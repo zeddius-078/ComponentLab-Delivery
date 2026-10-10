@@ -1,0 +1,576 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+    <class>Generated_horizontalReviewPage</class>
+    <widget class="QWidget" name="horizontalReviewPage">
+        <property name="designNodeId" stdset="0">
+            <string>27:450</string>
+        </property>
+        <property name="designName" stdset="0">
+            <string>工单列 / V2 CombineHorizontalLayout</string>
+        </property>
+        <property name="designType" stdset="0">
+            <string>FRAME</string>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>0</x>
+                <y>0</y>
+                <width>1106</width>
+                <height>560</height>
+            </rect>
+        </property>
+        <property name="minimumSize">
+            <size>
+                <width>1106</width>
+                <height>560</height>
+            </size>
+        </property>
+        <property name="maximumSize">
+            <size>
+                <width>16777215</width>
+                <height>16777215</height>
+            </size>
+        </property>
+        <property name="sizePolicy">
+            <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+            </sizepolicy>
+        </property>
+        <layout class="QHBoxLayout" name="layout_horizontalReviewPage">
+            <property name="leftMargin">
+                <number>36</number>
+            </property>
+            <property name="topMargin">
+                <number>24</number>
+            </property>
+            <property name="rightMargin">
+                <number>28</number>
+            </property>
+            <property name="bottomMargin">
+                <number>32</number>
+            </property>
+            <property name="spacing">
+                <number>20</number>
+            </property>
+            <item alignment="Qt::AlignBottom">
+                <widget class="commonWidget::Z_PushButton" name="horizontalReturnButton">
+                    <property name="designNodeId" stdset="0">
+                        <string>27:451</string>
+                    </property>
+                    <property name="designName" stdset="0">
+                        <string>实例 1</string>
+                    </property>
+                    <property name="designType" stdset="0">
+                        <string>INSTANCE</string>
+                    </property>
+                    <property name="minimumSize">
+                        <size>
+                            <width>0</width>
+                            <height>32</height>
+                        </size>
+                    </property>
+                    <property name="maximumSize">
+                        <size>
+                            <width>16777215</width>
+                            <height>32</height>
+                        </size>
+                    </property>
+                    <property name="sizePolicy">
+                        <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                        </sizepolicy>
+                    </property>
+                    <property name="text">
+                        <string>返回</string>
+                    </property>
+                </widget>
+            </item>
+            <item alignment="Qt::AlignBottom">
+                <widget class="QLabel" name="horizontalReviewHeading">
+                    <property name="designNodeId" stdset="0">
+                        <string>27:457</string>
+                    </property>
+                    <property name="designName" stdset="0">
+                        <string>复核工单</string>
+                    </property>
+                    <property name="designType" stdset="0">
+                        <string>PARAGRAPH</string>
+                    </property>
+                    <property name="minimumSize">
+                        <size>
+                            <width>96</width>
+                            <height>32</height>
+                        </size>
+                    </property>
+                    <property name="maximumSize">
+                        <size>
+                            <width>96</width>
+                            <height>32</height>
+                        </size>
+                    </property>
+                    <property name="sizePolicy">
+                        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                        </sizepolicy>
+                    </property>
+                    <property name="text">
+                        <string>工单列表</string>
+                    </property>
+                    <property name="textFormat">
+                        <enum>Qt::PlainText</enum>
+                    </property>
+                </widget>
+            </item>
+            <item>
+                <layout class="QVBoxLayout" name="anchor_horizontalWorkOrderForm">
+                    <property name="leftMargin">
+                        <number>0</number>
+                    </property>
+                    <property name="topMargin">
+                        <number>0</number>
+                    </property>
+                    <property name="rightMargin">
+                        <number>0</number>
+                    </property>
+                    <property name="bottomMargin">
+                        <number>0</number>
+                    </property>
+                    <property name="spacing">
+                        <number>0</number>
+                    </property>
+                    <item>
+                        <spacer name="before_horizontalWorkOrderForm">
+                            <property name="orientation">
+                                <enum>Qt::Vertical</enum>
+                            </property>
+                            <property name="sizeType">
+                                <enum>QSizePolicy::Expanding</enum>
+                            </property>
+                            <property name="sizeHint">
+                                <size>
+                                    <width>0</width>
+                                    <height>0</height>
+                                </size>
+                            </property>
+                        </spacer>
+                    </item>
+                    <item>
+                        <layout class="QVBoxLayout" name="layout_horizontalWorkOrderForm">
+                            <property name="designNodeId" stdset="0">
+                                <string>27:458</string>
+                            </property>
+                            <property name="designName" stdset="0">
+                                <string>工单表单</string>
+                            </property>
+                            <property name="leftMargin">
+                                <number>0</number>
+                            </property>
+                            <property name="topMargin">
+                                <number>0</number>
+                            </property>
+                            <property name="rightMargin">
+                                <number>0</number>
+                            </property>
+                            <property name="bottomMargin">
+                                <number>0</number>
+                            </property>
+                            <property name="spacing">
+                                <number>10</number>
+                            </property>
+                            <item alignment="Qt::AlignLeft">
+                                <widget class="v2::SelectOptionAdapter" name="horizontalChamberOptionOne">
+                                    <property name="designNodeId" stdset="0">
+                                        <string>27:459</string>
+                                    </property>
+                                    <property name="designName" stdset="0">
+                                        <string>实例 2</string>
+                                    </property>
+                                    <property name="designType" stdset="0">
+                                        <string>INSTANCE</string>
+                                    </property>
+                                    <property name="minimumSize">
+                                        <size>
+                                            <width>310</width>
+                                            <height>32</height>
+                                        </size>
+                                    </property>
+                                    <property name="maximumSize">
+                                        <size>
+                                            <width>310</width>
+                                            <height>32</height>
+                                        </size>
+                                    </property>
+                                    <property name="sizePolicy">
+                                        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                                            <horstretch>0</horstretch>
+                                            <verstretch>0</verstretch>
+                                        </sizepolicy>
+                                    </property>
+                                </widget>
+                            </item>
+                            <item alignment="Qt::AlignLeft">
+                                <widget class="v2::SelectOptionAdapter" name="horizontalChamberOptionTwo">
+                                    <property name="designNodeId" stdset="0">
+                                        <string>27:461</string>
+                                    </property>
+                                    <property name="designName" stdset="0">
+                                        <string>实例 3</string>
+                                    </property>
+                                    <property name="designType" stdset="0">
+                                        <string>INSTANCE</string>
+                                    </property>
+                                    <property name="minimumSize">
+                                        <size>
+                                            <width>310</width>
+                                            <height>32</height>
+                                        </size>
+                                    </property>
+                                    <property name="maximumSize">
+                                        <size>
+                                            <width>310</width>
+                                            <height>32</height>
+                                        </size>
+                                    </property>
+                                    <property name="sizePolicy">
+                                        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                                            <horstretch>0</horstretch>
+                                            <verstretch>0</verstretch>
+                                        </sizepolicy>
+                                    </property>
+                                </widget>
+                            </item>
+                            <item alignment="Qt::AlignLeft">
+                                <widget class="v2::SelectOptionAdapter" name="horizontalChamberOptionThree">
+                                    <property name="designNodeId" stdset="0">
+                                        <string>27:463</string>
+                                    </property>
+                                    <property name="designName" stdset="0">
+                                        <string>实例 4</string>
+                                    </property>
+                                    <property name="designType" stdset="0">
+                                        <string>INSTANCE</string>
+                                    </property>
+                                    <property name="minimumSize">
+                                        <size>
+                                            <width>310</width>
+                                            <height>32</height>
+                                        </size>
+                                    </property>
+                                    <property name="maximumSize">
+                                        <size>
+                                            <width>310</width>
+                                            <height>32</height>
+                                        </size>
+                                    </property>
+                                    <property name="sizePolicy">
+                                        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                                            <horstretch>0</horstretch>
+                                            <verstretch>0</verstretch>
+                                        </sizepolicy>
+                                    </property>
+                                </widget>
+                            </item>
+                            <item alignment="Qt::AlignLeft">
+                                <widget class="v2::SelectOptionAdapter" name="horizontalChamberOptionFour">
+                                    <property name="designNodeId" stdset="0">
+                                        <string>27:465</string>
+                                    </property>
+                                    <property name="designName" stdset="0">
+                                        <string>实例 5</string>
+                                    </property>
+                                    <property name="designType" stdset="0">
+                                        <string>INSTANCE</string>
+                                    </property>
+                                    <property name="minimumSize">
+                                        <size>
+                                            <width>310</width>
+                                            <height>32</height>
+                                        </size>
+                                    </property>
+                                    <property name="maximumSize">
+                                        <size>
+                                            <width>310</width>
+                                            <height>32</height>
+                                        </size>
+                                    </property>
+                                    <property name="sizePolicy">
+                                        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                                            <horstretch>0</horstretch>
+                                            <verstretch>0</verstretch>
+                                        </sizepolicy>
+                                    </property>
+                                </widget>
+                            </item>
+                        </layout>
+                    </item>
+                </layout>
+            </item>
+            <item>
+                <layout class="QVBoxLayout" name="anchor_horizontalActionRow">
+                    <property name="leftMargin">
+                        <number>0</number>
+                    </property>
+                    <property name="topMargin">
+                        <number>0</number>
+                    </property>
+                    <property name="rightMargin">
+                        <number>0</number>
+                    </property>
+                    <property name="bottomMargin">
+                        <number>0</number>
+                    </property>
+                    <property name="spacing">
+                        <number>0</number>
+                    </property>
+                    <item>
+                        <spacer name="before_horizontalActionRow">
+                            <property name="orientation">
+                                <enum>Qt::Vertical</enum>
+                            </property>
+                            <property name="sizeType">
+                                <enum>QSizePolicy::Expanding</enum>
+                            </property>
+                            <property name="sizeHint">
+                                <size>
+                                    <width>0</width>
+                                    <height>0</height>
+                                </size>
+                            </property>
+                        </spacer>
+                    </item>
+                    <item>
+                        <layout class="QHBoxLayout" name="layout_horizontalActionRow">
+                            <property name="designNodeId" stdset="0">
+                                <string>27:467</string>
+                            </property>
+                            <property name="designName" stdset="0">
+                                <string>容器 2</string>
+                            </property>
+                            <property name="leftMargin">
+                                <number>0</number>
+                            </property>
+                            <property name="topMargin">
+                                <number>0</number>
+                            </property>
+                            <property name="rightMargin">
+                                <number>0</number>
+                            </property>
+                            <property name="bottomMargin">
+                                <number>0</number>
+                            </property>
+                            <property name="spacing">
+                                <number>20</number>
+                            </property>
+                            <item alignment="Qt::AlignTop">
+                                <widget class="commonWidget::Z_PushButton" name="horizontalConfirmFirstButton">
+                                    <property name="designNodeId" stdset="0">
+                                        <string>27:468</string>
+                                    </property>
+                                    <property name="designName" stdset="0">
+                                        <string>实例 6</string>
+                                    </property>
+                                    <property name="designType" stdset="0">
+                                        <string>INSTANCE</string>
+                                    </property>
+                                    <property name="minimumSize">
+                                        <size>
+                                            <width>82</width>
+                                            <height>32</height>
+                                        </size>
+                                    </property>
+                                    <property name="maximumSize">
+                                        <size>
+                                            <width>82</width>
+                                            <height>32</height>
+                                        </size>
+                                    </property>
+                                    <property name="sizePolicy">
+                                        <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                                            <horstretch>0</horstretch>
+                                            <verstretch>0</verstretch>
+                                        </sizepolicy>
+                                    </property>
+                                    <property name="text">
+                                        <string>确认1</string>
+                                    </property>
+                                </widget>
+                            </item>
+                            <item alignment="Qt::AlignTop">
+                                <widget class="commonWidget::Z_PushButton" name="horizontalConfirmSecondButton">
+                                    <property name="designNodeId" stdset="0">
+                                        <string>27:470</string>
+                                    </property>
+                                    <property name="designName" stdset="0">
+                                        <string>实例 7</string>
+                                    </property>
+                                    <property name="designType" stdset="0">
+                                        <string>INSTANCE</string>
+                                    </property>
+                                    <property name="minimumSize">
+                                        <size>
+                                            <width>82</width>
+                                            <height>32</height>
+                                        </size>
+                                    </property>
+                                    <property name="maximumSize">
+                                        <size>
+                                            <width>82</width>
+                                            <height>32</height>
+                                        </size>
+                                    </property>
+                                    <property name="sizePolicy">
+                                        <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                                            <horstretch>0</horstretch>
+                                            <verstretch>0</verstretch>
+                                        </sizepolicy>
+                                    </property>
+                                    <property name="text">
+                                        <string>确认2</string>
+                                    </property>
+                                </widget>
+                            </item>
+                            <item alignment="Qt::AlignTop">
+                                <widget class="commonWidget::Z_PushButton" name="horizontalConfirmThirdButton">
+                                    <property name="designNodeId" stdset="0">
+                                        <string>27:472</string>
+                                    </property>
+                                    <property name="designName" stdset="0">
+                                        <string>实例 8</string>
+                                    </property>
+                                    <property name="designType" stdset="0">
+                                        <string>INSTANCE</string>
+                                    </property>
+                                    <property name="minimumSize">
+                                        <size>
+                                            <width>82</width>
+                                            <height>32</height>
+                                        </size>
+                                    </property>
+                                    <property name="maximumSize">
+                                        <size>
+                                            <width>82</width>
+                                            <height>32</height>
+                                        </size>
+                                    </property>
+                                    <property name="sizePolicy">
+                                        <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                                            <horstretch>0</horstretch>
+                                            <verstretch>0</verstretch>
+                                        </sizepolicy>
+                                    </property>
+                                    <property name="text">
+                                        <string>确认3</string>
+                                    </property>
+                                </widget>
+                            </item>
+                            <item alignment="Qt::AlignTop">
+                                <widget class="commonWidget::Z_PushButton" name="horizontalConfirmFourthButton">
+                                    <property name="designNodeId" stdset="0">
+                                        <string>27:474</string>
+                                    </property>
+                                    <property name="designName" stdset="0">
+                                        <string>实例 9</string>
+                                    </property>
+                                    <property name="designType" stdset="0">
+                                        <string>INSTANCE</string>
+                                    </property>
+                                    <property name="minimumSize">
+                                        <size>
+                                            <width>82</width>
+                                            <height>32</height>
+                                        </size>
+                                    </property>
+                                    <property name="maximumSize">
+                                        <size>
+                                            <width>82</width>
+                                            <height>32</height>
+                                        </size>
+                                    </property>
+                                    <property name="sizePolicy">
+                                        <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                                            <horstretch>0</horstretch>
+                                            <verstretch>0</verstretch>
+                                        </sizepolicy>
+                                    </property>
+                                    <property name="text">
+                                        <string>确认4</string>
+                                    </property>
+                                </widget>
+                            </item>
+                            <item alignment="Qt::AlignTop">
+                                <widget class="commonWidget::Z_PushButton" name="horizontalSubmitButton">
+                                    <property name="designNodeId" stdset="0">
+                                        <string>27:476</string>
+                                    </property>
+                                    <property name="designName" stdset="0">
+                                        <string>实例 10</string>
+                                    </property>
+                                    <property name="designType" stdset="0">
+                                        <string>INSTANCE</string>
+                                    </property>
+                                    <property name="minimumSize">
+                                        <size>
+                                            <width>82</width>
+                                            <height>32</height>
+                                        </size>
+                                    </property>
+                                    <property name="maximumSize">
+                                        <size>
+                                            <width>82</width>
+                                            <height>32</height>
+                                        </size>
+                                    </property>
+                                    <property name="sizePolicy">
+                                        <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                                            <horstretch>0</horstretch>
+                                            <verstretch>0</verstretch>
+                                        </sizepolicy>
+                                    </property>
+                                    <property name="enabled">
+                                        <bool>false</bool>
+                                    </property>
+                                    <property name="text">
+                                        <string>提交</string>
+                                    </property>
+                                </widget>
+                            </item>
+                        </layout>
+                    </item>
+                </layout>
+            </item>
+            <item>
+                <spacer name="after_horizontalReviewPage">
+                    <property name="orientation">
+                        <enum>Qt::Horizontal</enum>
+                    </property>
+                    <property name="sizeType">
+                        <enum>QSizePolicy::Expanding</enum>
+                    </property>
+                    <property name="sizeHint">
+                        <size>
+                            <width>0</width>
+                            <height>0</height>
+                        </size>
+                    </property>
+                </spacer>
+            </item>
+        </layout>
+    </widget>
+    <customwidgets>
+        <customwidget>
+            <class>commonWidget::Z_PushButton</class>
+            <extends>QPushButton</extends>
+            <header>Z_PushButton.h</header>
+        </customwidget>
+        <customwidget>
+            <class>v2::SelectOptionAdapter</class>
+            <extends>QWidget</extends>
+            <header>WidgetRegistry.h</header>
+        </customwidget>
+    </customwidgets>
+    <resources/>
+    <connections/>
+</ui>

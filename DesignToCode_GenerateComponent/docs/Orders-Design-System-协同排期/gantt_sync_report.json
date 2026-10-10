@@ -1,0 +1,138 @@
+{
+  "schema_version": "orders-gantt-sync-report/1.0",
+  "source": {
+    "path": "C:\\Users\\ZYC\\Desktop\\Orders-Design-System-协同排期\\README.md",
+    "readme_version": "v4.6",
+    "readme_updated": "2026-08-28",
+    "readme_sha256": "133ea435a59bc40d34523732ebc0ceb2fa24a793605719673ddc521fd2cfbfe4",
+    "generated_at": "2026-08-29T00:33:24+08:00",
+    "source_of_truth": true
+  },
+  "sync": {
+    "mode": "BASELINE",
+    "task_count": 73,
+    "dependency_count": 129,
+    "confirmed_date_task_count": 0,
+    "calendar_available": false,
+    "calendar_blocker": "等待 M1-08 确认任务级开始日期、结束日期与 9 月 30 日前承诺范围"
+  },
+  "validation": {
+    "valid": true,
+    "errors": [],
+    "warnings": [],
+    "counts": {
+      "total_tasks": 73,
+      "initial_pilot_tasks": 55,
+      "post_pilot_tasks": 18,
+      "phase_counts": {
+        "M1": 9,
+        "M2": 16,
+        "M3": 18,
+        "M4": 12,
+        "后续": 18
+      },
+      "dependency_count": 129,
+      "confirmed_date_tasks": 0,
+      "partial_date_tasks": 0,
+      "unset_date_tasks": 73,
+      "workload_counts": {
+        "小": 6,
+        "中": 34,
+        "大": 33
+      },
+      "work_units_total": 206
+    },
+    "calendar_available": false,
+    "calendar_blocker": "等待 M1-08 确认任务级开始日期、结束日期与 9 月 30 日前承诺范围",
+    "cycle_error": null
+  },
+  "file_audit": [
+    {
+      "path": "__pycache__/generate_gantt.cpython-314.pyc",
+      "category": "GENERATED",
+      "reason": "可由脚本重新生成"
+    },
+    {
+      "path": "_obsolete/__pycache__/Orders-Design-System-执行排期.cpython-314.pyc",
+      "category": "OBSOLETE",
+      "reason": "README 明确标记为历史留存"
+    },
+    {
+      "path": "_obsolete/Design-System治理与AI协同排期-甘特图.png",
+      "category": "OBSOLETE",
+      "reason": "README 明确标记为历史留存"
+    },
+    {
+      "path": "_obsolete/generate_gantt_v4.6_legacy.py",
+      "category": "OBSOLETE",
+      "reason": "README 明确标记为历史留存"
+    },
+    {
+      "path": "_obsolete/Orders-Design-System-执行甘特图.png",
+      "category": "OBSOLETE",
+      "reason": "README 明确标记为历史留存"
+    },
+    {
+      "path": "gantt_source.csv",
+      "category": "GENERATED",
+      "reason": "可由脚本重新生成"
+    },
+    {
+      "path": "gantt_source.json",
+      "category": "GENERATED",
+      "reason": "可由脚本重新生成"
+    },
+    {
+      "path": "generate_gantt.py",
+      "category": "REFERENCE",
+      "reason": "README 驱动的可复用解析与生成工具"
+    },
+    {
+      "path": "Orders-Design-System-任务量与依赖甘特图.png",
+      "category": "REFERENCE",
+      "reason": "由 README 生成的当前任务量与依赖结构参考"
+    },
+    {
+      "path": "README.md",
+      "category": "AUTHORITATIVE",
+      "reason": "唯一任务事实源"
+    }
+  ],
+  "figma": {
+    "file_key": "jAOWkleaIWm6F52N93fQhb",
+    "target_node": "47:1284",
+    "section_id": "140:1285",
+    "frame_ids": {
+      "00_Sync_Status": "140:1286",
+      "01_Task_Volume_Dependency": "140:1298",
+      "02_Calendar_Gantt": "140:1302",
+      "03_Legend_and_Rules": "140:1290",
+      "Archive": "140:1306",
+      ".Component_Library": "140:1294"
+    },
+    "component_count": 11,
+    "baseline_row_count": 73,
+    "calendar_pending_count": 73,
+    "task_update_key": "sharedPluginData: orders_gantt/task_id",
+    "qa": {
+      "anonymous_nodes": 0,
+      "raw_shape_nodes": 0,
+      "auto_layout_failures": 0,
+      "text_overflow": 0,
+      "clipped_frames": 0,
+      "duplicate_baseline_tasks": 0,
+      "duplicate_pending_tasks": 0
+    },
+    "screenshots": {
+      "full": "C:\\Users\\ZYC\\AppData\\Local\\Temp\\orders-gantt-final-full.png",
+      "sync_status": "C:\\Users\\ZYC\\AppData\\Local\\Temp\\orders-gantt-final-sync.png",
+      "m1": "C:\\Users\\ZYC\\AppData\\Local\\Temp\\orders-gantt-final-m1.png",
+      "m2": "C:\\Users\\ZYC\\AppData\\Local\\Temp\\orders-gantt-final-m2.png",
+      "m3": "C:\\Users\\ZYC\\AppData\\Local\\Temp\\orders-gantt-final-m3.png",
+      "m4": "C:\\Users\\ZYC\\AppData\\Local\\Temp\\orders-gantt-final-m4.png",
+      "post_pilot": "C:\\Users\\ZYC\\AppData\\Local\\Temp\\orders-gantt-final-post.png",
+      "calendar_pending": "C:\\Users\\ZYC\\AppData\\Local\\Temp\\orders-gantt-final-calendar.png"
+    },
+    "rollback": "删除 Section 140:1285（Orders Design System / Gantt）；原有 4 个 Section、README 与本地生成文件不受影响"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "checks": {
+    "alias": "passed",
+    "components": "passed",
+    "hash": "passed",
+    "identity": "passed",
+    "provenance": "passed",
+    "schema": "passed",
+    "variables": "passed"
+  },
+  "schemaVersion": 1,
+  "status": "passed"
+}

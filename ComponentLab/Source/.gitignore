@@ -1,0 +1,8 @@
+/build/
+/dist/
+/release/
+*.user
+/delivery/tools/workspace/
+__pycache__/
+*.py[cod]
+/delivery/.work/

@@ -1,0 +1,9 @@
+{
+  "canonicalIndex": "canonical/index.json",
+  "canonicalIndexSha256": "c73c08f57d22d1edc3e769c2e86aa29d5741ff44bbf9779425febd8cb3baece5",
+  "captureId": "import-20261003",
+  "packageId": "DesignTest-2-145",
+  "schemaVersion": 1,
+  "sourceManifest": "runs/import-20261003/manifest.json",
+  "sourceManifestSha256": "d24d88524250b023ad9690f589848a24210241feb1d7e6990baec030509d9ebe"
+}

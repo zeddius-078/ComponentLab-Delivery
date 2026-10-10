@@ -1,0 +1,9 @@
+{
+  "fileKey": "4S0Ktm81WnvzuJmZHvRuOg",
+  "componentSetId": "3:10558",
+  "variantId": "3:5686",
+  "component": "Button",
+  "expected": {"type":"PRIMARY","size":"M","state":"default","appearance":"solid","content":"Text","iconStyle":"Bare","danger":"false","ghost":"false","Profile":"light-comfortable"},
+  "labelLayer": "LABEL",
+  "mappingId": "component-lab-qt-mapping-v1"
+}

@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>node_19_45</class>
+ <widget class="QWidget" name="node_19_45">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>600</width>
+    <height>560</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>600</width>
+    <height>560</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>16777215</width>
+    <height>16777215</height>
+   </size>
+  </property>
+  <property name="designNodeId" stdset="0">
+   <string>19:45</string>
+  </property>
+  <property name="designType" stdset="0">
+   <string>FRAME</string>
+  </property>
+  <layout class="QVBoxLayout" name="layout_node_19_45">
+   <property name="spacing">
+    <number>20</number>
+   </property>
+   <property name="leftMargin">
+    <number>36</number>
+   </property>
+   <property name="topMargin">
+    <number>24</number>
+   </property>
+   <property name="rightMargin">
+    <number>28</number>
+   </property>
+   <property name="bottomMargin">
+    <number>32</number>
+   </property>
+   <item>
+    <spacer name="before_node_19_45">
+     <property name="orientation">
+      <enum>Qt::Orientation::Vertical</enum>
+     </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::Policy::Expanding</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>0</width>
+       <height>0</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item alignment="Qt::AlignmentFlag::AlignLeft">
+    <widget class="QLabel" name="node_19_46">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>320</width>
+       <height>32</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>320</width>
+       <height>32</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>复核工单</string>
+     </property>
+     <property name="textFormat">
+      <enum>Qt::TextFormat::PlainText</enum>
+     </property>
+     <property name="designNodeId" stdset="0">
+      <string>19:46</string>
+     </property>
+     <property name="designType" stdset="0">
+      <string>PARAGRAPH</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="commonWidget::Z_InputField" name="node_19_47" native="true">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Maximum">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>120</width>
+       <height>88</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>88</height>
+      </size>
+     </property>
+     <property name="designNodeId" stdset="0">
+      <string>19:47</string>
+     </property>
+     <property name="designType" stdset="0">
+      <string>INSTANCE</string>
+     </property>
+    </widget>
+   </item>
+   <item alignment="Qt::AlignmentFlag::AlignLeft">
+    <widget class="commonWidget::Z_CheckBox" name="node_19_52">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>120</width>
+       <height>32</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>120</width>
+       <height>32</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>启用质量检查</string>
+     </property>
+     <property name="designNodeId" stdset="0">
+      <string>19:52</string>
+     </property>
+     <property name="designType" stdset="0">
+      <string>INSTANCE</string>
+     </property>
+    </widget>
+   </item>
+   <item alignment="Qt::AlignmentFlag::AlignLeft">
+    <widget class="commonWidget::Z_PushButton" name="node_19_57">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>82</width>
+       <height>32</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>82</width>
+       <height>32</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>确认复核</string>
+     </property>
+     <property name="designNodeId" stdset="0">
+      <string>19:57</string>
+     </property>
+     <property name="designType" stdset="0">
+      <string>INSTANCE</string>
+     </property>
+    </widget>
+   </item>
+   <item alignment="Qt::AlignmentFlag::AlignLeft">
+    <widget class="commonWidget::Z_PushButton" name="node_19_59">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>82</width>
+       <height>32</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>82</width>
+       <height>32</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>撤回复核</string>
+     </property>
+     <property name="designNodeId" stdset="0">
+      <string>19:59</string>
+     </property>
+     <property name="designType" stdset="0">
+      <string>INSTANCE</string>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>commonWidget::Z_CheckBox</class>
+   <extends>QCheckBox</extends>
+   <header>Z_CheckBox.h</header>
+  </customwidget>
+  <customwidget>
+   <class>commonWidget::Z_InputField</class>
+   <extends>QWidget</extends>
+   <header>Z_InputField.h</header>
+  </customwidget>
+  <customwidget>
+   <class>commonWidget::Z_PushButton</class>
+   <extends>QPushButton</extends>
+   <header>Z_PushButton.h</header>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>

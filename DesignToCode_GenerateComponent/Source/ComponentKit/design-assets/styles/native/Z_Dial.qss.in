@@ -1,0 +1,19 @@
+/* Z_Dial <- QDial; compiled from the active Token profile. */
+*[designSystemClass="commonWidget::Z_Dial"] {
+    color: @FOREGROUND@;
+    background-color: @SURFACE@;
+    font-size: @FONT_SIZE@px;
+}
+*[designSystemClass="commonWidget::Z_Dial"]:disabled {
+    color: @DISABLED_TEXT@;
+    background-color: @DISABLED@;
+    border-color: @DISABLED_BORDER@;
+}
+*[designSystemClass="commonWidget::Z_Dial"] {
+    min-height: @HEIGHT@px;
+    border: 1px solid @BORDER@;
+    border-radius: @RADIUS@px;
+    padding-left: 8px;
+    padding-right: 8px;
+}
+*[designSystemClass="commonWidget::Z_Dial"]:focus { border-color: @FOCUS@; }

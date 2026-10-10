@@ -1,0 +1,23 @@
+{
+  "status": "PASS",
+  "directory": "holdout-overview-full",
+  "arguments": {
+    "guid": "3:10569",
+    "simplify": false,
+    "isDetachInstance": false
+  },
+  "receivedAtUtc": "2026-09-23T17:23:25.981620+00:00",
+  "rawBytes": 4663816,
+  "rawSha256": "c63c71cf2e68c9f0c5b305447837d3d04ed7c3c52822935f40d294c68e15a5bd",
+  "responseSha256": "7f958bf0cc92d8a5c28b25c4eee0f63fd1926529ff713505ae72d086c83eec65",
+  "verbatimText": true,
+  "topLevelFields": [
+    "pixTreeNodes",
+    "svgGuidInfo",
+    "pixComponentTreeDslNodes",
+    "variableMap",
+    "variableSetMap",
+    "localStyleMap",
+    "isContainFixed"
+  ]
+}

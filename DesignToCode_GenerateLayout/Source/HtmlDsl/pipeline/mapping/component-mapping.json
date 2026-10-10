@@ -1,0 +1,74 @@
+{
+  "version": 1,
+  "identity": "mainStateGroup -> component set definition -> exact name and key",
+  "unknownComponent": "UNMAPPED_COMPONENT",
+  "profile": "light-comfortable",
+  "rules": [
+    {
+      "designComponentName": "ComponentLab/Button",
+      "designComponentKey": "ac579859d36e1aaa878e788b32a322b28abcb09e",
+      "designComponentSet": "ComponentLab/Button",
+      "qtClass": "commonWidget::Z_PushButton",
+      "propertyMappings": {
+        "type": {"api": "setType", "values": {"PRIMARY":"Primary","DEFAULT":"Default","DASHED":"Dashed","TEXT":"Text","LINK":"Link"}},
+        "size": {"api":"setSize", "values":{"XS":"XS","S":"S","M":"M","L":"L"}},
+        "danger": {"api":"setDanger", "values":{"false":false,"true":true}},
+        "ghost": {"api":"setGhost", "values":{"false":false,"true":true}},
+        "appearance": {"api":"ButtonAppearanceAdapter.setAppearance", "values":{"solid":"solid","gradient":"gradient","inset":"inset","gradient-inset":"gradient-inset","outline":"outline","elevated":"elevated","gradient-elevated":"gradient-elevated","solid-inner-shadow":"solid-inner-shadow"}},
+        "iconStyle": {"api":"setIconStyles", "values":{"Bare":"Bare","Filled":"Filled","Outlined":"Outlined"}},
+        "content": {"api":"setContentMode", "values":{"Text":"Text","Dual":"Dual","Leading":"Leading","Trailing":"Trailing","IconOnly":"IconOnly"}}
+      },
+      "stateMappings": {"default":[],"disabled":[{"api":"setEnabled","value":false}],"loading":[{"api":"setLoading","value":true}]},
+      "slotMappings": [{"name":"LABEL","api":"setText","field":"nodeText","when":{"content":["Text","Leading","Trailing","Dual"]}}],
+      "resourceMappings": {
+        "policy":"named design glyph -> explicit QRC/local asset",
+        "glyphPrefix":"GLYPH / ",
+        "contentSlots":{"Text":[],"Leading":["leading"],"Trailing":["trailing"],"Dual":["leading","trailing"],"IconOnly":["leading"]},
+        "entries":{
+          "GLYPH / arrow-left":{"ownership":"shared","source":":/icons/arrow-left.svg","accessibleName":"返回"},
+          "GLYPH / arrow-right":{"ownership":"shared","source":":/icons/arrow-right.svg","accessibleName":"前进"},
+          "GLYPH / search":{"ownership":"shared","source":":/icons/search.svg","accessibleName":"搜索"}
+        },
+        "missing":"UNMAPPED_RESOURCE"
+      },
+      "fallback":"error",
+      "status":"V1: default, disabled, loading; transient states supplied by native events"
+    },
+    {
+      "designComponentName":"ComponentLab/Checkbox",
+      "designComponentKey":"77657535de6dc1212386afaa18cf2e4dc5db587f",
+      "designComponentSet":"ComponentLab/Checkbox",
+      "qtClass":"commonWidget::Z_CheckBox",
+      "propertyMappings": {
+        "value":{"api":"setCheckValue","values":{"unchecked":"unchecked","checked":"checked","mixed":"mixed"}},
+        "size":{"api":"setControlSize","values":{"sm":"sm","lg":"lg"}},
+        "appearance":{"api":"setAppearance","values":{"solid":"solid","gradient":"gradient","inset":"inset","gradient-inset":"gradient-inset","outline":"outline","elevated":"elevated","gradient-elevated":"gradient-elevated"}}
+      },
+      "stateMappings":{"default":[],"disabled":[{"api":"setEnabled","value":false}]},
+      "slotMappings":[{"name":"LABEL","api":"setText","field":"nodeText"}],
+      "resourceMappings":{"policy":"check/mixed glyph supplied by existing Token catalog"},
+      "fallback":"error",
+      "status":"V1: default and disabled; transient states supplied by native events"
+    },
+    {
+      "designComponentName":"ComponentLab/Input",
+      "designComponentKey":"c99aef2324e1a9ee292a501e5ad635a2e28ce0f1",
+      "designComponentSet":"ComponentLab/Input",
+      "qtClass":"commonWidget::Z_InputField",
+      "propertyMappings": {
+        "kind":{"api":"setKind","values":{"text":"Text","password":"Password","search":"Search","textarea":"TextArea"}},
+        "size":{"api":"setControlSize","values":{"sm":"sm","md":"md","lg":"lg"}},
+        "variant":{"api":"setVariant","values":{"outlined":"outlined","filled":"filled","borderless":"borderless","underlined":"underlined"}},
+        "appearance":{"api":"setAppearance","values":{"solid":"solid","gradient":"gradient","inset":"inset","gradient-inset":"gradient-inset","outline":"outline","elevated":"elevated","gradient-elevated":"gradient-elevated"}},
+        "allowClear":{"api":"setAllowClear","values":{"false":false,"true":true}},
+        "content":{"api":"editorTextMode","values":{"empty":"setPlaceholder","value":"setValue"}},
+        "prefix":{"api":"prefixPolicy","values":{"false":"none"}}
+      },
+      "stateMappings":{"default":[],"disabled":[{"api":"setEnabled","value":false}],"readOnly":[{"api":"setReadOnly","value":true}],"loading":[{"api":"setLoading","value":true}],"error":[{"api":"setStatus","value":"error"}],"warning":[{"api":"setStatus","value":"warning"}]},
+      "slotMappings":[{"name":"LABEL","api":"setLabel","field":"nodeText"},{"name":"HELP","api":"setHint","field":"nodeText"},{"name":"EDITOR","api":"editorText","field":"nodeText"}],
+      "resourceMappings":{"policy":"password eye and search supplied by existing native component"},
+      "fallback":"error",
+      "status":"V1: explicit properties; prefix=true awaits resource mapping"
+    }
+  ]
+}

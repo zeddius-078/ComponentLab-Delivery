@@ -1,0 +1,18 @@
+/* Z_ProgressBar <- QProgressBar; compiled from the active Token profile. */
+*[designSystemClass="commonWidget::Z_ProgressBar"] {
+    color: #191919;
+    background-color: #ffffff;
+    font-size: 14px;
+}
+*[designSystemClass="commonWidget::Z_ProgressBar"]:disabled {
+    color: #8a8a8a;
+    background-color: #f3f3f3;
+    border-color: #d0d0d0;
+}
+*[designSystemClass="commonWidget::Z_ProgressBar"] {
+    min-height: 32px;
+    border: 1px solid #a7a7a7;
+    border-radius: 4px;
+    text-align: center;
+}
+*[designSystemClass="commonWidget::Z_ProgressBar"]::chunk { background-color: #6235f7; border-radius: 4px; }

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="UTF-8"><title>设计组件映射方案</title></head>
+<body>
+<h2>从设计实例装配 Qt 页面</h2>
+<p>设计师选择组件、内容、状态与布局；工具按登记规则找到已有 Qt 类，写入页面结构并连接公开接口。组件的颜色、尺寸和材质继续读取现有 Token 产物。</p>
+<h3>1. 首次建设：把本地能力放到设计侧</h3>
+<table cellpadding="6" cellspacing="0" border="1" width="100%">
+<tr><th>输入</th><th>处理</th><th>交付</th></tr>
+<tr><td>当前 Token、Z_ 组件、资源</td><td>通过 MCP 创建变量、组件集；绑定视觉值与属性</td><td>Figma 组件库、身份登记表、设计截图</td></tr>
+</table>
+<p>目标文件：Design-Components-Build，页面 buttonDSM。已有 AntD 内容保留。QtLab 变量使用独立集合，保留本地 Token 路径和四个 Profile。</p>
+<h3>2. 日常开发：按规则读取与装配</h3>
+<table cellpadding="6" cellspacing="0" border="1" width="100%">
+<tr><th>阶段</th><th>动作</th><th>检查</th></tr>
+<tr><td>设计实例</td><td>组合 Button、IconButton、Checkbox、Input、Select</td><td>实例身份、属性、Auto Layout 与变量绑定完整</td></tr>
+<tr><td>MCP 快照</td><td>读取主组件 key、实例 ID、属性与布局变量</td><td>保留原始 JSON 与 SHA-256</td></tr>
+<tr><td>规则转换</td><td>按登记表转换为 UI Contract</td><td>未知组件、属性、资源和视觉覆写停止输出</td></tr>
+<tr><td>Qt 适配</td><td>生成 .ui、.h、.cpp、.qss；装配现有 Z_ 组件</td><td>类型、状态、信号、Token 引用与布局一致</td></tr>
+<tr><td>业务接入</td><td>Controller 连接 clicked、valueChanged 等信号</td><td>业务校验、权限和设备操作由业务代码负责</td></tr>
+</table>
+<h3>3. 一个按钮的完整对应关系</h3>
+<p><b>QtLab/Button</b> → 设计实例 <b>submitButton</b> → 登记族 <b>Button</b> → <b>commonWidget::Z_PushButton</b></p>
+<p>Label → setText；Type → setType；Size=M → setSize(M)；State=Disabled → setEnabled(false)。运行时的 Hover、Pressed 和键盘焦点由 Qt 事件驱动。</p>
+<p>图标使用实例交换属性。登记表把图标主组件身份映射到 QRC 资源键；独立 IconButton 保留 accessibleName 和 Loading。</p>
+<h3>4. 四类文件的分工</h3>
+<table cellpadding="6" cellspacing="0" border="1" width="100%">
+<tr><th>文件</th><th>内容</th><th>执行方</th></tr>
+<tr><td>.ui</td><td>结构、布局、objectName、组件占位</td><td>QUiLoader 预览；uic 编译</td></tr>
+<tr><td>.h</td><td>页面类型和 mappedControl 接口</td><td>C++ 编译器</td></tr>
+<tr><td>.cpp</td><td>调用已有工厂、设置类型化属性</td><td>Qt Runtime</td></tr>
+<tr><td>.qss</td><td>页面背景；组件视觉继续消费既有 generated 样式</td><td>Qt Style Sheet</td></tr>
+</table>
+<h3>5. Figma 与 Pixso 的入口</h3>
+<p>Figma 使用 MCP 实例快照和项目登记表。Pixso 使用 DSM 别名与 D2C+ 解析配置，再转换到同一 UI Contract。DSM 属于 Pixso；Qt 适配层属于本项目。</p>
+<p>模型负责调用读取工具、执行规则、运行校验与编译。新的组件类型或视觉能力需要设计与开发明确扩展登记表和组件实现。</p>
+<h3>当前状态</h3>
+<p><b>变量已写入并核对：</b>2 个集合，35 个原始值，71 个用途变量，4 个 Profile。</p>
+<p><b>组件创建等待字体确认：</b>Figma MCP 暂无 HarmonyOS Sans SC。Noto Sans SC 替代尚未获确认，因此还没有实际组件集、装配实例或设计截图。</p>
+<p><b>本地能力：</b>规则转换器与 Qt 适配器可执行。后两个子页目前使用 localFixture 示例；它证明装配行为，不代表 Figma 视觉还原已经完成。</p>
+<p>完整字段、DSM 配置和开发接口见 Documents/DesignMapping/Guide.md。Token 原解析器和 APK 构建流程保持原状。</p>
+</body></html>

@@ -1,0 +1,163 @@
+{
+  "$id": "urn:componentlab:design-evidence:raw-manifest:1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "calls": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "arguments": {
+            "type": "object"
+          },
+          "bodySha256": {
+            "pattern": "^[a-f0-9]{64}$",
+            "type": "string"
+          },
+          "callId": {
+            "type": "string"
+          },
+          "capturedAt": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "metadataSource": {
+            "type": "string"
+          },
+          "method": {
+            "enum": [
+              "initialize",
+              "tools/list",
+              "tools/call"
+            ]
+          },
+          "payloadSha256": {
+            "pattern": "^[a-f0-9]{64}$",
+            "type": "string"
+          },
+          "response": {
+            "additionalProperties": false,
+            "properties": {
+              "path": {
+                "type": "string"
+              },
+              "pointer": {
+                "type": "string"
+              },
+              "sha256": {
+                "pattern": "^[a-f0-9]{64}$",
+                "type": "string"
+              }
+            },
+            "required": [
+              "path",
+              "pointer",
+              "sha256"
+            ],
+            "type": "object"
+          },
+          "role": {
+            "type": "string"
+          },
+          "tool": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "callId",
+          "role",
+          "method",
+          "tool",
+          "arguments",
+          "capturedAt",
+          "metadataSource",
+          "response",
+          "payloadSha256",
+          "bodySha256"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "captureId": {
+      "type": "string"
+    },
+    "captureTimeEvidence": {
+      "type": "string"
+    },
+    "capturedAt": {
+      "type": "string"
+    },
+    "failures": {
+      "items": {
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "fileKey": {
+      "type": "string"
+    },
+    "files": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "bytes": {
+            "minimum": 0,
+            "type": "integer"
+          },
+          "path": {
+            "type": "string"
+          },
+          "sha256": {
+            "pattern": "^[a-f0-9]{64}$",
+            "type": "string"
+          }
+        },
+        "required": [
+          "path",
+          "bytes",
+          "sha256"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "notifications": {
+      "items": {
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "packageId": {
+      "type": "string"
+    },
+    "pageId": {
+      "type": "string"
+    },
+    "provider": {
+      "const": "pixso"
+    },
+    "schemaVersion": {
+      "const": 1
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "packageId",
+    "provider",
+    "fileKey",
+    "pageId",
+    "captureId",
+    "capturedAt",
+    "captureTimeEvidence",
+    "files",
+    "calls",
+    "notifications"
+  ],
+  "type": "object"
+}

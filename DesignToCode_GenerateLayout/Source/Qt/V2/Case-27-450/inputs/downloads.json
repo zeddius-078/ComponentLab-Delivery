@@ -1,0 +1,29 @@
+{
+  "capturedAtUtc": "2026-09-27T17:39:09.097Z",
+  "page": {
+    "url": "http://localhost:3667/code/1790530644314/0%3A0",
+    "file": "inputs/html/page.html",
+    "status": 200,
+    "contentType": "text/plain; charset=utf-8",
+    "bytes": 49533,
+    "sha256": "b31c912a0cfa3edea6e180c9eabeee3645647e80338239352ef3d4687726ac8c"
+  },
+  "assets": [
+    {
+      "url": "http://localhost:3667/assets/1790530644314/HarmonyOS_Sans_SC_Regular.ttf",
+      "file": "inputs/assets/HarmonyOS_Sans_SC_Regular.ttf",
+      "status": 200,
+      "contentType": "application/octet-stream",
+      "bytes": 8261128,
+      "sha256": "297b088424be212207df2ce8b98e335468b782aa6b96832af0b8b773d711e2b1"
+    },
+    {
+      "url": "http://localhost:3667/assets/1790530644314/GLYPHarrowleft.svg",
+      "file": "inputs/assets/GLYPHarrowleft.svg",
+      "status": 200,
+      "contentType": "image/svg+xml",
+      "bytes": 560,
+      "sha256": "2ec181b06c10403ac127eac82d21c03b061083e8875207facf68c4d51643fbd0"
+    }
+  ]
+}

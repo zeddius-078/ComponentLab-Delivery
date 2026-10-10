@@ -1,0 +1,319 @@
+{
+  "id": "COMPONENT-LAB-CPP-QT-2026-09-15-R4-sToken",
+  "status": "inherited-structural-mapping-with-local-stoken-overlay",
+  "fileKey": "nKMurHs3dh9ka4vilOIPiM",
+  "evidence": "Inherited read-only Figma evidence from R3, 2026-09-15. No new Figma MCP read in R4. Input set 37:204; variant 37:203. Other references are from the preserved component_library.json.",
+  "priority": "R4 sToken overlay governs mapped parameters, with documented project floors/adaptations. Unmapped native defaults are retained. Figma references identify structure, not current style values.",
+  "components": [
+    {
+      "id": "button",
+      "class": "commonWidget::Z_PushButton",
+      "header": "runtime/component/Z_PushButton.h",
+      "implementation": "runtime/component/Z_PushButton.cpp",
+      "style": "design-assets/styles/Z_PushButton.qss.in",
+      "contract": "design-assets/tokens/button-contract.json",
+      "referenceNode": "37:92",
+      "referenceLevel": "upstream-component-library",
+      "parts": [
+        {
+          "name": "LEADING",
+          "level": "project-structure",
+          "tokenPaths": [
+            "component.basic.button.size.md.height"
+          ]
+        },
+        {
+          "name": "CONTENT",
+          "level": "project-structure",
+          "tokenPaths": [
+            "component.basic.button.size.md.paddingInline"
+          ]
+        },
+        {
+          "name": "LABEL",
+          "level": "project-structure",
+          "tokenPaths": [
+            "component.basic.button.size.md.fontSize"
+          ]
+        },
+        {
+          "name": "TRAILING",
+          "level": "project-structure",
+          "tokenPaths": [
+            "component.basic.button.size.md.height"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "checkbox",
+      "class": "commonWidget::Z_CheckBox",
+      "header": "runtime/component/Z_CheckBox.h",
+      "implementation": "runtime/component/Z_CheckBox.cpp",
+      "style": "design-assets/styles/Z_CheckBox.qss.in",
+      "contract": "design-assets/tokens/checkbox-contract.json",
+      "referenceNode": "37:4667",
+      "referenceLevel": "upstream-component-library",
+      "parts": [
+        {
+          "name": "INDICATOR_FACE",
+          "level": "project-structure",
+          "tokenPaths": [
+            "component.basic.checkbox.sizes.sm.indicator",
+            "component.basic.checkbox.radius"
+          ]
+        },
+        {
+          "name": "GLYPH",
+          "level": "project-structure",
+          "tokenPaths": [
+            "component.basic.checkbox.state.selected.background"
+          ]
+        },
+        {
+          "name": "LABEL",
+          "level": "project-structure",
+          "tokenPaths": [
+            "component.basic.checkbox.sizes.sm.fontSize",
+            "component.basic.checkbox.sizes.sm.spacing"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "input",
+      "class": "commonWidget::Z_InputField",
+      "header": "runtime/component/Z_InputField.h",
+      "implementation": "runtime/component/Z_InputField.cpp",
+      "style": "design-assets/styles/Z_Field.qss.in",
+      "contract": "design-assets/tokens/forms-contract.json",
+      "referenceNode": "37:203",
+      "referenceLevel": "inspected-design-context",
+      "states": {
+        "Default": "empty + default",
+        "Filled": "nonempty value, independent of filled variant",
+        "Active": "focus",
+        "Disabled": "disabled",
+        "Error": "status=error"
+      },
+      "parts": [
+        {
+          "name": "LABEL",
+          "node": "35:1246",
+          "level": "inspected-design-context",
+          "tokenPaths": [
+            "base.stoken.typography.font-size.label.default"
+          ]
+        },
+        {
+          "name": "CONTROL",
+          "node": "35:1247",
+          "level": "inspected-design-context",
+          "tokenPaths": [
+            "component.basic.input.size.md.height",
+            "component.basic.input.radius",
+            "component.basic.input.state.default.background"
+          ]
+        },
+        {
+          "name": "PREFIX",
+          "node": "35:1643",
+          "level": "inspected-design-context",
+          "tokenPaths": [
+            "base.stoken.metric.visualization-size.xs",
+            "component.basic.input.state.default.text"
+          ]
+        },
+        {
+          "name": "EDITOR",
+          "node": "35:1248",
+          "level": "inspected-design-context",
+          "tokenPaths": [
+            "component.basic.input.size.md.fontSize",
+            "component.basic.input.state.default.placeholder"
+          ]
+        },
+        {
+          "name": "SUFFIX",
+          "node": "35:1662",
+          "level": "inspected-design-context",
+          "tokenPaths": [
+            "base.stoken.metric.visualization-size.xs"
+          ]
+        },
+        {
+          "name": "HINT",
+          "node": "35:1379",
+          "level": "inspected-design-context",
+          "tokenPaths": [
+            "base.stoken.typography.font-size.label.default-auxiliary",
+            "semantic.color.text.muted"
+          ]
+        },
+        {
+          "name": "CLEAR",
+          "level": "project-extension",
+          "tokenPaths": [
+            "semantic.dimension.control.height-xs"
+          ],
+          "componentRef": "button"
+        },
+        {
+          "name": "COUNT",
+          "level": "project-extension",
+          "tokenPaths": [
+            "base.stoken.typography.font-size.label.default-auxiliary"
+          ]
+        },
+        {
+          "name": "TEXTAREA",
+          "level": "project-extension",
+          "tokenPaths": [
+            "component.basic.input.size.md.fontSize",
+            "base.lineHeight.body-sm"
+          ]
+        },
+        {
+          "name": "PASSWORD_TOGGLE",
+          "level": "project-extension",
+          "tokenPaths": [
+            "semantic.dimension.control.height-xs"
+          ],
+          "componentRef": "button"
+        },
+        {
+          "name": "SEARCH_ACTION",
+          "level": "project-extension",
+          "tokenPaths": [
+            "semantic.dimension.control.height-xs"
+          ],
+          "componentRef": "button"
+        }
+      ]
+    },
+    {
+      "id": "select",
+      "class": "commonWidget::Z_Select",
+      "header": "runtime/component/Z_Select.h",
+      "implementation": "runtime/component/Z_Select.cpp",
+      "style": "design-assets/styles/Z_Select.qss.in",
+      "contract": "design-assets/tokens/forms-contract.json",
+      "referenceNode": null,
+      "referenceLevel": "project-extension-of-shared-input-contract",
+      "parts": [
+        {
+          "name": "LABEL",
+          "level": "shared-input-structure",
+          "tokenPaths": [
+            "base.stoken.typography.font-size.label.default"
+          ]
+        },
+        {
+          "name": "CONTROL",
+          "level": "shared-input-structure",
+          "tokenPaths": [
+            "component.basic.input.size.md.height",
+            "component.basic.input.radius"
+          ]
+        },
+        {
+          "name": "DISPLAY",
+          "level": "project-extension",
+          "tokenPaths": [
+            "component.basic.input.size.md.fontSize"
+          ]
+        },
+        {
+          "name": "CONTENT",
+          "level": "project-extension",
+          "tokenPaths": [
+            "semantic.dimension.control.interactive-size",
+            "base.space.4"
+          ]
+        },
+        {
+          "name": "PREFIX",
+          "level": "shared-input-structure",
+          "tokenPaths": [
+            "base.stoken.metric.visualization-size.xs"
+          ]
+        },
+        {
+          "name": "SUFFIX",
+          "level": "project-extension",
+          "tokenPaths": [
+            "semantic.dimension.control.height-xs"
+          ],
+          "componentRef": "button"
+        },
+        {
+          "name": "CLEAR",
+          "level": "project-extension",
+          "tokenPaths": [
+            "semantic.dimension.control.height-xs"
+          ],
+          "componentRef": "button"
+        },
+        {
+          "name": "POPUP",
+          "level": "project-extension",
+          "tokenPaths": [
+            "semantic.radius.control-md",
+            "base.space.4"
+          ]
+        },
+        {
+          "name": "SEARCH",
+          "level": "project-extension",
+          "tokenPaths": [
+            "semantic.dimension.control.interactive-size"
+          ]
+        },
+        {
+          "name": "LIST",
+          "level": "project-extension",
+          "tokenPaths": [
+            "semantic.dimension.control.height-md",
+            "semantic.color.action.primary-bg"
+          ]
+        },
+        {
+          "name": "EMPTY",
+          "level": "project-extension",
+          "tokenPaths": [
+            "semantic.dimension.control.height-md"
+          ]
+        }
+      ]
+    }
+  ],
+  "composition": {
+    "fieldAction": {
+      "adapter": "field::Action",
+      "base": "commonWidget::Z_PushButton",
+      "type": "Text",
+      "size": "XS",
+      "mode": "IconOnly",
+      "tokenOwner": "design-assets/tokens/button-contract.json",
+      "instances": [
+        "Input/CLEAR",
+        "Input/PASSWORD_TOGGLE",
+        "Input/SEARCH_ACTION",
+        "Select/CLEAR",
+        "Select/SUFFIX",
+        "Select/TAG_REMOVE"
+      ]
+    },
+    "selectCheckbox": {
+      "base": "commonWidget::Z_CheckBox",
+      "adapter": "RowDelegate",
+      "objectName": "CHECKBOX_ROW_RENDERER",
+      "instancesPerSelect": 1,
+      "modelState": "Qt::CheckStateRole",
+      "tokenOwner": "design-assets/tokens/checkbox-contract.json",
+      "cacheBudgetKiB": 16384,
+      "referenceLevel": "project-composition-of-existing-checkbox"
+    }
+  },
+  "parameterEvidence": "design-assets/DesignSystem/generated/stoken-mapping-report.json"
+}

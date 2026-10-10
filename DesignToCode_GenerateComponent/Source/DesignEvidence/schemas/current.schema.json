@@ -1,0 +1,40 @@
+{
+  "$id": "urn:componentlab:design-evidence:current:1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "canonicalIndex": {
+      "type": "string"
+    },
+    "canonicalIndexSha256": {
+      "pattern": "^[a-f0-9]{64}$",
+      "type": "string"
+    },
+    "captureId": {
+      "type": "string"
+    },
+    "packageId": {
+      "type": "string"
+    },
+    "schemaVersion": {
+      "const": 1
+    },
+    "sourceManifest": {
+      "type": "string"
+    },
+    "sourceManifestSha256": {
+      "pattern": "^[a-f0-9]{64}$",
+      "type": "string"
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "packageId",
+    "captureId",
+    "sourceManifest",
+    "sourceManifestSha256",
+    "canonicalIndex",
+    "canonicalIndexSha256"
+  ],
+  "type": "object"
+}

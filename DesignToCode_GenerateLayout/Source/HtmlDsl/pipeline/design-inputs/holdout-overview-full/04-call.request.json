@@ -1,0 +1,1 @@
+{"jsonrpc": "2.0", "method": "tools/call", "params": {"name": "get_node_dsl", "arguments": {"guid": "3:10569", "simplify": false, "isDetachInstance": false}}, "id": 4}

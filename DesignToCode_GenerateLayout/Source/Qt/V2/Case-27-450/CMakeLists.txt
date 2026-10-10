@@ -1,0 +1,20 @@
+# 复用 HTML + DSL 路线的编译器、组件工厂与 XML 加载器；本实验只新增单页展示与验证。
+cmake_minimum_required(VERSION 3.21)
+project(PixsoCase27450 LANGUAGES CXX)
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTORCC ON)
+# 本机 MSVC 输出中文 include 提示；显式识别前缀以便 Ninja 正确收集依赖。
+set(CMAKE_CL_SHOWINCLUDES_PREFIX "注意: 包含文件:")
+find_package(Qt5 5.15 REQUIRED COMPONENTS Core Gui Widgets Svg Test UiTools Xml)
+set(D2C_ROUTE_FOLDER "HtmlDsl" CACHE STRING "Source route" FORCE)
+add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/.." "${CMAKE_BINARY_DIR}/v2")
+get_filename_component(D2C_SOURCE "${CMAKE_CURRENT_SOURCE_DIR}/../../.." ABSOLUTE)
+add_executable(case_27_450 src/main.cpp src/CaseWindow.cpp src/CaseWindow.h)
+target_link_libraries(case_27_450 PRIVATE v2_runtime Qt5::Test)
+target_include_directories(case_27_450 PRIVATE src)
+# 本机 MSVC 的 UTF-8 与 Qt 兼容配置和既有程序一致。
+if(MSVC)
+  target_compile_options(case_27_450 PRIVATE /W4 /permissive- /utf-8)
+endif()

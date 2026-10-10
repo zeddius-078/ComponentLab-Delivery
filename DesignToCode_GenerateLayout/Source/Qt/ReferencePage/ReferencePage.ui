@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ui version="4.0">
+    <class>ReferencePage</class>
+    <widget class="QWidget" name="referencePage">
+        <property name="geometry">
+            <rect>
+                <x>0</x>
+                <y>0</y>
+                <width>640</width>
+                <height>360</height>
+            </rect>
+        </property>
+        <property name="windowTitle">
+            <string>批次参数</string>
+        </property>
+        <property name="autoFillBackground">
+            <bool>true</bool>
+        </property>
+        <layout class="QVBoxLayout" name="pageLayout">
+            <property name="spacing">
+                <number>8</number>
+            </property>
+            <property name="leftMargin">
+                <number>8</number>
+            </property>
+            <property name="topMargin">
+                <number>8</number>
+            </property>
+            <property name="rightMargin">
+                <number>8</number>
+            </property>
+            <property name="bottomMargin">
+                <number>8</number>
+            </property>
+            <item>
+                <widget class="QLabel" name="lotLabel">
+                    <property name="text">
+                        <string>批次编号</string>
+                    </property>
+                    <property name="buddy">
+                        <cstring>lotInput</cstring>
+                    </property>
+                </widget>
+            </item>
+            <item>
+                <widget class="designer_widgets::InputField" name="lotInput">
+                    <property name="sizePolicy">
+                        <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                        </sizepolicy>
+                    </property>
+                    <property name="value" stdset="0">
+                        <string>LOT-2026-0917</string>
+                    </property>
+                    <property name="placeholderText" stdset="0">
+                        <string>输入批次编号</string>
+                    </property>
+                    <property name="accessibleName">
+                        <string>批次编号</string>
+                    </property>
+                    <property name="focusPolicy">
+                        <enum>Qt::StrongFocus</enum>
+                    </property>
+                </widget>
+            </item>
+            <item>
+                <widget class="QLabel" name="chamberLabel">
+                    <property name="text">
+                        <string>目标腔体</string>
+                    </property>
+                    <property name="buddy">
+                        <cstring>chamberSelect</cstring>
+                    </property>
+                </widget>
+            </item>
+            <item>
+                <widget class="designer_widgets::Select" name="chamberSelect">
+                    <property name="sizePolicy">
+                        <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                        </sizepolicy>
+                    </property>
+                    <property name="accessibleName">
+                        <string>目标腔体</string>
+                    </property>
+                    <property name="focusPolicy">
+                        <enum>Qt::StrongFocus</enum>
+                    </property>
+                </widget>
+            </item>
+            <item>
+                <widget class="QLabel" name="chamberHint">
+                    <property name="text">
+                        <string>维护中的腔体不可选择</string>
+                    </property>
+                    <property name="wordWrap">
+                        <bool>true</bool>
+                    </property>
+                </widget>
+            </item>
+            <item>
+                <widget class="designer_widgets::CheckBox" name="qualityCheck">
+                    <property name="text">
+                        <string>启用质量检查</string>
+                    </property>
+                    <property name="checked">
+                        <bool>true</bool>
+                    </property>
+                </widget>
+            </item>
+            <item>
+                <layout class="QHBoxLayout" name="actionsLayout">
+                    <property name="spacing">
+                        <number>8</number>
+                    </property>
+                    <item>
+                        <widget class="commonWidget::Z_PushButton" name="submitButton">
+                            <property name="text">
+                                <string>确认操作</string>
+                            </property>
+                            <property name="enabled">
+                                <bool>true</bool>
+                            </property>
+                            <property name="trailingIconSource" stdset="0">
+                                <string>:/icons/arrow-right.svg</string>
+                            </property>
+                        </widget>
+                    </item>
+                    <item>
+                        <widget class="commonWidget::Z_PushButton" name="searchButton">
+                            <property name="text">
+                                <string />
+                            </property>
+                            <property name="enabled">
+                                <bool>true</bool>
+                            </property>
+                            <property name="accessibleName">
+                                <string>查询批次</string>
+                            </property>
+                            <property name="toolTip">
+                                <string>查询批次</string>
+                            </property>
+                            <property name="leadingIconSource" stdset="0">
+                                <string>:/icons/search.svg</string>
+                            </property>
+                        </widget>
+                    </item>
+                    <item>
+                        <spacer name="actionsSpacer">
+                            <property name="orientation">
+                                <enum>Qt::Horizontal</enum>
+                            </property>
+                            <property name="sizeType">
+                                <enum>QSizePolicy::Expanding</enum>
+                            </property>
+                            <property name="sizeHint">
+                                <size>
+                                    <width>0</width>
+                                    <height>0</height>
+                                </size>
+                            </property>
+                        </spacer>
+                    </item>
+                </layout>
+            </item>
+            <item>
+                <spacer name="bottomSpacer">
+                    <property name="orientation">
+                        <enum>Qt::Vertical</enum>
+                    </property>
+                    <property name="sizeType">
+                        <enum>QSizePolicy::Expanding</enum>
+                    </property>
+                    <property name="sizeHint">
+                        <size>
+                            <width>0</width>
+                            <height>0</height>
+                        </size>
+                    </property>
+                </spacer>
+            </item>
+        </layout>
+    </widget>
+    <customwidgets>
+        <customwidget>
+            <class>designer_widgets::InputField</class>
+            <extends>QWidget</extends>
+            <header>DesignerWidgets.h</header>
+        </customwidget>
+        <customwidget>
+            <class>designer_widgets::Select</class>
+            <extends>QWidget</extends>
+            <header>DesignerWidgets.h</header>
+        </customwidget>
+        <customwidget>
+            <class>designer_widgets::CheckBox</class>
+            <extends>QCheckBox</extends>
+            <header>DesignerWidgets.h</header>
+        </customwidget>
+        <customwidget>
+            <class>commonWidget::Z_PushButton</class>
+            <extends>QPushButton</extends>
+            <header>Z_PushButton.h</header>
+        </customwidget>
+    </customwidgets>
+    <tabstops>
+        <tabstop>lotInput</tabstop>
+        <tabstop>chamberSelect</tabstop>
+        <tabstop>qualityCheck</tabstop>
+        <tabstop>submitButton</tabstop>
+        <tabstop>searchButton</tabstop>
+    </tabstops>
+    <resources />
+    <connections />
+</ui>

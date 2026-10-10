@@ -1,0 +1,11 @@
+/* Z_StatusBar <- QStatusBar; compiled from the active Token profile. */
+*[designSystemClass="commonWidget::Z_StatusBar"] {
+    color: @FOREGROUND@;
+    background-color: @SURFACE@;
+    font-size: @FONT_SIZE@px;
+}
+*[designSystemClass="commonWidget::Z_StatusBar"]:disabled {
+    color: @DISABLED_TEXT@;
+    background-color: @DISABLED@;
+    border-color: @DISABLED_BORDER@;
+}

@@ -1,0 +1,199 @@
+{
+  "$id": "urn:componentlab:design-evidence:page-structure:1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "boundsSpace": {
+      "const": "parent-local"
+    },
+    "nodes": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "bounds": {
+            "type": "object"
+          },
+          "children": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "componentNodeRef": {
+            "type": "string"
+          },
+          "componentSetRef": {
+            "type": "string"
+          },
+          "layout": {
+            "type": "object"
+          },
+          "locator": {
+            "type": "string"
+          },
+          "mainComponent": {
+            "type": [
+              "object",
+              "null"
+            ]
+          },
+          "name": {
+            "type": "string"
+          },
+          "nodeId": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "parentLocator": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "text": {
+            "type": "object"
+          },
+          "type": {
+            "type": "string"
+          },
+          "variantProperties": {
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "value": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "name",
+                "value"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "visible": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "locator",
+          "nodeId",
+          "parentLocator",
+          "children",
+          "type"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "rootLocators": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "schemaVersion": {
+      "const": 1
+    },
+    "variantExamples": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "bounds": {
+            "type": "object"
+          },
+          "children": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "componentNodeRef": {
+            "type": "string"
+          },
+          "componentSetRef": {
+            "type": "string"
+          },
+          "layout": {
+            "type": "object"
+          },
+          "locator": {
+            "type": "string"
+          },
+          "mainComponent": {
+            "type": [
+              "object",
+              "null"
+            ]
+          },
+          "name": {
+            "type": "string"
+          },
+          "nodeId": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "parentLocator": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "text": {
+            "type": "object"
+          },
+          "type": {
+            "type": "string"
+          },
+          "variantProperties": {
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "value": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "name",
+                "value"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "visible": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "locator",
+          "nodeId",
+          "parentLocator",
+          "children",
+          "type"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "boundsSpace",
+    "rootLocators",
+    "nodes",
+    "variantExamples"
+  ],
+  "type": "object"
+}

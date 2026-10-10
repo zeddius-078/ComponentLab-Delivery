@@ -1,0 +1,11 @@
+{
+  "verifiedAtUtc": "2026-09-29T18:06:46.664809+00:00",
+  "scope": "SDK consumer build and display tests",
+  "exeSha256": "B713AD26B53F7C0137F40704423D49F2F563A66EAA17974D331C9745FFDCA223",
+  "inputDigest": "9ffd9bc5f7bf0683aaa4a7d32ffcc0edadbc29e81678f85f0dfc32b65ca803eb",
+  "ctestGroups": {
+    "total": 17,
+    "passed": 17,
+    "failed": 0
+  }
+}

@@ -1,0 +1,108 @@
+{
+  "$id": "urn:componentlab:design-evidence:design-identity:1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "componentSets": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "componentSetId": {
+            "type": "string"
+          },
+          "mappingKey": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "componentSetId",
+          "mappingKey"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "fileKey": {
+      "type": "string"
+    },
+    "instances": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "componentSetId": {
+            "type": "string"
+          },
+          "instanceNodeId": {
+            "type": "string"
+          },
+          "locator": {
+            "type": "string"
+          },
+          "nativeComponentKey": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "variantNodeId": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "instanceNodeId",
+          "componentSetId",
+          "variantNodeId",
+          "nativeComponentKey",
+          "locator"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "pageId": {
+      "type": "string"
+    },
+    "provider": {
+      "const": "pixso"
+    },
+    "schemaVersion": {
+      "const": 1
+    },
+    "variants": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "componentSetId": {
+            "type": "string"
+          },
+          "nativeComponentKey": {
+            "type": "string"
+          },
+          "variantNodeId": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "componentSetId",
+          "variantNodeId",
+          "nativeComponentKey"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "provider",
+    "fileKey",
+    "pageId",
+    "componentSets",
+    "variants",
+    "instances"
+  ],
+  "type": "object"
+}

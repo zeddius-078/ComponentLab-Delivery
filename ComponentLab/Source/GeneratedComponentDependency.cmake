@@ -1,0 +1,16 @@
+# ComponentLab displays the published component SDK; it does not build component sources.
+if(NOT GENERATED_COMPONENT_SDK_ROOT)
+    if(DEFINED ENV{GENERATED_COMPONENT_SDK_ROOT})
+        set(GENERATED_COMPONENT_SDK_ROOT "$ENV{GENERATED_COMPONENT_SDK_ROOT}")
+    else()
+        get_filename_component(_COMPONENT_LAB_ROOT "${CMAKE_CURRENT_LIST_DIR}/.." ABSOLUTE)
+        set(GENERATED_COMPONENT_SDK_ROOT "${_COMPONENT_LAB_ROOT}/build/sdk")
+    endif()
+endif()
+get_filename_component(GENERATED_COMPONENT_SDK_ROOT "${GENERATED_COMPONENT_SDK_ROOT}" ABSOLUTE)
+set(_GENERATED_COMPONENT_CONFIG "${GENERATED_COMPONENT_SDK_ROOT}/cmake/GeneratedComponentSDKConfig.cmake")
+if(NOT EXISTS "${_GENERATED_COMPONENT_CONFIG}")
+    message(FATAL_ERROR "GeneratedComponentSDK is missing. Run Source/Import-GeneratedComponentSDK.ps1 first.")
+endif()
+find_package(GeneratedComponentSDK 1.0 CONFIG REQUIRED
+    PATHS "${GENERATED_COMPONENT_SDK_ROOT}/cmake" NO_DEFAULT_PATH)

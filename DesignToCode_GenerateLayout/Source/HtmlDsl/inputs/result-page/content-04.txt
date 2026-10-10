@@ -1,0 +1,29 @@
+MANDATORY DEFAULT CODE REFINEMENT AFTER DESIGN_TO_CODE:
+After completing the required resource-handling and screenshot-context steps above, apply these mandatory default refinements to the saved generated code.
+This default refinement is part of completing design_to_code, not optional cleanup. Even if the user only asks to generate, save, or place Vue/React/HTML code in a project, you MUST perform this step before reporting completion.
+Do not treat requests like generate framework code, minimal changes, or preserve UI as permission to skip semantic markup, class naming, or syntax/code-quality cleanup. Make every safe no-visual-change refinement, and leave only the specific unsafe element unchanged when confidence is low.
+Use both the saved code and the required screenshot(s) to infer element roles. Preserve the rendered UI and behavior, not the generated tag names: do NOT change layout strategy, spacing, colors, typography, radii, shadows, visual hierarchy, assets, event behavior, or API behavior.
+Semantic tag replacement is expected when it keeps the same classes, styles, handlers, and rendered output.
+
+1. Semantic markup:
+   - Do not optimize for reducing the number of div elements; preserve the rendered Pixso layout. However, preserving layout does not mean preserving generated `div` tags. Change generated tags whenever the screenshot and code show a clear semantic role and the existing styles/handlers can be kept.
+   - Treat visible command text, CTA text, navigation items, page-level regions, and heading-like text as clear role signals. Do not skip the whole semantic pass because some elements are ambiguous; only leave the ambiguous element unchanged.
+   - Priority 1: interactive controls. Convert a generated container to `button` only when the screenshot and code show a clear control: CTA or command text, button-like visual styling, existing click/submit behavior, or an icon+label command. Use `type="button"` unless native submit/reset behavior is required. Preserve existing event handlers and do not invent navigation.
+   - Priority 2: text hierarchy. Use heading tags only for real page or content headings. If a headline is split into multiple generated text nodes for styling, create at most one heading wrapper only when the visual output can be preserved safely; otherwise keep the generated structure.
+   - Priority 3: page landmarks. Use `header`, `nav`, `main`, `footer`, or `section` only for clear high-level regions inferred from the screenshot. Do not convert layout-only frame/group/vector wrappers to semantic tags.
+   - Links and images: use `a` only when a real href or route is known; do not create `href="#"` placeholders. Keep CSS-background images and decorative vectors as containers unless the image is meaningful content and safe alt text is clear.
+   - Fallback applies per element only: when a specific element has unclear role or cannot be changed without broad layout rewrites, keep only that element unchanged and continue refining other clear elements.
+
+2. Class naming cleanup:
+   - Rename only machine-generated className/class values derived from layer or node numeric patterns when the element has a clear high-level role and every reference can be updated safely.
+   - Examples: `xxx-frame-1_1`, `xxx-frame-13_12`, `xxx-group-3_7`, where `xxx` represents the project-wide generated class prefix.
+   - Prefer semantic names for clear regions or controls, such as hero, primary-cta, site-nav, login-button, or feature-list, based on visible content and role inferred from the code and screenshot.
+   - Keep low-level layout, vector, background, clipping, mask, absolute-position helper, and generated component-scope classes unchanged when they are required for visual fidelity.
+   - Update all matching class references in HTML, CSS, JS, TS, Vue, and React consistently.
+   - If a class is manually meaningful, project-defined, globally shared, or cannot be safely renamed with all references updated, keep it unchanged.
+
+3. Syntax and code-quality cleanup:
+   - Remove unused imports, variables, functions, and non-documentation commented-out blocks.
+   - Fix invalid or fragile markup patterns, duplicate attributes, and clearly redundant rules only when computed styles remain unchanged.
+   - Prefer modern, idiomatic JS/TS syntax where it simplifies code without changing behavior.
+   - Do not extract shared components, change event handlers, change API calls, or change branch semantics as part of this default refinement.

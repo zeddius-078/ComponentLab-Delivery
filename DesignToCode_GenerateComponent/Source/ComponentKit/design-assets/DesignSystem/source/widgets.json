@@ -1,0 +1,1877 @@
+{
+  "$description": "Qt objectName to QSS mapping. Values can reference layered tokens with {base.*}, {semantic.*}, or {component.*}.",
+  "$requiredBlocks": {
+    "@button.primary": ["&", "&:hover", "&:pressed", "&:disabled"],
+    "@button.auth-primary": ["&", "&:hover", "&:pressed", "&:disabled"],
+    "@button.outline": ["&", "&:hover", "&:pressed", "&:disabled"],
+    "@button.ghost": ["&", "&:hover", "&:pressed", "&:disabled"],
+    "@button.danger": ["&", "&:hover", "&:pressed", "&:disabled"],
+    "@button.size.sm": ["&"],
+    "@button.size.md": ["&"],
+    "@button.size.lg": ["&"],
+    "@input.default": ["&", "&:hover", "&:focus", "&:disabled"],
+    "@input.error": ["&"],
+    "@checkbox": [
+      "&",
+      "&:disabled",
+      "&::indicator",
+      "&::indicator:unchecked",
+      "&::indicator:unchecked:hover",
+      "&::indicator:unchecked:pressed",
+      "&::indicator:unchecked:disabled",
+      "&::indicator:checked",
+      "&::indicator:checked:hover",
+      "&::indicator:checked:pressed",
+      "&::indicator:checked:disabled",
+      "&::indicator:indeterminate",
+      "&::indicator:indeterminate:hover",
+      "&::indicator:indeterminate:pressed",
+      "&::indicator:indeterminate:disabled",
+      "&:focus"
+    ],
+    "@checkbox.size.sm": ["&", "&::indicator"],
+    "@checkbox.size.lg": ["&", "&::indicator"],
+    "@radio": ["&", "&:disabled", "&::indicator", "&::indicator:checked"],
+    "@chip.horizontal": ["&", "&:checked"],
+    "@chip.vertical": ["&", "&:checked"],
+    "@chip.category": ["&", "&:hover", "&:checked"]
+  },
+  "SignInWindow": {
+    "QWidget": {
+      "background-color": "{semantic.color.background.brand}"
+    }
+  },
+  "SignUpWindow": {
+    "QWidget": {
+      "background-color": "{semantic.color.background.brand}"
+    }
+  },
+  "cardArea": {
+    "QWidget": {
+      "background-color": "{component.basic.card.background}",
+      "border-top-left-radius": "{semantic.radius.surface}px",
+      "border-top-right-radius": "{semantic.radius.surface}px"
+    }
+  },
+  "workflowWindow": {
+    "QWidget": {
+      "background-color": "{component.composite.appShell.background}"
+    }
+  },
+  "dashboardScreen": {
+    "QWidget": {
+      "background-color": "{component.composite.appShell.background}"
+    }
+  },
+  "ordersScreen": {
+    "QWidget": {
+      "background-color": "{component.composite.appShell.background}"
+    }
+  },
+  "workflowSidebar": {
+    "QFrame": {
+      "background-color": "{component.composite.sidebar.background}",
+      "border-radius": "{component.composite.sidebar.radius}px",
+      "border": "none"
+    }
+  },
+  "usernameFieldBg": {
+    "QWidget": {
+      "background": "{component.basic.input.background}",
+      "border": "{semantic.borderWidth.control}px solid {component.basic.input.border}",
+      "border-radius": "{component.basic.input.radius}px"
+    }
+  },
+  "phoneFieldBg": {
+    "QWidget": {
+      "background": "{component.basic.input.background}",
+      "border": "{semantic.borderWidth.control}px solid {component.basic.input.border}",
+      "border-radius": "{component.basic.input.radius}px"
+    }
+  },
+  "passwordFieldBg": {
+    "QWidget": {
+      "background": "{component.basic.input.background}",
+      "border": "{semantic.borderWidth.control}px solid {component.basic.input.border}",
+      "border-radius": "{component.basic.input.radius}px"
+    }
+  },
+  "currencyFieldBg": {
+    "QWidget": {
+      "background": "{component.basic.input.background}",
+      "border": "{semantic.borderWidth.control}px solid {component.basic.input.border}",
+      "border-radius": "{component.basic.input.radius}px"
+    }
+  },
+  "usernameInput": {
+    "QLineEdit": {
+      "border": "none",
+      "background": "{semantic.color.overlay.transparent}",
+      "color": "{component.basic.input.text}",
+      "font-family": "{base.fontFamily.app}",
+      "font-size": "{base.fontSize.body-sm}px",
+      "font-weight": "{base.fontWeight.medium}"
+    }
+  },
+  "phoneInput": {
+    "QLineEdit": {
+      "border": "none",
+      "background": "{semantic.color.overlay.transparent}",
+      "color": "{component.basic.input.text}",
+      "font-family": "{base.fontFamily.app}",
+      "font-size": "{base.fontSize.body-sm}px",
+      "font-weight": "{base.fontWeight.medium}"
+    }
+  },
+  "passwordInput": {
+    "QLineEdit": {
+      "border": "none",
+      "background": "{semantic.color.overlay.transparent}",
+      "color": "{component.basic.input.text}",
+      "font-family": "{base.fontFamily.app}",
+      "font-size": "{base.fontSize.body-sm}px",
+      "font-weight": "{base.fontWeight.medium}"
+    }
+  },
+  "countryCodeCombo": {
+    "QComboBox": {
+      "border": "none",
+      "background": "{semantic.color.overlay.transparent}",
+      "color": "{component.basic.input.text}",
+      "font-family": "{base.fontFamily.app}",
+      "font-size": "{base.fontSize.body-sm}px",
+      "font-weight": "{base.fontWeight.medium}",
+      "padding-right": "{base.space.4}px"
+    }
+  },
+  "currencyCombo": {
+    "QComboBox": {
+      "border": "none",
+      "background": "{semantic.color.overlay.transparent}",
+      "color": "{component.basic.input.text}",
+      "font-family": "{base.fontFamily.app}",
+      "font-size": "{base.fontSize.body-sm}px",
+      "font-weight": "{base.fontWeight.medium}"
+    }
+  },
+  "signUpButton": {
+    "QPushButton": {
+      "background-color": "{component.basic.button.primary.background}",
+      "color": "{component.basic.button.primary.text}",
+      "border-radius": "{component.basic.button.primary.radius}px",
+      "border": "none",
+      "font-family": "{base.fontFamily.app}",
+      "font-size": "{base.fontSize.body-md}px",
+      "font-weight": "{base.fontWeight.semibold}"
+    },
+    "QPushButton:hover": {
+      "background-color": "{component.basic.button.primary.backgroundHover}"
+    },
+    "QPushButton:pressed": {
+      "background-color": "{component.basic.button.primary.backgroundPressed}"
+    },
+    "QPushButton:disabled": {
+      "background-color": "{component.basic.button.primary.backgroundDisabled}",
+      "color": "{component.basic.button.primary.textDisabled}"
+    }
+  },
+  "designSystemShowcase": {
+    "QWidget": {
+      "background-color": "{component.composite.appShell.background}",
+      "color": "{semantic.color.text.primary}"
+    }
+  },
+  "showcaseScrollArea": {
+    "QScrollArea": {
+      "background": "{semantic.color.overlay.transparent}",
+      "border": "none"
+    }
+  },
+  "scrollAreaWidgetContents": {
+    "QWidget": {
+      "background-color": "{component.composite.appShell.background}",
+      "color": "{semantic.color.text.primary}"
+    }
+  },
+  "signInButton": {
+    "QPushButton": {
+      "background-color": "{component.basic.button.primary.background}",
+      "color": "{component.basic.button.primary.text}",
+      "border-radius": "{component.basic.button.primary.radius}px",
+      "border": "none",
+      "font-family": "{base.fontFamily.app}",
+      "font-size": "{base.fontSize.body-md}px",
+      "font-weight": "{base.fontWeight.semibold}"
+    },
+    "QPushButton:hover": {
+      "background-color": "{component.basic.button.primary.backgroundHover}"
+    },
+    "QPushButton:pressed": {
+      "background-color": "{component.basic.button.primary.backgroundPressed}"
+    },
+    "QPushButton:disabled": {
+      "background-color": "{component.basic.button.primary.backgroundDisabled}",
+      "color": "{component.basic.button.primary.textDisabled}"
+    }
+  },
+  "togglePasswordBtn": {
+    "QPushButton": {
+      "border": "none",
+      "background": "{semantic.color.overlay.transparent}",
+      "color": "{semantic.color.text.placeholder}",
+      "font-size": "{base.fontSize.caption}px"
+    }
+  },
+  "termsCheckbox": {
+    "QCheckBox::indicator": {
+      "width": "{base.dimension.icon-md}px",
+      "height": "{base.dimension.icon-md}px",
+      "border-radius": "{base.radius.sm}px",
+      "border": "{semantic.borderWidth.emphasis}px solid {semantic.color.action.primary}",
+      "background": "{semantic.color.background.surface}"
+    },
+    "QCheckBox::indicator:checked": {
+      "background": "{semantic.color.action.primary}"
+    }
+  },
+  "phoneDivider": {
+    "QWidget": {
+      "background-color": "{semantic.color.border.default}"
+    }
+  },
+  "welcomeTitle": {
+    "QLabel": {
+      "color": "{semantic.color.action.primary}",
+      "background": "{semantic.color.overlay.transparent}",
+      "font-family": "{base.fontFamily.app}",
+      "font-size": "{base.fontSize.title-2}px",
+      "font-weight": "{base.fontWeight.semibold}"
+    }
+  },
+  "welcomeTitleSignIn": {
+    "QLabel": {
+      "color": "{semantic.color.action.primary}",
+      "background": "{semantic.color.overlay.transparent}",
+      "font-family": "{base.fontFamily.app}",
+      "font-size": "{base.fontSize.title-2}px",
+      "font-weight": "{base.fontWeight.semibold}"
+    }
+  },
+  "subtitleLabel": {
+    "QLabel": {
+      "color": "{semantic.color.text.primary}",
+      "background": "{semantic.color.overlay.transparent}",
+      "font-family": "{base.fontFamily.app}",
+      "font-size": "{base.fontSize.caption}px",
+      "font-weight": "{base.fontWeight.medium}"
+    }
+  },
+  "headerTitle": {
+    "QLabel": {
+      "color": "{semantic.color.text.inverse}",
+      "background": "{semantic.color.overlay.transparent}",
+      "font-family": "{base.fontFamily.app}",
+      "font-size": "{base.fontSize.title-3}px",
+      "font-weight": "{base.fontWeight.semibold}"
+    }
+  },
+  "headerBackIcon": {
+    "QLabel": {
+      "color": "{semantic.color.text.inverse}",
+      "background": "{semantic.color.overlay.transparent}",
+      "font-family": "{base.fontFamily.app}",
+      "font-size": "{base.fontSize.body-lg}px",
+      "font-weight": "{base.fontWeight.semibold}"
+    }
+  },
+  "termsLabel": {
+    "QLabel": {
+      "color": "{semantic.color.text.primary}",
+      "background": "{semantic.color.overlay.transparent}",
+      "font-family": "{base.fontFamily.app}",
+      "font-size": "{base.fontSize.caption}px",
+      "font-weight": "{base.fontWeight.regular}"
+    }
+  },
+  "haveAccountLabel": {
+    "QLabel": {
+      "color": "{semantic.color.text.primary}",
+      "background": "{semantic.color.overlay.transparent}",
+      "font-family": "{base.fontFamily.app}",
+      "font-size": "{base.fontSize.caption}px",
+      "font-weight": "{base.fontWeight.regular}"
+    }
+  },
+  "signInLink": {
+    "QLabel": {
+      "color": "{semantic.color.action.primary}",
+      "background": "{semantic.color.overlay.transparent}",
+      "font-family": "{base.fontFamily.app}",
+      "font-size": "{base.fontSize.caption}px",
+      "font-weight": "{base.fontWeight.semibold}"
+    }
+  },
+  "RegisterScreenForm": {
+    "QWidget": {
+      "background-color": "{semantic.color.background.brand}"
+    }
+  },
+  "registerFormPanel": {
+    "QFrame": {
+      "background-color": "{semantic.color.background.surface}",
+      "border-radius": "{semantic.radius.surface}px",
+      "border": "none"
+    }
+  },
+  "registerMarketingPanel": {
+    "QWidget": {
+      "background-color": "{semantic.color.background.brand}"
+    }
+  },
+  "registerTitleLabel": {
+    "QLabel": {
+      "color": "{semantic.color.text.primary}",
+      "background": "{semantic.color.overlay.transparent}",
+      "font-family": "{base.fontFamily.app}",
+      "font-size": "{base.fontSize.title-1}px",
+      "font-weight": "{base.fontWeight.semibold}"
+    }
+  },
+  "registerSubtitleLabel": {
+    "QLabel": {
+      "color": "{semantic.color.text.muted}",
+      "background": "{semantic.color.overlay.transparent}",
+      "font-family": "{base.fontFamily.app}",
+      "font-size": "{base.fontSize.body-md}px",
+      "font-weight": "{base.fontWeight.regular}"
+    }
+  },
+  "registerEmailLabel": {
+    "QLabel": {
+      "color": "{semantic.color.text.primary}",
+      "background": "{semantic.color.overlay.transparent}",
+      "font-family": "{base.fontFamily.app}",
+      "font-size": "{base.fontSize.body-md}px",
+      "font-weight": "{base.fontWeight.medium}"
+    }
+  },
+  "registerEmailInput": {
+    "QLineEdit": {
+      "background": "{component.basic.input.background}",
+      "border": "{semantic.borderWidth.control}px solid {component.basic.input.border}",
+      "border-radius": "{component.basic.input.radius}px",
+      "color": "{component.basic.input.text}",
+      "font-family": "{base.fontFamily.app}",
+      "font-size": "{base.fontSize.body-sm}px",
+      "font-weight": "{base.fontWeight.medium}",
+      "padding-left": "{base.space.4}px"
+    },
+    "QLineEdit:focus": {
+      "border": "{semantic.borderWidth.control}px solid {component.basic.input.focusBorder}"
+    },
+    "QLineEdit[state=\"error\"]": {
+      "background": "{component.basic.input.state.error.background}",
+      "border": "{semantic.borderWidth.control}px solid {component.basic.input.state.error.border}",
+      "color": "{component.basic.input.state.error.text}"
+    },
+    "QLineEdit:disabled": {
+      "background": "{component.basic.input.state.disabled.background}",
+      "border": "{semantic.borderWidth.control}px solid {component.basic.input.state.disabled.border}",
+      "color": "{component.basic.input.state.disabled.text}"
+    }
+  },
+  "registerContinueButton": {
+    "QPushButton": {
+      "background-color": "{component.basic.button.primary.background}",
+      "color": "{component.basic.button.primary.text}",
+      "border-radius": "{component.basic.button.primary.radius}px",
+      "border": "none",
+      "font-family": "{base.fontFamily.app}",
+      "font-size": "{base.fontSize.body-md}px",
+      "font-weight": "{base.fontWeight.semibold}"
+    },
+    "QPushButton:hover": {
+      "background-color": "{component.basic.button.primary.backgroundHover}"
+    },
+    "QPushButton:pressed": {
+      "background-color": "{component.basic.button.primary.backgroundPressed}"
+    },
+    "QPushButton:disabled": {
+      "background-color": "{component.basic.button.primary.backgroundDisabled}",
+      "color": "{component.basic.button.primary.textDisabled}"
+    }
+  },
+  "registerGoogleButton": {
+    "QPushButton": {
+      "background-color": "{component.basic.button.secondary.background}",
+      "color": "{component.basic.button.secondary.text}",
+      "border": "{semantic.borderWidth.control}px solid {component.basic.button.secondary.border}",
+      "border-radius": "{component.basic.button.secondary.radius}px",
+      "font-family": "{base.fontFamily.app}",
+      "font-size": "{base.fontSize.body-md}px",
+      "font-weight": "{base.fontWeight.medium}"
+    }
+  },
+  "registerAppleButton": {
+    "QPushButton": {
+      "background-color": "{component.basic.button.secondary.background}",
+      "color": "{component.basic.button.secondary.text}",
+      "border": "{semantic.borderWidth.control}px solid {component.basic.button.secondary.border}",
+      "border-radius": "{component.basic.button.secondary.radius}px",
+      "font-family": "{base.fontFamily.app}",
+      "font-size": "{base.fontSize.body-md}px",
+      "font-weight": "{base.fontWeight.medium}"
+    }
+  },
+  "registerLoginButton": {
+    "QPushButton": {
+      "background": "{semantic.color.overlay.transparent}",
+      "border": "none",
+      "color": "{semantic.color.action.primary}",
+      "font-family": "{base.fontFamily.app}",
+      "font-size": "{base.fontSize.body-sm}px",
+      "font-weight": "{base.fontWeight.semibold}"
+    }
+  },
+  "registerSeparatorLeft": {
+    "QFrame": {
+      "background-color": "{semantic.color.border.subtle}",
+      "border": "none"
+    }
+  },
+  "registerSeparatorRight": {
+    "QFrame": {
+      "background-color": "{semantic.color.border.subtle}",
+      "border": "none"
+    }
+  },
+  "registerWithLabel": {
+    "QLabel": {
+      "color": "{semantic.color.text.muted}",
+      "background": "{semantic.color.overlay.transparent}",
+      "font-family": "{base.fontFamily.app}",
+      "font-size": "{base.fontSize.body-sm}px"
+    }
+  },
+  "registerHaveAccountLabel": {
+    "QLabel": {
+      "color": "{semantic.color.text.muted}",
+      "background": "{semantic.color.overlay.transparent}",
+      "font-family": "{base.fontFamily.app}",
+      "font-size": "{base.fontSize.body-sm}px"
+    }
+  },
+  "registerCopyrightLabel": {
+    "QLabel": {
+      "color": "{semantic.color.text.muted}",
+      "background": "{semantic.color.overlay.transparent}",
+      "font-family": "{base.fontFamily.app}",
+      "font-size": "{base.fontSize.caption}px"
+    }
+  },
+  "registerLogoPlaceholder": {
+    "QLabel": {
+      "background-color": "{semantic.color.background.surface}",
+      "color": "{semantic.color.action.primary}",
+      "border-radius": "{base.radius.md}px",
+      "font-family": "{base.fontFamily.app}",
+      "font-size": "{base.fontSize.title-3}px",
+      "font-weight": "{base.fontWeight.semibold}"
+    }
+  },
+  "registerBrandLabel": {
+    "QLabel": {
+      "color": "{semantic.color.text.inverse}",
+      "background": "{semantic.color.overlay.transparent}",
+      "font-family": "{base.fontFamily.app}",
+      "font-size": "{base.fontSize.title-2}px",
+      "font-weight": "{base.fontWeight.semibold}"
+    }
+  },
+  "registerRevenueSummaryPlaceholder": {
+    "QFrame": {
+      "background-color": "{component.basic.card.background}",
+      "border-radius": "{component.basic.card.radius}px",
+      "border": "none"
+    }
+  },
+  "registerRevenuePlaceholderTitle": {
+    "QLabel": {
+      "color": "{semantic.color.text.primary}",
+      "background": "{semantic.color.overlay.transparent}",
+      "font-family": "{base.fontFamily.app}",
+      "font-size": "{base.fontSize.title-3}px",
+      "font-weight": "{base.fontWeight.medium}"
+    }
+  },
+  "registerRevenuePlaceholderCopy": {
+    "QLabel": {
+      "color": "{semantic.color.text.muted}",
+      "background": "{semantic.color.overlay.transparent}",
+      "font-family": "{base.fontFamily.app}",
+      "font-size": "{base.fontSize.body-sm}px"
+    }
+  },
+  "registerMarketingHeadline": {
+    "QLabel": {
+      "color": "{semantic.color.text.inverse}",
+      "background": "{semantic.color.overlay.transparent}",
+      "font-family": "{base.fontFamily.app}",
+      "font-size": "{base.fontSize.title-1}px",
+      "font-weight": "{base.fontWeight.semibold}"
+    }
+  },
+  "registerMarketingCopy": {
+    "QLabel": {
+      "color": "{semantic.color.text.inverse}",
+      "background": "{semantic.color.overlay.transparent}",
+      "font-family": "{base.fontFamily.app}",
+      "font-size": "{base.fontSize.body-md}px"
+    }
+  },
+  "OnboardingScreenForm": {
+    "QWidget": {
+      "background-color": "{semantic.color.background.surface}"
+    }
+  },
+  "onboardingImageHeroPlaceholder": {
+    "QFrame": {
+      "background-color": "{semantic.color.background.brand}",
+      "border-radius": "{component.composite.imageHero.radius}px",
+      "border": "none"
+    }
+  },
+  "imageHeroQuoteLabel": {
+    "QLabel": {
+      "color": "{semantic.color.text.inverse}",
+      "background": "{semantic.color.overlay.transparent}",
+      "font-family": "{base.fontFamily.app}",
+      "font-size": "{base.fontSize.title-2}px",
+      "font-weight": "{base.fontWeight.semibold}"
+    }
+  },
+  "imageHeroAuthorLabel": {
+    "QLabel": {
+      "color": "{semantic.color.text.inverse}",
+      "background": "{semantic.color.overlay.transparent}",
+      "font-family": "{base.fontFamily.app}",
+      "font-size": "{base.fontSize.body-md}px"
+    }
+  },
+  "onboardingFormPanel": {
+    "QFrame": {
+      "background-color": "{semantic.color.background.surface}",
+      "border": "none"
+    }
+  },
+  "onboardingProgressBarActive": {
+    "QFrame": {
+      "background-color": "{semantic.color.action.primary}",
+      "border-radius": "{base.radius.sm}px",
+      "border": "none"
+    }
+  },
+  "onboardingProgressBarSecond": {
+    "QFrame": {
+      "background-color": "{semantic.color.border.subtle}",
+      "border-radius": "{base.radius.sm}px",
+      "border": "none"
+    }
+  },
+  "onboardingProgressBarThird": {
+    "QFrame": {
+      "background-color": "{semantic.color.border.subtle}",
+      "border-radius": "{base.radius.sm}px",
+      "border": "none"
+    }
+  },
+  "onboardingStepLabel": {
+    "QLabel": {
+      "color": "{semantic.color.text.muted}",
+      "background": "{semantic.color.overlay.transparent}",
+      "font-family": "{base.fontFamily.app}",
+      "font-size": "{base.fontSize.body-sm}px"
+    }
+  },
+  "onboardingTitleLabel": {
+    "QLabel": {
+      "color": "{semantic.color.text.primary}",
+      "background": "{semantic.color.overlay.transparent}",
+      "font-family": "{base.fontFamily.app}",
+      "font-size": "{base.fontSize.title-1}px",
+      "font-weight": "{base.fontWeight.semibold}"
+    }
+  },
+  "onboardingCopyLabel": {
+    "QLabel": {
+      "color": "{semantic.color.text.muted}",
+      "background": "{semantic.color.overlay.transparent}",
+      "font-family": "{base.fontFamily.app}",
+      "font-size": "{base.fontSize.body-md}px"
+    }
+  },
+  "onboardingQuestionLabel": {
+    "QLabel": {
+      "color": "{semantic.color.text.primary}",
+      "background": "{semantic.color.overlay.transparent}",
+      "font-family": "{base.fontFamily.app}",
+      "font-size": "{base.fontSize.body-md}px",
+      "font-weight": "{base.fontWeight.medium}"
+    }
+  },
+  "businessOptionFashion": {
+    "QFrame": {
+      "background-color": "{semantic.color.background.surface-muted}",
+      "border": "{semantic.borderWidth.control}px solid {semantic.color.action.primary}",
+      "border-radius": "{base.radius.lg}px"
+    }
+  },
+  "businessOptionElectronics": {
+    "QFrame": {
+      "background-color": "{semantic.color.background.surface}",
+      "border": "{semantic.borderWidth.control}px solid {semantic.color.border.subtle}",
+      "border-radius": "{base.radius.lg}px"
+    }
+  },
+  "businessOptionFurniture": {
+    "QFrame": {
+      "background-color": "{semantic.color.background.surface}",
+      "border": "{semantic.borderWidth.control}px solid {semantic.color.border.subtle}",
+      "border-radius": "{base.radius.lg}px"
+    }
+  },
+  "businessOptionFood": {
+    "QFrame": {
+      "background-color": "{semantic.color.background.surface}",
+      "border": "{semantic.borderWidth.control}px solid {semantic.color.border.subtle}",
+      "border-radius": "{base.radius.lg}px"
+    }
+  },
+  "businessOptionBeauty": {
+    "QFrame": {
+      "background-color": "{semantic.color.background.surface}",
+      "border": "{semantic.borderWidth.control}px solid {semantic.color.border.subtle}",
+      "border-radius": "{base.radius.lg}px"
+    }
+  },
+  "businessOptionOthers": {
+    "QFrame": {
+      "background-color": "{semantic.color.background.surface}",
+      "border": "{semantic.borderWidth.control}px solid {semantic.color.border.subtle}",
+      "border-radius": "{base.radius.lg}px"
+    }
+  },
+  "onboardingSkipButton": {
+    "QPushButton": {
+      "background-color": "{component.basic.button.secondary.background}",
+      "color": "{component.basic.button.secondary.text}",
+      "border": "{semantic.borderWidth.control}px solid {component.basic.button.secondary.border}",
+      "border-radius": "{component.basic.button.secondary.radius}px",
+      "font-family": "{base.fontFamily.app}",
+      "font-size": "{base.fontSize.body-md}px",
+      "font-weight": "{base.fontWeight.semibold}"
+    }
+  },
+  "onboardingNextButton": {
+    "QPushButton": {
+      "background-color": "{component.basic.button.primary.background}",
+      "color": "{component.basic.button.primary.text}",
+      "border-radius": "{component.basic.button.primary.radius}px",
+      "border": "none",
+      "font-family": "{base.fontFamily.app}",
+      "font-size": "{base.fontSize.body-md}px",
+      "font-weight": "{base.fontWeight.semibold}"
+    }
+  },
+  "DashboardScreenForm": {
+    "QWidget": {
+      "background-color": "{semantic.color.background.surface-muted}"
+    }
+  },
+  "dashboardLogoPlaceholder": {
+    "QLabel": {
+      "background-color": "{semantic.color.action.primary}",
+      "color": "{semantic.color.text.inverse}",
+      "border-radius": "{base.radius.md}px",
+      "font-family": "{base.fontFamily.app}",
+      "font-size": "{base.fontSize.title-3}px",
+      "font-weight": "{base.fontWeight.semibold}"
+    }
+  },
+  "dashboardBrandLabel": {
+    "QLabel": {
+      "color": "{semantic.color.text.primary}",
+      "background": "{semantic.color.overlay.transparent}",
+      "font-family": "{base.fontFamily.app}",
+      "font-size": "{base.fontSize.title-2}px",
+      "font-weight": "{base.fontWeight.semibold}"
+    }
+  },
+  "dashboardMenuLabel": {
+    "QLabel": {
+      "color": "{semantic.color.text.muted}",
+      "background": "{semantic.color.overlay.transparent}",
+      "font-family": "{base.fontFamily.app}",
+      "font-size": "{base.fontSize.body-sm}px"
+    }
+  },
+  "dashboardGeneralLabel": {
+    "QLabel": {
+      "color": "{semantic.color.text.muted}",
+      "background": "{semantic.color.overlay.transparent}",
+      "font-family": "{base.fontFamily.app}",
+      "font-size": "{base.fontSize.body-sm}px"
+    }
+  },
+  "sidebarDashboardButton": {
+    "QPushButton": {
+      "background-color": "{component.composite.sidebar.navItemActiveBg}",
+      "color": "{component.composite.sidebar.navItemActiveText}",
+      "border": "none",
+      "border-radius": "{component.composite.sidebar.navItemRadius}px",
+      "font-family": "{base.fontFamily.app}",
+      "font-size": "{base.fontSize.body-md}px",
+      "font-weight": "{base.fontWeight.medium}",
+      "text-align": "left",
+      "padding-left": "{base.space.20}px"
+    }
+  },
+  "sidebarOrdersButton": {
+    "QPushButton": {
+      "background": "{semantic.color.overlay.transparent}",
+      "color": "{component.composite.sidebar.navItemText}",
+      "border": "none",
+      "border-radius": "{component.composite.sidebar.navItemRadius}px",
+      "font-family": "{base.fontFamily.app}",
+      "font-size": "{base.fontSize.body-md}px",
+      "font-weight": "{base.fontWeight.medium}",
+      "text-align": "left",
+      "padding-left": "{base.space.20}px"
+    },
+    "QPushButton:hover": {
+      "background-color": "{component.composite.sidebar.navItemActiveBg}",
+      "color": "{component.composite.sidebar.navItemActiveText}"
+    }
+  },
+  "sidebarProductsButton": {
+    "QPushButton": {
+      "background": "{semantic.color.overlay.transparent}",
+      "color": "{component.composite.sidebar.navItemText}",
+      "border": "none",
+      "border-radius": "{component.composite.sidebar.navItemRadius}px",
+      "font-family": "{base.fontFamily.app}",
+      "font-size": "{base.fontSize.body-md}px",
+      "font-weight": "{base.fontWeight.medium}",
+      "text-align": "left",
+      "padding-left": "{base.space.20}px"
+    }
+  },
+  "sidebarChatsButton": {
+    "QPushButton": {
+      "background": "{semantic.color.overlay.transparent}",
+      "color": "{component.composite.sidebar.navItemText}",
+      "border": "none",
+      "border-radius": "{component.composite.sidebar.navItemRadius}px",
+      "font-family": "{base.fontFamily.app}",
+      "font-size": "{base.fontSize.body-md}px",
+      "font-weight": "{base.fontWeight.medium}",
+      "text-align": "left",
+      "padding-left": "{base.space.20}px"
+    }
+  },
+  "sidebarSettingsButton": {
+    "QPushButton": {
+      "background": "{semantic.color.overlay.transparent}",
+      "color": "{component.composite.sidebar.navItemText}",
+      "border": "none",
+      "border-radius": "{component.composite.sidebar.navItemRadius}px",
+      "font-family": "{base.fontFamily.app}",
+      "font-size": "{base.fontSize.body-md}px",
+      "font-weight": "{base.fontWeight.medium}",
+      "text-align": "left",
+      "padding-left": "{base.space.20}px"
+    }
+  },
+  "sidebarIntegrationButton": {
+    "QPushButton": {
+      "background": "{semantic.color.overlay.transparent}",
+      "color": "{component.composite.sidebar.navItemText}",
+      "border": "none",
+      "border-radius": "{component.composite.sidebar.navItemRadius}px",
+      "font-family": "{base.fontFamily.app}",
+      "font-size": "{base.fontSize.body-md}px",
+      "font-weight": "{base.fontWeight.medium}",
+      "text-align": "left",
+      "padding-left": "{base.space.20}px"
+    }
+  },
+  "sidebarHelpButton": {
+    "QPushButton": {
+      "background": "{semantic.color.overlay.transparent}",
+      "color": "{component.composite.sidebar.navItemText}",
+      "border": "none",
+      "border-radius": "{component.composite.sidebar.navItemRadius}px",
+      "font-family": "{base.fontFamily.app}",
+      "font-size": "{base.fontSize.body-md}px",
+      "font-weight": "{base.fontWeight.medium}",
+      "text-align": "left",
+      "padding-left": "{base.space.20}px"
+    }
+  },
+  "sidebarUpgradePanel": {
+    "QFrame": {
+      "background-color": "{semantic.color.background.surface-muted}",
+      "border-radius": "{component.basic.button.primary.radius}px",
+      "border": "none"
+    }
+  },
+  "sidebarUpgradeTitle": {
+    "QLabel": {
+      "color": "{semantic.color.text.primary}",
+      "background": "{semantic.color.overlay.transparent}",
+      "font-family": "{base.fontFamily.app}",
+      "font-size": "{base.fontSize.body-md}px",
+      "font-weight": "{base.fontWeight.semibold}"
+    }
+  },
+  "sidebarUpgradeCopy": {
+    "QLabel": {
+      "color": "{semantic.color.text.muted}",
+      "background": "{semantic.color.overlay.transparent}",
+      "font-family": "{base.fontFamily.app}",
+      "font-size": "{base.fontSize.body-sm}px"
+    }
+  },
+  "sidebarUpgradeButton": {
+    "QPushButton": {
+      "background-color": "{component.basic.button.primary.background}",
+      "color": "{component.basic.button.primary.text}",
+      "border-radius": "{component.basic.button.primary.radius}px",
+      "border": "none",
+      "font-family": "{base.fontFamily.app}",
+      "font-size": "{base.fontSize.body-md}px",
+      "font-weight": "{base.fontWeight.semibold}"
+    }
+  },
+  "dashboardWelcomeLabel": {
+    "QLabel": {
+      "color": "{semantic.color.text.primary}",
+      "background": "{semantic.color.overlay.transparent}",
+      "font-family": "{base.fontFamily.app}",
+      "font-size": "{base.fontSize.subheading-lg}px",
+      "font-weight": "{base.fontWeight.semibold}"
+    }
+  },
+  "dashboardOverviewLabel": {
+    "QLabel": {
+      "color": "{semantic.color.text.muted}",
+      "background": "{semantic.color.overlay.transparent}",
+      "font-family": "{base.fontFamily.app}",
+      "font-size": "{base.fontSize.body-sm}px"
+    }
+  },
+  "dashboardSearchInput": {
+    "QLineEdit": {
+      "background": "{component.basic.input.background}",
+      "border": "{semantic.borderWidth.control}px solid {component.basic.input.border}",
+      "border-radius": "{component.basic.input.radius}px",
+      "color": "{component.basic.input.text}",
+      "font-family": "{base.fontFamily.app}",
+      "font-size": "{base.fontSize.body-sm}px",
+      "padding-left": "{base.space.4}px"
+    }
+  },
+  "dashboardFilterButton": {
+    "QPushButton": {
+      "background-color": "{component.basic.button.secondary.background}",
+      "color": "{component.basic.button.secondary.text}",
+      "border": "{semantic.borderWidth.control}px solid {component.basic.button.secondary.border}",
+      "border-radius": "{component.basic.button.secondary.radius}px",
+      "font-family": "{base.fontFamily.app}",
+      "font-size": "{base.fontSize.body-md}px",
+      "font-weight": "{base.fontWeight.medium}"
+    }
+  },
+  "dashboardAdjustWidgetButton": {
+    "QPushButton": {
+      "background-color": "{component.basic.button.primary.background}",
+      "color": "{component.basic.button.primary.text}",
+      "border-radius": "{component.basic.button.primary.radius}px",
+      "border": "none",
+      "font-family": "{base.fontFamily.app}",
+      "font-size": "{base.fontSize.body-md}px",
+      "font-weight": "{base.fontWeight.semibold}"
+    }
+  },
+  "metricCardTotalSales": {
+    "QFrame": {
+      "background-color": "{component.composite.metricCard.background}",
+      "border-radius": "{component.composite.metricCard.radius}px",
+      "border": "none",
+      "min-height": "{component.composite.metricCard.minHeight}px"
+    }
+  },
+  "metricCardTotalCustomers": {
+    "QFrame": {
+      "background-color": "{component.composite.metricCard.background}",
+      "border-radius": "{component.composite.metricCard.radius}px",
+      "border": "none",
+      "min-height": "{component.composite.metricCard.minHeight}px"
+    }
+  },
+  "metricCardTotalRevenue": {
+    "QFrame": {
+      "background-color": "{component.composite.metricCard.background}",
+      "border-radius": "{component.composite.metricCard.radius}px",
+      "border": "none",
+      "min-height": "{component.composite.metricCard.minHeight}px"
+    }
+  },
+  "metricCardTotalProducts": {
+    "QFrame": {
+      "background-color": "{component.composite.metricCard.background}",
+      "border-radius": "{component.composite.metricCard.radius}px",
+      "border": "none",
+      "min-height": "{component.composite.metricCard.minHeight}px"
+    }
+  },
+  "salesOverviewPlaceholder": {
+    "QFrame": {
+      "background-color": "{component.basic.card.background}",
+      "border-radius": "{component.basic.card.radius}px",
+      "border": "none"
+    }
+  },
+  "revenueSummaryPlaceholder": {
+    "QFrame": {
+      "background-color": "{component.basic.card.background}",
+      "border-radius": "{component.basic.card.radius}px",
+      "border": "none"
+    }
+  },
+  "recentSalesPanel": {
+    "QFrame": {
+      "background-color": "{component.basic.card.background}",
+      "border-radius": "{component.basic.card.radius}px",
+      "border": "none"
+    }
+  },
+  "recentSalesTable": {
+    "QTableWidget": {
+      "background-color": "{semantic.color.background.surface}",
+      "color": "{component.composite.table.text}",
+      "gridline-color": "{component.composite.table.rowBorder}",
+      "border": "none",
+      "font-family": "{base.fontFamily.app}",
+      "font-size": "{base.fontSize.body-sm}px"
+    }
+  },
+  "metricSalesTitle": {
+    "QLabel": {
+      "color": "{semantic.color.text.primary}",
+      "background": "{semantic.color.overlay.transparent}",
+      "font-family": "{base.fontFamily.app}",
+      "font-size": "{base.fontSize.body-sm}px",
+      "font-weight": "{base.fontWeight.medium}"
+    }
+  },
+  "metricCustomersTitle": {
+    "QLabel": {
+      "color": "{semantic.color.text.primary}",
+      "background": "{semantic.color.overlay.transparent}",
+      "font-family": "{base.fontFamily.app}",
+      "font-size": "{base.fontSize.body-sm}px",
+      "font-weight": "{base.fontWeight.medium}"
+    }
+  },
+  "metricRevenueTitle": {
+    "QLabel": {
+      "color": "{semantic.color.text.primary}",
+      "background": "{semantic.color.overlay.transparent}",
+      "font-family": "{base.fontFamily.app}",
+      "font-size": "{base.fontSize.body-sm}px",
+      "font-weight": "{base.fontWeight.medium}"
+    }
+  },
+  "metricProductsTitle": {
+    "QLabel": {
+      "color": "{semantic.color.text.primary}",
+      "background": "{semantic.color.overlay.transparent}",
+      "font-family": "{base.fontFamily.app}",
+      "font-size": "{base.fontSize.body-sm}px",
+      "font-weight": "{base.fontWeight.medium}"
+    }
+  },
+  "metricSalesValue": {
+    "QLabel": {
+      "color": "{semantic.color.text.primary}",
+      "background": "{semantic.color.overlay.transparent}",
+      "font-family": "{base.fontFamily.app}",
+      "font-size": "{base.fontSize.heading-md}px",
+      "font-weight": "{base.fontWeight.semibold}"
+    }
+  },
+  "metricCustomersValue": {
+    "QLabel": {
+      "color": "{semantic.color.text.primary}",
+      "background": "{semantic.color.overlay.transparent}",
+      "font-family": "{base.fontFamily.app}",
+      "font-size": "{base.fontSize.heading-md}px",
+      "font-weight": "{base.fontWeight.semibold}"
+    }
+  },
+  "metricRevenueValue": {
+    "QLabel": {
+      "color": "{semantic.color.text.primary}",
+      "background": "{semantic.color.overlay.transparent}",
+      "font-family": "{base.fontFamily.app}",
+      "font-size": "{base.fontSize.heading-md}px",
+      "font-weight": "{base.fontWeight.semibold}"
+    }
+  },
+  "metricProductsValue": {
+    "QLabel": {
+      "color": "{semantic.color.text.primary}",
+      "background": "{semantic.color.overlay.transparent}",
+      "font-family": "{base.fontFamily.app}",
+      "font-size": "{base.fontSize.heading-md}px",
+      "font-weight": "{base.fontWeight.semibold}"
+    }
+  },
+  "metricSalesMeta": {
+    "QLabel": {
+      "color": "{semantic.color.text.muted}",
+      "background": "{semantic.color.overlay.transparent}",
+      "font-family": "{base.fontFamily.app}",
+      "font-size": "{base.fontSize.caption}px"
+    }
+  },
+  "metricCustomersMeta": {
+    "QLabel": {
+      "color": "{semantic.color.text.muted}",
+      "background": "{semantic.color.overlay.transparent}",
+      "font-family": "{base.fontFamily.app}",
+      "font-size": "{base.fontSize.caption}px"
+    }
+  },
+  "metricRevenueMeta": {
+    "QLabel": {
+      "color": "{semantic.color.text.muted}",
+      "background": "{semantic.color.overlay.transparent}",
+      "font-family": "{base.fontFamily.app}",
+      "font-size": "{base.fontSize.caption}px"
+    }
+  },
+  "metricProductsMeta": {
+    "QLabel": {
+      "color": "{semantic.color.text.muted}",
+      "background": "{semantic.color.overlay.transparent}",
+      "font-family": "{base.fontFamily.app}",
+      "font-size": "{base.fontSize.caption}px"
+    }
+  },
+  "salesOverviewTitle": {
+    "QLabel": {
+      "color": "{semantic.color.text.primary}",
+      "background": "{semantic.color.overlay.transparent}",
+      "font-family": "{base.fontFamily.app}",
+      "font-size": "{base.fontSize.title-3}px",
+      "font-weight": "{base.fontWeight.medium}"
+    }
+  },
+  "salesOverviewGaugePlaceholder": {
+    "QLabel": {
+      "color": "{semantic.color.action.primary}",
+      "background": "{semantic.color.overlay.transparent}",
+      "font-family": "{base.fontFamily.app}",
+      "font-size": "{base.fontSize.heading-md}px",
+      "font-weight": "{base.fontWeight.semibold}"
+    }
+  },
+  "salesOverviewCopy": {
+    "QLabel": {
+      "color": "{semantic.color.text.muted}",
+      "background": "{semantic.color.overlay.transparent}",
+      "font-family": "{base.fontFamily.app}",
+      "font-size": "{base.fontSize.body-sm}px"
+    }
+  },
+  "revenueSummaryTitle": {
+    "QLabel": {
+      "color": "{semantic.color.text.primary}",
+      "background": "{semantic.color.overlay.transparent}",
+      "font-family": "{base.fontFamily.app}",
+      "font-size": "{base.fontSize.title-3}px",
+      "font-weight": "{base.fontWeight.medium}"
+    }
+  },
+  "revenueSummaryAmount": {
+    "QLabel": {
+      "color": "{semantic.color.text.primary}",
+      "background": "{semantic.color.overlay.transparent}",
+      "font-family": "{base.fontFamily.app}",
+      "font-size": "{base.fontSize.title-1}px",
+      "font-weight": "{base.fontWeight.semibold}"
+    }
+  },
+  "revenueChartPlaceholder": {
+    "QLabel": {
+      "color": "{semantic.color.text.muted}",
+      "background": "{semantic.color.overlay.transparent}",
+      "font-family": "{base.fontFamily.app}",
+      "font-size": "{base.fontSize.body-sm}px"
+    }
+  },
+  "recentSalesTitle": {
+    "QLabel": {
+      "color": "{semantic.color.text.primary}",
+      "background": "{semantic.color.overlay.transparent}",
+      "font-family": "{base.fontFamily.app}",
+      "font-size": "{base.fontSize.title-3}px",
+      "font-weight": "{base.fontWeight.medium}"
+    }
+  },
+  "recentSalesCategoriesButton": {
+    "QPushButton": {
+      "background-color": "{component.basic.button.secondary.background}",
+      "color": "{component.basic.button.secondary.text}",
+      "border": "{semantic.borderWidth.control}px solid {component.basic.button.secondary.border}",
+      "border-radius": "{base.radius.md}px",
+      "font-family": "{base.fontFamily.app}",
+      "font-size": "{base.fontSize.body-sm}px"
+    }
+  },
+  "recentSalesFilterButton": {
+    "QPushButton": {
+      "background-color": "{component.basic.button.secondary.background}",
+      "color": "{component.basic.button.secondary.text}",
+      "border": "{semantic.borderWidth.control}px solid {component.basic.button.secondary.border}",
+      "border-radius": "{base.radius.md}px",
+      "font-family": "{base.fontFamily.app}",
+      "font-size": "{base.fontSize.body-sm}px"
+    }
+  },
+  "@button.primary": {
+    "$selector": "QPushButton[dsVariant=\"primary\"]",
+    "&": {
+      "min-height": "{component.basic.button.primary.height}px",
+      "background-color": "{component.basic.button.primary.background}",
+      "color": "{component.basic.button.primary.text}",
+      "border": "none",
+      "border-radius": "{component.basic.button.primary.radius}px",
+      "padding": "0 {component.basic.button.size.lg.paddingInline}px",
+      "font-size": "{component.basic.button.size.lg.fontSize}px",
+      "font-weight": "{base.fontWeight.medium}"
+    },
+    "&:hover": {"background-color": "{component.basic.button.primary.backgroundHover}"},
+    "&:pressed": {"background-color": "{component.basic.button.primary.backgroundPressed}"},
+    "&:disabled": {
+      "background-color": "{component.basic.button.primary.backgroundDisabled}",
+      "color": "{component.basic.button.primary.textDisabled}"
+    }
+  },
+  "@button.auth-primary": {
+    "$selector": "QPushButton[dsVariant=\"auth-primary\"]",
+    "&": {
+      "min-height": "{component.composite.authFlow.controlHeight}px",
+      "background-color": "{semantic.color.action.accent}",
+      "color": "{base.color.brand.deep-forest.900}",
+      "border": "none",
+      "border-radius": "{component.composite.authFlow.controlRadius}px",
+      "padding": "0 {base.space.24}px",
+      "font-size": "{base.fontSize.scale-300}px",
+      "font-weight": "{base.fontWeight.medium}"
+    },
+    "&:hover": {"background-color": "{base.color.brand.mint-glow.400}"},
+    "&:pressed": {"background-color": "{base.color.brand.mint-glow.600}"},
+    "&:disabled": {
+      "background-color": "{semantic.color.background.disabled}",
+      "color": "{semantic.color.text.disabled}"
+    }
+  },
+  "@button.outline": {
+    "$selector": "QPushButton[dsVariant=\"outline\"]",
+    "&": {
+      "min-height": "{component.basic.button.secondary.height}px",
+      "background-color": "{component.basic.button.secondary.background}",
+      "color": "{component.basic.button.secondary.text}",
+      "border": "{semantic.borderWidth.control}px solid {component.basic.button.secondary.border}",
+      "border-radius": "{component.basic.button.secondary.radius}px",
+      "padding": "0 {component.basic.button.size.lg.paddingInline}px",
+      "font-size": "{component.basic.button.size.lg.fontSize}px",
+      "font-weight": "{base.fontWeight.medium}"
+    },
+    "&:hover": {
+      "background-color": "{component.basic.button.secondary.backgroundHover}",
+      "border-color": "{component.basic.button.secondary.borderHover}",
+      "color": "{component.basic.button.secondary.textHover}"
+    },
+    "&:pressed": {
+      "background-color": "{component.basic.button.secondary.backgroundPressed}",
+      "border-color": "{component.basic.button.secondary.borderPressed}",
+      "color": "{component.basic.button.secondary.textPressed}"
+    },
+    "&:disabled": {
+      "background-color": "{component.basic.button.secondary.backgroundDisabled}",
+      "border-color": "{component.basic.button.secondary.borderDisabled}",
+      "color": "{component.basic.button.secondary.textDisabled}"
+    }
+  },
+  "@button.ghost": {
+    "$selector": "QPushButton[dsVariant=\"ghost\"]",
+    "&": {
+      "min-height": "{component.basic.button.secondary.height}px",
+      "background-color": "{semantic.color.overlay.transparent}",
+      "color": "{component.basic.button.secondary.text}",
+      "border": "none",
+      "border-radius": "{component.basic.button.secondary.radius}px",
+      "padding": "0 {component.basic.button.size.lg.paddingInline}px",
+      "font-size": "{component.basic.button.size.lg.fontSize}px"
+    },
+    "&:hover": {
+      "background-color": "{semantic.color.background.interactive-hover}",
+      "color": "{component.basic.button.secondary.textHover}"
+    },
+    "&:pressed": {"background-color": "{semantic.color.background.interactive-active}"},
+    "&:disabled": {"color": "{component.basic.button.secondary.textDisabled}"}
+  },
+  "@button.danger": {
+    "$selector": "QPushButton[dsVariant=\"danger\"]",
+    "&": {
+      "min-height": "{component.basic.button.primary.height}px",
+      "background-color": "{component.basic.button.danger.background}",
+      "color": "{component.basic.button.danger.text}",
+      "border": "{semantic.borderWidth.control}px solid {component.basic.button.danger.border}",
+      "border-radius": "{component.basic.button.danger.radius}px",
+      "padding": "0 {component.basic.button.size.lg.paddingInline}px",
+      "font-size": "{component.basic.button.size.lg.fontSize}px",
+      "font-weight": "{base.fontWeight.medium}"
+    },
+    "&:hover": {
+      "background-color": "{component.basic.button.danger.backgroundHover}",
+      "border-color": "{component.basic.button.danger.backgroundHover}"
+    },
+    "&:pressed": {
+      "background-color": "{component.basic.button.danger.backgroundPressed}",
+      "border-color": "{component.basic.button.danger.backgroundPressed}"
+    },
+    "&:disabled": {
+      "background-color": "{component.basic.button.danger.backgroundDisabled}",
+      "border-color": "{semantic.color.border.subtle}",
+      "color": "{component.basic.button.danger.textDisabled}"
+    }
+  },
+  "@button.size.sm": {
+    "$selector": "QPushButton[dsSize=\"sm\"]",
+    "&": {
+      "min-height": "{component.basic.button.size.sm.height}px",
+      "padding": "0 {component.basic.button.size.sm.paddingInline}px",
+      "font-size": "{component.basic.button.size.sm.fontSize}px"
+    }
+  },
+  "@button.size.md": {
+    "$selector": "QPushButton[dsSize=\"md\"]",
+    "&": {
+      "min-height": "{component.basic.button.size.md.height}px",
+      "padding": "0 {component.basic.button.size.md.paddingInline}px",
+      "font-size": "{component.basic.button.size.md.fontSize}px"
+    }
+  },
+  "@button.size.lg": {
+    "$selector": "QPushButton[dsSize=\"lg\"]",
+    "&": {
+      "min-height": "{component.basic.button.size.lg.height}px",
+      "padding": "0 {component.basic.button.size.lg.paddingInline}px",
+      "font-size": "{component.basic.button.size.lg.fontSize}px"
+    }
+  },
+  "@button.link": {
+    "$selector": "QPushButton[dsVariant=\"link\"]",
+    "&": {
+      "background": "{semantic.color.overlay.transparent}",
+      "color": "{semantic.color.text.primary}",
+      "border": "none",
+      "padding": "{base.space.0}px",
+      "min-height": "{semantic.dimension.control.interactive-size}px",
+      "font-size": "{base.fontSize.scale-200}px",
+      "font-weight": "{base.fontWeight.medium}"
+    },
+    "&:hover": {"color": "{semantic.color.action.primary}"}
+  },
+  "@input.default": {
+    "$selector": "QLineEdit[dsRole=\"input\"]",
+    "&": {
+      "min-height": "{component.basic.input.size.lg.height}px",
+      "background-color": "{component.basic.input.state.default.background}",
+      "color": "{component.basic.input.state.default.text}",
+      "border": "{semantic.borderWidth.control}px solid {component.basic.input.state.default.border}",
+      "border-radius": "{component.basic.input.radius}px",
+      "padding": "0 {component.basic.input.size.lg.paddingInline}px",
+      "font-size": "{component.basic.input.size.lg.fontSize}px"
+    },
+    "&:hover": {"border-color": "{component.basic.input.state.hover.border}"},
+    "&:focus": {"border-color": "{component.basic.input.state.focus.border}"},
+    "&:disabled": {
+      "background-color": "{component.basic.input.state.disabled.background}",
+      "border-color": "{component.basic.input.state.disabled.border}",
+      "color": "{component.basic.input.state.disabled.text}"
+    }
+  },
+  "@input.error": {
+    "$selector": "QLineEdit[dsState=\"error\"]",
+    "&": {
+      "background-color": "{component.basic.input.state.error.background}",
+      "border-color": "{component.basic.input.state.error.border}",
+      "color": "{component.basic.input.state.error.text}"
+    }
+  },
+  "@checkbox": {
+    "$selector": "QCheckBox[dsRole=\"checkbox\"]",
+    "&": {
+      "color": "{component.basic.checkbox.text}",
+      "spacing": "{base.space.8}px",
+      "font-size": "{base.fontSize.body-md}px",
+      "min-height": "{semantic.dimension.control.interactive-size}px",
+      "border": "{component.basic.checkbox.focus.borderWidth}px solid {semantic.color.overlay.transparent}",
+      "border-radius": "{component.basic.checkbox.radius}px"
+    },
+    "&:disabled": {"color": "{component.basic.checkbox.disabledText}"},
+    "&::indicator": {
+      "width": "{component.basic.checkbox.sizes.sm.qssContentSize}px",
+      "height": "{component.basic.checkbox.sizes.sm.qssContentSize}px",
+      "border": "{component.basic.checkbox.borderWidth}px solid {component.basic.checkbox.border}",
+      "border-radius": "{component.basic.checkbox.radius}px",
+      "background-color": "{component.basic.checkbox.background}"
+    },
+    "&::indicator:unchecked": {
+      "background-color": "{component.basic.checkbox.state.unchecked.background}",
+      "border-color": "{component.basic.checkbox.state.unchecked.border}"
+    },
+    "&::indicator:unchecked:hover": {
+      "background-color": "{component.basic.checkbox.state.unchecked.hoverBackground}",
+      "border-color": "{component.basic.checkbox.state.unchecked.hoverBorder}"
+    },
+    "&::indicator:unchecked:pressed": {
+      "background-color": "{component.basic.checkbox.state.unchecked.pressedBackground}",
+      "border-color": "{component.basic.checkbox.state.unchecked.pressedBorder}"
+    },
+    "&::indicator:unchecked:disabled": {
+      "background-color": "{component.basic.checkbox.state.unchecked.disabledBackground}",
+      "border-color": "{component.basic.checkbox.state.unchecked.disabledBorder}"
+    },
+    "&::indicator:checked": {
+      "background-color": "{component.basic.checkbox.state.selected.background}",
+      "border-color": "{component.basic.checkbox.state.selected.border}",
+      "image": "url({component.basic.checkbox.glyph.checked})"
+    },
+    "&::indicator:checked:hover": {
+      "background-color": "{component.basic.checkbox.state.selected.hoverBackground}",
+      "border-color": "{component.basic.checkbox.state.selected.hoverBorder}"
+    },
+    "&::indicator:checked:pressed": {
+      "background-color": "{component.basic.checkbox.state.selected.pressedBackground}",
+      "border-color": "{component.basic.checkbox.state.selected.pressedBorder}"
+    },
+    "&::indicator:checked:disabled": {
+      "background-color": "{component.basic.checkbox.state.selected.disabledBackground}",
+      "border-color": "{component.basic.checkbox.state.selected.disabledBorder}"
+    },
+    "&::indicator:indeterminate": {
+      "background-color": "{component.basic.checkbox.state.selected.background}",
+      "border-color": "{component.basic.checkbox.state.selected.border}",
+      "image": "url({component.basic.checkbox.glyph.indeterminate})"
+    },
+    "&::indicator:indeterminate:hover": {
+      "background-color": "{component.basic.checkbox.state.selected.hoverBackground}",
+      "border-color": "{component.basic.checkbox.state.selected.hoverBorder}"
+    },
+    "&::indicator:indeterminate:pressed": {
+      "background-color": "{component.basic.checkbox.state.selected.pressedBackground}",
+      "border-color": "{component.basic.checkbox.state.selected.pressedBorder}"
+    },
+    "&::indicator:indeterminate:disabled": {
+      "background-color": "{component.basic.checkbox.state.selected.disabledBackground}",
+      "border-color": "{component.basic.checkbox.state.selected.disabledBorder}"
+    },
+    "&:focus": {
+      "border-color": "{component.basic.checkbox.focus.border}"
+    }
+  },
+  "@checkbox.size.sm": {
+    "$selector": "QCheckBox[dsRole=\"checkbox\"][dsSize=\"sm\"]",
+    "&": {
+      "min-height": "{component.basic.checkbox.sizes.sm.hitTarget}px",
+      "spacing": "{component.basic.checkbox.sizes.sm.spacing}px",
+      "font-size": "{component.basic.checkbox.sizes.sm.fontSize}px"
+    },
+    "&::indicator": {
+      "width": "{component.basic.checkbox.sizes.sm.qssContentSize}px",
+      "height": "{component.basic.checkbox.sizes.sm.qssContentSize}px"
+    }
+  },
+  "@checkbox.size.lg": {
+    "$selector": "QCheckBox[dsRole=\"checkbox\"][dsSize=\"lg\"]",
+    "&": {
+      "min-height": "{component.basic.checkbox.sizes.lg.hitTarget}px",
+      "spacing": "{component.basic.checkbox.sizes.lg.spacing}px",
+      "font-size": "{component.basic.checkbox.sizes.lg.fontSize}px"
+    },
+    "&::indicator": {
+      "width": "{component.basic.checkbox.sizes.lg.qssContentSize}px",
+      "height": "{component.basic.checkbox.sizes.lg.qssContentSize}px"
+    }
+  },
+  "@radio": {
+    "$selector": "QRadioButton[dsRole=\"radio\"]",
+    "&": {
+      "color": "{component.basic.radio.text}",
+      "spacing": "{base.space.8}px",
+      "font-size": "{base.fontSize.body-md}px",
+      "min-height": "{semantic.dimension.control.interactive-size}px"
+    },
+    "&:disabled": {"color": "{component.basic.radio.disabledText}"},
+    "&::indicator": {
+      "width": "{component.basic.radio.size}px",
+      "height": "{component.basic.radio.size}px",
+      "image": "url({semantic.asset.icon.radioOff})"
+    },
+    "&::indicator:checked": {"image": "url({semantic.asset.icon.radioOn})"}
+  },
+  "@chip.horizontal": {
+    "$selector": "QPushButton[dsRole=\"chip-horizontal\"]",
+    "&": {
+      "min-height": "{component.basic.chip.horizontalHeight}px",
+      "background-color": "{component.basic.chip.background}",
+      "color": "{component.basic.chip.text}",
+      "border": "{semantic.borderWidth.control}px solid {component.basic.chip.border}",
+      "border-radius": "{component.basic.chip.horizontalRadius}px",
+      "padding": "0 {component.basic.chip.paddingInline}px",
+      "font-size": "{base.fontSize.body-md}px"
+    },
+    "&:checked": {
+      "background-color": "{component.basic.chip.selectedBackground}",
+      "border-color": "{component.basic.chip.selectedBorder}"
+    }
+  },
+  "@chip.vertical": {
+    "$selector": "QPushButton[dsRole=\"chip-vertical\"]",
+    "&": {
+      "min-width": "{component.basic.chip.verticalMinWidth}px",
+      "min-height": "{component.basic.chip.verticalHeight}px",
+      "background-color": "{component.basic.chip.background}",
+      "color": "{component.basic.chip.text}",
+      "border": "{semantic.borderWidth.control}px solid {component.basic.chip.border}",
+      "border-radius": "{component.basic.chip.verticalRadius}px",
+      "padding": "{base.space.12}px",
+      "text-align": "left",
+      "font-size": "{base.fontSize.body-md}px"
+    },
+    "&:checked": {
+      "background-color": "{component.basic.chip.selectedBackground}",
+      "border-color": "{component.basic.chip.selectedBorder}"
+    }
+  },
+  "@chip.category": {
+    "$selector": "QToolButton[dsRole=\"chip-vertical\"]",
+    "&": {
+      "min-width": "{component.basic.chip.verticalMinWidth}px",
+      "min-height": "{component.basic.chip.verticalHeight}px",
+      "background-color": "{component.basic.chip.background}",
+      "color": "{component.basic.chip.text}",
+      "border": "{semantic.borderWidth.control}px solid {component.basic.chip.border}",
+      "border-radius": "{component.basic.chip.verticalRadius}px",
+      "padding": "{base.space.12}px",
+      "font-size": "{base.fontSize.scale-300}px"
+    },
+    "&:hover": {"border-color": "{component.basic.chip.selectedBorder}"},
+    "&:checked": {
+      "background-color": "{component.basic.chip.selectedBackground}",
+      "border-color": "{component.basic.chip.selectedBorder}"
+    }
+  },
+  "@surface.card": {
+    "$selector": "QFrame[dsRole=\"card\"]",
+    "&": {
+      "background-color": "{component.basic.card.background}",
+      "border": "{semantic.borderWidth.control}px solid {component.basic.card.border}",
+      "border-radius": "{component.basic.card.radius}px"
+    }
+  },
+  "@status.success": {
+    "$selector": "QLabel[dsStatus=\"success\"]",
+    "&": {
+      "background-color": "{component.basic.statusBadge.success.background}",
+      "color": "{component.basic.statusBadge.success.text}",
+      "border-radius": "{component.basic.statusBadge.success.radius}px",
+      "padding": "{component.basic.statusBadge.paddingBlock}px {component.basic.statusBadge.paddingInline}px",
+      "font-size": "{component.basic.statusBadge.fontSize}px"
+    }
+  },
+  "@status.warning": {
+    "$selector": "QLabel[dsStatus=\"warning\"]",
+    "&": {
+      "background-color": "{component.basic.statusBadge.warning.background}",
+      "color": "{component.basic.statusBadge.warning.text}",
+      "border-radius": "{component.basic.statusBadge.warning.radius}px",
+      "padding": "{component.basic.statusBadge.paddingBlock}px {component.basic.statusBadge.paddingInline}px",
+      "font-size": "{component.basic.statusBadge.fontSize}px"
+    }
+  },
+  "@status.danger": {
+    "$selector": "QLabel[dsStatus=\"danger\"]",
+    "&": {
+      "background-color": "{component.basic.statusBadge.danger.background}",
+      "color": "{component.basic.statusBadge.danger.text}",
+      "border-radius": "{component.basic.statusBadge.danger.radius}px",
+      "padding": "{component.basic.statusBadge.paddingBlock}px {component.basic.statusBadge.paddingInline}px",
+      "font-size": "{component.basic.statusBadge.fontSize}px"
+    }
+  },
+  "@type.heading": {
+    "$selector": "QLabel[dsType=\"heading\"]",
+    "&": {
+      "color": "{semantic.color.text.primary}",
+      "font-size": "{base.fontSize.subheading-md}px",
+      "font-weight": "{base.fontWeight.semibold}",
+      "background": "{semantic.color.overlay.transparent}"
+    }
+  },
+  "@type.body": {
+    "$selector": "QLabel[dsType=\"body\"]",
+    "&": {
+      "color": "{semantic.color.text.primary}",
+      "font-size": "{base.fontSize.body-md}px",
+      "background": "{semantic.color.overlay.transparent}"
+    }
+  },
+  "@type.section": {
+    "$selector": "QLabel[dsType=\"section\"]",
+    "&": {
+      "color": "{semantic.color.text.primary}",
+      "font-size": "{base.fontSize.subheading-sm}px",
+      "font-weight": "{base.fontWeight.medium}",
+      "background": "{semantic.color.overlay.transparent}"
+    }
+  },
+  "@type.metric": {
+    "$selector": "QLabel[dsType=\"metric\"]",
+    "&": {
+      "color": "{component.composite.metricCard.value}",
+      "font-size": "{base.fontSize.heading-sm}px",
+      "font-weight": "{base.fontWeight.semibold}",
+      "background": "{semantic.color.overlay.transparent}"
+    }
+  },
+  "@type.hint": {
+    "$selector": "QLabel[dsType=\"hint\"]",
+    "&": {
+      "color": "{semantic.color.text.placeholder}",
+      "font-size": "{base.fontSize.body-sm}px",
+      "background": "{semantic.color.overlay.transparent}"
+    }
+  },
+  "@type.label": {
+    "$selector": "QLabel[dsType=\"label\"]",
+    "&": {
+      "color": "{semantic.color.text.primary}",
+      "font-size": "{base.fontSize.scale-300}px",
+      "background": "{semantic.color.overlay.transparent}"
+    }
+  },
+  "@type.caption": {
+    "$selector": "QLabel[dsType=\"caption\"]",
+    "&": {
+      "color": "{semantic.color.text.tertiary}",
+      "font-size": "{base.fontSize.scale-100}px",
+      "background": "{semantic.color.overlay.transparent}"
+    }
+  },
+  "@type.hero-title": {
+    "$selector": "QLabel[dsType=\"hero-title\"]",
+    "&": {
+      "color": "{semantic.color.text.onBrand}",
+      "font-size": "{base.fontSize.scale-600}px",
+      "font-weight": "{base.fontWeight.semibold}",
+      "background": "{semantic.color.overlay.transparent}"
+    }
+  },
+  "@type.hero-body": {
+    "$selector": "QLabel[dsType=\"hero-body\"]",
+    "&": {
+      "color": "{semantic.color.text.onBrand}",
+      "font-size": "{base.fontSize.scale-300}px",
+      "background": "{semantic.color.overlay.transparent}"
+    }
+  },
+  "@type.hero-quote": {
+    "$selector": "QLabel[dsType=\"hero-quote\"]",
+    "&": {
+      "color": "{semantic.color.text.onImage}",
+      "font-size": "{base.fontSize.scale-600}px",
+      "font-weight": "{base.fontWeight.medium}",
+      "background": "{semantic.color.overlay.transparent}"
+    }
+  },
+  "@type.hero-author": {
+    "$selector": "QLabel[dsType=\"hero-author\"]",
+    "&": {
+      "color": "{semantic.color.text.onImage}",
+      "font-size": "{base.fontSize.scale-500}px",
+      "background": "{semantic.color.overlay.transparent}"
+    }
+  },
+  "@screen.application": {
+    "$selector": "QWidget[dsRole=\"app-screen\"]",
+    "&": {
+      "background-color": "{component.composite.appShell.background}",
+      "color": "{semantic.color.text.primary}"
+    }
+  },
+  "@screen.auth": {
+    "$selector": "QWidget[dsRole=\"auth-screen\"]",
+    "&": {
+      "background-color": "{semantic.color.background.brand}",
+      "color": "{semantic.color.text.primary}"
+    }
+  },
+  "@screen.onboarding": {
+    "$selector": "QWidget[dsRole=\"onboarding-screen\"]",
+    "&": {
+      "background-color": "{semantic.color.background.surface}",
+      "color": "{semantic.color.text.primary}"
+    }
+  },
+  "@surface.auth-card": {
+    "$selector": "QFrame[dsRole=\"auth-card\"]",
+    "&": {
+      "background-color": "{semantic.color.background.surface}",
+      "border": "none",
+      "border-radius": "{component.composite.authFlow.panelRadius}px"
+    }
+  },
+  "@progress.active": {
+    "$selector": "QFrame[dsRole=\"progress-active\"]",
+    "&": {
+      "background-color": "{base.color.brand.mint-glow.500}",
+      "border": "none",
+      "border-radius": "{base.radius.sm}px"
+    }
+  },
+  "@progress.inactive": {
+    "$selector": "QFrame[dsRole=\"progress-inactive\"]",
+    "&": {
+      "background-color": "{semantic.color.background.surface-muted}",
+      "border": "none",
+      "border-radius": "{base.radius.sm}px"
+    }
+  },
+  "@divider.horizontal": {
+    "$selector": "QFrame[dsRole=\"divider-horizontal\"]",
+    "&": {
+      "min-height": "{component.basic.divider.thickness}px",
+      "max-height": "{component.basic.divider.thickness}px",
+      "background-color": "{semantic.color.border.subtle}",
+      "border": "none"
+    }
+  },
+  "@button.hero-nav": {
+    "$selector": "QPushButton[dsVariant=\"hero-nav\"]",
+    "&": {
+      "min-width": "{base.dimension.control.height-lg}px",
+      "min-height": "{base.dimension.control.height-lg}px",
+      "background": "{semantic.color.overlay.transparent}",
+      "color": "{semantic.color.text.onImage}",
+      "border": "none",
+      "font-size": "{base.fontSize.scale-500}px"
+    }
+  },
+  "@surface.navbar": {
+    "$selector": "QFrame[dsRole=\"navbar\"]",
+    "&": {
+      "background-color": "{component.composite.navbar.background}",
+      "border": "{semantic.borderWidth.control}px solid {component.composite.navbar.border}",
+      "border-radius": "{base.radius.pill}px"
+    }
+  },
+  "@surface.sidebar": {
+    "$selector": "QFrame[dsRole=\"sidebar\"]",
+    "&": {
+      "background-color": "{component.composite.sidebar.background}",
+      "border": "none",
+      "border-radius": "{component.composite.sidebar.radius}px"
+    }
+  },
+  "@surface.soft": {
+    "$selector": "QFrame[dsRole=\"soft-panel\"]",
+    "&": {
+      "background-color": "{semantic.color.background.surface-muted}",
+      "border": "none",
+      "border-radius": "{component.basic.card.radius}px"
+    }
+  },
+  "@surface.modal": {
+    "$selector": "QFrame[dsRole=\"modal\"]",
+    "&": {
+      "background-color": "{semantic.color.background.surface}",
+      "border": "{semantic.borderWidth.control}px solid {semantic.color.border.subtle}",
+      "border-radius": "{component.basic.card.radius}px"
+    }
+  },
+  "@surface.overlay": {
+    "$selector": "QWidget[dsRole=\"overlay\"]",
+    "&": {"background-color": "{semantic.color.overlay.modal}"}
+  },
+  "@nav.item": {
+    "$selector": "QPushButton[dsRole=\"nav-item\"]",
+    "&": {
+      "min-height": "{component.composite.sidebar.navItemHeight}px",
+      "background-color": "{semantic.color.overlay.transparent}",
+      "color": "{component.composite.sidebar.navItemText}",
+      "border": "none",
+      "border-radius": "{component.composite.sidebar.navItemRadius}px",
+      "padding": "0 {base.space.12}px",
+      "text-align": "left",
+      "font-size": "{base.fontSize.body-md}px"
+    },
+    "&:hover": {"background-color": "{semantic.color.background.interactive-hover}"}
+  },
+  "@nav.item.active": {
+    "$selector": "QPushButton[dsRole=\"nav-item\"][dsActive=\"true\"]",
+    "&": {
+      "background-color": "{component.composite.sidebar.navItemActiveBg}",
+      "color": "{component.composite.sidebar.navItemActiveText}",
+      "font-weight": "{base.fontWeight.medium}"
+    }
+  },
+  "@type.brand": {
+    "$selector": "QLabel[dsType=\"brand\"]",
+    "&": {
+      "color": "{semantic.color.text.primary}",
+      "font-size": "{base.fontSize.subheading-md}px",
+      "font-weight": "{base.fontWeight.semibold}",
+      "background": "{semantic.color.overlay.transparent}"
+    }
+  },
+  "@type.page-title": {
+    "$selector": "QLabel[dsType=\"page-title\"]",
+    "&": {
+      "color": "{semantic.color.text.primary}",
+      "font-size": "{base.fontSize.heading-sm}px",
+      "font-weight": "{base.fontWeight.medium}",
+      "background": "{semantic.color.overlay.transparent}"
+    }
+  },
+  "@type.display": {
+    "$selector": "QLabel[dsType=\"display\"]",
+    "&": {
+      "color": "{semantic.color.text.primary}",
+      "font-size": "{base.fontSize.heading-md}px",
+      "font-weight": "{base.fontWeight.semibold}",
+      "background": "{semantic.color.overlay.transparent}"
+    }
+  },
+  "@type.inverse": {
+    "$selector": "QLabel[dsType=\"inverse\"]",
+    "&": {
+      "color": "{semantic.color.text.inverse}",
+      "font-size": "{base.fontSize.scale-300}px",
+      "background": "{semantic.color.overlay.transparent}"
+    }
+  },
+  "@input.search": {
+    "$selector": "QLineEdit[dsRole=\"search\"]",
+    "&": {
+      "min-height": "{component.basic.input.size.md.height}px",
+      "background-color": "{component.basic.input.background}",
+      "color": "{component.basic.input.text}",
+      "border": "{semantic.borderWidth.control}px solid {component.basic.input.border}",
+      "border-radius": "{component.basic.input.radius}px",
+      "padding": "0 {base.space.16}px"
+    },
+    "&:focus": {"border-color": "{component.basic.input.focusBorder}"}
+  },
+  "@combo.input": {
+    "$selector": "QComboBox[dsRole=\"input\"]",
+    "&": {
+      "min-height": "{component.basic.input.size.md.height}px",
+      "background-color": "{component.basic.input.background}",
+      "color": "{component.basic.input.text}",
+      "border": "{semantic.borderWidth.control}px solid {component.basic.input.border}",
+      "border-radius": "{component.basic.input.radius}px",
+      "padding": "0 {base.space.12}px"
+    }
+  },
+  "@table.data": {
+    "$selector": "QTableWidget[dsRole=\"data-table\"]",
+    "&": {
+      "background-color": "{component.composite.table.rowBackground}",
+      "color": "{semantic.color.text.primary}",
+      "border": "none",
+      "gridline-color": "{component.composite.table.rowBorder}"
+    },
+    "&::item": {
+      "padding": "{base.space.8}px",
+      "border-bottom": "{semantic.borderWidth.control}px solid {component.composite.table.rowBorder}"
+    }
+  },
+  "@table.header": {
+    "$selector": "QTableWidget[dsRole=\"data-table\"] QHeaderView::section",
+    "&": {
+      "background-color": "{semantic.color.background.surface-muted}",
+      "color": "{component.composite.table.headerText}",
+      "border": "none",
+      "padding": "{base.space.12}px"
+    }
+  },
+  "@list.navigation": {
+    "$selector": "QListWidget[dsRole=\"navigation-list\"]",
+    "&": {
+      "background-color": "{semantic.color.background.surface}",
+      "color": "{semantic.color.text.primary}",
+      "border": "none",
+      "outline": "none"
+    },
+    "&::item": {
+      "min-height": "{component.basic.list.itemHeight}px",
+      "padding": "{base.space.8}px",
+      "border-radius": "{base.radius.lg}px"
+    },
+    "&::item:selected": {
+      "background-color": "{semantic.color.background.surface-muted}",
+      "color": "{semantic.color.text.primary}"
+    }
+  },
+  "@scroll.page": {
+    "$selector": "QScrollArea[dsRole=\"page-scroll\"]",
+    "&": {"background": "{semantic.color.overlay.transparent}", "border": "none"}
+  },
+  "@combo.profile": {
+    "$selector": "QComboBox[dsRole=\"profile\"]",
+    "&": {
+      "min-height": "{component.basic.input.size.md.height}px",
+      "background-color": "{component.basic.input.background}",
+      "color": "{component.basic.input.text}",
+      "border": "{semantic.borderWidth.control}px solid {component.basic.input.border}",
+      "border-radius": "{base.radius.md}px",
+      "padding": "0 {base.space.12}px"
+    }
+  },
+  "@message.incoming": {
+    "$selector": "QLabel[dsRole=\"message-incoming\"]",
+    "&": {
+      "background-color": "{semantic.color.background.surface-muted}",
+      "color": "{semantic.color.text.primary}",
+      "border-radius": "{base.radius.md}px",
+      "padding": "{base.space.8}px {base.space.12}px"
+    }
+  },
+  "@message.outgoing": {
+    "$selector": "QLabel[dsRole=\"message-outgoing\"]",
+    "&": {
+      "background-color": "{semantic.color.action.primary-bg}",
+      "color": "{semantic.color.text.primary}",
+      "border-radius": "{base.radius.md}px",
+      "padding": "{base.space.8}px {base.space.12}px"
+    }
+  }
+}

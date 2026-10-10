@@ -1,0 +1,11 @@
+/* Z_Menu <- QMenu; compiled from the active Token profile. */
+*[designSystemClass="commonWidget::Z_Menu"] {
+    color: @FOREGROUND@;
+    background-color: @SURFACE@;
+    font-size: @FONT_SIZE@px;
+}
+*[designSystemClass="commonWidget::Z_Menu"]:disabled {
+    color: @DISABLED_TEXT@;
+    background-color: @DISABLED@;
+    border-color: @DISABLED_BORDER@;
+}

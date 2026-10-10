@@ -1,0 +1,15 @@
+/* Z_ToolBox <- QToolBox; compiled from the active Token profile. */
+*[designSystemClass="commonWidget::Z_ToolBox"] {
+    color: @FOREGROUND@;
+    background-color: @SURFACE@;
+    font-size: @FONT_SIZE@px;
+}
+*[designSystemClass="commonWidget::Z_ToolBox"]:disabled {
+    color: @DISABLED_TEXT@;
+    background-color: @DISABLED@;
+    border-color: @DISABLED_BORDER@;
+}
+*[designSystemClass="commonWidget::Z_ToolBox"] {
+    border: 1px solid @BORDER@;
+    border-radius: @RADIUS@px;
+}

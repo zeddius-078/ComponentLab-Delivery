@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>SelectOptionFixture</class>
+ <widget class="QWidget" name="fixturePage">
+  <layout class="QVBoxLayout" name="pageLayout">
+   <item><widget class="designer_widgets::SelectOption" name="optionItem">
+    <property name="text"><string>ETCH-01</string></property>
+    <property name="controlSize"><string>md</string></property>
+   </widget></item>
+  </layout>
+ </widget>
+ <customwidgets><customwidget>
+  <class>designer_widgets::SelectOption</class><extends>QWidget</extends>
+  <header>DesignerWidgets.h</header>
+ </customwidget></customwidgets>
+ <resources/><connections/>
+</ui>

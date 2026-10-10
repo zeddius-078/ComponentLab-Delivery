@@ -1,0 +1,176 @@
+{
+  "capturedAtUtc": "2026-10-03T14:08:30.224794+00:00",
+  "endpoint": "http://127.0.0.1:3667/mcp",
+  "fileKey": "4S0Ktm81WnvzuJmZHvRuOg",
+  "evidenceSource": "fresh-Pixso-MCP-tools-call",
+  "files": [
+    {
+      "path": "00-initialize.json",
+      "bytes": 313,
+      "sha256": "a548e3b9c3af23fc3782b9d7e0eb9becc9827ba0653daaa3a7a26c702fb9cf95"
+    },
+    {
+      "path": "01-tools-list.json",
+      "bytes": 57645,
+      "sha256": "6c5f4ab5dc9bfc0ea07ccc70a3b8131544e750b7d362c77c79001ee9996ac814"
+    },
+    {
+      "path": "02-file-identity.json",
+      "bytes": 175,
+      "sha256": "94a8031a787dad11ae1828c0c70d3fbd06fc2ce18e93e85f851290cbfac7b99b"
+    },
+    {
+      "path": "03-page-dsl.json",
+      "bytes": 547568,
+      "sha256": "4211e9f7bf37481b7351ac1ed7fa7dfa92bdc9b2363990831885cb0a53d4428e"
+    },
+    {
+      "path": "04-button-variant-dsl.json",
+      "bytes": 157462,
+      "sha256": "17197d08f3aafafb1b99a09e4247dc4a3ca837e6dc81d1e5c1a4926d0132252d"
+    },
+    {
+      "path": "05-variable-sets.json",
+      "bytes": 4535468,
+      "sha256": "361df42c95565889249bc4d9c710522b0c8feb72051aeb60538f21981211c8f7"
+    },
+    {
+      "path": "06-variables.json",
+      "bytes": 4535124,
+      "sha256": "ccccccb870752c89f31c1d52e78220452be37370bf58632005f28533c69a205d"
+    },
+    {
+      "path": "07-all-components.json",
+      "bytes": 972347,
+      "sha256": "2a3e982e0ffa5cc336c5a8e0e58191f685bc1c2e549537444e4fa43662a1f341"
+    },
+    {
+      "path": "08-local-styles.json",
+      "bytes": 137,
+      "sha256": "032db22ce090ad6ba9ffdfbde87cc29a1608fbf7cfe34b93f6d1ae8e1e4c977e"
+    },
+    {
+      "path": "09-variable-collections.json",
+      "bytes": 2574,
+      "sha256": "6b3ddb92a9e0a86e978b4af4741dcd3839182b584daa737c062fdbf0af3cf5a9"
+    },
+    {
+      "path": "10-state-group-variants.json",
+      "bytes": 42156,
+      "sha256": "b49ca850f2a0d266e44000f1d38906e50161ddc438a2e750a5998664dac8abc7"
+    },
+    {
+      "path": "11-state-group-dsl.json",
+      "bytes": 226835,
+      "sha256": "b3318134fb9b377f4a865b0b8f02659ffe827ce040ea6aaac3d4b6a9882889a2"
+    },
+    {
+      "path": "design-evidence.json",
+      "bytes": 1902282,
+      "sha256": "7088ea85263ecaa651febf51da3455a6cc3b726d401963a9511437f05d5744bf"
+    }
+  ],
+  "calls": [
+    {
+      "tool": "get_node_dsl",
+      "arguments": {
+        "guid": "2:145",
+        "simplify": true
+      },
+      "resultFile": "03-page-dsl.json",
+      "sha256": "4211e9f7bf37481b7351ac1ed7fa7dfa92bdc9b2363990831885cb0a53d4428e"
+    },
+    {
+      "tool": "get_node_dsl",
+      "arguments": {
+        "guid": "3:5686",
+        "simplify": true
+      },
+      "resultFile": "04-button-variant-dsl.json",
+      "sha256": "17197d08f3aafafb1b99a09e4247dc4a3ca837e6dc81d1e5c1a4926d0132252d"
+    },
+    {
+      "tool": "get_variable_sets",
+      "arguments": {},
+      "resultFile": "05-variable-sets.json",
+      "sha256": "361df42c95565889249bc4d9c710522b0c8feb72051aeb60538f21981211c8f7"
+    },
+    {
+      "tool": "get_variables",
+      "arguments": {},
+      "resultFile": "06-variables.json",
+      "sha256": "ccccccb870752c89f31c1d52e78220452be37370bf58632005f28533c69a205d"
+    },
+    {
+      "tool": "get_all_components",
+      "arguments": {},
+      "resultFile": "07-all-components.json",
+      "sha256": "2a3e982e0ffa5cc336c5a8e0e58191f685bc1c2e549537444e4fa43662a1f341"
+    },
+    {
+      "tool": "get_local_styles",
+      "arguments": {},
+      "resultFile": "08-local-styles.json",
+      "sha256": "032db22ce090ad6ba9ffdfbde87cc29a1608fbf7cfe34b93f6d1ae8e1e4c977e"
+    },
+    {
+      "tool": "eval_script",
+      "arguments": {
+        "script": "const c = await pixso.variables.getLocalVariableCollectionsAsync(); return c.map(x => ({id:x.id,name:x.name,defaultModeId:x.defaultModeId,modes:(x.modes || []).map(m => ({modeId:m.modeId,name:m.name}))}));"
+      },
+      "resultFile": "09-variable-collections.json",
+      "sha256": "6b3ddb92a9e0a86e978b4af4741dcd3839182b584daa737c062fdbf0af3cf5a9"
+    },
+    {
+      "tool": "get_variants",
+      "arguments": {
+        "guid": "3:10560"
+      },
+      "resultFile": "10-state-group-variants.json",
+      "sha256": "b49ca850f2a0d266e44000f1d38906e50161ddc438a2e750a5998664dac8abc7"
+    },
+    {
+      "tool": "get_variants",
+      "arguments": {
+        "guid": "3:10565"
+      },
+      "resultFile": "10-state-group-variants.json",
+      "sha256": "b49ca850f2a0d266e44000f1d38906e50161ddc438a2e750a5998664dac8abc7"
+    },
+    {
+      "tool": "get_variants",
+      "arguments": {
+        "guid": "3:10567"
+      },
+      "resultFile": "10-state-group-variants.json",
+      "sha256": "b49ca850f2a0d266e44000f1d38906e50161ddc438a2e750a5998664dac8abc7"
+    },
+    {
+      "tool": "get_node_dsl",
+      "arguments": {
+        "guid": "3:10560",
+        "simplify": true
+      },
+      "resultFile": "11-state-group-dsl.json",
+      "sha256": "b3318134fb9b377f4a865b0b8f02659ffe827ce040ea6aaac3d4b6a9882889a2"
+    },
+    {
+      "tool": "get_node_dsl",
+      "arguments": {
+        "guid": "3:10565",
+        "simplify": true
+      },
+      "resultFile": "11-state-group-dsl.json",
+      "sha256": "b3318134fb9b377f4a865b0b8f02659ffe827ce040ea6aaac3d4b6a9882889a2"
+    },
+    {
+      "tool": "get_node_dsl",
+      "arguments": {
+        "guid": "3:10567",
+        "simplify": true
+      },
+      "resultFile": "11-state-group-dsl.json",
+      "sha256": "b3318134fb9b377f4a865b0b8f02659ffe827ce040ea6aaac3d4b6a9882889a2"
+    }
+  ]
+}

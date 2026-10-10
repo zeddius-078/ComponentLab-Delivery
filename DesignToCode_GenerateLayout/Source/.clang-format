@@ -1,0 +1,17 @@
+# C++ 格式沿用主线的基础约定，配置在此独立维护，限定当前 DesignToCode 目录。
+BasedOnStyle: LLVM
+IndentWidth: 4
+AccessModifierOffset: -4
+UseTab: Never
+ColumnLimit: 100
+PointerAlignment: Left
+SortIncludes: Never
+AllowShortFunctionsOnASingleLine: Empty
+AllowShortIfStatementsOnASingleLine: Never
+AllowShortLoopsOnASingleLine: false
+AllowShortBlocksOnASingleLine: Never
+AllowShortLambdasOnASingleLine: Empty
+SeparateDefinitionBlocks: Always
+# 保留说明文字及已有命名空间注释，格式化只调整代码排版。
+ReflowComments: false
+FixNamespaceComments: false

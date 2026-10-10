@@ -1,0 +1,7 @@
+{
+  "Button": {"name":"ds-button","props":{"filter":[],"showTrueValue":true},"text":{"nodeName":"label","textAttr":"text"},"icon":[{"nodeName":"leading-icon","attrName":"leadingIcon"},{"nodeName":"trailing-icon","attrName":"trailingIcon"}]},
+  "IconButton": {"name":"ds-icon-button","props":{"filter":[],"showTrueValue":true},"icon":{"nodeName":"icon","attrName":"leadingIcon"}},
+  "Checkbox": {"name":"ds-checkbox","props":{"filter":[],"showTrueValue":true},"text":{"nodeName":"label","textAttr":"text"}},
+  "Input": {"name":"ds-input","props":{"filter":[],"showTrueValue":true},"text":[{"nodeName":"label","textAttr":"label"},{"nodeName":"placeholder","textAttr":"placeholder"}]},
+  "Select": {"name":"ds-select","props":{"filter":[],"showTrueValue":true},"text":[{"nodeName":"label","textAttr":"label"},{"nodeName":"placeholder","textAttr":"placeholder"}]}
+}

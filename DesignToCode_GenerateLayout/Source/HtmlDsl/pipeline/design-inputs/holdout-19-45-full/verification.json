@@ -1,0 +1,23 @@
+{
+  "status": "PASS",
+  "directory": "holdout-19-45-full",
+  "arguments": {
+    "guid": "19:45",
+    "simplify": false,
+    "isDetachInstance": false
+  },
+  "receivedAtUtc": "2026-09-24T00:46:29.643348+00:00",
+  "rawBytes": 2796828,
+  "rawSha256": "0ffb505672294b7d1fb89a6b4febb16281833f286540c183f9f4a649f2ed89b5",
+  "responseSha256": "a251f765b77ec6c3b3fca272f290294f6013f548b1912e79b72b91071b1bd74b",
+  "verbatimText": true,
+  "topLevelFields": [
+    "pixTreeNodes",
+    "svgGuidInfo",
+    "pixComponentTreeDslNodes",
+    "variableMap",
+    "variableSetMap",
+    "localStyleMap",
+    "isContainFixed"
+  ]
+}

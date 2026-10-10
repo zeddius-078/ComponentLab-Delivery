@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+    <class>MappingGenerated</class>
+    <widget class="QWidget" name="MappingPageRoot">
+        <layout class="QVBoxLayout" name="layout_MappingExample">
+            <property name="spacing">
+                <number>8</number>
+            </property>
+            <property name="leftMargin">
+                <number>8</number>
+            </property>
+            <property name="topMargin">
+                <number>8</number>
+            </property>
+            <property name="rightMargin">
+                <number>8</number>
+            </property>
+            <property name="bottomMargin">
+                <number>8</number>
+            </property>
+            <item>
+                <widget class="QWidget" name="host_lotInput">
+                    <layout class="QVBoxLayout" name="layout_lotInput">
+                        <property name="spacing">
+                            <number>0</number>
+                        </property>
+                        <property name="leftMargin">
+                            <number>0</number>
+                        </property>
+                        <property name="topMargin">
+                            <number>0</number>
+                        </property>
+                        <property name="rightMargin">
+                            <number>0</number>
+                        </property>
+                        <property name="bottomMargin">
+                            <number>0</number>
+                        </property>
+                    </layout>
+                </widget>
+            </item>
+            <item>
+                <widget class="QWidget" name="host_chamberSelect">
+                    <layout class="QVBoxLayout" name="layout_chamberSelect">
+                        <property name="spacing">
+                            <number>0</number>
+                        </property>
+                        <property name="leftMargin">
+                            <number>0</number>
+                        </property>
+                        <property name="topMargin">
+                            <number>0</number>
+                        </property>
+                        <property name="rightMargin">
+                            <number>0</number>
+                        </property>
+                        <property name="bottomMargin">
+                            <number>0</number>
+                        </property>
+                    </layout>
+                </widget>
+            </item>
+            <item>
+                <widget class="QWidget" name="host_qualityCheck">
+                    <layout class="QVBoxLayout" name="layout_qualityCheck">
+                        <property name="spacing">
+                            <number>0</number>
+                        </property>
+                        <property name="leftMargin">
+                            <number>0</number>
+                        </property>
+                        <property name="topMargin">
+                            <number>0</number>
+                        </property>
+                        <property name="rightMargin">
+                            <number>0</number>
+                        </property>
+                        <property name="bottomMargin">
+                            <number>0</number>
+                        </property>
+                    </layout>
+                </widget>
+            </item>
+            <item>
+                <widget class="QWidget" name="group_actions">
+                    <layout class="QHBoxLayout" name="layout_actions">
+                        <property name="spacing">
+                            <number>8</number>
+                        </property>
+                        <property name="leftMargin">
+                            <number>8</number>
+                        </property>
+                        <property name="topMargin">
+                            <number>8</number>
+                        </property>
+                        <property name="rightMargin">
+                            <number>8</number>
+                        </property>
+                        <property name="bottomMargin">
+                            <number>8</number>
+                        </property>
+                        <item>
+                            <widget class="QWidget" name="host_submitButton">
+                                <layout class="QVBoxLayout" name="layout_submitButton">
+                                    <property name="spacing">
+                                        <number>0</number>
+                                    </property>
+                                    <property name="leftMargin">
+                                        <number>0</number>
+                                    </property>
+                                    <property name="topMargin">
+                                        <number>0</number>
+                                    </property>
+                                    <property name="rightMargin">
+                                        <number>0</number>
+                                    </property>
+                                    <property name="bottomMargin">
+                                        <number>0</number>
+                                    </property>
+                                </layout>
+                            </widget>
+                        </item>
+                        <item>
+                            <widget class="QWidget" name="host_searchButton">
+                                <layout class="QVBoxLayout" name="layout_searchButton">
+                                    <property name="spacing">
+                                        <number>0</number>
+                                    </property>
+                                    <property name="leftMargin">
+                                        <number>0</number>
+                                    </property>
+                                    <property name="topMargin">
+                                        <number>0</number>
+                                    </property>
+                                    <property name="rightMargin">
+                                        <number>0</number>
+                                    </property>
+                                    <property name="bottomMargin">
+                                        <number>0</number>
+                                    </property>
+                                </layout>
+                            </widget>
+                        </item>
+                    </layout>
+                </widget>
+            </item>
+        </layout>
+    </widget>
+    <resources/>
+    <connections/>
+</ui>

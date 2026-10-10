@@ -1,0 +1,11 @@
+/* Z_MessageBox <- QMessageBox; compiled from the active Token profile. */
+*[designSystemClass="commonWidget::Z_MessageBox"] {
+    color: @FOREGROUND@;
+    background-color: @SURFACE@;
+    font-size: @FONT_SIZE@px;
+}
+*[designSystemClass="commonWidget::Z_MessageBox"]:disabled {
+    color: @DISABLED_TEXT@;
+    background-color: @DISABLED@;
+    border-color: @DISABLED_BORDER@;
+}

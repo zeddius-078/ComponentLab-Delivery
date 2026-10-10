@@ -1,0 +1,578 @@
+{
+  "contract": "BUTTON-CONTRACT-2026-09-13 / 861630ab3cac / R2-ICON-SOURCE-2026-09-14 / R4-STOKEN",
+  "status": "DEMO-PROPOSAL-NOT-DESIGN-APPROVED",
+  "focusIndicator": {
+    "mode": "{semantic.interaction.focusIndicator.mode}",
+    "opacity": "{semantic.interaction.focusIndicator.opacity}"
+  },
+  "softInnerShadow": {
+    "alpha": "{component.basic.button.innerShadow.soft.alpha}",
+    "y": "{component.basic.button.innerShadow.soft.offsetY}",
+    "blur": "{component.basic.button.innerShadow.soft.blur}"
+  },
+  "solidInnerShadow": {
+    "id": "solid-inner-shadow",
+    "label": "实色几何内阴影",
+    "colorPolicy": {
+      "black": "{base.color.neutral.black.500}",
+      "blackMix": {
+        "primary": "{component.basic.button.innerShadow.blackMix.primary}",
+        "secondary": "{component.basic.button.innerShadow.blackMix.secondary}",
+        "danger": "{component.basic.button.innerShadow.blackMix.danger}"
+      },
+      "baseSelection": "darkest-qgray-of-state-stops",
+      "surfaceSamples": [0, 0.25, 0.5, 0.75, 1],
+      "transparentTypes": "material-supplies-face",
+      "ghost": false
+    },
+    "geometry": {
+      "width": "{component.basic.button.innerShadow.geometry.width}",
+      "cornerRadius": "{component.basic.button.innerShadow.geometry.cornerRadius}",
+      "fadeStartRatio": "{component.basic.button.innerShadow.geometry.fadeStartRatio}",
+      "matchButtonRadiusToInnerShadow": "{component.basic.button.innerShadow.geometry.matchButtonRadiusToInnerShadow}",
+      "buttonRadius": "{component.basic.button.innerShadow.geometry.buttonRadius}",
+      "borderWidth": "{component.basic.button.innerShadow.geometry.borderWidth}"
+    },
+    "states": {
+      "default": {
+        "shadowColor": "{component.basic.button.innerShadow.default.shadowColor}",
+        "borderColor": "{component.basic.button.innerShadow.default.borderColor}",
+        "textColor": "{component.basic.button.innerShadow.default.textColor}",
+        "bgTop": "{component.basic.button.innerShadow.default.bgTop}",
+        "bgMid": "{component.basic.button.innerShadow.default.bgMid}",
+        "bgBottom": "{component.basic.button.innerShadow.default.bgBottom}",
+        "bgMidStop": "{component.basic.button.innerShadow.default.bgMidStop}"
+      },
+      "hover": {
+        "shadowColor": "{component.basic.button.innerShadow.hover.shadowColor}",
+        "borderColor": "{component.basic.button.innerShadow.hover.borderColor}",
+        "textColor": "{component.basic.button.innerShadow.hover.textColor}",
+        "bgTop": "{component.basic.button.innerShadow.hover.bgTop}",
+        "bgMid": "{component.basic.button.innerShadow.hover.bgMid}",
+        "bgBottom": "{component.basic.button.innerShadow.hover.bgBottom}",
+        "bgMidStop": "{component.basic.button.innerShadow.hover.bgMidStop}"
+      },
+      "pressed": {
+        "shadowColor": "{component.basic.button.innerShadow.pressed.shadowColor}",
+        "borderColor": "{component.basic.button.innerShadow.pressed.borderColor}",
+        "textColor": "{component.basic.button.innerShadow.pressed.textColor}",
+        "bgTop": "{component.basic.button.innerShadow.pressed.bgTop}",
+        "bgMid": "{component.basic.button.innerShadow.pressed.bgMid}",
+        "bgBottom": "{component.basic.button.innerShadow.pressed.bgBottom}",
+        "bgMidStop": "{component.basic.button.innerShadow.pressed.bgMidStop}"
+      },
+      "disabled": {
+        "shadowColor": "{component.basic.button.innerShadow.disabled.shadowColor}",
+        "borderColor": "{component.basic.button.innerShadow.disabled.borderColor}",
+        "textColor": "{component.basic.button.innerShadow.disabled.textColor}",
+        "bgTop": "{component.basic.button.innerShadow.disabled.bgTop}",
+        "bgMid": "{component.basic.button.innerShadow.disabled.bgMid}",
+        "bgBottom": "{component.basic.button.innerShadow.disabled.bgBottom}",
+        "bgMidStop": "{component.basic.button.innerShadow.disabled.bgMidStop}"
+      }
+    }
+  },
+  "units": {
+    "dimensions": "Qt logical px",
+    "fontSize": "px",
+    "duration": "ms",
+    "opacity": "0..1",
+    "angle": "degrees"
+  },
+  "mapping": {
+    "logical": "component.button.*",
+    "repository": "component.basic.button.*",
+    "policy": "Existing values are aliases into source/primitives.json. Missing values are explicitly scoped demo decisions."
+  },
+  "presets": [
+    [
+      "PRIMARY",
+      "PRIMARY",
+      "SOLID"
+    ],
+    [
+      "DEFAULT",
+      "NEUTRAL",
+      "OUTLINED"
+    ],
+    [
+      "DASHED",
+      "NEUTRAL",
+      "DASHED"
+    ],
+    [
+      "TEXT",
+      "NEUTRAL",
+      "TEXT"
+    ],
+    [
+      "LINK",
+      "PRIMARY",
+      "LINK"
+    ]
+  ],
+  "font": {
+    "family": "{base.stoken.typography.font-family.harmony-os-sans-sc}",
+    "weight": "{base.stoken.typography.font-weight.body}",
+    "decision": "sToken font; installed locally, no font redistribution in this delivery"
+  },
+  "metrics": [
+    {
+      "name": "XS",
+      "iconOnlySize": "{semantic.dimension.control.height-xs}",
+      "minimumHeight": "{semantic.dimension.control.height-xs}",
+      "paddingInline": "{base.stoken.button.size.small.container.padding-inline}",
+      "paddingBlock": "{base.stoken.button.base.default.container.padding-block}",
+      "gap": "{base.stoken.button.icon-text.base.default.container.gap}",
+      "borderWidth": "{base.stoken.button.base.default.border.width}",
+      "iconCanvas": "{base.stoken.button.icon.size.small.icon.size}",
+      "iconContainer": "{base.stokenAdapter.button.XS.iconContainer}",
+      "indicatorSize": "{base.stoken.button.size.small.spinner.size}",
+      "indicatorStroke": 1.5,
+      "fontSize": "{base.stoken.typography.font-size.label.default}"
+    },
+    {
+      "name": "S",
+      "iconOnlySize": "{component.basic.button.size.sm.height}",
+      "minimumHeight": "{component.basic.button.size.sm.height}",
+      "paddingInline": "{base.stoken.button.size.small.container.padding-inline}",
+      "paddingBlock": "{base.stoken.button.base.default.container.padding-block}",
+      "gap": "{base.stoken.button.icon-text.base.default.container.gap}",
+      "borderWidth": "{base.stoken.button.base.default.border.width}",
+      "iconCanvas": "{base.stoken.button.icon.size.small.icon.size}",
+      "iconContainer": "{base.stokenAdapter.button.S.iconContainer}",
+      "indicatorSize": "{base.stoken.button.size.small.spinner.size}",
+      "indicatorStroke": 1.5,
+      "fontSize": "{base.stoken.typography.font-size.label.default}"
+    },
+    {
+      "name": "M",
+      "iconOnlySize": "{component.basic.button.size.md.height}",
+      "minimumHeight": "{component.basic.button.size.md.height}",
+      "paddingInline": "{base.stoken.button.size.medium.container.padding-inline}",
+      "paddingBlock": "{base.stoken.button.base.default.container.padding-block}",
+      "gap": "{base.stoken.button.icon-text.base.default.container.gap}",
+      "borderWidth": "{base.stoken.button.base.default.border.width}",
+      "iconCanvas": "{base.stoken.button.icon.size.medium.icon.size}",
+      "iconContainer": "{base.stokenAdapter.button.M.iconContainer}",
+      "indicatorSize": "{base.stoken.button.size.medium.spinner.size}",
+      "indicatorStroke": 1.5,
+      "fontSize": "{base.stoken.typography.font-size.label.default}"
+    },
+    {
+      "name": "L",
+      "iconOnlySize": "{component.basic.button.size.lg.height}",
+      "minimumHeight": "{component.basic.button.size.lg.height}",
+      "paddingInline": "{base.stoken.button.size.large.container.padding-inline}",
+      "paddingBlock": "{base.stoken.button.base.default.container.padding-block}",
+      "gap": "{base.stoken.button.icon-text.base.default.container.gap}",
+      "borderWidth": "{base.stoken.button.base.default.border.width}",
+      "iconCanvas": "{base.stoken.button.icon.size.large.icon.size}",
+      "iconContainer": "{base.stokenAdapter.button.L.iconContainer}",
+      "indicatorSize": "{base.stoken.button.size.large.spinner.size}",
+      "indicatorStroke": 2,
+      "fontSize": "{base.stoken.typography.font-size.label.default}"
+    }
+  ],
+  "compact": {},
+  "shape": {
+    "radius": "{base.stoken.button.base.default.container.radius}",
+    "iconRadius": "{base.stoken.metric.radius.control-sm}",
+    "iconBorderWidth": "{base.stoken.metric.border-width.boundary-default}",
+    "iconFilledOpacity": 0.2
+  },
+  "loading": {
+    "cycleMs": 800,
+    "frameMs": 16,
+    "sweepDegrees": 270,
+    "disabledPolicy": "pause-indicator-and-block-input",
+    "sizePolicy": "freeze-actual-size-reject-size-change"
+  },
+  "ghost": {
+    "hoverOpacity": 0.1,
+    "pressedOpacity": 0.2,
+    "disabledOpacity": 0.4,
+    "surface": "{semantic.color.background.brand}"
+  },
+  "palette": {
+    "surface": "{semantic.color.background.surface}",
+    "app": "{semantic.color.background.app}",
+    "foreground": "{semantic.color.text.primary}",
+    "muted": "{semantic.color.text.muted}",
+    "border": "{semantic.color.border.default}",
+    "focus": "{semantic.color.border.focus}",
+    "onBrand": "{semantic.color.text.onBrand}",
+    "disabled": "{semantic.color.background.disabled}",
+    "disabledText": "{semantic.color.text.disabled}",
+    "disabledBorder": "{semantic.color.border.subtle}",
+    "neutralHover": "{semantic.color.background.interactive-hover}",
+    "neutralPressed": "{semantic.color.background.interactive-active}",
+    "primary": "{semantic.color.action.primary}",
+    "primaryHover": "{semantic.color.action.primary-hover}",
+    "primaryPressed": "{semantic.color.action.primary-pressed}",
+    "primaryText": "{semantic.color.action.primary-text}",
+    "primarySoft": "{semantic.color.action.primary-bg}",
+    "danger": "{semantic.color.status.danger}",
+    "dangerHover": "{semantic.color.status.danger-hover}",
+    "dangerPressed": "{semantic.color.status.danger-pressed}",
+    "dangerSoft": "{semantic.color.status.danger-bg}"
+  },
+  "demoIcons": {
+    "glyphOccupancy": 0.75,
+    "provider": "QRC/local SVG and transparent PNG via IconSource. QStyle ids below remain legacy-only.",
+    "ids": [
+      "arrow-left",
+      "arrow-right",
+      "start",
+      "pause",
+      "abort"
+    ],
+    "opticalPublication": "Not approved optical glyph assets; demo adapter only",
+    "allowedCanvases": [
+      20,
+      24,
+      32
+    ]
+  },
+  "decisions": {
+    "B02": "XS/S/M floor 32px; L uses source height. Missing paddings/gaps explicitly listed above.",
+    "B03": "Source small/medium/large icon canvases: 20/24/32px; XS shares small. Existing QRC SVGs are rasterized at the requested size; not a published optical asset claim.",
+    "B05": "Shared semantic palette; Ghost uses approved-for-demo brand surface only. New recipes are proposal rules.",
+    "B07": "800ms linear rotation,16ms frame,270deg sweep; policy disabled pauses while Loading marker remains.",
+    "B08": "Demonstration-only mappings; real CWS callers and full-state PNG migration are not validated.",
+    "R2": "Explicit iconOnly square uses source height aliases; source loading is orthogonal to five appearance Types.",
+    "STOKEN": "See tokens/stoken-map.json and mapping report. XS shares small; 32px floor retained. Material state colors consume sToken; geometry/state APIs unchanged."
+  },
+  "materialStates": {
+    "primary": {
+      "default": {
+        "stops": [
+          {
+            "at": 0,
+            "color": "{base.stoken.button.primary.default.container.gradient-stop-01}"
+          },
+          {
+            "at": 0.25,
+            "color": "{base.stoken.button.primary.default.container.gradient-stop-02}"
+          },
+          {
+            "at": 0.5,
+            "color": "{base.stoken.button.primary.default.container.gradient-stop-03}"
+          },
+          {
+            "at": 0.75,
+            "color": "{base.stoken.button.primary.default.container.gradient-stop-04}"
+          },
+          {
+            "at": 1,
+            "color": "{base.stoken.button.primary.default.container.gradient-stop-05}"
+          }
+        ],
+        "border": "{base.stoken.button.primary.default.border.color}",
+        "foreground": "{base.stoken.button.primary.default.label.color}",
+        "innerShadow": "{base.stoken.button.primary.default.container.inner-shadow-color}"
+      },
+      "hover": {
+        "stops": [
+          {
+            "at": 0,
+            "color": "{base.stoken.button.primary.hover.container.gradient-stop-01}"
+          },
+          {
+            "at": 0.25,
+            "color": "{base.stoken.button.primary.hover.container.gradient-stop-02}"
+          },
+          {
+            "at": 0.5,
+            "color": "{base.stoken.button.primary.hover.container.gradient-stop-03}"
+          },
+          {
+            "at": 0.75,
+            "color": "{base.stoken.button.primary.hover.container.gradient-stop-04}"
+          },
+          {
+            "at": 1,
+            "color": "{base.stoken.button.primary.hover.container.gradient-stop-05}"
+          }
+        ],
+        "border": "{base.stoken.button.primary.hover.border.color}",
+        "foreground": "{base.stoken.button.primary.hover.label.color}",
+        "innerShadow": "{base.stoken.button.primary.hover.container.inner-shadow-color}"
+      },
+      "pressed": {
+        "stops": [
+          {
+            "at": 0,
+            "color": "{base.stoken.button.primary.pressed.container.gradient-stop-01}"
+          },
+          {
+            "at": 0.25,
+            "color": "{base.stoken.button.primary.pressed.container.gradient-stop-02}"
+          },
+          {
+            "at": 0.5,
+            "color": "{base.stoken.button.primary.pressed.container.gradient-stop-03}"
+          },
+          {
+            "at": 0.75,
+            "color": "{base.stoken.button.primary.pressed.container.gradient-stop-04}"
+          },
+          {
+            "at": 1,
+            "color": "{base.stoken.button.primary.pressed.container.gradient-stop-05}"
+          }
+        ],
+        "border": "{base.stoken.button.primary.pressed.border.color}",
+        "foreground": "{base.stoken.button.primary.pressed.label.color}",
+        "innerShadow": "{base.stoken.button.primary.pressed.container.inner-shadow-color}"
+      },
+      "disabled": {
+        "stops": [
+          {
+            "at": 0,
+            "color": "{base.stoken.button.base.disabled.container.gradient-stop-01}"
+          },
+          {
+            "at": 0.25,
+            "color": "{base.stoken.button.base.disabled.container.gradient-stop-02}"
+          },
+          {
+            "at": 0.5,
+            "color": "{base.stoken.button.base.disabled.container.gradient-stop-03}"
+          },
+          {
+            "at": 0.75,
+            "color": "{base.stoken.button.base.disabled.container.gradient-stop-04}"
+          },
+          {
+            "at": 1,
+            "color": "{base.stoken.button.base.disabled.container.gradient-stop-05}"
+          }
+        ],
+        "border": "{base.stoken.button.base.disabled.border.color}",
+        "foreground": "{base.stoken.button.base.disabled.label.color}",
+        "innerShadow": "{base.stoken.button.base.disabled.container.inner-shadow-color}"
+      }
+    },
+    "secondary": {
+      "default": {
+        "stops": [
+          {
+            "at": 0,
+            "color": "{base.stoken.button.secondary.default.container.gradient-stop-01}"
+          },
+          {
+            "at": 0.25,
+            "color": "{base.stoken.button.secondary.default.container.gradient-stop-02}"
+          },
+          {
+            "at": 0.5,
+            "color": "{base.stoken.button.secondary.default.container.gradient-stop-03}"
+          },
+          {
+            "at": 0.75,
+            "color": "{base.stoken.button.secondary.default.container.gradient-stop-04}"
+          },
+          {
+            "at": 1,
+            "color": "{base.stoken.button.secondary.default.container.gradient-stop-05}"
+          }
+        ],
+        "border": "{base.stoken.button.secondary.default.border.color}",
+        "foreground": "{base.stoken.color.text.primary}",
+        "innerShadow": "{base.stoken.button.secondary.default.container.inner-shadow-color}"
+      },
+      "hover": {
+        "stops": [
+          {
+            "at": 0,
+            "color": "{base.stoken.button.secondary.hover.container.gradient-stop-01}"
+          },
+          {
+            "at": 0.25,
+            "color": "{base.stoken.button.secondary.hover.container.gradient-stop-02}"
+          },
+          {
+            "at": 0.5,
+            "color": "{base.stoken.button.secondary.hover.container.gradient-stop-03}"
+          },
+          {
+            "at": 0.75,
+            "color": "{base.stoken.button.secondary.hover.container.gradient-stop-04}"
+          },
+          {
+            "at": 1,
+            "color": "{base.stoken.button.secondary.hover.container.gradient-stop-05}"
+          }
+        ],
+        "border": "{base.stoken.button.secondary.hover.border.color}",
+        "foreground": "{base.stoken.color.text.primary}",
+        "innerShadow": "{base.stoken.button.secondary.hover.container.inner-shadow-color}"
+      },
+      "pressed": {
+        "stops": [
+          {
+            "at": 0,
+            "color": "{base.stoken.button.secondary.pressed.container.gradient-stop-01}"
+          },
+          {
+            "at": 0.25,
+            "color": "{base.stoken.button.secondary.pressed.container.gradient-stop-02}"
+          },
+          {
+            "at": 0.5,
+            "color": "{base.stoken.button.secondary.pressed.container.gradient-stop-03}"
+          },
+          {
+            "at": 0.75,
+            "color": "{base.stoken.button.secondary.pressed.container.gradient-stop-04}"
+          },
+          {
+            "at": 1,
+            "color": "{base.stoken.button.secondary.pressed.container.gradient-stop-05}"
+          }
+        ],
+        "border": "{base.stoken.button.secondary.pressed.border.color}",
+        "foreground": "{base.stoken.color.text.primary}",
+        "innerShadow": "{base.stoken.button.secondary.pressed.container.inner-shadow-color}"
+      },
+      "disabled": {
+        "stops": [
+          {
+            "at": 0,
+            "color": "{base.stoken.button.base.disabled.container.gradient-stop-01}"
+          },
+          {
+            "at": 0.25,
+            "color": "{base.stoken.button.base.disabled.container.gradient-stop-02}"
+          },
+          {
+            "at": 0.5,
+            "color": "{base.stoken.button.base.disabled.container.gradient-stop-03}"
+          },
+          {
+            "at": 0.75,
+            "color": "{base.stoken.button.base.disabled.container.gradient-stop-04}"
+          },
+          {
+            "at": 1,
+            "color": "{base.stoken.button.base.disabled.container.gradient-stop-05}"
+          }
+        ],
+        "border": "{base.stoken.button.base.disabled.border.color}",
+        "foreground": "{base.stoken.button.base.disabled.label.color}",
+        "innerShadow": "{base.stoken.button.base.disabled.container.inner-shadow-color}"
+      }
+    },
+    "danger": {
+      "default": {
+        "stops": [
+          {
+            "at": 0,
+            "color": "{base.stoken.button.danger.default.container.gradient-stop-01}"
+          },
+          {
+            "at": 0.25,
+            "color": "{base.stoken.button.danger.default.container.gradient-stop-02}"
+          },
+          {
+            "at": 0.5,
+            "color": "{base.stoken.button.danger.default.container.gradient-stop-03}"
+          },
+          {
+            "at": 0.75,
+            "color": "{base.stoken.button.danger.default.container.gradient-stop-04}"
+          },
+          {
+            "at": 1,
+            "color": "{base.stoken.button.danger.default.container.gradient-stop-05}"
+          }
+        ],
+        "border": "{base.stoken.button.danger.default.border.color}",
+        "foreground": "{base.stoken.button.danger.default.label.color}",
+        "innerShadow": "{base.stoken.button.danger.default.container.inner-shadow-color}"
+      },
+      "hover": {
+        "stops": [
+          {
+            "at": 0,
+            "color": "{base.stoken.button.danger.hover.container.gradient-stop-01}"
+          },
+          {
+            "at": 0.25,
+            "color": "{base.stoken.button.danger.hover.container.gradient-stop-02}"
+          },
+          {
+            "at": 0.5,
+            "color": "{base.stoken.button.danger.hover.container.gradient-stop-03}"
+          },
+          {
+            "at": 0.75,
+            "color": "{base.stoken.button.danger.hover.container.gradient-stop-04}"
+          },
+          {
+            "at": 1,
+            "color": "{base.stoken.button.danger.hover.container.gradient-stop-05}"
+          }
+        ],
+        "border": "{base.stoken.button.danger.hover.border.color}",
+        "foreground": "{base.stoken.button.danger.hover.label.color}",
+        "innerShadow": "{base.stoken.button.danger.hover.container.inner-shadow-color}"
+      },
+      "pressed": {
+        "stops": [
+          {
+            "at": 0,
+            "color": "{base.stoken.button.danger.pressed.container.gradient-stop-01}"
+          },
+          {
+            "at": 0.25,
+            "color": "{base.stoken.button.danger.pressed.container.gradient-stop-02}"
+          },
+          {
+            "at": 0.5,
+            "color": "{base.stoken.button.danger.pressed.container.gradient-stop-03}"
+          },
+          {
+            "at": 0.75,
+            "color": "{base.stoken.button.danger.pressed.container.gradient-stop-04}"
+          },
+          {
+            "at": 1,
+            "color": "{base.stoken.button.danger.pressed.container.gradient-stop-05}"
+          }
+        ],
+        "border": "{base.stoken.button.danger.pressed.border.color}",
+        "foreground": "{base.stoken.button.danger.pressed.label.color}",
+        "innerShadow": "{base.stoken.button.danger.pressed.container.inner-shadow-color}"
+      },
+      "disabled": {
+        "stops": [
+          {
+            "at": 0,
+            "color": "{base.stoken.button.base.disabled.container.gradient-stop-01}"
+          },
+          {
+            "at": 0.25,
+            "color": "{base.stoken.button.base.disabled.container.gradient-stop-02}"
+          },
+          {
+            "at": 0.5,
+            "color": "{base.stoken.button.base.disabled.container.gradient-stop-03}"
+          },
+          {
+            "at": 0.75,
+            "color": "{base.stoken.button.base.disabled.container.gradient-stop-04}"
+          },
+          {
+            "at": 1,
+            "color": "{base.stoken.button.base.disabled.container.gradient-stop-05}"
+          }
+        ],
+        "border": "{base.stoken.button.base.disabled.border.color}",
+        "foreground": "{base.stoken.button.base.disabled.label.color}",
+        "innerShadow": "{base.stoken.button.base.disabled.container.inner-shadow-color}"
+      }
+    }
+  }
+}

@@ -1,0 +1,56 @@
+/* Z_PushButton.qss.in -> generated Z_PushButton.qss */
+@selector@ {
+    background: @background@;
+    color: @foreground@;
+    border: @borderWidth@px @borderStyle@ @borderColor@;
+    border-radius: @radius@px;
+    padding: 0px;
+    font-family: "@fontFamily@";
+    font-size: @fontSize@px;
+    font-weight: @fontWeight@;
+}
+@partSelector@ QWidget[buttonPart="LEADING"],
+@partSelector@ QWidget[buttonPart="TRAILING"],
+@partSelector@ QWidget[buttonPart="CONTENT"] {
+    background: transparent;
+    border: none;
+    padding: 0px;
+}
+@partSelector@ QLabel[buttonPart="LABEL"],
+@partSelector@ QLabel[buttonPart="GLYPH"],
+@partSelector@ QLabel[buttonPart="LOADING"] {
+    background: transparent;
+    color: @foreground@;
+    border: none;
+    padding: 0px;
+    font-family: "@fontFamily@";
+    font-size: @fontSize@px;
+    font-weight: @fontWeight@;
+}
+@partSelector@ QFrame[buttonPart="ICON_CONTAINER"][iconContainerStyle="FILLED"] {
+    background: @iconFilledBackground@;
+    border: @iconBorderWidth@px solid @iconFilledBorder@;
+    border-radius: @iconRadius@px;
+}
+@partSelector@ QFrame[buttonPart="ICON_CONTAINER"][iconContainerStyle="OUTLINED"] {
+    background: transparent;
+    border: @iconBorderWidth@px solid @iconOutlinedBorder@;
+    border-radius: @iconRadius@px;
+}
+@partSelector@ QFrame[buttonPart="ICON_CONTAINER"][iconContainerStyle="BARE"] {
+    background: transparent;
+    border: @iconBorderWidth@px solid transparent;
+    border-radius: @iconRadius@px;
+}
+@partSelector@ QFrame[buttonPart="ICON_CONTAINER"][iconContainerStyle="FILLED"] QLabel[buttonPart="GLYPH"] {
+    color: @iconFilledForeground@;
+}
+@partSelector@ QFrame[buttonPart="ICON_CONTAINER"][iconContainerStyle="OUTLINED"] QLabel[buttonPart="GLYPH"] {
+    color: @iconOutlinedForeground@;
+}
+@partSelector@ QFrame[buttonPart="ICON_CONTAINER"][iconContainerStyle="BARE"] QLabel[buttonPart="GLYPH"] {
+    color: @iconBareForeground@;
+}
+@selector@:enabled:focus[loading="false"][focusIndicatorVisible="true"] {
+    border-color: @focusBorder@;
+}

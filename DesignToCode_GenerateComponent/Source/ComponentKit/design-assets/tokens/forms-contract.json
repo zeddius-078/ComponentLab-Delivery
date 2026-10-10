@@ -1,0 +1,94 @@
+{
+  "id": "COMPONENT-LAB-FORMS-R4-STOKEN",
+  "status": "PROJECT-ADAPTER-PROPOSAL",
+  "sourcePolicy": "sToken overlay via the canonical parser; Input and Select share component.basic.input. Unspecified popup bounds and layout defaults remain explicit project contract values.",
+  "fontFamily": "{base.stoken.typography.font-family.harmony-os-sans-sc}",
+  "fallbackFontFamily": "Microsoft YaHei UI",
+  "icons": {
+    "clear": ":/icons/x.svg",
+    "showPassword": ":/icons/eye.svg",
+    "hidePassword": ":/icons/eye-off.svg",
+    "search": ":/icons/search.svg",
+    "arrow": ":/icons/chevron-down.svg"
+  },
+  "metrics": {
+    "gap": "{base.stoken.metric.space.icon-text}",
+    "labelGap": "{base.stoken.metric.space.vertical.standard}",
+    "hintGap": "{base.stoken.metric.space.vertical.micro}",
+    "borderWidth": "{base.borderWidth.hairline}",
+    "radius": "{component.basic.input.radius}",
+    "focusWidth": "{component.basic.input.state.focus.outlineWidth}",
+    "actionSize": "{semantic.dimension.control.interactive-size}",
+    "actionInset": "{base.stoken.metric.space.vertical.micro}",
+    "iconSize": "{base.stoken.metric.visualization-size.xs}",
+    "hintFontSize": "{base.stoken.typography.font-size.label.default-auxiliary}",
+    "labelFontSize": "{base.stoken.typography.font-size.label.default}",
+    "optionHeight": "{semantic.dimension.control.height-md}",
+    "popupPadding": "{base.stoken.layout.padding.inline.micro}",
+    "popupGap": "{base.stoken.metric.space.vertical.micro}",
+    "popupRadius": "{base.stoken.metric.radius.control-default}",
+    "tagGap": "{base.stoken.metric.space.horizontal.micro}",
+    "tagRadius": "{base.stoken.metric.radius.control-sm}",
+    "tagHeight": "{semantic.dimension.control.interactive-size}",
+    "tagPadding": "{base.stoken.layout.padding.inline.compact}",
+    "popupMaxHeight": 256,
+    "popupMinWidth": 160,
+    "fieldPreferredWidth": 320,
+    "fieldMinimumWidth": 120,
+    "textAreaMinRows": 2,
+    "textAreaMaxRows": 5
+  },
+  "sizes": {
+    "sm": {
+      "height": "{component.basic.input.size.sm.height}",
+      "paddingInline": "{component.basic.input.size.sm.paddingInline}",
+      "paddingBlock": "{component.basic.input.size.sm.paddingBlock}",
+      "fontSize": "{component.basic.input.size.sm.fontSize}",
+      "lineHeight": "{base.lineHeight.body-sm}"
+    },
+    "md": {
+      "height": "{component.basic.input.size.md.height}",
+      "paddingInline": "{component.basic.input.size.md.paddingInline}",
+      "paddingBlock": "{component.basic.input.size.md.paddingBlock}",
+      "fontSize": "{component.basic.input.size.md.fontSize}",
+      "lineHeight": "{base.lineHeight.body-sm}"
+    },
+    "lg": {
+      "height": "{component.basic.input.size.lg.height}",
+      "paddingInline": "{component.basic.input.size.lg.paddingInline}",
+      "paddingBlock": "{component.basic.input.size.lg.paddingBlock}",
+      "fontSize": "{component.basic.input.size.lg.fontSize}",
+      "lineHeight": "{base.lineHeight.body-md}"
+    }
+  },
+  "palette": {
+    "background": "{component.basic.input.state.default.background}",
+    "text": "{component.basic.input.state.default.text}",
+    "placeholder": "{component.basic.input.state.default.placeholder}",
+    "border": "{component.basic.input.state.default.border}",
+    "hoverBorder": "{component.basic.input.state.hover.border}",
+    "focusBorder": "{component.basic.input.state.focus.border}",
+    "focusOutline": "{component.basic.input.state.focus.outline}",
+    "disabledBackground": "{component.basic.input.state.disabled.background}",
+    "disabledText": "{component.basic.input.state.disabled.text}",
+    "disabledBorder": "{component.basic.input.state.disabled.border}",
+    "errorBorder": "{component.basic.input.state.error.border}",
+    "errorBackground": "{component.basic.input.state.error.background}",
+    "warningBorder": "{semantic.color.status.warning}",
+    "warningBackground": "{semantic.color.status.warning-bg}",
+    "muted": "{semantic.color.text.muted}",
+    "filledBackground": "{semantic.color.background.surface-muted}",
+    "gradientHigh": "{semantic.color.background.elevated}",
+    "gradientLow": "{semantic.color.action.primary-bg-hover}",
+    "optionHover": "{semantic.color.background.interactive-hover}",
+    "optionSelected": "{semantic.color.action.primary-bg}",
+    "accent": "{semantic.color.action.primary}",
+    "tagBackground": "{semantic.color.background.surface-muted}"
+  },
+  "decisions": {
+    "F01": "Font family is sToken HarmonyOS Sans SC; not bundled. Qt fallback applies when unavailable; Field retains Microsoft YaHei UI fallback.",
+    "F02": "Popup bounds, preferred width and textarea row defaults remain local parameters. Action Loading reuses the Button contract.",
+    "F03": "The sToken embedded interaction size resolves to 24px in all four current runtime configurations; the shared Input/Select field adapter applies a 32px minimum height and 14px minimum body font size.",
+    "F04": "Surface presets use the same checkbox-contract.json data; borderless and underlined preserve their structural border semantics and have no decorative shadow."
+  }
+}

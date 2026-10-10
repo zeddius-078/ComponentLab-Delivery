@@ -1,0 +1,153 @@
+{
+  "status": "PASS_SCOPED_PILOT",
+  "batch": "compact-release-20261004",
+  "date": "2026-10-04T01:32:35.3868412+08:00",
+  "profile": "light-compact",
+  "visualApproval": {
+    "pageGapPx": 20,
+    "date": "2026-10-04",
+    "marginPx": {
+      "left": 36,
+      "right": 28,
+      "top": 24,
+      "bottom": 32
+    },
+    "scope": "Three Compact samples and explicit page gap/margins",
+    "source": "User response in current conversation",
+    "tokenBindingRisk": "RAW_LAYOUT_VALUE remains open",
+    "quote": "通过，保留上述明确布局值并继续收尾"
+  },
+  "packageComparison": {
+    "baseline": "compact-validated-20261004",
+    "files": [
+      {
+        "sha256": "A6C9A5B647B23F2ACACD4E8BCAAEDB8742615AB861859C310DF576D8CFB7ED96",
+        "identical": true,
+        "path": "review\\form\\ReviewPage.ui"
+      },
+      {
+        "sha256": "B470BFE7EF6EE73EF4E159D906CECEA2FBDF53F748DE8B4F7F3F8EB8851B3387",
+        "identical": true,
+        "path": "review\\include\\ReviewPage.h"
+      },
+      {
+        "sha256": "17A2B795C9A14DA4B25B970962FB24394B3F91D4BE0774C28AC81005A80E3650",
+        "identical": true,
+        "path": "review\\src\\ReviewPage.cpp"
+      },
+      {
+        "sha256": "492EDAD138846E477386E69428A7447573131B7BA14A178AFCEDB7C774E71C58",
+        "identical": true,
+        "path": "review\\view\\res\\qss\\ReviewPage.qss"
+      },
+      {
+        "sha256": "F6012D51CA8CF068370617B3EF176F884EE54005B08A0FF32D6D1582768A3DAA",
+        "identical": true,
+        "path": "result\\form\\ReviewResultPage.ui"
+      },
+      {
+        "sha256": "D95CC9D759A10D3CB1F0D2573E5CBDCCFBBF83C3755F6BF5CB5A721BE71EB207",
+        "identical": true,
+        "path": "result\\include\\ReviewResultPage.h"
+      },
+      {
+        "sha256": "C25DD414308F7DE14F0FEAB91DC19D4776457985F617E2AEF2A135C12C07D4DF",
+        "identical": true,
+        "path": "result\\src\\ReviewResultPage.cpp"
+      },
+      {
+        "sha256": "E025478A44AAE02B4546E3BF20E5BD4D3F0C358F8CE3DC7DCF474574DA73AD04",
+        "identical": true,
+        "path": "result\\view\\res\\qss\\ReviewResultPage.qss"
+      },
+      {
+        "sha256": "8A9C60EC5028E2729C55D3E60CE07ED6DFE7421C0410C50CEE6F86E1D5894D28",
+        "identical": true,
+        "path": "horizontal\\form\\HorizontalReviewPage.ui"
+      },
+      {
+        "sha256": "09E230E17F8C0A4D5AAA9265E71E6B88051B9A5566F3213A0FC81BDE344A6B41",
+        "identical": true,
+        "path": "horizontal\\include\\HorizontalReviewPage.h"
+      },
+      {
+        "sha256": "CFA3B0D9B8F3C54FEF1C6E4C3FEB3D404DA4DAB29D7BF9EF08AE8D92733EBB46",
+        "identical": true,
+        "path": "horizontal\\src\\HorizontalReviewPage.cpp"
+      },
+      {
+        "sha256": "155D766F210899A66B7BA85C32E5603137F8BC87A28BE8657654C386FEC4D24E",
+        "identical": true,
+        "path": "horizontal\\view\\res\\qss\\HorizontalReviewPage.qss"
+      }
+    ]
+  },
+  "screenshots": [
+    {
+      "identicalToApprovedCandidate": true,
+      "sha256": "BFB5418CE8746768C8209906E684EB18EE395C3A52247CA3318748453B3FF118",
+      "path": "tests/reviewPage.png"
+    },
+    {
+      "identicalToApprovedCandidate": true,
+      "sha256": "6DFDC215D51A91CC1C9AC598CD7E79FF7B9E728499FD89939735A9748D578A9B",
+      "path": "tests/reviewResultPage.png"
+    },
+    {
+      "identicalToApprovedCandidate": true,
+      "sha256": "3B006C49633553805276122E77E66EB8AF6CE96DFFD825BCFE9A120119837E38",
+      "path": "tests/horizontalReviewPage.png"
+    }
+  ],
+  "tests": {
+    "geometryMismatches": 0,
+    "publicationFunctional": 4,
+    "relocatedConsumer": "PASS",
+    "qtPageFunctional": 5,
+    "pythonContracts": 41,
+    "oldPreviewRuntimeEvidence": "../compact-validated-20261004/preview-regression/qt-results.txt",
+    "oldHorizontalRuntimeEvidence": "../compact-validated-20261004/preview-horizontal/qt-result.json",
+    "tokenColorRoundtrip": "PASS",
+    "sdkFunctional": 2,
+    "geometryNodes": 34
+  },
+  "entry": {
+    "formalPagesGenerated": 3,
+    "businessProjectWritten": false,
+    "compatibilitySwitch": "-Formal",
+    "previewGenerated": "build/cache/preview-release-20261004",
+    "default": "formal",
+    "legacySwitch": "-Preview"
+  },
+  "requirementEvidence": {
+    "T5": "tests; relocated; token-roundtrip; visualApproval",
+    "T1": "tests/select-option-tests.txt; relocated/relocation.json",
+    "T2": "tests/design-geometry.json; tests/contract-tests.txt",
+    "T4": "../compact-geometry-20261003/tests/page-tests.txt; tests/contract-tests.txt",
+    "T6": "default entry generation; entry isolation test; source-revision.json; documentation-check.json",
+    "T3": "structure-check.json; page generation-record.json; tests/page-tests.txt",
+    "T0": "../baseline-20261003/baseline.json; live-pixso/compact-after.json"
+  },
+  "boundaries": [
+    "Only three approved samples, not arbitrary designs",
+    "Unbound explicit layout values remain a design-side risk",
+    "Alias validation covers exported page fields only",
+    "SelectOption is a disabled read-only option",
+    "Page QRC proven with an explicit licensed fixture; production samples have no page-owned image",
+    "Relocation proves build/runtime isolation, not fallback-font visual parity",
+    "Qt offscreen pixel validation is not device-wide certification",
+    "Manual business import/merge remains developer-owned"
+  ],
+  "additionalEvidence": {
+    "platformDifference": "platform-source-diff.json",
+    "baselineDifference": "baseline-diff.json",
+    "sdkIntegrity": "sdk-integrity.json",
+    "powerShellSyntax": "powershell-syntax.json"
+  },
+  "outOfScopeSourceChanges": {
+    "action": "Preserved; not attributed to or reverted by this task",
+    "runtimeDependency": "Published SDK verified against all 355 manifest file hashes",
+    "count": 6,
+    "area": "Gen_comp MappingWorkbench"
+  }
+}

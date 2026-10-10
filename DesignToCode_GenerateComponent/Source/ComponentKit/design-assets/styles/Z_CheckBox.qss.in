@@ -1,0 +1,3 @@
+/* GENERATED from checkbox-contract.json and the locked source snapshot. */
+QFrame[checkboxPart="FACE"] { padding: 0; margin: 0; }
+QLabel[checkboxPart="LABEL"] { background: transparent; border: none; padding: 0; margin: 0; }

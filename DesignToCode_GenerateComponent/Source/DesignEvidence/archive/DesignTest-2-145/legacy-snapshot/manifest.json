@@ -1,0 +1,29 @@
+{
+  "assembledAtUtc": "2026-10-03T14:06:48.202096+00:00",
+  "fileKeyExpected": "4S0Ktm81WnvzuJmZHvRuOg",
+  "files": [
+    {
+      "path": "page-2-145.source.json",
+      "sourcePath": "G:\\ComponentLab-Delivery\\DesignToCode_GenerateComponent\\Source\\Qt\\MappingWorkbench\\mapping\\design\\pixso-qt-native-library\\page-2-145.snapshot.json",
+      "bytes": 1178430,
+      "sha256": "e03de8a3990c7914df32516effc8a3cec2df145fb959ed3de9735e84ddb9cbce"
+    },
+    {
+      "path": "variant-1.source.json",
+      "sourcePath": "G:\\ComponentLab-Delivery\\DesignToCode_GenerateComponent\\Source\\Qt\\MappingWorkbench\\mapping\\design\\pixso-button\\variant.json",
+      "bytes": 335095,
+      "sha256": "c1f6cf69fdf251ef8645d38c30ea813687c93595139038cd5fe89efc11e041ab"
+    },
+    {
+      "path": "design-evidence.json",
+      "bytes": 1207650,
+      "sha256": "a1d4d9450f859e38aed7ab5d0438d603bd18ab3e88641176971d58523f069447"
+    },
+    {
+      "path": "mcp-probe.json",
+      "bytes": 60386,
+      "sha256": "9bad5b99d2a4cc7d4cb4da84ee4fa12a4d7375b115b581231c6a8115282a7571"
+    }
+  ],
+  "evidenceSource": "preserved-local-snapshot"
+}

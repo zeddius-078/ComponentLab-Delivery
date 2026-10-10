@@ -1,0 +1,5166 @@
+{
+  "$description": "Commerly PySide2 design tokens. Three layers: base -> semantic -> component.basic / component.composite.",
+  "base": {
+    "$description": "Base tokens are raw atoms. They describe what a value is, not where it is used. Designers should not bind screens directly to base tokens except when creating new semantic tokens.",
+    "color": {
+      "$type": "color",
+      "brand": {
+        "$type": "color",
+        "$description": "Brand palettes from Figma node 128:15390.",
+        "mint-glow": {
+          "50": {
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                0.9608,
+                0.9882,
+                0.9412
+              ]
+            },
+            "$description": "Figma Colors / mint glow / 50"
+          },
+          "100": {
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                0.8745,
+                0.9608,
+                0.8157
+              ]
+            },
+            "$description": "Figma Colors / mint glow / 100"
+          },
+          "200": {
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                0.8118,
+                0.9412,
+                0.7294
+              ]
+            },
+            "$description": "Figma Colors / mint glow / 200"
+          },
+          "300": {
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                0.7255,
+                0.9176,
+                0.6039
+              ]
+            },
+            "$description": "Figma Colors / mint glow / 300"
+          },
+          "400": {
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                0.6745,
+                0.898,
+                0.5255
+              ]
+            },
+            "$description": "Figma Colors / mint glow / 400"
+          },
+          "500": {
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                0.5922,
+                0.8745,
+                0.4078
+              ]
+            },
+            "$description": "Figma Colors / mint glow / 500"
+          },
+          "600": {
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                0.5373,
+                0.7961,
+                0.3725
+              ]
+            },
+            "$description": "Figma Colors / mint glow / 600"
+          },
+          "700": {
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                0.4196,
+                0.6196,
+                0.2902
+              ]
+            },
+            "$description": "Figma Colors / mint glow / 700"
+          },
+          "800": {
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                0.3255,
+                0.4824,
+                0.2235
+              ]
+            },
+            "$description": "Figma Colors / mint glow / 800"
+          },
+          "900": {
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                0.2471,
+                0.3686,
+                0.1725
+              ]
+            },
+            "$description": "Figma Colors / mint glow / 900"
+          }
+        },
+        "deep-forest": {
+          "50": {
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                0.9098,
+                0.9294,
+                0.9255
+              ]
+            },
+            "$description": "Figma Colors / deep forest / 50"
+          },
+          "100": {
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                0.7255,
+                0.7765,
+                0.7686
+              ]
+            },
+            "$description": "Figma Colors / deep forest / 100"
+          },
+          "200": {
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                0.5922,
+                0.6706,
+                0.6549
+              ]
+            },
+            "$description": "Figma Colors / deep forest / 200"
+          },
+          "300": {
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                0.4078,
+                0.5176,
+                0.498
+              ]
+            },
+            "$description": "Figma Colors / deep forest / 300"
+          },
+          "400": {
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                0.2902,
+                0.4275,
+                0.4
+              ]
+            },
+            "$description": "Figma Colors / deep forest / 400"
+          },
+          "500": {
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                0.1137,
+                0.2824,
+                0.251
+              ]
+            },
+            "$description": "Figma Colors / deep forest / 500"
+          },
+          "600": {
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                0.102,
+                0.2588,
+                0.2275
+              ]
+            },
+            "$description": "Figma Colors / deep forest / 600"
+          },
+          "700": {
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                0.0824,
+                0.2,
+                0.1765
+              ]
+            },
+            "$description": "Figma Colors / deep forest / 700"
+          },
+          "800": {
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                0.0627,
+                0.1569,
+                0.1373
+              ]
+            },
+            "$description": "Figma Colors / deep forest / 800"
+          },
+          "900": {
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                0.0471,
+                0.1176,
+                0.1059
+              ]
+            },
+            "$description": "Figma Colors / deep forest / 900"
+          }
+        },
+        "primary-700": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.0824,
+              0.2,
+              0.1765
+            ]
+          },
+          "$description": "Legacy alias: use base.color.brand.deep-forest.700"
+        },
+        "primary-600": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.1137,
+              0.2824,
+              0.251
+            ]
+          },
+          "$description": "Legacy alias: use base.color.brand.deep-forest.500"
+        },
+        "primary-500": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.2902,
+              0.4275,
+              0.4
+            ]
+          },
+          "$description": "Legacy alias: use base.color.brand.deep-forest.400"
+        },
+        "primary-200": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.5922,
+              0.6706,
+              0.6549
+            ]
+          },
+          "$description": "Legacy alias: use base.color.brand.deep-forest.200"
+        },
+        "primary-50": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.9098,
+              0.9294,
+              0.9255
+            ]
+          },
+          "$description": "Legacy alias: use base.color.brand.deep-forest.50"
+        },
+        "mint-500": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.5922,
+              0.8745,
+              0.4078
+            ]
+          },
+          "$description": "Legacy alias: use base.color.brand.mint-glow.500"
+        },
+        "forest-500": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.1137,
+              0.2824,
+              0.251
+            ]
+          },
+          "$description": "Legacy alias: use base.color.brand.deep-forest.500"
+        }
+      },
+      "neutral": {
+        "$type": "color",
+        "$description": "Neutral palettes from Figma node 128:15390. Includes white, black and grey scales.",
+        "white": {
+          "50": {
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                1.0,
+                1.0,
+                1.0
+              ]
+            },
+            "$description": "Figma Colors / white / 50"
+          },
+          "100": {
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                1.0,
+                1.0,
+                1.0
+              ]
+            },
+            "$description": "Figma Colors / white / 100"
+          },
+          "200": {
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                1.0,
+                1.0,
+                1.0
+              ]
+            },
+            "$description": "Figma Colors / white / 200"
+          },
+          "300": {
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                1.0,
+                1.0,
+                1.0
+              ]
+            },
+            "$description": "Figma Colors / white / 300"
+          },
+          "400": {
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                1.0,
+                1.0,
+                1.0
+              ]
+            },
+            "$description": "Figma Colors / white / 400"
+          },
+          "500": {
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                1.0,
+                1.0,
+                1.0
+              ]
+            },
+            "$description": "Figma Colors / white / 500"
+          },
+          "600": {
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                0.9098,
+                0.9098,
+                0.9098
+              ]
+            },
+            "$description": "Figma Colors / white / 600"
+          },
+          "700": {
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                0.7098,
+                0.7098,
+                0.7098
+              ]
+            },
+            "$description": "Figma Colors / white / 700"
+          },
+          "800": {
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                0.549,
+                0.549,
+                0.549
+              ]
+            },
+            "$description": "Figma Colors / white / 800"
+          },
+          "900": {
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                0.4196,
+                0.4196,
+                0.4196
+              ]
+            },
+            "$description": "Figma Colors / white / 900"
+          }
+        },
+        "black": {
+          "50": {
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                0.902,
+                0.902,
+                0.902
+              ]
+            },
+            "$description": "Figma Colors / black / 50"
+          },
+          "100": {
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                0.6902,
+                0.6902,
+                0.6902
+              ]
+            },
+            "$description": "Figma Colors / black / 100"
+          },
+          "200": {
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                0.5412,
+                0.5412,
+                0.5412
+              ]
+            },
+            "$description": "Figma Colors / black / 200"
+          },
+          "300": {
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                0.3294,
+                0.3294,
+                0.3294
+              ]
+            },
+            "$description": "Figma Colors / black / 300"
+          },
+          "400": {
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                0.2,
+                0.2,
+                0.2
+              ]
+            },
+            "$description": "Figma Colors / black / 400"
+          },
+          "500": {
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "$description": "Figma Colors / black / 500"
+          },
+          "600": {
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "$description": "Figma Colors / black / 600"
+          },
+          "700": {
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "$description": "Figma Colors / black / 700"
+          },
+          "800": {
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "$description": "Figma Colors / black / 800"
+          },
+          "900": {
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "$description": "Figma Colors / black / 900"
+          }
+        },
+        "grey": {
+          "50": {
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                0.9647,
+                0.9647,
+                0.9647
+              ]
+            },
+            "$description": "Figma Colors / grey / 50"
+          },
+          "100": {
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                0.8863,
+                0.8863,
+                0.8863
+              ]
+            },
+            "$description": "Figma Colors / grey / 100"
+          },
+          "200": {
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                0.8275,
+                0.8275,
+                0.8275
+              ]
+            },
+            "$description": "Figma Colors / grey / 200"
+          },
+          "300": {
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                0.749,
+                0.749,
+                0.749
+              ]
+            },
+            "$description": "Figma Colors / grey / 300"
+          },
+          "400": {
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                0.702,
+                0.702,
+                0.702
+              ]
+            },
+            "$description": "Figma Colors / grey / 400"
+          },
+          "500": {
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                0.6275,
+                0.6275,
+                0.6275
+              ]
+            },
+            "$description": "Figma Colors / grey / 500"
+          },
+          "600": {
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                0.5725,
+                0.5725,
+                0.5725
+              ]
+            },
+            "$description": "Figma Colors / grey / 600"
+          },
+          "700": {
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                0.4471,
+                0.4471,
+                0.4471
+              ]
+            },
+            "$description": "Figma Colors / grey / 700"
+          },
+          "800": {
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                0.3451,
+                0.3451,
+                0.3451
+              ]
+            },
+            "$description": "Figma Colors / grey / 800"
+          },
+          "900": {
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                0.2627,
+                0.2627,
+                0.2627
+              ]
+            },
+            "$description": "Figma Colors / grey / 900"
+          }
+        },
+        "0": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              1.0,
+              1.0,
+              1.0
+            ]
+          },
+          "$description": "Legacy alias: surface white"
+        },
+        "50": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.9647,
+              0.9647,
+              0.9647
+            ]
+          },
+          "$description": "Legacy alias: app background"
+        },
+        "100": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.8863,
+              0.8863,
+              0.8863
+            ]
+          },
+          "$description": "Legacy alias: soft divider"
+        },
+        "200": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.8275,
+              0.8275,
+              0.8275
+            ]
+          },
+          "$description": "Legacy alias: border"
+        },
+        "300": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.749,
+              0.749,
+              0.749
+            ]
+          },
+          "$description": "Legacy alias: control border"
+        },
+        "400": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.6275,
+              0.6275,
+              0.6275
+            ]
+          },
+          "$description": "Legacy alias: placeholder"
+        },
+        "500": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.4471,
+              0.4471,
+              0.4471
+            ]
+          },
+          "$description": "Legacy alias: muted text"
+        },
+        "900": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.2,
+              0.2,
+              0.2
+            ]
+          },
+          "$description": "Legacy alias: primary text"
+        },
+        "1000": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "$description": "Legacy alias: absolute black"
+        }
+      },
+      "status": {
+        "$type": "color",
+        "$description": "Semantic status palettes from Figma node 128:15390.",
+        "informative": {
+          "50": {
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                0.902,
+                0.9333,
+                1.0
+              ]
+            },
+            "$description": "Figma Colors / informative / 50"
+          },
+          "100": {
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                0.6902,
+                0.7882,
+                1.0
+              ]
+            },
+            "$description": "Figma Colors / informative / 100"
+          },
+          "200": {
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                0.5412,
+                0.6863,
+                1.0
+              ]
+            },
+            "$description": "Figma Colors / informative / 200"
+          },
+          "300": {
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                0.3294,
+                0.5412,
+                1.0
+              ]
+            },
+            "$description": "Figma Colors / informative / 300"
+          },
+          "400": {
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                0.2,
+                0.4549,
+                1.0
+              ]
+            },
+            "$description": "Figma Colors / informative / 400"
+          },
+          "500": {
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                0.0,
+                0.3176,
+                1.0
+              ]
+            },
+            "$description": "Figma Colors / informative / 500"
+          },
+          "600": {
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                0.0,
+                0.2902,
+                0.9098
+              ]
+            },
+            "$description": "Figma Colors / informative / 600"
+          },
+          "700": {
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                0.0,
+                0.2275,
+                0.7098
+              ]
+            },
+            "$description": "Figma Colors / informative / 700"
+          },
+          "800": {
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                0.0,
+                0.1765,
+                0.549
+              ]
+            },
+            "$description": "Figma Colors / informative / 800"
+          },
+          "900": {
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                0.0,
+                0.1333,
+                0.4196
+              ]
+            },
+            "$description": "Figma Colors / informative / 900"
+          }
+        },
+        "success": {
+          "50": {
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                0.9059,
+                0.9569,
+                0.9137
+              ]
+            },
+            "$description": "Figma Colors / success / 50"
+          },
+          "100": {
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                0.7059,
+                0.8627,
+                0.7294
+              ]
+            },
+            "$description": "Figma Colors / success / 100"
+          },
+          "200": {
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                0.5647,
+                0.7961,
+                0.6
+              ]
+            },
+            "$description": "Figma Colors / success / 200"
+          },
+          "300": {
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                0.3686,
+                0.7059,
+                0.4157
+              ]
+            },
+            "$description": "Figma Colors / success / 300"
+          },
+          "400": {
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                0.2431,
+                0.6471,
+                0.302
+              ]
+            },
+            "$description": "Figma Colors / success / 400"
+          },
+          "500": {
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                0.0549,
+                0.5608,
+                0.1294
+              ]
+            },
+            "$description": "Figma Colors / success / 500"
+          },
+          "600": {
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                0.051,
+                0.5098,
+                0.1176
+              ]
+            },
+            "$description": "Figma Colors / success / 600"
+          },
+          "700": {
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                0.0392,
+                0.4,
+                0.0902
+              ]
+            },
+            "$description": "Figma Colors / success / 700"
+          },
+          "800": {
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                0.0314,
+                0.3098,
+                0.0706
+              ]
+            },
+            "$description": "Figma Colors / success / 800"
+          },
+          "900": {
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                0.0235,
+                0.2353,
+                0.0549
+              ]
+            },
+            "$description": "Figma Colors / success / 900"
+          }
+        },
+        "warning": {
+          "50": {
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                1.0,
+                0.9569,
+                0.902
+              ]
+            },
+            "$description": "Figma Colors / warning / 50"
+          },
+          "100": {
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                1.0,
+                0.8706,
+                0.6902
+              ]
+            },
+            "$description": "Figma Colors / warning / 100"
+          },
+          "200": {
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                1.0,
+                0.8078,
+                0.5412
+              ]
+            },
+            "$description": "Figma Colors / warning / 200"
+          },
+          "300": {
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                1.0,
+                0.7216,
+                0.3294
+              ]
+            },
+            "$description": "Figma Colors / warning / 300"
+          },
+          "400": {
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                1.0,
+                0.6667,
+                0.2
+              ]
+            },
+            "$description": "Figma Colors / warning / 400"
+          },
+          "500": {
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                1.0,
+                0.5843,
+                0.0
+              ]
+            },
+            "$description": "Figma Colors / warning / 500"
+          },
+          "600": {
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                0.9098,
+                0.5333,
+                0.0
+              ]
+            },
+            "$description": "Figma Colors / warning / 600"
+          },
+          "700": {
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                0.7098,
+                0.4157,
+                0.0
+              ]
+            },
+            "$description": "Figma Colors / warning / 700"
+          },
+          "800": {
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                0.549,
+                0.3216,
+                0.0
+              ]
+            },
+            "$description": "Figma Colors / warning / 800"
+          },
+          "900": {
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                0.4196,
+                0.2471,
+                0.0
+              ]
+            },
+            "$description": "Figma Colors / warning / 900"
+          }
+        },
+        "danger": {
+          "50": {
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                1.0,
+                0.902,
+                0.9059
+              ]
+            },
+            "$description": "Figma Colors / danger / 50"
+          },
+          "100": {
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                1.0,
+                0.6902,
+                0.7137
+              ]
+            },
+            "$description": "Figma Colors / danger / 100"
+          },
+          "200": {
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                1.0,
+                0.5412,
+                0.5725
+              ]
+            },
+            "$description": "Figma Colors / danger / 200"
+          },
+          "300": {
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                1.0,
+                0.3294,
+                0.3804
+              ]
+            },
+            "$description": "Figma Colors / danger / 300"
+          },
+          "400": {
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                1.0,
+                0.2,
+                0.2588
+              ]
+            },
+            "$description": "Figma Colors / danger / 400"
+          },
+          "500": {
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                1.0,
+                0.0,
+                0.0745
+              ]
+            },
+            "$description": "Figma Colors / danger / 500"
+          },
+          "600": {
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                0.9098,
+                0.0,
+                0.0667
+              ]
+            },
+            "$description": "Figma Colors / danger / 600"
+          },
+          "700": {
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                0.7098,
+                0.0,
+                0.051
+              ]
+            },
+            "$description": "Figma Colors / danger / 700"
+          },
+          "800": {
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                0.549,
+                0.0,
+                0.0392
+              ]
+            },
+            "$description": "Figma Colors / danger / 800"
+          },
+          "900": {
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                0.4196,
+                0.0,
+                0.0314
+              ]
+            },
+            "$description": "Figma Colors / danger / 900"
+          }
+        },
+        "success-50": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.9059,
+              0.9569,
+              0.9137
+            ]
+          },
+          "$description": "Legacy alias: use base.color.status.success.50"
+        },
+        "success-300": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.3686,
+              0.7059,
+              0.4157
+            ]
+          },
+          "$description": "Legacy alias: use base.color.status.success.300"
+        },
+        "success-500": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.0549,
+              0.5608,
+              0.1294
+            ]
+          },
+          "$description": "Legacy alias: use base.color.status.success.500"
+        },
+        "info-500": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.0,
+              0.3176,
+              1.0
+            ]
+          },
+          "$description": "Legacy alias: use base.color.status.informative.500"
+        },
+        "warning-50": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              1.0,
+              0.9569,
+              0.902
+            ]
+          },
+          "$description": "Legacy alias: use base.color.status.warning.50"
+        },
+        "warning-300": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              1.0,
+              0.7216,
+              0.3294
+            ]
+          },
+          "$description": "Legacy alias: use base.color.status.warning.300"
+        },
+        "warning-500": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              1.0,
+              0.5843,
+              0.0
+            ]
+          },
+          "$description": "Legacy alias: use base.color.status.warning.500"
+        },
+        "danger-50": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              1.0,
+              0.902,
+              0.9059
+            ]
+          },
+          "$description": "Legacy alias: use base.color.status.danger.50"
+        },
+        "danger-300": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              1.0,
+              0.3294,
+              0.3804
+            ]
+          },
+          "$description": "Legacy alias: use base.color.status.danger.300"
+        },
+        "danger-500": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              1.0,
+              0.0,
+              0.0745
+            ]
+          },
+          "$description": "Legacy alias: use base.color.status.danger.500"
+        }
+      }
+    },
+    "fontFamily": {
+      "$type": "fontFamily",
+      "primary": {
+        "$value": "Geist",
+        "$description": "Figma typography style family for Title, Heading, Subheading and Body text"
+      },
+      "ui": {
+        "$value": "Inter",
+        "$description": "Font family exported with the Figma documentation node; use as PySide2 fallback when Geist is unavailable"
+      },
+      "app": {
+        "$value": "Geist, Inter, Poppins, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
+        "$description": "Runtime font stack for generated QSS"
+      },
+      "fallback": {
+        "$value": "Inter, Poppins, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
+      }
+    },
+    "fontSize": {
+      "$type": "fontSize",
+      "$description": "Six-level application typography scale. Runtime UI must resolve to 24, 20, 18, 16, 14 or 12 logical px.",
+      "scale-600": {
+        "$value": 24,
+        "$description": "Largest application title size"
+      },
+      "scale-500": {
+        "$value": 20,
+        "$description": "Section title size"
+      },
+      "scale-400": {
+        "$value": 18,
+        "$description": "Emphasized body and compact heading size"
+      },
+      "scale-300": {
+        "$value": 16,
+        "$description": "Default body and control text size"
+      },
+      "scale-200": {
+        "$value": 14,
+        "$description": "Secondary body and table text size"
+      },
+      "scale-100": {
+        "$value": 12,
+        "$description": "Caption and assistive text size"
+      },
+      "title": {
+        "$value": "{base.fontSize.scale-600}",
+        "$description": "Application title role constrained to the six-level scale"
+      },
+      "heading-xl": {
+        "$value": "{base.fontSize.scale-600}",
+        "$description": "Application heading role constrained to the six-level scale"
+      },
+      "heading-lg": {
+        "$value": "{base.fontSize.scale-600}",
+        "$description": "Application heading role constrained to the six-level scale"
+      },
+      "heading-md": {
+        "$value": "{base.fontSize.scale-600}",
+        "$description": "Application heading role constrained to the six-level scale"
+      },
+      "heading-sm": {
+        "$value": "{base.fontSize.scale-600}",
+        "$description": "Application heading role constrained to the six-level scale"
+      },
+      "subheading-lg": {
+        "$value": "{base.fontSize.scale-600}",
+        "$description": "Largest subheading role"
+      },
+      "subheading-md": {
+        "$value": "{base.fontSize.scale-600}",
+        "$description": "Default page heading role"
+      },
+      "subheading-sm": {
+        "$value": "{base.fontSize.scale-500}",
+        "$description": "Section heading role"
+      },
+      "body-lg": {
+        "$value": "{base.fontSize.scale-400}",
+        "$description": "Emphasized body role"
+      },
+      "body-md": {
+        "$value": "{base.fontSize.scale-300}",
+        "$description": "Default body role"
+      },
+      "body-sm": {
+        "$value": "{base.fontSize.scale-200}",
+        "$description": "Secondary body role"
+      },
+      "display": {
+        "$value": "{base.fontSize.scale-600}",
+        "$description": "Legacy alias for heading-xl"
+      },
+      "headline": {
+        "$value": "{base.fontSize.scale-600}",
+        "$description": "Legacy alias for heading-md"
+      },
+      "title-1": {
+        "$value": "{base.fontSize.scale-600}",
+        "$description": "Legacy alias aligned to heading-sm"
+      },
+      "title-2": {
+        "$value": "{base.fontSize.scale-600}",
+        "$description": "Legacy alias aligned to subheading-md"
+      },
+      "title-3": {
+        "$value": "{base.fontSize.scale-500}",
+        "$description": "Legacy alias aligned to subheading-sm"
+      },
+      "caption": {
+        "$value": "{base.fontSize.scale-100}",
+        "$description": "Legacy compact caption for dense PySide2 tables; not present in Figma typography node"
+      }
+    },
+    "letterSpacing": {
+      "$type": "letterSpacing",
+      "none": {
+        "$value": 0,
+        "$description": "Default tracking for Figma text styles"
+      },
+      "xs": {
+        "$value": 0.25,
+        "$description": "Documentation label and helper text tracking from Figma typography node"
+      }
+    },
+    "fontWeight": {
+      "$type": "fontWeight",
+      "semibold": {
+        "$value": 600
+      },
+      "medium": {
+        "$value": 500
+      },
+      "regular": {
+        "$value": 400
+      }
+    },
+    "lineHeight": {
+      "$type": "lineHeight",
+      "$description": "Six-level logical-pixel line boxes. Each line height equals its paired font size plus 8px.",
+      "scale-600": {
+        "$value": 32,
+        "$description": "Line height for 24px type"
+      },
+      "scale-500": {
+        "$value": 28,
+        "$description": "Line height for 20px type"
+      },
+      "scale-400": {
+        "$value": 26,
+        "$description": "Line height for 18px type"
+      },
+      "scale-300": {
+        "$value": 24,
+        "$description": "Line height for 16px type"
+      },
+      "scale-200": {
+        "$value": 22,
+        "$description": "Line height for 14px type"
+      },
+      "scale-100": {
+        "$value": 20,
+        "$description": "Line height for 12px type"
+      },
+      "title": {
+        "$value": "{base.lineHeight.scale-600}",
+        "$description": "Line box for application title"
+      },
+      "heading-xl": {
+        "$value": "{base.lineHeight.scale-600}"
+      },
+      "heading-lg": {
+        "$value": "{base.lineHeight.scale-600}"
+      },
+      "heading-md": {
+        "$value": "{base.lineHeight.scale-600}"
+      },
+      "heading-sm": {
+        "$value": "{base.lineHeight.scale-600}"
+      },
+      "subheading-lg": {
+        "$value": "{base.lineHeight.scale-600}"
+      },
+      "subheading-md": {
+        "$value": "{base.lineHeight.scale-600}"
+      },
+      "subheading-sm": {
+        "$value": "{base.lineHeight.scale-500}"
+      },
+      "body-lg": {
+        "$value": "{base.lineHeight.scale-400}"
+      },
+      "body-md": {
+        "$value": "{base.lineHeight.scale-300}"
+      },
+      "body-sm": {
+        "$value": "{base.lineHeight.scale-200}"
+      },
+      "tight": {
+        "$value": "{base.lineHeight.scale-200}",
+        "$description": "Legacy compact line-height alias"
+      },
+      "normal": {
+        "$value": "{base.lineHeight.scale-300}",
+        "$description": "Legacy normal line-height alias"
+      },
+      "relaxed": {
+        "$value": "{base.lineHeight.scale-400}",
+        "$description": "Legacy relaxed line-height alias"
+      }
+    },
+    "dimension": {
+      "$type": "dimension",
+      "$description": "Raw dimensions. Desktop control sizes follow the HelloUI Default mode; legacy mobile dimensions remain available for existing screens.",
+      "app-width": {
+        "$value": 1440
+      },
+      "app-height": {
+        "$value": 1024
+      },
+      "sidebar-width": {
+        "$value": 280
+      },
+      "control-height": {
+        "$value": 48,
+        "$description": "Legacy mobile control height retained for existing authentication/onboarding screens"
+      },
+      "control": {
+        "$description": "Desktop B-end control heights with the CGY 32px minimum interaction floor.",
+        "height-xs": {
+          "$value": 32,
+          "$description": "Smallest interactive control height at the 1440px design baseline"
+        },
+        "height-sm": {
+          "$value": 32,
+          "$description": "Small control height collapsed to the 32px interaction floor"
+        },
+        "height-md": {
+          "$value": 32
+        },
+        "height-lg": {
+          "$value": 40
+        },
+        "interactive-size": {
+          "$value": 32,
+          "$description": "Minimum interactive target height for Qt Widgets controls"
+        },
+        "outline-width": {
+          "$value": 2
+        },
+        "focus-width": {
+          "$value": 4
+        }
+      },
+      "nav-item-height": {
+        "$value": 46
+      },
+      "icon-sm": {
+        "$value": 16
+      },
+      "icon-md": {
+        "$value": 24
+      },
+      "icon-lg": {
+        "$value": 32
+      },
+      "avatar-md": {
+        "$value": 40
+      },
+      "media": {
+        "$description": "Stable raster presentation sizes used by token-bound QLabel assets.",
+        "thumbnail": {
+          "$value": 72
+        }
+      }
+    },
+    "radius": {
+      "$type": "borderRadius",
+      "xs": {
+        "$value": 2
+      },
+      "sm": {
+        "$value": 4
+      },
+      "md": {
+        "$value": 8
+      },
+      "lg": {
+        "$value": 16
+      },
+      "xl": {
+        "$value": 24
+      },
+      "2xl": {
+        "$value": 32
+      },
+      "3xl": {
+        "$value": 40
+      },
+      "pill": {
+        "$value": 100
+      }
+    },
+    "borderWidth": {
+      "$type": "borderWidth",
+      "hairline": {
+        "$value": 1
+      },
+      "strong": {
+        "$value": 2
+      }
+    },
+    "space": {
+      "$type": "spacing",
+      "0": {
+        "$value": 0
+      },
+      "2": {
+        "$value": 2
+      },
+      "4": {
+        "$value": 4
+      },
+      "8": {
+        "$value": 8
+      },
+      "12": {
+        "$value": 12
+      },
+      "16": {
+        "$value": 16
+      },
+      "20": {
+        "$value": 20
+      },
+      "24": {
+        "$value": 24
+      },
+      "28": {
+        "$value": 28
+      },
+      "32": {
+        "$value": 32
+      },
+      "36": {
+        "$value": 36
+      },
+      "40": {
+        "$value": 40
+      }
+    },
+    "shadow": {
+      "$type": "boxShadow",
+      "card": {
+        "$value": {
+          "offsetX": 0,
+          "offsetY": 4,
+          "blur": 30,
+          "spread": 0,
+          "color": {
+            "colorSpace": "srgb",
+            "components": [
+              0.2118,
+              0.1608,
+              0.7176,
+              0.07
+            ]
+          }
+        }
+      },
+      "inner-light": {
+        "$value": {
+          "offsetX": 0,
+          "offsetY": 4,
+          "blur": 8,
+          "spread": 0,
+          "color": {
+            "colorSpace": "srgb",
+            "components": [
+              1,
+              1,
+              1,
+              0.12
+            ]
+          }
+        }
+      }
+    },
+    "motion": {
+      "$description": "Raw motion atoms. Use through semantic/component motion tokens for UI implementation.",
+      "duration": {
+        "$type": "duration",
+        "instant": {
+          "$value": 0,
+          "$description": "No animation; use for reduced motion or forced instant jumps"
+        },
+        "micro": {
+          "$value": 120,
+          "$description": "Small hover/press feedback"
+        },
+        "fast": {
+          "$value": 180,
+          "$description": "Small component state changes"
+        },
+        "normal": {
+          "$value": 240,
+          "$description": "Default enter/exit animation"
+        },
+        "page": {
+          "$value": 320,
+          "$description": "Screen-level transition"
+        },
+        "slow": {
+          "$value": 420,
+          "$description": "Large illustrative or onboarding transition"
+        }
+      },
+      "distance": {
+        "$type": "dimension",
+        "micro": {
+          "$value": 8,
+          "$description": "Tiny nudge for controls"
+        },
+        "panel": {
+          "$value": 24,
+          "$description": "Panel enter/exit offset"
+        },
+        "page": {
+          "$value": 56,
+          "$description": "Page transition offset"
+        }
+      },
+      "opacity": {
+        "$type": "number",
+        "hidden": {
+          "$value": 0
+        },
+        "visible": {
+          "$value": 1
+        },
+        "scrim": {
+          "$value": 0.82
+        }
+      },
+      "easing": {
+        "$type": "cubicBezier",
+        "standard": {
+          "$value": "OutCubic",
+          "$description": "Default decelerating feel for page enter"
+        },
+        "emphasized": {
+          "$value": "InOutCubic",
+          "$description": "Balanced in/out page transition"
+        },
+        "exit": {
+          "$value": "InCubic",
+          "$description": "Subtle acceleration for exiting content"
+        }
+      }
+    },
+    "asset": {
+      "$description": "Raw resource paths. Use through semantic.asset.* or component tokens instead of hard-coded file paths.",
+      "image": {
+        "onboarding-portrait": {
+          "$type": "asset",
+          "$value": "assets/stable/images/onboarding-portrait.png",
+          "$description": "Portrait image used by the onboarding hero panel"
+        },
+        "revenue-insights": {
+          "$type": "asset",
+          "$value": "assets/stable/images/revenue-insights.png",
+          "$description": "Revenue widget exported from Figma SignUp node 819:16163"
+        },
+        "commerly-logo-inverse": {
+          "$type": "asset",
+          "$value": "assets/stable/icons/figma/commerly-logo-on-brand.svg",
+          "$description": "Transparent on-brand Commerly lockup rebuilt from Figma logo geometry for dark and branded surfaces"
+        },
+        "avatar-brian": {
+          "$type": "asset",
+          "$value": "assets/stable/images/avatar-brian.png",
+          "$description": "Brian profile avatar exported from Figma component 86:6297"
+        },
+        "avatar-alex": {
+          "$type": "asset",
+          "$value": "assets/stable/images/avatar-alex.png",
+          "$description": "Alex Johnson avatar exported from Figma node 70:14703"
+        },
+        "chat-damage-1": {
+          "$type": "asset",
+          "$value": "assets/stable/images/chat-damage-1.png",
+          "$description": "Customer damage attachment exported from Figma node 116:31100"
+        },
+        "chat-damage-2": {
+          "$type": "asset",
+          "$value": "assets/stable/images/chat-damage-2.png",
+          "$description": "Customer damage attachment exported from Figma node 116:31103"
+        },
+        "product-oslo-chair": {
+          "$type": "asset",
+          "$value": "assets/stable/images/product-oslo-chair.png",
+          "$description": "Product thumbnail exported from Figma node 50:2522"
+        },
+        "product-sapporo-sofa": {
+          "$type": "asset",
+          "$value": "assets/stable/images/product-sapporo-sofa.png",
+          "$description": "Product thumbnail exported from Figma node 50:2556"
+        },
+        "product-bergen-table": {
+          "$type": "asset",
+          "$value": "assets/stable/images/product-bergen-table.png",
+          "$description": "Product thumbnail exported from Figma node 50:2564"
+        }
+      },
+      "icon": {
+        "fingerprint": {
+          "$type": "asset",
+          "$value": "assets/stable/icons/auth-fingerprint.png",
+          "$description": "Fingerprint icon used by auth screens"
+        },
+        "arrow-back": {
+          "$type": "asset",
+          "$value": "assets/stable/icons/navigation-back.png",
+          "$description": "Legacy navigation arrow export; should be replaced by semantic SVG icon when available"
+        },
+        "commerly-logo": {
+          "$type": "asset",
+          "$value": "assets/stable/icons/figma/commerly-logo.svg",
+          "$description": "Commerly logo exported from Figma component 49:1669"
+        },
+        "arrow-left": {
+          "$type": "asset",
+          "$value": "assets/stable/icons/figma/arrow-left.svg",
+          "$description": "Arrow-left icon exported from Figma component 35:1414"
+        },
+        "arrow-right": {
+          "$type": "asset",
+          "$value": "assets/stable/icons/figma/arrow-right.svg",
+          "$description": "Arrow-right icon exported from Figma component 35:1421"
+        },
+        "check": {
+          "$type": "asset",
+          "$value": "assets/stable/icons/figma/check.svg",
+          "$description": "Check icon exported from Figma component 40:1957"
+        },
+        "checkbox-check": {
+          "$type": "asset",
+          "$value": "assets/stable/icons/figma/checkbox-check.svg",
+          "$description": "Project-owned transparent Checkbox check glyph; TMCA-2026-09-09"
+        },
+        "checkbox-mixed": {
+          "$type": "asset",
+          "$value": "assets/stable/icons/figma/checkbox-mixed.svg",
+          "$description": "Project-owned transparent Checkbox indeterminate glyph; TMCA-2026-09-09"
+        },
+        "category-fashion": {
+          "$type": "asset",
+          "$value": "assets/stable/icons/figma/category-fashion.png",
+          "$description": "24px icon crop from Figma category card 116:10192"
+        },
+        "category-electronics": {
+          "$type": "asset",
+          "$value": "assets/stable/icons/figma/category-electronics.png",
+          "$description": "24px icon crop from Figma category card 116:10200"
+        },
+        "category-furniture": {
+          "$type": "asset",
+          "$value": "assets/stable/icons/figma/category-furniture.png",
+          "$description": "24px icon crop from Figma category card 116:10212"
+        },
+        "category-food": {
+          "$type": "asset",
+          "$value": "assets/stable/icons/figma/category-food.png",
+          "$description": "24px icon crop from Figma category card 116:10228"
+        },
+        "category-beauty": {
+          "$type": "asset",
+          "$value": "assets/stable/icons/figma/category-beauty.png",
+          "$description": "24px icon crop from Figma category card 116:10229"
+        },
+        "category-others": {
+          "$type": "asset",
+          "$value": "assets/stable/icons/figma/category-others.png",
+          "$description": "24px icon crop from Figma category card 116:10230"
+        },
+        "social-google": {
+          "$type": "asset",
+          "$value": "assets/stable/icons/figma/social-google.svg",
+          "$description": "Google sign-in icon exported from Figma node 819:16148"
+        },
+        "social-apple": {
+          "$type": "asset",
+          "$value": "assets/stable/icons/figma/social-apple.svg",
+          "$description": "Apple sign-in icon exported from Figma node 819:16155"
+        },
+        "radio-off": {
+          "$type": "asset",
+          "$value": "assets/stable/icons/figma/radio-off.svg",
+          "$description": "Unchecked radio indicator exported from Figma component 46:3125"
+        },
+        "radio-on": {
+          "$type": "asset",
+          "$value": "assets/stable/icons/figma/radio-on.svg",
+          "$description": "Checked radio indicator exported from Figma component 46:3129"
+        },
+        "nav-dashboard": {
+          "$type": "asset",
+          "$value": "assets/stable/icons/figma/nav-dashboard.png",
+          "$description": "Dashboard navigation icon exported from Figma component 37:298"
+        },
+        "nav-orders": {
+          "$type": "asset",
+          "$value": "assets/stable/icons/figma/nav-orders.png",
+          "$description": "Orders navigation icon exported from Figma component 37:312"
+        },
+        "nav-products": {
+          "$type": "asset",
+          "$value": "assets/stable/icons/figma/nav-products.png",
+          "$description": "Products navigation icon exported from Figma component 37:305"
+        },
+        "nav-chats": {
+          "$type": "asset",
+          "$value": "assets/stable/icons/figma/nav-chats.png",
+          "$description": "Chats navigation icon exported from Figma component 37:319"
+        },
+        "nav-settings": {
+          "$type": "asset",
+          "$value": "assets/stable/icons/figma/nav-settings.png",
+          "$description": "Settings navigation icon exported from Figma component 37:324"
+        },
+        "nav-integrations": {
+          "$type": "asset",
+          "$value": "assets/stable/icons/figma/nav-integrations.png",
+          "$description": "Integrations navigation icon exported from Figma component 37:329"
+        },
+        "nav-help": {
+          "$type": "asset",
+          "$value": "assets/stable/icons/figma/nav-help.png",
+          "$description": "Help Center navigation icon exported from Figma component 37:340"
+        },
+        "external-link": {
+          "$type": "asset",
+          "$value": "assets/stable/icons/figma/external-link.png",
+          "$description": "External-link icon exported from Figma component 115:9916"
+        },
+        "top-search": {
+          "$type": "asset",
+          "$value": "assets/stable/icons/figma/top-search.png",
+          "$description": "Navbar search icon exported from Figma component 49:1900"
+        },
+        "top-bell": {
+          "$type": "asset",
+          "$value": "assets/stable/icons/figma/top-bell.png",
+          "$description": "Navbar notification icon exported from Figma component 49:1894"
+        },
+        "help-getting-started": {
+          "$type": "asset",
+          "$value": "assets/stable/icons/figma/help-getting-started.png",
+          "$description": "Help category icon exported from Figma node 102:9645"
+        },
+        "help-account": {
+          "$type": "asset",
+          "$value": "assets/stable/icons/figma/help-account.png",
+          "$description": "Help category icon exported from Figma node 102:9664"
+        },
+        "help-troubleshooting": {
+          "$type": "asset",
+          "$value": "assets/stable/icons/figma/help-troubleshooting.png",
+          "$description": "Help category icon exported from Figma node 102:9670"
+        },
+        "integration-amazon": {
+          "$type": "asset",
+          "$value": "assets/stable/icons/figma/integration-amazon.png"
+        },
+        "integration-tiktok": {
+          "$type": "asset",
+          "$value": "assets/stable/icons/figma/integration-tiktok.svg"
+        },
+        "integration-shopee": {
+          "$type": "asset",
+          "$value": "assets/stable/icons/figma/integration-shopee.png"
+        },
+        "integration-paypal": {
+          "$type": "asset",
+          "$value": "assets/stable/icons/figma/integration-paypal.png"
+        },
+        "integration-stripe": {
+          "$type": "asset",
+          "$value": "assets/stable/icons/figma/integration-stripe.png"
+        },
+        "integration-dhl": {
+          "$type": "asset",
+          "$value": "assets/stable/icons/figma/integration-dhl.png"
+        },
+        "integration-hubspot": {
+          "$type": "asset",
+          "$value": "assets/stable/icons/figma/integration-hubspot.png"
+        },
+        "integration-whatsapp": {
+          "$type": "asset",
+          "$value": "assets/stable/icons/figma/integration-whatsapp.png"
+        },
+        "integration-zendesk": {
+          "$type": "asset",
+          "$value": "assets/stable/icons/figma/integration-zendesk.png"
+        }
+      },
+      "font": {
+        "poppins-regular": {
+          "$type": "asset",
+          "$value": "assets/stable/fonts/Poppins-Regular.ttf"
+        },
+        "poppins-medium": {
+          "$type": "asset",
+          "$value": "assets/stable/fonts/Poppins-Medium.ttf"
+        },
+        "poppins-semibold": {
+          "$type": "asset",
+          "$value": "assets/stable/fonts/Poppins-SemiBold.ttf"
+        }
+      }
+    },
+    "term": {
+      "$description": "Raw domain vocabulary. Terms are content tokens, not visual tokens.",
+      "navigation": {
+        "dashboard": {
+          "$type": "string",
+          "$value": "Dashboard"
+        },
+        "orders": {
+          "$type": "string",
+          "$value": "Orders"
+        }
+      },
+      "orders": {
+        "pending": {
+          "$type": "string",
+          "$value": "Pending"
+        },
+        "shipped": {
+          "$type": "string",
+          "$value": "Shipped"
+        },
+        "canceled": {
+          "$type": "string",
+          "$value": "Canceled"
+        }
+      }
+    },
+    "uiLayout": {
+      "$description": "Qt Designer 原始布局数值层；页面和组件不得直接消费，应通过 semantic 或 component Alias。",
+      "dimension": {
+        "$type": "dimension",
+        "0": {
+          "$value": 0
+        },
+        "14": {
+          "$value": 14
+        },
+        "18": {
+          "$value": 18
+        },
+        "20": {
+          "$value": 20
+        },
+        "24": {
+          "$value": 24
+        },
+        "30": {
+          "$value": 30
+        },
+        "32": {
+          "$value": 32
+        },
+        "40": {
+          "$value": 40
+        },
+        "42": {
+          "$value": 42
+        },
+        "44": {
+          "$value": 44
+        },
+        "60": {
+          "$value": 60
+        },
+        "70": {
+          "$value": 70
+        },
+        "72": {
+          "$value": 72
+        },
+        "82": {
+          "$value": 82
+        },
+        "90": {
+          "$value": 90
+        },
+        "120": {
+          "$value": 120
+        },
+        "142": {
+          "$value": 142
+        },
+        "150": {
+          "$value": 150
+        },
+        "176": {
+          "$value": 176
+        },
+        "180": {
+          "$value": 180
+        },
+        "200": {
+          "$value": 200
+        },
+        "220": {
+          "$value": 220
+        },
+        "250": {
+          "$value": 250
+        },
+        "286": {
+          "$value": 286
+        },
+        "305": {
+          "$value": 305
+        },
+        "313": {
+          "$value": 313
+        },
+        "320": {
+          "$value": 320
+        },
+        "330": {
+          "$value": 330
+        },
+        "360": {
+          "$value": 360
+        },
+        "420": {
+          "$value": 420
+        },
+        "500": {
+          "$value": 500
+        },
+        "520": {
+          "$value": 520
+        },
+        "566": {
+          "$value": 566
+        },
+        "650": {
+          "$value": 650
+        },
+        "696": {
+          "$value": 696
+        },
+        "725": {
+          "$value": 725
+        },
+        "921": {
+          "$value": 921
+        },
+        "1024": {
+          "$value": 1024
+        },
+        "1440": {
+          "$value": 1440
+        }
+      },
+      "space": {
+        "$type": "spacing",
+        "0": {
+          "$value": 0
+        },
+        "1": {
+          "$value": 1
+        },
+        "2": {
+          "$value": 2
+        },
+        "4": {
+          "$value": 4
+        },
+        "8": {
+          "$value": 8
+        },
+        "10": {
+          "$value": 10
+        },
+        "12": {
+          "$value": 12
+        },
+        "14": {
+          "$value": 14
+        },
+        "16": {
+          "$value": 16
+        },
+        "18": {
+          "$value": 18
+        },
+        "20": {
+          "$value": 20
+        },
+        "24": {
+          "$value": 24
+        },
+        "28": {
+          "$value": 28
+        },
+        "32": {
+          "$value": 32
+        },
+        "48": {
+          "$value": 48
+        },
+        "56": {
+          "$value": 56
+        },
+        "72": {
+          "$value": 72
+        },
+        "80": {
+          "$value": 80
+        },
+        "106": {
+          "$value": 106
+        },
+        "137": {
+          "$value": 137
+        },
+        "150": {
+          "$value": 150
+        },
+        "184": {
+          "$value": 184
+        }
+      }
+    }
+  },
+  "semantic": {
+    "$description": "Semantic tokens translate base values into product meaning: background, text, action, border, status, chart. Screens and component tokens should use semantic tokens instead of raw base values.",
+    "interaction": {
+      "focusIndicator": {
+        "mode": {
+          "$type": "string",
+          "$value": "keyboard",
+          "$description": "Component Lab visibility policy: off, keyboard or always. Keyboard focus behavior remains enabled."
+        },
+        "opacity": {
+          "$type": "number",
+          "$value": 0.55,
+          "$description": "Alpha multiplier for optional focus feedback, within 0..1."
+        }
+      }
+    },
+    "color": {
+      "$type": "color",
+      "$description": "Semantic color roles mapped to Figma color variables from node 128:15390.",
+      "background": {
+        "app": {
+          "$value": "{base.color.neutral.grey.50}"
+        },
+        "surface": {
+          "$value": "{base.color.neutral.white.500}"
+        },
+        "elevated": {
+          "$value": "{base.color.neutral.white.500}"
+        },
+        "surface-muted": {
+          "$value": "{base.color.brand.mint-glow.50}"
+        },
+        "disabled": {
+          "$value": "rgba(0, 0, 0, 0.04)"
+        },
+        "interactive-hover": {
+          "$value": "rgba(0, 0, 0, 0.04)"
+        },
+        "interactive-active": {
+          "$value": "rgba(0, 0, 0, 0.15)"
+        },
+        "brand": {
+          "$value": "{base.color.brand.deep-forest.500}"
+        }
+      },
+      "text": {
+        "primary": {
+          "$value": "{base.color.neutral.black.400}"
+        },
+        "secondary": {
+          "$value": "rgba(0, 0, 0, 0.65)"
+        },
+        "tertiary": {
+          "$value": "rgba(0, 0, 0, 0.45)"
+        },
+        "muted": {
+          "$value": "{base.color.neutral.grey.700}"
+        },
+        "placeholder": {
+          "$value": "rgba(0, 0, 0, 0.25)"
+        },
+        "disabled": {
+          "$value": "{semantic.color.text.placeholder}"
+        },
+        "inverse": {
+          "$value": "{base.color.neutral.white.500}"
+        },
+        "onBrand": {
+          "$value": "{base.color.neutral.white.500}",
+          "$description": "Stable light text on deep brand surfaces; does not switch with Theme"
+        },
+        "onImage": {
+          "$value": "{base.color.neutral.white.500}",
+          "$description": "Stable light text on darkened image overlays; does not switch with Theme"
+        }
+      },
+      "border": {
+        "default": {
+          "$value": "{base.color.neutral.grey.200}"
+        },
+        "subtle": {
+          "$value": "{base.color.neutral.grey.100}"
+        },
+        "split": {
+          "$value": "rgba(0, 0, 0, 0.06)"
+        },
+        "control": {
+          "$value": "{base.color.neutral.grey.300}"
+        },
+        "focus": {
+          "$value": "{base.color.status.informative.500}"
+        }
+      },
+      "action": {
+        "primary": {
+          "$value": "{base.color.brand.deep-forest.500}"
+        },
+        "primary-hover": {
+          "$value": "{base.color.brand.deep-forest.400}"
+        },
+        "primary-pressed": {
+          "$value": "{base.color.brand.deep-forest.700}"
+        },
+        "primary-disabled": {
+          "$value": "{semantic.color.background.disabled}"
+        },
+        "primary-text": {
+          "$value": "{semantic.color.text.inverse}"
+        },
+        "primary-text-disabled": {
+          "$value": "{semantic.color.text.disabled}"
+        },
+        "primary-bg": {
+          "$value": "{base.color.brand.mint-glow.50}"
+        },
+        "primary-bg-hover": {
+          "$value": "{base.color.brand.mint-glow.100}"
+        },
+        "primary-border": {
+          "$value": "{base.color.brand.deep-forest.200}"
+        },
+        "primary-border-hover": {
+          "$value": "{base.color.brand.deep-forest.400}"
+        },
+        "secondary": {
+          "$value": "{base.color.neutral.white.500}"
+        },
+        "secondary-hover": {
+          "$value": "{semantic.color.background.interactive-hover}"
+        },
+        "secondary-pressed": {
+          "$value": "{semantic.color.background.interactive-active}"
+        },
+        "accent": {
+          "$value": "{base.color.brand.mint-glow.500}"
+        }
+      },
+      "status": {
+        "success": {
+          "$value": "{base.color.status.success.500}"
+        },
+        "success-bg": {
+          "$value": "{base.color.status.success.50}"
+        },
+        "success-hover": {
+          "$value": "{base.color.status.success.400}"
+        },
+        "success-pressed": {
+          "$value": "{base.color.status.success.700}"
+        },
+        "success-border": {
+          "$value": "{base.color.status.success.300}"
+        },
+        "info": {
+          "$value": "{base.color.status.informative.500}"
+        },
+        "info-bg": {
+          "$value": "{base.color.status.informative.50}"
+        },
+        "info-hover": {
+          "$value": "{base.color.status.informative.400}"
+        },
+        "info-pressed": {
+          "$value": "{base.color.status.informative.700}"
+        },
+        "info-border": {
+          "$value": "{base.color.status.informative.300}"
+        },
+        "warning": {
+          "$value": "{base.color.status.warning.500}"
+        },
+        "warning-bg": {
+          "$value": "{base.color.status.warning.50}"
+        },
+        "warning-hover": {
+          "$value": "{base.color.status.warning.400}"
+        },
+        "warning-pressed": {
+          "$value": "{base.color.status.warning.700}"
+        },
+        "warning-border": {
+          "$value": "{base.color.status.warning.300}"
+        },
+        "danger": {
+          "$value": "{base.color.status.danger.500}"
+        },
+        "danger-bg": {
+          "$value": "{base.color.status.danger.50}"
+        },
+        "danger-hover": {
+          "$value": "{base.color.status.danger.400}"
+        },
+        "danger-pressed": {
+          "$value": "{base.color.status.danger.700}"
+        },
+        "danger-border": {
+          "$value": "{base.color.status.danger.300}"
+        }
+      },
+      "fill": {
+        "default": {
+          "$value": "rgba(0, 0, 0, 0.15)"
+        },
+        "secondary": {
+          "$value": "rgba(0, 0, 0, 0.06)"
+        },
+        "tertiary": {
+          "$value": "rgba(0, 0, 0, 0.04)"
+        },
+        "quaternary": {
+          "$value": "rgba(0, 0, 0, 0.02)"
+        }
+      },
+      "overlay": {
+        "transparent": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0,
+              0,
+              0,
+              0
+            ]
+          }
+        },
+        "scrim": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0,
+              0,
+              0,
+              0.82
+            ]
+          }
+        },
+        "modal": {
+          "$value": "rgba(0, 0, 0, 0.38)",
+          "$description": "Modal overlay used by Qt Widgets composite dialogs"
+        }
+      },
+      "chart": {
+        "pending": {
+          "$value": "{base.color.status.warning.500}"
+        },
+        "shipped": {
+          "$value": "{base.color.status.success.500}"
+        },
+        "canceled": {
+          "$value": "{base.color.status.danger.500}"
+        },
+        "active": {
+          "$value": "{base.color.brand.deep-forest.500}"
+        },
+        "accent": {
+          "$value": "{base.color.brand.mint-glow.500}"
+        }
+      }
+    },
+    "type": {
+      "$description": "Typography roles from Figma node 128:15075. Each role supports regular, medium and semibold weights.",
+      "title": {
+        "family": {
+          "$type": "fontFamily",
+          "$value": "{base.fontFamily.primary}"
+        },
+        "size": {
+          "$type": "fontSize",
+          "$value": "{base.fontSize.title}"
+        },
+        "lineHeight": {
+          "$type": "lineHeight",
+          "$value": "{base.lineHeight.title}"
+        },
+        "letterSpacing": {
+          "$type": "letterSpacing",
+          "$value": "{base.letterSpacing.none}"
+        },
+        "regular": {
+          "weight": {
+            "$type": "fontWeight",
+            "$value": "{base.fontWeight.regular}"
+          }
+        },
+        "medium": {
+          "weight": {
+            "$type": "fontWeight",
+            "$value": "{base.fontWeight.medium}"
+          }
+        },
+        "semibold": {
+          "weight": {
+            "$type": "fontWeight",
+            "$value": "{base.fontWeight.semibold}"
+          }
+        }
+      },
+      "heading-xl": {
+        "family": {
+          "$type": "fontFamily",
+          "$value": "{base.fontFamily.primary}"
+        },
+        "size": {
+          "$type": "fontSize",
+          "$value": "{base.fontSize.heading-xl}"
+        },
+        "lineHeight": {
+          "$type": "lineHeight",
+          "$value": "{base.lineHeight.heading-xl}"
+        },
+        "letterSpacing": {
+          "$type": "letterSpacing",
+          "$value": "{base.letterSpacing.none}"
+        },
+        "regular": {
+          "weight": {
+            "$type": "fontWeight",
+            "$value": "{base.fontWeight.regular}"
+          }
+        },
+        "medium": {
+          "weight": {
+            "$type": "fontWeight",
+            "$value": "{base.fontWeight.medium}"
+          }
+        },
+        "semibold": {
+          "weight": {
+            "$type": "fontWeight",
+            "$value": "{base.fontWeight.semibold}"
+          }
+        }
+      },
+      "heading-lg": {
+        "family": {
+          "$type": "fontFamily",
+          "$value": "{base.fontFamily.primary}"
+        },
+        "size": {
+          "$type": "fontSize",
+          "$value": "{base.fontSize.heading-lg}"
+        },
+        "lineHeight": {
+          "$type": "lineHeight",
+          "$value": "{base.lineHeight.heading-lg}"
+        },
+        "letterSpacing": {
+          "$type": "letterSpacing",
+          "$value": "{base.letterSpacing.none}"
+        },
+        "regular": {
+          "weight": {
+            "$type": "fontWeight",
+            "$value": "{base.fontWeight.regular}"
+          }
+        },
+        "medium": {
+          "weight": {
+            "$type": "fontWeight",
+            "$value": "{base.fontWeight.medium}"
+          }
+        },
+        "semibold": {
+          "weight": {
+            "$type": "fontWeight",
+            "$value": "{base.fontWeight.semibold}"
+          }
+        }
+      },
+      "heading-md": {
+        "family": {
+          "$type": "fontFamily",
+          "$value": "{base.fontFamily.primary}"
+        },
+        "size": {
+          "$type": "fontSize",
+          "$value": "{base.fontSize.heading-md}"
+        },
+        "lineHeight": {
+          "$type": "lineHeight",
+          "$value": "{base.lineHeight.heading-md}"
+        },
+        "letterSpacing": {
+          "$type": "letterSpacing",
+          "$value": "{base.letterSpacing.none}"
+        },
+        "regular": {
+          "weight": {
+            "$type": "fontWeight",
+            "$value": "{base.fontWeight.regular}"
+          }
+        },
+        "medium": {
+          "weight": {
+            "$type": "fontWeight",
+            "$value": "{base.fontWeight.medium}"
+          }
+        },
+        "semibold": {
+          "weight": {
+            "$type": "fontWeight",
+            "$value": "{base.fontWeight.semibold}"
+          }
+        }
+      },
+      "heading-sm": {
+        "family": {
+          "$type": "fontFamily",
+          "$value": "{base.fontFamily.primary}"
+        },
+        "size": {
+          "$type": "fontSize",
+          "$value": "{base.fontSize.heading-sm}"
+        },
+        "lineHeight": {
+          "$type": "lineHeight",
+          "$value": "{base.lineHeight.heading-sm}"
+        },
+        "letterSpacing": {
+          "$type": "letterSpacing",
+          "$value": "{base.letterSpacing.none}"
+        },
+        "regular": {
+          "weight": {
+            "$type": "fontWeight",
+            "$value": "{base.fontWeight.regular}"
+          }
+        },
+        "medium": {
+          "weight": {
+            "$type": "fontWeight",
+            "$value": "{base.fontWeight.medium}"
+          }
+        },
+        "semibold": {
+          "weight": {
+            "$type": "fontWeight",
+            "$value": "{base.fontWeight.semibold}"
+          }
+        }
+      },
+      "subheading-lg": {
+        "family": {
+          "$type": "fontFamily",
+          "$value": "{base.fontFamily.primary}"
+        },
+        "size": {
+          "$type": "fontSize",
+          "$value": "{base.fontSize.subheading-lg}"
+        },
+        "lineHeight": {
+          "$type": "lineHeight",
+          "$value": "{base.lineHeight.subheading-lg}"
+        },
+        "letterSpacing": {
+          "$type": "letterSpacing",
+          "$value": "{base.letterSpacing.none}"
+        },
+        "regular": {
+          "weight": {
+            "$type": "fontWeight",
+            "$value": "{base.fontWeight.regular}"
+          }
+        },
+        "medium": {
+          "weight": {
+            "$type": "fontWeight",
+            "$value": "{base.fontWeight.medium}"
+          }
+        },
+        "semibold": {
+          "weight": {
+            "$type": "fontWeight",
+            "$value": "{base.fontWeight.semibold}"
+          }
+        }
+      },
+      "subheading-md": {
+        "family": {
+          "$type": "fontFamily",
+          "$value": "{base.fontFamily.primary}"
+        },
+        "size": {
+          "$type": "fontSize",
+          "$value": "{base.fontSize.subheading-md}"
+        },
+        "lineHeight": {
+          "$type": "lineHeight",
+          "$value": "{base.lineHeight.subheading-md}"
+        },
+        "letterSpacing": {
+          "$type": "letterSpacing",
+          "$value": "{base.letterSpacing.none}"
+        },
+        "regular": {
+          "weight": {
+            "$type": "fontWeight",
+            "$value": "{base.fontWeight.regular}"
+          }
+        },
+        "medium": {
+          "weight": {
+            "$type": "fontWeight",
+            "$value": "{base.fontWeight.medium}"
+          }
+        },
+        "semibold": {
+          "weight": {
+            "$type": "fontWeight",
+            "$value": "{base.fontWeight.semibold}"
+          }
+        }
+      },
+      "subheading-sm": {
+        "family": {
+          "$type": "fontFamily",
+          "$value": "{base.fontFamily.primary}"
+        },
+        "size": {
+          "$type": "fontSize",
+          "$value": "{base.fontSize.subheading-sm}"
+        },
+        "lineHeight": {
+          "$type": "lineHeight",
+          "$value": "{base.lineHeight.subheading-sm}"
+        },
+        "letterSpacing": {
+          "$type": "letterSpacing",
+          "$value": "{base.letterSpacing.none}"
+        },
+        "regular": {
+          "weight": {
+            "$type": "fontWeight",
+            "$value": "{base.fontWeight.regular}"
+          }
+        },
+        "medium": {
+          "weight": {
+            "$type": "fontWeight",
+            "$value": "{base.fontWeight.medium}"
+          }
+        },
+        "semibold": {
+          "weight": {
+            "$type": "fontWeight",
+            "$value": "{base.fontWeight.semibold}"
+          }
+        }
+      },
+      "body-lg": {
+        "family": {
+          "$type": "fontFamily",
+          "$value": "{base.fontFamily.primary}"
+        },
+        "size": {
+          "$type": "fontSize",
+          "$value": "{base.fontSize.body-lg}"
+        },
+        "lineHeight": {
+          "$type": "lineHeight",
+          "$value": "{base.lineHeight.body-lg}"
+        },
+        "letterSpacing": {
+          "$type": "letterSpacing",
+          "$value": "{base.letterSpacing.none}"
+        },
+        "regular": {
+          "weight": {
+            "$type": "fontWeight",
+            "$value": "{base.fontWeight.regular}"
+          }
+        },
+        "medium": {
+          "weight": {
+            "$type": "fontWeight",
+            "$value": "{base.fontWeight.medium}"
+          }
+        },
+        "semibold": {
+          "weight": {
+            "$type": "fontWeight",
+            "$value": "{base.fontWeight.semibold}"
+          }
+        }
+      },
+      "body-md": {
+        "family": {
+          "$type": "fontFamily",
+          "$value": "{base.fontFamily.primary}"
+        },
+        "size": {
+          "$type": "fontSize",
+          "$value": "{base.fontSize.body-md}"
+        },
+        "lineHeight": {
+          "$type": "lineHeight",
+          "$value": "{base.lineHeight.body-md}"
+        },
+        "letterSpacing": {
+          "$type": "letterSpacing",
+          "$value": "{base.letterSpacing.none}"
+        },
+        "regular": {
+          "weight": {
+            "$type": "fontWeight",
+            "$value": "{base.fontWeight.regular}"
+          }
+        },
+        "medium": {
+          "weight": {
+            "$type": "fontWeight",
+            "$value": "{base.fontWeight.medium}"
+          }
+        },
+        "semibold": {
+          "weight": {
+            "$type": "fontWeight",
+            "$value": "{base.fontWeight.semibold}"
+          }
+        }
+      },
+      "body-sm": {
+        "family": {
+          "$type": "fontFamily",
+          "$value": "{base.fontFamily.primary}"
+        },
+        "size": {
+          "$type": "fontSize",
+          "$value": "{base.fontSize.body-sm}"
+        },
+        "lineHeight": {
+          "$type": "lineHeight",
+          "$value": "{base.lineHeight.body-sm}"
+        },
+        "letterSpacing": {
+          "$type": "letterSpacing",
+          "$value": "{base.letterSpacing.none}"
+        },
+        "regular": {
+          "weight": {
+            "$type": "fontWeight",
+            "$value": "{base.fontWeight.regular}"
+          }
+        },
+        "medium": {
+          "weight": {
+            "$type": "fontWeight",
+            "$value": "{base.fontWeight.medium}"
+          }
+        },
+        "semibold": {
+          "weight": {
+            "$type": "fontWeight",
+            "$value": "{base.fontWeight.semibold}"
+          }
+        }
+      },
+      "display": {
+        "$description": "Legacy alias for existing PySide2 screens; prefer heading-xl for new work.",
+        "family": {
+          "$type": "fontFamily",
+          "$value": "{base.fontFamily.primary}"
+        },
+        "size": {
+          "$type": "fontSize",
+          "$value": "{base.fontSize.display}"
+        },
+        "lineHeight": {
+          "$type": "lineHeight",
+          "$value": "{base.lineHeight.heading-xl}"
+        },
+        "letterSpacing": {
+          "$type": "letterSpacing",
+          "$value": "{base.letterSpacing.none}"
+        },
+        "weight": {
+          "$type": "fontWeight",
+          "$value": "{base.fontWeight.medium}"
+        }
+      },
+      "headline": {
+        "$description": "Legacy alias for existing PySide2 screens; prefer heading-md for new work.",
+        "family": {
+          "$type": "fontFamily",
+          "$value": "{base.fontFamily.primary}"
+        },
+        "size": {
+          "$type": "fontSize",
+          "$value": "{base.fontSize.headline}"
+        },
+        "lineHeight": {
+          "$type": "lineHeight",
+          "$value": "{base.lineHeight.heading-md}"
+        },
+        "letterSpacing": {
+          "$type": "letterSpacing",
+          "$value": "{base.letterSpacing.none}"
+        },
+        "weight": {
+          "$type": "fontWeight",
+          "$value": "{base.fontWeight.medium}"
+        }
+      },
+      "body": {
+        "$description": "Legacy alias for existing PySide2 screens; prefer body-md for new work.",
+        "family": {
+          "$type": "fontFamily",
+          "$value": "{base.fontFamily.primary}"
+        },
+        "size": {
+          "$type": "fontSize",
+          "$value": "{base.fontSize.body-md}"
+        },
+        "lineHeight": {
+          "$type": "lineHeight",
+          "$value": "{base.lineHeight.body-md}"
+        },
+        "letterSpacing": {
+          "$type": "letterSpacing",
+          "$value": "{base.letterSpacing.none}"
+        },
+        "weight": {
+          "$type": "fontWeight",
+          "$value": "{base.fontWeight.regular}"
+        }
+      },
+      "caption": {
+        "$description": "Legacy dense caption for tables and compact labels.",
+        "family": {
+          "$type": "fontFamily",
+          "$value": "{base.fontFamily.ui}"
+        },
+        "size": {
+          "$type": "fontSize",
+          "$value": "{base.fontSize.caption}"
+        },
+        "lineHeight": {
+          "$type": "lineHeight",
+          "$value": "{base.lineHeight.normal}"
+        },
+        "letterSpacing": {
+          "$type": "letterSpacing",
+          "$value": "{base.letterSpacing.xs}"
+        },
+        "weight": {
+          "$type": "fontWeight",
+          "$value": "{base.fontWeight.medium}"
+        }
+      }
+    },
+    "dimension": {
+      "$description": "Semantic dimensions for desktop controls. Values follow the HelloUI Default density and may be overridden by a density profile.",
+      "control": {
+        "height-xs": {
+          "$type": "dimension",
+          "$value": "{base.dimension.control.height-xs}"
+        },
+        "height-sm": {
+          "$type": "dimension",
+          "$value": "{base.dimension.control.height-sm}"
+        },
+        "height-md": {
+          "$type": "dimension",
+          "$value": "{base.dimension.control.height-md}"
+        },
+        "height-lg": {
+          "$type": "dimension",
+          "$value": "{base.dimension.control.height-lg}"
+        },
+        "interactive-size": {
+          "$type": "dimension",
+          "$value": "{base.dimension.control.interactive-size}"
+        },
+        "outline-width": {
+          "$type": "dimension",
+          "$value": "{base.dimension.control.outline-width}"
+        },
+        "focus-width": {
+          "$type": "dimension",
+          "$value": "{base.dimension.control.focus-width}"
+        }
+      }
+    },
+    "radius": {
+      "$type": "borderRadius",
+      "surface": {
+        "$value": "{base.radius.3xl}"
+      },
+      "card": {
+        "$value": "{base.radius.2xl}"
+      },
+      "control": {
+        "$value": "{base.radius.xl}"
+      },
+      "control-sm": {
+        "$value": "{base.radius.sm}"
+      },
+      "control-md": {
+        "$value": 6
+      },
+      "control-lg": {
+        "$value": "{base.radius.md}"
+      },
+      "input": {
+        "$value": "{base.radius.lg}"
+      },
+      "badge": {
+        "$value": "{base.radius.pill}"
+      }
+    },
+    "borderWidth": {
+      "$type": "borderWidth",
+      "control": {
+        "$value": "{base.borderWidth.hairline}"
+      },
+      "emphasis": {
+        "$value": "{base.borderWidth.strong}"
+      }
+    },
+    "space": {
+      "$type": "spacing",
+      "page": {
+        "$value": "{base.space.24}"
+      },
+      "section": {
+        "$value": "{base.space.28}"
+      },
+      "card": {
+        "$value": "{base.space.24}"
+      },
+      "control-gap": {
+        "$value": "{base.space.12}"
+      },
+      "control-content-gap": {
+        "$value": "{base.space.8}",
+        "$description": "Internal gap between a control glyph or icon and its text label."
+      }
+    },
+    "motion": {
+      "$description": "Semantic motion roles. Components should reference these instead of raw base.motion values.",
+      "pageTransition": {
+        "duration": {
+          "$type": "duration",
+          "$value": "{base.motion.duration.page}"
+        },
+        "distance": {
+          "$type": "dimension",
+          "$value": "{base.motion.distance.page}"
+        },
+        "easing": {
+          "$type": "cubicBezier",
+          "$value": "{base.motion.easing.emphasized}"
+        },
+        "enterOpacity": {
+          "$type": "number",
+          "$value": "{base.motion.opacity.visible}"
+        },
+        "exitOpacity": {
+          "$type": "number",
+          "$value": "{base.motion.opacity.hidden}"
+        }
+      },
+      "panelTransition": {
+        "duration": {
+          "$type": "duration",
+          "$value": "{base.motion.duration.normal}"
+        },
+        "distance": {
+          "$type": "dimension",
+          "$value": "{base.motion.distance.panel}"
+        },
+        "easing": {
+          "$type": "cubicBezier",
+          "$value": "{base.motion.easing.standard}"
+        }
+      },
+      "stateChange": {
+        "duration": {
+          "$type": "duration",
+          "$value": "{base.motion.duration.fast}"
+        },
+        "distance": {
+          "$type": "dimension",
+          "$value": "{base.motion.distance.micro}"
+        },
+        "easing": {
+          "$type": "cubicBezier",
+          "$value": "{base.motion.easing.standard}"
+        }
+      },
+      "reduced": {
+        "duration": {
+          "$type": "duration",
+          "$value": "{base.motion.duration.instant}"
+        },
+        "distance": {
+          "$type": "dimension",
+          "$value": 0
+        }
+      }
+    },
+    "asset": {
+      "$description": "Semantic resource roles. Components should use these instead of raw assets.",
+      "image": {
+        "hero": {
+          "onboardingPortrait": {
+            "$type": "asset",
+            "$value": "{base.asset.image.onboarding-portrait}"
+          }
+        },
+        "auth": {
+          "revenueInsights": {
+            "$type": "asset",
+            "$value": "{base.asset.image.revenue-insights}"
+          },
+          "brandLogoInverse": {
+            "$type": "asset",
+            "$value": "{base.asset.image.commerly-logo-inverse}"
+          }
+        },
+        "avatar": {
+          "profile": {
+            "$type": "asset",
+            "$value": "{base.asset.image.avatar-brian}"
+          },
+          "chat": {
+            "$type": "asset",
+            "$value": "{base.asset.image.avatar-alex}"
+          }
+        },
+        "chat": {
+          "damageOne": {
+            "$type": "asset",
+            "$value": "{base.asset.image.chat-damage-1}"
+          },
+          "damageTwo": {
+            "$type": "asset",
+            "$value": "{base.asset.image.chat-damage-2}"
+          }
+        },
+        "product": {
+          "osloChair": {
+            "$type": "asset",
+            "$value": "{base.asset.image.product-oslo-chair}"
+          },
+          "sapporoSofa": {
+            "$type": "asset",
+            "$value": "{base.asset.image.product-sapporo-sofa}"
+          },
+          "bergenTable": {
+            "$type": "asset",
+            "$value": "{base.asset.image.product-bergen-table}"
+          }
+        }
+      },
+      "icon": {
+        "authFingerprint": {
+          "$type": "asset",
+          "$value": "{base.asset.icon.fingerprint}"
+        },
+        "navigationBack": {
+          "$type": "asset",
+          "$value": "{base.asset.icon.arrow-back}"
+        },
+        "brandLogo": {
+          "$type": "asset",
+          "$value": "{base.asset.icon.commerly-logo}"
+        },
+        "actionPrevious": {
+          "$type": "asset",
+          "$value": "{base.asset.icon.arrow-left}"
+        },
+        "actionNext": {
+          "$type": "asset",
+          "$value": "{base.asset.icon.arrow-right}"
+        },
+        "selectionCheck": {
+          "$type": "asset",
+          "$value": "{base.asset.icon.check}"
+        },
+        "checkboxCheck": {
+          "$type": "asset",
+          "$value": "{base.asset.icon.checkbox-check}"
+        },
+        "checkboxMixed": {
+          "$type": "asset",
+          "$value": "{base.asset.icon.checkbox-mixed}"
+        },
+        "categoryFashion": {
+          "$type": "asset",
+          "$value": "{base.asset.icon.category-fashion}"
+        },
+        "categoryElectronics": {
+          "$type": "asset",
+          "$value": "{base.asset.icon.category-electronics}"
+        },
+        "categoryFurniture": {
+          "$type": "asset",
+          "$value": "{base.asset.icon.category-furniture}"
+        },
+        "categoryFood": {
+          "$type": "asset",
+          "$value": "{base.asset.icon.category-food}"
+        },
+        "categoryBeauty": {
+          "$type": "asset",
+          "$value": "{base.asset.icon.category-beauty}"
+        },
+        "categoryOthers": {
+          "$type": "asset",
+          "$value": "{base.asset.icon.category-others}"
+        },
+        "socialGoogle": {
+          "$type": "asset",
+          "$value": "{base.asset.icon.social-google}"
+        },
+        "socialApple": {
+          "$type": "asset",
+          "$value": "{base.asset.icon.social-apple}"
+        },
+        "radioOff": {
+          "$type": "asset",
+          "$value": "{base.asset.icon.radio-off}"
+        },
+        "radioOn": {
+          "$type": "asset",
+          "$value": "{base.asset.icon.radio-on}"
+        },
+        "navDashboard": {
+          "$type": "asset",
+          "$value": "{base.asset.icon.nav-dashboard}"
+        },
+        "navOrders": {
+          "$type": "asset",
+          "$value": "{base.asset.icon.nav-orders}"
+        },
+        "navProducts": {
+          "$type": "asset",
+          "$value": "{base.asset.icon.nav-products}"
+        },
+        "navChats": {
+          "$type": "asset",
+          "$value": "{base.asset.icon.nav-chats}"
+        },
+        "navSettings": {
+          "$type": "asset",
+          "$value": "{base.asset.icon.nav-settings}"
+        },
+        "navIntegrations": {
+          "$type": "asset",
+          "$value": "{base.asset.icon.nav-integrations}"
+        },
+        "navHelp": {
+          "$type": "asset",
+          "$value": "{base.asset.icon.nav-help}"
+        },
+        "externalLink": {
+          "$type": "asset",
+          "$value": "{base.asset.icon.external-link}"
+        },
+        "globalSearch": {
+          "$type": "asset",
+          "$value": "{base.asset.icon.top-search}"
+        },
+        "notification": {
+          "$type": "asset",
+          "$value": "{base.asset.icon.top-bell}"
+        },
+        "helpGettingStarted": {
+          "$type": "asset",
+          "$value": "{base.asset.icon.help-getting-started}"
+        },
+        "helpAccount": {
+          "$type": "asset",
+          "$value": "{base.asset.icon.help-account}"
+        },
+        "helpTroubleshooting": {
+          "$type": "asset",
+          "$value": "{base.asset.icon.help-troubleshooting}"
+        },
+        "integrationAmazon": {
+          "$type": "asset",
+          "$value": "{base.asset.icon.integration-amazon}"
+        },
+        "integrationTiktok": {
+          "$type": "asset",
+          "$value": "{base.asset.icon.integration-tiktok}"
+        },
+        "integrationShopee": {
+          "$type": "asset",
+          "$value": "{base.asset.icon.integration-shopee}"
+        },
+        "integrationPaypal": {
+          "$type": "asset",
+          "$value": "{base.asset.icon.integration-paypal}"
+        },
+        "integrationStripe": {
+          "$type": "asset",
+          "$value": "{base.asset.icon.integration-stripe}"
+        },
+        "integrationDhl": {
+          "$type": "asset",
+          "$value": "{base.asset.icon.integration-dhl}"
+        },
+        "integrationHubspot": {
+          "$type": "asset",
+          "$value": "{base.asset.icon.integration-hubspot}"
+        },
+        "integrationWhatsapp": {
+          "$type": "asset",
+          "$value": "{base.asset.icon.integration-whatsapp}"
+        },
+        "integrationZendesk": {
+          "$type": "asset",
+          "$value": "{base.asset.icon.integration-zendesk}"
+        }
+      },
+      "font": {
+        "appRegular": {
+          "$type": "asset",
+          "$value": "{base.asset.font.poppins-regular}"
+        },
+        "appMedium": {
+          "$type": "asset",
+          "$value": "{base.asset.font.poppins-medium}"
+        },
+        "appSemibold": {
+          "$type": "asset",
+          "$value": "{base.asset.font.poppins-semibold}"
+        }
+      }
+    },
+    "term": {
+      "$description": "Semantic content vocabulary. Use for stable labels shared by designs and implementation.",
+      "navigation": {
+        "dashboard": {
+          "$type": "string",
+          "$value": "{base.term.navigation.dashboard}"
+        },
+        "orders": {
+          "$type": "string",
+          "$value": "{base.term.navigation.orders}"
+        }
+      },
+      "orders": {
+        "pending": {
+          "$type": "string",
+          "$value": "{base.term.orders.pending}"
+        },
+        "shipped": {
+          "$type": "string",
+          "$value": "{base.term.orders.shipped}"
+        },
+        "canceled": {
+          "$type": "string",
+          "$value": "{base.term.orders.canceled}"
+        }
+      }
+    },
+    "uiLayout": {
+      "$description": "Qt 布局适配语义层。迁移值用于全量约束 XML；稳定复用区域应继续提升为 component Token。",
+      "space": {
+        "$type": "spacing",
+        "24": {
+          "$value": "{base.uiLayout.space.24}",
+          "$description": "Qt XML 迁移语义值；复用成熟后应提升为具名组件 Token。"
+        },
+        "12": {
+          "$value": "{base.uiLayout.space.12}",
+          "$description": "Qt XML 迁移语义值；复用成熟后应提升为具名组件 Token。"
+        },
+        "32": {
+          "$value": "{base.uiLayout.space.32}",
+          "$description": "Qt XML 迁移语义值；复用成熟后应提升为具名组件 Token。"
+        },
+        "8": {
+          "$value": "{base.uiLayout.space.8}",
+          "$description": "Qt XML 迁移语义值；复用成熟后应提升为具名组件 Token。"
+        },
+        "4": {
+          "$value": "{base.uiLayout.space.4}",
+          "$description": "Qt XML 迁移语义值；复用成熟后应提升为具名组件 Token。"
+        },
+        "80": {
+          "$value": "{base.uiLayout.space.80}",
+          "$description": "Qt XML 迁移语义值；复用成熟后应提升为具名组件 Token。"
+        },
+        "20": {
+          "$value": "{base.uiLayout.space.20}",
+          "$description": "Qt XML 迁移语义值；复用成熟后应提升为具名组件 Token。"
+        },
+        "28": {
+          "$value": "{base.uiLayout.space.28}",
+          "$description": "Qt XML 迁移语义值；复用成熟后应提升为具名组件 Token。"
+        },
+        "137": {
+          "$value": "{base.uiLayout.space.137}",
+          "$description": "Qt XML 迁移语义值；复用成熟后应提升为具名组件 Token。"
+        },
+        "18": {
+          "$value": "{base.uiLayout.space.18}",
+          "$description": "Qt XML 迁移语义值；复用成熟后应提升为具名组件 Token。"
+        },
+        "150": {
+          "$value": "{base.uiLayout.space.150}",
+          "$description": "Qt XML 迁移语义值；复用成熟后应提升为具名组件 Token。"
+        },
+        "16": {
+          "$value": "{base.uiLayout.space.16}",
+          "$description": "Qt XML 迁移语义值；复用成熟后应提升为具名组件 Token。"
+        },
+        "48": {
+          "$value": "{base.uiLayout.space.48}",
+          "$description": "Qt XML 迁移语义值；复用成熟后应提升为具名组件 Token。"
+        },
+        "56": {
+          "$value": "{base.uiLayout.space.56}",
+          "$description": "Qt XML 迁移语义值；复用成熟后应提升为具名组件 Token。"
+        },
+        "72": {
+          "$value": "{base.uiLayout.space.72}",
+          "$description": "Qt XML 迁移语义值；复用成熟后应提升为具名组件 Token。"
+        },
+        "2": {
+          "$value": "{base.uiLayout.space.2}",
+          "$description": "Qt XML 迁移语义值；复用成熟后应提升为具名组件 Token。"
+        },
+        "1": {
+          "$value": "{base.uiLayout.space.1}",
+          "$description": "Qt XML 迁移语义值；复用成熟后应提升为具名组件 Token。"
+        },
+        "10": {
+          "$value": "{base.uiLayout.space.10}",
+          "$description": "Qt XML 迁移语义值；复用成熟后应提升为具名组件 Token。"
+        },
+        "106": {
+          "$value": "{base.uiLayout.space.106}",
+          "$description": "Qt XML 迁移语义值；复用成熟后应提升为具名组件 Token。"
+        },
+        "184": {
+          "$value": "{base.uiLayout.space.184}",
+          "$description": "Qt XML 迁移语义值；复用成熟后应提升为具名组件 Token。"
+        },
+        "14": {
+          "$value": "{base.uiLayout.space.14}",
+          "$description": "Qt XML 迁移语义值；复用成熟后应提升为具名组件 Token。"
+        }
+      },
+      "dimension": {
+        "$type": "dimension",
+        "20": {
+          "$value": "{base.uiLayout.dimension.20}",
+          "$description": "Qt XML 迁移语义值；复用成熟后应提升为具名组件 Token。"
+        },
+        "40": {
+          "$value": "{base.uiLayout.dimension.40}",
+          "$description": "Qt XML 迁移语义值；复用成熟后应提升为具名组件 Token。"
+        },
+        "1024": {
+          "$value": "{base.uiLayout.dimension.1024}",
+          "$description": "Qt XML 迁移语义值；复用成熟后应提升为具名组件 Token。"
+        },
+        "1440": {
+          "$value": "{base.uiLayout.dimension.1440}",
+          "$description": "Qt XML 迁移语义值；复用成熟后应提升为具名组件 Token。"
+        },
+        "24": {
+          "$value": "{base.uiLayout.dimension.24}",
+          "$description": "Qt XML 迁移语义值；复用成熟后应提升为具名组件 Token。"
+        },
+        "30": {
+          "$value": "{base.uiLayout.dimension.30}",
+          "$description": "Qt XML 迁移语义值；复用成熟后应提升为具名组件 Token。"
+        },
+        "650": {
+          "$value": "{base.uiLayout.dimension.650}",
+          "$description": "Qt XML 迁移语义值；复用成熟后应提升为具名组件 Token。"
+        },
+        "696": {
+          "$value": "{base.uiLayout.dimension.696}",
+          "$description": "Qt XML 迁移语义值；复用成熟后应提升为具名组件 Token。"
+        },
+        "320": {
+          "$value": "{base.uiLayout.dimension.320}",
+          "$description": "Qt XML 迁移语义值；复用成熟后应提升为具名组件 Token。"
+        },
+        "142": {
+          "$value": "{base.uiLayout.dimension.142}",
+          "$description": "Qt XML 迁移语义值；复用成熟后应提升为具名组件 Token。"
+        },
+        "200": {
+          "$value": "{base.uiLayout.dimension.200}",
+          "$description": "Qt XML 迁移语义值；复用成熟后应提升为具名组件 Token。"
+        },
+        "18": {
+          "$value": "{base.uiLayout.dimension.18}",
+          "$description": "Qt XML 迁移语义值；复用成熟后应提升为具名组件 Token。"
+        },
+        "566": {
+          "$value": "{base.uiLayout.dimension.566}",
+          "$description": "Qt XML 迁移语义值；复用成熟后应提升为具名组件 Token。"
+        },
+        "250": {
+          "$value": "{base.uiLayout.dimension.250}",
+          "$description": "Qt XML 迁移语义值；复用成熟后应提升为具名组件 Token。"
+        },
+        "286": {
+          "$value": "{base.uiLayout.dimension.286}",
+          "$description": "Qt XML 迁移语义值；复用成熟后应提升为具名组件 Token。"
+        },
+        "150": {
+          "$value": "{base.uiLayout.dimension.150}",
+          "$description": "Qt XML 迁移语义值；复用成熟后应提升为具名组件 Token。"
+        },
+        "70": {
+          "$value": "{base.uiLayout.dimension.70}",
+          "$description": "Qt XML 迁移语义值；复用成熟后应提升为具名组件 Token。"
+        },
+        "360": {
+          "$value": "{base.uiLayout.dimension.360}",
+          "$description": "Qt XML 迁移语义值；复用成熟后应提升为具名组件 Token。"
+        },
+        "176": {
+          "$value": "{base.uiLayout.dimension.176}",
+          "$description": "Qt XML 迁移语义值；复用成熟后应提升为具名组件 Token。"
+        },
+        "220": {
+          "$value": "{base.uiLayout.dimension.220}",
+          "$description": "Qt XML 迁移语义值；复用成熟后应提升为具名组件 Token。"
+        },
+        "180": {
+          "$value": "{base.uiLayout.dimension.180}",
+          "$description": "Qt XML 迁移语义值；复用成熟后应提升为具名组件 Token。"
+        },
+        "60": {
+          "$value": "{base.uiLayout.dimension.60}",
+          "$description": "Qt XML 迁移语义值；复用成熟后应提升为具名组件 Token。"
+        },
+        "72": {
+          "$value": "{base.uiLayout.dimension.72}",
+          "$description": "Qt XML 迁移语义值；复用成熟后应提升为具名组件 Token。"
+        },
+        "330": {
+          "$value": "{base.uiLayout.dimension.330}",
+          "$description": "Qt XML 迁移语义值；复用成熟后应提升为具名组件 Token。"
+        },
+        "44": {
+          "$value": "{base.uiLayout.dimension.44}",
+          "$description": "Qt XML 迁移语义值；复用成熟后应提升为具名组件 Token。"
+        },
+        "90": {
+          "$value": "{base.uiLayout.dimension.90}",
+          "$description": "Qt XML 迁移语义值；复用成熟后应提升为具名组件 Token。"
+        },
+        "520": {
+          "$value": "{base.uiLayout.dimension.520}",
+          "$description": "Qt XML 迁移语义值；复用成熟后应提升为具名组件 Token。"
+        },
+        "420": {
+          "$value": "{base.uiLayout.dimension.420}",
+          "$description": "Qt XML 迁移语义值；复用成熟后应提升为具名组件 Token。"
+        },
+        "14": {
+          "$value": "{base.uiLayout.dimension.14}",
+          "$description": "Qt XML 迁移语义值；复用成熟后应提升为具名组件 Token。"
+        },
+        "500": {
+          "$value": "{base.uiLayout.dimension.500}",
+          "$description": "Qt XML 迁移语义值；复用成熟后应提升为具名组件 Token。"
+        },
+        "313": {
+          "$value": "{base.uiLayout.dimension.313}",
+          "$description": "Qt XML 迁移语义值；复用成熟后应提升为具名组件 Token。"
+        },
+        "725": {
+          "$value": "{base.uiLayout.dimension.725}",
+          "$description": "Qt XML 迁移语义值；复用成熟后应提升为具名组件 Token。"
+        },
+        "921": {
+          "$value": "{base.uiLayout.dimension.921}",
+          "$description": "Qt XML 迁移语义值；复用成熟后应提升为具名组件 Token。"
+        },
+        "82": {
+          "$value": "{base.uiLayout.dimension.82}",
+          "$description": "Qt XML 迁移语义值；复用成熟后应提升为具名组件 Token。"
+        },
+        "32": {
+          "$value": "{base.uiLayout.dimension.32}",
+          "$description": "Qt XML 迁移语义值；复用成熟后应提升为具名组件 Token。"
+        },
+        "305": {
+          "$value": "{base.uiLayout.dimension.305}",
+          "$description": "Qt XML 迁移语义值；复用成熟后应提升为具名组件 Token。"
+        },
+        "42": {
+          "$value": "{base.uiLayout.dimension.42}",
+          "$description": "Qt XML 迁移语义值；复用成熟后应提升为具名组件 Token。"
+        },
+        "120": {
+          "$value": "{base.uiLayout.dimension.120}",
+          "$description": "Qt XML 迁移语义值；复用成熟后应提升为具名组件 Token。"
+        }
+      }
+    }
+  },
+  "component": {
+    "$description": "Component tokens are split by complexity: basic components are small reusable controls; composite components assemble basic components into business UI blocks.",
+    "basic": {
+      "$description": "Basic component contracts. Usually map to one primary Qt widget or a small reusable control: Button, Input, Card, Badge.",
+      "button": {
+        "$description": "Button contract. Global foundations stay in base/semantic tokens; this layer owns button-only size, variant, part and state decisions.",
+        "size": {
+          "$description": "Desktop B-end sizes derived from HelloUI Button and Dimensions collections.",
+          "sm": {
+            "height": {
+              "$type": "dimension",
+              "$value": "{semantic.dimension.control.height-sm}"
+            },
+            "paddingInline": {
+              "$type": "spacing",
+              "$value": 7
+            },
+            "fontSize": {
+              "$type": "fontSize",
+              "$value": "{base.fontSize.body-sm}"
+            },
+            "lineHeight": {
+              "$type": "lineHeight",
+              "$value": "{base.lineHeight.body-sm}"
+            },
+            "iconSize": {
+              "$type": "dimension",
+              "$value": 14
+            }
+          },
+          "md": {
+            "height": {
+              "$type": "dimension",
+              "$value": "{semantic.dimension.control.height-md}"
+            },
+            "paddingInline": {
+              "$type": "spacing",
+              "$value": 15
+            },
+            "fontSize": {
+              "$type": "fontSize",
+              "$value": "{base.fontSize.body-sm}"
+            },
+            "lineHeight": {
+              "$type": "lineHeight",
+              "$value": "{base.lineHeight.body-sm}"
+            },
+            "iconSize": {
+              "$type": "dimension",
+              "$value": 16
+            }
+          },
+          "lg": {
+            "height": {
+              "$type": "dimension",
+              "$value": "{semantic.dimension.control.height-lg}"
+            },
+            "paddingInline": {
+              "$type": "spacing",
+              "$value": 15
+            },
+            "fontSize": {
+              "$type": "fontSize",
+              "$value": "{base.fontSize.body-md}"
+            },
+            "lineHeight": {
+              "$type": "lineHeight",
+              "$value": "{base.lineHeight.body-md}"
+            },
+            "iconSize": {
+              "$type": "dimension",
+              "$value": 18
+            }
+          }
+        },
+        "primary": {
+          "height": {
+            "$type": "dimension",
+            "$value": "{base.dimension.control-height}"
+          },
+          "background": {
+            "$type": "color",
+            "$value": "{semantic.color.action.primary}"
+          },
+          "backgroundHover": {
+            "$type": "color",
+            "$value": "{semantic.color.action.primary-hover}"
+          },
+          "backgroundPressed": {
+            "$type": "color",
+            "$value": "{semantic.color.action.primary-pressed}"
+          },
+          "backgroundDisabled": {
+            "$type": "color",
+            "$value": "{semantic.color.action.primary-disabled}"
+          },
+          "text": {
+            "$type": "color",
+            "$value": "{semantic.color.action.primary-text}"
+          },
+          "textDisabled": {
+            "$type": "color",
+            "$value": "{semantic.color.action.primary-text-disabled}"
+          },
+          "focusBorder": {
+            "$type": "color",
+            "$value": "{semantic.color.border.focus}"
+          },
+          "focusWidth": {
+            "$type": "dimension",
+            "$value": "{semantic.dimension.control.focus-width}"
+          },
+          "radius": {
+            "$type": "borderRadius",
+            "$value": "{semantic.radius.control}"
+          }
+        },
+        "secondary": {
+          "height": {
+            "$type": "dimension",
+            "$value": "{base.dimension.control-height}"
+          },
+          "background": {
+            "$type": "color",
+            "$value": "{semantic.color.action.secondary}"
+          },
+          "backgroundHover": {
+            "$type": "color",
+            "$value": "{semantic.color.action.secondary-hover}"
+          },
+          "backgroundPressed": {
+            "$type": "color",
+            "$value": "{semantic.color.action.secondary-pressed}"
+          },
+          "backgroundDisabled": {
+            "$type": "color",
+            "$value": "{semantic.color.background.disabled}"
+          },
+          "text": {
+            "$type": "color",
+            "$value": "{semantic.color.text.primary}"
+          },
+          "textHover": {
+            "$type": "color",
+            "$value": "{semantic.color.action.primary-hover}"
+          },
+          "textPressed": {
+            "$type": "color",
+            "$value": "{semantic.color.action.primary-pressed}"
+          },
+          "textDisabled": {
+            "$type": "color",
+            "$value": "{semantic.color.text.disabled}"
+          },
+          "border": {
+            "$type": "color",
+            "$value": "{semantic.color.border.default}"
+          },
+          "borderHover": {
+            "$type": "color",
+            "$value": "{semantic.color.action.primary-hover}"
+          },
+          "borderPressed": {
+            "$type": "color",
+            "$value": "{semantic.color.action.primary-pressed}"
+          },
+          "borderDisabled": {
+            "$type": "color",
+            "$value": "{semantic.color.border.subtle}"
+          },
+          "focusBorder": {
+            "$type": "color",
+            "$value": "{semantic.color.border.focus}"
+          },
+          "radius": {
+            "$type": "borderRadius",
+            "$value": "{semantic.radius.control}"
+          }
+        },
+        "danger": {
+          "background": {
+            "$type": "color",
+            "$value": "{semantic.color.status.danger}"
+          },
+          "backgroundHover": {
+            "$type": "color",
+            "$value": "{semantic.color.status.danger-hover}"
+          },
+          "backgroundPressed": {
+            "$type": "color",
+            "$value": "{semantic.color.status.danger-pressed}"
+          },
+          "backgroundDisabled": {
+            "$type": "color",
+            "$value": "{semantic.color.background.disabled}"
+          },
+          "text": {
+            "$type": "color",
+            "$value": "{semantic.color.text.inverse}"
+          },
+          "textDisabled": {
+            "$type": "color",
+            "$value": "{semantic.color.text.disabled}"
+          },
+          "border": {
+            "$type": "color",
+            "$value": "{semantic.color.status.danger}"
+          },
+          "focusBorder": {
+            "$type": "color",
+            "$value": "{semantic.color.status.danger-border}"
+          },
+          "radius": {
+            "$type": "borderRadius",
+            "$value": "{semantic.radius.control-md}"
+          }
+        },
+        "innerShadow": {
+          "$description": "Button inner-shadow parameters for the supplied geometric renderer and the existing Qt blurred inset layer.",
+          "blackMix": {
+            "$description": "Mix the darkest current state gradient stop with pure black in encoded sRGB.",
+            "primary": { "$type": "number", "$value": 0.08 },
+            "secondary": { "$type": "number", "$value": 0.1 },
+            "danger": { "$type": "number", "$value": 0.08 }
+          },
+          "soft": {
+            "$description": "Button-only parameters for the existing Qt blurred inset renderer.",
+            "alpha": { "$type": "number", "$value": 0.18 },
+            "offsetY": { "$type": "dimension", "$value": 1 },
+            "blur": { "$type": "dimension", "$value": 3 }
+          },
+          "geometry": {
+            "width": {
+              "$type": "dimension",
+              "$value": 2
+            },
+            "cornerRadius": {
+              "$type": "borderRadius",
+              "$value": 4
+            },
+            "fadeStartRatio": {
+              "$type": "number",
+              "$value": 0.333333
+            },
+            "matchButtonRadiusToInnerShadow": {
+              "$type": "boolean",
+              "$value": true
+            },
+            "buttonRadius": {
+              "$type": "borderRadius",
+              "$value": 4
+            },
+            "borderWidth": {
+              "$type": "dimension",
+              "$value": 1
+            }
+          },
+          "default": {
+            "shadowColor": {
+              "$type": "color",
+              "$value": "#DEDEDE"
+            },
+            "borderColor": {
+              "$type": "color",
+              "$value": "{semantic.color.border.default}"
+            },
+            "textColor": {
+              "$type": "color",
+              "$value": "{semantic.color.text.primary}"
+            },
+            "bgTop": {
+              "$type": "color",
+              "$value": "{semantic.color.background.surface}"
+            },
+            "bgMid": {
+              "$type": "color",
+              "$value": "#E5E5E5"
+            },
+            "bgBottom": {
+              "$type": "color",
+              "$value": "{semantic.color.background.surface}"
+            },
+            "bgMidStop": {
+              "$type": "number",
+              "$value": 0.1
+            }
+          },
+          "hover": {
+            "shadowColor": {
+              "$type": "color",
+              "$value": "#D2D2D2"
+            },
+            "borderColor": {
+              "$type": "color",
+              "$value": "{semantic.color.border.control}"
+            },
+            "textColor": {
+              "$type": "color",
+              "$value": "{semantic.color.text.primary}"
+            },
+            "bgTop": {
+              "$type": "color",
+              "$value": "#FFFFFF"
+            },
+            "bgMid": {
+              "$type": "color",
+              "$value": "#EAEAEA"
+            },
+            "bgBottom": {
+              "$type": "color",
+              "$value": "#FFFFFF"
+            },
+            "bgMidStop": {
+              "$type": "number",
+              "$value": 0.1
+            }
+          },
+          "pressed": {
+            "shadowColor": {
+              "$type": "color",
+              "$value": "#C4C4C4"
+            },
+            "borderColor": {
+              "$type": "color",
+              "$value": "{semantic.color.text.placeholder}"
+            },
+            "textColor": {
+              "$type": "color",
+              "$value": "{semantic.color.text.primary}"
+            },
+            "bgTop": {
+              "$type": "color",
+              "$value": "#EFEFEF"
+            },
+            "bgMid": {
+              "$type": "color",
+              "$value": "#DADADA"
+            },
+            "bgBottom": {
+              "$type": "color",
+              "$value": "#FAFAFA"
+            },
+            "bgMidStop": {
+              "$type": "number",
+              "$value": 0.1
+            }
+          },
+          "disabled": {
+            "shadowColor": {
+              "$type": "color",
+              "$value": "#E8E8E8"
+            },
+            "borderColor": {
+              "$type": "color",
+              "$value": "{semantic.color.border.subtle}"
+            },
+            "textColor": {
+              "$type": "color",
+              "$value": "{semantic.color.text.placeholder}"
+            },
+            "bgTop": {
+              "$type": "color",
+              "$value": "{semantic.color.background.app}"
+            },
+            "bgMid": {
+              "$type": "color",
+              "$value": "#EFEFEF"
+            },
+            "bgBottom": {
+              "$type": "color",
+              "$value": "{semantic.color.background.app}"
+            },
+            "bgMidStop": {
+              "$type": "number",
+              "$value": 0.1
+            }
+          }
+        }
+      },
+      "input": {
+        "$description": "Single-line input/select contract. Size and state keys map to QLineEdit/QComboBox selectors or dynamic properties.",
+        "size": {
+          "sm": {
+            "height": {
+              "$type": "dimension",
+              "$value": "{semantic.dimension.control.height-sm}"
+            },
+            "paddingInline": {
+              "$type": "spacing",
+              "$value": 7
+            },
+            "paddingBlock": {
+              "$type": "spacing",
+              "$value": 0
+            },
+            "fontSize": {
+              "$type": "fontSize",
+              "$value": "{base.fontSize.body-sm}"
+            }
+          },
+          "md": {
+            "height": {
+              "$type": "dimension",
+              "$value": "{semantic.dimension.control.height-md}"
+            },
+            "paddingInline": {
+              "$type": "spacing",
+              "$value": 11
+            },
+            "paddingBlock": {
+              "$type": "spacing",
+              "$value": 4
+            },
+            "fontSize": {
+              "$type": "fontSize",
+              "$value": "{base.fontSize.body-sm}"
+            }
+          },
+          "lg": {
+            "height": {
+              "$type": "dimension",
+              "$value": "{semantic.dimension.control.height-lg}"
+            },
+            "paddingInline": {
+              "$type": "spacing",
+              "$value": 11
+            },
+            "paddingBlock": {
+              "$type": "spacing",
+              "$value": 7
+            },
+            "fontSize": {
+              "$type": "fontSize",
+              "$value": "{base.fontSize.body-md}"
+            }
+          }
+        },
+        "state": {
+          "default": {
+            "background": {
+              "$type": "color",
+              "$value": "{semantic.color.background.surface}"
+            },
+            "text": {
+              "$type": "color",
+              "$value": "{semantic.color.text.primary}"
+            },
+            "placeholder": {
+              "$type": "color",
+              "$value": "{semantic.color.text.placeholder}"
+            },
+            "border": {
+              "$type": "color",
+              "$value": "{semantic.color.border.default}"
+            }
+          },
+          "hover": {
+            "background": {
+              "$type": "color",
+              "$value": "{semantic.color.background.surface}"
+            },
+            "border": {
+              "$type": "color",
+              "$value": "{semantic.color.action.primary-hover}"
+            }
+          },
+          "focus": {
+            "background": {
+              "$type": "color",
+              "$value": "{semantic.color.background.surface}"
+            },
+            "border": {
+              "$type": "color",
+              "$value": "{semantic.color.border.focus}"
+            },
+            "outline": {
+              "$type": "color",
+              "$value": "{semantic.color.action.primary-bg}"
+            },
+            "outlineWidth": {
+              "$type": "dimension",
+              "$value": "{semantic.dimension.control.outline-width}"
+            }
+          },
+          "error": {
+            "background": {
+              "$type": "color",
+              "$value": "{semantic.color.status.danger-bg}"
+            },
+            "border": {
+              "$type": "color",
+              "$value": "{semantic.color.status.danger}"
+            },
+            "text": {
+              "$type": "color",
+              "$value": "{semantic.color.text.primary}"
+            }
+          },
+          "disabled": {
+            "background": {
+              "$type": "color",
+              "$value": "{semantic.color.background.disabled}"
+            },
+            "border": {
+              "$type": "color",
+              "$value": "{semantic.color.border.subtle}"
+            },
+            "text": {
+              "$type": "color",
+              "$value": "{semantic.color.text.disabled}"
+            },
+            "placeholder": {
+              "$type": "color",
+              "$value": "{semantic.color.text.disabled}"
+            }
+          }
+        },
+        "height": {
+          "$type": "dimension",
+          "$value": "{base.dimension.control-height}"
+        },
+        "background": {
+          "$type": "color",
+          "$value": "{component.basic.input.state.default.background}",
+          "$description": "Compatibility alias; new mappings should use component.basic.input.state.default.background"
+        },
+        "text": {
+          "$type": "color",
+          "$value": "{component.basic.input.state.default.text}"
+        },
+        "placeholder": {
+          "$type": "color",
+          "$value": "{component.basic.input.state.default.placeholder}"
+        },
+        "border": {
+          "$type": "color",
+          "$value": "{component.basic.input.state.default.border}"
+        },
+        "focusBorder": {
+          "$type": "color",
+          "$value": "{component.basic.input.state.focus.border}"
+        },
+        "radius": {
+          "$type": "borderRadius",
+          "$value": "{semantic.radius.input}"
+        }
+      },
+      "card": {
+        "$description": "Generic surface card contract used by dashboard widgets and order panels.",
+        "background": {
+          "$type": "color",
+          "$value": "{semantic.color.background.surface}"
+        },
+        "radius": {
+          "$type": "borderRadius",
+          "$value": "{semantic.radius.card}"
+        },
+        "padding": {
+          "$type": "spacing",
+          "$value": "{semantic.space.card}"
+        },
+        "border": {
+          "$type": "color",
+          "$value": "{semantic.color.border.subtle}"
+        },
+        "titleText": {
+          "$type": "color",
+          "$value": "{semantic.color.text.primary}"
+        },
+        "bodyText": {
+          "$type": "color",
+          "$value": "{semantic.color.text.secondary}"
+        },
+        "headerHeight": {
+          "$type": "dimension",
+          "$value": 56
+        },
+        "headerPadding": {
+          "$type": "spacing",
+          "$value": "{base.space.24}"
+        },
+        "bodyPadding": {
+          "$type": "spacing",
+          "$value": "{base.space.24}"
+        },
+        "shadow": {
+          "$type": "boxShadow",
+          "$value": "{base.shadow.card}"
+        }
+      },
+      "statusBadge": {
+        "$description": "Reusable status badge contract for table/status chips.",
+        "success": {
+          "background": {
+            "$type": "color",
+            "$value": "{semantic.color.status.success-bg}"
+          },
+          "text": {
+            "$type": "color",
+            "$value": "{semantic.color.status.success}"
+          },
+          "radius": {
+            "$type": "borderRadius",
+            "$value": "{semantic.radius.badge}"
+          }
+        },
+        "warning": {
+          "background": {
+            "$type": "color",
+            "$value": "{semantic.color.status.warning-bg}"
+          },
+          "text": {
+            "$type": "color",
+            "$value": "{semantic.color.status.warning}"
+          },
+          "radius": {
+            "$type": "borderRadius",
+            "$value": "{semantic.radius.badge}"
+          }
+        },
+        "danger": {
+          "background": {
+            "$type": "color",
+            "$value": "{semantic.color.status.danger-bg}"
+          },
+          "text": {
+            "$type": "color",
+            "$value": "{semantic.color.status.danger}"
+          },
+          "radius": {
+            "$type": "borderRadius",
+            "$value": "{semantic.radius.badge}"
+          }
+        },
+        "info": {
+          "background": {
+            "$type": "color",
+            "$value": "{semantic.color.status.info-bg}"
+          },
+          "text": {
+            "$type": "color",
+            "$value": "{semantic.color.status.info}"
+          },
+          "radius": {
+            "$type": "borderRadius",
+            "$value": "{semantic.radius.badge}"
+          }
+        },
+        "neutral": {
+          "background": {
+            "$type": "color",
+            "$value": "{semantic.color.fill.quaternary}"
+          },
+          "text": {
+            "$type": "color",
+            "$value": "{semantic.color.text.secondary}"
+          },
+          "radius": {
+            "$type": "borderRadius",
+            "$value": "{semantic.radius.badge}"
+          }
+        },
+        "height": {
+          "$type": "dimension",
+          "$value": 20
+        },
+        "dotSize": {
+          "$type": "dimension",
+          "$value": 6
+        },
+        "paddingInline": {
+          "$type": "spacing",
+          "$value": "{base.space.8}"
+        },
+        "paddingBlock": {
+          "$type": "spacing",
+          "$value": "{base.space.2}"
+        },
+        "fontSize": {
+          "$type": "fontSize",
+          "$value": "{base.fontSize.caption}"
+        }
+      },
+      "divider": {
+        "$description": "Native separator geometry.",
+        "thickness": {
+          "$type": "dimension",
+          "$value": 1
+        }
+      },
+      "list": {
+        "$description": "Native list item geometry.",
+        "itemHeight": {
+          "$type": "dimension",
+          "$value": 56
+        }
+      },
+      "checkbox": {
+        "$description": "TMCA-2026-09-09 native QCheckBox contract: two sizes, three selection states and complete interaction states.",
+        "size": {
+          "$type": "dimension",
+          "$value": "{component.basic.checkbox.sizes.sm.indicator}",
+          "$description": "Compatibility alias for the former single-size contract."
+        },
+        "sizes": {
+          "sm": {
+            "indicator": {
+              "$type": "dimension",
+              "$value": 20
+            },
+            "qssContentSize": {
+              "$type": "dimension",
+              "$value": 18,
+              "$description": "Qt QSS content box; 18 + two 1px borders produces the 20px visual indicator."
+            },
+            "hitTarget": {
+              "$type": "dimension",
+              "$value": "{semantic.dimension.control.interactive-size}"
+            },
+            "fontSize": {
+              "$type": "fontSize",
+              "$value": "{semantic.type.body-sm.size}"
+            },
+            "spacing": {
+              "$type": "spacing",
+              "$value": "{semantic.space.control-content-gap}"
+            }
+          },
+          "lg": {
+            "indicator": {
+              "$type": "dimension",
+              "$value": 24
+            },
+            "qssContentSize": {
+              "$type": "dimension",
+              "$value": 22,
+              "$description": "Qt QSS content box; 22 + two 1px borders produces the 24px visual indicator."
+            },
+            "hitTarget": {
+              "$type": "dimension",
+              "$value": "{semantic.dimension.control.height-lg}"
+            },
+            "fontSize": {
+              "$type": "fontSize",
+              "$value": "{semantic.type.body-md.size}"
+            },
+            "spacing": {
+              "$type": "spacing",
+              "$value": "{semantic.space.control-content-gap}"
+            }
+          }
+        },
+        "radius": {
+          "$type": "borderRadius",
+          "$value": "{base.radius.sm}"
+        },
+        "borderWidth": {
+          "$type": "borderWidth",
+          "$value": 1
+        },
+        "background": {
+          "$type": "color",
+          "$value": "{component.basic.checkbox.state.unchecked.background}",
+          "$description": "Compatibility alias for the former default background."
+        },
+        "border": {
+          "$type": "color",
+          "$value": "{component.basic.checkbox.state.unchecked.border}",
+          "$description": "Compatibility alias for the former default border."
+        },
+        "checkedBackground": {
+          "$type": "color",
+          "$value": "{component.basic.checkbox.state.selected.background}",
+          "$description": "Compatibility alias for checked and indeterminate surfaces."
+        },
+        "checkedBorder": {
+          "$type": "color",
+          "$value": "{component.basic.checkbox.state.selected.border}",
+          "$description": "Compatibility alias for checked and indeterminate borders."
+        },
+        "state": {
+          "unchecked": {
+            "background": {
+              "$type": "color",
+              "$value": "{semantic.color.background.surface}"
+            },
+            "border": {
+              "$type": "color",
+              "$value": "{base.color.neutral.white.700}"
+            },
+            "hoverBackground": {
+              "$type": "color",
+              "$value": "{semantic.color.background.interactive-hover}"
+            },
+            "hoverBorder": {
+              "$type": "color",
+              "$value": "{semantic.color.border.focus}"
+            },
+            "pressedBackground": {
+              "$type": "color",
+              "$value": "{semantic.color.background.interactive-active}"
+            },
+            "pressedBorder": {
+              "$type": "color",
+              "$value": "{semantic.color.action.primary-pressed}"
+            },
+            "disabledBackground": {
+              "$type": "color",
+              "$value": "{semantic.color.background.disabled}"
+            },
+            "disabledBorder": {
+              "$type": "color",
+              "$value": "{semantic.color.border.subtle}"
+            }
+          },
+          "selected": {
+            "background": {
+              "$type": "color",
+              "$value": "{semantic.color.status.info}"
+            },
+            "border": {
+              "$type": "color",
+              "$value": "{semantic.color.status.info}"
+            },
+            "hoverBackground": {
+              "$type": "color",
+              "$value": "{semantic.color.status.info-hover}"
+            },
+            "hoverBorder": {
+              "$type": "color",
+              "$value": "{semantic.color.status.info-hover}"
+            },
+            "pressedBackground": {
+              "$type": "color",
+              "$value": "{semantic.color.status.info-pressed}"
+            },
+            "pressedBorder": {
+              "$type": "color",
+              "$value": "{semantic.color.status.info-pressed}"
+            },
+            "disabledBackground": {
+              "$type": "color",
+              "$value": "{semantic.color.text.placeholder}"
+            },
+            "disabledBorder": {
+              "$type": "color",
+              "$value": "{semantic.color.text.placeholder}"
+            }
+          }
+        },
+        "focus": {
+          "border": {
+            "$type": "color",
+            "$value": "{semantic.color.border.focus}"
+          },
+          "borderWidth": {
+            "$type": "borderWidth",
+            "$value": "{semantic.borderWidth.emphasis}"
+          }
+        },
+        "glyph": {
+          "checked": {
+            "$type": "asset",
+            "$value": "{semantic.asset.icon.checkboxCheck}"
+          },
+          "indeterminate": {
+            "$type": "asset",
+            "$value": "{semantic.asset.icon.checkboxMixed}"
+          }
+        },
+        "text": {
+          "$type": "color",
+          "$value": "{semantic.color.text.primary}"
+        },
+        "disabledText": {
+          "$type": "color",
+          "$value": "{semantic.color.text.disabled}"
+        }
+      },
+      "radio": {
+        "$description": "Native QRadioButton indicator contract from Figma Radio Button variants 46:3133 and 46:3134.",
+        "size": {
+          "$type": "dimension",
+          "$value": 20
+        },
+        "radius": {
+          "$type": "borderRadius",
+          "$value": 10
+        },
+        "borderWidth": {
+          "$type": "borderWidth",
+          "$value": 1
+        },
+        "background": {
+          "$type": "color",
+          "$value": "{semantic.color.background.surface}"
+        },
+        "border": {
+          "$type": "color",
+          "$value": "{base.color.neutral.white.700}"
+        },
+        "checkedBorder": {
+          "$type": "color",
+          "$value": "{semantic.color.status.info}"
+        },
+        "checkedDot": {
+          "$type": "color",
+          "$value": "{semantic.color.status.info}"
+        },
+        "text": {
+          "$type": "color",
+          "$value": "{semantic.color.text.primary}"
+        },
+        "disabledText": {
+          "$type": "color",
+          "$value": "{semantic.color.text.disabled}"
+        }
+      },
+      "switch": {
+        "$description": "Custom QAbstractButton switch geometry and state contract from Figma Switch 51:2241 and 51:2242.",
+        "width": {
+          "$type": "dimension",
+          "$value": 36
+        },
+        "height": {
+          "$type": "dimension",
+          "$value": 20
+        },
+        "knobSize": {
+          "$type": "dimension",
+          "$value": 16
+        },
+        "knobInset": {
+          "$type": "spacing",
+          "$value": 2
+        },
+        "trackOff": {
+          "$type": "color",
+          "$value": "{base.color.neutral.white.700}"
+        },
+        "trackOn": {
+          "$type": "color",
+          "$value": "{semantic.color.status.info}"
+        },
+        "trackDisabled": {
+          "$type": "color",
+          "$value": "{semantic.color.background.disabled}"
+        },
+        "knob": {
+          "$type": "color",
+          "$value": "{semantic.color.background.surface}"
+        },
+        "text": {
+          "$type": "color",
+          "$value": "{semantic.color.text.primary}"
+        },
+        "disabledText": {
+          "$type": "color",
+          "$value": "{semantic.color.text.disabled}"
+        }
+      },
+      "chip": {
+        "$description": "Selectable horizontal and vertical chip contract from Figma Chips 116:10181-116:10184.",
+        "horizontalHeight": {
+          "$type": "dimension",
+          "$value": 40
+        },
+        "verticalHeight": {
+          "$type": "dimension",
+          "$value": 110
+        },
+        "verticalMinWidth": {
+          "$type": "dimension",
+          "$value": 160
+        },
+        "horizontalRadius": {
+          "$type": "borderRadius",
+          "$value": 20
+        },
+        "verticalRadius": {
+          "$type": "borderRadius",
+          "$value": "{base.radius.lg}"
+        },
+        "paddingInline": {
+          "$type": "spacing",
+          "$value": "{base.space.20}"
+        },
+        "background": {
+          "$type": "color",
+          "$value": "{semantic.color.background.surface}"
+        },
+        "border": {
+          "$type": "color",
+          "$value": "{base.color.neutral.white.600}"
+        },
+        "selectedBackground": {
+          "$type": "color",
+          "$value": "{semantic.color.background.surface-muted}"
+        },
+        "selectedBorder": {
+          "$type": "color",
+          "$value": "{base.color.brand.mint-glow.500}"
+        },
+        "text": {
+          "$type": "color",
+          "$value": "{semantic.color.text.primary}"
+        }
+      }
+    },
+    "composite": {
+      "$description": "Composite component contracts. Usually assemble multiple basic components and carry layout or business context: AppShell, Sidebar, MetricCard, Orders, Table, Chart.",
+      "appShell": {
+        "$description": "Whole desktop application shell.",
+        "background": {
+          "$type": "color",
+          "$value": "{semantic.color.background.app}"
+        },
+        "contentGap": {
+          "$type": "spacing",
+          "$value": "{semantic.space.section}"
+        },
+        "pageTransitionDuration": {
+          "$type": "duration",
+          "$value": "{semantic.motion.pageTransition.duration}"
+        },
+        "pageTransitionDistance": {
+          "$type": "dimension",
+          "$value": "{semantic.motion.pageTransition.distance}"
+        },
+        "pageTransitionEasing": {
+          "$type": "cubicBezier",
+          "$value": "{semantic.motion.pageTransition.easing}"
+        },
+        "pageTransitionEnterOpacity": {
+          "$type": "number",
+          "$value": "{semantic.motion.pageTransition.enterOpacity}"
+        },
+        "pageTransitionExitOpacity": {
+          "$type": "number",
+          "$value": "{semantic.motion.pageTransition.exitOpacity}"
+        }
+      },
+      "imageHero": {
+        "$description": "Composite image hero panel contract. Used by RoundedImagePanel and any future hero/image-card surface.",
+        "imagePath": {
+          "$type": "asset",
+          "$value": "{semantic.asset.image.hero.onboardingPortrait}"
+        },
+        "radius": {
+          "$type": "borderRadius",
+          "$value": "{semantic.radius.surface}"
+        },
+        "overlayStart": {
+          "$type": "number",
+          "$value": 0.45
+        },
+        "overlayEnd": {
+          "$type": "number",
+          "$value": 1
+        },
+        "overlayStartColor": {
+          "$type": "color",
+          "$value": "{semantic.color.overlay.transparent}"
+        },
+        "overlayEndColor": {
+          "$type": "color",
+          "$value": "{semantic.color.overlay.scrim}"
+        },
+        "overlayQss": {
+          "$type": "gradient",
+          "$value": "qlineargradient(x1:0, y1:0.45, x2:0, y2:1, stop:0 rgba(0, 0, 0, 0.00), stop:1 rgba(0, 0, 0, 0.82))",
+          "$description": "Use only when a QSS background gradient is sufficient. QPainter code should use the split overlay tokens above."
+        }
+      },
+      "authFlow": {
+        "$description": "Composite layout contract for the 1440x1024 SignUp and Onboarding flow. It captures reusable panel geometry, not one-off absolute coordinates.",
+        "pageInset": {
+          "$type": "spacing",
+          "$value": 24
+        },
+        "pageGap": {
+          "$type": "spacing",
+          "$value": 20
+        },
+        "panelWidth": {
+          "$type": "dimension",
+          "$value": 696
+        },
+        "panelHeight": {
+          "$type": "dimension",
+          "$value": 976
+        },
+        "panelRadius": {
+          "$type": "borderRadius",
+          "$value": 40
+        },
+        "formWidth": {
+          "$type": "dimension",
+          "$value": 422
+        },
+        "formInset": {
+          "$type": "spacing",
+          "$value": 137
+        },
+        "contentWidth": {
+          "$type": "dimension",
+          "$value": 544
+        },
+        "contentInset": {
+          "$type": "spacing",
+          "$value": 76
+        },
+        "signupContentTop": {
+          "$type": "spacing",
+          "$value": 226
+        },
+        "signupContentBottom": {
+          "$type": "spacing",
+          "$value": 24
+        },
+        "headlineGap": {
+          "$type": "spacing",
+          "$value": 56
+        },
+        "formSectionGap": {
+          "$type": "spacing",
+          "$value": 32
+        },
+        "fieldGap": {
+          "$type": "spacing",
+          "$value": 12
+        },
+        "controlHeight": {
+          "$type": "dimension",
+          "$value": 48
+        },
+        "controlRadius": {
+          "$type": "borderRadius",
+          "$value": "{base.radius.xl}",
+          "$description": "Authentication control radius. Qt requires twice this value to be no greater than the rendered control height."
+        },
+        "marketingInset": {
+          "$type": "spacing",
+          "$value": 28
+        },
+        "marketingTop": {
+          "$type": "spacing",
+          "$value": 136
+        },
+        "marketingWidgetWidth": {
+          "$type": "dimension",
+          "$value": 619
+        },
+        "marketingWidgetHeight": {
+          "$type": "dimension",
+          "$value": 371
+        },
+        "marketingLogoWidth": {
+          "$type": "dimension",
+          "$value": 170
+        },
+        "marketingLogoHeight": {
+          "$type": "dimension",
+          "$value": 40
+        },
+        "marketingBrandGap": {
+          "$type": "spacing",
+          "$value": 64
+        },
+        "marketingCopyGap": {
+          "$type": "spacing",
+          "$value": 64
+        },
+        "onboardingContentTop": {
+          "$type": "spacing",
+          "$value": 178
+        },
+        "progressHeight": {
+          "$type": "dimension",
+          "$value": 8
+        },
+        "progressGap": {
+          "$type": "spacing",
+          "$value": 8
+        },
+        "optionGap": {
+          "$type": "spacing",
+          "$value": 12
+        },
+        "optionHeight": {
+          "$type": "dimension",
+          "$value": 110
+        },
+        "actionWidth": {
+          "$type": "dimension",
+          "$value": 150
+        },
+        "heroTextInset": {
+          "$type": "spacing",
+          "$value": 48
+        },
+        "heroBottomInset": {
+          "$type": "spacing",
+          "$value": 60
+        }
+      },
+      "sidebar": {
+        "$description": "Left navigation rail shared by Dashboard and Orders.",
+        "width": {
+          "$type": "dimension",
+          "$value": "{base.dimension.sidebar-width}"
+        },
+        "background": {
+          "$type": "color",
+          "$value": "{semantic.color.background.surface}"
+        },
+        "radius": {
+          "$type": "borderRadius",
+          "$value": "{semantic.radius.card}"
+        },
+        "navItemHeight": {
+          "$type": "dimension",
+          "$value": "{base.dimension.nav-item-height}"
+        },
+        "navItemRadius": {
+          "$type": "borderRadius",
+          "$value": "{semantic.radius.input}"
+        },
+        "navItemActiveBg": {
+          "$type": "color",
+          "$value": "{semantic.color.background.surface-muted}"
+        },
+        "navItemActiveText": {
+          "$type": "color",
+          "$value": "{semantic.color.action.primary}"
+        },
+        "navItemText": {
+          "$type": "color",
+          "$value": "{semantic.color.text.primary}"
+        }
+      },
+      "navbar": {
+        "$description": "Desktop top navigation contract from Figma component 86:6298.",
+        "height": {
+          "$type": "dimension",
+          "$value": 63
+        },
+        "background": {
+          "$type": "color",
+          "$value": "{semantic.color.background.surface}"
+        },
+        "paddingInline": {
+          "$type": "spacing",
+          "$value": "{base.space.24}"
+        },
+        "gap": {
+          "$type": "spacing",
+          "$value": "{base.space.16}"
+        },
+        "title": {
+          "$type": "color",
+          "$value": "{semantic.color.text.primary}"
+        },
+        "meta": {
+          "$type": "color",
+          "$value": "{semantic.color.text.muted}"
+        },
+        "border": {
+          "$type": "color",
+          "$value": "{semantic.color.border.subtle}"
+        }
+      },
+      "integrationCard": {
+        "$description": "Integration card contract from Figma component 86:4316.",
+        "minHeight": {
+          "$type": "dimension",
+          "$value": 209
+        },
+        "background": {
+          "$type": "color",
+          "$value": "{component.basic.card.background}"
+        },
+        "radius": {
+          "$type": "borderRadius",
+          "$value": "{component.basic.card.radius}"
+        },
+        "border": {
+          "$type": "color",
+          "$value": "{component.basic.card.border}"
+        },
+        "title": {
+          "$type": "color",
+          "$value": "{semantic.color.text.primary}"
+        },
+        "description": {
+          "$type": "color",
+          "$value": "{semantic.color.text.secondary}"
+        },
+        "logoSize": {
+          "$type": "dimension",
+          "$value": 40
+        }
+      },
+      "widgetCard": {
+        "$description": "Shared geometry for Figma dashboard widget variants 116:35991-116:36000.",
+        "background": {
+          "$type": "color",
+          "$value": "{component.basic.card.background}"
+        },
+        "radius": {
+          "$type": "borderRadius",
+          "$value": "{component.basic.card.radius}"
+        },
+        "border": {
+          "$type": "color",
+          "$value": "{component.basic.card.border}"
+        },
+        "padding": {
+          "$type": "spacing",
+          "$value": "{component.basic.card.bodyPadding}"
+        },
+        "title": {
+          "$type": "color",
+          "$value": "{semantic.color.text.primary}"
+        },
+        "meta": {
+          "$type": "color",
+          "$value": "{semantic.color.text.muted}"
+        }
+      },
+      "metricCard": {
+        "$description": "KPI card contract. Use this for Total Orders, Revenue, Delivery Time and similar metric panels.",
+        "background": {
+          "$type": "color",
+          "$value": "{component.basic.card.background}"
+        },
+        "radius": {
+          "$type": "borderRadius",
+          "$value": "{component.basic.card.radius}"
+        },
+        "minHeight": {
+          "$type": "dimension",
+          "$value": 176
+        },
+        "title": {
+          "$type": "color",
+          "$value": "{semantic.color.text.primary}"
+        },
+        "value": {
+          "$type": "color",
+          "$value": "{semantic.color.text.primary}"
+        },
+        "meta": {
+          "$type": "color",
+          "$value": "{semantic.color.text.muted}"
+        }
+      },
+      "orders": {
+        "$description": "Orders domain tokens. They bind order states to chart bars, badges and table status labels.",
+        "pending": {
+          "$type": "color",
+          "$value": "{semantic.color.chart.pending}"
+        },
+        "shipped": {
+          "$type": "color",
+          "$value": "{semantic.color.chart.shipped}"
+        },
+        "canceled": {
+          "$type": "color",
+          "$value": "{semantic.color.chart.canceled}"
+        },
+        "statusSuccessBg": {
+          "$type": "color",
+          "$value": "{semantic.color.status.success-bg}"
+        },
+        "statusWarningBg": {
+          "$type": "color",
+          "$value": "{semantic.color.status.warning-bg}"
+        },
+        "statusDangerBg": {
+          "$type": "color",
+          "$value": "{semantic.color.status.danger-bg}"
+        }
+      },
+      "chart": {
+        "$description": "Chart color contract. Keeps Dashboard and Orders chart semantics consistent.",
+        "statusHeight": {
+          "$type": "dimension",
+          "$value": 76,
+          "$description": "Height of the compact order-status segmented chart, including its legend."
+        },
+        "seriesPrimary": {
+          "$type": "color",
+          "$value": "{semantic.color.chart.active}"
+        },
+        "ordersPending": {
+          "$type": "color",
+          "$value": "{component.composite.orders.pending}"
+        },
+        "ordersShipped": {
+          "$type": "color",
+          "$value": "{component.composite.orders.shipped}"
+        },
+        "ordersCanceled": {
+          "$type": "color",
+          "$value": "{component.composite.orders.canceled}"
+        },
+        "grid": {
+          "$type": "color",
+          "$value": "{semantic.color.border.default}"
+        }
+      },
+      "table": {
+        "$description": "Table composite contract derived from the HelloUI Table component variables. Global values resolve through semantic/base tokens; this group owns table parts, density and row states.",
+        "headerBg": {
+          "$type": "color",
+          "$value": "{semantic.color.fill.quaternary}"
+        },
+        "headerText": {
+          "$type": "color",
+          "$value": "{semantic.color.text.primary}"
+        },
+        "headerSplit": {
+          "$type": "color",
+          "$value": "{semantic.color.border.subtle}"
+        },
+        "headerRadius": {
+          "$type": "borderRadius",
+          "$value": "{semantic.radius.control-lg}"
+        },
+        "rowBorder": {
+          "$type": "color",
+          "$value": "{semantic.color.border.subtle}"
+        },
+        "rowBackground": {
+          "$type": "color",
+          "$value": "{semantic.color.background.surface}"
+        },
+        "rowHoverBackground": {
+          "$type": "color",
+          "$value": "{semantic.color.background.interactive-hover}"
+        },
+        "rowSelectedBackground": {
+          "$type": "color",
+          "$value": "{semantic.color.action.primary-bg}"
+        },
+        "rowSelectedHoverBackground": {
+          "$type": "color",
+          "$value": "{semantic.color.action.primary-bg-hover}"
+        },
+        "text": {
+          "$type": "color",
+          "$value": "{semantic.color.text.primary}"
+        },
+        "muted": {
+          "$type": "color",
+          "$value": "{semantic.color.text.muted}"
+        },
+        "cell": {
+          "sm": {
+            "paddingInline": {
+              "$type": "spacing",
+              "$value": "{base.space.8}"
+            },
+            "paddingBlock": {
+              "$type": "spacing",
+              "$value": "{base.space.8}"
+            },
+            "fontSize": {
+              "$type": "fontSize",
+              "$value": "{base.fontSize.body-sm}"
+            }
+          },
+          "md": {
+            "paddingInline": {
+              "$type": "spacing",
+              "$value": "{base.space.8}"
+            },
+            "paddingBlock": {
+              "$type": "spacing",
+              "$value": "{base.space.12}"
+            },
+            "fontSize": {
+              "$type": "fontSize",
+              "$value": "{base.fontSize.body-sm}"
+            }
+          },
+          "lg": {
+            "paddingInline": {
+              "$type": "spacing",
+              "$value": "{base.space.16}"
+            },
+            "paddingBlock": {
+              "$type": "spacing",
+              "$value": "{base.space.16}"
+            },
+            "fontSize": {
+              "$type": "fontSize",
+              "$value": "{base.fontSize.body-sm}"
+            }
+          }
+        }
+      }
+    }
+  }
+}

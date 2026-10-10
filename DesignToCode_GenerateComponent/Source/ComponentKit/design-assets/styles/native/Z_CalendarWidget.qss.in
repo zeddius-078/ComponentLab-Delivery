@@ -1,0 +1,15 @@
+/* Z_CalendarWidget <- QCalendarWidget; compiled from the active Token profile. */
+*[designSystemClass="commonWidget::Z_CalendarWidget"] {
+    color: @FOREGROUND@;
+    background-color: @SURFACE@;
+    font-size: @FONT_SIZE@px;
+}
+*[designSystemClass="commonWidget::Z_CalendarWidget"]:disabled {
+    color: @DISABLED_TEXT@;
+    background-color: @DISABLED@;
+    border-color: @DISABLED_BORDER@;
+}
+*[designSystemClass="commonWidget::Z_CalendarWidget"] {
+    border: 1px solid @BORDER@;
+    border-radius: @RADIUS@px;
+}

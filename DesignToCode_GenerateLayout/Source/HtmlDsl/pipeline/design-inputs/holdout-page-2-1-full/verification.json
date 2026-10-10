@@ -1,0 +1,23 @@
+{
+  "status": "PASS",
+  "directory": "holdout-page-2-1-full",
+  "arguments": {
+    "guid": "2:1",
+    "simplify": false,
+    "isDetachInstance": false
+  },
+  "receivedAtUtc": "2026-09-23T17:02:20.090789+00:00",
+  "rawBytes": 14435,
+  "rawSha256": "2aaf59f726ceed5cba8d6a25b89333326458243c38d6148229a9f5741e2ec0b6",
+  "responseSha256": "bf7198a33e385f5a4a1724234739aa289026ab8bdac2c5c835dafda42106d5b9",
+  "verbatimText": true,
+  "topLevelFields": [
+    "pixTreeNodes",
+    "svgGuidInfo",
+    "pixComponentTreeDslNodes",
+    "variableMap",
+    "variableSetMap",
+    "localStyleMap",
+    "isContainFixed"
+  ]
+}

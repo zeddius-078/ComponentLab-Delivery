@@ -1,0 +1,13 @@
+{
+  "caseId": "pixso-27-450-html-dsl",
+  "sourceUrl": "https://pixso.cn/app/design/4S0Ktm81WnvzuJmZHvRuOg?item-id=27:450",
+  "requestedFileKey": "4S0Ktm81WnvzuJmZHvRuOg",
+  "rootGuid": "27:450",
+  "route": "HTML layout + same-source full DSL identity",
+  "frameworkRequestedFromPixso": "html",
+  "nativeTarget": "C++ / Qt 5.15.2 / static .ui XML",
+  "outputBoundary": "Qt/V2/Case-27-450",
+  "designWriteAllowed": false,
+  "policy": "Preserve raw responses; use deterministic parsing and existing component contracts; record unsupported structures instead of inventing them.",
+  "createdLocalDate": "2026-09-28"
+}

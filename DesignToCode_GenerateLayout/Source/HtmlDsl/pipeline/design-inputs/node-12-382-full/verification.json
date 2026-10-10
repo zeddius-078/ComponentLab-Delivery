@@ -1,0 +1,23 @@
+{
+  "status": "PASS",
+  "directory": "node-12-382-full",
+  "arguments": {
+    "guid": "12:382",
+    "simplify": false,
+    "isDetachInstance": false
+  },
+  "receivedAtUtc": "2026-09-23T16:19:56.308725+00:00",
+  "rawBytes": 2824546,
+  "rawSha256": "8215b35e5d7aecf66447d5565bcff3feaf72b24a546e8cee6290bf2fffd23b63",
+  "responseSha256": "63c0323c8eb8e459760f260911d91a2636916fd9a52d3541511ce7c08c4952fe",
+  "verbatimText": true,
+  "topLevelFields": [
+    "pixTreeNodes",
+    "svgGuidInfo",
+    "pixComponentTreeDslNodes",
+    "variableMap",
+    "variableSetMap",
+    "localStyleMap",
+    "isContainFixed"
+  ]
+}

@@ -1,0 +1,166 @@
+{
+  "$id": "urn:componentlab:design-evidence:variables-used:1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "bindings": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "locator": {
+            "type": "string"
+          },
+          "nodeId": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "propertyPath": {
+            "type": "string"
+          },
+          "reference": {
+            "type": "string"
+          },
+          "scope": {
+            "enum": [
+              "page",
+              "supplemental-variant"
+            ]
+          },
+          "selectorId": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "variableId": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "scope",
+          "nodeId",
+          "locator",
+          "propertyPath",
+          "reference",
+          "variableId",
+          "selectorId"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "schemaVersion": {
+      "const": 1
+    },
+    "variables": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "collectionId": {
+            "type": "string"
+          },
+          "modes": {
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "aliasChain": {
+                  "items": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "collectionId": {
+                        "type": "string"
+                      },
+                      "modeId": {
+                        "type": "string"
+                      },
+                      "rawValue": {},
+                      "variableId": {
+                        "type": "string"
+                      },
+                      "variableName": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "variableId",
+                      "variableName",
+                      "collectionId",
+                      "modeId",
+                      "rawValue"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                },
+                "finalValue": {},
+                "modeId": {
+                  "type": "string"
+                },
+                "modeName": {
+                  "type": "string"
+                },
+                "rawPayload": {
+                  "type": "object"
+                },
+                "status": {
+                  "const": "resolved"
+                }
+              },
+              "required": [
+                "modeId",
+                "modeName",
+                "rawPayload",
+                "aliasChain",
+                "finalValue",
+                "status"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "name": {
+            "type": "string"
+          },
+          "nativeVariableKey": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "resolvedType": {},
+          "scopes": {
+            "items": {
+              "enum": [
+                "page",
+                "supplemental-variant"
+              ]
+            },
+            "type": "array"
+          },
+          "variableId": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "variableId",
+          "name",
+          "collectionId",
+          "nativeVariableKey",
+          "resolvedType",
+          "scopes",
+          "modes"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "variables",
+    "bindings"
+  ],
+  "type": "object"
+}

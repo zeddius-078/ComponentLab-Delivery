@@ -1,0 +1,10 @@
+The following main page files are available in pageEntries. Fetch each URL to get the file content. Save to the specified path when present; if path is missing, derive a framework-appropriate path from id or name:
+{
+  "pageEntries": [
+    {
+      "id": "0:0",
+      "type": "page",
+      "url": "http://localhost:3667/code/1790355461100/0%3A0"
+    }
+  ]
+}

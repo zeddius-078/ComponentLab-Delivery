@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>ComponentLab</class>
+ <widget class="QMainWindow" name="ComponentLab">
+  <property name="geometry"><rect><x>0</x><y>0</y><width>1240</width><height>800</height></rect></property>
+  <property name="minimumSize"><size><width>960</width><height>680</height></size></property>
+  <property name="windowTitle"><string>Component Lab</string></property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QVBoxLayout" name="mainLayout">
+    <property name="leftMargin"><number>24</number></property><property name="topMargin"><number>20</number></property><property name="rightMargin"><number>24</number></property><property name="bottomMargin"><number>20</number></property><property name="spacing"><number>16</number></property>
+    <item><layout class="QHBoxLayout" name="headerLayout">
+     <item><widget class="QLabel" name="titleLabel"><property name="text"><string>Component Lab</string></property></widget></item>
+     <item><spacer name="headerSpacer"><property name="orientation"><enum>Qt::Horizontal</enum></property><property name="sizeHint"><size><width>40</width><height>20</height></size></property></spacer></item>
+     <item><widget class="QComboBox" name="profileCombo"/></item>
+     <item><widget class="QLabel" name="focusLabel"><property name="text"><string>焦点描边</string></property><property name="buddy"><cstring>focusIndicatorCombo</cstring></property></widget></item>
+     <item><widget class="QComboBox" name="focusIndicatorCombo"><property name="accessibleName"><string>焦点描边显示方式</string></property></widget></item>
+    </layout></item>
+    <item><widget class="QTabWidget" name="tabs">
+<widget class="QWidget" name="buttonTab"><attribute name="title"><string>Button</string></attribute><layout class="QVBoxLayout" name="buttonTabLayout"><item><widget class="QTabWidget" name="buttonSections"><widget class="QWidget" name="buttonAppearanceTab"><attribute name="title"><string>外观</string></attribute><layout class="QVBoxLayout" name="buttonLayout"/></widget><widget class="QWidget" name="buttonStatesTab"><attribute name="title"><string>分组与状态</string></attribute><layout class="QVBoxLayout" name="buttonStatesLayout"/></widget></widget></item></layout></widget>
+<widget class="QWidget" name="checkboxTab"><attribute name="title"><string>Checkbox</string></attribute><layout class="QVBoxLayout" name="checkboxTabLayout"><item><widget class="QTabWidget" name="checkboxSections"><widget class="QWidget" name="checkboxAppearanceTab"><attribute name="title"><string>外观</string></attribute><layout class="QVBoxLayout" name="inspectLayout"/></widget><widget class="QWidget" name="checkboxStatesTab"><attribute name="title"><string>分组与状态</string></attribute><layout class="QVBoxLayout" name="checkboxStatesLayout"><item><widget class="QScrollArea" name="checkboxStatesScroll"><property name="widgetResizable"><bool>true</bool></property><property name="frameShape"><enum>QFrame::NoFrame</enum></property><widget class="QWidget" name="checkboxStateContent"><layout class="QVBoxLayout" name="checkboxStateContentLayout"><item><layout class="QVBoxLayout" name="matrixLayout"/></item><item><layout class="QVBoxLayout" name="groupLayout"/></item></layout></widget></widget></item></layout></widget></widget></item></layout></widget>
+<widget class="QWidget" name="inputTab"><attribute name="title"><string>Input</string></attribute><layout class="QVBoxLayout" name="inputTabLayout"><item><widget class="QTabWidget" name="inputSections"><widget class="QWidget" name="inputAppearanceTab"><attribute name="title"><string>外观</string></attribute><layout class="QVBoxLayout" name="inputAppearanceLayout"/></widget><widget class="QWidget" name="inputStatesTab"><attribute name="title"><string>分组与状态</string></attribute><layout class="QVBoxLayout" name="inputStatesLayout"/></widget></widget></item></layout></widget>
+<widget class="QWidget" name="selectTab"><attribute name="title"><string>Select</string></attribute><layout class="QVBoxLayout" name="selectTabLayout"><item><widget class="QTabWidget" name="selectSections"><widget class="QWidget" name="selectAppearanceTab"><attribute name="title"><string>外观</string></attribute><layout class="QVBoxLayout" name="selectAppearanceLayout"/></widget><widget class="QWidget" name="selectStatesTab"><attribute name="title"><string>分组与状态</string></attribute><layout class="QVBoxLayout" name="selectStatesLayout"/></widget></widget></item></layout></widget>
+<widget class="QWidget" name="nativeTab"><attribute name="title"><string>Z-DesignSystem</string></attribute><layout class="QVBoxLayout" name="nativeTabLayout"><item><widget class="QTabWidget" name="nativeSections"><widget class="QWidget" name="nativeGalleryTab"><attribute name="title"><string>组件图库</string></attribute><layout class="QVBoxLayout" name="nativeGalleryLayout"/></widget><widget class="QWidget" name="nativeRegistryTab"><attribute name="title"><string>组件映射</string></attribute><layout class="QVBoxLayout" name="nativeRegistryLayout"/></widget></widget></item></layout></widget>
+    </widget></item>
+    <item><widget class="QLabel" name="statusLabel"><property name="text"><string>COMPONENT-LAB R4-sToken</string></property><property name="wordWrap"><bool>true</bool></property></widget></item>
+   </layout>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "entry": "19:45",
+  "result": "21:436",
+  "input": "19:47",
+  "confirm": "19:57",
+  "back": "21:481",
+  "required": true,
+  "demoActions": ["21:448", "21:474", "21:476", "21:478"],
+  "interactionSource": "Project rule: nonempty work order opens result; back retains value; confirmation buttons report local demo events. Pixso supplies appearance and disabled state."
+}

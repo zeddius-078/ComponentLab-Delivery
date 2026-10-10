@@ -1,0 +1,2 @@
+QWidget#horizontalReviewPage { background-color: #ffffffff; }
+QLabel#horizontalReviewHeading { font-family: "HarmonyOS Sans SC"; font-size: 24px; color: #ff1f2429; background: transparent; }

@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "sourceKind": "localFixture",
+  "sourceFile": "Qt/ReferencePage/example.ui-contract.json",
+  "designDocumentUrl": null,
+  "designNodeIds": {},
+  "ownership": {
+    "ReferencePage.ui": "developer",
+    "ReferencePage.h": "developer",
+    "ReferencePage.cpp": "developer",
+    "ReferencePage.source.json": "developer",
+    "ui_ReferencePage.h": "uic-build-output"
+  },
+  "componentObjects": {
+    "lotInput": "designer_widgets::InputField",
+    "chamberSelect": "designer_widgets::Select",
+    "qualityCheck": "designer_widgets::CheckBox",
+    "submitButton": "commonWidget::Z_PushButton",
+    "searchButton": "commonWidget::Z_PushButton"
+  },
+  "layoutBindings": [
+    {"objectName": "pageLayout", "property": "spacing", "token": "base.stoken.metric.space.vertical.standard", "resolvedValue": 8},
+    {"objectName": "pageLayout", "property": "leftMargin", "token": "base.stoken.layout.padding.inline.compact", "resolvedValue": 8},
+    {"objectName": "pageLayout", "property": "topMargin", "token": "base.stoken.layout.padding.inline.compact", "resolvedValue": 8},
+    {"objectName": "pageLayout", "property": "rightMargin", "token": "base.stoken.layout.padding.inline.compact", "resolvedValue": 8},
+    {"objectName": "pageLayout", "property": "bottomMargin", "token": "base.stoken.layout.padding.inline.compact", "resolvedValue": 8},
+    {"objectName": "actionsLayout", "property": "spacing", "token": "base.stoken.metric.space.vertical.standard", "resolvedValue": 8}
+  ]
+}

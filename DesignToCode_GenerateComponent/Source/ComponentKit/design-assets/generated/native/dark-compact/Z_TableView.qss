@@ -1,0 +1,15 @@
+/* Z_TableView <- QTableView; compiled from the active Token profile. */
+*[designSystemClass="commonWidget::Z_TableView"] {
+    color: #f3f3f3;
+    background-color: #272727;
+    font-size: 14px;
+}
+*[designSystemClass="commonWidget::Z_TableView"]:disabled {
+    color: #8a8a8a;
+    background-color: #303030;
+    border-color: #444444;
+}
+*[designSystemClass="commonWidget::Z_TableView"] {
+    border: 1px solid #676767;
+    border-radius: 4px;
+}

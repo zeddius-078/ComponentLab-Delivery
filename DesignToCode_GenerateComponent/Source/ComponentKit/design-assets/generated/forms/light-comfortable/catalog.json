@@ -1,0 +1,2240 @@
+{
+    "canonicalRevision": "bcb515403b7d",
+    "decisions": {
+        "F01": "Font family is sToken HarmonyOS Sans SC; not bundled. Qt fallback applies when unavailable; Field retains Microsoft YaHei UI fallback.",
+        "F02": "Popup bounds, preferred width and textarea row defaults remain local parameters. Action Loading reuses the Button contract.",
+        "F03": "The sToken embedded interaction size resolves to 24px in all four current runtime configurations; the shared Input/Select field adapter applies a 32px minimum height and 14px minimum body font size.",
+        "F04": "Surface presets use the same checkbox-contract.json data; borderless and underlined preserve their structural border semantics and have no decorative shadow."
+    },
+    "fallbackFontFamily": "Microsoft YaHei UI",
+    "fontFamily": "HarmonyOS Sans SC",
+    "icons": {
+        "arrow": ":/icons/chevron-down.svg",
+        "clear": ":/icons/x.svg",
+        "hidePassword": ":/icons/eye-off.svg",
+        "search": ":/icons/search.svg",
+        "showPassword": ":/icons/eye.svg"
+    },
+    "id": "COMPONENT-LAB-FORMS-R4-STOKEN",
+    "inputs": {
+        "DesignSystem/generated/runtime/tokens_qt.json": "d87561987bb669e4229e9524ab3b8d9c978e99857d61bb8f9bbcfc5d23746b1c",
+        "styles/Z_Field.qss.in": "28f64be34ce79bbd53a631a9e2f2102bd25a23ae6da73004c434392b99d5be7a",
+        "styles/Z_Select.qss.in": "4a8f58aa71ff07f6145b8d5dc19fbe18b30c2738c42ff05138fb6496dc57b083",
+        "tokens/checkbox-contract.json": "4f09560bf675ba6de673be4dcf2ed2316fbd970a0c5cae544c4e13eb277dcfd9",
+        "tokens/forms-contract.json": "4033c71aba678774e7e607d80aec3d328b8db498fdfd588adf47a01171eb2fbd",
+        "tools/contract_values.h": "e7797f2e03178cb355662ba34351869968ea9969389caeb787345270418c95ec",
+        "tools/forms_token_compiler.cpp": "c2588ff74547fe9485ef61ece45fe77f8f91360ea05f52646b67bb85bf6dda51",
+        "tools/token_inputs.h": "bf8b737dad30a74db3efd8da6a524e9b3e18419835b2c32f12366ba4fc73a00f"
+    },
+    "metrics": {
+        "actionInset": 4,
+        "actionSize": 32,
+        "borderWidth": 1,
+        "fieldMinimumWidth": 120,
+        "fieldPreferredWidth": 320,
+        "focusWidth": 2,
+        "gap": 8,
+        "hintFontSize": 12,
+        "hintGap": 4,
+        "iconSize": 16,
+        "labelFontSize": 14,
+        "labelGap": 8,
+        "optionHeight": 32,
+        "popupGap": 4,
+        "popupMaxHeight": 256,
+        "popupMinWidth": 160,
+        "popupPadding": 4,
+        "popupRadius": 4,
+        "radius": 4,
+        "tagGap": 4,
+        "tagHeight": 32,
+        "tagPadding": 8,
+        "tagRadius": 2,
+        "textAreaMaxRows": 5,
+        "textAreaMinRows": 2
+    },
+    "palette": {
+        "accent": "#6235f7",
+        "background": "#ffffff",
+        "border": "#a7a7a7",
+        "disabledBackground": "#f3f3f3",
+        "disabledBorder": "#d0d0d0",
+        "disabledText": "#8a8a8a",
+        "errorBackground": "#fbe4e5",
+        "errorBorder": "#e02128",
+        "filledBackground": "#f3f3f3",
+        "focusBorder": "#6235f7",
+        "focusOutline": "#f3efff",
+        "gradientHigh": "#f3f3f3",
+        "gradientLow": "#f1ecff",
+        "hoverBorder": "#191919",
+        "muted": "#444444",
+        "onAccent": "#ffffff",
+        "optionHover": "#f3f3f3",
+        "optionSelected": "#f3efff",
+        "placeholder": "#676767",
+        "tagBackground": "#f3f3f3",
+        "text": "#191919",
+        "warningBackground": "#fff8e3",
+        "warningBorder": "#e6af19"
+    },
+    "profile": "light-comfortable",
+    "recipes": {
+        "elevated/borderless/default": {
+            "borderWidth": 1,
+            "fill": "transparent",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:transparent; border:1px solid transparent; border-radius:0px;border:0;",
+            "radius": 0,
+            "shadows": [
+            ]
+        },
+        "elevated/borderless/disabled": {
+            "borderWidth": 1,
+            "fill": "transparent",
+            "foreground": "#8a8a8a",
+            "glyph": "#8a8a8a",
+            "qss": "background:transparent; border:1px solid transparent; border-radius:0px;border:0;",
+            "radius": 0,
+            "shadows": [
+            ]
+        },
+        "elevated/borderless/error": {
+            "borderWidth": 1,
+            "fill": "transparent",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:transparent; border:1px solid transparent; border-radius:0px;border:0;",
+            "radius": 0,
+            "shadows": [
+            ]
+        },
+        "elevated/borderless/focus": {
+            "borderWidth": 1,
+            "fill": "transparent",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:transparent; border:1px solid transparent; border-radius:0px;border:0;",
+            "radius": 0,
+            "shadows": [
+            ]
+        },
+        "elevated/borderless/hover": {
+            "borderWidth": 1,
+            "fill": "transparent",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:transparent; border:1px solid transparent; border-radius:0px;border:0;",
+            "radius": 0,
+            "shadows": [
+            ]
+        },
+        "elevated/borderless/warning": {
+            "borderWidth": 1,
+            "fill": "transparent",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:transparent; border:1px solid transparent; border-radius:0px;border:0;",
+            "radius": 0,
+            "shadows": [
+            ]
+        },
+        "elevated/filled/default": {
+            "borderWidth": 1,
+            "fill": "#f3f3f3",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:#f3f3f3; border:1px solid transparent; border-radius:4px;",
+            "radius": 4,
+            "shadows": [
+                {
+                    "alpha": 0.3,
+                    "blur": 7,
+                    "color": "#000000",
+                    "kind": "outer",
+                    "spread": 0,
+                    "x": 0,
+                    "y": 3
+                }
+            ]
+        },
+        "elevated/filled/disabled": {
+            "borderWidth": 1,
+            "fill": "#f3f3f3",
+            "foreground": "#8a8a8a",
+            "glyph": "#8a8a8a",
+            "qss": "background:#f3f3f3; border:1px solid #d0d0d0; border-radius:4px;",
+            "radius": 4,
+            "shadows": [
+            ]
+        },
+        "elevated/filled/error": {
+            "borderWidth": 1,
+            "fill": "#fbe4e5",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:#fbe4e5; border:1px solid #e02128; border-radius:4px;",
+            "radius": 4,
+            "shadows": [
+                {
+                    "alpha": 0.3,
+                    "blur": 7,
+                    "color": "#000000",
+                    "kind": "outer",
+                    "spread": 0,
+                    "x": 0,
+                    "y": 3
+                }
+            ]
+        },
+        "elevated/filled/focus": {
+            "borderWidth": 1,
+            "fill": "#f3f3f3",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:#f3f3f3; border:1px solid #6235f7; border-radius:4px;",
+            "radius": 4,
+            "shadows": [
+                {
+                    "alpha": 0.3,
+                    "blur": 7,
+                    "color": "#000000",
+                    "kind": "outer",
+                    "spread": 0,
+                    "x": 0,
+                    "y": 3
+                }
+            ]
+        },
+        "elevated/filled/hover": {
+            "borderWidth": 1,
+            "fill": "#f3f3f3",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:#f3f3f3; border:1px solid #191919; border-radius:4px;",
+            "radius": 4,
+            "shadows": [
+                {
+                    "alpha": 0.3,
+                    "blur": 7,
+                    "color": "#000000",
+                    "kind": "outer",
+                    "spread": 0,
+                    "x": 0,
+                    "y": 3
+                }
+            ]
+        },
+        "elevated/filled/warning": {
+            "borderWidth": 1,
+            "fill": "#fff8e3",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:#fff8e3; border:1px solid #e6af19; border-radius:4px;",
+            "radius": 4,
+            "shadows": [
+                {
+                    "alpha": 0.3,
+                    "blur": 7,
+                    "color": "#000000",
+                    "kind": "outer",
+                    "spread": 0,
+                    "x": 0,
+                    "y": 3
+                }
+            ]
+        },
+        "elevated/outlined/default": {
+            "borderWidth": 1,
+            "fill": "#ffffff",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:#ffffff; border:1px solid #a7a7a7; border-radius:4px;",
+            "radius": 4,
+            "shadows": [
+                {
+                    "alpha": 0.3,
+                    "blur": 7,
+                    "color": "#000000",
+                    "kind": "outer",
+                    "spread": 0,
+                    "x": 0,
+                    "y": 3
+                }
+            ]
+        },
+        "elevated/outlined/disabled": {
+            "borderWidth": 1,
+            "fill": "#f3f3f3",
+            "foreground": "#8a8a8a",
+            "glyph": "#8a8a8a",
+            "qss": "background:#f3f3f3; border:1px solid #d0d0d0; border-radius:4px;",
+            "radius": 4,
+            "shadows": [
+            ]
+        },
+        "elevated/outlined/error": {
+            "borderWidth": 1,
+            "fill": "#fbe4e5",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:#fbe4e5; border:1px solid #e02128; border-radius:4px;",
+            "radius": 4,
+            "shadows": [
+                {
+                    "alpha": 0.3,
+                    "blur": 7,
+                    "color": "#000000",
+                    "kind": "outer",
+                    "spread": 0,
+                    "x": 0,
+                    "y": 3
+                }
+            ]
+        },
+        "elevated/outlined/focus": {
+            "borderWidth": 1,
+            "fill": "#ffffff",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:#ffffff; border:1px solid #6235f7; border-radius:4px;",
+            "radius": 4,
+            "shadows": [
+                {
+                    "alpha": 0.3,
+                    "blur": 7,
+                    "color": "#000000",
+                    "kind": "outer",
+                    "spread": 0,
+                    "x": 0,
+                    "y": 3
+                }
+            ]
+        },
+        "elevated/outlined/hover": {
+            "borderWidth": 1,
+            "fill": "#ffffff",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:#ffffff; border:1px solid #191919; border-radius:4px;",
+            "radius": 4,
+            "shadows": [
+                {
+                    "alpha": 0.3,
+                    "blur": 7,
+                    "color": "#000000",
+                    "kind": "outer",
+                    "spread": 0,
+                    "x": 0,
+                    "y": 3
+                }
+            ]
+        },
+        "elevated/outlined/warning": {
+            "borderWidth": 1,
+            "fill": "#fff8e3",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:#fff8e3; border:1px solid #e6af19; border-radius:4px;",
+            "radius": 4,
+            "shadows": [
+                {
+                    "alpha": 0.3,
+                    "blur": 7,
+                    "color": "#000000",
+                    "kind": "outer",
+                    "spread": 0,
+                    "x": 0,
+                    "y": 3
+                }
+            ]
+        },
+        "elevated/underlined/default": {
+            "borderWidth": 1,
+            "fill": "transparent",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:transparent; border:1px solid #a7a7a7; border-radius:0px;border-top:0;border-left:0;border-right:0;",
+            "radius": 0,
+            "shadows": [
+            ]
+        },
+        "elevated/underlined/disabled": {
+            "borderWidth": 1,
+            "fill": "transparent",
+            "foreground": "#8a8a8a",
+            "glyph": "#8a8a8a",
+            "qss": "background:transparent; border:1px solid #d0d0d0; border-radius:0px;border-top:0;border-left:0;border-right:0;",
+            "radius": 0,
+            "shadows": [
+            ]
+        },
+        "elevated/underlined/error": {
+            "borderWidth": 1,
+            "fill": "transparent",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:transparent; border:1px solid #e02128; border-radius:0px;border-top:0;border-left:0;border-right:0;",
+            "radius": 0,
+            "shadows": [
+            ]
+        },
+        "elevated/underlined/focus": {
+            "borderWidth": 1,
+            "fill": "transparent",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:transparent; border:1px solid #6235f7; border-radius:0px;border-top:0;border-left:0;border-right:0;",
+            "radius": 0,
+            "shadows": [
+            ]
+        },
+        "elevated/underlined/hover": {
+            "borderWidth": 1,
+            "fill": "transparent",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:transparent; border:1px solid #191919; border-radius:0px;border-top:0;border-left:0;border-right:0;",
+            "radius": 0,
+            "shadows": [
+            ]
+        },
+        "elevated/underlined/warning": {
+            "borderWidth": 1,
+            "fill": "transparent",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:transparent; border:1px solid #e6af19; border-radius:0px;border-top:0;border-left:0;border-right:0;",
+            "radius": 0,
+            "shadows": [
+            ]
+        },
+        "gradient-elevated/borderless/default": {
+            "borderWidth": 1,
+            "fill": "transparent",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:transparent; border:1px solid transparent; border-radius:0px;border:0;",
+            "radius": 0,
+            "shadows": [
+            ]
+        },
+        "gradient-elevated/borderless/disabled": {
+            "borderWidth": 1,
+            "fill": "transparent",
+            "foreground": "#8a8a8a",
+            "glyph": "#8a8a8a",
+            "qss": "background:transparent; border:1px solid transparent; border-radius:0px;border:0;",
+            "radius": 0,
+            "shadows": [
+            ]
+        },
+        "gradient-elevated/borderless/error": {
+            "borderWidth": 1,
+            "fill": "transparent",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:transparent; border:1px solid transparent; border-radius:0px;border:0;",
+            "radius": 0,
+            "shadows": [
+            ]
+        },
+        "gradient-elevated/borderless/focus": {
+            "borderWidth": 1,
+            "fill": "transparent",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:transparent; border:1px solid transparent; border-radius:0px;border:0;",
+            "radius": 0,
+            "shadows": [
+            ]
+        },
+        "gradient-elevated/borderless/hover": {
+            "borderWidth": 1,
+            "fill": "transparent",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:transparent; border:1px solid transparent; border-radius:0px;border:0;",
+            "radius": 0,
+            "shadows": [
+            ]
+        },
+        "gradient-elevated/borderless/warning": {
+            "borderWidth": 1,
+            "fill": "transparent",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:transparent; border:1px solid transparent; border-radius:0px;border:0;",
+            "radius": 0,
+            "shadows": [
+            ]
+        },
+        "gradient-elevated/filled/default": {
+            "borderWidth": 1,
+            "fill": "qlineargradient(x1:0,y1:0,x2:0,y2:1,stop:0 #f3f3f3,stop:1 #f1ecff)",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:qlineargradient(x1:0,y1:0,x2:0,y2:1,stop:0 #f3f3f3,stop:1 #f1ecff); border:1px solid transparent; border-radius:4px;",
+            "radius": 4,
+            "shadows": [
+                {
+                    "alpha": 0.28,
+                    "blur": 3,
+                    "color": "#ffffff",
+                    "kind": "inset",
+                    "spread": 0,
+                    "x": 0,
+                    "y": 1
+                },
+                {
+                    "alpha": 0.3,
+                    "blur": 7,
+                    "color": "#000000",
+                    "kind": "outer",
+                    "spread": 0,
+                    "x": 0,
+                    "y": 3
+                }
+            ]
+        },
+        "gradient-elevated/filled/disabled": {
+            "borderWidth": 1,
+            "fill": "#f3f3f3",
+            "foreground": "#8a8a8a",
+            "glyph": "#8a8a8a",
+            "qss": "background:#f3f3f3; border:1px solid #d0d0d0; border-radius:4px;",
+            "radius": 4,
+            "shadows": [
+            ]
+        },
+        "gradient-elevated/filled/error": {
+            "borderWidth": 1,
+            "fill": "qlineargradient(x1:0,y1:0,x2:0,y2:1,stop:0 #f3f3f3,stop:1 #f1ecff)",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:qlineargradient(x1:0,y1:0,x2:0,y2:1,stop:0 #f3f3f3,stop:1 #f1ecff); border:1px solid #e02128; border-radius:4px;",
+            "radius": 4,
+            "shadows": [
+                {
+                    "alpha": 0.28,
+                    "blur": 3,
+                    "color": "#ffffff",
+                    "kind": "inset",
+                    "spread": 0,
+                    "x": 0,
+                    "y": 1
+                },
+                {
+                    "alpha": 0.3,
+                    "blur": 7,
+                    "color": "#000000",
+                    "kind": "outer",
+                    "spread": 0,
+                    "x": 0,
+                    "y": 3
+                }
+            ]
+        },
+        "gradient-elevated/filled/focus": {
+            "borderWidth": 1,
+            "fill": "qlineargradient(x1:0,y1:0,x2:0,y2:1,stop:0 #f3f3f3,stop:1 #f1ecff)",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:qlineargradient(x1:0,y1:0,x2:0,y2:1,stop:0 #f3f3f3,stop:1 #f1ecff); border:1px solid #6235f7; border-radius:4px;",
+            "radius": 4,
+            "shadows": [
+                {
+                    "alpha": 0.28,
+                    "blur": 3,
+                    "color": "#ffffff",
+                    "kind": "inset",
+                    "spread": 0,
+                    "x": 0,
+                    "y": 1
+                },
+                {
+                    "alpha": 0.3,
+                    "blur": 7,
+                    "color": "#000000",
+                    "kind": "outer",
+                    "spread": 0,
+                    "x": 0,
+                    "y": 3
+                }
+            ]
+        },
+        "gradient-elevated/filled/hover": {
+            "borderWidth": 1,
+            "fill": "qlineargradient(x1:0,y1:0,x2:0,y2:1,stop:0 #f3f3f3,stop:1 #f1ecff)",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:qlineargradient(x1:0,y1:0,x2:0,y2:1,stop:0 #f3f3f3,stop:1 #f1ecff); border:1px solid #191919; border-radius:4px;",
+            "radius": 4,
+            "shadows": [
+                {
+                    "alpha": 0.28,
+                    "blur": 3,
+                    "color": "#ffffff",
+                    "kind": "inset",
+                    "spread": 0,
+                    "x": 0,
+                    "y": 1
+                },
+                {
+                    "alpha": 0.3,
+                    "blur": 7,
+                    "color": "#000000",
+                    "kind": "outer",
+                    "spread": 0,
+                    "x": 0,
+                    "y": 3
+                }
+            ]
+        },
+        "gradient-elevated/filled/warning": {
+            "borderWidth": 1,
+            "fill": "qlineargradient(x1:0,y1:0,x2:0,y2:1,stop:0 #f3f3f3,stop:1 #f1ecff)",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:qlineargradient(x1:0,y1:0,x2:0,y2:1,stop:0 #f3f3f3,stop:1 #f1ecff); border:1px solid #e6af19; border-radius:4px;",
+            "radius": 4,
+            "shadows": [
+                {
+                    "alpha": 0.28,
+                    "blur": 3,
+                    "color": "#ffffff",
+                    "kind": "inset",
+                    "spread": 0,
+                    "x": 0,
+                    "y": 1
+                },
+                {
+                    "alpha": 0.3,
+                    "blur": 7,
+                    "color": "#000000",
+                    "kind": "outer",
+                    "spread": 0,
+                    "x": 0,
+                    "y": 3
+                }
+            ]
+        },
+        "gradient-elevated/outlined/default": {
+            "borderWidth": 1,
+            "fill": "qlineargradient(x1:0,y1:0,x2:0,y2:1,stop:0 #f3f3f3,stop:1 #f1ecff)",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:qlineargradient(x1:0,y1:0,x2:0,y2:1,stop:0 #f3f3f3,stop:1 #f1ecff); border:1px solid #a7a7a7; border-radius:4px;",
+            "radius": 4,
+            "shadows": [
+                {
+                    "alpha": 0.28,
+                    "blur": 3,
+                    "color": "#ffffff",
+                    "kind": "inset",
+                    "spread": 0,
+                    "x": 0,
+                    "y": 1
+                },
+                {
+                    "alpha": 0.3,
+                    "blur": 7,
+                    "color": "#000000",
+                    "kind": "outer",
+                    "spread": 0,
+                    "x": 0,
+                    "y": 3
+                }
+            ]
+        },
+        "gradient-elevated/outlined/disabled": {
+            "borderWidth": 1,
+            "fill": "#f3f3f3",
+            "foreground": "#8a8a8a",
+            "glyph": "#8a8a8a",
+            "qss": "background:#f3f3f3; border:1px solid #d0d0d0; border-radius:4px;",
+            "radius": 4,
+            "shadows": [
+            ]
+        },
+        "gradient-elevated/outlined/error": {
+            "borderWidth": 1,
+            "fill": "qlineargradient(x1:0,y1:0,x2:0,y2:1,stop:0 #f3f3f3,stop:1 #f1ecff)",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:qlineargradient(x1:0,y1:0,x2:0,y2:1,stop:0 #f3f3f3,stop:1 #f1ecff); border:1px solid #e02128; border-radius:4px;",
+            "radius": 4,
+            "shadows": [
+                {
+                    "alpha": 0.28,
+                    "blur": 3,
+                    "color": "#ffffff",
+                    "kind": "inset",
+                    "spread": 0,
+                    "x": 0,
+                    "y": 1
+                },
+                {
+                    "alpha": 0.3,
+                    "blur": 7,
+                    "color": "#000000",
+                    "kind": "outer",
+                    "spread": 0,
+                    "x": 0,
+                    "y": 3
+                }
+            ]
+        },
+        "gradient-elevated/outlined/focus": {
+            "borderWidth": 1,
+            "fill": "qlineargradient(x1:0,y1:0,x2:0,y2:1,stop:0 #f3f3f3,stop:1 #f1ecff)",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:qlineargradient(x1:0,y1:0,x2:0,y2:1,stop:0 #f3f3f3,stop:1 #f1ecff); border:1px solid #6235f7; border-radius:4px;",
+            "radius": 4,
+            "shadows": [
+                {
+                    "alpha": 0.28,
+                    "blur": 3,
+                    "color": "#ffffff",
+                    "kind": "inset",
+                    "spread": 0,
+                    "x": 0,
+                    "y": 1
+                },
+                {
+                    "alpha": 0.3,
+                    "blur": 7,
+                    "color": "#000000",
+                    "kind": "outer",
+                    "spread": 0,
+                    "x": 0,
+                    "y": 3
+                }
+            ]
+        },
+        "gradient-elevated/outlined/hover": {
+            "borderWidth": 1,
+            "fill": "qlineargradient(x1:0,y1:0,x2:0,y2:1,stop:0 #f3f3f3,stop:1 #f1ecff)",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:qlineargradient(x1:0,y1:0,x2:0,y2:1,stop:0 #f3f3f3,stop:1 #f1ecff); border:1px solid #191919; border-radius:4px;",
+            "radius": 4,
+            "shadows": [
+                {
+                    "alpha": 0.28,
+                    "blur": 3,
+                    "color": "#ffffff",
+                    "kind": "inset",
+                    "spread": 0,
+                    "x": 0,
+                    "y": 1
+                },
+                {
+                    "alpha": 0.3,
+                    "blur": 7,
+                    "color": "#000000",
+                    "kind": "outer",
+                    "spread": 0,
+                    "x": 0,
+                    "y": 3
+                }
+            ]
+        },
+        "gradient-elevated/outlined/warning": {
+            "borderWidth": 1,
+            "fill": "qlineargradient(x1:0,y1:0,x2:0,y2:1,stop:0 #f3f3f3,stop:1 #f1ecff)",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:qlineargradient(x1:0,y1:0,x2:0,y2:1,stop:0 #f3f3f3,stop:1 #f1ecff); border:1px solid #e6af19; border-radius:4px;",
+            "radius": 4,
+            "shadows": [
+                {
+                    "alpha": 0.28,
+                    "blur": 3,
+                    "color": "#ffffff",
+                    "kind": "inset",
+                    "spread": 0,
+                    "x": 0,
+                    "y": 1
+                },
+                {
+                    "alpha": 0.3,
+                    "blur": 7,
+                    "color": "#000000",
+                    "kind": "outer",
+                    "spread": 0,
+                    "x": 0,
+                    "y": 3
+                }
+            ]
+        },
+        "gradient-elevated/underlined/default": {
+            "borderWidth": 1,
+            "fill": "transparent",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:transparent; border:1px solid #a7a7a7; border-radius:0px;border-top:0;border-left:0;border-right:0;",
+            "radius": 0,
+            "shadows": [
+            ]
+        },
+        "gradient-elevated/underlined/disabled": {
+            "borderWidth": 1,
+            "fill": "transparent",
+            "foreground": "#8a8a8a",
+            "glyph": "#8a8a8a",
+            "qss": "background:transparent; border:1px solid #d0d0d0; border-radius:0px;border-top:0;border-left:0;border-right:0;",
+            "radius": 0,
+            "shadows": [
+            ]
+        },
+        "gradient-elevated/underlined/error": {
+            "borderWidth": 1,
+            "fill": "transparent",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:transparent; border:1px solid #e02128; border-radius:0px;border-top:0;border-left:0;border-right:0;",
+            "radius": 0,
+            "shadows": [
+            ]
+        },
+        "gradient-elevated/underlined/focus": {
+            "borderWidth": 1,
+            "fill": "transparent",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:transparent; border:1px solid #6235f7; border-radius:0px;border-top:0;border-left:0;border-right:0;",
+            "radius": 0,
+            "shadows": [
+            ]
+        },
+        "gradient-elevated/underlined/hover": {
+            "borderWidth": 1,
+            "fill": "transparent",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:transparent; border:1px solid #191919; border-radius:0px;border-top:0;border-left:0;border-right:0;",
+            "radius": 0,
+            "shadows": [
+            ]
+        },
+        "gradient-elevated/underlined/warning": {
+            "borderWidth": 1,
+            "fill": "transparent",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:transparent; border:1px solid #e6af19; border-radius:0px;border-top:0;border-left:0;border-right:0;",
+            "radius": 0,
+            "shadows": [
+            ]
+        },
+        "gradient-inset/borderless/default": {
+            "borderWidth": 1,
+            "fill": "transparent",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:transparent; border:1px solid transparent; border-radius:0px;border:0;",
+            "radius": 0,
+            "shadows": [
+            ]
+        },
+        "gradient-inset/borderless/disabled": {
+            "borderWidth": 1,
+            "fill": "transparent",
+            "foreground": "#8a8a8a",
+            "glyph": "#8a8a8a",
+            "qss": "background:transparent; border:1px solid transparent; border-radius:0px;border:0;",
+            "radius": 0,
+            "shadows": [
+            ]
+        },
+        "gradient-inset/borderless/error": {
+            "borderWidth": 1,
+            "fill": "transparent",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:transparent; border:1px solid transparent; border-radius:0px;border:0;",
+            "radius": 0,
+            "shadows": [
+            ]
+        },
+        "gradient-inset/borderless/focus": {
+            "borderWidth": 1,
+            "fill": "transparent",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:transparent; border:1px solid transparent; border-radius:0px;border:0;",
+            "radius": 0,
+            "shadows": [
+            ]
+        },
+        "gradient-inset/borderless/hover": {
+            "borderWidth": 1,
+            "fill": "transparent",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:transparent; border:1px solid transparent; border-radius:0px;border:0;",
+            "radius": 0,
+            "shadows": [
+            ]
+        },
+        "gradient-inset/borderless/warning": {
+            "borderWidth": 1,
+            "fill": "transparent",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:transparent; border:1px solid transparent; border-radius:0px;border:0;",
+            "radius": 0,
+            "shadows": [
+            ]
+        },
+        "gradient-inset/filled/default": {
+            "borderWidth": 1,
+            "fill": "qlineargradient(x1:0,y1:0,x2:0,y2:1,stop:0 #f3f3f3,stop:0.5 #f3f3f3,stop:1 #f1ecff)",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:qlineargradient(x1:0,y1:0,x2:0,y2:1,stop:0 #f3f3f3,stop:0.5 #f3f3f3,stop:1 #f1ecff); border:1px solid transparent; border-radius:4px;",
+            "radius": 4,
+            "shadows": [
+                {
+                    "alpha": 0.36,
+                    "blur": 5,
+                    "color": "#000000",
+                    "kind": "inset",
+                    "spread": 0,
+                    "x": 0,
+                    "y": 2
+                }
+            ]
+        },
+        "gradient-inset/filled/disabled": {
+            "borderWidth": 1,
+            "fill": "#f3f3f3",
+            "foreground": "#8a8a8a",
+            "glyph": "#8a8a8a",
+            "qss": "background:#f3f3f3; border:1px solid #d0d0d0; border-radius:4px;",
+            "radius": 4,
+            "shadows": [
+            ]
+        },
+        "gradient-inset/filled/error": {
+            "borderWidth": 1,
+            "fill": "qlineargradient(x1:0,y1:0,x2:0,y2:1,stop:0 #f3f3f3,stop:0.5 #fbe4e5,stop:1 #f1ecff)",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:qlineargradient(x1:0,y1:0,x2:0,y2:1,stop:0 #f3f3f3,stop:0.5 #fbe4e5,stop:1 #f1ecff); border:1px solid #e02128; border-radius:4px;",
+            "radius": 4,
+            "shadows": [
+                {
+                    "alpha": 0.36,
+                    "blur": 5,
+                    "color": "#000000",
+                    "kind": "inset",
+                    "spread": 0,
+                    "x": 0,
+                    "y": 2
+                }
+            ]
+        },
+        "gradient-inset/filled/focus": {
+            "borderWidth": 1,
+            "fill": "qlineargradient(x1:0,y1:0,x2:0,y2:1,stop:0 #f3f3f3,stop:0.5 #f3f3f3,stop:1 #f1ecff)",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:qlineargradient(x1:0,y1:0,x2:0,y2:1,stop:0 #f3f3f3,stop:0.5 #f3f3f3,stop:1 #f1ecff); border:1px solid #6235f7; border-radius:4px;",
+            "radius": 4,
+            "shadows": [
+                {
+                    "alpha": 0.36,
+                    "blur": 5,
+                    "color": "#000000",
+                    "kind": "inset",
+                    "spread": 0,
+                    "x": 0,
+                    "y": 2
+                }
+            ]
+        },
+        "gradient-inset/filled/hover": {
+            "borderWidth": 1,
+            "fill": "qlineargradient(x1:0,y1:0,x2:0,y2:1,stop:0 #f3f3f3,stop:0.5 #f3f3f3,stop:1 #f1ecff)",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:qlineargradient(x1:0,y1:0,x2:0,y2:1,stop:0 #f3f3f3,stop:0.5 #f3f3f3,stop:1 #f1ecff); border:1px solid #191919; border-radius:4px;",
+            "radius": 4,
+            "shadows": [
+                {
+                    "alpha": 0.36,
+                    "blur": 5,
+                    "color": "#000000",
+                    "kind": "inset",
+                    "spread": 0,
+                    "x": 0,
+                    "y": 2
+                }
+            ]
+        },
+        "gradient-inset/filled/warning": {
+            "borderWidth": 1,
+            "fill": "qlineargradient(x1:0,y1:0,x2:0,y2:1,stop:0 #f3f3f3,stop:0.5 #fff8e3,stop:1 #f1ecff)",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:qlineargradient(x1:0,y1:0,x2:0,y2:1,stop:0 #f3f3f3,stop:0.5 #fff8e3,stop:1 #f1ecff); border:1px solid #e6af19; border-radius:4px;",
+            "radius": 4,
+            "shadows": [
+                {
+                    "alpha": 0.36,
+                    "blur": 5,
+                    "color": "#000000",
+                    "kind": "inset",
+                    "spread": 0,
+                    "x": 0,
+                    "y": 2
+                }
+            ]
+        },
+        "gradient-inset/outlined/default": {
+            "borderWidth": 1,
+            "fill": "qlineargradient(x1:0,y1:0,x2:0,y2:1,stop:0 #f3f3f3,stop:0.5 #ffffff,stop:1 #f1ecff)",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:qlineargradient(x1:0,y1:0,x2:0,y2:1,stop:0 #f3f3f3,stop:0.5 #ffffff,stop:1 #f1ecff); border:1px solid #a7a7a7; border-radius:4px;",
+            "radius": 4,
+            "shadows": [
+                {
+                    "alpha": 0.36,
+                    "blur": 5,
+                    "color": "#000000",
+                    "kind": "inset",
+                    "spread": 0,
+                    "x": 0,
+                    "y": 2
+                }
+            ]
+        },
+        "gradient-inset/outlined/disabled": {
+            "borderWidth": 1,
+            "fill": "#f3f3f3",
+            "foreground": "#8a8a8a",
+            "glyph": "#8a8a8a",
+            "qss": "background:#f3f3f3; border:1px solid #d0d0d0; border-radius:4px;",
+            "radius": 4,
+            "shadows": [
+            ]
+        },
+        "gradient-inset/outlined/error": {
+            "borderWidth": 1,
+            "fill": "qlineargradient(x1:0,y1:0,x2:0,y2:1,stop:0 #f3f3f3,stop:0.5 #fbe4e5,stop:1 #f1ecff)",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:qlineargradient(x1:0,y1:0,x2:0,y2:1,stop:0 #f3f3f3,stop:0.5 #fbe4e5,stop:1 #f1ecff); border:1px solid #e02128; border-radius:4px;",
+            "radius": 4,
+            "shadows": [
+                {
+                    "alpha": 0.36,
+                    "blur": 5,
+                    "color": "#000000",
+                    "kind": "inset",
+                    "spread": 0,
+                    "x": 0,
+                    "y": 2
+                }
+            ]
+        },
+        "gradient-inset/outlined/focus": {
+            "borderWidth": 1,
+            "fill": "qlineargradient(x1:0,y1:0,x2:0,y2:1,stop:0 #f3f3f3,stop:0.5 #ffffff,stop:1 #f1ecff)",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:qlineargradient(x1:0,y1:0,x2:0,y2:1,stop:0 #f3f3f3,stop:0.5 #ffffff,stop:1 #f1ecff); border:1px solid #6235f7; border-radius:4px;",
+            "radius": 4,
+            "shadows": [
+                {
+                    "alpha": 0.36,
+                    "blur": 5,
+                    "color": "#000000",
+                    "kind": "inset",
+                    "spread": 0,
+                    "x": 0,
+                    "y": 2
+                }
+            ]
+        },
+        "gradient-inset/outlined/hover": {
+            "borderWidth": 1,
+            "fill": "qlineargradient(x1:0,y1:0,x2:0,y2:1,stop:0 #f3f3f3,stop:0.5 #ffffff,stop:1 #f1ecff)",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:qlineargradient(x1:0,y1:0,x2:0,y2:1,stop:0 #f3f3f3,stop:0.5 #ffffff,stop:1 #f1ecff); border:1px solid #191919; border-radius:4px;",
+            "radius": 4,
+            "shadows": [
+                {
+                    "alpha": 0.36,
+                    "blur": 5,
+                    "color": "#000000",
+                    "kind": "inset",
+                    "spread": 0,
+                    "x": 0,
+                    "y": 2
+                }
+            ]
+        },
+        "gradient-inset/outlined/warning": {
+            "borderWidth": 1,
+            "fill": "qlineargradient(x1:0,y1:0,x2:0,y2:1,stop:0 #f3f3f3,stop:0.5 #fff8e3,stop:1 #f1ecff)",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:qlineargradient(x1:0,y1:0,x2:0,y2:1,stop:0 #f3f3f3,stop:0.5 #fff8e3,stop:1 #f1ecff); border:1px solid #e6af19; border-radius:4px;",
+            "radius": 4,
+            "shadows": [
+                {
+                    "alpha": 0.36,
+                    "blur": 5,
+                    "color": "#000000",
+                    "kind": "inset",
+                    "spread": 0,
+                    "x": 0,
+                    "y": 2
+                }
+            ]
+        },
+        "gradient-inset/underlined/default": {
+            "borderWidth": 1,
+            "fill": "transparent",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:transparent; border:1px solid #a7a7a7; border-radius:0px;border-top:0;border-left:0;border-right:0;",
+            "radius": 0,
+            "shadows": [
+            ]
+        },
+        "gradient-inset/underlined/disabled": {
+            "borderWidth": 1,
+            "fill": "transparent",
+            "foreground": "#8a8a8a",
+            "glyph": "#8a8a8a",
+            "qss": "background:transparent; border:1px solid #d0d0d0; border-radius:0px;border-top:0;border-left:0;border-right:0;",
+            "radius": 0,
+            "shadows": [
+            ]
+        },
+        "gradient-inset/underlined/error": {
+            "borderWidth": 1,
+            "fill": "transparent",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:transparent; border:1px solid #e02128; border-radius:0px;border-top:0;border-left:0;border-right:0;",
+            "radius": 0,
+            "shadows": [
+            ]
+        },
+        "gradient-inset/underlined/focus": {
+            "borderWidth": 1,
+            "fill": "transparent",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:transparent; border:1px solid #6235f7; border-radius:0px;border-top:0;border-left:0;border-right:0;",
+            "radius": 0,
+            "shadows": [
+            ]
+        },
+        "gradient-inset/underlined/hover": {
+            "borderWidth": 1,
+            "fill": "transparent",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:transparent; border:1px solid #191919; border-radius:0px;border-top:0;border-left:0;border-right:0;",
+            "radius": 0,
+            "shadows": [
+            ]
+        },
+        "gradient-inset/underlined/warning": {
+            "borderWidth": 1,
+            "fill": "transparent",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:transparent; border:1px solid #e6af19; border-radius:0px;border-top:0;border-left:0;border-right:0;",
+            "radius": 0,
+            "shadows": [
+            ]
+        },
+        "gradient/borderless/default": {
+            "borderWidth": 1,
+            "fill": "transparent",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:transparent; border:1px solid transparent; border-radius:0px;border:0;",
+            "radius": 0,
+            "shadows": [
+            ]
+        },
+        "gradient/borderless/disabled": {
+            "borderWidth": 1,
+            "fill": "transparent",
+            "foreground": "#8a8a8a",
+            "glyph": "#8a8a8a",
+            "qss": "background:transparent; border:1px solid transparent; border-radius:0px;border:0;",
+            "radius": 0,
+            "shadows": [
+            ]
+        },
+        "gradient/borderless/error": {
+            "borderWidth": 1,
+            "fill": "transparent",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:transparent; border:1px solid transparent; border-radius:0px;border:0;",
+            "radius": 0,
+            "shadows": [
+            ]
+        },
+        "gradient/borderless/focus": {
+            "borderWidth": 1,
+            "fill": "transparent",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:transparent; border:1px solid transparent; border-radius:0px;border:0;",
+            "radius": 0,
+            "shadows": [
+            ]
+        },
+        "gradient/borderless/hover": {
+            "borderWidth": 1,
+            "fill": "transparent",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:transparent; border:1px solid transparent; border-radius:0px;border:0;",
+            "radius": 0,
+            "shadows": [
+            ]
+        },
+        "gradient/borderless/warning": {
+            "borderWidth": 1,
+            "fill": "transparent",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:transparent; border:1px solid transparent; border-radius:0px;border:0;",
+            "radius": 0,
+            "shadows": [
+            ]
+        },
+        "gradient/filled/default": {
+            "borderWidth": 1,
+            "fill": "qlineargradient(x1:0,y1:0,x2:0,y2:1,stop:0 #f3f3f3,stop:1 #f1ecff)",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:qlineargradient(x1:0,y1:0,x2:0,y2:1,stop:0 #f3f3f3,stop:1 #f1ecff); border:1px solid transparent; border-radius:4px;",
+            "radius": 4,
+            "shadows": [
+            ]
+        },
+        "gradient/filled/disabled": {
+            "borderWidth": 1,
+            "fill": "#f3f3f3",
+            "foreground": "#8a8a8a",
+            "glyph": "#8a8a8a",
+            "qss": "background:#f3f3f3; border:1px solid #d0d0d0; border-radius:4px;",
+            "radius": 4,
+            "shadows": [
+            ]
+        },
+        "gradient/filled/error": {
+            "borderWidth": 1,
+            "fill": "qlineargradient(x1:0,y1:0,x2:0,y2:1,stop:0 #f3f3f3,stop:1 #f1ecff)",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:qlineargradient(x1:0,y1:0,x2:0,y2:1,stop:0 #f3f3f3,stop:1 #f1ecff); border:1px solid #e02128; border-radius:4px;",
+            "radius": 4,
+            "shadows": [
+            ]
+        },
+        "gradient/filled/focus": {
+            "borderWidth": 1,
+            "fill": "qlineargradient(x1:0,y1:0,x2:0,y2:1,stop:0 #f3f3f3,stop:1 #f1ecff)",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:qlineargradient(x1:0,y1:0,x2:0,y2:1,stop:0 #f3f3f3,stop:1 #f1ecff); border:1px solid #6235f7; border-radius:4px;",
+            "radius": 4,
+            "shadows": [
+            ]
+        },
+        "gradient/filled/hover": {
+            "borderWidth": 1,
+            "fill": "qlineargradient(x1:0,y1:0,x2:0,y2:1,stop:0 #f3f3f3,stop:1 #f1ecff)",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:qlineargradient(x1:0,y1:0,x2:0,y2:1,stop:0 #f3f3f3,stop:1 #f1ecff); border:1px solid #191919; border-radius:4px;",
+            "radius": 4,
+            "shadows": [
+            ]
+        },
+        "gradient/filled/warning": {
+            "borderWidth": 1,
+            "fill": "qlineargradient(x1:0,y1:0,x2:0,y2:1,stop:0 #f3f3f3,stop:1 #f1ecff)",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:qlineargradient(x1:0,y1:0,x2:0,y2:1,stop:0 #f3f3f3,stop:1 #f1ecff); border:1px solid #e6af19; border-radius:4px;",
+            "radius": 4,
+            "shadows": [
+            ]
+        },
+        "gradient/outlined/default": {
+            "borderWidth": 1,
+            "fill": "qlineargradient(x1:0,y1:0,x2:0,y2:1,stop:0 #f3f3f3,stop:1 #f1ecff)",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:qlineargradient(x1:0,y1:0,x2:0,y2:1,stop:0 #f3f3f3,stop:1 #f1ecff); border:1px solid #a7a7a7; border-radius:4px;",
+            "radius": 4,
+            "shadows": [
+            ]
+        },
+        "gradient/outlined/disabled": {
+            "borderWidth": 1,
+            "fill": "#f3f3f3",
+            "foreground": "#8a8a8a",
+            "glyph": "#8a8a8a",
+            "qss": "background:#f3f3f3; border:1px solid #d0d0d0; border-radius:4px;",
+            "radius": 4,
+            "shadows": [
+            ]
+        },
+        "gradient/outlined/error": {
+            "borderWidth": 1,
+            "fill": "qlineargradient(x1:0,y1:0,x2:0,y2:1,stop:0 #f3f3f3,stop:1 #f1ecff)",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:qlineargradient(x1:0,y1:0,x2:0,y2:1,stop:0 #f3f3f3,stop:1 #f1ecff); border:1px solid #e02128; border-radius:4px;",
+            "radius": 4,
+            "shadows": [
+            ]
+        },
+        "gradient/outlined/focus": {
+            "borderWidth": 1,
+            "fill": "qlineargradient(x1:0,y1:0,x2:0,y2:1,stop:0 #f3f3f3,stop:1 #f1ecff)",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:qlineargradient(x1:0,y1:0,x2:0,y2:1,stop:0 #f3f3f3,stop:1 #f1ecff); border:1px solid #6235f7; border-radius:4px;",
+            "radius": 4,
+            "shadows": [
+            ]
+        },
+        "gradient/outlined/hover": {
+            "borderWidth": 1,
+            "fill": "qlineargradient(x1:0,y1:0,x2:0,y2:1,stop:0 #f3f3f3,stop:1 #f1ecff)",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:qlineargradient(x1:0,y1:0,x2:0,y2:1,stop:0 #f3f3f3,stop:1 #f1ecff); border:1px solid #191919; border-radius:4px;",
+            "radius": 4,
+            "shadows": [
+            ]
+        },
+        "gradient/outlined/warning": {
+            "borderWidth": 1,
+            "fill": "qlineargradient(x1:0,y1:0,x2:0,y2:1,stop:0 #f3f3f3,stop:1 #f1ecff)",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:qlineargradient(x1:0,y1:0,x2:0,y2:1,stop:0 #f3f3f3,stop:1 #f1ecff); border:1px solid #e6af19; border-radius:4px;",
+            "radius": 4,
+            "shadows": [
+            ]
+        },
+        "gradient/underlined/default": {
+            "borderWidth": 1,
+            "fill": "transparent",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:transparent; border:1px solid #a7a7a7; border-radius:0px;border-top:0;border-left:0;border-right:0;",
+            "radius": 0,
+            "shadows": [
+            ]
+        },
+        "gradient/underlined/disabled": {
+            "borderWidth": 1,
+            "fill": "transparent",
+            "foreground": "#8a8a8a",
+            "glyph": "#8a8a8a",
+            "qss": "background:transparent; border:1px solid #d0d0d0; border-radius:0px;border-top:0;border-left:0;border-right:0;",
+            "radius": 0,
+            "shadows": [
+            ]
+        },
+        "gradient/underlined/error": {
+            "borderWidth": 1,
+            "fill": "transparent",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:transparent; border:1px solid #e02128; border-radius:0px;border-top:0;border-left:0;border-right:0;",
+            "radius": 0,
+            "shadows": [
+            ]
+        },
+        "gradient/underlined/focus": {
+            "borderWidth": 1,
+            "fill": "transparent",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:transparent; border:1px solid #6235f7; border-radius:0px;border-top:0;border-left:0;border-right:0;",
+            "radius": 0,
+            "shadows": [
+            ]
+        },
+        "gradient/underlined/hover": {
+            "borderWidth": 1,
+            "fill": "transparent",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:transparent; border:1px solid #191919; border-radius:0px;border-top:0;border-left:0;border-right:0;",
+            "radius": 0,
+            "shadows": [
+            ]
+        },
+        "gradient/underlined/warning": {
+            "borderWidth": 1,
+            "fill": "transparent",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:transparent; border:1px solid #e6af19; border-radius:0px;border-top:0;border-left:0;border-right:0;",
+            "radius": 0,
+            "shadows": [
+            ]
+        },
+        "inset/borderless/default": {
+            "borderWidth": 1,
+            "fill": "transparent",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:transparent; border:1px solid transparent; border-radius:0px;border:0;",
+            "radius": 0,
+            "shadows": [
+            ]
+        },
+        "inset/borderless/disabled": {
+            "borderWidth": 1,
+            "fill": "transparent",
+            "foreground": "#8a8a8a",
+            "glyph": "#8a8a8a",
+            "qss": "background:transparent; border:1px solid transparent; border-radius:0px;border:0;",
+            "radius": 0,
+            "shadows": [
+            ]
+        },
+        "inset/borderless/error": {
+            "borderWidth": 1,
+            "fill": "transparent",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:transparent; border:1px solid transparent; border-radius:0px;border:0;",
+            "radius": 0,
+            "shadows": [
+            ]
+        },
+        "inset/borderless/focus": {
+            "borderWidth": 1,
+            "fill": "transparent",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:transparent; border:1px solid transparent; border-radius:0px;border:0;",
+            "radius": 0,
+            "shadows": [
+            ]
+        },
+        "inset/borderless/hover": {
+            "borderWidth": 1,
+            "fill": "transparent",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:transparent; border:1px solid transparent; border-radius:0px;border:0;",
+            "radius": 0,
+            "shadows": [
+            ]
+        },
+        "inset/borderless/warning": {
+            "borderWidth": 1,
+            "fill": "transparent",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:transparent; border:1px solid transparent; border-radius:0px;border:0;",
+            "radius": 0,
+            "shadows": [
+            ]
+        },
+        "inset/filled/default": {
+            "borderWidth": 1,
+            "fill": "#f3f3f3",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:#f3f3f3; border:1px solid transparent; border-radius:4px;",
+            "radius": 4,
+            "shadows": [
+                {
+                    "alpha": 0.36,
+                    "blur": 5,
+                    "color": "#000000",
+                    "kind": "inset",
+                    "spread": 0,
+                    "x": 0,
+                    "y": 2
+                }
+            ]
+        },
+        "inset/filled/disabled": {
+            "borderWidth": 1,
+            "fill": "#f3f3f3",
+            "foreground": "#8a8a8a",
+            "glyph": "#8a8a8a",
+            "qss": "background:#f3f3f3; border:1px solid #d0d0d0; border-radius:4px;",
+            "radius": 4,
+            "shadows": [
+            ]
+        },
+        "inset/filled/error": {
+            "borderWidth": 1,
+            "fill": "#fbe4e5",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:#fbe4e5; border:1px solid #e02128; border-radius:4px;",
+            "radius": 4,
+            "shadows": [
+                {
+                    "alpha": 0.36,
+                    "blur": 5,
+                    "color": "#000000",
+                    "kind": "inset",
+                    "spread": 0,
+                    "x": 0,
+                    "y": 2
+                }
+            ]
+        },
+        "inset/filled/focus": {
+            "borderWidth": 1,
+            "fill": "#f3f3f3",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:#f3f3f3; border:1px solid #6235f7; border-radius:4px;",
+            "radius": 4,
+            "shadows": [
+                {
+                    "alpha": 0.36,
+                    "blur": 5,
+                    "color": "#000000",
+                    "kind": "inset",
+                    "spread": 0,
+                    "x": 0,
+                    "y": 2
+                }
+            ]
+        },
+        "inset/filled/hover": {
+            "borderWidth": 1,
+            "fill": "#f3f3f3",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:#f3f3f3; border:1px solid #191919; border-radius:4px;",
+            "radius": 4,
+            "shadows": [
+                {
+                    "alpha": 0.36,
+                    "blur": 5,
+                    "color": "#000000",
+                    "kind": "inset",
+                    "spread": 0,
+                    "x": 0,
+                    "y": 2
+                }
+            ]
+        },
+        "inset/filled/warning": {
+            "borderWidth": 1,
+            "fill": "#fff8e3",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:#fff8e3; border:1px solid #e6af19; border-radius:4px;",
+            "radius": 4,
+            "shadows": [
+                {
+                    "alpha": 0.36,
+                    "blur": 5,
+                    "color": "#000000",
+                    "kind": "inset",
+                    "spread": 0,
+                    "x": 0,
+                    "y": 2
+                }
+            ]
+        },
+        "inset/outlined/default": {
+            "borderWidth": 1,
+            "fill": "#ffffff",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:#ffffff; border:1px solid #a7a7a7; border-radius:4px;",
+            "radius": 4,
+            "shadows": [
+                {
+                    "alpha": 0.36,
+                    "blur": 5,
+                    "color": "#000000",
+                    "kind": "inset",
+                    "spread": 0,
+                    "x": 0,
+                    "y": 2
+                }
+            ]
+        },
+        "inset/outlined/disabled": {
+            "borderWidth": 1,
+            "fill": "#f3f3f3",
+            "foreground": "#8a8a8a",
+            "glyph": "#8a8a8a",
+            "qss": "background:#f3f3f3; border:1px solid #d0d0d0; border-radius:4px;",
+            "radius": 4,
+            "shadows": [
+            ]
+        },
+        "inset/outlined/error": {
+            "borderWidth": 1,
+            "fill": "#fbe4e5",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:#fbe4e5; border:1px solid #e02128; border-radius:4px;",
+            "radius": 4,
+            "shadows": [
+                {
+                    "alpha": 0.36,
+                    "blur": 5,
+                    "color": "#000000",
+                    "kind": "inset",
+                    "spread": 0,
+                    "x": 0,
+                    "y": 2
+                }
+            ]
+        },
+        "inset/outlined/focus": {
+            "borderWidth": 1,
+            "fill": "#ffffff",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:#ffffff; border:1px solid #6235f7; border-radius:4px;",
+            "radius": 4,
+            "shadows": [
+                {
+                    "alpha": 0.36,
+                    "blur": 5,
+                    "color": "#000000",
+                    "kind": "inset",
+                    "spread": 0,
+                    "x": 0,
+                    "y": 2
+                }
+            ]
+        },
+        "inset/outlined/hover": {
+            "borderWidth": 1,
+            "fill": "#ffffff",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:#ffffff; border:1px solid #191919; border-radius:4px;",
+            "radius": 4,
+            "shadows": [
+                {
+                    "alpha": 0.36,
+                    "blur": 5,
+                    "color": "#000000",
+                    "kind": "inset",
+                    "spread": 0,
+                    "x": 0,
+                    "y": 2
+                }
+            ]
+        },
+        "inset/outlined/warning": {
+            "borderWidth": 1,
+            "fill": "#fff8e3",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:#fff8e3; border:1px solid #e6af19; border-radius:4px;",
+            "radius": 4,
+            "shadows": [
+                {
+                    "alpha": 0.36,
+                    "blur": 5,
+                    "color": "#000000",
+                    "kind": "inset",
+                    "spread": 0,
+                    "x": 0,
+                    "y": 2
+                }
+            ]
+        },
+        "inset/underlined/default": {
+            "borderWidth": 1,
+            "fill": "transparent",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:transparent; border:1px solid #a7a7a7; border-radius:0px;border-top:0;border-left:0;border-right:0;",
+            "radius": 0,
+            "shadows": [
+            ]
+        },
+        "inset/underlined/disabled": {
+            "borderWidth": 1,
+            "fill": "transparent",
+            "foreground": "#8a8a8a",
+            "glyph": "#8a8a8a",
+            "qss": "background:transparent; border:1px solid #d0d0d0; border-radius:0px;border-top:0;border-left:0;border-right:0;",
+            "radius": 0,
+            "shadows": [
+            ]
+        },
+        "inset/underlined/error": {
+            "borderWidth": 1,
+            "fill": "transparent",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:transparent; border:1px solid #e02128; border-radius:0px;border-top:0;border-left:0;border-right:0;",
+            "radius": 0,
+            "shadows": [
+            ]
+        },
+        "inset/underlined/focus": {
+            "borderWidth": 1,
+            "fill": "transparent",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:transparent; border:1px solid #6235f7; border-radius:0px;border-top:0;border-left:0;border-right:0;",
+            "radius": 0,
+            "shadows": [
+            ]
+        },
+        "inset/underlined/hover": {
+            "borderWidth": 1,
+            "fill": "transparent",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:transparent; border:1px solid #191919; border-radius:0px;border-top:0;border-left:0;border-right:0;",
+            "radius": 0,
+            "shadows": [
+            ]
+        },
+        "inset/underlined/warning": {
+            "borderWidth": 1,
+            "fill": "transparent",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:transparent; border:1px solid #e6af19; border-radius:0px;border-top:0;border-left:0;border-right:0;",
+            "radius": 0,
+            "shadows": [
+            ]
+        },
+        "outline/borderless/default": {
+            "borderWidth": 1,
+            "fill": "transparent",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:transparent; border:1px solid transparent; border-radius:0px;border:0;",
+            "radius": 0,
+            "shadows": [
+            ]
+        },
+        "outline/borderless/disabled": {
+            "borderWidth": 1,
+            "fill": "transparent",
+            "foreground": "#8a8a8a",
+            "glyph": "#8a8a8a",
+            "qss": "background:transparent; border:1px solid transparent; border-radius:0px;border:0;",
+            "radius": 0,
+            "shadows": [
+            ]
+        },
+        "outline/borderless/error": {
+            "borderWidth": 1,
+            "fill": "transparent",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:transparent; border:1px solid transparent; border-radius:0px;border:0;",
+            "radius": 0,
+            "shadows": [
+            ]
+        },
+        "outline/borderless/focus": {
+            "borderWidth": 1,
+            "fill": "transparent",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:transparent; border:1px solid transparent; border-radius:0px;border:0;",
+            "radius": 0,
+            "shadows": [
+            ]
+        },
+        "outline/borderless/hover": {
+            "borderWidth": 1,
+            "fill": "transparent",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:transparent; border:1px solid transparent; border-radius:0px;border:0;",
+            "radius": 0,
+            "shadows": [
+            ]
+        },
+        "outline/borderless/warning": {
+            "borderWidth": 1,
+            "fill": "transparent",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:transparent; border:1px solid transparent; border-radius:0px;border:0;",
+            "radius": 0,
+            "shadows": [
+            ]
+        },
+        "outline/filled/default": {
+            "borderWidth": 1,
+            "fill": "transparent",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:transparent; border:1px solid transparent; border-radius:4px;",
+            "radius": 4,
+            "shadows": [
+            ]
+        },
+        "outline/filled/disabled": {
+            "borderWidth": 1,
+            "fill": "transparent",
+            "foreground": "#8a8a8a",
+            "glyph": "#8a8a8a",
+            "qss": "background:transparent; border:1px solid #d0d0d0; border-radius:4px;",
+            "radius": 4,
+            "shadows": [
+            ]
+        },
+        "outline/filled/error": {
+            "borderWidth": 1,
+            "fill": "transparent",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:transparent; border:1px solid #e02128; border-radius:4px;",
+            "radius": 4,
+            "shadows": [
+            ]
+        },
+        "outline/filled/focus": {
+            "borderWidth": 1,
+            "fill": "transparent",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:transparent; border:1px solid #6235f7; border-radius:4px;",
+            "radius": 4,
+            "shadows": [
+            ]
+        },
+        "outline/filled/hover": {
+            "borderWidth": 1,
+            "fill": "transparent",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:transparent; border:1px solid #191919; border-radius:4px;",
+            "radius": 4,
+            "shadows": [
+            ]
+        },
+        "outline/filled/warning": {
+            "borderWidth": 1,
+            "fill": "transparent",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:transparent; border:1px solid #e6af19; border-radius:4px;",
+            "radius": 4,
+            "shadows": [
+            ]
+        },
+        "outline/outlined/default": {
+            "borderWidth": 1,
+            "fill": "transparent",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:transparent; border:1px solid #a7a7a7; border-radius:4px;",
+            "radius": 4,
+            "shadows": [
+            ]
+        },
+        "outline/outlined/disabled": {
+            "borderWidth": 1,
+            "fill": "transparent",
+            "foreground": "#8a8a8a",
+            "glyph": "#8a8a8a",
+            "qss": "background:transparent; border:1px solid #d0d0d0; border-radius:4px;",
+            "radius": 4,
+            "shadows": [
+            ]
+        },
+        "outline/outlined/error": {
+            "borderWidth": 1,
+            "fill": "transparent",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:transparent; border:1px solid #e02128; border-radius:4px;",
+            "radius": 4,
+            "shadows": [
+            ]
+        },
+        "outline/outlined/focus": {
+            "borderWidth": 1,
+            "fill": "transparent",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:transparent; border:1px solid #6235f7; border-radius:4px;",
+            "radius": 4,
+            "shadows": [
+            ]
+        },
+        "outline/outlined/hover": {
+            "borderWidth": 1,
+            "fill": "transparent",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:transparent; border:1px solid #191919; border-radius:4px;",
+            "radius": 4,
+            "shadows": [
+            ]
+        },
+        "outline/outlined/warning": {
+            "borderWidth": 1,
+            "fill": "transparent",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:transparent; border:1px solid #e6af19; border-radius:4px;",
+            "radius": 4,
+            "shadows": [
+            ]
+        },
+        "outline/underlined/default": {
+            "borderWidth": 1,
+            "fill": "transparent",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:transparent; border:1px solid #a7a7a7; border-radius:0px;border-top:0;border-left:0;border-right:0;",
+            "radius": 0,
+            "shadows": [
+            ]
+        },
+        "outline/underlined/disabled": {
+            "borderWidth": 1,
+            "fill": "transparent",
+            "foreground": "#8a8a8a",
+            "glyph": "#8a8a8a",
+            "qss": "background:transparent; border:1px solid #d0d0d0; border-radius:0px;border-top:0;border-left:0;border-right:0;",
+            "radius": 0,
+            "shadows": [
+            ]
+        },
+        "outline/underlined/error": {
+            "borderWidth": 1,
+            "fill": "transparent",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:transparent; border:1px solid #e02128; border-radius:0px;border-top:0;border-left:0;border-right:0;",
+            "radius": 0,
+            "shadows": [
+            ]
+        },
+        "outline/underlined/focus": {
+            "borderWidth": 1,
+            "fill": "transparent",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:transparent; border:1px solid #6235f7; border-radius:0px;border-top:0;border-left:0;border-right:0;",
+            "radius": 0,
+            "shadows": [
+            ]
+        },
+        "outline/underlined/hover": {
+            "borderWidth": 1,
+            "fill": "transparent",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:transparent; border:1px solid #191919; border-radius:0px;border-top:0;border-left:0;border-right:0;",
+            "radius": 0,
+            "shadows": [
+            ]
+        },
+        "outline/underlined/warning": {
+            "borderWidth": 1,
+            "fill": "transparent",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:transparent; border:1px solid #e6af19; border-radius:0px;border-top:0;border-left:0;border-right:0;",
+            "radius": 0,
+            "shadows": [
+            ]
+        },
+        "solid/borderless/default": {
+            "borderWidth": 1,
+            "fill": "transparent",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:transparent; border:1px solid transparent; border-radius:0px;border:0;",
+            "radius": 0,
+            "shadows": [
+            ]
+        },
+        "solid/borderless/disabled": {
+            "borderWidth": 1,
+            "fill": "transparent",
+            "foreground": "#8a8a8a",
+            "glyph": "#8a8a8a",
+            "qss": "background:transparent; border:1px solid transparent; border-radius:0px;border:0;",
+            "radius": 0,
+            "shadows": [
+            ]
+        },
+        "solid/borderless/error": {
+            "borderWidth": 1,
+            "fill": "transparent",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:transparent; border:1px solid transparent; border-radius:0px;border:0;",
+            "radius": 0,
+            "shadows": [
+            ]
+        },
+        "solid/borderless/focus": {
+            "borderWidth": 1,
+            "fill": "transparent",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:transparent; border:1px solid transparent; border-radius:0px;border:0;",
+            "radius": 0,
+            "shadows": [
+            ]
+        },
+        "solid/borderless/hover": {
+            "borderWidth": 1,
+            "fill": "transparent",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:transparent; border:1px solid transparent; border-radius:0px;border:0;",
+            "radius": 0,
+            "shadows": [
+            ]
+        },
+        "solid/borderless/warning": {
+            "borderWidth": 1,
+            "fill": "transparent",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:transparent; border:1px solid transparent; border-radius:0px;border:0;",
+            "radius": 0,
+            "shadows": [
+            ]
+        },
+        "solid/filled/default": {
+            "borderWidth": 1,
+            "fill": "#f3f3f3",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:#f3f3f3; border:1px solid transparent; border-radius:4px;",
+            "radius": 4,
+            "shadows": [
+            ]
+        },
+        "solid/filled/disabled": {
+            "borderWidth": 1,
+            "fill": "#f3f3f3",
+            "foreground": "#8a8a8a",
+            "glyph": "#8a8a8a",
+            "qss": "background:#f3f3f3; border:1px solid #d0d0d0; border-radius:4px;",
+            "radius": 4,
+            "shadows": [
+            ]
+        },
+        "solid/filled/error": {
+            "borderWidth": 1,
+            "fill": "#fbe4e5",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:#fbe4e5; border:1px solid #e02128; border-radius:4px;",
+            "radius": 4,
+            "shadows": [
+            ]
+        },
+        "solid/filled/focus": {
+            "borderWidth": 1,
+            "fill": "#f3f3f3",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:#f3f3f3; border:1px solid #6235f7; border-radius:4px;",
+            "radius": 4,
+            "shadows": [
+            ]
+        },
+        "solid/filled/hover": {
+            "borderWidth": 1,
+            "fill": "#f3f3f3",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:#f3f3f3; border:1px solid #191919; border-radius:4px;",
+            "radius": 4,
+            "shadows": [
+            ]
+        },
+        "solid/filled/warning": {
+            "borderWidth": 1,
+            "fill": "#fff8e3",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:#fff8e3; border:1px solid #e6af19; border-radius:4px;",
+            "radius": 4,
+            "shadows": [
+            ]
+        },
+        "solid/outlined/default": {
+            "borderWidth": 1,
+            "fill": "#ffffff",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:#ffffff; border:1px solid #a7a7a7; border-radius:4px;",
+            "radius": 4,
+            "shadows": [
+            ]
+        },
+        "solid/outlined/disabled": {
+            "borderWidth": 1,
+            "fill": "#f3f3f3",
+            "foreground": "#8a8a8a",
+            "glyph": "#8a8a8a",
+            "qss": "background:#f3f3f3; border:1px solid #d0d0d0; border-radius:4px;",
+            "radius": 4,
+            "shadows": [
+            ]
+        },
+        "solid/outlined/error": {
+            "borderWidth": 1,
+            "fill": "#fbe4e5",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:#fbe4e5; border:1px solid #e02128; border-radius:4px;",
+            "radius": 4,
+            "shadows": [
+            ]
+        },
+        "solid/outlined/focus": {
+            "borderWidth": 1,
+            "fill": "#ffffff",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:#ffffff; border:1px solid #6235f7; border-radius:4px;",
+            "radius": 4,
+            "shadows": [
+            ]
+        },
+        "solid/outlined/hover": {
+            "borderWidth": 1,
+            "fill": "#ffffff",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:#ffffff; border:1px solid #191919; border-radius:4px;",
+            "radius": 4,
+            "shadows": [
+            ]
+        },
+        "solid/outlined/warning": {
+            "borderWidth": 1,
+            "fill": "#fff8e3",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:#fff8e3; border:1px solid #e6af19; border-radius:4px;",
+            "radius": 4,
+            "shadows": [
+            ]
+        },
+        "solid/underlined/default": {
+            "borderWidth": 1,
+            "fill": "transparent",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:transparent; border:1px solid #a7a7a7; border-radius:0px;border-top:0;border-left:0;border-right:0;",
+            "radius": 0,
+            "shadows": [
+            ]
+        },
+        "solid/underlined/disabled": {
+            "borderWidth": 1,
+            "fill": "transparent",
+            "foreground": "#8a8a8a",
+            "glyph": "#8a8a8a",
+            "qss": "background:transparent; border:1px solid #d0d0d0; border-radius:0px;border-top:0;border-left:0;border-right:0;",
+            "radius": 0,
+            "shadows": [
+            ]
+        },
+        "solid/underlined/error": {
+            "borderWidth": 1,
+            "fill": "transparent",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:transparent; border:1px solid #e02128; border-radius:0px;border-top:0;border-left:0;border-right:0;",
+            "radius": 0,
+            "shadows": [
+            ]
+        },
+        "solid/underlined/focus": {
+            "borderWidth": 1,
+            "fill": "transparent",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:transparent; border:1px solid #6235f7; border-radius:0px;border-top:0;border-left:0;border-right:0;",
+            "radius": 0,
+            "shadows": [
+            ]
+        },
+        "solid/underlined/hover": {
+            "borderWidth": 1,
+            "fill": "transparent",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:transparent; border:1px solid #191919; border-radius:0px;border-top:0;border-left:0;border-right:0;",
+            "radius": 0,
+            "shadows": [
+            ]
+        },
+        "solid/underlined/warning": {
+            "borderWidth": 1,
+            "fill": "transparent",
+            "foreground": "#191919",
+            "glyph": "#191919",
+            "qss": "background:transparent; border:1px solid #e6af19; border-radius:0px;border-top:0;border-left:0;border-right:0;",
+            "radius": 0,
+            "shadows": [
+            ]
+        }
+    },
+    "sizes": {
+        "lg": {
+            "fontSize": 14,
+            "height": 40,
+            "lineHeight": 26,
+            "paddingBlock": 0,
+            "paddingInline": 16
+        },
+        "md": {
+            "fontSize": 14,
+            "height": 32,
+            "lineHeight": 22,
+            "paddingBlock": 0,
+            "paddingInline": 12
+        },
+        "sm": {
+            "fontSize": 14,
+            "height": 32,
+            "lineHeight": 22,
+            "paddingBlock": 0,
+            "paddingInline": 8
+        }
+    },
+    "sourceHash": "8e1c258f58c0419aadb65d04291890f39c845b0b7376a85de2b2831e295f92b1",
+    "sourcePolicy": "sToken overlay via the canonical parser; Input and Select share component.basic.input. Unspecified popup bounds and layout defaults remain explicit project contract values.",
+    "status": "PROJECT-ADAPTER-PROPOSAL"
+}

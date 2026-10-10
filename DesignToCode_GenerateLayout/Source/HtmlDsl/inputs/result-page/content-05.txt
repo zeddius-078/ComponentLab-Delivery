@@ -1,0 +1,7 @@
+USER-INTERACTION GATE:
+After completing the resource-handling steps and mandatory default code refinement above, you MUST ask the user whether to apply optional refinement tags A-E before performing any optional optimization.
+Required post-processing means completing the resource-handling steps above and applying the mandatory default semantic/class/code-quality refinement.
+Do NOT call refine_generated_code unless the user explicitly selects one or more optional tags from A-E.
+NEXT-TURN TAG HANDLING: If the next user message contains valid tags (examples: `A`, `AB`, `A+B`, `A,B`, `execute A and B`), treat it as explicit selection and immediately call refine_generated_code({ refinementTags }) before inspecting, editing, or manually applying refinements.
+Do NOT manually apply selected refinements until refine_generated_code returns the official guide text for those tags.
+If the user does not select any tags, keep the current output as the baseline result and do not apply optional refinements on your own.

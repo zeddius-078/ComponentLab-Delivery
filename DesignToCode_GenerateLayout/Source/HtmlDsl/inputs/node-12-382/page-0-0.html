@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pixso HTML</title>
+  <style>
+@font-face {
+	font-family: 'HarmonyOS Sans SC';
+	font-style: normal;
+	font-weight: 400;
+	src: url(http://localhost:3667/assets/1790180768506/HarmonyOS_Sans_SC_Regular.ttf) format('truetype');
+}
+</style>
+  <script src="js/animation.js"></script>
+  <style>
+:root, 
+[data-collection-12-424-mode="light-comfortable"] {
+  /* light-comfortable */
+  --contract-button-metrics-xs-iconcanvas: 20px;
+  --contract-button-metrics-xs-icononlysize: 32px;
+  --derived-qt-checkbox-sm-edge: 4px;
+  --derived-qt-checkbox-sm-visualgap: 12px;
+  --contract-forms-metrics-labelgap: 8px;
+  --derived-qt-forms-md-controlheight: 40px;
+  --contract-checkbox-checkbox-radius: 4px;
+  --contract-checkbox-checkbox-sizes-sm-indicator: 20px;
+  --contract-forms-metrics-radius: 4px;
+  --contract-forms-palette-muted: rgba(68, 68, 68, 1);
+  --contract-forms-palette-border: rgba(167, 167, 167, 1);
+  --contract-forms-palette-placeholder: rgba(103, 103, 103, 1);
+  --contract-forms-palette-text: rgba(25, 25, 25, 1);
+  --contract-forms-palette-background: rgba(255, 255, 255, 1);
+  --contract-forms-sizes-md-fontsize: 14px;
+  --contract-forms-metrics-fieldpreferredwidth: 320px;
+  --contract-forms-metrics-labelfontsize: 14px;
+  --contract-forms-metrics-hintfontsize: 12px;
+  --contract-checkbox-checkbox-palette-border: rgba(68, 68, 68, 1);
+  --contract-checkbox-checkbox-palette-unchecked: rgba(255, 255, 255, 1);
+  --contract-checkbox-checkbox-palette-text: rgba(25, 25, 25, 1);
+  --contract-checkbox-checkbox-sizes-sm-fontsize: 14px;
+  --contract-checkbox-checkbox-sizes-sm-hittarget: 32px;
+  --contract-button-materialstates-primary-default-foreground: rgba(255, 255, 255, 1);
+  --contract-button-materialstates-primary-default-border: rgba(90, 62, 193, 1);
+  --contract-button-palette-primary: rgba(98, 53, 247, 1);
+  --contract-button-shape-radius: 4px;
+  --contract-button-metrics-m-fontsize: 14px;
+  --contract-button-metrics-m-gap: 4px;
+  --contract-button-metrics-m-minimumheight: 32px;
+  --stoken-layout-padding-inline-comfortable: 20px;
+  --stoken-metric-space-vertical-comfortable: 12px;
+}
+
+[data-collection-12-424-mode="light-compact"] {
+  /* light-compact */
+  --contract-button-metrics-xs-iconcanvas: 20px;
+  --contract-button-metrics-xs-icononlysize: 32px;
+  --derived-qt-checkbox-sm-edge: 4px;
+  --derived-qt-checkbox-sm-visualgap: 12px;
+  --contract-forms-metrics-labelgap: 8px;
+  --derived-qt-forms-md-controlheight: 40px;
+  --contract-checkbox-checkbox-radius: 4px;
+  --contract-checkbox-checkbox-sizes-sm-indicator: 20px;
+  --contract-forms-metrics-radius: 4px;
+  --contract-forms-palette-muted: rgba(68, 68, 68, 1);
+  --contract-forms-palette-border: rgba(167, 167, 167, 1);
+  --contract-forms-palette-placeholder: rgba(103, 103, 103, 1);
+  --contract-forms-palette-text: rgba(25, 25, 25, 1);
+  --contract-forms-palette-background: rgba(255, 255, 255, 1);
+  --contract-forms-sizes-md-fontsize: 14px;
+  --contract-forms-metrics-fieldpreferredwidth: 320px;
+  --contract-forms-metrics-labelfontsize: 14px;
+  --contract-forms-metrics-hintfontsize: 12px;
+  --contract-checkbox-checkbox-palette-border: rgba(68, 68, 68, 1);
+  --contract-checkbox-checkbox-palette-unchecked: rgba(255, 255, 255, 1);
+  --contract-checkbox-checkbox-palette-text: rgba(25, 25, 25, 1);
+  --contract-checkbox-checkbox-sizes-sm-fontsize: 14px;
+  --contract-checkbox-checkbox-sizes-sm-hittarget: 32px;
+  --contract-button-materialstates-primary-default-foreground: rgba(255, 255, 255, 1);
+  --contract-button-materialstates-primary-default-border: rgba(90, 62, 193, 1);
+  --contract-button-palette-primary: rgba(98, 53, 247, 1);
+  --contract-button-shape-radius: 4px;
+  --contract-button-metrics-m-fontsize: 14px;
+  --contract-button-metrics-m-gap: 4px;
+  --contract-button-metrics-m-minimumheight: 32px;
+  --stoken-layout-padding-inline-comfortable: 20px;
+  --stoken-metric-space-vertical-comfortable: 12px;
+}
+
+[data-collection-12-424-mode="dark-comfortable"] {
+  /* dark-comfortable */
+  --contract-button-metrics-xs-iconcanvas: 20px;
+  --contract-button-metrics-xs-icononlysize: 32px;
+  --derived-qt-checkbox-sm-edge: 4px;
+  --derived-qt-checkbox-sm-visualgap: 12px;
+  --contract-forms-metrics-labelgap: 8px;
+  --derived-qt-forms-md-controlheight: 40px;
+  --contract-checkbox-checkbox-radius: 4px;
+  --contract-checkbox-checkbox-sizes-sm-indicator: 20px;
+  --contract-forms-metrics-radius: 4px;
+  --contract-forms-palette-muted: rgba(198, 198, 198, 1);
+  --contract-forms-palette-border: rgba(103, 103, 103, 1);
+  --contract-forms-palette-placeholder: rgba(147, 147, 147, 1);
+  --contract-forms-palette-text: rgba(243, 243, 243, 1);
+  --contract-forms-palette-background: rgba(39, 39, 39, 1);
+  --contract-forms-sizes-md-fontsize: 14px;
+  --contract-forms-metrics-fieldpreferredwidth: 320px;
+  --contract-forms-metrics-labelfontsize: 14px;
+  --contract-forms-metrics-hintfontsize: 12px;
+  --contract-checkbox-checkbox-palette-border: rgba(167, 167, 167, 1);
+  --contract-checkbox-checkbox-palette-unchecked: rgba(39, 39, 39, 1);
+  --contract-checkbox-checkbox-palette-text: rgba(243, 243, 243, 1);
+  --contract-checkbox-checkbox-sizes-sm-fontsize: 14px;
+  --contract-checkbox-checkbox-sizes-sm-hittarget: 32px;
+  --contract-button-materialstates-primary-default-foreground: rgba(255, 255, 255, 1);
+  --contract-button-materialstates-primary-default-border: rgba(90, 62, 193, 1);
+  --contract-button-palette-primary: rgba(98, 53, 247, 1);
+  --contract-button-shape-radius: 4px;
+  --contract-button-metrics-m-fontsize: 14px;
+  --contract-button-metrics-m-gap: 4px;
+  --contract-button-metrics-m-minimumheight: 32px;
+  --stoken-layout-padding-inline-comfortable: 20px;
+  --stoken-metric-space-vertical-comfortable: 12px;
+}
+
+[data-collection-12-424-mode="dark-compact"] {
+  /* dark-compact */
+  --contract-button-metrics-xs-iconcanvas: 20px;
+  --contract-button-metrics-xs-icononlysize: 32px;
+  --derived-qt-checkbox-sm-edge: 4px;
+  --derived-qt-checkbox-sm-visualgap: 12px;
+  --contract-forms-metrics-labelgap: 8px;
+  --derived-qt-forms-md-controlheight: 40px;
+  --contract-checkbox-checkbox-radius: 4px;
+  --contract-checkbox-checkbox-sizes-sm-indicator: 20px;
+  --contract-forms-metrics-radius: 4px;
+  --contract-forms-palette-muted: rgba(198, 198, 198, 1);
+  --contract-forms-palette-border: rgba(103, 103, 103, 1);
+  --contract-forms-palette-placeholder: rgba(147, 147, 147, 1);
+  --contract-forms-palette-text: rgba(243, 243, 243, 1);
+  --contract-forms-palette-background: rgba(39, 39, 39, 1);
+  --contract-forms-sizes-md-fontsize: 14px;
+  --contract-forms-metrics-fieldpreferredwidth: 320px;
+  --contract-forms-metrics-labelfontsize: 14px;
+  --contract-forms-metrics-hintfontsize: 12px;
+  --contract-checkbox-checkbox-palette-border: rgba(167, 167, 167, 1);
+  --contract-checkbox-checkbox-palette-unchecked: rgba(39, 39, 39, 1);
+  --contract-checkbox-checkbox-palette-text: rgba(243, 243, 243, 1);
+  --contract-checkbox-checkbox-sizes-sm-fontsize: 14px;
+  --contract-checkbox-checkbox-sizes-sm-hittarget: 32px;
+  --contract-button-materialstates-primary-default-foreground: rgba(255, 255, 255, 1);
+  --contract-button-materialstates-primary-default-border: rgba(90, 62, 193, 1);
+  --contract-button-palette-primary: rgba(98, 53, 247, 1);
+  --contract-button-shape-radius: 4px;
+  --contract-button-metrics-m-fontsize: 14px;
+  --contract-button-metrics-m-gap: 4px;
+  --contract-button-metrics-m-minimumheight: 32px;
+  --stoken-layout-padding-inline-comfortable: 20px;
+  --stoken-metric-space-vertical-comfortable: 12px;
+}
+
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+ol,ul,menu {
+  padding-inline-start: 0;
+  list-style: none;
+}
+
+ol li::marker, ul li::before {
+  letter-spacing: 0;
+}
+
+.scroll-container > div {
+  width: 100%;
+}
+
+.container > div {
+  width: 100%;
+}
+
+.Pixso-canvas-0_1 > div {
+  width: 100%;
+}
+
+html {
+  width: 100%;
+  height: 100%;
+}
+
+body { 
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  background-color: white;
+}
+    
+span {
+  word-break: break-word;
+}
+
+.container {
+  width: 100%;
+  height: 100%;
+}
+
+.scroll-container {
+  height: 100%;
+  width: 100%;
+  overflow: auto;
+}
+
+.Pixso-canvas-0_1,.Pixso-frame-12_382 {
+  width: 100%;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.Pixso-canvas-0_1 {
+  height: 100%;
+}
+
+.Pixso-frame-12_382,.frame-content-12_382,.Pixso-instance-12_385,.Pixso-instance-12_390 {
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.Pixso-frame-12_382 {
+  height: 600px;
+  min-width: 720px;
+  overflow: hidden;
+  display: flex;
+  background-color: var(--contract-forms-palette-background);
+}
+
+.frame-content-12_382 {
+  display: flex;
+  gap: var(--stoken-metric-space-vertical-comfortable);
+  padding: var(--stoken-layout-padding-inline-comfortable) var(--stoken-layout-padding-inline-comfortable) var(--stoken-layout-padding-inline-comfortable) var(--stoken-layout-padding-inline-comfortable);
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.Pixso-paragraph-12_383,.Pixso-paragraph-12_384,.Pixso-paragraph-14_141,.Pixso-paragraph-14_12 {
+  font-size: var(--contract-forms-metrics-labelfontsize);
+  color: var(--contract-forms-palette-text);
+}
+
+.Pixso-paragraph-12_383,.Pixso-paragraph-12_384,.Pixso-paragraph-14_141,.Pixso-paragraph-14_143,.Pixso-paragraph-14_144,.Pixso-paragraph-14_12,.Pixso-paragraph-14_14,.Pixso-paragraph-14_19,.Pixso-paragraph-14_11,.Pixso-paragraph-14_165 {
+  font-family: "HarmonyOS Sans SC-Regular";
+  font-weight: 400;
+  letter-spacing: 0px;
+  text-decoration: none;
+}
+
+.Pixso-paragraph-12_383,.Pixso-paragraph-12_384 {
+  text-align: left;
+  line-height: 17px;
+  font-feature-settings: "locl" 0;
+  height: auto;
+  position: relative;
+  flex-shrink: 0;
+  white-space: pre;
+  flex-grow: 0;
+}
+
+.Pixso-paragraph-12_383 {
+  width: 70px;
+}
+
+.Pixso-paragraph-12_384 {
+  width: 56px;
+}
+
+.Pixso-instance-12_385,.Pixso-paragraph-14_141,.Pixso-frame-14_142,.stroke-wrapper-14_142 {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.Pixso-instance-12_385 {
+  width: var(--contract-forms-metrics-fieldpreferredwidth);
+  height: 88px;
+  display: flex;
+  gap: var(--contract-forms-metrics-labelgap);
+}
+
+.Pixso-paragraph-14_141 {
+  text-align: left;
+  line-height: 17px;
+  font-feature-settings: "locl" 0;
+  width: 100%;
+  height: auto;
+  flex-grow: 0;
+}
+
+.Pixso-frame-14_142 {
+  width: 100%;
+  height: 100%;
+  border-radius: var(--contract-forms-metrics-radius) var(--contract-forms-metrics-radius) var(--contract-forms-metrics-radius) var(--contract-forms-metrics-radius);
+  z-index: 0;
+  background-color: var(--contract-forms-palette-background);
+}
+
+.stroke-wrapper-14_142 {
+  isolation: isolate;
+  width: 100%;
+  height: var(--derived-qt-forms-md-controlheight);
+}
+
+.stroke-14_142,.stroke-14_13,.stroke-14_10,.stroke-12_402 {
+  border-radius: 4px 4px 4px 4px;
+  pointer-events: none;
+  border-width: 1px 1px 1px 1px;
+  border-style: solid;
+  box-sizing: border-box;
+}
+
+.stroke-14_142 {
+  position: absolute;
+  inset: 0px;
+  z-index: 1;
+  border-color: var(--contract-forms-palette-border);
+}
+
+.Pixso-paragraph-14_143,.Pixso-paragraph-14_14 {
+  font-size: var(--contract-forms-sizes-md-fontsize);
+  line-height: 22px;
+  color: var(--contract-forms-palette-placeholder);
+}
+
+.Pixso-paragraph-14_143 {
+  text-align: left;
+  font-feature-settings: "locl" 0;
+  width: 288px;
+  height: auto;
+  position: absolute;
+  left: 16px;
+  top: 8px;
+  white-space: pre;
+}
+
+.Pixso-frame-14_142-content-layer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+}
+
+.Pixso-paragraph-14_144,.Pixso-instance-12_390,.Pixso-paragraph-14_12,.Pixso-frame-14_13,.stroke-wrapper-14_13 {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.Pixso-paragraph-14_144,.Pixso-paragraph-14_19 {
+  font-size: var(--contract-forms-metrics-hintfontsize);
+  line-height: 15px;
+  color: var(--contract-forms-palette-muted);
+}
+
+.Pixso-paragraph-14_144 {
+  text-align: left;
+  font-feature-settings: "locl" 0;
+  width: 100%;
+  height: auto;
+  flex-grow: 0;
+}
+
+.Pixso-instance-12_390 {
+  width: var(--contract-forms-metrics-fieldpreferredwidth);
+  height: 88px;
+  display: flex;
+  gap: var(--contract-forms-metrics-labelgap);
+}
+
+.Pixso-paragraph-14_12 {
+  text-align: left;
+  line-height: 17px;
+  font-feature-settings: "locl" 0;
+  width: 100%;
+  height: auto;
+  flex-grow: 0;
+}
+
+.Pixso-frame-14_13 {
+  width: 100%;
+  height: 100%;
+  border-radius: var(--contract-forms-metrics-radius) var(--contract-forms-metrics-radius) var(--contract-forms-metrics-radius) var(--contract-forms-metrics-radius);
+  z-index: 0;
+  background-color: var(--contract-forms-palette-background);
+}
+
+.stroke-wrapper-14_13 {
+  isolation: isolate;
+  width: 100%;
+  height: var(--derived-qt-forms-md-controlheight);
+}
+
+.stroke-14_13 {
+  position: absolute;
+  inset: 0px;
+  z-index: 1;
+  border-color: var(--contract-forms-palette-border);
+}
+
+.Pixso-paragraph-14_14 {
+  text-align: left;
+  font-feature-settings: "locl" 0;
+  width: 248px;
+  height: auto;
+  position: absolute;
+  left: 16px;
+  top: 8px;
+  white-space: pre;
+}
+
+.Pixso-frame-14_15,.frame-content-14_15,.Pixso-instance-12_399,.Pixso-frame-14_10,.Pixso-instance-12_402 {
+  flex-direction: row;
+  align-items: center;
+}
+
+.Pixso-frame-14_15,.frame-content-14_15 {
+  display: flex;
+  justify-content: center;
+}
+
+.Pixso-frame-14_15 {
+  width: var(--contract-button-metrics-xs-icononlysize);
+  height: var(--contract-button-metrics-xs-icononlysize);
+  position: absolute;
+  left: 274px;
+  top: 4px;
+}
+
+.frame-content-14_15 {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.Pixso-vector-14_16 {
+  width: var(--contract-button-metrics-xs-iconcanvas);
+  height: var(--contract-button-metrics-xs-iconcanvas);
+  background-image: url("http://localhost:3667/assets/1790180768506/GLYPHeye.svg");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.Pixso-frame-14_13-content-layer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+}
+
+.Pixso-paragraph-14_19,.Pixso-instance-12_399,.Pixso-frame-14_10,.stroke-wrapper-14_10,.Pixso-paragraph-14_11,.Pixso-instance-12_402,.stroke-wrapper-12_402 {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.Pixso-paragraph-14_19 {
+  text-align: left;
+  font-feature-settings: "locl" 0;
+  width: 100%;
+  height: auto;
+  flex-grow: 0;
+}
+
+.Pixso-instance-12_399 {
+  width: 120px;
+  height: var(--contract-checkbox-checkbox-sizes-sm-hittarget);
+  display: flex;
+  gap: var(--derived-qt-checkbox-sm-visualgap);
+  padding: 0px 0px 0px var(--derived-qt-checkbox-sm-edge);
+}
+
+.Pixso-frame-14_10 {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  border-radius: var(--contract-checkbox-checkbox-radius) var(--contract-checkbox-checkbox-radius) var(--contract-checkbox-checkbox-radius) var(--contract-checkbox-checkbox-radius);
+  z-index: 0;
+  background-color: var(--contract-checkbox-checkbox-palette-unchecked);
+}
+
+.stroke-wrapper-14_10 {
+  isolation: isolate;
+  width: var(--contract-checkbox-checkbox-sizes-sm-indicator);
+  height: var(--contract-checkbox-checkbox-sizes-sm-indicator);
+  display: flex;
+}
+
+.stroke-14_10 {
+  position: absolute;
+  inset: 0px;
+  z-index: 1;
+  border-color: var(--contract-checkbox-checkbox-palette-border);
+}
+
+.Pixso-paragraph-14_11 {
+  font-size: var(--contract-checkbox-checkbox-sizes-sm-fontsize);
+  text-align: left;
+  line-height: 17px;
+  color: var(--contract-checkbox-checkbox-palette-text);
+  width: auto;
+  height: auto;
+  white-space: pre;
+  flex-grow: 0;
+}
+
+.Pixso-instance-12_402 {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  gap: var(--contract-button-metrics-m-gap);
+  justify-content: center;
+  padding: 0px 13px 0px 13px;
+  border-radius: var(--contract-button-shape-radius) var(--contract-button-shape-radius) var(--contract-button-shape-radius) var(--contract-button-shape-radius);
+  z-index: 1;
+  background-color: var(--contract-button-palette-primary);
+}
+
+.stroke-wrapper-12_402 {
+  isolation: isolate;
+  width: 82px;
+  height: var(--contract-button-metrics-m-minimumheight);
+  display: flex;
+}
+
+.stroke-12_402 {
+  position: absolute;
+  inset: 0px;
+  z-index: 0;
+  border-color: var(--contract-button-materialstates-primary-default-border);
+}
+
+.Pixso-paragraph-14_165 {
+  font-size: var(--contract-button-metrics-m-fontsize);
+  text-align: center;
+  line-height: 17px;
+  color: var(--contract-button-materialstates-primary-default-foreground);
+  width: auto;
+  height: auto;
+  position: relative;
+  flex-shrink: 0;
+  white-space: pre;
+  flex-grow: 0;
+}
+
+
+  </style>
+</head>
+<body>
+<div class="scroll-container">
+  <div id="0_1" class="Pixso-canvas-0_1">
+    <div id="12_382" class="Pixso-frame-12_382">
+      <div class="frame-content-12_382">
+        <p id="12_383" class="Pixso-paragraph-12_383">设备工作台</p>
+        <p id="12_384" class="Pixso-paragraph-12_384">演示环境</p>
+        <div id="12_385" class="Pixso-instance-12_385">
+          <p id="14_141" class="Pixso-paragraph-14_141">账号</p>
+          <div id="14_142" class="stroke-wrapper-14_142">
+            <div class="Pixso-frame-14_142"></div>
+            <div class="stroke-14_142"></div>
+            <div class="Pixso-frame-14_142-content-layer">
+              <p id="14_143" class="Pixso-paragraph-14_143">请输入账号</p>
+            </div>
+          </div>
+          <p id="14_144" class="Pixso-paragraph-14_144">工作账号</p>
+        </div>
+        <div id="12_390" class="Pixso-instance-12_390">
+          <p id="14_12" class="Pixso-paragraph-14_12">密码</p>
+          <div id="14_13" class="stroke-wrapper-14_13">
+            <div class="Pixso-frame-14_13"></div>
+            <div class="stroke-14_13"></div>
+            <div class="Pixso-frame-14_13-content-layer">
+              <p id="14_14" class="Pixso-paragraph-14_14">请输入密码</p>
+              <div id="14_15" class="Pixso-frame-14_15">
+                <div class="frame-content-14_15">
+                  <div id="14_16" class="Pixso-vector-14_16"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <p id="14_19" class="Pixso-paragraph-14_19">本次会话使用</p>
+        </div>
+        <div id="12_399" class="Pixso-instance-12_399">
+          <div id="14_10" class="stroke-wrapper-14_10">
+            <div class="Pixso-frame-14_10"></div>
+            <div class="stroke-14_10"></div>
+          </div>
+          <p id="14_11" class="Pixso-paragraph-14_11">保留本次账号</p>
+        </div>
+        <div id="12_402" class="stroke-wrapper-12_402">
+          <div class="Pixso-instance-12_402">
+            <p id="14_165" class="Pixso-paragraph-14_165">登录</p>
+          </div>
+          <div class="stroke-12_402"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script>
+
+</script>
+<script>
+  // 设置图层变量模式
+  document.addEventListener('DOMContentLoaded', function() {
+  });
+</script>
+</body>
+</html>

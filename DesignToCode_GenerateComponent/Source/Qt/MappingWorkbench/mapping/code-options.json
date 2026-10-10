@@ -1,0 +1,6 @@
+{
+  "slot_prefix":"#",
+  "icon_prefix":["@"],
+  "ignore_prefixes":["_"],
+  "ignore_component":[]
+}

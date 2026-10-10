@@ -1,0 +1,3 @@
+MANDATORY SCREENSHOT CONTEXT AFTER DESIGN_TO_CODE:
+Before default code refinement, call get_screenshot separately for each of these design node ids: ["21:436"].
+Do not collapse multiple ids into one get_screenshot call, and do not call get_screenshot for only the first id.

@@ -1,0 +1,65 @@
+{
+  "$id": "urn:componentlab:design-evidence:component-variants:1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "schemaVersion": {
+      "const": 1
+    },
+    "variants": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "componentSetId": {
+            "type": "string"
+          },
+          "name": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "nativeComponentKey": {
+            "type": "string"
+          },
+          "properties": {
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "value": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "name",
+                "value"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "variantNodeId": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "componentSetId",
+          "variantNodeId",
+          "name",
+          "properties",
+          "nativeComponentKey"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "variants"
+  ],
+  "type": "object"
+}

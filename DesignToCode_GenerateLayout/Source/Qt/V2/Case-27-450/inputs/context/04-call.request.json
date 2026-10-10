@@ -1,0 +1,1 @@
+{"jsonrpc": "2.0", "method": "tools/call", "params": {"name": "eval_script", "arguments": {"script": "const n = pixso.getNodeById(\"27:450\"); return {fileKey:pixso.fileKey || null,documentName:pixso.root.name,pageId:pixso.currentPage.id,node:n ? {id:n.id,name:n.name,type:n.type,width:n.width,height:n.height} : null};"}}, "id": 4}

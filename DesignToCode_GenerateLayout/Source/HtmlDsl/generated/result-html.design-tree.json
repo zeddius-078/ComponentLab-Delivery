@@ -1,0 +1,1722 @@
+{
+    "boundsSpace": "parent-local",
+    "inputKind": "html-plus-dsl",
+    "nodes": [
+        {
+            "bounds": {
+                "height": 560,
+                "left": 0,
+                "top": 0,
+                "width": 600
+            },
+            "children": [
+                "21:473",
+                "21:457",
+                "21:437",
+                "21:481"
+            ],
+            "componentProperties": {
+            },
+            "componentRef": null,
+            "layout": {
+                "autoLayoutAlignType": "center",
+                "autoLayoutCounterAlign": "flex-start",
+                "autoLayoutCounterItemSpacing": 10,
+                "autoLayoutDirection": 2,
+                "autoLayoutIncludeBorders": false,
+                "autoLayoutItemHoriAlign": 0,
+                "autoLayoutItemSpacing": 20,
+                "autoLayoutItemVertAlign": 2,
+                "autoLayoutPaddingBottom": 32,
+                "autoLayoutPaddingLeft": 36,
+                "autoLayoutPaddingRight": 28,
+                "autoLayoutPaddingTop": 24,
+                "autoLayoutPrimaryAlign": "flex-end",
+                "stackChildCounterSizing": "FIXED",
+                "stackChildPrimarySizing": "FIXED",
+                "stackCounterSizing": "FIXED",
+                "stackMode": "VERTICAL",
+                "stackPrimarySizing": "FIXED"
+            },
+            "name": "工单列 / V2 CombineLayout",
+            "nodeId": "21:436",
+            "parentId": null,
+            "tokenBindings": {
+            },
+            "type": "FRAME",
+            "variableModes": {
+            }
+        },
+        {
+            "bounds": {
+                "height": 32,
+                "left": 36,
+                "top": 496,
+                "width": 490
+            },
+            "children": [
+                "21:450",
+                "21:478",
+                "21:476",
+                "21:474",
+                "21:448"
+            ],
+            "componentProperties": {
+            },
+            "componentRef": null,
+            "layout": {
+                "autoLayoutAlignType": "center",
+                "autoLayoutCounterAlign": "flex-start",
+                "autoLayoutCounterItemSpacing": 0,
+                "autoLayoutDirection": 1,
+                "autoLayoutHeightResize": 1,
+                "autoLayoutIncludeBorders": false,
+                "autoLayoutItemSpacing": 20,
+                "autoLayoutItemVertAlign": 0,
+                "autoLayoutPaddingBottom": 0,
+                "autoLayoutPaddingLeft": 0,
+                "autoLayoutPaddingRight": 0,
+                "autoLayoutPaddingTop": 0,
+                "autoLayoutPrimaryAlign": "flex-start",
+                "autoLayoutWidthResize": 1,
+                "stackCounterSizing": "RESIZE_TO_FIT",
+                "stackMode": "HORIZONTAL",
+                "stackPrimarySizing": "RESIZE_TO_FIT"
+            },
+            "name": "容器 2",
+            "nodeId": "21:473",
+            "parentId": "21:436",
+            "tokenBindings": {
+            },
+            "type": "FRAME",
+            "variableModes": {
+            }
+        },
+        {
+            "bounds": {
+                "height": 32,
+                "left": 408,
+                "top": 0,
+                "width": 82
+            },
+            "children": [
+            ],
+            "componentProperties": {
+                "variant": [
+                    {
+                        "aliasName": "",
+                        "name": "type",
+                        "type": "variant",
+                        "value": "DEFAULT"
+                    },
+                    {
+                        "aliasName": "",
+                        "name": "size",
+                        "type": "variant",
+                        "value": "M"
+                    },
+                    {
+                        "aliasName": "",
+                        "name": "state",
+                        "type": "variant",
+                        "value": "disabled"
+                    },
+                    {
+                        "aliasName": "",
+                        "name": "appearance",
+                        "type": "variant",
+                        "value": "solid"
+                    },
+                    {
+                        "aliasName": "",
+                        "name": "content",
+                        "type": "variant",
+                        "value": "Text"
+                    },
+                    {
+                        "aliasName": "",
+                        "name": "iconStyle",
+                        "type": "variant",
+                        "value": "Bare"
+                    },
+                    {
+                        "aliasName": "",
+                        "name": "danger",
+                        "type": "variant",
+                        "value": "false"
+                    },
+                    {
+                        "aliasName": "",
+                        "name": "ghost",
+                        "type": "variant",
+                        "value": "false"
+                    },
+                    {
+                        "aliasName": "",
+                        "name": "Profile",
+                        "type": "variant",
+                        "value": "light-comfortable"
+                    }
+                ]
+            },
+            "componentRef": {
+                "fileKey": "4S0Ktm81WnvzuJmZHvRuOg",
+                "key": "6cc8de7a0483f61cc33e9c806ef8ec227d977ef3",
+                "nodeId": "3:5742",
+                "setId": "3:10558"
+            },
+            "layout": {
+                "autoLayoutAlignType": "center",
+                "autoLayoutCounterAlign": "center",
+                "autoLayoutCounterItemSpacing": 10,
+                "autoLayoutDirection": 1,
+                "autoLayoutHeightResize": 0,
+                "autoLayoutIncludeBorders": false,
+                "autoLayoutItemHoriAlign": 1,
+                "autoLayoutItemSpacing": 4,
+                "autoLayoutItemVertAlign": 1,
+                "autoLayoutPaddingLeft": 13,
+                "autoLayoutPaddingRight": 13,
+                "autoLayoutPrimaryAlign": "center",
+                "autoLayoutWidthResize": 0,
+                "stackCounterSizing": "FIXED",
+                "stackMode": "HORIZONTAL",
+                "stackPrimarySizing": "FIXED"
+            },
+            "name": "实例 4",
+            "nodeId": "21:450",
+            "parentId": "21:473",
+            "tokenBindings": {
+                "fillPaints[0].colorVar": {
+                    "dataType": "ALIAS",
+                    "resolvedDataType": "BOOLEAN",
+                    "value": {
+                        "alias": "3:5336"
+                    }
+                },
+                "props[1].variableConsumptionMap.entries[1].variableData": {
+                    "dataType": "ALIAS",
+                    "resolvedDataType": "FLOAT",
+                    "value": {
+                        "alias": {
+                            "guid": {
+                                "localID": 5188,
+                                "sessionID": 3
+                            }
+                        }
+                    }
+                },
+                "props[1].variablesAlias[0].data": {
+                    "dataType": "ALIAS",
+                    "resolvedDataType": "FLOAT",
+                    "value": {
+                        "alias": "3:5188"
+                    }
+                },
+                "strokePaints[0].colorVar": {
+                    "dataType": "ALIAS",
+                    "resolvedDataType": "BOOLEAN",
+                    "value": {
+                        "alias": "3:5345"
+                    }
+                },
+                "variablesAlias[0].data": {
+                    "dataType": "ALIAS",
+                    "resolvedDataType": "FLOAT",
+                    "value": {
+                        "alias": "3:5183"
+                    }
+                },
+                "variablesAlias[1].data": {
+                    "dataType": "ALIAS",
+                    "resolvedDataType": "FLOAT",
+                    "value": {
+                        "alias": "3:5182"
+                    }
+                },
+                "variablesAlias[2].data": {
+                    "dataType": "ALIAS",
+                    "resolvedDataType": "FLOAT",
+                    "value": {
+                        "alias": "3:5179"
+                    }
+                },
+                "variablesAlias[3].data": {
+                    "dataType": "ALIAS",
+                    "resolvedDataType": "FLOAT",
+                    "value": {
+                        "alias": "3:5201"
+                    }
+                },
+                "variablesAlias[4].data": {
+                    "dataType": "ALIAS",
+                    "resolvedDataType": "FLOAT",
+                    "value": {
+                        "alias": "3:5201"
+                    }
+                },
+                "variablesAlias[5].data": {
+                    "dataType": "ALIAS",
+                    "resolvedDataType": "FLOAT",
+                    "value": {
+                        "alias": "3:5201"
+                    }
+                },
+                "variablesAlias[6].data": {
+                    "dataType": "ALIAS",
+                    "resolvedDataType": "FLOAT",
+                    "value": {
+                        "alias": "3:5201"
+                    }
+                },
+                "variablesAlias[7].data": {
+                    "dataType": "ALIAS",
+                    "resolvedDataType": "BOOLEAN",
+                    "value": {
+                        "alias": "3:5336"
+                    }
+                },
+                "variablesAlias[8].data": {
+                    "dataType": "ALIAS",
+                    "resolvedDataType": "BOOLEAN",
+                    "value": {
+                        "alias": "3:5345"
+                    }
+                }
+            },
+            "type": "INSTANCE",
+            "variableModes": {
+                "3:3078": "3:3077",
+                "3:3083": "3:3082",
+                "3:3088": "3:3087",
+                "3:3093": "3:3092"
+            }
+        },
+        {
+            "bounds": {
+                "height": 32,
+                "left": 306,
+                "top": 0,
+                "width": 82
+            },
+            "children": [
+            ],
+            "componentProperties": {
+                "variant": [
+                    {
+                        "aliasName": "",
+                        "name": "type",
+                        "type": "variant",
+                        "value": "PRIMARY"
+                    },
+                    {
+                        "aliasName": "",
+                        "name": "size",
+                        "type": "variant",
+                        "value": "M"
+                    },
+                    {
+                        "aliasName": "",
+                        "name": "state",
+                        "type": "variant",
+                        "value": "default"
+                    },
+                    {
+                        "aliasName": "",
+                        "name": "appearance",
+                        "type": "variant",
+                        "value": "solid"
+                    },
+                    {
+                        "aliasName": "",
+                        "name": "content",
+                        "type": "variant",
+                        "value": "Text"
+                    },
+                    {
+                        "aliasName": "",
+                        "name": "iconStyle",
+                        "type": "variant",
+                        "value": "Bare"
+                    },
+                    {
+                        "aliasName": "",
+                        "name": "danger",
+                        "type": "variant",
+                        "value": "false"
+                    },
+                    {
+                        "aliasName": "",
+                        "name": "ghost",
+                        "type": "variant",
+                        "value": "false"
+                    },
+                    {
+                        "aliasName": "",
+                        "name": "Profile",
+                        "type": "variant",
+                        "value": "light-comfortable"
+                    }
+                ]
+            },
+            "componentRef": {
+                "fileKey": "4S0Ktm81WnvzuJmZHvRuOg",
+                "key": "5db2a212943f439833dd3b8d6f8957d687a6edb1",
+                "nodeId": "3:5686",
+                "setId": "3:10558"
+            },
+            "layout": {
+                "autoLayoutAlignType": "center",
+                "autoLayoutCounterAlign": "center",
+                "autoLayoutCounterItemSpacing": 10,
+                "autoLayoutDirection": 1,
+                "autoLayoutHeightResize": 0,
+                "autoLayoutIncludeBorders": false,
+                "autoLayoutItemHoriAlign": 1,
+                "autoLayoutItemSpacing": 4,
+                "autoLayoutItemVertAlign": 1,
+                "autoLayoutPaddingLeft": 13,
+                "autoLayoutPaddingRight": 13,
+                "autoLayoutPrimaryAlign": "center",
+                "autoLayoutWidthResize": 0,
+                "stackCounterSizing": "FIXED",
+                "stackMode": "HORIZONTAL",
+                "stackPrimarySizing": "FIXED"
+            },
+            "name": "提交",
+            "nodeId": "21:478",
+            "parentId": "21:473",
+            "tokenBindings": {
+                "fillPaints[0].colorVar": {
+                    "dataType": "ALIAS",
+                    "resolvedDataType": "BOOLEAN",
+                    "value": {
+                        "alias": "3:5226"
+                    }
+                },
+                "props[1].variableConsumptionMap.entries[1].variableData": {
+                    "dataType": "ALIAS",
+                    "resolvedDataType": "FLOAT",
+                    "value": {
+                        "alias": {
+                            "guid": {
+                                "localID": 5188,
+                                "sessionID": 3
+                            }
+                        }
+                    }
+                },
+                "props[1].variablesAlias[0].data": {
+                    "dataType": "ALIAS",
+                    "resolvedDataType": "FLOAT",
+                    "value": {
+                        "alias": "3:5188"
+                    }
+                },
+                "strokePaints[0].colorVar": {
+                    "dataType": "ALIAS",
+                    "resolvedDataType": "BOOLEAN",
+                    "value": {
+                        "alias": "3:5254"
+                    }
+                },
+                "variablesAlias[0].data": {
+                    "dataType": "ALIAS",
+                    "resolvedDataType": "FLOAT",
+                    "value": {
+                        "alias": "3:5183"
+                    }
+                },
+                "variablesAlias[1].data": {
+                    "dataType": "ALIAS",
+                    "resolvedDataType": "FLOAT",
+                    "value": {
+                        "alias": "3:5182"
+                    }
+                },
+                "variablesAlias[2].data": {
+                    "dataType": "ALIAS",
+                    "resolvedDataType": "FLOAT",
+                    "value": {
+                        "alias": "3:5179"
+                    }
+                },
+                "variablesAlias[3].data": {
+                    "dataType": "ALIAS",
+                    "resolvedDataType": "FLOAT",
+                    "value": {
+                        "alias": "3:5201"
+                    }
+                },
+                "variablesAlias[4].data": {
+                    "dataType": "ALIAS",
+                    "resolvedDataType": "FLOAT",
+                    "value": {
+                        "alias": "3:5201"
+                    }
+                },
+                "variablesAlias[5].data": {
+                    "dataType": "ALIAS",
+                    "resolvedDataType": "FLOAT",
+                    "value": {
+                        "alias": "3:5201"
+                    }
+                },
+                "variablesAlias[6].data": {
+                    "dataType": "ALIAS",
+                    "resolvedDataType": "FLOAT",
+                    "value": {
+                        "alias": "3:5201"
+                    }
+                },
+                "variablesAlias[7].data": {
+                    "dataType": "ALIAS",
+                    "resolvedDataType": "BOOLEAN",
+                    "value": {
+                        "alias": "3:5226"
+                    }
+                },
+                "variablesAlias[8].data": {
+                    "dataType": "ALIAS",
+                    "resolvedDataType": "BOOLEAN",
+                    "value": {
+                        "alias": "3:5254"
+                    }
+                }
+            },
+            "type": "INSTANCE",
+            "variableModes": {
+                "3:3078": "3:3077",
+                "3:3083": "3:3082",
+                "3:3088": "3:3087",
+                "3:3093": "3:3092"
+            }
+        },
+        {
+            "bounds": {
+                "height": 32,
+                "left": 204,
+                "top": 0,
+                "width": 82
+            },
+            "children": [
+            ],
+            "componentProperties": {
+                "variant": [
+                    {
+                        "aliasName": "",
+                        "name": "type",
+                        "type": "variant",
+                        "value": "PRIMARY"
+                    },
+                    {
+                        "aliasName": "",
+                        "name": "size",
+                        "type": "variant",
+                        "value": "M"
+                    },
+                    {
+                        "aliasName": "",
+                        "name": "state",
+                        "type": "variant",
+                        "value": "default"
+                    },
+                    {
+                        "aliasName": "",
+                        "name": "appearance",
+                        "type": "variant",
+                        "value": "solid"
+                    },
+                    {
+                        "aliasName": "",
+                        "name": "content",
+                        "type": "variant",
+                        "value": "Text"
+                    },
+                    {
+                        "aliasName": "",
+                        "name": "iconStyle",
+                        "type": "variant",
+                        "value": "Bare"
+                    },
+                    {
+                        "aliasName": "",
+                        "name": "danger",
+                        "type": "variant",
+                        "value": "false"
+                    },
+                    {
+                        "aliasName": "",
+                        "name": "ghost",
+                        "type": "variant",
+                        "value": "false"
+                    },
+                    {
+                        "aliasName": "",
+                        "name": "Profile",
+                        "type": "variant",
+                        "value": "light-comfortable"
+                    }
+                ]
+            },
+            "componentRef": {
+                "fileKey": "4S0Ktm81WnvzuJmZHvRuOg",
+                "key": "5db2a212943f439833dd3b8d6f8957d687a6edb1",
+                "nodeId": "3:5686",
+                "setId": "3:10558"
+            },
+            "layout": {
+                "autoLayoutAlignType": "center",
+                "autoLayoutCounterAlign": "center",
+                "autoLayoutCounterItemSpacing": 10,
+                "autoLayoutDirection": 1,
+                "autoLayoutHeightResize": 0,
+                "autoLayoutIncludeBorders": false,
+                "autoLayoutItemHoriAlign": 1,
+                "autoLayoutItemSpacing": 4,
+                "autoLayoutItemVertAlign": 1,
+                "autoLayoutPaddingLeft": 13,
+                "autoLayoutPaddingRight": 13,
+                "autoLayoutPrimaryAlign": "center",
+                "autoLayoutWidthResize": 0,
+                "stackCounterSizing": "FIXED",
+                "stackMode": "HORIZONTAL",
+                "stackPrimarySizing": "FIXED"
+            },
+            "name": "提交",
+            "nodeId": "21:476",
+            "parentId": "21:473",
+            "tokenBindings": {
+                "fillPaints[0].colorVar": {
+                    "dataType": "ALIAS",
+                    "resolvedDataType": "BOOLEAN",
+                    "value": {
+                        "alias": "3:5226"
+                    }
+                },
+                "props[1].variableConsumptionMap.entries[1].variableData": {
+                    "dataType": "ALIAS",
+                    "resolvedDataType": "FLOAT",
+                    "value": {
+                        "alias": {
+                            "guid": {
+                                "localID": 5188,
+                                "sessionID": 3
+                            }
+                        }
+                    }
+                },
+                "props[1].variablesAlias[0].data": {
+                    "dataType": "ALIAS",
+                    "resolvedDataType": "FLOAT",
+                    "value": {
+                        "alias": "3:5188"
+                    }
+                },
+                "strokePaints[0].colorVar": {
+                    "dataType": "ALIAS",
+                    "resolvedDataType": "BOOLEAN",
+                    "value": {
+                        "alias": "3:5254"
+                    }
+                },
+                "variablesAlias[0].data": {
+                    "dataType": "ALIAS",
+                    "resolvedDataType": "FLOAT",
+                    "value": {
+                        "alias": "3:5183"
+                    }
+                },
+                "variablesAlias[1].data": {
+                    "dataType": "ALIAS",
+                    "resolvedDataType": "FLOAT",
+                    "value": {
+                        "alias": "3:5182"
+                    }
+                },
+                "variablesAlias[2].data": {
+                    "dataType": "ALIAS",
+                    "resolvedDataType": "FLOAT",
+                    "value": {
+                        "alias": "3:5179"
+                    }
+                },
+                "variablesAlias[3].data": {
+                    "dataType": "ALIAS",
+                    "resolvedDataType": "FLOAT",
+                    "value": {
+                        "alias": "3:5201"
+                    }
+                },
+                "variablesAlias[4].data": {
+                    "dataType": "ALIAS",
+                    "resolvedDataType": "FLOAT",
+                    "value": {
+                        "alias": "3:5201"
+                    }
+                },
+                "variablesAlias[5].data": {
+                    "dataType": "ALIAS",
+                    "resolvedDataType": "FLOAT",
+                    "value": {
+                        "alias": "3:5201"
+                    }
+                },
+                "variablesAlias[6].data": {
+                    "dataType": "ALIAS",
+                    "resolvedDataType": "FLOAT",
+                    "value": {
+                        "alias": "3:5201"
+                    }
+                },
+                "variablesAlias[7].data": {
+                    "dataType": "ALIAS",
+                    "resolvedDataType": "BOOLEAN",
+                    "value": {
+                        "alias": "3:5226"
+                    }
+                },
+                "variablesAlias[8].data": {
+                    "dataType": "ALIAS",
+                    "resolvedDataType": "BOOLEAN",
+                    "value": {
+                        "alias": "3:5254"
+                    }
+                }
+            },
+            "type": "INSTANCE",
+            "variableModes": {
+                "3:3078": "3:3077",
+                "3:3083": "3:3082",
+                "3:3088": "3:3087",
+                "3:3093": "3:3092"
+            }
+        },
+        {
+            "bounds": {
+                "height": 32,
+                "left": 102,
+                "top": 0,
+                "width": 82
+            },
+            "children": [
+            ],
+            "componentProperties": {
+                "variant": [
+                    {
+                        "aliasName": "",
+                        "name": "type",
+                        "type": "variant",
+                        "value": "PRIMARY"
+                    },
+                    {
+                        "aliasName": "",
+                        "name": "size",
+                        "type": "variant",
+                        "value": "M"
+                    },
+                    {
+                        "aliasName": "",
+                        "name": "state",
+                        "type": "variant",
+                        "value": "default"
+                    },
+                    {
+                        "aliasName": "",
+                        "name": "appearance",
+                        "type": "variant",
+                        "value": "solid"
+                    },
+                    {
+                        "aliasName": "",
+                        "name": "content",
+                        "type": "variant",
+                        "value": "Text"
+                    },
+                    {
+                        "aliasName": "",
+                        "name": "iconStyle",
+                        "type": "variant",
+                        "value": "Bare"
+                    },
+                    {
+                        "aliasName": "",
+                        "name": "danger",
+                        "type": "variant",
+                        "value": "false"
+                    },
+                    {
+                        "aliasName": "",
+                        "name": "ghost",
+                        "type": "variant",
+                        "value": "false"
+                    },
+                    {
+                        "aliasName": "",
+                        "name": "Profile",
+                        "type": "variant",
+                        "value": "light-comfortable"
+                    }
+                ]
+            },
+            "componentRef": {
+                "fileKey": "4S0Ktm81WnvzuJmZHvRuOg",
+                "key": "5db2a212943f439833dd3b8d6f8957d687a6edb1",
+                "nodeId": "3:5686",
+                "setId": "3:10558"
+            },
+            "layout": {
+                "autoLayoutAlignType": "center",
+                "autoLayoutCounterAlign": "center",
+                "autoLayoutCounterItemSpacing": 10,
+                "autoLayoutDirection": 1,
+                "autoLayoutHeightResize": 0,
+                "autoLayoutIncludeBorders": false,
+                "autoLayoutItemHoriAlign": 1,
+                "autoLayoutItemSpacing": 4,
+                "autoLayoutItemVertAlign": 1,
+                "autoLayoutPaddingLeft": 13,
+                "autoLayoutPaddingRight": 13,
+                "autoLayoutPrimaryAlign": "center",
+                "autoLayoutWidthResize": 0,
+                "stackCounterSizing": "FIXED",
+                "stackMode": "HORIZONTAL",
+                "stackPrimarySizing": "FIXED"
+            },
+            "name": "提交",
+            "nodeId": "21:474",
+            "parentId": "21:473",
+            "tokenBindings": {
+                "fillPaints[0].colorVar": {
+                    "dataType": "ALIAS",
+                    "resolvedDataType": "BOOLEAN",
+                    "value": {
+                        "alias": "3:5226"
+                    }
+                },
+                "props[1].variableConsumptionMap.entries[1].variableData": {
+                    "dataType": "ALIAS",
+                    "resolvedDataType": "FLOAT",
+                    "value": {
+                        "alias": {
+                            "guid": {
+                                "localID": 5188,
+                                "sessionID": 3
+                            }
+                        }
+                    }
+                },
+                "props[1].variablesAlias[0].data": {
+                    "dataType": "ALIAS",
+                    "resolvedDataType": "FLOAT",
+                    "value": {
+                        "alias": "3:5188"
+                    }
+                },
+                "strokePaints[0].colorVar": {
+                    "dataType": "ALIAS",
+                    "resolvedDataType": "BOOLEAN",
+                    "value": {
+                        "alias": "3:5254"
+                    }
+                },
+                "variablesAlias[0].data": {
+                    "dataType": "ALIAS",
+                    "resolvedDataType": "FLOAT",
+                    "value": {
+                        "alias": "3:5183"
+                    }
+                },
+                "variablesAlias[1].data": {
+                    "dataType": "ALIAS",
+                    "resolvedDataType": "FLOAT",
+                    "value": {
+                        "alias": "3:5182"
+                    }
+                },
+                "variablesAlias[2].data": {
+                    "dataType": "ALIAS",
+                    "resolvedDataType": "FLOAT",
+                    "value": {
+                        "alias": "3:5179"
+                    }
+                },
+                "variablesAlias[3].data": {
+                    "dataType": "ALIAS",
+                    "resolvedDataType": "FLOAT",
+                    "value": {
+                        "alias": "3:5201"
+                    }
+                },
+                "variablesAlias[4].data": {
+                    "dataType": "ALIAS",
+                    "resolvedDataType": "FLOAT",
+                    "value": {
+                        "alias": "3:5201"
+                    }
+                },
+                "variablesAlias[5].data": {
+                    "dataType": "ALIAS",
+                    "resolvedDataType": "FLOAT",
+                    "value": {
+                        "alias": "3:5201"
+                    }
+                },
+                "variablesAlias[6].data": {
+                    "dataType": "ALIAS",
+                    "resolvedDataType": "FLOAT",
+                    "value": {
+                        "alias": "3:5201"
+                    }
+                },
+                "variablesAlias[7].data": {
+                    "dataType": "ALIAS",
+                    "resolvedDataType": "BOOLEAN",
+                    "value": {
+                        "alias": "3:5226"
+                    }
+                },
+                "variablesAlias[8].data": {
+                    "dataType": "ALIAS",
+                    "resolvedDataType": "BOOLEAN",
+                    "value": {
+                        "alias": "3:5254"
+                    }
+                }
+            },
+            "type": "INSTANCE",
+            "variableModes": {
+                "3:3078": "3:3077",
+                "3:3083": "3:3082",
+                "3:3088": "3:3087",
+                "3:3093": "3:3092"
+            }
+        },
+        {
+            "bounds": {
+                "height": 32,
+                "left": 0,
+                "top": 0,
+                "width": 82
+            },
+            "children": [
+            ],
+            "componentProperties": {
+                "variant": [
+                    {
+                        "aliasName": "",
+                        "name": "type",
+                        "type": "variant",
+                        "value": "PRIMARY"
+                    },
+                    {
+                        "aliasName": "",
+                        "name": "size",
+                        "type": "variant",
+                        "value": "M"
+                    },
+                    {
+                        "aliasName": "",
+                        "name": "state",
+                        "type": "variant",
+                        "value": "default"
+                    },
+                    {
+                        "aliasName": "",
+                        "name": "appearance",
+                        "type": "variant",
+                        "value": "solid"
+                    },
+                    {
+                        "aliasName": "",
+                        "name": "content",
+                        "type": "variant",
+                        "value": "Text"
+                    },
+                    {
+                        "aliasName": "",
+                        "name": "iconStyle",
+                        "type": "variant",
+                        "value": "Bare"
+                    },
+                    {
+                        "aliasName": "",
+                        "name": "danger",
+                        "type": "variant",
+                        "value": "false"
+                    },
+                    {
+                        "aliasName": "",
+                        "name": "ghost",
+                        "type": "variant",
+                        "value": "false"
+                    },
+                    {
+                        "aliasName": "",
+                        "name": "Profile",
+                        "type": "variant",
+                        "value": "light-comfortable"
+                    }
+                ]
+            },
+            "componentRef": {
+                "fileKey": "4S0Ktm81WnvzuJmZHvRuOg",
+                "key": "5db2a212943f439833dd3b8d6f8957d687a6edb1",
+                "nodeId": "3:5686",
+                "setId": "3:10558"
+            },
+            "layout": {
+                "autoLayoutAlignType": "center",
+                "autoLayoutCounterAlign": "center",
+                "autoLayoutCounterItemSpacing": 10,
+                "autoLayoutDirection": 1,
+                "autoLayoutHeightResize": 0,
+                "autoLayoutIncludeBorders": false,
+                "autoLayoutItemHoriAlign": 1,
+                "autoLayoutItemSpacing": 4,
+                "autoLayoutItemVertAlign": 1,
+                "autoLayoutPaddingLeft": 13,
+                "autoLayoutPaddingRight": 13,
+                "autoLayoutPrimaryAlign": "center",
+                "autoLayoutWidthResize": 0,
+                "stackCounterSizing": "FIXED",
+                "stackMode": "HORIZONTAL",
+                "stackPrimarySizing": "FIXED"
+            },
+            "name": "实例 3",
+            "nodeId": "21:448",
+            "parentId": "21:473",
+            "tokenBindings": {
+                "fillPaints[0].colorVar": {
+                    "dataType": "ALIAS",
+                    "resolvedDataType": "BOOLEAN",
+                    "value": {
+                        "alias": "3:5226"
+                    }
+                },
+                "props[1].variableConsumptionMap.entries[1].variableData": {
+                    "dataType": "ALIAS",
+                    "resolvedDataType": "FLOAT",
+                    "value": {
+                        "alias": {
+                            "guid": {
+                                "localID": 5188,
+                                "sessionID": 3
+                            }
+                        }
+                    }
+                },
+                "props[1].variablesAlias[0].data": {
+                    "dataType": "ALIAS",
+                    "resolvedDataType": "FLOAT",
+                    "value": {
+                        "alias": "3:5188"
+                    }
+                },
+                "strokePaints[0].colorVar": {
+                    "dataType": "ALIAS",
+                    "resolvedDataType": "BOOLEAN",
+                    "value": {
+                        "alias": "3:5254"
+                    }
+                },
+                "variablesAlias[0].data": {
+                    "dataType": "ALIAS",
+                    "resolvedDataType": "FLOAT",
+                    "value": {
+                        "alias": "3:5183"
+                    }
+                },
+                "variablesAlias[1].data": {
+                    "dataType": "ALIAS",
+                    "resolvedDataType": "FLOAT",
+                    "value": {
+                        "alias": "3:5182"
+                    }
+                },
+                "variablesAlias[2].data": {
+                    "dataType": "ALIAS",
+                    "resolvedDataType": "FLOAT",
+                    "value": {
+                        "alias": "3:5179"
+                    }
+                },
+                "variablesAlias[3].data": {
+                    "dataType": "ALIAS",
+                    "resolvedDataType": "FLOAT",
+                    "value": {
+                        "alias": "3:5201"
+                    }
+                },
+                "variablesAlias[4].data": {
+                    "dataType": "ALIAS",
+                    "resolvedDataType": "FLOAT",
+                    "value": {
+                        "alias": "3:5201"
+                    }
+                },
+                "variablesAlias[5].data": {
+                    "dataType": "ALIAS",
+                    "resolvedDataType": "FLOAT",
+                    "value": {
+                        "alias": "3:5201"
+                    }
+                },
+                "variablesAlias[6].data": {
+                    "dataType": "ALIAS",
+                    "resolvedDataType": "FLOAT",
+                    "value": {
+                        "alias": "3:5201"
+                    }
+                },
+                "variablesAlias[7].data": {
+                    "dataType": "ALIAS",
+                    "resolvedDataType": "BOOLEAN",
+                    "value": {
+                        "alias": "3:5226"
+                    }
+                },
+                "variablesAlias[8].data": {
+                    "dataType": "ALIAS",
+                    "resolvedDataType": "BOOLEAN",
+                    "value": {
+                        "alias": "3:5254"
+                    }
+                }
+            },
+            "type": "INSTANCE",
+            "variableModes": {
+                "3:3078": "3:3077",
+                "3:3083": "3:3082",
+                "3:3088": "3:3087",
+                "3:3093": "3:3092"
+            }
+        },
+        {
+            "bounds": {
+                "height": 158,
+                "left": 36,
+                "top": 318,
+                "width": 536
+            },
+            "children": [
+                "21:465",
+                "21:467",
+                "21:469",
+                "21:471"
+            ],
+            "componentProperties": {
+            },
+            "componentRef": null,
+            "layout": {
+                "autoLayoutAlignType": "center",
+                "autoLayoutCounterAlign": "flex-start",
+                "autoLayoutCounterItemSpacing": 10,
+                "autoLayoutDirection": 2,
+                "autoLayoutHeightResize": 1,
+                "autoLayoutIncludeBorders": false,
+                "autoLayoutItemHoriAlign": 0,
+                "autoLayoutItemSpacing": 10,
+                "autoLayoutPaddingBottom": 0,
+                "autoLayoutPaddingLeft": 0,
+                "autoLayoutPaddingRight": 0,
+                "autoLayoutPaddingTop": 0,
+                "autoLayoutPrimaryAlign": "flex-start",
+                "autoLayoutWidthResize": 2,
+                "stackChildCounterSizing": "RESIZE_TO_FIT",
+                "stackCounterSizing": "FIXED",
+                "stackMode": "VERTICAL",
+                "stackPrimarySizing": "RESIZE_TO_FIT"
+            },
+            "name": "工单表单",
+            "nodeId": "21:457",
+            "parentId": "21:436",
+            "tokenBindings": {
+            },
+            "type": "FRAME",
+            "variableModes": {
+            }
+        },
+        {
+            "bounds": {
+                "height": 32,
+                "left": 0,
+                "top": 126,
+                "width": 310
+            },
+            "children": [
+            ],
+            "componentProperties": {
+                "variant": [
+                    {
+                        "aliasName": "",
+                        "name": "state",
+                        "type": "variant",
+                        "value": "disabled"
+                    },
+                    {
+                        "aliasName": "",
+                        "name": "mode",
+                        "type": "variant",
+                        "value": "single"
+                    },
+                    {
+                        "aliasName": "",
+                        "name": "label",
+                        "type": "variant",
+                        "value": "刻蚀腔体 ETCH-01"
+                    },
+                    {
+                        "aliasName": "",
+                        "name": "Profile",
+                        "type": "variant",
+                        "value": "light-comfortable"
+                    }
+                ]
+            },
+            "componentRef": {
+                "fileKey": "4S0Ktm81WnvzuJmZHvRuOg",
+                "key": "1136ebba3880f2c42766bee9d95c906effd6ba24",
+                "nodeId": "3:10199",
+                "setId": "3:10565"
+            },
+            "layout": {
+                "autoLayoutHeightResize": 0,
+                "autoLayoutWidthResize": 0
+            },
+            "name": "state=disabled, mode=single, label=刻蚀腔体 ETCH-01, Profile=light-comfortable",
+            "nodeId": "21:465",
+            "parentId": "21:457",
+            "tokenBindings": {
+                "props[1].variableConsumptionMap.entries[1].variableData": {
+                    "dataType": "ALIAS",
+                    "resolvedDataType": "FLOAT",
+                    "value": {
+                        "alias": {
+                            "guid": {
+                                "localID": 5563,
+                                "sessionID": 3
+                            }
+                        }
+                    }
+                },
+                "props[1].variablesAlias[0].data": {
+                    "dataType": "ALIAS",
+                    "resolvedDataType": "FLOAT",
+                    "value": {
+                        "alias": "3:5563"
+                    }
+                },
+                "variablesAlias[0].data": {
+                    "dataType": "ALIAS",
+                    "resolvedDataType": "FLOAT",
+                    "value": {
+                        "alias": "3:5541"
+                    }
+                }
+            },
+            "type": "INSTANCE",
+            "variableModes": {
+                "3:3078": "3:3077",
+                "3:3083": "3:3082",
+                "3:3088": "3:3087",
+                "3:3093": "3:3092"
+            }
+        },
+        {
+            "bounds": {
+                "height": 32,
+                "left": 0,
+                "top": 84,
+                "width": 310
+            },
+            "children": [
+            ],
+            "componentProperties": {
+                "variant": [
+                    {
+                        "aliasName": "",
+                        "name": "state",
+                        "type": "variant",
+                        "value": "disabled"
+                    },
+                    {
+                        "aliasName": "",
+                        "name": "mode",
+                        "type": "variant",
+                        "value": "single"
+                    },
+                    {
+                        "aliasName": "",
+                        "name": "label",
+                        "type": "variant",
+                        "value": "刻蚀腔体 ETCH-01"
+                    },
+                    {
+                        "aliasName": "",
+                        "name": "Profile",
+                        "type": "variant",
+                        "value": "light-comfortable"
+                    }
+                ]
+            },
+            "componentRef": {
+                "fileKey": "4S0Ktm81WnvzuJmZHvRuOg",
+                "key": "1136ebba3880f2c42766bee9d95c906effd6ba24",
+                "nodeId": "3:10199",
+                "setId": "3:10565"
+            },
+            "layout": {
+                "autoLayoutHeightResize": 0,
+                "autoLayoutWidthResize": 0
+            },
+            "name": "state=disabled, mode=single, label=刻蚀腔体 ETCH-01, Profile=light-comfortable",
+            "nodeId": "21:467",
+            "parentId": "21:457",
+            "tokenBindings": {
+                "props[1].variableConsumptionMap.entries[1].variableData": {
+                    "dataType": "ALIAS",
+                    "resolvedDataType": "FLOAT",
+                    "value": {
+                        "alias": {
+                            "guid": {
+                                "localID": 5563,
+                                "sessionID": 3
+                            }
+                        }
+                    }
+                },
+                "props[1].variablesAlias[0].data": {
+                    "dataType": "ALIAS",
+                    "resolvedDataType": "FLOAT",
+                    "value": {
+                        "alias": "3:5563"
+                    }
+                },
+                "variablesAlias[0].data": {
+                    "dataType": "ALIAS",
+                    "resolvedDataType": "FLOAT",
+                    "value": {
+                        "alias": "3:5541"
+                    }
+                }
+            },
+            "type": "INSTANCE",
+            "variableModes": {
+                "3:3078": "3:3077",
+                "3:3083": "3:3082",
+                "3:3088": "3:3087",
+                "3:3093": "3:3092"
+            }
+        },
+        {
+            "bounds": {
+                "height": 32,
+                "left": 0,
+                "top": 42,
+                "width": 310
+            },
+            "children": [
+            ],
+            "componentProperties": {
+                "variant": [
+                    {
+                        "aliasName": "",
+                        "name": "state",
+                        "type": "variant",
+                        "value": "disabled"
+                    },
+                    {
+                        "aliasName": "",
+                        "name": "mode",
+                        "type": "variant",
+                        "value": "single"
+                    },
+                    {
+                        "aliasName": "",
+                        "name": "label",
+                        "type": "variant",
+                        "value": "刻蚀腔体 ETCH-01"
+                    },
+                    {
+                        "aliasName": "",
+                        "name": "Profile",
+                        "type": "variant",
+                        "value": "light-comfortable"
+                    }
+                ]
+            },
+            "componentRef": {
+                "fileKey": "4S0Ktm81WnvzuJmZHvRuOg",
+                "key": "1136ebba3880f2c42766bee9d95c906effd6ba24",
+                "nodeId": "3:10199",
+                "setId": "3:10565"
+            },
+            "layout": {
+                "autoLayoutHeightResize": 0,
+                "autoLayoutWidthResize": 0
+            },
+            "name": "state=disabled, mode=single, label=刻蚀腔体 ETCH-01, Profile=light-comfortable",
+            "nodeId": "21:469",
+            "parentId": "21:457",
+            "tokenBindings": {
+                "props[1].variableConsumptionMap.entries[1].variableData": {
+                    "dataType": "ALIAS",
+                    "resolvedDataType": "FLOAT",
+                    "value": {
+                        "alias": {
+                            "guid": {
+                                "localID": 5563,
+                                "sessionID": 3
+                            }
+                        }
+                    }
+                },
+                "props[1].variablesAlias[0].data": {
+                    "dataType": "ALIAS",
+                    "resolvedDataType": "FLOAT",
+                    "value": {
+                        "alias": "3:5563"
+                    }
+                },
+                "variablesAlias[0].data": {
+                    "dataType": "ALIAS",
+                    "resolvedDataType": "FLOAT",
+                    "value": {
+                        "alias": "3:5541"
+                    }
+                }
+            },
+            "type": "INSTANCE",
+            "variableModes": {
+                "3:3078": "3:3077",
+                "3:3083": "3:3082",
+                "3:3088": "3:3087",
+                "3:3093": "3:3092"
+            }
+        },
+        {
+            "bounds": {
+                "height": 32,
+                "left": 0,
+                "top": 0,
+                "width": 310
+            },
+            "children": [
+            ],
+            "componentProperties": {
+                "variant": [
+                    {
+                        "aliasName": "",
+                        "name": "state",
+                        "type": "variant",
+                        "value": "disabled"
+                    },
+                    {
+                        "aliasName": "",
+                        "name": "mode",
+                        "type": "variant",
+                        "value": "single"
+                    },
+                    {
+                        "aliasName": "",
+                        "name": "label",
+                        "type": "variant",
+                        "value": "刻蚀腔体 ETCH-01"
+                    },
+                    {
+                        "aliasName": "",
+                        "name": "Profile",
+                        "type": "variant",
+                        "value": "light-comfortable"
+                    }
+                ]
+            },
+            "componentRef": {
+                "fileKey": "4S0Ktm81WnvzuJmZHvRuOg",
+                "key": "1136ebba3880f2c42766bee9d95c906effd6ba24",
+                "nodeId": "3:10199",
+                "setId": "3:10565"
+            },
+            "layout": {
+                "autoLayoutHeightResize": 0,
+                "autoLayoutWidthResize": 0
+            },
+            "name": "state=disabled, mode=single, label=刻蚀腔体 ETCH-01, Profile=light-comfortable",
+            "nodeId": "21:471",
+            "parentId": "21:457",
+            "tokenBindings": {
+                "props[1].variableConsumptionMap.entries[1].variableData": {
+                    "dataType": "ALIAS",
+                    "resolvedDataType": "FLOAT",
+                    "value": {
+                        "alias": {
+                            "guid": {
+                                "localID": 5563,
+                                "sessionID": 3
+                            }
+                        }
+                    }
+                },
+                "props[1].variablesAlias[0].data": {
+                    "dataType": "ALIAS",
+                    "resolvedDataType": "FLOAT",
+                    "value": {
+                        "alias": "3:5563"
+                    }
+                },
+                "variablesAlias[0].data": {
+                    "dataType": "ALIAS",
+                    "resolvedDataType": "FLOAT",
+                    "value": {
+                        "alias": "3:5541"
+                    }
+                }
+            },
+            "type": "INSTANCE",
+            "variableModes": {
+                "3:3078": "3:3077",
+                "3:3083": "3:3082",
+                "3:3088": "3:3087",
+                "3:3093": "3:3092"
+            }
+        },
+        {
+            "bounds": {
+                "height": 32,
+                "left": 36,
+                "top": 266,
+                "width": 320
+            },
+            "children": [
+            ],
+            "componentProperties": {
+            },
+            "componentRef": null,
+            "layout": {
+                "autoLayoutHeightResize": 0,
+                "autoLayoutWidthResize": 0
+            },
+            "name": "复核工单",
+            "nodeId": "21:437",
+            "parentId": "21:436",
+            "tokenBindings": {
+            },
+            "type": "PARAGRAPH",
+            "variableModes": {
+            }
+        },
+        {
+            "bounds": {
+                "height": 32,
+                "left": 36,
+                "top": 214,
+                "width": 114
+            },
+            "children": [
+            ],
+            "componentProperties": {
+                "variant": [
+                    {
+                        "aliasName": "",
+                        "name": "type",
+                        "type": "variant",
+                        "value": "PRIMARY"
+                    },
+                    {
+                        "aliasName": "",
+                        "name": "size",
+                        "type": "variant",
+                        "value": "M"
+                    },
+                    {
+                        "aliasName": "",
+                        "name": "state",
+                        "type": "variant",
+                        "value": "default"
+                    },
+                    {
+                        "aliasName": "",
+                        "name": "appearance",
+                        "type": "variant",
+                        "value": "solid"
+                    },
+                    {
+                        "aliasName": "",
+                        "name": "content",
+                        "type": "variant",
+                        "value": "Leading"
+                    },
+                    {
+                        "aliasName": "",
+                        "name": "iconStyle",
+                        "type": "variant",
+                        "value": "Bare"
+                    },
+                    {
+                        "aliasName": "",
+                        "name": "danger",
+                        "type": "variant",
+                        "value": "false"
+                    },
+                    {
+                        "aliasName": "",
+                        "name": "ghost",
+                        "type": "variant",
+                        "value": "false"
+                    },
+                    {
+                        "aliasName": "",
+                        "name": "Profile",
+                        "type": "variant",
+                        "value": "light-comfortable"
+                    }
+                ]
+            },
+            "componentRef": {
+                "fileKey": "4S0Ktm81WnvzuJmZHvRuOg",
+                "key": "6b0acfc28c9001150dbcf73dbc328ac17822844d",
+                "nodeId": "3:6530",
+                "setId": "3:10558"
+            },
+            "layout": {
+                "autoLayoutAlignType": "center",
+                "autoLayoutCounterAlign": "center",
+                "autoLayoutCounterItemSpacing": 10,
+                "autoLayoutDirection": 1,
+                "autoLayoutHeightResize": 0,
+                "autoLayoutIncludeBorders": false,
+                "autoLayoutItemHoriAlign": 1,
+                "autoLayoutItemSpacing": 4,
+                "autoLayoutItemVertAlign": 1,
+                "autoLayoutPaddingLeft": 13,
+                "autoLayoutPaddingRight": 13,
+                "autoLayoutPrimaryAlign": "center",
+                "autoLayoutWidthResize": 0,
+                "stackCounterSizing": "FIXED",
+                "stackMode": "HORIZONTAL",
+                "stackPrimarySizing": "FIXED"
+            },
+            "name": "提交",
+            "nodeId": "21:481",
+            "parentId": "21:436",
+            "tokenBindings": {
+                "fillPaints[0].colorVar": {
+                    "dataType": "ALIAS",
+                    "resolvedDataType": "BOOLEAN",
+                    "value": {
+                        "alias": "3:5226"
+                    }
+                },
+                "props[1].variableConsumptionMap.entries[1].variableData": {
+                    "dataType": "ALIAS",
+                    "resolvedDataType": "FLOAT",
+                    "value": {
+                        "alias": {
+                            "guid": {
+                                "localID": 5188,
+                                "sessionID": 3
+                            }
+                        }
+                    }
+                },
+                "props[1].variablesAlias[0].data": {
+                    "dataType": "ALIAS",
+                    "resolvedDataType": "FLOAT",
+                    "value": {
+                        "alias": "3:5188"
+                    }
+                },
+                "strokePaints[0].colorVar": {
+                    "dataType": "ALIAS",
+                    "resolvedDataType": "BOOLEAN",
+                    "value": {
+                        "alias": "3:5254"
+                    }
+                },
+                "variablesAlias[0].data": {
+                    "dataType": "ALIAS",
+                    "resolvedDataType": "FLOAT",
+                    "value": {
+                        "alias": "3:5183"
+                    }
+                },
+                "variablesAlias[1].data": {
+                    "dataType": "ALIAS",
+                    "resolvedDataType": "FLOAT",
+                    "value": {
+                        "alias": "3:5182"
+                    }
+                },
+                "variablesAlias[2].data": {
+                    "dataType": "ALIAS",
+                    "resolvedDataType": "FLOAT",
+                    "value": {
+                        "alias": "3:5179"
+                    }
+                },
+                "variablesAlias[3].data": {
+                    "dataType": "ALIAS",
+                    "resolvedDataType": "FLOAT",
+                    "value": {
+                        "alias": "3:5201"
+                    }
+                },
+                "variablesAlias[4].data": {
+                    "dataType": "ALIAS",
+                    "resolvedDataType": "FLOAT",
+                    "value": {
+                        "alias": "3:5201"
+                    }
+                },
+                "variablesAlias[5].data": {
+                    "dataType": "ALIAS",
+                    "resolvedDataType": "FLOAT",
+                    "value": {
+                        "alias": "3:5201"
+                    }
+                },
+                "variablesAlias[6].data": {
+                    "dataType": "ALIAS",
+                    "resolvedDataType": "FLOAT",
+                    "value": {
+                        "alias": "3:5201"
+                    }
+                },
+                "variablesAlias[7].data": {
+                    "dataType": "ALIAS",
+                    "resolvedDataType": "BOOLEAN",
+                    "value": {
+                        "alias": "3:5226"
+                    }
+                },
+                "variablesAlias[8].data": {
+                    "dataType": "ALIAS",
+                    "resolvedDataType": "BOOLEAN",
+                    "value": {
+                        "alias": "3:5254"
+                    }
+                }
+            },
+            "type": "INSTANCE",
+            "variableModes": {
+                "3:3078": "3:3077",
+                "3:3083": "3:3082",
+                "3:3088": "3:3087",
+                "3:3093": "3:3092"
+            }
+        }
+    ],
+    "provenance": {
+        "identity": "Pixso full DSL",
+        "layout": "HTML computed layout",
+        "sourceDslSha256": "bd4ccd9b4267bd7bb419eb5d825c2501b4e062d7dd4454190e9ac872bff808c8",
+        "sourceHtmlSha256": "86c4772ed7edaf33f282aef363fa9d5c0a68960d96bb26bf609f4f1beff0c455"
+    },
+    "provider": "pixso",
+    "rootIds": [
+        "21:436"
+    ],
+    "schemaVersion": 1,
+    "sourceSha256": "28001996d347c29ae1de27d1e70ead1b0b5f91fa9b719f8aa213d13a804ee882"
+}

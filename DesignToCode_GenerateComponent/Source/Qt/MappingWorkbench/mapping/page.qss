@@ -1,0 +1,3 @@
+/* The palette is installed by DemoRuntime from the existing compiled Token set.
+   Component visuals remain owned by generated Button/Checkbox/Forms styles. */
+QWidget#MappingPageRoot { background-color: palette(base); }

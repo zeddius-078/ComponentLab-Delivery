@@ -1,0 +1,3 @@
+event: message
+data: {"result":{"content":[{"type":"text","text":"{\"fileKey\":\"4S0Ktm81WnvzuJmZHvRuOg\",\"documentName\":\"DesignTest\",\"pageId\":\"19:1\",\"node\":{\"id\":\"27:450\",\"name\":\"工单列 / V2 CombineHorizontalLayout\",\"type\":\"FRAME\",\"width\":1106,\"height\":560}}"}]},"jsonrpc":"2.0","id":4}
+

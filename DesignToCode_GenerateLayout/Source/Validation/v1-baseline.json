@@ -1,0 +1,145 @@
+{
+  "frozenAtUtc": "2026-09-24T00:45:55.9738240Z",
+  "scope": "After generic disabled-state and paragraph-font fixes; before creation of a new full holdout page",
+  "readabilityUpdate": {
+    "updatedAtUtc": "2026-09-27T12:46:36.3104833Z",
+    "scope": "Chinese source comments and clang-format 20.1.8 layout only. Comment additions passed non-comment line comparison before formatting; formatter preserves include order. V1 rebuild and both CTest suites passed after formatting. Design inputs, mapping rules and deployed V1 executable unchanged.",
+    "files": [
+      {
+        "path": "02_Engines/component_converter/ComponentConverter.h",
+        "previousSha256": "0ff57807f116310302564473bac5a177b988c9f5017b024aed66c7f119834e78",
+        "sha256": "f60fa2ad0e1315e5bfcd22067dbba0cd7bebe5ea60ad89320488857e2e814b77"
+      },
+      {
+        "path": "02_Engines/component_converter/ComponentConverter.cpp",
+        "previousSha256": "1178c9b34c724d7f4542ad736e7095e87233b25df1a6b232a698608f5f555f9b",
+        "sha256": "78caf227ecdc267d21d841cdf9a6538232bc17f737169290d546796e7224171c"
+      },
+      {
+        "path": "02_Engines/layout_converter/LayoutConverter.h",
+        "previousSha256": "e8b1598612f29b41bf90571961bdf1caf0820ce2c29314a90e437991cc945b58",
+        "sha256": "eaf93faea45d17e6ea29a5c3960d51a91179fe1324fe7b1721736a2fc1f5c503"
+      },
+      {
+        "path": "02_Engines/layout_converter/LayoutConverter.cpp",
+        "previousSha256": "a73dcbaee69415c5509c750678836a098de93f26578ff27feef51ab4ccbf852f",
+        "sha256": "7388a5430b44ec85f0374f9c9fde04770aff5ee87f3fcada00f7b10b134a082b"
+      },
+      {
+        "path": "03_GeneratedQt/main.cpp",
+        "previousSha256": "fad2e7471227bf7f21cdee4a434df9b51efc715368cfeba8d3f16f0b8cd7a65e",
+        "sha256": "29fb2e785622892ba353f41965d7c93550cebd86f2cd0f1521852568a21baeea"
+      }
+    ],
+    "formatConfiguration": ".clang-format"
+  },
+  "files": [
+    {
+      "path": "01_HTML_DSL/pipeline/mapping/component-mapping.json",
+      "sha256": "6fed043cd07dc15827aa69d179ec5d7e6effc7e0068634654c8aebd20e6be58d"
+    },
+    {
+      "path": "01_HTML_DSL/pipeline/mapping/layout-mapping.json",
+      "sha256": "db390475e257c8c8dea60e20f03906bd772f3cba93dbb2fe52294d752a44b784"
+    },
+    {
+      "path": "01_HTML_DSL/pipeline/engines/component_converter/ComponentConverter.h",
+      "sha256": "4d2dc65f8fe970463629e0e75c57fd8020595974336c22079c6cf063b4af1bf1"
+    },
+    {
+      "path": "01_HTML_DSL/pipeline/engines/component_converter/ComponentConverter.cpp",
+      "sha256": "9cf01d08960806191e8b3776599c5524b3399b4c1dbe10f78f6a4c65a224dc99"
+    },
+    {
+      "path": "01_HTML_DSL/pipeline/engines/layout_converter/LayoutConverter.h",
+      "sha256": "eaf93faea45d17e6ea29a5c3960d51a91179fe1324fe7b1721736a2fc1f5c503"
+    },
+    {
+      "path": "01_HTML_DSL/pipeline/engines/layout_converter/LayoutConverter.cpp",
+      "sha256": "7bb4251be38581f830cc385f776567f4756e86cdb739cd258f38ad1db6a9c389"
+    },
+    {
+      "path": "03_Qt/V1/main.cpp",
+      "sha256": "3862f63cc63c8459030b0ecb51f3c5884cb9ea163e90c2e61ffbb9afc60152bf"
+    },
+    {
+      "path": "03_Qt/V1/Offline/d2c_preview.exe",
+      "sha256": "747c2a836c6887465cb067205f99b8c526b44f341436ca989a9c25605481c94e"
+    }
+  ],
+  "controlFlowCommentUpdate": {
+    "updatedAtUtc": "2026-09-27T13:51:13.8287182Z",
+    "scope": "Standalone Chinese comments only; original source lines preserved in order. V1 rebuild and both CTest suites passed. C++ format check passed without reformatting. Design inputs, mapping rules and deployed V1 executable unchanged.",
+    "files": [
+      {
+        "path": "02_Engines/component_converter/ComponentConverter.cpp",
+        "previousSha256": "78caf227ecdc267d21d841cdf9a6538232bc17f737169290d546796e7224171c",
+        "sha256": "9cf01d08960806191e8b3776599c5524b3399b4c1dbe10f78f6a4c65a224dc99"
+      },
+      {
+        "path": "02_Engines/layout_converter/LayoutConverter.cpp",
+        "previousSha256": "7388a5430b44ec85f0374f9c9fde04770aff5ee87f3fcada00f7b10b134a082b",
+        "sha256": "7bb4251be38581f830cc385f776567f4756e86cdb739cd258f38ad1db6a9c389"
+      },
+      {
+        "path": "03_GeneratedQt/main.cpp",
+        "previousSha256": "29fb2e785622892ba353f41965d7c93550cebd86f2cd0f1521852568a21baeea",
+        "sha256": "f31f71317285df2357c7c09f00d559ed58f9110b453667eacd0bcd882a7bb7f3"
+      }
+    ]
+  },
+  "directorySeparation": {
+    "date": "2026-09-28",
+    "scope": "Route-local copies replace the shared parsing directory. Non-comment lines of frozen V1 C++ sources are unchanged; deployed V1 EXE retains its original hash.",
+    "files": [
+      {
+        "oldPath": "01_Mapping/component-mapping.json",
+        "path": "01_HTML_DSL/pipeline/mapping/component-mapping.json",
+        "oldHash": "6fed043cd07dc15827aa69d179ec5d7e6effc7e0068634654c8aebd20e6be58d",
+        "sha256": "6fed043cd07dc15827aa69d179ec5d7e6effc7e0068634654c8aebd20e6be58d"
+      },
+      {
+        "oldPath": "01_Mapping/layout-mapping.json",
+        "path": "01_HTML_DSL/pipeline/mapping/layout-mapping.json",
+        "oldHash": "db390475e257c8c8dea60e20f03906bd772f3cba93dbb2fe52294d752a44b784",
+        "sha256": "db390475e257c8c8dea60e20f03906bd772f3cba93dbb2fe52294d752a44b784"
+      },
+      {
+        "oldPath": "02_Engines/component_converter/ComponentConverter.h",
+        "path": "01_HTML_DSL/pipeline/engines/component_converter/ComponentConverter.h",
+        "oldHash": "f60fa2ad0e1315e5bfcd22067dbba0cd7bebe5ea60ad89320488857e2e814b77",
+        "sha256": "4d2dc65f8fe970463629e0e75c57fd8020595974336c22079c6cf063b4af1bf1"
+      },
+      {
+        "oldPath": "02_Engines/component_converter/ComponentConverter.cpp",
+        "path": "01_HTML_DSL/pipeline/engines/component_converter/ComponentConverter.cpp",
+        "oldHash": "9cf01d08960806191e8b3776599c5524b3399b4c1dbe10f78f6a4c65a224dc99",
+        "sha256": "9cf01d08960806191e8b3776599c5524b3399b4c1dbe10f78f6a4c65a224dc99"
+      },
+      {
+        "oldPath": "02_Engines/layout_converter/LayoutConverter.h",
+        "path": "01_HTML_DSL/pipeline/engines/layout_converter/LayoutConverter.h",
+        "oldHash": "eaf93faea45d17e6ea29a5c3960d51a91179fe1324fe7b1721736a2fc1f5c503",
+        "sha256": "eaf93faea45d17e6ea29a5c3960d51a91179fe1324fe7b1721736a2fc1f5c503"
+      },
+      {
+        "oldPath": "02_Engines/layout_converter/LayoutConverter.cpp",
+        "path": "01_HTML_DSL/pipeline/engines/layout_converter/LayoutConverter.cpp",
+        "oldHash": "7bb4251be38581f830cc385f776567f4756e86cdb739cd258f38ad1db6a9c389",
+        "sha256": "7bb4251be38581f830cc385f776567f4756e86cdb739cd258f38ad1db6a9c389"
+      },
+      {
+        "oldPath": "03_GeneratedQt/main.cpp",
+        "path": "03_Qt/V1/main.cpp",
+        "oldHash": "f31f71317285df2357c7c09f00d559ed58f9110b453667eacd0bcd882a7bb7f3",
+        "sha256": "3862f63cc63c8459030b0ecb51f3c5884cb9ea163e90c2e61ffbb9afc60152bf"
+      },
+      {
+        "oldPath": "03_GeneratedQt/Offline/d2c_preview.exe",
+        "path": "03_Qt/V1/Offline/d2c_preview.exe",
+        "oldHash": "747c2a836c6887465cb067205f99b8c526b44f341436ca989a9c25605481c94e",
+        "sha256": "747c2a836c6887465cb067205f99b8c526b44f341436ca989a9c25605481c94e"
+      }
+    ]
+  }
+}

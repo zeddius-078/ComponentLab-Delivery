@@ -1,0 +1,80 @@
+{
+    "appearance": "solid",
+    "buttonAppearance": "solid",
+    "buttonIconSource": ":/icons/arrow-left.svg",
+    "buttonPresets": [
+        "solid",
+        "gradient",
+        "inset",
+        "gradient-inset",
+        "outline",
+        "elevated",
+        "gradient-elevated",
+        "solid-inner-shadow"
+    ],
+    "buttonTrailingIconSource": ":/icons/arrow-right.svg",
+    "capturedPages": 13,
+    "checkboxSize": "120x32",
+    "designSystemComponents": 62,
+    "focusIndicator": "keyboard",
+    "focusOpacity": 0.55,
+    "indicatorSize": 20,
+    "nativeDescriptors": 59,
+    "nativeRegistryRows": 62,
+    "navigation": [
+        {
+            "component": "commonWidget::Z_PushButton",
+            "sections": [
+                "外观",
+                "分组与状态"
+            ]
+        },
+        {
+            "component": "commonWidget::Z_CheckBox",
+            "sections": [
+                "外观",
+                "分组与状态"
+            ]
+        },
+        {
+            "component": "commonWidget::Z_InputField",
+            "sections": [
+                "外观",
+                "分组与状态"
+            ]
+        },
+        {
+            "component": "commonWidget::Z_Select",
+            "sections": [
+                "外观",
+                "分组与状态"
+            ]
+        },
+        {
+            "component": "commonWidget::Z_ToolButton",
+            "sections": [
+                "外观",
+                "分组与状态"
+            ]
+        },
+        {
+            "component": "commonWidget::Z_TableView",
+            "sections": [
+                "外观",
+                "分组与状态"
+            ]
+        }
+    ],
+    "presets": [
+        "solid",
+        "gradient",
+        "inset",
+        "gradient-inset",
+        "outline",
+        "elevated",
+        "gradient-elevated"
+    ],
+    "profile": "light-comfortable",
+    "screens": 1,
+    "sourceHash": "4d2637868dd93975caee9bb80e42c17074af0ec0537ccea3f482420c5a4a9316"
+}

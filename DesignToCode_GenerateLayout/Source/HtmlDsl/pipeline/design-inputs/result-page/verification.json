@@ -1,0 +1,23 @@
+{
+  "status": "PASS",
+  "directory": "result-page",
+  "arguments": {
+    "guid": "21:436",
+    "simplify": false,
+    "isDetachInstance": false
+  },
+  "receivedAtUtc": "2026-09-25T16:57:01.623765+00:00",
+  "rawBytes": 1583974,
+  "rawSha256": "bd4ccd9b4267bd7bb419eb5d825c2501b4e062d7dd4454190e9ac872bff808c8",
+  "responseSha256": "74a96e080aaaec38f70930d772dbd3d1230bf75d0e233fac23740e0801df1cd3",
+  "verbatimText": true,
+  "topLevelFields": [
+    "pixTreeNodes",
+    "svgGuidInfo",
+    "pixComponentTreeDslNodes",
+    "variableMap",
+    "variableSetMap",
+    "localStyleMap",
+    "isContainFixed"
+  ]
+}

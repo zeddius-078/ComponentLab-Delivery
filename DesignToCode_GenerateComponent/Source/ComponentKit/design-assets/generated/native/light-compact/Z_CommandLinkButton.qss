@@ -1,0 +1,19 @@
+/* Z_CommandLinkButton <- QCommandLinkButton; compiled from the active Token profile. */
+*[designSystemClass="commonWidget::Z_CommandLinkButton"] {
+    color: #191919;
+    background-color: #ffffff;
+    font-size: 14px;
+}
+*[designSystemClass="commonWidget::Z_CommandLinkButton"]:disabled {
+    color: #8a8a8a;
+    background-color: #f3f3f3;
+    border-color: #d0d0d0;
+}
+*[designSystemClass="commonWidget::Z_CommandLinkButton"] {
+    min-height: 32px;
+    border: 1px solid #a7a7a7;
+    border-radius: 4px;
+    padding: 0 12px;
+}
+*[designSystemClass="commonWidget::Z_CommandLinkButton"]:hover { background-color: #f3efff; }
+*[designSystemClass="commonWidget::Z_CommandLinkButton"]:pressed { border-color: #6235f7; }
