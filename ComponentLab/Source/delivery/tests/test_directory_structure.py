@@ -1,11 +1,15 @@
 """Check that ComponentLab remains a display-only SDK consumer."""
 from pathlib import Path
 import json
+import os
 import unittest
 
 SOURCE = Path(__file__).resolve().parents[2]
 PROJECT = SOURCE.parent
-SDK = PROJECT / "build/sdk"
+SDK = Path(os.environ.get(
+    "GENERATED_COMPONENT_SDK_ROOT",
+    PROJECT.parent / "DesignToCode_GenerateComponent" / "build" / "sdk",
+)).resolve()
 
 
 class DirectoryTests(unittest.TestCase):

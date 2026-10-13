@@ -1,0 +1,2671 @@
+{
+  "schemaVersion": 1,
+  "fileKey": "w92BKW1EcutKmTXkwzNHbf",
+  "pageId": "511:11",
+  "galleryId": "511:45",
+  "capturedReadOnly": true,
+  "rowSchema": [
+    "id",
+    "parent",
+    "name",
+    "type",
+    "bounds",
+    "visible",
+    "fills",
+    "strokes",
+    "strokeWeight",
+    "cornerRadius",
+    "clipsContent",
+    "textFontSizeLineAlign",
+    "effects"
+  ],
+  "subWindow": {
+    "properties": {
+      "Title#511:24": {
+        "type": "TEXT",
+        "defaultValue": "Trend window"
+      },
+      "Closable#511:25": {
+        "type": "BOOLEAN",
+        "defaultValue": true
+      },
+      "Minimizable#511:26": {
+        "type": "BOOLEAN",
+        "defaultValue": true
+      },
+      "Maximizable#511:27": {
+        "type": "BOOLEAN",
+        "defaultValue": true
+      },
+      "State": {
+        "type": "VARIANT",
+        "defaultValue": "Inactive",
+        "variantOptions": [
+          "Inactive",
+          "Active",
+          "Maximized",
+          "Minimized",
+          "Shaded",
+          "Disabled"
+        ]
+      }
+    },
+    "rows": [
+      [
+        "511:124",
+        "511:45",
+        "ComponentLab/MdiSubWindow",
+        "COMPONENT_SET",
+        [
+          28,
+          78,
+          904,
+          376
+        ],
+        true,
+        [],
+        [],
+        1,
+        5,
+        true,
+        null,
+        []
+      ],
+      [
+        "511:48",
+        "511:124",
+        "State=Inactive",
+        "COMPONENT",
+        [
+          0,
+          0,
+          280,
+          170
+        ],
+        true,
+        [
+          [
+            "#ffffff",
+            1
+          ]
+        ],
+        [
+          [
+            "#d0d0d0",
+            1
+          ]
+        ],
+        1,
+        8,
+        true,
+        null,
+        []
+      ],
+      [
+        "511:49",
+        "511:48",
+        "Title bar",
+        "FRAME",
+        [
+          0,
+          0,
+          280,
+          34
+        ],
+        true,
+        [
+          [
+            "#ffffff",
+            1
+          ]
+        ],
+        [],
+        1,
+        7,
+        true,
+        null,
+        []
+      ],
+      [
+        "511:50",
+        "511:49",
+        "Window icon",
+        "FRAME",
+        [
+          10,
+          10,
+          14,
+          14
+        ],
+        true,
+        [
+          [
+            "#6235f7",
+            1
+          ]
+        ],
+        [],
+        1,
+        3,
+        true,
+        null,
+        []
+      ],
+      [
+        "511:51",
+        "511:49",
+        "Window title",
+        "TEXT",
+        [
+          32,
+          9,
+          76,
+          44
+        ],
+        true,
+        [
+          [
+            "#191919",
+            1
+          ]
+        ],
+        [],
+        1,
+        null,
+        null,
+        [
+          "Trend window",
+          {
+            "family": "Inter",
+            "style": "Medium",
+            "variationSettings": {
+              "wght": 500,
+              "slnt": 0
+            }
+          },
+          14,
+          {
+            "unit": "PIXELS",
+            "value": 22
+          },
+          "TOP"
+        ],
+        []
+      ],
+      [
+        "511:52",
+        "511:49",
+        "Window control –",
+        "FRAME",
+        [
+          202,
+          6,
+          22,
+          22
+        ],
+        true,
+        [
+          [
+            "#ffffff",
+            1
+          ]
+        ],
+        [],
+        1,
+        5,
+        true,
+        null,
+        []
+      ],
+      [
+        "1071:220",
+        "511:52",
+        "Minimize icon",
+        "INSTANCE",
+        [
+          3,
+          3,
+          16,
+          16
+        ],
+        true,
+        [],
+        [],
+        1,
+        0,
+        false,
+        null,
+        []
+      ],
+      [
+        "511:54",
+        "511:49",
+        "Window control □",
+        "FRAME",
+        [
+          228,
+          6,
+          22,
+          22
+        ],
+        true,
+        [
+          [
+            "#ffffff",
+            1
+          ]
+        ],
+        [],
+        1,
+        5,
+        true,
+        null,
+        []
+      ],
+      [
+        "1071:223",
+        "511:54",
+        "Maximize icon",
+        "INSTANCE",
+        [
+          3,
+          3,
+          16,
+          16
+        ],
+        true,
+        [],
+        [],
+        1,
+        0,
+        false,
+        null,
+        []
+      ],
+      [
+        "511:56",
+        "511:49",
+        "Window control ×",
+        "FRAME",
+        [
+          254,
+          6,
+          22,
+          22
+        ],
+        true,
+        [
+          [
+            "#ffffff",
+            1
+          ]
+        ],
+        [],
+        1,
+        5,
+        true,
+        null,
+        []
+      ],
+      [
+        "1071:226",
+        "511:56",
+        "Close icon",
+        "INSTANCE",
+        [
+          3,
+          3,
+          16,
+          16
+        ],
+        true,
+        [],
+        [],
+        1,
+        0,
+        false,
+        null,
+        []
+      ],
+      [
+        "511:58",
+        "511:48",
+        "CONTENT slot",
+        "FRAME",
+        [
+          1,
+          34,
+          278,
+          135
+        ],
+        true,
+        [
+          [
+            "#ffffff",
+            1
+          ]
+        ],
+        [],
+        1,
+        0,
+        true,
+        null,
+        []
+      ],
+      [
+        "511:59",
+        "511:58",
+        "Content label",
+        "TEXT",
+        [
+          16,
+          20,
+          130,
+          18
+        ],
+        true,
+        [
+          [
+            "#191919",
+            1
+          ]
+        ],
+        [],
+        1,
+        null,
+        null,
+        [
+          "Document content slot",
+          {
+            "family": "Inter",
+            "style": "Regular",
+            "variationSettings": {
+              "wght": 400,
+              "slnt": 0
+            }
+          },
+          12,
+          {
+            "unit": "PIXELS",
+            "value": 18
+          },
+          "TOP"
+        ],
+        []
+      ],
+      [
+        "511:60",
+        "511:58",
+        "Data preview",
+        "FRAME",
+        [
+          16,
+          54,
+          246,
+          56
+        ],
+        true,
+        [
+          [
+            "#ffffff",
+            1
+          ]
+        ],
+        [
+          [
+            "#d0d0d0",
+            1
+          ]
+        ],
+        1,
+        8,
+        true,
+        null,
+        []
+      ],
+      [
+        "511:61",
+        "511:60",
+        "Preview",
+        "TEXT",
+        [
+          12,
+          18,
+          123,
+          36
+        ],
+        true,
+        [
+          [
+            "#191919",
+            1
+          ]
+        ],
+        [],
+        1,
+        null,
+        null,
+        [
+          "Pressure trend · 1.20 Pa",
+          {
+            "family": "Inter",
+            "style": "Regular",
+            "variationSettings": {
+              "wght": 400,
+              "slnt": 0
+            }
+          },
+          12,
+          {
+            "unit": "PIXELS",
+            "value": 18
+          },
+          "TOP"
+        ],
+        []
+      ],
+      [
+        "511:62",
+        "511:124",
+        "State=Active",
+        "COMPONENT",
+        [
+          296,
+          0,
+          280,
+          170
+        ],
+        true,
+        [
+          [
+            "#ffffff",
+            1
+          ]
+        ],
+        [
+          [
+            "#6235f7",
+            1
+          ]
+        ],
+        2,
+        8,
+        true,
+        null,
+        []
+      ],
+      [
+        "511:63",
+        "511:62",
+        "Title bar",
+        "FRAME",
+        [
+          0,
+          0,
+          280,
+          34
+        ],
+        true,
+        [
+          [
+            "#f3f3f3",
+            1
+          ]
+        ],
+        [],
+        1,
+        7,
+        true,
+        null,
+        []
+      ],
+      [
+        "511:64",
+        "511:63",
+        "Window icon",
+        "FRAME",
+        [
+          10,
+          10,
+          14,
+          14
+        ],
+        true,
+        [
+          [
+            "#6235f7",
+            1
+          ]
+        ],
+        [],
+        1,
+        3,
+        true,
+        null,
+        []
+      ],
+      [
+        "511:65",
+        "511:63",
+        "Window title",
+        "TEXT",
+        [
+          32,
+          9,
+          78,
+          44
+        ],
+        true,
+        [
+          [
+            "#191919",
+            1
+          ]
+        ],
+        [],
+        1,
+        null,
+        null,
+        [
+          "Trend window",
+          {
+            "family": "Inter",
+            "style": "Medium",
+            "variationSettings": {
+              "wght": 500,
+              "slnt": 0
+            }
+          },
+          14,
+          {
+            "unit": "PIXELS",
+            "value": 22
+          },
+          "TOP"
+        ],
+        []
+      ],
+      [
+        "511:66",
+        "511:63",
+        "Window control –",
+        "FRAME",
+        [
+          202,
+          6,
+          22,
+          22
+        ],
+        true,
+        [
+          [
+            "#ffffff",
+            1
+          ]
+        ],
+        [],
+        1,
+        5,
+        true,
+        null,
+        []
+      ],
+      [
+        "1071:229",
+        "511:66",
+        "Minimize icon",
+        "INSTANCE",
+        [
+          3,
+          3,
+          16,
+          16
+        ],
+        true,
+        [],
+        [],
+        1,
+        0,
+        false,
+        null,
+        []
+      ],
+      [
+        "511:68",
+        "511:63",
+        "Window control □",
+        "FRAME",
+        [
+          228,
+          6,
+          22,
+          22
+        ],
+        true,
+        [
+          [
+            "#ffffff",
+            1
+          ]
+        ],
+        [],
+        1,
+        5,
+        true,
+        null,
+        []
+      ],
+      [
+        "1071:232",
+        "511:68",
+        "Maximize icon",
+        "INSTANCE",
+        [
+          3,
+          3,
+          16,
+          16
+        ],
+        true,
+        [],
+        [],
+        1,
+        0,
+        false,
+        null,
+        []
+      ],
+      [
+        "511:70",
+        "511:63",
+        "Window control ×",
+        "FRAME",
+        [
+          254,
+          6,
+          22,
+          22
+        ],
+        true,
+        [
+          [
+            "#ffffff",
+            1
+          ]
+        ],
+        [],
+        1,
+        5,
+        true,
+        null,
+        []
+      ],
+      [
+        "1071:235",
+        "511:70",
+        "Close icon",
+        "INSTANCE",
+        [
+          3,
+          3,
+          16,
+          16
+        ],
+        true,
+        [],
+        [],
+        1,
+        0,
+        false,
+        null,
+        []
+      ],
+      [
+        "511:72",
+        "511:62",
+        "CONTENT slot",
+        "FRAME",
+        [
+          1,
+          34,
+          278,
+          135
+        ],
+        true,
+        [
+          [
+            "#ffffff",
+            1
+          ]
+        ],
+        [],
+        1,
+        0,
+        true,
+        null,
+        []
+      ],
+      [
+        "511:73",
+        "511:72",
+        "Content label",
+        "TEXT",
+        [
+          16,
+          20,
+          130,
+          18
+        ],
+        true,
+        [
+          [
+            "#191919",
+            1
+          ]
+        ],
+        [],
+        1,
+        null,
+        null,
+        [
+          "Document content slot",
+          {
+            "family": "Inter",
+            "style": "Regular",
+            "variationSettings": {
+              "wght": 400,
+              "slnt": 0
+            }
+          },
+          12,
+          {
+            "unit": "PIXELS",
+            "value": 18
+          },
+          "TOP"
+        ],
+        []
+      ],
+      [
+        "511:74",
+        "511:72",
+        "Data preview",
+        "FRAME",
+        [
+          16,
+          54,
+          246,
+          56
+        ],
+        true,
+        [
+          [
+            "#ffffff",
+            1
+          ]
+        ],
+        [
+          [
+            "#d0d0d0",
+            1
+          ]
+        ],
+        1,
+        8,
+        true,
+        null,
+        []
+      ],
+      [
+        "511:75",
+        "511:74",
+        "Preview",
+        "TEXT",
+        [
+          12,
+          18,
+          123,
+          36
+        ],
+        true,
+        [
+          [
+            "#191919",
+            1
+          ]
+        ],
+        [],
+        1,
+        null,
+        null,
+        [
+          "Pressure trend · 1.20 Pa",
+          {
+            "family": "Inter",
+            "style": "Regular",
+            "variationSettings": {
+              "wght": 400,
+              "slnt": 0
+            }
+          },
+          12,
+          {
+            "unit": "PIXELS",
+            "value": 18
+          },
+          "TOP"
+        ],
+        []
+      ],
+      [
+        "511:76",
+        "511:124",
+        "State=Maximized",
+        "COMPONENT",
+        [
+          592,
+          0,
+          280,
+          170
+        ],
+        true,
+        [
+          [
+            "#ffffff",
+            1
+          ]
+        ],
+        [
+          [
+            "#d0d0d0",
+            1
+          ]
+        ],
+        1,
+        8,
+        true,
+        null,
+        []
+      ],
+      [
+        "511:77",
+        "511:76",
+        "Title bar",
+        "FRAME",
+        [
+          0,
+          0,
+          280,
+          34
+        ],
+        true,
+        [
+          [
+            "#ffffff",
+            1
+          ]
+        ],
+        [],
+        1,
+        7,
+        true,
+        null,
+        []
+      ],
+      [
+        "511:78",
+        "511:77",
+        "Window icon",
+        "FRAME",
+        [
+          10,
+          10,
+          14,
+          14
+        ],
+        true,
+        [
+          [
+            "#6235f7",
+            1
+          ]
+        ],
+        [],
+        1,
+        3,
+        true,
+        null,
+        []
+      ],
+      [
+        "511:79",
+        "511:77",
+        "Window title",
+        "TEXT",
+        [
+          32,
+          9,
+          76,
+          44
+        ],
+        true,
+        [
+          [
+            "#191919",
+            1
+          ]
+        ],
+        [],
+        1,
+        null,
+        null,
+        [
+          "Trend window",
+          {
+            "family": "Inter",
+            "style": "Medium",
+            "variationSettings": {
+              "wght": 500,
+              "slnt": 0
+            }
+          },
+          14,
+          {
+            "unit": "PIXELS",
+            "value": 22
+          },
+          "TOP"
+        ],
+        []
+      ],
+      [
+        "511:80",
+        "511:77",
+        "Window control –",
+        "FRAME",
+        [
+          202,
+          6,
+          22,
+          22
+        ],
+        true,
+        [
+          [
+            "#ffffff",
+            1
+          ]
+        ],
+        [],
+        1,
+        5,
+        true,
+        null,
+        []
+      ],
+      [
+        "1071:238",
+        "511:80",
+        "Minimize icon",
+        "INSTANCE",
+        [
+          3,
+          3,
+          16,
+          16
+        ],
+        true,
+        [],
+        [],
+        1,
+        0,
+        false,
+        null,
+        []
+      ],
+      [
+        "511:82",
+        "511:77",
+        "Window control □",
+        "FRAME",
+        [
+          228,
+          6,
+          22,
+          22
+        ],
+        true,
+        [
+          [
+            "#ffffff",
+            1
+          ]
+        ],
+        [],
+        1,
+        5,
+        true,
+        null,
+        []
+      ],
+      [
+        "1071:241",
+        "511:82",
+        "Restore icon",
+        "INSTANCE",
+        [
+          3,
+          3,
+          16,
+          16
+        ],
+        true,
+        [],
+        [],
+        1,
+        0,
+        false,
+        null,
+        []
+      ],
+      [
+        "511:84",
+        "511:77",
+        "Window control ×",
+        "FRAME",
+        [
+          254,
+          6,
+          22,
+          22
+        ],
+        true,
+        [
+          [
+            "#ffffff",
+            1
+          ]
+        ],
+        [],
+        1,
+        5,
+        true,
+        null,
+        []
+      ],
+      [
+        "1071:244",
+        "511:84",
+        "Close icon",
+        "INSTANCE",
+        [
+          3,
+          3,
+          16,
+          16
+        ],
+        true,
+        [],
+        [],
+        1,
+        0,
+        false,
+        null,
+        []
+      ],
+      [
+        "511:86",
+        "511:76",
+        "CONTENT slot",
+        "FRAME",
+        [
+          1,
+          34,
+          278,
+          135
+        ],
+        true,
+        [
+          [
+            "#ffffff",
+            1
+          ]
+        ],
+        [],
+        1,
+        0,
+        true,
+        null,
+        []
+      ],
+      [
+        "511:87",
+        "511:86",
+        "Content label",
+        "TEXT",
+        [
+          16,
+          20,
+          169,
+          18
+        ],
+        true,
+        [
+          [
+            "#191919",
+            1
+          ]
+        ],
+        [],
+        1,
+        null,
+        null,
+        [
+          "Maximized document content",
+          {
+            "family": "Inter",
+            "style": "Regular",
+            "variationSettings": {
+              "wght": 400,
+              "slnt": 0
+            }
+          },
+          12,
+          {
+            "unit": "PIXELS",
+            "value": 18
+          },
+          "TOP"
+        ],
+        []
+      ],
+      [
+        "511:88",
+        "511:86",
+        "Data preview",
+        "FRAME",
+        [
+          16,
+          54,
+          246,
+          56
+        ],
+        true,
+        [
+          [
+            "#ffffff",
+            1
+          ]
+        ],
+        [
+          [
+            "#d0d0d0",
+            1
+          ]
+        ],
+        1,
+        8,
+        true,
+        null,
+        []
+      ],
+      [
+        "511:89",
+        "511:88",
+        "Preview",
+        "TEXT",
+        [
+          12,
+          18,
+          123,
+          36
+        ],
+        true,
+        [
+          [
+            "#191919",
+            1
+          ]
+        ],
+        [],
+        1,
+        null,
+        null,
+        [
+          "Pressure trend · 1.20 Pa",
+          {
+            "family": "Inter",
+            "style": "Regular",
+            "variationSettings": {
+              "wght": 400,
+              "slnt": 0
+            }
+          },
+          12,
+          {
+            "unit": "PIXELS",
+            "value": 18
+          },
+          "TOP"
+        ],
+        []
+      ],
+      [
+        "511:90",
+        "511:124",
+        "State=Minimized",
+        "COMPONENT",
+        [
+          0,
+          188,
+          280,
+          72
+        ],
+        true,
+        [
+          [
+            "#ffffff",
+            1
+          ]
+        ],
+        [
+          [
+            "#d0d0d0",
+            1
+          ]
+        ],
+        1,
+        8,
+        true,
+        null,
+        []
+      ],
+      [
+        "511:91",
+        "511:90",
+        "Title bar",
+        "FRAME",
+        [
+          0,
+          0,
+          280,
+          34
+        ],
+        true,
+        [
+          [
+            "#ffffff",
+            1
+          ]
+        ],
+        [],
+        1,
+        7,
+        true,
+        null,
+        []
+      ],
+      [
+        "511:92",
+        "511:91",
+        "Window icon",
+        "FRAME",
+        [
+          10,
+          10,
+          14,
+          14
+        ],
+        true,
+        [
+          [
+            "#6235f7",
+            1
+          ]
+        ],
+        [],
+        1,
+        3,
+        true,
+        null,
+        []
+      ],
+      [
+        "511:93",
+        "511:91",
+        "Window title",
+        "TEXT",
+        [
+          32,
+          9,
+          76,
+          44
+        ],
+        true,
+        [
+          [
+            "#191919",
+            1
+          ]
+        ],
+        [],
+        1,
+        null,
+        null,
+        [
+          "Trend window",
+          {
+            "family": "Inter",
+            "style": "Medium",
+            "variationSettings": {
+              "wght": 500,
+              "slnt": 0
+            }
+          },
+          14,
+          {
+            "unit": "PIXELS",
+            "value": 22
+          },
+          "TOP"
+        ],
+        []
+      ],
+      [
+        "511:94",
+        "511:91",
+        "Window control –",
+        "FRAME",
+        [
+          202,
+          6,
+          22,
+          22
+        ],
+        true,
+        [
+          [
+            "#ffffff",
+            1
+          ]
+        ],
+        [],
+        1,
+        5,
+        true,
+        null,
+        []
+      ],
+      [
+        "1071:247",
+        "511:94",
+        "Minimize icon",
+        "INSTANCE",
+        [
+          3,
+          3,
+          16,
+          16
+        ],
+        true,
+        [],
+        [],
+        1,
+        0,
+        false,
+        null,
+        []
+      ],
+      [
+        "511:96",
+        "511:91",
+        "Window control □",
+        "FRAME",
+        [
+          228,
+          6,
+          22,
+          22
+        ],
+        true,
+        [
+          [
+            "#ffffff",
+            1
+          ]
+        ],
+        [],
+        1,
+        5,
+        true,
+        null,
+        []
+      ],
+      [
+        "1071:250",
+        "511:96",
+        "Maximize icon",
+        "INSTANCE",
+        [
+          3,
+          3,
+          16,
+          16
+        ],
+        true,
+        [],
+        [],
+        1,
+        0,
+        false,
+        null,
+        []
+      ],
+      [
+        "511:98",
+        "511:91",
+        "Window control ×",
+        "FRAME",
+        [
+          254,
+          6,
+          22,
+          22
+        ],
+        true,
+        [
+          [
+            "#ffffff",
+            1
+          ]
+        ],
+        [],
+        1,
+        5,
+        true,
+        null,
+        []
+      ],
+      [
+        "1071:253",
+        "511:98",
+        "Close icon",
+        "INSTANCE",
+        [
+          3,
+          3,
+          16,
+          16
+        ],
+        true,
+        [],
+        [],
+        1,
+        0,
+        false,
+        null,
+        []
+      ],
+      [
+        "511:100",
+        "511:124",
+        "State=Shaded",
+        "COMPONENT",
+        [
+          296,
+          188,
+          280,
+          72
+        ],
+        true,
+        [
+          [
+            "#ffffff",
+            1
+          ]
+        ],
+        [
+          [
+            "#d0d0d0",
+            1
+          ]
+        ],
+        1,
+        8,
+        true,
+        null,
+        []
+      ],
+      [
+        "511:101",
+        "511:100",
+        "Title bar",
+        "FRAME",
+        [
+          0,
+          0,
+          280,
+          34
+        ],
+        true,
+        [
+          [
+            "#ffffff",
+            1
+          ]
+        ],
+        [],
+        1,
+        7,
+        true,
+        null,
+        []
+      ],
+      [
+        "511:102",
+        "511:101",
+        "Window icon",
+        "FRAME",
+        [
+          10,
+          10,
+          14,
+          14
+        ],
+        true,
+        [
+          [
+            "#6235f7",
+            1
+          ]
+        ],
+        [],
+        1,
+        3,
+        true,
+        null,
+        []
+      ],
+      [
+        "511:103",
+        "511:101",
+        "Window title",
+        "TEXT",
+        [
+          32,
+          9,
+          76,
+          44
+        ],
+        true,
+        [
+          [
+            "#191919",
+            1
+          ]
+        ],
+        [],
+        1,
+        null,
+        null,
+        [
+          "Trend window",
+          {
+            "family": "Inter",
+            "style": "Medium",
+            "variationSettings": {
+              "wght": 500,
+              "slnt": 0
+            }
+          },
+          14,
+          {
+            "unit": "PIXELS",
+            "value": 22
+          },
+          "TOP"
+        ],
+        []
+      ],
+      [
+        "511:104",
+        "511:101",
+        "Window control –",
+        "FRAME",
+        [
+          202,
+          6,
+          22,
+          22
+        ],
+        true,
+        [
+          [
+            "#ffffff",
+            1
+          ]
+        ],
+        [],
+        1,
+        5,
+        true,
+        null,
+        []
+      ],
+      [
+        "1071:256",
+        "511:104",
+        "Minimize icon",
+        "INSTANCE",
+        [
+          3,
+          3,
+          16,
+          16
+        ],
+        true,
+        [],
+        [],
+        1,
+        0,
+        false,
+        null,
+        []
+      ],
+      [
+        "511:106",
+        "511:101",
+        "Window control □",
+        "FRAME",
+        [
+          228,
+          6,
+          22,
+          22
+        ],
+        true,
+        [
+          [
+            "#ffffff",
+            1
+          ]
+        ],
+        [],
+        1,
+        5,
+        true,
+        null,
+        []
+      ],
+      [
+        "1071:259",
+        "511:106",
+        "Maximize icon",
+        "INSTANCE",
+        [
+          3,
+          3,
+          16,
+          16
+        ],
+        true,
+        [],
+        [],
+        1,
+        0,
+        false,
+        null,
+        []
+      ],
+      [
+        "511:108",
+        "511:101",
+        "Window control ×",
+        "FRAME",
+        [
+          254,
+          6,
+          22,
+          22
+        ],
+        true,
+        [
+          [
+            "#ffffff",
+            1
+          ]
+        ],
+        [],
+        1,
+        5,
+        true,
+        null,
+        []
+      ],
+      [
+        "1071:262",
+        "511:108",
+        "Close icon",
+        "INSTANCE",
+        [
+          3,
+          3,
+          16,
+          16
+        ],
+        true,
+        [],
+        [],
+        1,
+        0,
+        false,
+        null,
+        []
+      ],
+      [
+        "511:110",
+        "511:124",
+        "State=Disabled",
+        "COMPONENT",
+        [
+          592,
+          188,
+          280,
+          170
+        ],
+        true,
+        [
+          [
+            "#8a8a8a",
+            1
+          ]
+        ],
+        [
+          [
+            "#d0d0d0",
+            1
+          ]
+        ],
+        1,
+        8,
+        true,
+        null,
+        []
+      ],
+      [
+        "511:111",
+        "511:110",
+        "Title bar",
+        "FRAME",
+        [
+          0,
+          0,
+          280,
+          34
+        ],
+        true,
+        [
+          [
+            "#ffffff",
+            1
+          ]
+        ],
+        [],
+        1,
+        7,
+        true,
+        null,
+        []
+      ],
+      [
+        "511:112",
+        "511:111",
+        "Window icon",
+        "FRAME",
+        [
+          10,
+          10,
+          14,
+          14
+        ],
+        true,
+        [
+          [
+            "#8a8a8a",
+            1
+          ]
+        ],
+        [],
+        1,
+        3,
+        true,
+        null,
+        []
+      ],
+      [
+        "511:113",
+        "511:111",
+        "Window title",
+        "TEXT",
+        [
+          32,
+          9,
+          76,
+          44
+        ],
+        true,
+        [
+          [
+            "#8a8a8a",
+            1
+          ]
+        ],
+        [],
+        1,
+        null,
+        null,
+        [
+          "Trend window",
+          {
+            "family": "Inter",
+            "style": "Medium",
+            "variationSettings": {
+              "wght": 500,
+              "slnt": 0
+            }
+          },
+          14,
+          {
+            "unit": "PIXELS",
+            "value": 22
+          },
+          "TOP"
+        ],
+        []
+      ],
+      [
+        "511:114",
+        "511:111",
+        "Window control –",
+        "FRAME",
+        [
+          202,
+          6,
+          22,
+          22
+        ],
+        true,
+        [
+          [
+            "#ffffff",
+            1
+          ]
+        ],
+        [],
+        1,
+        5,
+        true,
+        null,
+        []
+      ],
+      [
+        "1071:265",
+        "511:114",
+        "Minimize icon",
+        "INSTANCE",
+        [
+          3,
+          3,
+          16,
+          16
+        ],
+        true,
+        [],
+        [],
+        1,
+        0,
+        false,
+        null,
+        []
+      ],
+      [
+        "511:116",
+        "511:111",
+        "Window control □",
+        "FRAME",
+        [
+          228,
+          6,
+          22,
+          22
+        ],
+        true,
+        [
+          [
+            "#ffffff",
+            1
+          ]
+        ],
+        [],
+        1,
+        5,
+        true,
+        null,
+        []
+      ],
+      [
+        "1071:268",
+        "511:116",
+        "Maximize icon",
+        "INSTANCE",
+        [
+          3,
+          3,
+          16,
+          16
+        ],
+        true,
+        [],
+        [],
+        1,
+        0,
+        false,
+        null,
+        []
+      ],
+      [
+        "511:118",
+        "511:111",
+        "Window control ×",
+        "FRAME",
+        [
+          254,
+          6,
+          22,
+          22
+        ],
+        true,
+        [
+          [
+            "#ffffff",
+            1
+          ]
+        ],
+        [],
+        1,
+        5,
+        true,
+        null,
+        []
+      ],
+      [
+        "1071:271",
+        "511:118",
+        "Close icon",
+        "INSTANCE",
+        [
+          3,
+          3,
+          16,
+          16
+        ],
+        true,
+        [],
+        [],
+        1,
+        0,
+        false,
+        null,
+        []
+      ],
+      [
+        "511:120",
+        "511:110",
+        "CONTENT slot",
+        "FRAME",
+        [
+          1,
+          34,
+          278,
+          135
+        ],
+        true,
+        [
+          [
+            "#ffffff",
+            1
+          ]
+        ],
+        [],
+        1,
+        0,
+        true,
+        null,
+        []
+      ],
+      [
+        "511:121",
+        "511:120",
+        "Content label",
+        "TEXT",
+        [
+          16,
+          20,
+          130,
+          18
+        ],
+        true,
+        [
+          [
+            "#8a8a8a",
+            1
+          ]
+        ],
+        [],
+        1,
+        null,
+        null,
+        [
+          "Document content slot",
+          {
+            "family": "Inter",
+            "style": "Regular",
+            "variationSettings": {
+              "wght": 400,
+              "slnt": 0
+            }
+          },
+          12,
+          {
+            "unit": "PIXELS",
+            "value": 18
+          },
+          "TOP"
+        ],
+        []
+      ],
+      [
+        "511:122",
+        "511:120",
+        "Data preview",
+        "FRAME",
+        [
+          16,
+          54,
+          246,
+          56
+        ],
+        true,
+        [
+          [
+            "#ffffff",
+            1
+          ]
+        ],
+        [
+          [
+            "#d0d0d0",
+            1
+          ]
+        ],
+        1,
+        8,
+        true,
+        null,
+        []
+      ],
+      [
+        "511:123",
+        "511:122",
+        "Preview",
+        "TEXT",
+        [
+          12,
+          18,
+          123,
+          36
+        ],
+        true,
+        [
+          [
+            "#8a8a8a",
+            1
+          ]
+        ],
+        [],
+        1,
+        null,
+        null,
+        [
+          "Pressure trend · 1.20 Pa",
+          {
+            "family": "Inter",
+            "style": "Regular",
+            "variationSettings": {
+              "wght": 400,
+              "slnt": 0
+            }
+          },
+          12,
+          {
+            "unit": "PIXELS",
+            "value": 18
+          },
+          "TOP"
+        ],
+        []
+      ],
+      [
+        "511:46",
+        "511:45",
+        "Badge / ComponentLab/MdiSubWindow",
+        "FRAME",
+        [
+          28,
+          24,
+          230,
+          28
+        ],
+        true,
+        [
+          [
+            "#f3f3f3",
+            1
+          ]
+        ],
+        [],
+        1,
+        14,
+        true,
+        null,
+        []
+      ],
+      [
+        "511:47",
+        "511:46",
+        "Label",
+        "TEXT",
+        [
+          12,
+          7,
+          170,
+          13
+        ],
+        true,
+        [
+          [
+            "#ffffff",
+            1
+          ]
+        ],
+        [],
+        1,
+        null,
+        null,
+        [
+          "ComponentLab/MdiSubWindow",
+          {
+            "family": "Inter",
+            "style": "Semi Bold",
+            "variationSettings": {
+              "wght": 600,
+              "slnt": 0
+            }
+          },
+          11,
+          {
+            "unit": "AUTO"
+          },
+          "TOP"
+        ],
+        []
+      ],
+      [
+        "511:125",
+        "511:45",
+        "Badge / ComponentLab/MdiArea",
+        "FRAME",
+        [
+          28,
+          490,
+          190,
+          28
+        ],
+        true,
+        [
+          [
+            "#f3f3f3",
+            1
+          ]
+        ],
+        [],
+        1,
+        14,
+        true,
+        null,
+        []
+      ],
+      [
+        "511:126",
+        "511:125",
+        "Label",
+        "TEXT",
+        [
+          12,
+          7,
+          131,
+          13
+        ],
+        true,
+        [
+          [
+            "#ffffff",
+            1
+          ]
+        ],
+        [],
+        1,
+        null,
+        null,
+        [
+          "ComponentLab/MdiArea",
+          {
+            "family": "Inter",
+            "style": "Semi Bold",
+            "variationSettings": {
+              "wght": 600,
+              "slnt": 0
+            }
+          },
+          11,
+          {
+            "unit": "AUTO"
+          },
+          "TOP"
+        ],
+        []
+      ],
+      [
+        "511:281",
+        "511:45",
+        "Card and Tabs boundary",
+        "FRAME",
+        [
+          28,
+          1320,
+          1256,
+          172
+        ],
+        true,
+        [
+          [
+            "#f3f3f3",
+            1
+          ]
+        ],
+        [
+          [
+            "#6235f7",
+            1
+          ]
+        ],
+        1,
+        12,
+        true,
+        null,
+        []
+      ],
+      [
+        "511:282",
+        "511:281",
+        "Title",
+        "TEXT",
+        [
+          18,
+          18,
+          540,
+          17
+        ],
+        true,
+        [
+          [
+            "#6235f7",
+            1
+          ]
+        ],
+        [],
+        1,
+        null,
+        null,
+        [
+          "Pattern boundary · Card / Tabs are construction references, not MDI equivalents",
+          {
+            "family": "Inter",
+            "style": "Semi Bold",
+            "variationSettings": {
+              "wght": 600,
+              "slnt": 0
+            }
+          },
+          14,
+          {
+            "unit": "AUTO"
+          },
+          "TOP"
+        ],
+        []
+      ],
+      [
+        "511:283",
+        "511:281",
+        "Body",
+        "TEXT",
+        [
+          18,
+          54,
+          1200,
+          58
+        ],
+        true,
+        [
+          [
+            "#191919",
+            1
+          ]
+        ],
+        [],
+        1,
+        null,
+        null,
+        [
+          "Card can inform surface, header and actions. Tabs can inform TabbedView anatomy. Neither owns subwindow stacking, tiling, move/resize, system menu, close-event veto, activation order, QWidget reparenting or WA_DeleteOnClose.",
+          {
+            "family": "Inter",
+            "style": "Regular",
+            "variationSettings": {
+              "wght": 400,
+              "slnt": 0
+            }
+          },
+          12,
+          {
+            "unit": "AUTO"
+          },
+          "TOP"
+        ],
+        []
+      ],
+      [
+        "511:284",
+        "511:281",
+        "Badge / DO NOT MAP Card = SubWindow",
+        "FRAME",
+        [
+          18,
+          122,
+          230,
+          28
+        ],
+        true,
+        [
+          [
+            "#ffffff",
+            1
+          ]
+        ],
+        [],
+        1,
+        14,
+        true,
+        null,
+        []
+      ],
+      [
+        "511:285",
+        "511:284",
+        "Label",
+        "TEXT",
+        [
+          12,
+          7,
+          176,
+          13
+        ],
+        true,
+        [
+          [
+            "#6235f7",
+            1
+          ]
+        ],
+        [],
+        1,
+        null,
+        null,
+        [
+          "DO NOT MAP Card = SubWindow",
+          {
+            "family": "Inter",
+            "style": "Semi Bold",
+            "variationSettings": {
+              "wght": 600,
+              "slnt": 0
+            }
+          },
+          11,
+          {
+            "unit": "AUTO"
+          },
+          "TOP"
+        ],
+        []
+      ],
+      [
+        "511:286",
+        "511:281",
+        "Badge / DO NOT MAP Tabs = MDI lifecycle",
+        "FRAME",
+        [
+          264,
+          122,
+          240,
+          28
+        ],
+        true,
+        [
+          [
+            "#ffffff",
+            1
+          ]
+        ],
+        [],
+        1,
+        14,
+        true,
+        null,
+        []
+      ],
+      [
+        "511:287",
+        "511:286",
+        "Label",
+        "TEXT",
+        [
+          12,
+          7,
+          180,
+          13
+        ],
+        true,
+        [
+          [
+            "#6235f7",
+            1
+          ]
+        ],
+        [],
+        1,
+        null,
+        null,
+        [
+          "DO NOT MAP Tabs = MDI lifecycle",
+          {
+            "family": "Inter",
+            "style": "Semi Bold",
+            "variationSettings": {
+              "wght": 600,
+              "slnt": 0
+            }
+          },
+          11,
+          {
+            "unit": "AUTO"
+          },
+          "TOP"
+        ],
+        []
+      ]
+    ]
+  },
+  "area": {
+    "setId": "511:280",
+    "size": [
+      604,
+      360
+    ],
+    "header": [
+      0,
+      0,
+      604,
+      36
+    ],
+    "presentations": {
+      "Free": {
+        "id": "511:127",
+        "windows": [
+          [
+            36,
+            70,
+            280,
+            170,
+            "Active"
+          ],
+          [
+            292,
+            158,
+            280,
+            170,
+            "Inactive"
+          ]
+        ]
+      },
+      "Cascade": {
+        "id": "511:159",
+        "windows": [
+          [
+            18,
+            52,
+            280,
+            170,
+            "Inactive"
+          ],
+          [
+            104,
+            92,
+            280,
+            170,
+            "Inactive"
+          ],
+          [
+            190,
+            132,
+            280,
+            170,
+            "Active"
+          ]
+        ]
+      },
+      "Tile": {
+        "id": "511:205",
+        "windows": [
+          [
+            12,
+            42,
+            280,
+            170,
+            "Active"
+          ],
+          [
+            312,
+            42,
+            280,
+            170,
+            "Inactive"
+          ],
+          [
+            12,
+            188,
+            280,
+            170,
+            "Inactive"
+          ],
+          [
+            312,
+            188,
+            280,
+            170,
+            "Inactive"
+          ]
+        ]
+      },
+      "Tabbed": {
+        "id": "511:265",
+        "tabBar": [
+          12,
+          48,
+          580,
+          36
+        ],
+        "pane": [
+          12,
+          92,
+          580,
+          250
+        ],
+        "tabs": [
+          "Trend",
+          "Recipe",
+          "Alarm"
+        ],
+        "tabWidths": [
+          118,
+          118,
+          118
+        ],
+        "tabX": [
+          0,
+          120,
+          240
+        ],
+        "textWidths": [
+          31,
+          36,
+          30
+        ],
+        "closeGlyph": [
+          92,
+          9,
+          16,
+          16
+        ]
+      }
+    }
+  },
+  "boundaries": [
+    "Visual State is not a mutually exclusive Qt state enum; activation, window state and enabled are independent.",
+    "Free/Cascade/Tile are SubWindowView geometry or arrangement command results; Tabbed alone maps to TabbedView.",
+    "Glyph visibility does not change native WindowFlags or command permissions.",
+    "Source gallery retains Tile row overlap, narrow wrapped/clipped text and low-contrast badges; interactive view uses native layout and readable text.",
+    "No Figma write, approval or normalization promotion."
+  ]
+}

@@ -6,6 +6,8 @@
 #include <memory>
 
 namespace field {
+// Read-only captured Input design evidence, separate from the legacy profile recipes.
+const QJsonObject& inputVisuals();
 QPixmap iconPixmap(const QIcon&, int logicalSize, qreal dpr, const QColor&);
 class Tokens {
   public:
@@ -38,6 +40,9 @@ class Chrome : public QFrame {
     void setVariant(const QString&);
     void setStatus(const QString&);
     void setAppearance(const QString&);
+    void setFigmaInputAppearance(bool);
+    void setSnapshotState(const QString&);
+    bool isFigmaInputAppearance() const;
     void setControlHeight(int height);
     int controlHeight() const;
     QString controlSize() const {
@@ -59,6 +64,8 @@ class Chrome : public QFrame {
     std::shared_ptr<const Tokens> catalog;
     QString sizeName = "md", variant = "outlined", status, appearance = "solid";
     bool hovered = false;
+    bool figmaInput = false;
+    QString snapshotState;
     surface::InsetLayer* inset;
     surface::OuterShadowEffect* shadow;
     void refresh();
@@ -70,8 +77,14 @@ class Action : public commonWidget::Z_PushButton {
     explicit Action(std::shared_ptr<const Tokens>, QWidget* parent = nullptr);
     void setBusy(bool);
     void setIconSource(const QString&);
+    // Internal Input anatomy: original 16px SVG inside the authored 32px hit slot.
+    void setFigmaGlyph(const QString& glyph);
     bool isBusy() const {
         return property("loading").toBool();
     }
+  protected:
+    void paintEvent(QPaintEvent*) override;
+  private:
+    QString figmaGlyph;
 };
 } // namespace field

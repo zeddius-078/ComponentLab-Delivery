@@ -1,7 +1,7 @@
 """Verify saved MCP response bytes and verbatim DSL extraction."""
 # 离线检查已保存的第 04 步响应与 DSL，执行时不连接 Pixso。
 # 检查通过表示本地文件相互一致；服务身份、所属设计文件和图片来源另需证据。
-# 当前检查使用 assert；命令见交付包 docs/DesignMapping/Guide.md，避免用 -O/-OO 关闭断言。
+# 当前检查使用 assert；命令见 docs/mainSkill/generate-layout-pipeline/references/设计到布局生成说明.md，避免用 -O/-OO 关闭断言。
 # 命令从 DesignToCode 执行：
 # python -B HtmlDsl/pipeline/capture/verify_capture.py HtmlDsl/pipeline/design-inputs/node-12-382-full
 # -B 仅关闭 Python 字节码缓存写入，校验断言仍会执行。

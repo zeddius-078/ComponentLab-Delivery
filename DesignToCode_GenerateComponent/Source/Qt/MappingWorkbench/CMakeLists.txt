@@ -30,6 +30,8 @@ target_link_libraries(design_to_code PRIVATE mapping_demo)
 install(TARGETS design_to_code RUNTIME DESTINATION .)
 install(FILES Run.cmd DESTINATION .)
 install(DIRECTORY "${KIT}/licenses/" DESTINATION licenses)
+install(FILES "${KIT}/runtime/assets/fonts/Inter/LICENSE.txt" DESTINATION licenses RENAME Inter-OFL.txt)
+install(FILES "${KIT}/runtime/assets/fonts/NotoSansSC/LICENSE.txt" DESTINATION licenses RENAME NotoSansSC-OFL.txt)
 if(D2C_BUILD_MAPPING_COMPILER)
     add_executable(mapping_compiler mapping/MappingCompiler.cpp ${RESOURCES})
     target_link_libraries(mapping_compiler PRIVATE mapping_core)
@@ -51,6 +53,8 @@ if(BUILD_TESTING)
     foreach(SUITE design_normalization pixso_button independence qt_native_catalog)
         add_test(NAME ${SUITE} COMMAND "${Python3_EXECUTABLE}" -B -m unittest discover -s "${CMAKE_CURRENT_SOURCE_DIR}/tests" -p "test_${SUITE}.py")
     endforeach()
+    add_test(NAME figma_component_catalog COMMAND "${Python3_EXECUTABLE}" -B
+        "${KIT}/tools/test_design_component_catalog.py")
     add_test(NAME design_evidence_contract COMMAND "${Python3_EXECUTABLE}" -B -m unittest discover
         -s "${CMAKE_CURRENT_SOURCE_DIR}/../../DesignEvidence/tests" -p "test_contract.py")
     add_test(NAME qt_native_meta_catalog COMMAND qt_meta_scanner

@@ -345,19 +345,25 @@ QStringList validate(const QJsonObject& contract, const QString& profile) {
                                 where + ": register asset in qt-component-map.json first");
                     }
                     if (type == "material")
-                        require(surfaces.presetIds().contains(value.toString()),
+                        require(surfaces.presetIds().contains(value.toString()) ||
+                                    ((definition["factory"] == "checkbox" || definition["factory"] == "input") && value == "figma-light"),
                                 where + ": unsupported material");
                     if (type == "buttonMaterial")
-                        require(surfaces.buttonPresetIds().contains(value.toString()),
+                        require(surfaces.buttonPresetIds().contains(value.toString()) || value=="figma-light",
                                 where + ": unsupported button material");
                 }
             }
             const auto p = properties(node, definition);
+            if (definition["factory"] == "input" && p["appearance"] == "figma-light")
+                require(p["variant"] == "outlined" && p["status"] != "warning",
+                        id + ": captured Input supports outlined and none/error status only");
             if (definition["factory"] == "button") {
                 const auto reason = surfaces.buttonUnsupportedReason(p["appearance"].toString(),
                                                                      p["type"].toString().toUpper(),
                                                                      p["ghost"].toBool());
                 require(reason.isEmpty(), id + ": " + reason);
+                require(p["appearance"]!="figma-light" || !p["danger"].toBool() || p["type"]=="Primary",
+                        id+": non-primary Danger is not defined by the captured Figma appearance");
                 if (definition["iconOnly"].toBool())
                     require(!p["accessibleName"].toString().trimmed().isEmpty() &&
                                 (!p["leadingIcon"].toString().isEmpty() ||
@@ -466,7 +472,7 @@ QMap<QString, QByteArray> generate(const QJsonObject& contract, const QString& p
             "组件 QSS 和材质仍由既有组件运行时读取。改变导出副本不会更改内嵌资源。\n"
             "Qt Designer 展示结构占位；真实组件在装配后出现。\n\n"
             "ui-contract.json 是本次输入，mapping-report.json 给出来源、依赖及文件哈希。\n"
-            "完整接入步骤见 docs/DesignMapping/Guide.md。\n")
+            "完整接入步骤见 docs/mainSkill/generate-component-pipeline/references/设计组件映射指南.md。\n")
             .toUtf8();
     return files;
 }
@@ -539,6 +545,7 @@ void mount(QWidget* root, const QJsonObject& contract, const QString& profile) {
                 {"search", Z_InputField::Kind::Search},
                 {"textarea", Z_InputField::Kind::TextArea}};
             input->setKind(kinds.value(p["kind"].toString()));
+            input->setPasswordVisible(p["passwordVisible"].toBool());
             input->setControlSize(p["controlSize"].toString());
             input->setVariant(p["variant"].toString());
             input->setStatus(p["status"] == "none" ? "" : p["status"].toString());

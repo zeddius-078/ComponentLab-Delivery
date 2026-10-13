@@ -1,0 +1,393 @@
+{
+  "schemaVersion": 1,
+  "fileKey": "w92BKW1EcutKmTXkwzNHbf",
+  "pageId": "339:2",
+  "galleryId": "2015:19216",
+  "designApproval": "NOT_DESIGN_APPROVED",
+  "source": "High-fidelity get_design_context for all seven sets plus read-only geometry and variable evidence",
+  "variantCount": 108,
+  "inputCount": 96,
+  "internalActionSlotCount": 12,
+  "appearance": "figma-light",
+  "profilePolicy": "Captured light appearance only; legacy material profiles remain explicit compatibility mode.",
+  "metrics": {
+    "radius": 4,
+    "borderWidth": 1,
+    "gap": 8,
+    "textFrameHeight": 20,
+    "fontSize": 14,
+    "placeholderLineHeight": 22,
+    "valueLineHeight": 14,
+    "actionSize": 32,
+    "actionIconOrigin": 9,
+    "actionIconRootSize": 16,
+    "textAreaBlockPadding": 1,
+    "footerGap": 4,
+    "footerHeight": 20,
+    "sizes": {
+      "sm": {
+        "height": 32,
+        "paddingInline": 8,
+        "textAreaHeight": 46
+      },
+      "md": {
+        "height": 32,
+        "paddingInline": 12,
+        "textAreaHeight": 46
+      },
+      "lg": {
+        "height": 40,
+        "paddingInline": 16,
+        "textAreaHeight": 54
+      }
+    }
+  },
+  "colors": {
+    "background": "#ffffff",
+    "border": "#a7a7a7",
+    "hoverBorder": "#191919",
+    "focusBorder": "#6235f7",
+    "focusOutline": "#f3efff",
+    "text": "#191919",
+    "placeholder": "#676767",
+    "errorBackground": "#fbe4e5",
+    "errorBorder": "#e02128",
+    "disabledText": "#8a8a8a",
+    "disabledBackground": "#f3f3f3",
+    "disabledBorder": "#d0d0d0"
+  },
+  "assets": [
+    {
+      "glyph": "EyeOffPrimary",
+      "resource": ":/figma/input/EyeOffPrimary.svg",
+      "rootSize": [
+        16,
+        16
+      ],
+      "slotSize": [
+        32,
+        32
+      ],
+      "rootOriginInSlot": [
+        9,
+        9
+      ],
+      "authoredInstanceSize": [
+        14,
+        14
+      ]
+    },
+    {
+      "glyph": "EyeOffAccent",
+      "resource": ":/figma/input/EyeOffAccent.svg",
+      "rootSize": [
+        16,
+        16
+      ],
+      "slotSize": [
+        32,
+        32
+      ],
+      "rootOriginInSlot": [
+        9,
+        9
+      ],
+      "authoredInstanceSize": [
+        14,
+        14
+      ]
+    },
+    {
+      "glyph": "EyeOffDisabled",
+      "resource": ":/figma/input/EyeOffDisabled.svg",
+      "rootSize": [
+        16,
+        16
+      ],
+      "slotSize": [
+        32,
+        32
+      ],
+      "rootOriginInSlot": [
+        9,
+        9
+      ],
+      "authoredInstanceSize": [
+        14,
+        14
+      ]
+    },
+    {
+      "glyph": "EyeOffDanger",
+      "resource": ":/figma/input/EyeOffDanger.svg",
+      "rootSize": [
+        16,
+        16
+      ],
+      "slotSize": [
+        32,
+        32
+      ],
+      "rootOriginInSlot": [
+        9,
+        9
+      ],
+      "authoredInstanceSize": [
+        14,
+        14
+      ]
+    },
+    {
+      "glyph": "EyePrimary",
+      "resource": ":/figma/input/EyePrimary.svg",
+      "rootSize": [
+        16,
+        16
+      ],
+      "slotSize": [
+        32,
+        32
+      ],
+      "rootOriginInSlot": [
+        9,
+        9
+      ],
+      "authoredInstanceSize": [
+        14,
+        14
+      ]
+    },
+    {
+      "glyph": "EyeAccent",
+      "resource": ":/figma/input/EyeAccent.svg",
+      "rootSize": [
+        16,
+        16
+      ],
+      "slotSize": [
+        32,
+        32
+      ],
+      "rootOriginInSlot": [
+        9,
+        9
+      ],
+      "authoredInstanceSize": [
+        14,
+        14
+      ]
+    },
+    {
+      "glyph": "EyeDisabled",
+      "resource": ":/figma/input/EyeDisabled.svg",
+      "rootSize": [
+        16,
+        16
+      ],
+      "slotSize": [
+        32,
+        32
+      ],
+      "rootOriginInSlot": [
+        9,
+        9
+      ],
+      "authoredInstanceSize": [
+        14,
+        14
+      ]
+    },
+    {
+      "glyph": "EyeDanger",
+      "resource": ":/figma/input/EyeDanger.svg",
+      "rootSize": [
+        16,
+        16
+      ],
+      "slotSize": [
+        32,
+        32
+      ],
+      "rootOriginInSlot": [
+        9,
+        9
+      ],
+      "authoredInstanceSize": [
+        14,
+        14
+      ]
+    },
+    {
+      "glyph": "LoadingPrimary",
+      "resource": ":/figma/input/LoadingPrimary.svg",
+      "rootSize": [
+        16,
+        16
+      ],
+      "slotSize": [
+        32,
+        32
+      ],
+      "rootOriginInSlot": [
+        9,
+        9
+      ],
+      "authoredInstanceSize": [
+        14,
+        14
+      ]
+    },
+    {
+      "glyph": "SearchPrimary",
+      "resource": ":/figma/input/SearchPrimary.svg",
+      "rootSize": [
+        16,
+        16
+      ],
+      "slotSize": [
+        32,
+        32
+      ],
+      "rootOriginInSlot": [
+        9,
+        9
+      ],
+      "authoredInstanceSize": [
+        14,
+        14
+      ]
+    },
+    {
+      "glyph": "SearchDisabled",
+      "resource": ":/figma/input/SearchDisabled.svg",
+      "rootSize": [
+        16,
+        16
+      ],
+      "slotSize": [
+        32,
+        32
+      ],
+      "rootOriginInSlot": [
+        9,
+        9
+      ],
+      "authoredInstanceSize": [
+        14,
+        14
+      ]
+    },
+    {
+      "glyph": "ClosePrimary",
+      "resource": ":/figma/input/ClosePrimary.svg",
+      "rootSize": [
+        16,
+        16
+      ],
+      "slotSize": [
+        32,
+        32
+      ],
+      "rootOriginInSlot": [
+        9,
+        9
+      ],
+      "authoredInstanceSize": [
+        14,
+        14
+      ]
+    }
+  ],
+  "sets": [
+    {
+      "id": "339:111",
+      "name": "DSM/Input",
+      "box": [
+        28,
+        85,
+        2208,
+        264
+      ],
+      "background": "transparent",
+      "radius": 5
+    },
+    {
+      "id": "1161:16084",
+      "name": ".DSM/Input/Password",
+      "box": [
+        776,
+        367,
+        712,
+        200
+      ],
+      "background": "transparent",
+      "radius": 5
+    },
+    {
+      "id": "1164:643",
+      "name": ".DSM/Input/Search",
+      "box": [
+        88,
+        585,
+        2088,
+        200
+      ],
+      "background": "transparent",
+      "radius": 5
+    },
+    {
+      "id": "1164:746",
+      "name": ".DSM/Input/SearchLoading",
+      "box": [
+        776,
+        803,
+        712,
+        200
+      ],
+      "background": "transparent",
+      "radius": 5
+    },
+    {
+      "id": "1171:16329",
+      "name": ".DSM/Input/TextArea",
+      "box": [
+        88,
+        1021,
+        2088,
+        262
+      ],
+      "background": "#f5f6fa",
+      "radius": 8
+    },
+    {
+      "id": "1175:1520",
+      "name": ".DSM/Input/PasswordOtherStates",
+      "box": [
+        260,
+        1301,
+        1744,
+        408
+      ],
+      "background": "#f5f6fa",
+      "radius": 8
+    },
+    {
+      "id": "1179:666",
+      "name": ".DSM/Input/ActionSlot",
+      "box": [
+        976,
+        1727,
+        312,
+        240
+      ],
+      "background": "#f5f6fa",
+      "radius": 8
+    }
+  ],
+  "notes": [
+    "Original SVG files retained without recolor, path extraction or size overrides.",
+    "ActionSlot is internal field anatomy, not a new public SDK component type.",
+    "Snapshot state is visual only; real value, enabled, password visibility and native signals remain separate.",
+    "Legacy filled/borderless/underlined/warning combinations are not authored by these sets; they explicitly fall back to legacy solid appearance."
+  ]
+}

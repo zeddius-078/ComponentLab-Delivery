@@ -1,7 +1,7 @@
 """Record explicit MCP calls without transforming design fields."""
 # 构建期采集工具：通过 HTTP 调用 MCP，保存请求、响应正文和提取的文本。
 # 设计文件由 Pixso 客户端当前打开的文档决定，节点由 --arguments 中的 guid 指定。
-# 本工具不执行 Qt 组件映射或 Token 求值；来源边界见交付包 docs/DesignMapping/Guide.md。
+# 本工具不执行 Qt 组件映射或 Token 求值；来源边界见 docs/mainSkill/generate-layout-pipeline/references/设计到布局生成说明.md。
 # 文件分工：request 是本地请求，response.body 是服务正文，meta 是本地接收记录。
 # canonical.raw.json 的内容来自响应中的文本块；它与外层响应文件的字节不同。
 import argparse

@@ -1,4 +1,4 @@
-/* GENERATED DEMO SHELL | bdc3e50ba3578d10916d4f62e0c7610062200b228553706588aa86283919c3d8 */
+/* GENERATED DEMO SHELL | 79059ec4189ce0c4194a0cd6aa3160963870be5d42e024543b1c83fbf8bf395e */
 QMainWindow, QDialog { background: #191919; }
 QWidget { color: #f3f3f3; font-family: 'HarmonyOS Sans SC'; font-size: 14px; }
 QLineEdit, QComboBox, QTreeWidget, QTableWidget, QPlainTextEdit { background: #272727; color: #f3f3f3; selection-background-color: #6235f7; selection-color: #ffffff; }

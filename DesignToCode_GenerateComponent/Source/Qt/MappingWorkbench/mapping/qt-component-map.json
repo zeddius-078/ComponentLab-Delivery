@@ -194,6 +194,11 @@
           "default": "text",
           "api": "setKind"
         },
+        "passwordVisible": {
+          "type": "bool",
+          "default": false,
+          "api": "setPasswordVisible"
+        },
         "controlSize": {
           "type": "enum",
           "values": [

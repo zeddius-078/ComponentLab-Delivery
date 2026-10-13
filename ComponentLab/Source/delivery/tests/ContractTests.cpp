@@ -1,5 +1,9 @@
 #include "Z_CheckBox.h"
 #include "ButtonAppearanceAdapter.h"
+#include "LabelAppearance.h"
+#include "ProgressAppearance.h"
+#include "RadioAppearance.h"
+#include "native/Z_RadioButton.h"
 #include "CheckBoxGroupController.h"
 #include "DemoRuntime.h"
 #include <QAccessible>
@@ -7,7 +11,12 @@
 #include <QDir>
 #include <QFrame>
 #include <QLabel>
+#include <QFontInfo>
 #include <QPushButton>
+#include <QProgressBar>
+#include <QRadioButton>
+#include <QButtonGroup>
+#include <QSvgRenderer>
 #include <QSignalSpy>
 #include <QStyleFactory>
 #include <QtTest>
@@ -168,6 +177,162 @@ class ContractTests : public QObject {
         QCOMPARE(c.appearance(), QString("solid"));
         QVERIFY_EXCEPTION_THROWN(c.setControlSize("xxl"), std::invalid_argument);
         QCOMPARE(c.controlSize(), QString("sm"));
+    }
+    void figmaAppearancePreservesNativeContract() {
+        QWidget host;
+        Z_CheckBox c(catalog,"Checkbox",&host);
+        c.setAppearance("figma-light");c.setControlSize("lg");
+        c.setFixedSize(108,32);c.move(10,10);host.resize(140,60);host.show();events();
+        QCOMPARE(c.designContentRect(),QRect(4,4,100,24));
+        QCOMPARE(c.indicatorRect(),QRect(6,6,20,20));
+        auto* label=c.findChild<QLabel*>("LABEL");QVERIFY(label);
+        QCOMPARE(label->geometry().left(),36);
+        QCOMPARE(QFontInfo(label->font()).family(),QString("Inter"));
+        QCOMPARE(label->font().pixelSize(),14);
+        QSignalSpy requested(&c,&Z_CheckBox::checkedChangeRequested);
+        QTest::mouseClick(&c,Qt::LeftButton,Qt::NoModifier,QPoint(100,16));
+        QVERIFY(c.isChecked());QCOMPARE(requested.count(),1);
+        c.setChecked(false);c.setIndeterminate(true);
+        QVERIFY(!c.isChecked());QVERIFY(c.isIndeterminate());QVERIFY(!c.isTristate());
+        c.setProperty("figmaPreviewState","Hover");
+        QCOMPARE(c.interactionState(),QString("hover"));
+        QCOMPARE(c.checkState(),Qt::Unchecked);
+        c.setEnabled(false);QCOMPARE(c.interactionState(),QString("disabled"));
+        c.click();QCOMPARE(requested.count(),1);
+        c.setEnabled(true);c.setControlSize("sm");
+        QCOMPARE(c.indicatorRect().size(),QSize(18,18));
+        QCOMPARE(c.designContentRect().height(),20);
+        c.setAppearance("solid");
+        QCOMPARE(c.appearance(),QString("solid"));
+    }
+    void capturedButtonKeepsNativeInteractionAndLegacyAppearance() {
+        QWidget host;Z_PushButton b(&host);ButtonAppearanceAdapter adapter(&b,catalog);
+        b.setText("Button");b.setType(commonWidget::ButtonType::Primary);b.setSize(commonWidget::ButtonSize::S);
+        adapter.setAppearance("figma-light");b.resize(b.sizeHint());host.resize(160,80);host.show();events();
+        // DirectWrite and Qt's offscreen font backend differ by one logical px.
+        // The gallery's authored 60px specimen is fixed and tested separately.
+        QCOMPARE(b.height(),32);QVERIFY(b.width()>=59 && b.width()<=60);
+        QSignalSpy clicked(&b,&QPushButton::clicked);
+        QTest::mouseClick(&b,Qt::LeftButton);QCOMPARE(clicked.count(),1);
+        b.setProperty("figmaPreviewState","hover");events();QVERIFY(!b.isDown());
+        const auto hover=b.grab().toImage();
+        QCOMPARE(hover.pixelColor(5,5),QColor("#6e58d9"));
+        b.setProperty("figmaPreviewState","active");events();QVERIFY(!b.isDown());
+        QCOMPARE(b.grab().toImage().pixelColor(5,5),QColor("#532cd1"));
+        b.setEnabled(false);events();b.click();QCOMPARE(clicked.count(),1);
+        QCOMPARE(b.grab().toImage().pixelColor(5,5),QColor("#f3f3f3"));
+        b.setEnabled(true);b.setProperty("figmaPreviewState",QString());
+        const auto normal=b.size();b.setLoading(true);events();
+        QCOMPARE(b.size(),normal);QVERIFY(!b.isEnabled());b.click();QCOMPARE(clicked.count(),1);
+        const auto first=b.grab().toImage();QTest::qWait(120);const auto second=b.grab().toImage();
+        QVERIFY(first!=second);
+        b.setLoading(false);events();QVERIFY(b.isEnabled());QCOMPARE(b.size(),normal);
+        adapter.setAppearance("solid");events();QVERIFY(!b.property("figmaAppearance").toBool());
+        QVERIFY(b.findChild<QLabel*>("LABEL")->isVisible());
+    }
+    void capturedRadioKeepsNativeExclusiveKeyboardAndAssets() {
+        QWidget host;host.setStyleSheet("background:white;");host.resize(400,100);
+        commonWidget::Z_RadioButton first(&host),second(&host);
+        first.setText("&First");second.setText("Second");first.resize(180,32);second.setGeometry(190,0,180,32);
+        QButtonGroup group;group.addButton(&first,1);group.addButton(&second,2);
+        commonWidget::applyFigmaRadioAppearance(&first,"Default");
+        commonWidget::applyFigmaRadioAppearance(&second);
+        first.setChecked(true);host.show();events();
+        QCOMPARE(QFontInfo(first.font()).family(),QString("Inter"));
+        QSignalSpy clicks(&second,&QAbstractButton::clicked),toggles(&first,&QAbstractButton::toggled);
+        QTest::mouseClick(&second,Qt::LeftButton,Qt::NoModifier,QPoint(8,16));
+        QCOMPARE(group.checkedId(),2);QCOMPARE(clicks.count(),1);QCOMPARE(toggles.count(),1);
+        first.setFocus(Qt::TabFocusReason);QTest::keyClick(&first,Qt::Key_Space);
+        QCOMPARE(group.checkedId(),1);QVERIFY(!second.isChecked());
+        commonWidget::applyFigmaRadioAppearance(&first,"Pressed",false);
+        events();
+        const auto pressed=first.grab().toImage();
+        QCOMPARE(pressed.pixelColor(1,16).alpha(),0);
+        QCOMPARE(pressed.pixelColor(11,5).alpha(),0);
+        QVERIFY(!first.isDown());QCOMPARE(first.text(),QString("&First"));
+        QCOMPARE(group.checkedId(),1);QVERIFY(first.autoExclusive());
+        auto* accessible=QAccessible::queryAccessibleInterface(&first);QVERIFY(accessible);
+        QVERIFY(accessible->state().checked);QVERIFY(!accessible->text(QAccessible::Name).isEmpty());
+        commonWidget::applyFigmaRadioAppearance(&first,"Default");events();
+        QCOMPARE(first.grab().toImage().pixelColor(11,16),QColor("#6235f7"));
+        first.setEnabled(false);events();
+        QCOMPARE(first.grab().toImage().pixelColor(11,16),QColor("#8a8a8a"));
+        first.click();QCOMPARE(group.checkedId(),1);
+        first.setEnabled(true);first.setLayoutDirection(Qt::RightToLeft);events();
+        QCOMPARE(first.grab().toImage().pixelColor(168,16),QColor("#6235f7"));
+        QCOMPARE(first.findChildren<QObject*>("figmaRadioRenderer").size(),1);
+        for(const auto& value:QStringList{"unselected","selected"})
+            for(const auto& state:QStringList{"default","hover","pressed","focus-visible","disabled"}) {
+                const QString path=QString(":/figma/radio/%1-%2.svg").arg(value,state);
+                QSvgRenderer asset(path);QVERIFY2(asset.isValid(),qPrintable(path));
+                const int extent=state=="focus-visible"?22:18;
+                QCOMPARE(asset.defaultSize(),QSize(extent,extent));
+            }
+        QVERIFY_EXCEPTION_THROWN(commonWidget::applyFigmaRadioAppearance(&first,"Active"),std::invalid_argument);
+    }
+    void capturedLabelKeepsLogicalAlignmentAndWrapping() {
+        QWidget host;host.setStyleSheet("QWidget {background:white;}");host.resize(460,100);
+        QLabel label("Alignment",&host);label.resize(440,32);
+        commonWidget::applyFigmaLabelAppearance(&label,"Start",false);
+        QCOMPARE(label.alignment(),Qt::Alignment(Qt::AlignLeft|Qt::AlignVCenter|Qt::AlignAbsolute));
+        host.show();events();
+        QCOMPARE(QFontInfo(label.font()).family(),QString("Inter"));
+        const auto inkStart=[](const QImage& image) {
+            for(int x=0;x<image.width();++x)for(int y=0;y<image.height();++y) {
+                const auto color=image.pixelColor(x,y);
+                if(color.alpha()>128 && color.red()<70 && color.green()<70 && color.blue()<70)return x;
+            }
+            return -1;
+        };
+        QVERIFY(inkStart(label.grab().toImage())<20);
+        label.setLayoutDirection(Qt::RightToLeft);events();
+        QVERIFY(inkStart(label.grab().toImage())>300);
+        commonWidget::applyFigmaLabelAppearance(&label,"End",true);events();
+        QVERIFY(inkStart(label.grab().toImage())<20);QVERIFY(label.wordWrap());
+        QVERIFY(label.alignment()&Qt::AlignAbsolute);
+        QCOMPARE(label.property("figmaLogicalAlignment").toString(),QString("End"));
+        QCOMPARE(label.findChildren<QObject*>("figmaLabelDirectionBinding").size(),1);
+        label.setLayoutDirection(Qt::LeftToRight);events();
+        QVERIFY(inkStart(label.grab().toImage())>300);
+        QCOMPARE(label.text(),QString("Alignment"));
+        QVERIFY_EXCEPTION_THROWN(commonWidget::applyFigmaLabelAppearance(&label,"Left",false),std::invalid_argument);
+    }
+    void capturedProgressKeepsNativeRangeValueAndBusyContract() {
+        QWidget host;host.setStyleSheet("QWidget {background:white;}");host.resize(300,240);
+        QProgressBar bar(&host);bar.resize(270,24);bar.setRange(0,100);bar.setValue(68);
+        bar.setFormat("%p%");
+        commonWidget::applyFigmaProgressAppearance(&bar,"Determinate",true);
+        host.show();events();
+        QCOMPARE(QFontInfo(bar.font()).family(),QString("Inter"));
+        const QColor purple("#6235f7"),rail("#f3f3f3");
+        QCOMPARE(bar.grab().toImage().pixelColor(50,12),purple);
+        QCOMPARE(bar.grab().toImage().pixelColor(140,12),rail);
+        QSignalSpy values(&bar,&QProgressBar::valueChanged);
+        bar.setValue(20);events();QCOMPARE(values.count(),1);
+        QCOMPARE(bar.grab().toImage().pixelColor(50,12),rail);
+        bar.setValue(68);bar.setInvertedAppearance(true);events();
+        QCOMPARE(bar.grab().toImage().pixelColor(30,12),rail);
+        QCOMPARE(bar.grab().toImage().pixelColor(130,12),purple);
+        commonWidget::applyFigmaProgressAppearance(&bar,"Completed",true);events();
+        QCOMPARE(bar.value(),68);QCOMPARE(bar.text(),QString("68%"));
+        QCOMPARE(bar.grab().toImage().pixelColor(130,12),QColor("#067a3a"));
+        bar.setOrientation(Qt::Vertical);bar.resize(32,200);events();
+        QCOMPARE(bar.grab().toImage().pixelColor(16,30),purple);
+        QCOMPARE(bar.grab().toImage().pixelColor(16,180),QColor(Qt::white));
+        bar.setInvertedAppearance(false);events();
+        QCOMPARE(bar.grab().toImage().pixelColor(16,180),purple);
+        bar.setOrientation(Qt::Horizontal);bar.resize(270,24);bar.setRange(0,0);events();
+        QCOMPARE(bar.text(),QString());
+        const auto still=bar.grab().toImage();QTest::qWait(100);QCOMPARE(bar.grab().toImage(),still);
+        commonWidget::applyFigmaProgressAppearance(&bar,"Indeterminate",false);events();
+        const auto moving=bar.grab().toImage();QTest::qWait(150);QVERIFY(bar.grab().toImage()!=moving);
+        bar.setProperty("reducedMotion",true);events();
+        const auto reduced=bar.grab().toImage();QTest::qWait(100);QCOMPARE(bar.grab().toImage(),reduced);
+        bar.setRange(-50,50);bar.setValue(0);bar.setFormat("%v / %m");events();
+        QCOMPARE(bar.text(),QString("0 / 100"));
+        bar.reset();events();QCOMPARE(bar.text(),QString());
+        QCOMPARE(bar.findChildren<QObject*>("figmaProgressRenderer").size(),1);
+        QVERIFY_EXCEPTION_THROWN(commonWidget::applyFigmaProgressAppearance(&bar,"Unknown"),std::invalid_argument);
     }
     void geometryAndTypeface() {
         Z_CheckBox c(catalog, "Quality check");

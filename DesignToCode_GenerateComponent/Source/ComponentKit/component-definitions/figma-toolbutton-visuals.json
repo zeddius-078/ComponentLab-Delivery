@@ -1,0 +1,2546 @@
+{
+  "schemaVersion": 1,
+  "fileKey": "w92BKW1EcutKmTXkwzNHbf",
+  "pageId": "443:2",
+  "status": "CAPTURED_LIGHT_NOT_DESIGN_APPROVED",
+  "gallery": {
+    "id": "2015:17659",
+    "rect": [
+      64,
+      1170,
+      2256,
+      873
+    ]
+  },
+  "set": {
+    "id": "443:222",
+    "name": "ComponentLab/ToolButton",
+    "rect": [
+      40,
+      110,
+      2120,
+      520
+    ],
+    "properties": {
+      "Label#443:40": {
+        "type": "TEXT",
+        "defaultValue": "Format"
+      },
+      "Show label#443:41": {
+        "type": "BOOLEAN",
+        "defaultValue": true
+      },
+      "Icon#974:44": {
+        "type": "INSTANCE_SWAP",
+        "defaultValue": "973:75",
+        "preferredValues": []
+      },
+      "Surface": {
+        "type": "VARIANT",
+        "defaultValue": "Framed",
+        "variantOptions": [
+          "Framed",
+          "AutoRaise"
+        ]
+      },
+      "Menu": {
+        "type": "VARIANT",
+        "defaultValue": "None",
+        "variantOptions": [
+          "None",
+          "Split"
+        ]
+      },
+      "State": {
+        "type": "VARIANT",
+        "defaultValue": "Default",
+        "variantOptions": [
+          "Default",
+          "Hover",
+          "Pressed",
+          "Focus",
+          "Disabled",
+          "Checked",
+          "CheckedHover",
+          "CheckedFocus",
+          "Open"
+        ]
+      }
+    },
+    "variants": [
+      {
+        "id": "443:32",
+        "name": "Surface=Framed, Menu=None, State=Default",
+        "type": "COMPONENT",
+        "rect": [
+          24,
+          24,
+          90,
+          32
+        ],
+        "fill": [
+          [
+            "SOLID",
+            [
+              255,
+              255,
+              255
+            ],
+            1,
+            true
+          ]
+        ],
+        "stroke": [
+          [
+            "SOLID",
+            [
+              167,
+              167,
+              167
+            ],
+            1,
+            true
+          ]
+        ],
+        "sw": 1,
+        "r": 4,
+        "effects": []
+      },
+      {
+        "id": "443:39",
+        "name": "Surface=Framed, Menu=None, State=Hover",
+        "type": "COMPONENT",
+        "rect": [
+          274,
+          24,
+          90,
+          32
+        ],
+        "fill": [
+          [
+            "SOLID",
+            [
+              241,
+              236,
+              255
+            ],
+            1,
+            true
+          ]
+        ],
+        "stroke": [
+          [
+            "SOLID",
+            [
+              167,
+              167,
+              167
+            ],
+            1,
+            true
+          ]
+        ],
+        "sw": 1,
+        "r": 4,
+        "effects": []
+      },
+      {
+        "id": "443:46",
+        "name": "Surface=Framed, Menu=None, State=Pressed",
+        "type": "COMPONENT",
+        "rect": [
+          524,
+          24,
+          90,
+          32
+        ],
+        "fill": [
+          [
+            "SOLID",
+            [
+              241,
+              236,
+              255
+            ],
+            1,
+            true
+          ]
+        ],
+        "stroke": [
+          [
+            "SOLID",
+            [
+              83,
+              44,
+              209
+            ],
+            1,
+            true
+          ]
+        ],
+        "sw": 1,
+        "r": 4,
+        "effects": []
+      },
+      {
+        "id": "443:53",
+        "name": "Surface=Framed, Menu=None, State=Focus",
+        "type": "COMPONENT",
+        "rect": [
+          774,
+          24,
+          92,
+          32
+        ],
+        "fill": [
+          [
+            "SOLID",
+            [
+              255,
+              255,
+              255
+            ],
+            1,
+            true
+          ]
+        ],
+        "stroke": [
+          [
+            "SOLID",
+            [
+              98,
+              53,
+              247
+            ],
+            1,
+            true
+          ]
+        ],
+        "sw": 2,
+        "r": 4,
+        "effects": []
+      },
+      {
+        "id": "443:60",
+        "name": "Surface=Framed, Menu=None, State=Disabled",
+        "type": "COMPONENT",
+        "rect": [
+          1024,
+          24,
+          90,
+          32
+        ],
+        "fill": [
+          [
+            "SOLID",
+            [
+              243,
+              243,
+              243
+            ],
+            1,
+            true
+          ]
+        ],
+        "stroke": [
+          [
+            "SOLID",
+            [
+              208,
+              208,
+              208
+            ],
+            1,
+            true
+          ]
+        ],
+        "sw": 1,
+        "r": 4,
+        "effects": []
+      },
+      {
+        "id": "443:67",
+        "name": "Surface=Framed, Menu=Split, State=Default",
+        "type": "COMPONENT",
+        "rect": [
+          24,
+          142,
+          119,
+          32
+        ],
+        "fill": [
+          [
+            "SOLID",
+            [
+              255,
+              255,
+              255
+            ],
+            1,
+            true
+          ]
+        ],
+        "stroke": [
+          [
+            "SOLID",
+            [
+              167,
+              167,
+              167
+            ],
+            1,
+            true
+          ]
+        ],
+        "sw": 1,
+        "r": 4,
+        "effects": []
+      },
+      {
+        "id": "443:79",
+        "name": "Surface=Framed, Menu=Split, State=Hover",
+        "type": "COMPONENT",
+        "rect": [
+          274,
+          142,
+          119,
+          32
+        ],
+        "fill": [
+          [
+            "SOLID",
+            [
+              241,
+              236,
+              255
+            ],
+            1,
+            true
+          ]
+        ],
+        "stroke": [
+          [
+            "SOLID",
+            [
+              167,
+              167,
+              167
+            ],
+            1,
+            true
+          ]
+        ],
+        "sw": 1,
+        "r": 4,
+        "effects": []
+      },
+      {
+        "id": "443:91",
+        "name": "Surface=Framed, Menu=Split, State=Pressed",
+        "type": "COMPONENT",
+        "rect": [
+          524,
+          142,
+          119,
+          32
+        ],
+        "fill": [
+          [
+            "SOLID",
+            [
+              241,
+              236,
+              255
+            ],
+            1,
+            true
+          ]
+        ],
+        "stroke": [
+          [
+            "SOLID",
+            [
+              83,
+              44,
+              209
+            ],
+            1,
+            true
+          ]
+        ],
+        "sw": 1,
+        "r": 4,
+        "effects": []
+      },
+      {
+        "id": "443:103",
+        "name": "Surface=Framed, Menu=Split, State=Focus",
+        "type": "COMPONENT",
+        "rect": [
+          774,
+          142,
+          121,
+          32
+        ],
+        "fill": [
+          [
+            "SOLID",
+            [
+              255,
+              255,
+              255
+            ],
+            1,
+            true
+          ]
+        ],
+        "stroke": [
+          [
+            "SOLID",
+            [
+              98,
+              53,
+              247
+            ],
+            1,
+            true
+          ]
+        ],
+        "sw": 2,
+        "r": 4,
+        "effects": []
+      },
+      {
+        "id": "443:115",
+        "name": "Surface=Framed, Menu=Split, State=Disabled",
+        "type": "COMPONENT",
+        "rect": [
+          1024,
+          142,
+          119,
+          32
+        ],
+        "fill": [
+          [
+            "SOLID",
+            [
+              243,
+              243,
+              243
+            ],
+            1,
+            true
+          ]
+        ],
+        "stroke": [
+          [
+            "SOLID",
+            [
+              208,
+              208,
+              208
+            ],
+            1,
+            true
+          ]
+        ],
+        "sw": 1,
+        "r": 4,
+        "effects": []
+      },
+      {
+        "id": "443:127",
+        "name": "Surface=AutoRaise, Menu=None, State=Default",
+        "type": "COMPONENT",
+        "rect": [
+          24,
+          260,
+          90,
+          32
+        ],
+        "fill": [
+          [
+            "SOLID",
+            [
+              255,
+              255,
+              255
+            ],
+            0,
+            true
+          ]
+        ],
+        "stroke": [
+          [
+            "SOLID",
+            [
+              255,
+              255,
+              255
+            ],
+            0,
+            true
+          ]
+        ],
+        "sw": 1,
+        "r": 4,
+        "effects": []
+      },
+      {
+        "id": "443:134",
+        "name": "Surface=AutoRaise, Menu=None, State=Hover",
+        "type": "COMPONENT",
+        "rect": [
+          274,
+          260,
+          90,
+          32
+        ],
+        "fill": [
+          [
+            "SOLID",
+            [
+              241,
+              236,
+              255
+            ],
+            1,
+            true
+          ]
+        ],
+        "stroke": [
+          [
+            "SOLID",
+            [
+              167,
+              167,
+              167
+            ],
+            1,
+            true
+          ]
+        ],
+        "sw": 1,
+        "r": 4,
+        "effects": []
+      },
+      {
+        "id": "443:141",
+        "name": "Surface=AutoRaise, Menu=None, State=Pressed",
+        "type": "COMPONENT",
+        "rect": [
+          524,
+          260,
+          90,
+          32
+        ],
+        "fill": [
+          [
+            "SOLID",
+            [
+              241,
+              236,
+              255
+            ],
+            1,
+            true
+          ]
+        ],
+        "stroke": [
+          [
+            "SOLID",
+            [
+              83,
+              44,
+              209
+            ],
+            1,
+            true
+          ]
+        ],
+        "sw": 1,
+        "r": 4,
+        "effects": []
+      },
+      {
+        "id": "443:148",
+        "name": "Surface=AutoRaise, Menu=None, State=Focus",
+        "type": "COMPONENT",
+        "rect": [
+          774,
+          260,
+          92,
+          32
+        ],
+        "fill": [
+          [
+            "SOLID",
+            [
+              255,
+              255,
+              255
+            ],
+            0,
+            true
+          ]
+        ],
+        "stroke": [
+          [
+            "SOLID",
+            [
+              98,
+              53,
+              247
+            ],
+            1,
+            true
+          ]
+        ],
+        "sw": 2,
+        "r": 4,
+        "effects": []
+      },
+      {
+        "id": "443:155",
+        "name": "Surface=AutoRaise, Menu=None, State=Disabled",
+        "type": "COMPONENT",
+        "rect": [
+          1024,
+          260,
+          90,
+          32
+        ],
+        "fill": [
+          [
+            "SOLID",
+            [
+              243,
+              243,
+              243
+            ],
+            1,
+            true
+          ]
+        ],
+        "stroke": [
+          [
+            "SOLID",
+            [
+              208,
+              208,
+              208
+            ],
+            1,
+            true
+          ]
+        ],
+        "sw": 1,
+        "r": 4,
+        "effects": []
+      },
+      {
+        "id": "443:162",
+        "name": "Surface=AutoRaise, Menu=Split, State=Default",
+        "type": "COMPONENT",
+        "rect": [
+          24,
+          378,
+          119,
+          32
+        ],
+        "fill": [
+          [
+            "SOLID",
+            [
+              255,
+              255,
+              255
+            ],
+            0,
+            true
+          ]
+        ],
+        "stroke": [
+          [
+            "SOLID",
+            [
+              255,
+              255,
+              255
+            ],
+            0,
+            true
+          ]
+        ],
+        "sw": 1,
+        "r": 4,
+        "effects": []
+      },
+      {
+        "id": "443:174",
+        "name": "Surface=AutoRaise, Menu=Split, State=Hover",
+        "type": "COMPONENT",
+        "rect": [
+          274,
+          378,
+          119,
+          32
+        ],
+        "fill": [
+          [
+            "SOLID",
+            [
+              241,
+              236,
+              255
+            ],
+            1,
+            true
+          ]
+        ],
+        "stroke": [
+          [
+            "SOLID",
+            [
+              167,
+              167,
+              167
+            ],
+            1,
+            true
+          ]
+        ],
+        "sw": 1,
+        "r": 4,
+        "effects": []
+      },
+      {
+        "id": "443:186",
+        "name": "Surface=AutoRaise, Menu=Split, State=Pressed",
+        "type": "COMPONENT",
+        "rect": [
+          524,
+          378,
+          119,
+          32
+        ],
+        "fill": [
+          [
+            "SOLID",
+            [
+              241,
+              236,
+              255
+            ],
+            1,
+            true
+          ]
+        ],
+        "stroke": [
+          [
+            "SOLID",
+            [
+              83,
+              44,
+              209
+            ],
+            1,
+            true
+          ]
+        ],
+        "sw": 1,
+        "r": 4,
+        "effects": []
+      },
+      {
+        "id": "443:198",
+        "name": "Surface=AutoRaise, Menu=Split, State=Focus",
+        "type": "COMPONENT",
+        "rect": [
+          774,
+          378,
+          121,
+          32
+        ],
+        "fill": [
+          [
+            "SOLID",
+            [
+              255,
+              255,
+              255
+            ],
+            0,
+            true
+          ]
+        ],
+        "stroke": [
+          [
+            "SOLID",
+            [
+              98,
+              53,
+              247
+            ],
+            1,
+            true
+          ]
+        ],
+        "sw": 2,
+        "r": 4,
+        "effects": []
+      },
+      {
+        "id": "443:210",
+        "name": "Surface=AutoRaise, Menu=Split, State=Disabled",
+        "type": "COMPONENT",
+        "rect": [
+          1024,
+          378,
+          119,
+          32
+        ],
+        "fill": [
+          [
+            "SOLID",
+            [
+              243,
+              243,
+              243
+            ],
+            1,
+            true
+          ]
+        ],
+        "stroke": [
+          [
+            "SOLID",
+            [
+              208,
+              208,
+              208
+            ],
+            1,
+            true
+          ]
+        ],
+        "sw": 1,
+        "r": 4,
+        "effects": []
+      },
+      {
+        "id": "1129:8",
+        "name": "Surface=Framed, Menu=None, State=Checked",
+        "type": "COMPONENT",
+        "rect": [
+          1224,
+          24,
+          90,
+          32
+        ],
+        "fill": [
+          [
+            "SOLID",
+            [
+              243,
+              239,
+              255
+            ],
+            1,
+            true
+          ]
+        ],
+        "stroke": [
+          [
+            "SOLID",
+            [
+              98,
+              53,
+              247
+            ],
+            1,
+            true
+          ]
+        ],
+        "sw": 1,
+        "r": 4,
+        "effects": []
+      },
+      {
+        "id": "1129:16",
+        "name": "Surface=Framed, Menu=None, State=CheckedHover",
+        "type": "COMPONENT",
+        "rect": [
+          1474,
+          24,
+          90,
+          32
+        ],
+        "fill": [
+          [
+            "SOLID",
+            [
+              241,
+              236,
+              255
+            ],
+            1,
+            true
+          ]
+        ],
+        "stroke": [
+          [
+            "SOLID",
+            [
+              98,
+              53,
+              247
+            ],
+            1,
+            true
+          ]
+        ],
+        "sw": 1,
+        "r": 4,
+        "effects": []
+      },
+      {
+        "id": "1129:24",
+        "name": "Surface=Framed, Menu=None, State=CheckedFocus",
+        "type": "COMPONENT",
+        "rect": [
+          1724,
+          24,
+          92,
+          32
+        ],
+        "fill": [
+          [
+            "SOLID",
+            [
+              243,
+              239,
+              255
+            ],
+            1,
+            true
+          ]
+        ],
+        "stroke": [
+          [
+            "SOLID",
+            [
+              98,
+              53,
+              247
+            ],
+            1,
+            true
+          ]
+        ],
+        "sw": 2,
+        "r": 4,
+        "effects": []
+      },
+      {
+        "id": "1129:32",
+        "name": "Surface=Framed, Menu=Split, State=Checked",
+        "type": "COMPONENT",
+        "rect": [
+          1224,
+          142,
+          119,
+          32
+        ],
+        "fill": [
+          [
+            "SOLID",
+            [
+              243,
+              239,
+              255
+            ],
+            1,
+            true
+          ]
+        ],
+        "stroke": [
+          [
+            "SOLID",
+            [
+              98,
+              53,
+              247
+            ],
+            1,
+            true
+          ]
+        ],
+        "sw": 1,
+        "r": 4,
+        "effects": []
+      },
+      {
+        "id": "1129:45",
+        "name": "Surface=Framed, Menu=Split, State=CheckedHover",
+        "type": "COMPONENT",
+        "rect": [
+          1474,
+          142,
+          119,
+          32
+        ],
+        "fill": [
+          [
+            "SOLID",
+            [
+              241,
+              236,
+              255
+            ],
+            1,
+            true
+          ]
+        ],
+        "stroke": [
+          [
+            "SOLID",
+            [
+              98,
+              53,
+              247
+            ],
+            1,
+            true
+          ]
+        ],
+        "sw": 1,
+        "r": 4,
+        "effects": []
+      },
+      {
+        "id": "1129:58",
+        "name": "Surface=Framed, Menu=Split, State=CheckedFocus",
+        "type": "COMPONENT",
+        "rect": [
+          1724,
+          142,
+          121,
+          32
+        ],
+        "fill": [
+          [
+            "SOLID",
+            [
+              243,
+              239,
+              255
+            ],
+            1,
+            true
+          ]
+        ],
+        "stroke": [
+          [
+            "SOLID",
+            [
+              98,
+              53,
+              247
+            ],
+            1,
+            true
+          ]
+        ],
+        "sw": 2,
+        "r": 4,
+        "effects": []
+      },
+      {
+        "id": "1129:71",
+        "name": "Surface=Framed, Menu=Split, State=Open",
+        "type": "COMPONENT",
+        "rect": [
+          1974,
+          142,
+          121,
+          32
+        ],
+        "fill": [
+          [
+            "SOLID",
+            [
+              243,
+              239,
+              255
+            ],
+            1,
+            true
+          ]
+        ],
+        "stroke": [
+          [
+            "SOLID",
+            [
+              98,
+              53,
+              247
+            ],
+            1,
+            true
+          ]
+        ],
+        "sw": 2,
+        "r": 4,
+        "effects": []
+      },
+      {
+        "id": "1129:84",
+        "name": "Surface=AutoRaise, Menu=None, State=Checked",
+        "type": "COMPONENT",
+        "rect": [
+          1224,
+          260,
+          90,
+          32
+        ],
+        "fill": [
+          [
+            "SOLID",
+            [
+              243,
+              239,
+              255
+            ],
+            1,
+            true
+          ]
+        ],
+        "stroke": [
+          [
+            "SOLID",
+            [
+              98,
+              53,
+              247
+            ],
+            1,
+            true
+          ]
+        ],
+        "sw": 1,
+        "r": 4,
+        "effects": []
+      },
+      {
+        "id": "1129:92",
+        "name": "Surface=AutoRaise, Menu=None, State=CheckedHover",
+        "type": "COMPONENT",
+        "rect": [
+          1474,
+          260,
+          90,
+          32
+        ],
+        "fill": [
+          [
+            "SOLID",
+            [
+              241,
+              236,
+              255
+            ],
+            1,
+            true
+          ]
+        ],
+        "stroke": [
+          [
+            "SOLID",
+            [
+              98,
+              53,
+              247
+            ],
+            1,
+            true
+          ]
+        ],
+        "sw": 1,
+        "r": 4,
+        "effects": []
+      },
+      {
+        "id": "1129:100",
+        "name": "Surface=AutoRaise, Menu=None, State=CheckedFocus",
+        "type": "COMPONENT",
+        "rect": [
+          1724,
+          260,
+          92,
+          32
+        ],
+        "fill": [
+          [
+            "SOLID",
+            [
+              243,
+              239,
+              255
+            ],
+            1,
+            true
+          ]
+        ],
+        "stroke": [
+          [
+            "SOLID",
+            [
+              98,
+              53,
+              247
+            ],
+            1,
+            true
+          ]
+        ],
+        "sw": 2,
+        "r": 4,
+        "effects": []
+      },
+      {
+        "id": "1129:108",
+        "name": "Surface=AutoRaise, Menu=Split, State=Checked",
+        "type": "COMPONENT",
+        "rect": [
+          1224,
+          378,
+          119,
+          32
+        ],
+        "fill": [
+          [
+            "SOLID",
+            [
+              243,
+              239,
+              255
+            ],
+            1,
+            true
+          ]
+        ],
+        "stroke": [
+          [
+            "SOLID",
+            [
+              98,
+              53,
+              247
+            ],
+            1,
+            true
+          ]
+        ],
+        "sw": 1,
+        "r": 4,
+        "effects": []
+      },
+      {
+        "id": "1129:121",
+        "name": "Surface=AutoRaise, Menu=Split, State=CheckedHover",
+        "type": "COMPONENT",
+        "rect": [
+          1474,
+          378,
+          119,
+          32
+        ],
+        "fill": [
+          [
+            "SOLID",
+            [
+              241,
+              236,
+              255
+            ],
+            1,
+            true
+          ]
+        ],
+        "stroke": [
+          [
+            "SOLID",
+            [
+              98,
+              53,
+              247
+            ],
+            1,
+            true
+          ]
+        ],
+        "sw": 1,
+        "r": 4,
+        "effects": []
+      },
+      {
+        "id": "1129:134",
+        "name": "Surface=AutoRaise, Menu=Split, State=CheckedFocus",
+        "type": "COMPONENT",
+        "rect": [
+          1724,
+          378,
+          121,
+          32
+        ],
+        "fill": [
+          [
+            "SOLID",
+            [
+              243,
+              239,
+              255
+            ],
+            1,
+            true
+          ]
+        ],
+        "stroke": [
+          [
+            "SOLID",
+            [
+              98,
+              53,
+              247
+            ],
+            1,
+            true
+          ]
+        ],
+        "sw": 2,
+        "r": 4,
+        "effects": []
+      },
+      {
+        "id": "1129:147",
+        "name": "Surface=AutoRaise, Menu=Split, State=Open",
+        "type": "COMPONENT",
+        "rect": [
+          1974,
+          378,
+          121,
+          32
+        ],
+        "fill": [
+          [
+            "SOLID",
+            [
+              243,
+              239,
+              255
+            ],
+            1,
+            true
+          ]
+        ],
+        "stroke": [
+          [
+            "SOLID",
+            [
+              98,
+              53,
+              247
+            ],
+            1,
+            true
+          ]
+        ],
+        "sw": 2,
+        "r": 4,
+        "effects": []
+      }
+    ],
+    "examples": [
+      {
+        "id": "443:32",
+        "name": "Surface=Framed, Menu=None, State=Default",
+        "type": "COMPONENT",
+        "rect": [
+          24,
+          24,
+          90,
+          32
+        ],
+        "fill": [
+          [
+            "SOLID",
+            [
+              255,
+              255,
+              255
+            ],
+            1,
+            true
+          ]
+        ],
+        "stroke": [
+          [
+            "SOLID",
+            [
+              167,
+              167,
+              167
+            ],
+            1,
+            true
+          ]
+        ],
+        "sw": 1,
+        "r": 4,
+        "effects": [],
+        "clip": false,
+        "layout": "HORIZONTAL",
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "transform": [
+          [
+            1,
+            0,
+            24
+          ],
+          [
+            0,
+            1,
+            24
+          ]
+        ],
+        "children": [
+          {
+            "id": "443:33",
+            "name": "Main action",
+            "type": "FRAME",
+            "rect": [
+              1,
+              0,
+              88,
+              32
+            ],
+            "fill": [],
+            "stroke": [],
+            "sw": 1,
+            "r": 0,
+            "effects": [],
+            "clip": true,
+            "layout": "HORIZONTAL",
+            "padding": [
+              8,
+              0,
+              8,
+              0
+            ],
+            "gap": 6,
+            "transform": [
+              [
+                1,
+                0,
+                1
+              ],
+              [
+                0,
+                1,
+                0
+              ]
+            ],
+            "children": [
+              {
+                "id": "974:13500",
+                "name": "Icon / QAction",
+                "type": "INSTANCE",
+                "rect": [
+                  8,
+                  7,
+                  18,
+                  18
+                ],
+                "fill": [],
+                "stroke": [],
+                "sw": 1,
+                "r": 0,
+                "effects": [],
+                "clip": false,
+                "layout": "NONE",
+                "padding": [
+                  0,
+                  0,
+                  0,
+                  0
+                ],
+                "gap": 0,
+                "transform": [
+                  [
+                    1,
+                    0,
+                    8
+                  ],
+                  [
+                    0,
+                    1,
+                    7
+                  ]
+                ],
+                "children": [
+                  {
+                    "id": "I974:13500;973:76",
+                    "name": "Vector",
+                    "type": "FRAME",
+                    "rect": [
+                      0,
+                      0,
+                      16,
+                      16
+                    ],
+                    "fill": [
+                      [
+                        "SOLID",
+                        [
+                          25,
+                          25,
+                          25
+                        ],
+                        1,
+                        false
+                      ]
+                    ],
+                    "stroke": [],
+                    "sw": 1,
+                    "r": 0,
+                    "effects": [],
+                    "clip": true,
+                    "layout": "NONE",
+                    "padding": [
+                      0,
+                      0,
+                      0,
+                      0
+                    ],
+                    "gap": 0,
+                    "transform": [
+                      [
+                        1,
+                        0,
+                        0
+                      ],
+                      [
+                        0,
+                        1,
+                        0
+                      ]
+                    ],
+                    "children": []
+                  }
+                ]
+              },
+              {
+                "id": "443:38",
+                "name": "Label",
+                "type": "TEXT",
+                "rect": [
+                  32,
+                  5,
+                  48,
+                  22
+                ],
+                "fill": [
+                  [
+                    "SOLID",
+                    [
+                      25,
+                      25,
+                      25
+                    ],
+                    1,
+                    true
+                  ]
+                ],
+                "stroke": [],
+                "sw": 1,
+                "effects": [],
+                "padding": [
+                  null,
+                  null,
+                  null,
+                  null
+                ],
+                "transform": [
+                  [
+                    1,
+                    0,
+                    32
+                  ],
+                  [
+                    0,
+                    1,
+                    5
+                  ]
+                ],
+                "text": "Format",
+                "font": {
+                  "family": "Inter",
+                  "style": "Semi Bold",
+                  "variationSettings": {
+                    "wght": 600,
+                    "slnt": 0
+                  }
+                },
+                "size": 14,
+                "lineHeight": {
+                  "unit": "PIXELS",
+                  "value": 22
+                },
+                "children": []
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "443:67",
+        "name": "Surface=Framed, Menu=Split, State=Default",
+        "type": "COMPONENT",
+        "rect": [
+          24,
+          142,
+          119,
+          32
+        ],
+        "fill": [
+          [
+            "SOLID",
+            [
+              255,
+              255,
+              255
+            ],
+            1,
+            true
+          ]
+        ],
+        "stroke": [
+          [
+            "SOLID",
+            [
+              167,
+              167,
+              167
+            ],
+            1,
+            true
+          ]
+        ],
+        "sw": 1,
+        "r": 4,
+        "effects": [],
+        "clip": false,
+        "layout": "HORIZONTAL",
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "transform": [
+          [
+            1,
+            0,
+            24
+          ],
+          [
+            0,
+            1,
+            142
+          ]
+        ],
+        "children": [
+          {
+            "id": "443:68",
+            "name": "Main action",
+            "type": "FRAME",
+            "rect": [
+              1,
+              0,
+              88,
+              32
+            ],
+            "fill": [],
+            "stroke": [],
+            "sw": 1,
+            "r": 0,
+            "effects": [],
+            "clip": true,
+            "layout": "HORIZONTAL",
+            "padding": [
+              8,
+              0,
+              8,
+              0
+            ],
+            "gap": 6,
+            "transform": [
+              [
+                1,
+                0,
+                1
+              ],
+              [
+                0,
+                1,
+                0
+              ]
+            ],
+            "children": [
+              {
+                "id": "974:13517",
+                "name": "Icon / QAction",
+                "type": "INSTANCE",
+                "rect": [
+                  8,
+                  7,
+                  18,
+                  18
+                ],
+                "fill": [],
+                "stroke": [],
+                "sw": 1,
+                "r": 0,
+                "effects": [],
+                "clip": false,
+                "layout": "NONE",
+                "padding": [
+                  0,
+                  0,
+                  0,
+                  0
+                ],
+                "gap": 0,
+                "transform": [
+                  [
+                    1,
+                    0,
+                    8
+                  ],
+                  [
+                    0,
+                    1,
+                    7
+                  ]
+                ],
+                "children": [
+                  {
+                    "id": "I974:13517;973:76",
+                    "name": "Vector",
+                    "type": "FRAME",
+                    "rect": [
+                      0,
+                      0,
+                      16,
+                      16
+                    ],
+                    "fill": [
+                      [
+                        "SOLID",
+                        [
+                          25,
+                          25,
+                          25
+                        ],
+                        1,
+                        false
+                      ]
+                    ],
+                    "stroke": [],
+                    "sw": 1,
+                    "r": 0,
+                    "effects": [],
+                    "clip": true,
+                    "layout": "NONE",
+                    "padding": [
+                      0,
+                      0,
+                      0,
+                      0
+                    ],
+                    "gap": 0,
+                    "transform": [
+                      [
+                        1,
+                        0,
+                        0
+                      ],
+                      [
+                        0,
+                        1,
+                        0
+                      ]
+                    ],
+                    "children": []
+                  }
+                ]
+              },
+              {
+                "id": "443:73",
+                "name": "Label",
+                "type": "TEXT",
+                "rect": [
+                  32,
+                  5,
+                  48,
+                  22
+                ],
+                "fill": [
+                  [
+                    "SOLID",
+                    [
+                      25,
+                      25,
+                      25
+                    ],
+                    1,
+                    true
+                  ]
+                ],
+                "stroke": [],
+                "sw": 1,
+                "effects": [],
+                "padding": [
+                  null,
+                  null,
+                  null,
+                  null
+                ],
+                "transform": [
+                  [
+                    1,
+                    0,
+                    32
+                  ],
+                  [
+                    0,
+                    1,
+                    5
+                  ]
+                ],
+                "text": "Format",
+                "font": {
+                  "family": "Inter",
+                  "style": "Semi Bold",
+                  "variationSettings": {
+                    "wght": 600,
+                    "slnt": 0
+                  }
+                },
+                "size": 14,
+                "lineHeight": {
+                  "unit": "PIXELS",
+                  "value": 22
+                },
+                "children": []
+              }
+            ]
+          },
+          {
+            "id": "443:74",
+            "name": "Menu divider",
+            "type": "RECTANGLE",
+            "rect": [
+              89,
+              6,
+              1,
+              20
+            ],
+            "fill": [
+              [
+                "SOLID",
+                [
+                  208,
+                  208,
+                  208
+                ],
+                1,
+                true
+              ]
+            ],
+            "stroke": [],
+            "sw": 1,
+            "r": 0,
+            "effects": [],
+            "padding": [
+              null,
+              null,
+              null,
+              null
+            ],
+            "transform": [
+              [
+                1,
+                0,
+                89
+              ],
+              [
+                0,
+                1,
+                6
+              ]
+            ],
+            "children": []
+          },
+          {
+            "id": "443:75",
+            "name": "Menu action",
+            "type": "FRAME",
+            "rect": [
+              90,
+              0,
+              28,
+              32
+            ],
+            "fill": [],
+            "stroke": [],
+            "sw": 1,
+            "r": 0,
+            "effects": [],
+            "clip": true,
+            "layout": "HORIZONTAL",
+            "padding": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "gap": 0,
+            "transform": [
+              [
+                1,
+                0,
+                90
+              ],
+              [
+                0,
+                1,
+                0
+              ]
+            ],
+            "children": [
+              {
+                "id": "443:76",
+                "name": "Menu arrow",
+                "type": "FRAME",
+                "rect": [
+                  7,
+                  9,
+                  14,
+                  14
+                ],
+                "fill": [],
+                "stroke": [],
+                "sw": 1,
+                "r": 0,
+                "effects": [],
+                "clip": false,
+                "layout": "NONE",
+                "padding": [
+                  0,
+                  0,
+                  0,
+                  0
+                ],
+                "gap": 0,
+                "transform": [
+                  [
+                    1,
+                    0,
+                    7
+                  ],
+                  [
+                    0,
+                    1,
+                    9
+                  ]
+                ],
+                "children": [
+                  {
+                    "id": "443:77",
+                    "name": "Chevron/L",
+                    "type": "RECTANGLE",
+                    "rect": [
+                      1.5,
+                      5,
+                      7,
+                      2
+                    ],
+                    "fill": [
+                      [
+                        "SOLID",
+                        [
+                          25,
+                          25,
+                          25
+                        ],
+                        1,
+                        true
+                      ]
+                    ],
+                    "stroke": [],
+                    "sw": 1,
+                    "r": 1,
+                    "effects": [],
+                    "padding": [
+                      null,
+                      null,
+                      null,
+                      null
+                    ],
+                    "transform": [
+                      [
+                        0.7071068286895752,
+                        -0.7071068286895752,
+                        1.5
+                      ],
+                      [
+                        0.7071068286895752,
+                        0.7071068286895752,
+                        5
+                      ]
+                    ],
+                    "children": []
+                  },
+                  {
+                    "id": "443:78",
+                    "name": "Chevron/R",
+                    "type": "RECTANGLE",
+                    "rect": [
+                      6,
+                      5,
+                      7,
+                      2
+                    ],
+                    "fill": [
+                      [
+                        "SOLID",
+                        [
+                          25,
+                          25,
+                          25
+                        ],
+                        1,
+                        true
+                      ]
+                    ],
+                    "stroke": [],
+                    "sw": 1,
+                    "r": 1,
+                    "effects": [],
+                    "padding": [
+                      null,
+                      null,
+                      null,
+                      null
+                    ],
+                    "transform": [
+                      [
+                        0.7071068286895752,
+                        0.7071068286895752,
+                        6
+                      ],
+                      [
+                        -0.7071068286895752,
+                        0.7071068286895752,
+                        5
+                      ]
+                    ],
+                    "children": []
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "443:103",
+        "name": "Surface=Framed, Menu=Split, State=Focus",
+        "type": "COMPONENT",
+        "rect": [
+          774,
+          142,
+          121,
+          32
+        ],
+        "fill": [
+          [
+            "SOLID",
+            [
+              255,
+              255,
+              255
+            ],
+            1,
+            true
+          ]
+        ],
+        "stroke": [
+          [
+            "SOLID",
+            [
+              98,
+              53,
+              247
+            ],
+            1,
+            true
+          ]
+        ],
+        "sw": 2,
+        "r": 4,
+        "effects": [],
+        "clip": false,
+        "layout": "HORIZONTAL",
+        "padding": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "gap": 0,
+        "transform": [
+          [
+            1,
+            0,
+            774
+          ],
+          [
+            0,
+            1,
+            142
+          ]
+        ],
+        "children": [
+          {
+            "id": "443:104",
+            "name": "Main action",
+            "type": "FRAME",
+            "rect": [
+              2,
+              0,
+              88,
+              32
+            ],
+            "fill": [],
+            "stroke": [],
+            "sw": 1,
+            "r": 0,
+            "effects": [],
+            "clip": true,
+            "layout": "HORIZONTAL",
+            "padding": [
+              8,
+              0,
+              8,
+              0
+            ],
+            "gap": 6,
+            "transform": [
+              [
+                1,
+                0,
+                2
+              ],
+              [
+                0,
+                1,
+                0
+              ]
+            ],
+            "children": [
+              {
+                "id": "974:13526",
+                "name": "Icon / QAction",
+                "type": "INSTANCE",
+                "rect": [
+                  8,
+                  7,
+                  18,
+                  18
+                ],
+                "fill": [],
+                "stroke": [],
+                "sw": 1,
+                "r": 0,
+                "effects": [],
+                "clip": false,
+                "layout": "NONE",
+                "padding": [
+                  0,
+                  0,
+                  0,
+                  0
+                ],
+                "gap": 0,
+                "transform": [
+                  [
+                    1,
+                    0,
+                    8
+                  ],
+                  [
+                    0,
+                    1,
+                    7
+                  ]
+                ],
+                "children": [
+                  {
+                    "id": "I974:13526;973:76",
+                    "name": "Vector",
+                    "type": "FRAME",
+                    "rect": [
+                      0,
+                      0,
+                      16,
+                      16
+                    ],
+                    "fill": [
+                      [
+                        "SOLID",
+                        [
+                          25,
+                          25,
+                          25
+                        ],
+                        1,
+                        false
+                      ]
+                    ],
+                    "stroke": [],
+                    "sw": 1,
+                    "r": 0,
+                    "effects": [],
+                    "clip": true,
+                    "layout": "NONE",
+                    "padding": [
+                      0,
+                      0,
+                      0,
+                      0
+                    ],
+                    "gap": 0,
+                    "transform": [
+                      [
+                        1,
+                        0,
+                        0
+                      ],
+                      [
+                        0,
+                        1,
+                        0
+                      ]
+                    ],
+                    "children": []
+                  }
+                ]
+              },
+              {
+                "id": "443:109",
+                "name": "Label",
+                "type": "TEXT",
+                "rect": [
+                  32,
+                  5,
+                  48,
+                  22
+                ],
+                "fill": [
+                  [
+                    "SOLID",
+                    [
+                      25,
+                      25,
+                      25
+                    ],
+                    1,
+                    true
+                  ]
+                ],
+                "stroke": [],
+                "sw": 1,
+                "effects": [],
+                "padding": [
+                  null,
+                  null,
+                  null,
+                  null
+                ],
+                "transform": [
+                  [
+                    1,
+                    0,
+                    32
+                  ],
+                  [
+                    0,
+                    1,
+                    5
+                  ]
+                ],
+                "text": "Format",
+                "font": {
+                  "family": "Inter",
+                  "style": "Semi Bold",
+                  "variationSettings": {
+                    "wght": 600,
+                    "slnt": 0
+                  }
+                },
+                "size": 14,
+                "lineHeight": {
+                  "unit": "PIXELS",
+                  "value": 22
+                },
+                "children": []
+              }
+            ]
+          },
+          {
+            "id": "443:110",
+            "name": "Menu divider",
+            "type": "RECTANGLE",
+            "rect": [
+              90,
+              6,
+              1,
+              20
+            ],
+            "fill": [
+              [
+                "SOLID",
+                [
+                  208,
+                  208,
+                  208
+                ],
+                1,
+                true
+              ]
+            ],
+            "stroke": [],
+            "sw": 1,
+            "r": 0,
+            "effects": [],
+            "padding": [
+              null,
+              null,
+              null,
+              null
+            ],
+            "transform": [
+              [
+                1,
+                0,
+                90
+              ],
+              [
+                0,
+                1,
+                6
+              ]
+            ],
+            "children": []
+          },
+          {
+            "id": "443:111",
+            "name": "Menu action",
+            "type": "FRAME",
+            "rect": [
+              91,
+              0,
+              28,
+              32
+            ],
+            "fill": [],
+            "stroke": [],
+            "sw": 1,
+            "r": 0,
+            "effects": [],
+            "clip": true,
+            "layout": "HORIZONTAL",
+            "padding": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "gap": 0,
+            "transform": [
+              [
+                1,
+                0,
+                91
+              ],
+              [
+                0,
+                1,
+                0
+              ]
+            ],
+            "children": [
+              {
+                "id": "443:112",
+                "name": "Menu arrow",
+                "type": "FRAME",
+                "rect": [
+                  7,
+                  9,
+                  14,
+                  14
+                ],
+                "fill": [],
+                "stroke": [],
+                "sw": 1,
+                "r": 0,
+                "effects": [],
+                "clip": false,
+                "layout": "NONE",
+                "padding": [
+                  0,
+                  0,
+                  0,
+                  0
+                ],
+                "gap": 0,
+                "transform": [
+                  [
+                    1,
+                    0,
+                    7
+                  ],
+                  [
+                    0,
+                    1,
+                    9
+                  ]
+                ],
+                "children": [
+                  {
+                    "id": "443:113",
+                    "name": "Chevron/L",
+                    "type": "RECTANGLE",
+                    "rect": [
+                      1.5,
+                      5,
+                      7,
+                      2
+                    ],
+                    "fill": [
+                      [
+                        "SOLID",
+                        [
+                          25,
+                          25,
+                          25
+                        ],
+                        1,
+                        true
+                      ]
+                    ],
+                    "stroke": [],
+                    "sw": 1,
+                    "r": 1,
+                    "effects": [],
+                    "padding": [
+                      null,
+                      null,
+                      null,
+                      null
+                    ],
+                    "transform": [
+                      [
+                        0.7071068286895752,
+                        -0.7071068286895752,
+                        1.5
+                      ],
+                      [
+                        0.7071068286895752,
+                        0.7071068286895752,
+                        5
+                      ]
+                    ],
+                    "children": []
+                  },
+                  {
+                    "id": "443:114",
+                    "name": "Chevron/R",
+                    "type": "RECTANGLE",
+                    "rect": [
+                      6,
+                      5,
+                      7,
+                      2
+                    ],
+                    "fill": [
+                      [
+                        "SOLID",
+                        [
+                          25,
+                          25,
+                          25
+                        ],
+                        1,
+                        true
+                      ]
+                    ],
+                    "stroke": [],
+                    "sw": 1,
+                    "r": 1,
+                    "effects": [],
+                    "padding": [
+                      null,
+                      null,
+                      null,
+                      null
+                    ],
+                    "transform": [
+                      [
+                        0.7071068286895752,
+                        0.7071068286895752,
+                        6
+                      ],
+                      [
+                        -0.7071068286895752,
+                        0.7071068286895752,
+                        5
+                      ]
+                    ],
+                    "children": []
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "boundaries": [
+    "Current icon slot is 18px, exported vector 16px; historical 20px Standard description is stale for this gallery.",
+    "Open is a painted menu-state preview; native menu visibility, popup timing and QAction authority are not synthesized.",
+    "Gallery focus/open changes width by 2px; live geometry reserves focus border to avoid hit-area jitter.",
+    "Menu None means no split anatomy, not absence of a QMenu. Native text-only, icon-only, text-under-icon, arrowType and action priority remain native modes, not additional Figma variants."
+  ]
+}

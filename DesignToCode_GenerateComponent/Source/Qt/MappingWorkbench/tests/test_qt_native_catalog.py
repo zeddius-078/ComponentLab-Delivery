@@ -11,6 +11,8 @@ COMPONENT_KIT = ROOT.parent.parent / "ComponentKit"
 REGISTRY = COMPONENT_KIT / "component-definitions/native-components.json"
 SOURCE_MAP = COMPONENT_KIT / "component-definitions/generated-component-source-map.json"
 COMPONENT_MAP = ROOT / "mapping/qt-component-map.json"
+QT_REFERENCE = (ROOT.parents[2] /
+                "docs/mainSkill/generate-component-pipeline/references/Qt组件类与主属性参考.md")
 
 
 class QtNativeCatalogTests(unittest.TestCase):
@@ -55,7 +57,7 @@ class QtNativeCatalogTests(unittest.TestCase):
         self.assertEqual({"system": "DSM", "component": "ComponentLab/ProgressBar",
                           "equivalence": "project-defined"}, progress["designReference"])
         builder = runpy.run_path(str(ROOT / "mapping/tools/build_qt_catalog.py"))
-        reference = (ROOT.parents[2] / "docs/Qt 组件类与主属性汇总.md").read_text(encoding="utf-8")
+        reference = QT_REFERENCE.read_text(encoding="utf-8")
         rebuilt = next(item for item in builder["enrich"](builder["parse_reference"](reference))
                        if item["qtClass"] == "QProgressBar")
         self.assertEqual(progress["states"], rebuilt["states"])
@@ -71,7 +73,7 @@ class QtNativeCatalogTests(unittest.TestCase):
             "QDial": ["default", "focus", "dragging", "disabled"],
         }
         builder = runpy.run_path(str(ROOT / "mapping/tools/build_qt_catalog.py"))
-        reference = (ROOT.parents[2] / "docs/Qt 组件类与主属性汇总.md").read_text(encoding="utf-8")
+        reference = QT_REFERENCE.read_text(encoding="utf-8")
         rebuilt = {item["qtClass"]: item for item in builder["enrich"](builder["parse_reference"](reference))}
         cataloged = {item["qtClass"]: item for item in self.components}
         for name, states in expected.items():

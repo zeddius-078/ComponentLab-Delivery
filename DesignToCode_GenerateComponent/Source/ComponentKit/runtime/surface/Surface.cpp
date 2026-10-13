@@ -69,6 +69,7 @@ Recipe Catalog::checkbox(const QString& preset, bool selected, const QString& st
 }
 QString Catalog::buttonUnsupportedReason(const QString& preset, const QString& type,
                                          bool ghost) const {
+    if(preset=="figma-light") return ghost?"ghost-not-in-captured-figma":QString();
     const auto capabilities = data["buttonCapabilities"].toObject()[preset].toObject();
     if (capabilities.isEmpty())
         return "missing-material-capability";

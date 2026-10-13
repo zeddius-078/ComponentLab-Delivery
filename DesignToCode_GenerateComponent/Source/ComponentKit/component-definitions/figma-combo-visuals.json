@@ -1,0 +1,3587 @@
+{
+  "schemaVersion": 1,
+  "fileKey": "w92BKW1EcutKmTXkwzNHbf",
+  "status": "CAPTURED_LIGHT_NOT_DESIGN_APPROVED",
+  "components": [
+    {
+      "pageId": "1120:2",
+      "gallery": {
+        "id": "2015:22862",
+        "rect": [
+          64,
+          1457,
+          1488,
+          391
+        ]
+      },
+      "set": {
+        "id": "1120:18",
+        "rect": [
+          179,
+          85,
+          1130,
+          278
+        ],
+        "fills": [
+          {
+            "type": "SOLID",
+            "visible": true,
+            "opacity": 1,
+            "blendMode": "NORMAL",
+            "color": {
+              "r": 1,
+              "g": 1,
+              "b": 1
+            },
+            "boundVariables": {}
+          }
+        ],
+        "properties": {
+          "Show prefix#82:0": {
+            "type": "BOOLEAN",
+            "defaultValue": false
+          },
+          "Prefix icon#82:13": {
+            "type": "INSTANCE_SWAP",
+            "defaultValue": "989:74",
+            "preferredValues": [
+              {
+                "type": "COMPONENT",
+                "key": "7027a1e6e188fc5410424a024593a940da94ce3d"
+              },
+              {
+                "type": "COMPONENT",
+                "key": "7b1b97cc90b0dc91d833a581af52024b1a5963ff"
+              },
+              {
+                "type": "COMPONENT",
+                "key": "8c5407123246156171a21441ca49118f9dcf0339"
+              },
+              {
+                "type": "COMPONENT",
+                "key": "a6e08b808b3ca8ebe3ae8f4403b1c97bfc4f2299"
+              },
+              {
+                "type": "COMPONENT",
+                "key": "e3bcc402718d86266cbfd5191861d3548f345ed6"
+              },
+              {
+                "type": "COMPONENT",
+                "key": "0683afd50663956511a896b517343c179b491ff3"
+              },
+              {
+                "type": "COMPONENT",
+                "key": "298ae09654c0855ff7ffffdf8b1fac5bf835137e"
+              },
+              {
+                "type": "COMPONENT",
+                "key": "ddde77a75f7eee3b6848dcfdbab46f8e95aa56ad"
+              },
+              {
+                "type": "COMPONENT",
+                "key": "2b3e04ece07ef35f161e048527225856ba95623d"
+              },
+              {
+                "type": "COMPONENT",
+                "key": "126211c902385279507b42ebb4db43024f2066dc"
+              },
+              {
+                "type": "COMPONENT",
+                "key": "60cb35270afd56e799cd982ef6cf304b48502c02"
+              }
+            ]
+          },
+          "Show clear#82:39": {
+            "type": "BOOLEAN",
+            "defaultValue": false
+          },
+          "Clear icon#82:52": {
+            "type": "INSTANCE_SWAP",
+            "defaultValue": "989:26",
+            "preferredValues": [
+              {
+                "type": "COMPONENT",
+                "key": "7027a1e6e188fc5410424a024593a940da94ce3d"
+              },
+              {
+                "type": "COMPONENT",
+                "key": "7b1b97cc90b0dc91d833a581af52024b1a5963ff"
+              },
+              {
+                "type": "COMPONENT",
+                "key": "8c5407123246156171a21441ca49118f9dcf0339"
+              },
+              {
+                "type": "COMPONENT",
+                "key": "a6e08b808b3ca8ebe3ae8f4403b1c97bfc4f2299"
+              },
+              {
+                "type": "COMPONENT",
+                "key": "e3bcc402718d86266cbfd5191861d3548f345ed6"
+              },
+              {
+                "type": "COMPONENT",
+                "key": "0683afd50663956511a896b517343c179b491ff3"
+              },
+              {
+                "type": "COMPONENT",
+                "key": "298ae09654c0855ff7ffffdf8b1fac5bf835137e"
+              },
+              {
+                "type": "COMPONENT",
+                "key": "ddde77a75f7eee3b6848dcfdbab46f8e95aa56ad"
+              },
+              {
+                "type": "COMPONENT",
+                "key": "2b3e04ece07ef35f161e048527225856ba95623d"
+              },
+              {
+                "type": "COMPONENT",
+                "key": "126211c902385279507b42ebb4db43024f2066dc"
+              },
+              {
+                "type": "COMPONENT",
+                "key": "60cb35270afd56e799cd982ef6cf304b48502c02"
+              }
+            ]
+          },
+          "Show suffix#82:65": {
+            "type": "BOOLEAN",
+            "defaultValue": true
+          },
+          "Suffix icon#82:78": {
+            "type": "INSTANCE_SWAP",
+            "defaultValue": "989:58",
+            "preferredValues": [
+              {
+                "type": "COMPONENT",
+                "key": "7027a1e6e188fc5410424a024593a940da94ce3d"
+              },
+              {
+                "type": "COMPONENT",
+                "key": "7b1b97cc90b0dc91d833a581af52024b1a5963ff"
+              },
+              {
+                "type": "COMPONENT",
+                "key": "8c5407123246156171a21441ca49118f9dcf0339"
+              },
+              {
+                "type": "COMPONENT",
+                "key": "a6e08b808b3ca8ebe3ae8f4403b1c97bfc4f2299"
+              },
+              {
+                "type": "COMPONENT",
+                "key": "e3bcc402718d86266cbfd5191861d3548f345ed6"
+              },
+              {
+                "type": "COMPONENT",
+                "key": "0683afd50663956511a896b517343c179b491ff3"
+              },
+              {
+                "type": "COMPONENT",
+                "key": "298ae09654c0855ff7ffffdf8b1fac5bf835137e"
+              },
+              {
+                "type": "COMPONENT",
+                "key": "ddde77a75f7eee3b6848dcfdbab46f8e95aa56ad"
+              },
+              {
+                "type": "COMPONENT",
+                "key": "2b3e04ece07ef35f161e048527225856ba95623d"
+              },
+              {
+                "type": "COMPONENT",
+                "key": "126211c902385279507b42ebb4db43024f2066dc"
+              },
+              {
+                "type": "COMPONENT",
+                "key": "60cb35270afd56e799cd982ef6cf304b48502c02"
+              }
+            ]
+          },
+          "Size": {
+            "type": "VARIANT",
+            "defaultValue": "Small",
+            "variantOptions": [
+              "Small",
+              "Middle",
+              "Large"
+            ]
+          },
+          "State": {
+            "type": "VARIANT",
+            "defaultValue": "Default",
+            "variantOptions": [
+              "Default",
+              "Hover",
+              "Focus",
+              "Disabled"
+            ]
+          }
+        }
+      },
+      "variants": [
+        {
+          "id": "1120:19",
+          "name": "Size=Small, State=Default",
+          "rect": [
+            40,
+            54,
+            240,
+            24
+          ]
+        },
+        {
+          "id": "1120:24",
+          "name": "Size=Small, State=Hover",
+          "rect": [
+            310,
+            54,
+            240,
+            24
+          ]
+        },
+        {
+          "id": "1120:29",
+          "name": "Size=Small, State=Focus",
+          "rect": [
+            580,
+            54,
+            240,
+            24
+          ]
+        },
+        {
+          "id": "1120:34",
+          "name": "Size=Small, State=Disabled",
+          "rect": [
+            850,
+            54,
+            240,
+            24
+          ]
+        },
+        {
+          "id": "1120:39",
+          "name": "Size=Middle, State=Default",
+          "rect": [
+            40,
+            126,
+            240,
+            32
+          ]
+        },
+        {
+          "id": "1120:44",
+          "name": "Size=Middle, State=Hover",
+          "rect": [
+            310,
+            126,
+            240,
+            32
+          ]
+        },
+        {
+          "id": "1120:49",
+          "name": "Size=Middle, State=Focus",
+          "rect": [
+            580,
+            126,
+            240,
+            32
+          ]
+        },
+        {
+          "id": "1120:54",
+          "name": "Size=Middle, State=Disabled",
+          "rect": [
+            850,
+            126,
+            240,
+            32
+          ]
+        },
+        {
+          "id": "1120:59",
+          "name": "Size=Large, State=Default",
+          "rect": [
+            40,
+            198,
+            240,
+            40
+          ]
+        },
+        {
+          "id": "1120:64",
+          "name": "Size=Large, State=Hover",
+          "rect": [
+            310,
+            198,
+            240,
+            40
+          ]
+        },
+        {
+          "id": "1120:69",
+          "name": "Size=Large, State=Focus",
+          "rect": [
+            580,
+            198,
+            240,
+            40
+          ]
+        },
+        {
+          "id": "1120:74",
+          "name": "Size=Large, State=Disabled",
+          "rect": [
+            850,
+            198,
+            240,
+            40
+          ]
+        }
+      ],
+      "samples": [
+        {
+          "id": "1120:19",
+          "name": "Size=Small, State=Default",
+          "type": "COMPONENT",
+          "rect": [
+            40,
+            54,
+            240,
+            24
+          ],
+          "visible": true,
+          "opacity": 1,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 1,
+                "g": 1,
+                "b": 1
+              },
+              "opacity": 1,
+              "visible": true
+            }
+          ],
+          "strokes": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 0.8509804010391235,
+                "g": 0.8509804010391235,
+                "b": 0.8509804010391235
+              },
+              "opacity": 1,
+              "visible": true
+            }
+          ],
+          "radius": 4,
+          "strokeWeight": 1,
+          "strokeAlign": "INSIDE",
+          "effects": [],
+          "layout": [
+            "HORIZONTAL",
+            7,
+            0,
+            7,
+            0,
+            8
+          ],
+          "children": [
+            {
+              "id": "1120:20",
+              "name": "prefix-icon",
+              "type": "INSTANCE",
+              "rect": [
+                0,
+                0,
+                16,
+                16
+              ],
+              "visible": false,
+              "opacity": 1,
+              "fills": [],
+              "strokes": [],
+              "radius": 0,
+              "strokeWeight": 1,
+              "strokeAlign": "INSIDE",
+              "effects": [],
+              "layout": [
+                "NONE",
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "children": []
+            },
+            {
+              "id": "1120:21",
+              "name": "content",
+              "type": "INSTANCE",
+              "rect": [
+                8,
+                5,
+                200,
+                14
+              ],
+              "visible": true,
+              "opacity": 1,
+              "fills": [],
+              "strokes": [],
+              "radius": 0,
+              "strokeWeight": 1,
+              "strokeAlign": "INSIDE",
+              "effects": [],
+              "layout": [
+                "HORIZONTAL",
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "children": [
+                {
+                  "id": "I1120:21;242:2954",
+                  "name": "value",
+                  "type": "TEXT",
+                  "rect": [
+                    0,
+                    0,
+                    89,
+                    14
+                  ],
+                  "visible": true,
+                  "opacity": 1,
+                  "fills": [
+                    {
+                      "type": "SOLID",
+                      "color": {
+                        "r": 0.40392157435417175,
+                        "g": 0.40392157435417175,
+                        "b": 0.40392157435417175
+                      },
+                      "opacity": 1,
+                      "visible": true
+                    }
+                  ],
+                  "strokes": [],
+                  "strokeWeight": 1,
+                  "strokeAlign": "OUTSIDE",
+                  "effects": [],
+                  "text": "Please select",
+                  "font": {
+                    "family": "Inter",
+                    "style": "Medium",
+                    "variationSettings": {
+                      "wght": 500,
+                      "slnt": 0
+                    }
+                  },
+                  "fontSize": 14,
+                  "lineHeight": {
+                    "unit": "PIXELS",
+                    "value": 14
+                  }
+                }
+              ]
+            },
+            {
+              "id": "1120:22",
+              "name": "clear-icon",
+              "type": "INSTANCE",
+              "rect": [
+                0,
+                0,
+                16,
+                16
+              ],
+              "visible": false,
+              "opacity": 0.6499999761581421,
+              "fills": [],
+              "strokes": [],
+              "radius": 0,
+              "strokeWeight": 1,
+              "strokeAlign": "INSIDE",
+              "effects": [],
+              "layout": [
+                "NONE",
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "children": []
+            },
+            {
+              "id": "1120:23",
+              "name": "suffix-icon",
+              "type": "INSTANCE",
+              "rect": [
+                216,
+                4,
+                16,
+                16
+              ],
+              "visible": true,
+              "opacity": 0.6499999761581421,
+              "fills": [],
+              "strokes": [],
+              "radius": 0,
+              "strokeWeight": 1,
+              "strokeAlign": "INSIDE",
+              "effects": [],
+              "layout": [
+                "NONE",
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "children": [
+                {
+                  "id": "I1120:23;989:59",
+                  "name": "Vector",
+                  "type": "FRAME",
+                  "rect": [
+                    0,
+                    0,
+                    16,
+                    16
+                  ],
+                  "visible": true,
+                  "opacity": 1,
+                  "fills": [
+                    {
+                      "type": "SOLID",
+                      "color": {
+                        "r": 0.09803921729326248,
+                        "g": 0.09803921729326248,
+                        "b": 0.09803921729326248
+                      },
+                      "opacity": 1,
+                      "visible": false
+                    }
+                  ],
+                  "strokes": [],
+                  "radius": 0,
+                  "strokeWeight": 1,
+                  "strokeAlign": "INSIDE",
+                  "effects": [],
+                  "layout": [
+                    "NONE",
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                  ],
+                  "children": [
+                    {
+                      "id": "I1120:23;989:60",
+                      "name": "Vector",
+                      "type": "VECTOR",
+                      "rect": [
+                        4,
+                        6,
+                        8,
+                        4
+                      ],
+                      "visible": true,
+                      "opacity": 1,
+                      "fills": [],
+                      "strokes": [
+                        {
+                          "type": "SOLID",
+                          "color": {
+                            "r": 0.09803921729326248,
+                            "g": 0.09803921729326248,
+                            "b": 0.09803921729326248
+                          },
+                          "opacity": 1,
+                          "visible": true
+                        }
+                      ],
+                      "radius": 0,
+                      "strokeWeight": 1.5,
+                      "strokeAlign": "CENTER",
+                      "effects": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "1120:29",
+          "name": "Size=Small, State=Focus",
+          "type": "COMPONENT",
+          "rect": [
+            580,
+            54,
+            240,
+            24
+          ],
+          "visible": true,
+          "opacity": 1,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 1,
+                "g": 1,
+                "b": 1
+              },
+              "opacity": 1,
+              "visible": true
+            }
+          ],
+          "strokes": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 0.3843137323856354,
+                "g": 0.2078431397676468,
+                "b": 0.9686274528503418
+              },
+              "opacity": 1,
+              "visible": true
+            }
+          ],
+          "radius": 4,
+          "strokeWeight": 1,
+          "strokeAlign": "INSIDE",
+          "effects": [
+            {
+              "type": "DROP_SHADOW",
+              "visible": true,
+              "radius": 0,
+              "boundVariables": {
+                "color": {
+                  "type": "VARIABLE_ALIAS",
+                  "id": "VariableID:132:2786"
+                }
+              },
+              "color": {
+                "r": 0.9529411792755127,
+                "g": 0.9372549057006836,
+                "b": 1,
+                "a": 1
+              },
+              "offset": {
+                "x": 0,
+                "y": 0
+              },
+              "spread": 2,
+              "blendMode": "NORMAL",
+              "showShadowBehindNode": true
+            }
+          ],
+          "layout": [
+            "HORIZONTAL",
+            7,
+            0,
+            7,
+            0,
+            8
+          ],
+          "children": [
+            {
+              "id": "1120:30",
+              "name": "prefix-icon",
+              "type": "INSTANCE",
+              "rect": [
+                0,
+                0,
+                16,
+                16
+              ],
+              "visible": false,
+              "opacity": 1,
+              "fills": [],
+              "strokes": [],
+              "radius": 0,
+              "strokeWeight": 1,
+              "strokeAlign": "INSIDE",
+              "effects": [],
+              "layout": [
+                "NONE",
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "children": []
+            },
+            {
+              "id": "1120:31",
+              "name": "content",
+              "type": "INSTANCE",
+              "rect": [
+                8,
+                5,
+                200,
+                14
+              ],
+              "visible": true,
+              "opacity": 1,
+              "fills": [],
+              "strokes": [],
+              "radius": 0,
+              "strokeWeight": 1,
+              "strokeAlign": "INSIDE",
+              "effects": [],
+              "layout": [
+                "HORIZONTAL",
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "children": [
+                {
+                  "id": "I1120:31;242:2954",
+                  "name": "value",
+                  "type": "TEXT",
+                  "rect": [
+                    0,
+                    0,
+                    89,
+                    14
+                  ],
+                  "visible": true,
+                  "opacity": 1,
+                  "fills": [
+                    {
+                      "type": "SOLID",
+                      "color": {
+                        "r": 0.40392157435417175,
+                        "g": 0.40392157435417175,
+                        "b": 0.40392157435417175
+                      },
+                      "opacity": 1,
+                      "visible": true
+                    }
+                  ],
+                  "strokes": [],
+                  "strokeWeight": 1,
+                  "strokeAlign": "OUTSIDE",
+                  "effects": [],
+                  "text": "Please select",
+                  "font": {
+                    "family": "Inter",
+                    "style": "Medium",
+                    "variationSettings": {
+                      "wght": 500,
+                      "slnt": 0
+                    }
+                  },
+                  "fontSize": 14,
+                  "lineHeight": {
+                    "unit": "PIXELS",
+                    "value": 14
+                  }
+                }
+              ]
+            },
+            {
+              "id": "1120:32",
+              "name": "clear-icon",
+              "type": "INSTANCE",
+              "rect": [
+                0,
+                0,
+                16,
+                16
+              ],
+              "visible": false,
+              "opacity": 0.6499999761581421,
+              "fills": [],
+              "strokes": [],
+              "radius": 0,
+              "strokeWeight": 1,
+              "strokeAlign": "INSIDE",
+              "effects": [],
+              "layout": [
+                "NONE",
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "children": []
+            },
+            {
+              "id": "1120:33",
+              "name": "suffix-icon",
+              "type": "INSTANCE",
+              "rect": [
+                216,
+                4,
+                16,
+                16
+              ],
+              "visible": true,
+              "opacity": 0.6499999761581421,
+              "fills": [],
+              "strokes": [],
+              "radius": 0,
+              "strokeWeight": 1,
+              "strokeAlign": "INSIDE",
+              "effects": [],
+              "layout": [
+                "NONE",
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "children": [
+                {
+                  "id": "I1120:33;989:59",
+                  "name": "Vector",
+                  "type": "FRAME",
+                  "rect": [
+                    0,
+                    0,
+                    16,
+                    16
+                  ],
+                  "visible": true,
+                  "opacity": 1,
+                  "fills": [
+                    {
+                      "type": "SOLID",
+                      "color": {
+                        "r": 0.09803921729326248,
+                        "g": 0.09803921729326248,
+                        "b": 0.09803921729326248
+                      },
+                      "opacity": 1,
+                      "visible": false
+                    }
+                  ],
+                  "strokes": [],
+                  "radius": 0,
+                  "strokeWeight": 1,
+                  "strokeAlign": "INSIDE",
+                  "effects": [],
+                  "layout": [
+                    "NONE",
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                  ],
+                  "children": [
+                    {
+                      "id": "I1120:33;989:60",
+                      "name": "Vector",
+                      "type": "VECTOR",
+                      "rect": [
+                        4,
+                        6,
+                        8,
+                        4
+                      ],
+                      "visible": true,
+                      "opacity": 1,
+                      "fills": [],
+                      "strokes": [
+                        {
+                          "type": "SOLID",
+                          "color": {
+                            "r": 0.09803921729326248,
+                            "g": 0.09803921729326248,
+                            "b": 0.09803921729326248
+                          },
+                          "opacity": 1,
+                          "visible": true
+                        }
+                      ],
+                      "radius": 0,
+                      "strokeWeight": 1.5,
+                      "strokeAlign": "CENTER",
+                      "effects": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "1120:34",
+          "name": "Size=Small, State=Disabled",
+          "type": "COMPONENT",
+          "rect": [
+            850,
+            54,
+            240,
+            24
+          ],
+          "visible": true,
+          "opacity": 1,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 0,
+                "g": 0,
+                "b": 0
+              },
+              "opacity": 0.03999999910593033,
+              "visible": true
+            }
+          ],
+          "strokes": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 0.8509804010391235,
+                "g": 0.8509804010391235,
+                "b": 0.8509804010391235
+              },
+              "opacity": 1,
+              "visible": true
+            }
+          ],
+          "radius": 4,
+          "strokeWeight": 1,
+          "strokeAlign": "INSIDE",
+          "effects": [],
+          "layout": [
+            "HORIZONTAL",
+            7,
+            0,
+            7,
+            0,
+            8
+          ],
+          "children": [
+            {
+              "id": "1120:35",
+              "name": "prefix-icon",
+              "type": "INSTANCE",
+              "rect": [
+                0,
+                0,
+                16,
+                16
+              ],
+              "visible": false,
+              "opacity": 1,
+              "fills": [],
+              "strokes": [],
+              "radius": 0,
+              "strokeWeight": 1,
+              "strokeAlign": "INSIDE",
+              "effects": [],
+              "layout": [
+                "NONE",
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "children": []
+            },
+            {
+              "id": "1120:36",
+              "name": "content",
+              "type": "INSTANCE",
+              "rect": [
+                8,
+                5,
+                200,
+                14
+              ],
+              "visible": true,
+              "opacity": 0.699999988079071,
+              "fills": [],
+              "strokes": [],
+              "radius": 0,
+              "strokeWeight": 1,
+              "strokeAlign": "INSIDE",
+              "effects": [],
+              "layout": [
+                "HORIZONTAL",
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "children": [
+                {
+                  "id": "I1120:36;242:2958",
+                  "name": "value",
+                  "type": "TEXT",
+                  "rect": [
+                    0,
+                    0,
+                    89,
+                    14
+                  ],
+                  "visible": true,
+                  "opacity": 1,
+                  "fills": [
+                    {
+                      "type": "SOLID",
+                      "color": {
+                        "r": 0.5411764979362488,
+                        "g": 0.5411764979362488,
+                        "b": 0.5411764979362488
+                      },
+                      "opacity": 1,
+                      "visible": true
+                    }
+                  ],
+                  "strokes": [],
+                  "strokeWeight": 1,
+                  "strokeAlign": "OUTSIDE",
+                  "effects": [],
+                  "text": "Please select",
+                  "font": {
+                    "family": "Inter",
+                    "style": "Medium",
+                    "variationSettings": {
+                      "wght": 500,
+                      "slnt": 0
+                    }
+                  },
+                  "fontSize": 14,
+                  "lineHeight": {
+                    "unit": "PIXELS",
+                    "value": 14
+                  }
+                }
+              ]
+            },
+            {
+              "id": "1120:37",
+              "name": "clear-icon",
+              "type": "INSTANCE",
+              "rect": [
+                0,
+                0,
+                16,
+                16
+              ],
+              "visible": false,
+              "opacity": 0.25,
+              "fills": [],
+              "strokes": [],
+              "radius": 0,
+              "strokeWeight": 1,
+              "strokeAlign": "INSIDE",
+              "effects": [],
+              "layout": [
+                "NONE",
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "children": []
+            },
+            {
+              "id": "1120:38",
+              "name": "suffix-icon",
+              "type": "INSTANCE",
+              "rect": [
+                216,
+                4,
+                16,
+                16
+              ],
+              "visible": true,
+              "opacity": 0.25,
+              "fills": [],
+              "strokes": [],
+              "radius": 0,
+              "strokeWeight": 1,
+              "strokeAlign": "INSIDE",
+              "effects": [],
+              "layout": [
+                "NONE",
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "children": [
+                {
+                  "id": "I1120:38;989:59",
+                  "name": "Vector",
+                  "type": "FRAME",
+                  "rect": [
+                    0,
+                    0,
+                    16,
+                    16
+                  ],
+                  "visible": true,
+                  "opacity": 1,
+                  "fills": [
+                    {
+                      "type": "SOLID",
+                      "color": {
+                        "r": 0.09803921729326248,
+                        "g": 0.09803921729326248,
+                        "b": 0.09803921729326248
+                      },
+                      "opacity": 1,
+                      "visible": false
+                    }
+                  ],
+                  "strokes": [],
+                  "radius": 0,
+                  "strokeWeight": 1,
+                  "strokeAlign": "INSIDE",
+                  "effects": [],
+                  "layout": [
+                    "NONE",
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                  ],
+                  "children": [
+                    {
+                      "id": "I1120:38;989:60",
+                      "name": "Vector",
+                      "type": "VECTOR",
+                      "rect": [
+                        4,
+                        6,
+                        8,
+                        4
+                      ],
+                      "visible": true,
+                      "opacity": 1,
+                      "fills": [],
+                      "strokes": [
+                        {
+                          "type": "SOLID",
+                          "color": {
+                            "r": 0.09803921729326248,
+                            "g": 0.09803921729326248,
+                            "b": 0.09803921729326248
+                          },
+                          "opacity": 1,
+                          "visible": true
+                        }
+                      ],
+                      "radius": 0,
+                      "strokeWeight": 1.5,
+                      "strokeAlign": "CENTER",
+                      "effects": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "1120:39",
+          "name": "Size=Middle, State=Default",
+          "type": "COMPONENT",
+          "rect": [
+            40,
+            126,
+            240,
+            32
+          ],
+          "visible": true,
+          "opacity": 1,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 1,
+                "g": 1,
+                "b": 1
+              },
+              "opacity": 1,
+              "visible": true
+            }
+          ],
+          "strokes": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 0.8509804010391235,
+                "g": 0.8509804010391235,
+                "b": 0.8509804010391235
+              },
+              "opacity": 1,
+              "visible": true
+            }
+          ],
+          "radius": 4,
+          "strokeWeight": 1,
+          "strokeAlign": "INSIDE",
+          "effects": [],
+          "layout": [
+            "HORIZONTAL",
+            11,
+            0,
+            11,
+            0,
+            8
+          ],
+          "children": [
+            {
+              "id": "1120:40",
+              "name": "prefix-icon",
+              "type": "INSTANCE",
+              "rect": [
+                0,
+                0,
+                16,
+                16
+              ],
+              "visible": false,
+              "opacity": 1,
+              "fills": [],
+              "strokes": [],
+              "radius": 0,
+              "strokeWeight": 1,
+              "strokeAlign": "INSIDE",
+              "effects": [],
+              "layout": [
+                "NONE",
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "children": []
+            },
+            {
+              "id": "1120:41",
+              "name": "content",
+              "type": "INSTANCE",
+              "rect": [
+                12,
+                9,
+                192,
+                14
+              ],
+              "visible": true,
+              "opacity": 1,
+              "fills": [],
+              "strokes": [],
+              "radius": 0,
+              "strokeWeight": 1,
+              "strokeAlign": "INSIDE",
+              "effects": [],
+              "layout": [
+                "HORIZONTAL",
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "children": [
+                {
+                  "id": "I1120:41;242:2962",
+                  "name": "value",
+                  "type": "TEXT",
+                  "rect": [
+                    0,
+                    0,
+                    89,
+                    14
+                  ],
+                  "visible": true,
+                  "opacity": 1,
+                  "fills": [
+                    {
+                      "type": "SOLID",
+                      "color": {
+                        "r": 0.40392157435417175,
+                        "g": 0.40392157435417175,
+                        "b": 0.40392157435417175
+                      },
+                      "opacity": 1,
+                      "visible": true
+                    }
+                  ],
+                  "strokes": [],
+                  "strokeWeight": 1,
+                  "strokeAlign": "OUTSIDE",
+                  "effects": [],
+                  "text": "Please select",
+                  "font": {
+                    "family": "Inter",
+                    "style": "Medium",
+                    "variationSettings": {
+                      "wght": 500,
+                      "slnt": 0
+                    }
+                  },
+                  "fontSize": 14,
+                  "lineHeight": {
+                    "unit": "PIXELS",
+                    "value": 14
+                  }
+                }
+              ]
+            },
+            {
+              "id": "1120:42",
+              "name": "clear-icon",
+              "type": "INSTANCE",
+              "rect": [
+                0,
+                0,
+                16,
+                16
+              ],
+              "visible": false,
+              "opacity": 0.6499999761581421,
+              "fills": [],
+              "strokes": [],
+              "radius": 0,
+              "strokeWeight": 1,
+              "strokeAlign": "INSIDE",
+              "effects": [],
+              "layout": [
+                "NONE",
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "children": []
+            },
+            {
+              "id": "1120:43",
+              "name": "suffix-icon",
+              "type": "INSTANCE",
+              "rect": [
+                212,
+                8,
+                16,
+                16
+              ],
+              "visible": true,
+              "opacity": 0.6499999761581421,
+              "fills": [],
+              "strokes": [],
+              "radius": 0,
+              "strokeWeight": 1,
+              "strokeAlign": "INSIDE",
+              "effects": [],
+              "layout": [
+                "NONE",
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "children": [
+                {
+                  "id": "I1120:43;989:59",
+                  "name": "Vector",
+                  "type": "FRAME",
+                  "rect": [
+                    0,
+                    0,
+                    16,
+                    16
+                  ],
+                  "visible": true,
+                  "opacity": 1,
+                  "fills": [
+                    {
+                      "type": "SOLID",
+                      "color": {
+                        "r": 0.09803921729326248,
+                        "g": 0.09803921729326248,
+                        "b": 0.09803921729326248
+                      },
+                      "opacity": 1,
+                      "visible": false
+                    }
+                  ],
+                  "strokes": [],
+                  "radius": 0,
+                  "strokeWeight": 1,
+                  "strokeAlign": "INSIDE",
+                  "effects": [],
+                  "layout": [
+                    "NONE",
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                  ],
+                  "children": [
+                    {
+                      "id": "I1120:43;989:60",
+                      "name": "Vector",
+                      "type": "VECTOR",
+                      "rect": [
+                        4,
+                        6,
+                        8,
+                        4
+                      ],
+                      "visible": true,
+                      "opacity": 1,
+                      "fills": [],
+                      "strokes": [
+                        {
+                          "type": "SOLID",
+                          "color": {
+                            "r": 0.09803921729326248,
+                            "g": 0.09803921729326248,
+                            "b": 0.09803921729326248
+                          },
+                          "opacity": 1,
+                          "visible": true
+                        }
+                      ],
+                      "radius": 0,
+                      "strokeWeight": 1.5,
+                      "strokeAlign": "CENTER",
+                      "effects": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "1120:59",
+          "name": "Size=Large, State=Default",
+          "type": "COMPONENT",
+          "rect": [
+            40,
+            198,
+            240,
+            40
+          ],
+          "visible": true,
+          "opacity": 1,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 1,
+                "g": 1,
+                "b": 1
+              },
+              "opacity": 1,
+              "visible": true
+            }
+          ],
+          "strokes": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 0.8509804010391235,
+                "g": 0.8509804010391235,
+                "b": 0.8509804010391235
+              },
+              "opacity": 1,
+              "visible": true
+            }
+          ],
+          "radius": 4,
+          "strokeWeight": 1,
+          "strokeAlign": "INSIDE",
+          "effects": [],
+          "layout": [
+            "HORIZONTAL",
+            11,
+            0,
+            11,
+            0,
+            8
+          ],
+          "children": [
+            {
+              "id": "1120:60",
+              "name": "prefix-icon",
+              "type": "INSTANCE",
+              "rect": [
+                0,
+                0,
+                16,
+                16
+              ],
+              "visible": false,
+              "opacity": 1,
+              "fills": [],
+              "strokes": [],
+              "radius": 0,
+              "strokeWeight": 1,
+              "strokeAlign": "INSIDE",
+              "effects": [],
+              "layout": [
+                "NONE",
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "children": []
+            },
+            {
+              "id": "1120:61",
+              "name": "content",
+              "type": "INSTANCE",
+              "rect": [
+                12,
+                13,
+                192,
+                14
+              ],
+              "visible": true,
+              "opacity": 1,
+              "fills": [],
+              "strokes": [],
+              "radius": 0,
+              "strokeWeight": 1,
+              "strokeAlign": "INSIDE",
+              "effects": [],
+              "layout": [
+                "HORIZONTAL",
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "children": [
+                {
+                  "id": "I1120:61;242:2970",
+                  "name": "value",
+                  "type": "TEXT",
+                  "rect": [
+                    0,
+                    0,
+                    89,
+                    14
+                  ],
+                  "visible": true,
+                  "opacity": 1,
+                  "fills": [
+                    {
+                      "type": "SOLID",
+                      "color": {
+                        "r": 0.40392157435417175,
+                        "g": 0.40392157435417175,
+                        "b": 0.40392157435417175
+                      },
+                      "opacity": 1,
+                      "visible": true
+                    }
+                  ],
+                  "strokes": [],
+                  "strokeWeight": 1,
+                  "strokeAlign": "OUTSIDE",
+                  "effects": [],
+                  "text": "Please select",
+                  "font": {
+                    "family": "Inter",
+                    "style": "Medium",
+                    "variationSettings": {
+                      "wght": 500,
+                      "slnt": 0
+                    }
+                  },
+                  "fontSize": 14,
+                  "lineHeight": {
+                    "unit": "PIXELS",
+                    "value": 14
+                  }
+                }
+              ]
+            },
+            {
+              "id": "1120:62",
+              "name": "clear-icon",
+              "type": "INSTANCE",
+              "rect": [
+                0,
+                0,
+                16,
+                16
+              ],
+              "visible": false,
+              "opacity": 0.6499999761581421,
+              "fills": [],
+              "strokes": [],
+              "radius": 0,
+              "strokeWeight": 1,
+              "strokeAlign": "INSIDE",
+              "effects": [],
+              "layout": [
+                "NONE",
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "children": []
+            },
+            {
+              "id": "1120:63",
+              "name": "suffix-icon",
+              "type": "INSTANCE",
+              "rect": [
+                212,
+                12,
+                16,
+                16
+              ],
+              "visible": true,
+              "opacity": 0.6499999761581421,
+              "fills": [],
+              "strokes": [],
+              "radius": 0,
+              "strokeWeight": 1,
+              "strokeAlign": "INSIDE",
+              "effects": [],
+              "layout": [
+                "NONE",
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "children": [
+                {
+                  "id": "I1120:63;989:59",
+                  "name": "Vector",
+                  "type": "FRAME",
+                  "rect": [
+                    0,
+                    0,
+                    16,
+                    16
+                  ],
+                  "visible": true,
+                  "opacity": 1,
+                  "fills": [
+                    {
+                      "type": "SOLID",
+                      "color": {
+                        "r": 0.09803921729326248,
+                        "g": 0.09803921729326248,
+                        "b": 0.09803921729326248
+                      },
+                      "opacity": 1,
+                      "visible": false
+                    }
+                  ],
+                  "strokes": [],
+                  "radius": 0,
+                  "strokeWeight": 1,
+                  "strokeAlign": "INSIDE",
+                  "effects": [],
+                  "layout": [
+                    "NONE",
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                  ],
+                  "children": [
+                    {
+                      "id": "I1120:63;989:60",
+                      "name": "Vector",
+                      "type": "VECTOR",
+                      "rect": [
+                        4,
+                        6,
+                        8,
+                        4
+                      ],
+                      "visible": true,
+                      "opacity": 1,
+                      "fills": [],
+                      "strokes": [
+                        {
+                          "type": "SOLID",
+                          "color": {
+                            "r": 0.09803921729326248,
+                            "g": 0.09803921729326248,
+                            "b": 0.09803921729326248
+                          },
+                          "opacity": 1,
+                          "visible": true
+                        }
+                      ],
+                      "radius": 0,
+                      "strokeWeight": 1.5,
+                      "strokeAlign": "CENTER",
+                      "effects": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "variables": {
+        "var(--component-basic-select-default-placeholder-color)": "#676767",
+        "typography/letter-spacing/default": "0",
+        "typography/font-size/data/numeric": "14",
+        "typography/line-height/data/numeric": "14",
+        "typography/font-weight/subemphasis": "500",
+        "DSM/Data/Numeric": "Font(family: \"Inter\", style: Medium, size: typography/font-size/data/numeric, weight: typography/font-weight/subemphasis, lineHeight: typography/line-height/data/numeric, letterSpacing: typography/letter-spacing/default)",
+        "var(--qtlab-semantic-color-text-primary)": "#191919",
+        "color/text/primary": "#191919",
+        "select/size/small/container/min-height": "24",
+        "var(--component-basic-input-radius)": "4",
+        "var(--component-basic-input-state-default-background)": "#ffffff",
+        "token.colorBorder": "#d9d9d9",
+        "var(--component-basic-input-state-hover-border)": "#191919",
+        "var(--component-basic-input-state-focus-border)": "#6235f7",
+        "var(--component-basic-input-state-focus-outline)": "#f3efff",
+        "var(--component-basic-select-disabled-content-color)": "#8a8a8a",
+        "token.colorBgContainerDisabled": "#0000000a",
+        "select/size/medium/container/min-height": "32",
+        "select/size/large/container/min-height": "40"
+      }
+    },
+    {
+      "pageId": "1121:2",
+      "gallery": {
+        "id": "2015:23381",
+        "rect": [
+          64,
+          1457,
+          1488,
+          391
+        ]
+      },
+      "set": {
+        "id": "1121:18",
+        "rect": [
+          179,
+          85,
+          1130,
+          278
+        ],
+        "fills": [
+          {
+            "type": "SOLID",
+            "visible": true,
+            "opacity": 1,
+            "blendMode": "NORMAL",
+            "color": {
+              "r": 1,
+              "g": 1,
+              "b": 1
+            },
+            "boundVariables": {}
+          }
+        ],
+        "properties": {
+          "Show prefix#82:0": {
+            "type": "BOOLEAN",
+            "defaultValue": false
+          },
+          "Prefix icon#82:13": {
+            "type": "INSTANCE_SWAP",
+            "defaultValue": "989:74",
+            "preferredValues": [
+              {
+                "type": "COMPONENT",
+                "key": "7027a1e6e188fc5410424a024593a940da94ce3d"
+              },
+              {
+                "type": "COMPONENT",
+                "key": "7b1b97cc90b0dc91d833a581af52024b1a5963ff"
+              },
+              {
+                "type": "COMPONENT",
+                "key": "8c5407123246156171a21441ca49118f9dcf0339"
+              },
+              {
+                "type": "COMPONENT",
+                "key": "a6e08b808b3ca8ebe3ae8f4403b1c97bfc4f2299"
+              },
+              {
+                "type": "COMPONENT",
+                "key": "e3bcc402718d86266cbfd5191861d3548f345ed6"
+              },
+              {
+                "type": "COMPONENT",
+                "key": "0683afd50663956511a896b517343c179b491ff3"
+              },
+              {
+                "type": "COMPONENT",
+                "key": "298ae09654c0855ff7ffffdf8b1fac5bf835137e"
+              },
+              {
+                "type": "COMPONENT",
+                "key": "ddde77a75f7eee3b6848dcfdbab46f8e95aa56ad"
+              },
+              {
+                "type": "COMPONENT",
+                "key": "2b3e04ece07ef35f161e048527225856ba95623d"
+              },
+              {
+                "type": "COMPONENT",
+                "key": "126211c902385279507b42ebb4db43024f2066dc"
+              },
+              {
+                "type": "COMPONENT",
+                "key": "60cb35270afd56e799cd982ef6cf304b48502c02"
+              }
+            ]
+          },
+          "Show clear#82:39": {
+            "type": "BOOLEAN",
+            "defaultValue": false
+          },
+          "Clear icon#82:52": {
+            "type": "INSTANCE_SWAP",
+            "defaultValue": "989:26",
+            "preferredValues": [
+              {
+                "type": "COMPONENT",
+                "key": "7027a1e6e188fc5410424a024593a940da94ce3d"
+              },
+              {
+                "type": "COMPONENT",
+                "key": "7b1b97cc90b0dc91d833a581af52024b1a5963ff"
+              },
+              {
+                "type": "COMPONENT",
+                "key": "8c5407123246156171a21441ca49118f9dcf0339"
+              },
+              {
+                "type": "COMPONENT",
+                "key": "a6e08b808b3ca8ebe3ae8f4403b1c97bfc4f2299"
+              },
+              {
+                "type": "COMPONENT",
+                "key": "e3bcc402718d86266cbfd5191861d3548f345ed6"
+              },
+              {
+                "type": "COMPONENT",
+                "key": "0683afd50663956511a896b517343c179b491ff3"
+              },
+              {
+                "type": "COMPONENT",
+                "key": "298ae09654c0855ff7ffffdf8b1fac5bf835137e"
+              },
+              {
+                "type": "COMPONENT",
+                "key": "ddde77a75f7eee3b6848dcfdbab46f8e95aa56ad"
+              },
+              {
+                "type": "COMPONENT",
+                "key": "2b3e04ece07ef35f161e048527225856ba95623d"
+              },
+              {
+                "type": "COMPONENT",
+                "key": "126211c902385279507b42ebb4db43024f2066dc"
+              },
+              {
+                "type": "COMPONENT",
+                "key": "60cb35270afd56e799cd982ef6cf304b48502c02"
+              }
+            ]
+          },
+          "Show suffix#82:65": {
+            "type": "BOOLEAN",
+            "defaultValue": true
+          },
+          "Suffix icon#82:78": {
+            "type": "INSTANCE_SWAP",
+            "defaultValue": "989:58",
+            "preferredValues": [
+              {
+                "type": "COMPONENT",
+                "key": "7027a1e6e188fc5410424a024593a940da94ce3d"
+              },
+              {
+                "type": "COMPONENT",
+                "key": "7b1b97cc90b0dc91d833a581af52024b1a5963ff"
+              },
+              {
+                "type": "COMPONENT",
+                "key": "8c5407123246156171a21441ca49118f9dcf0339"
+              },
+              {
+                "type": "COMPONENT",
+                "key": "a6e08b808b3ca8ebe3ae8f4403b1c97bfc4f2299"
+              },
+              {
+                "type": "COMPONENT",
+                "key": "e3bcc402718d86266cbfd5191861d3548f345ed6"
+              },
+              {
+                "type": "COMPONENT",
+                "key": "0683afd50663956511a896b517343c179b491ff3"
+              },
+              {
+                "type": "COMPONENT",
+                "key": "298ae09654c0855ff7ffffdf8b1fac5bf835137e"
+              },
+              {
+                "type": "COMPONENT",
+                "key": "ddde77a75f7eee3b6848dcfdbab46f8e95aa56ad"
+              },
+              {
+                "type": "COMPONENT",
+                "key": "2b3e04ece07ef35f161e048527225856ba95623d"
+              },
+              {
+                "type": "COMPONENT",
+                "key": "126211c902385279507b42ebb4db43024f2066dc"
+              },
+              {
+                "type": "COMPONENT",
+                "key": "60cb35270afd56e799cd982ef6cf304b48502c02"
+              }
+            ]
+          },
+          "Size": {
+            "type": "VARIANT",
+            "defaultValue": "Small",
+            "variantOptions": [
+              "Small",
+              "Middle",
+              "Large"
+            ]
+          },
+          "State": {
+            "type": "VARIANT",
+            "defaultValue": "Default",
+            "variantOptions": [
+              "Default",
+              "Hover",
+              "Focus",
+              "Disabled"
+            ]
+          }
+        }
+      },
+      "variants": [
+        {
+          "id": "1121:19",
+          "name": "Size=Small, State=Default",
+          "rect": [
+            40,
+            54,
+            240,
+            24
+          ]
+        },
+        {
+          "id": "1121:24",
+          "name": "Size=Small, State=Hover",
+          "rect": [
+            310,
+            54,
+            240,
+            24
+          ]
+        },
+        {
+          "id": "1121:29",
+          "name": "Size=Small, State=Focus",
+          "rect": [
+            580,
+            54,
+            240,
+            24
+          ]
+        },
+        {
+          "id": "1121:34",
+          "name": "Size=Small, State=Disabled",
+          "rect": [
+            850,
+            54,
+            240,
+            24
+          ]
+        },
+        {
+          "id": "1121:39",
+          "name": "Size=Middle, State=Default",
+          "rect": [
+            40,
+            126,
+            240,
+            32
+          ]
+        },
+        {
+          "id": "1121:44",
+          "name": "Size=Middle, State=Hover",
+          "rect": [
+            310,
+            126,
+            240,
+            32
+          ]
+        },
+        {
+          "id": "1121:49",
+          "name": "Size=Middle, State=Focus",
+          "rect": [
+            580,
+            126,
+            240,
+            32
+          ]
+        },
+        {
+          "id": "1121:54",
+          "name": "Size=Middle, State=Disabled",
+          "rect": [
+            850,
+            126,
+            240,
+            32
+          ]
+        },
+        {
+          "id": "1121:59",
+          "name": "Size=Large, State=Default",
+          "rect": [
+            40,
+            198,
+            240,
+            40
+          ]
+        },
+        {
+          "id": "1121:64",
+          "name": "Size=Large, State=Hover",
+          "rect": [
+            310,
+            198,
+            240,
+            40
+          ]
+        },
+        {
+          "id": "1121:69",
+          "name": "Size=Large, State=Focus",
+          "rect": [
+            580,
+            198,
+            240,
+            40
+          ]
+        },
+        {
+          "id": "1121:74",
+          "name": "Size=Large, State=Disabled",
+          "rect": [
+            850,
+            198,
+            240,
+            40
+          ]
+        }
+      ],
+      "samples": [
+        {
+          "id": "1121:19",
+          "name": "Size=Small, State=Default",
+          "type": "COMPONENT",
+          "rect": [
+            40,
+            54,
+            240,
+            24
+          ],
+          "visible": true,
+          "opacity": 1,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 1,
+                "g": 1,
+                "b": 1
+              },
+              "opacity": 1,
+              "visible": true
+            }
+          ],
+          "strokes": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 0.8509804010391235,
+                "g": 0.8509804010391235,
+                "b": 0.8509804010391235
+              },
+              "opacity": 1,
+              "visible": true
+            }
+          ],
+          "radius": 4,
+          "strokeWeight": 1,
+          "strokeAlign": "INSIDE",
+          "effects": [],
+          "layout": [
+            "HORIZONTAL",
+            7,
+            0,
+            7,
+            0,
+            8
+          ],
+          "children": [
+            {
+              "id": "1121:20",
+              "name": "prefix-icon",
+              "type": "INSTANCE",
+              "rect": [
+                0,
+                0,
+                16,
+                16
+              ],
+              "visible": false,
+              "opacity": 1,
+              "fills": [],
+              "strokes": [],
+              "radius": 0,
+              "strokeWeight": 1,
+              "strokeAlign": "INSIDE",
+              "effects": [],
+              "layout": [
+                "NONE",
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "children": []
+            },
+            {
+              "id": "1121:21",
+              "name": "content",
+              "type": "INSTANCE",
+              "rect": [
+                8,
+                5,
+                200,
+                14
+              ],
+              "visible": true,
+              "opacity": 1,
+              "fills": [],
+              "strokes": [],
+              "radius": 0,
+              "strokeWeight": 1,
+              "strokeAlign": "INSIDE",
+              "effects": [],
+              "layout": [
+                "HORIZONTAL",
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "children": [
+                {
+                  "id": "I1121:21;242:2956",
+                  "name": "value",
+                  "type": "TEXT",
+                  "rect": [
+                    0,
+                    0,
+                    31,
+                    14
+                  ],
+                  "visible": true,
+                  "opacity": 1,
+                  "fills": [
+                    {
+                      "type": "SOLID",
+                      "color": {
+                        "r": 0.09803921729326248,
+                        "g": 0.09803921729326248,
+                        "b": 0.09803921729326248
+                      },
+                      "opacity": 1,
+                      "visible": true
+                    }
+                  ],
+                  "strokes": [],
+                  "strokeWeight": 1,
+                  "strokeAlign": "OUTSIDE",
+                  "effects": [],
+                  "text": "Arial",
+                  "font": {
+                    "family": "Inter",
+                    "style": "Medium",
+                    "variationSettings": {
+                      "wght": 500,
+                      "slnt": 0
+                    }
+                  },
+                  "fontSize": 14,
+                  "lineHeight": {
+                    "unit": "PIXELS",
+                    "value": 14
+                  }
+                }
+              ]
+            },
+            {
+              "id": "1121:22",
+              "name": "clear-icon",
+              "type": "INSTANCE",
+              "rect": [
+                0,
+                0,
+                16,
+                16
+              ],
+              "visible": false,
+              "opacity": 0.6499999761581421,
+              "fills": [],
+              "strokes": [],
+              "radius": 0,
+              "strokeWeight": 1,
+              "strokeAlign": "INSIDE",
+              "effects": [],
+              "layout": [
+                "NONE",
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "children": []
+            },
+            {
+              "id": "1121:23",
+              "name": "suffix-icon",
+              "type": "INSTANCE",
+              "rect": [
+                216,
+                4,
+                16,
+                16
+              ],
+              "visible": true,
+              "opacity": 0.6499999761581421,
+              "fills": [],
+              "strokes": [],
+              "radius": 0,
+              "strokeWeight": 1,
+              "strokeAlign": "INSIDE",
+              "effects": [],
+              "layout": [
+                "NONE",
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "children": [
+                {
+                  "id": "I1121:23;989:59",
+                  "name": "Vector",
+                  "type": "FRAME",
+                  "rect": [
+                    0,
+                    0,
+                    16,
+                    16
+                  ],
+                  "visible": true,
+                  "opacity": 1,
+                  "fills": [
+                    {
+                      "type": "SOLID",
+                      "color": {
+                        "r": 0.09803921729326248,
+                        "g": 0.09803921729326248,
+                        "b": 0.09803921729326248
+                      },
+                      "opacity": 1,
+                      "visible": false
+                    }
+                  ],
+                  "strokes": [],
+                  "radius": 0,
+                  "strokeWeight": 1,
+                  "strokeAlign": "INSIDE",
+                  "effects": [],
+                  "layout": [
+                    "NONE",
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                  ],
+                  "children": [
+                    {
+                      "id": "I1121:23;989:60",
+                      "name": "Vector",
+                      "type": "VECTOR",
+                      "rect": [
+                        4,
+                        6,
+                        8,
+                        4
+                      ],
+                      "visible": true,
+                      "opacity": 1,
+                      "fills": [],
+                      "strokes": [
+                        {
+                          "type": "SOLID",
+                          "color": {
+                            "r": 0.09803921729326248,
+                            "g": 0.09803921729326248,
+                            "b": 0.09803921729326248
+                          },
+                          "opacity": 1,
+                          "visible": true
+                        }
+                      ],
+                      "radius": 0,
+                      "strokeWeight": 1.5,
+                      "strokeAlign": "CENTER",
+                      "effects": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "1121:29",
+          "name": "Size=Small, State=Focus",
+          "type": "COMPONENT",
+          "rect": [
+            580,
+            54,
+            240,
+            24
+          ],
+          "visible": true,
+          "opacity": 1,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 1,
+                "g": 1,
+                "b": 1
+              },
+              "opacity": 1,
+              "visible": true
+            }
+          ],
+          "strokes": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 0.3843137323856354,
+                "g": 0.2078431397676468,
+                "b": 0.9686274528503418
+              },
+              "opacity": 1,
+              "visible": true
+            }
+          ],
+          "radius": 4,
+          "strokeWeight": 1,
+          "strokeAlign": "INSIDE",
+          "effects": [
+            {
+              "type": "DROP_SHADOW",
+              "visible": true,
+              "radius": 0,
+              "boundVariables": {
+                "color": {
+                  "type": "VARIABLE_ALIAS",
+                  "id": "VariableID:132:2786"
+                }
+              },
+              "color": {
+                "r": 0.9529411792755127,
+                "g": 0.9372549057006836,
+                "b": 1,
+                "a": 1
+              },
+              "offset": {
+                "x": 0,
+                "y": 0
+              },
+              "spread": 2,
+              "blendMode": "NORMAL",
+              "showShadowBehindNode": true
+            }
+          ],
+          "layout": [
+            "HORIZONTAL",
+            7,
+            0,
+            7,
+            0,
+            8
+          ],
+          "children": [
+            {
+              "id": "1121:30",
+              "name": "prefix-icon",
+              "type": "INSTANCE",
+              "rect": [
+                0,
+                0,
+                16,
+                16
+              ],
+              "visible": false,
+              "opacity": 1,
+              "fills": [],
+              "strokes": [],
+              "radius": 0,
+              "strokeWeight": 1,
+              "strokeAlign": "INSIDE",
+              "effects": [],
+              "layout": [
+                "NONE",
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "children": []
+            },
+            {
+              "id": "1121:31",
+              "name": "content",
+              "type": "INSTANCE",
+              "rect": [
+                8,
+                5,
+                200,
+                14
+              ],
+              "visible": true,
+              "opacity": 1,
+              "fills": [],
+              "strokes": [],
+              "radius": 0,
+              "strokeWeight": 1,
+              "strokeAlign": "INSIDE",
+              "effects": [],
+              "layout": [
+                "HORIZONTAL",
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "children": [
+                {
+                  "id": "I1121:31;242:2956",
+                  "name": "value",
+                  "type": "TEXT",
+                  "rect": [
+                    0,
+                    0,
+                    31,
+                    14
+                  ],
+                  "visible": true,
+                  "opacity": 1,
+                  "fills": [
+                    {
+                      "type": "SOLID",
+                      "color": {
+                        "r": 0.09803921729326248,
+                        "g": 0.09803921729326248,
+                        "b": 0.09803921729326248
+                      },
+                      "opacity": 1,
+                      "visible": true
+                    }
+                  ],
+                  "strokes": [],
+                  "strokeWeight": 1,
+                  "strokeAlign": "OUTSIDE",
+                  "effects": [],
+                  "text": "Arial",
+                  "font": {
+                    "family": "Inter",
+                    "style": "Medium",
+                    "variationSettings": {
+                      "wght": 500,
+                      "slnt": 0
+                    }
+                  },
+                  "fontSize": 14,
+                  "lineHeight": {
+                    "unit": "PIXELS",
+                    "value": 14
+                  }
+                }
+              ]
+            },
+            {
+              "id": "1121:32",
+              "name": "clear-icon",
+              "type": "INSTANCE",
+              "rect": [
+                0,
+                0,
+                16,
+                16
+              ],
+              "visible": false,
+              "opacity": 0.6499999761581421,
+              "fills": [],
+              "strokes": [],
+              "radius": 0,
+              "strokeWeight": 1,
+              "strokeAlign": "INSIDE",
+              "effects": [],
+              "layout": [
+                "NONE",
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "children": []
+            },
+            {
+              "id": "1121:33",
+              "name": "suffix-icon",
+              "type": "INSTANCE",
+              "rect": [
+                216,
+                4,
+                16,
+                16
+              ],
+              "visible": true,
+              "opacity": 0.6499999761581421,
+              "fills": [],
+              "strokes": [],
+              "radius": 0,
+              "strokeWeight": 1,
+              "strokeAlign": "INSIDE",
+              "effects": [],
+              "layout": [
+                "NONE",
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "children": [
+                {
+                  "id": "I1121:33;989:59",
+                  "name": "Vector",
+                  "type": "FRAME",
+                  "rect": [
+                    0,
+                    0,
+                    16,
+                    16
+                  ],
+                  "visible": true,
+                  "opacity": 1,
+                  "fills": [
+                    {
+                      "type": "SOLID",
+                      "color": {
+                        "r": 0.09803921729326248,
+                        "g": 0.09803921729326248,
+                        "b": 0.09803921729326248
+                      },
+                      "opacity": 1,
+                      "visible": false
+                    }
+                  ],
+                  "strokes": [],
+                  "radius": 0,
+                  "strokeWeight": 1,
+                  "strokeAlign": "INSIDE",
+                  "effects": [],
+                  "layout": [
+                    "NONE",
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                  ],
+                  "children": [
+                    {
+                      "id": "I1121:33;989:60",
+                      "name": "Vector",
+                      "type": "VECTOR",
+                      "rect": [
+                        4,
+                        6,
+                        8,
+                        4
+                      ],
+                      "visible": true,
+                      "opacity": 1,
+                      "fills": [],
+                      "strokes": [
+                        {
+                          "type": "SOLID",
+                          "color": {
+                            "r": 0.09803921729326248,
+                            "g": 0.09803921729326248,
+                            "b": 0.09803921729326248
+                          },
+                          "opacity": 1,
+                          "visible": true
+                        }
+                      ],
+                      "radius": 0,
+                      "strokeWeight": 1.5,
+                      "strokeAlign": "CENTER",
+                      "effects": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "1121:34",
+          "name": "Size=Small, State=Disabled",
+          "type": "COMPONENT",
+          "rect": [
+            850,
+            54,
+            240,
+            24
+          ],
+          "visible": true,
+          "opacity": 1,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 0,
+                "g": 0,
+                "b": 0
+              },
+              "opacity": 0.03999999910593033,
+              "visible": true
+            }
+          ],
+          "strokes": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 0.8509804010391235,
+                "g": 0.8509804010391235,
+                "b": 0.8509804010391235
+              },
+              "opacity": 1,
+              "visible": true
+            }
+          ],
+          "radius": 4,
+          "strokeWeight": 1,
+          "strokeAlign": "INSIDE",
+          "effects": [],
+          "layout": [
+            "HORIZONTAL",
+            7,
+            0,
+            7,
+            0,
+            8
+          ],
+          "children": [
+            {
+              "id": "1121:35",
+              "name": "prefix-icon",
+              "type": "INSTANCE",
+              "rect": [
+                0,
+                0,
+                16,
+                16
+              ],
+              "visible": false,
+              "opacity": 1,
+              "fills": [],
+              "strokes": [],
+              "radius": 0,
+              "strokeWeight": 1,
+              "strokeAlign": "INSIDE",
+              "effects": [],
+              "layout": [
+                "NONE",
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "children": []
+            },
+            {
+              "id": "1121:36",
+              "name": "content",
+              "type": "INSTANCE",
+              "rect": [
+                8,
+                5,
+                200,
+                14
+              ],
+              "visible": true,
+              "opacity": 0.699999988079071,
+              "fills": [],
+              "strokes": [],
+              "radius": 0,
+              "strokeWeight": 1,
+              "strokeAlign": "INSIDE",
+              "effects": [],
+              "layout": [
+                "HORIZONTAL",
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "children": [
+                {
+                  "id": "I1121:36;242:2960",
+                  "name": "value",
+                  "type": "TEXT",
+                  "rect": [
+                    0,
+                    0,
+                    31,
+                    14
+                  ],
+                  "visible": true,
+                  "opacity": 1,
+                  "fills": [
+                    {
+                      "type": "SOLID",
+                      "color": {
+                        "r": 0.5411764979362488,
+                        "g": 0.5411764979362488,
+                        "b": 0.5411764979362488
+                      },
+                      "opacity": 1,
+                      "visible": true
+                    }
+                  ],
+                  "strokes": [],
+                  "strokeWeight": 1,
+                  "strokeAlign": "OUTSIDE",
+                  "effects": [],
+                  "text": "Arial",
+                  "font": {
+                    "family": "Inter",
+                    "style": "Medium",
+                    "variationSettings": {
+                      "wght": 500,
+                      "slnt": 0
+                    }
+                  },
+                  "fontSize": 14,
+                  "lineHeight": {
+                    "unit": "PIXELS",
+                    "value": 14
+                  }
+                }
+              ]
+            },
+            {
+              "id": "1121:37",
+              "name": "clear-icon",
+              "type": "INSTANCE",
+              "rect": [
+                0,
+                0,
+                16,
+                16
+              ],
+              "visible": false,
+              "opacity": 0.25,
+              "fills": [],
+              "strokes": [],
+              "radius": 0,
+              "strokeWeight": 1,
+              "strokeAlign": "INSIDE",
+              "effects": [],
+              "layout": [
+                "NONE",
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "children": []
+            },
+            {
+              "id": "1121:38",
+              "name": "suffix-icon",
+              "type": "INSTANCE",
+              "rect": [
+                216,
+                4,
+                16,
+                16
+              ],
+              "visible": true,
+              "opacity": 0.25,
+              "fills": [],
+              "strokes": [],
+              "radius": 0,
+              "strokeWeight": 1,
+              "strokeAlign": "INSIDE",
+              "effects": [],
+              "layout": [
+                "NONE",
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "children": [
+                {
+                  "id": "I1121:38;989:59",
+                  "name": "Vector",
+                  "type": "FRAME",
+                  "rect": [
+                    0,
+                    0,
+                    16,
+                    16
+                  ],
+                  "visible": true,
+                  "opacity": 1,
+                  "fills": [
+                    {
+                      "type": "SOLID",
+                      "color": {
+                        "r": 0.09803921729326248,
+                        "g": 0.09803921729326248,
+                        "b": 0.09803921729326248
+                      },
+                      "opacity": 1,
+                      "visible": false
+                    }
+                  ],
+                  "strokes": [],
+                  "radius": 0,
+                  "strokeWeight": 1,
+                  "strokeAlign": "INSIDE",
+                  "effects": [],
+                  "layout": [
+                    "NONE",
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                  ],
+                  "children": [
+                    {
+                      "id": "I1121:38;989:60",
+                      "name": "Vector",
+                      "type": "VECTOR",
+                      "rect": [
+                        4,
+                        6,
+                        8,
+                        4
+                      ],
+                      "visible": true,
+                      "opacity": 1,
+                      "fills": [],
+                      "strokes": [
+                        {
+                          "type": "SOLID",
+                          "color": {
+                            "r": 0.09803921729326248,
+                            "g": 0.09803921729326248,
+                            "b": 0.09803921729326248
+                          },
+                          "opacity": 1,
+                          "visible": true
+                        }
+                      ],
+                      "radius": 0,
+                      "strokeWeight": 1.5,
+                      "strokeAlign": "CENTER",
+                      "effects": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "1121:39",
+          "name": "Size=Middle, State=Default",
+          "type": "COMPONENT",
+          "rect": [
+            40,
+            126,
+            240,
+            32
+          ],
+          "visible": true,
+          "opacity": 1,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 1,
+                "g": 1,
+                "b": 1
+              },
+              "opacity": 1,
+              "visible": true
+            }
+          ],
+          "strokes": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 0.8509804010391235,
+                "g": 0.8509804010391235,
+                "b": 0.8509804010391235
+              },
+              "opacity": 1,
+              "visible": true
+            }
+          ],
+          "radius": 4,
+          "strokeWeight": 1,
+          "strokeAlign": "INSIDE",
+          "effects": [],
+          "layout": [
+            "HORIZONTAL",
+            11,
+            0,
+            11,
+            0,
+            8
+          ],
+          "children": [
+            {
+              "id": "1121:40",
+              "name": "prefix-icon",
+              "type": "INSTANCE",
+              "rect": [
+                0,
+                0,
+                16,
+                16
+              ],
+              "visible": false,
+              "opacity": 1,
+              "fills": [],
+              "strokes": [],
+              "radius": 0,
+              "strokeWeight": 1,
+              "strokeAlign": "INSIDE",
+              "effects": [],
+              "layout": [
+                "NONE",
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "children": []
+            },
+            {
+              "id": "1121:41",
+              "name": "content",
+              "type": "INSTANCE",
+              "rect": [
+                12,
+                9,
+                192,
+                14
+              ],
+              "visible": true,
+              "opacity": 1,
+              "fills": [],
+              "strokes": [],
+              "radius": 0,
+              "strokeWeight": 1,
+              "strokeAlign": "INSIDE",
+              "effects": [],
+              "layout": [
+                "HORIZONTAL",
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "children": [
+                {
+                  "id": "I1121:41;242:2964",
+                  "name": "value",
+                  "type": "TEXT",
+                  "rect": [
+                    0,
+                    0,
+                    31,
+                    14
+                  ],
+                  "visible": true,
+                  "opacity": 1,
+                  "fills": [
+                    {
+                      "type": "SOLID",
+                      "color": {
+                        "r": 0.09803921729326248,
+                        "g": 0.09803921729326248,
+                        "b": 0.09803921729326248
+                      },
+                      "opacity": 1,
+                      "visible": true
+                    }
+                  ],
+                  "strokes": [],
+                  "strokeWeight": 1,
+                  "strokeAlign": "OUTSIDE",
+                  "effects": [],
+                  "text": "Arial",
+                  "font": {
+                    "family": "Inter",
+                    "style": "Medium",
+                    "variationSettings": {
+                      "wght": 500,
+                      "slnt": 0
+                    }
+                  },
+                  "fontSize": 14,
+                  "lineHeight": {
+                    "unit": "PIXELS",
+                    "value": 14
+                  }
+                }
+              ]
+            },
+            {
+              "id": "1121:42",
+              "name": "clear-icon",
+              "type": "INSTANCE",
+              "rect": [
+                0,
+                0,
+                16,
+                16
+              ],
+              "visible": false,
+              "opacity": 0.6499999761581421,
+              "fills": [],
+              "strokes": [],
+              "radius": 0,
+              "strokeWeight": 1,
+              "strokeAlign": "INSIDE",
+              "effects": [],
+              "layout": [
+                "NONE",
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "children": []
+            },
+            {
+              "id": "1121:43",
+              "name": "suffix-icon",
+              "type": "INSTANCE",
+              "rect": [
+                212,
+                8,
+                16,
+                16
+              ],
+              "visible": true,
+              "opacity": 0.6499999761581421,
+              "fills": [],
+              "strokes": [],
+              "radius": 0,
+              "strokeWeight": 1,
+              "strokeAlign": "INSIDE",
+              "effects": [],
+              "layout": [
+                "NONE",
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "children": [
+                {
+                  "id": "I1121:43;989:59",
+                  "name": "Vector",
+                  "type": "FRAME",
+                  "rect": [
+                    0,
+                    0,
+                    16,
+                    16
+                  ],
+                  "visible": true,
+                  "opacity": 1,
+                  "fills": [
+                    {
+                      "type": "SOLID",
+                      "color": {
+                        "r": 0.09803921729326248,
+                        "g": 0.09803921729326248,
+                        "b": 0.09803921729326248
+                      },
+                      "opacity": 1,
+                      "visible": false
+                    }
+                  ],
+                  "strokes": [],
+                  "radius": 0,
+                  "strokeWeight": 1,
+                  "strokeAlign": "INSIDE",
+                  "effects": [],
+                  "layout": [
+                    "NONE",
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                  ],
+                  "children": [
+                    {
+                      "id": "I1121:43;989:60",
+                      "name": "Vector",
+                      "type": "VECTOR",
+                      "rect": [
+                        4,
+                        6,
+                        8,
+                        4
+                      ],
+                      "visible": true,
+                      "opacity": 1,
+                      "fills": [],
+                      "strokes": [
+                        {
+                          "type": "SOLID",
+                          "color": {
+                            "r": 0.09803921729326248,
+                            "g": 0.09803921729326248,
+                            "b": 0.09803921729326248
+                          },
+                          "opacity": 1,
+                          "visible": true
+                        }
+                      ],
+                      "radius": 0,
+                      "strokeWeight": 1.5,
+                      "strokeAlign": "CENTER",
+                      "effects": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "1121:59",
+          "name": "Size=Large, State=Default",
+          "type": "COMPONENT",
+          "rect": [
+            40,
+            198,
+            240,
+            40
+          ],
+          "visible": true,
+          "opacity": 1,
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 1,
+                "g": 1,
+                "b": 1
+              },
+              "opacity": 1,
+              "visible": true
+            }
+          ],
+          "strokes": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 0.8509804010391235,
+                "g": 0.8509804010391235,
+                "b": 0.8509804010391235
+              },
+              "opacity": 1,
+              "visible": true
+            }
+          ],
+          "radius": 4,
+          "strokeWeight": 1,
+          "strokeAlign": "INSIDE",
+          "effects": [],
+          "layout": [
+            "HORIZONTAL",
+            11,
+            0,
+            11,
+            0,
+            8
+          ],
+          "children": [
+            {
+              "id": "1121:60",
+              "name": "prefix-icon",
+              "type": "INSTANCE",
+              "rect": [
+                0,
+                0,
+                16,
+                16
+              ],
+              "visible": false,
+              "opacity": 1,
+              "fills": [],
+              "strokes": [],
+              "radius": 0,
+              "strokeWeight": 1,
+              "strokeAlign": "INSIDE",
+              "effects": [],
+              "layout": [
+                "NONE",
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "children": []
+            },
+            {
+              "id": "1121:61",
+              "name": "content",
+              "type": "INSTANCE",
+              "rect": [
+                12,
+                13,
+                192,
+                14
+              ],
+              "visible": true,
+              "opacity": 1,
+              "fills": [],
+              "strokes": [],
+              "radius": 0,
+              "strokeWeight": 1,
+              "strokeAlign": "INSIDE",
+              "effects": [],
+              "layout": [
+                "HORIZONTAL",
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "children": [
+                {
+                  "id": "I1121:61;242:2972",
+                  "name": "value",
+                  "type": "TEXT",
+                  "rect": [
+                    0,
+                    0,
+                    31,
+                    14
+                  ],
+                  "visible": true,
+                  "opacity": 1,
+                  "fills": [
+                    {
+                      "type": "SOLID",
+                      "color": {
+                        "r": 0.09803921729326248,
+                        "g": 0.09803921729326248,
+                        "b": 0.09803921729326248
+                      },
+                      "opacity": 1,
+                      "visible": true
+                    }
+                  ],
+                  "strokes": [],
+                  "strokeWeight": 1,
+                  "strokeAlign": "OUTSIDE",
+                  "effects": [],
+                  "text": "Arial",
+                  "font": {
+                    "family": "Inter",
+                    "style": "Medium",
+                    "variationSettings": {
+                      "wght": 500,
+                      "slnt": 0
+                    }
+                  },
+                  "fontSize": 14,
+                  "lineHeight": {
+                    "unit": "PIXELS",
+                    "value": 14
+                  }
+                }
+              ]
+            },
+            {
+              "id": "1121:62",
+              "name": "clear-icon",
+              "type": "INSTANCE",
+              "rect": [
+                0,
+                0,
+                16,
+                16
+              ],
+              "visible": false,
+              "opacity": 0.6499999761581421,
+              "fills": [],
+              "strokes": [],
+              "radius": 0,
+              "strokeWeight": 1,
+              "strokeAlign": "INSIDE",
+              "effects": [],
+              "layout": [
+                "NONE",
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "children": []
+            },
+            {
+              "id": "1121:63",
+              "name": "suffix-icon",
+              "type": "INSTANCE",
+              "rect": [
+                212,
+                12,
+                16,
+                16
+              ],
+              "visible": true,
+              "opacity": 0.6499999761581421,
+              "fills": [],
+              "strokes": [],
+              "radius": 0,
+              "strokeWeight": 1,
+              "strokeAlign": "INSIDE",
+              "effects": [],
+              "layout": [
+                "NONE",
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "children": [
+                {
+                  "id": "I1121:63;989:59",
+                  "name": "Vector",
+                  "type": "FRAME",
+                  "rect": [
+                    0,
+                    0,
+                    16,
+                    16
+                  ],
+                  "visible": true,
+                  "opacity": 1,
+                  "fills": [
+                    {
+                      "type": "SOLID",
+                      "color": {
+                        "r": 0.09803921729326248,
+                        "g": 0.09803921729326248,
+                        "b": 0.09803921729326248
+                      },
+                      "opacity": 1,
+                      "visible": false
+                    }
+                  ],
+                  "strokes": [],
+                  "radius": 0,
+                  "strokeWeight": 1,
+                  "strokeAlign": "INSIDE",
+                  "effects": [],
+                  "layout": [
+                    "NONE",
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                  ],
+                  "children": [
+                    {
+                      "id": "I1121:63;989:60",
+                      "name": "Vector",
+                      "type": "VECTOR",
+                      "rect": [
+                        4,
+                        6,
+                        8,
+                        4
+                      ],
+                      "visible": true,
+                      "opacity": 1,
+                      "fills": [],
+                      "strokes": [
+                        {
+                          "type": "SOLID",
+                          "color": {
+                            "r": 0.09803921729326248,
+                            "g": 0.09803921729326248,
+                            "b": 0.09803921729326248
+                          },
+                          "opacity": 1,
+                          "visible": true
+                        }
+                      ],
+                      "radius": 0,
+                      "strokeWeight": 1.5,
+                      "strokeAlign": "CENTER",
+                      "effects": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "variables": {
+        "var(--component-basic-select-default-content-color)": "#191919",
+        "typography/letter-spacing/default": "0",
+        "typography/font-size/data/numeric": "14",
+        "typography/line-height/data/numeric": "14",
+        "typography/font-weight/subemphasis": "500",
+        "DSM/Data/Numeric": "Font(family: \"Inter\", style: Medium, size: typography/font-size/data/numeric, weight: typography/font-weight/subemphasis, lineHeight: typography/line-height/data/numeric, letterSpacing: typography/letter-spacing/default)",
+        "var(--qtlab-semantic-color-text-primary)": "#191919",
+        "color/text/primary": "#191919",
+        "select/size/small/container/min-height": "24",
+        "var(--component-basic-input-radius)": "4",
+        "var(--component-basic-input-state-default-background)": "#ffffff",
+        "token.colorBorder": "#d9d9d9",
+        "var(--component-basic-input-state-hover-border)": "#191919",
+        "var(--component-basic-input-state-focus-border)": "#6235f7",
+        "var(--component-basic-input-state-focus-outline)": "#f3efff",
+        "var(--component-basic-select-disabled-content-color)": "#8a8a8a",
+        "token.colorBgContainerDisabled": "#0000000a",
+        "select/size/medium/container/min-height": "32",
+        "select/size/large/container/min-height": "40"
+      }
+    }
+  ],
+  "assets": [
+    {
+      "name": "ChevronDown",
+      "root": [
+        16,
+        16
+      ]
+    },
+    {
+      "name": "Prefix",
+      "root": [
+        16,
+        16
+      ]
+    },
+    {
+      "name": "Clear",
+      "root": [
+        16,
+        16
+      ]
+    }
+  ],
+  "boundary": "Native QComboBox/Z_ComboBox and QFontComboBox/Z_FontComboBox are not semantic Z_Select aliases. Size/state affect presentation only, retaining model, view, delegate, native editor, validator, completer, insertion, keyboard, signals and font filters/writing systems. Combo placeholderText is painted only at non-editable currentIndex=-1, never an item/currentText. Gallery FontComboBox uses a non-editable closed specimen and source-only Arial label independent of installed font fallback; live stays native editable. Focus does not open the popup. Prefix/Clear/arbitrary suffix are Figma visual adapter proposals, not native API; captured hidden assets are retained but no unapproved behavior invented. Disabled fill is black alpha .04 and content alpha .7; no dark/profile parity, normalization or design approval promotion."
+}

@@ -19,14 +19,27 @@ ButtonAppearanceAdapter::ButtonAppearanceAdapter(commonWidget::Z_PushButton* b,
     refresh();
 }
 void ButtonAppearanceAdapter::setAppearance(const QString& id) {
-    catalog->label(id);
+    if(id!="figma-light") catalog->label(id);
     preset = id;
+    button->setProperty("figmaAppearance",id=="figma-light");
     refresh();
 }
 void ButtonAppearanceAdapter::refresh() {
+    const bool captured=preset=="figma-light" && !button->property("ghost").toBool() &&
+        (!button->property("danger").toBool() || button->property("buttonType")=="PRIMARY");
+    button->setProperty("figmaAppearanceSupported",captured);
+    if(captured) {
+        inset->hide();solid->hide();outer->setEnabled(false);
+        for(const char* name:{"innerShadowRole","innerShadowBaseColor","innerShadowColor","innerShadowBlackMix"})
+            button->setProperty(name,QVariant());
+        const QString qss="commonWidget--Z_PushButton {background:transparent;border:0;padding:0;}";
+        if(button->styleSheet()!=qss)button->setStyleSheet(qss);
+        button->update();return;
+    }
+    outer->setEnabled(true);
     QString state = button->property("visualState").toString().toLower();
     auto r = catalog->button(
-        preset, button->property("buttonType").toString(), button->property("danger").toBool(),
+        preset=="figma-light"?"solid":preset, button->property("buttonType").toString(), button->property("danger").toBool(),
         button->property("ghost").toBool(), state, button->property("buttonSize").toString());
     QString fg = QString("rgba(%1,%2,%3,%4)")
                      .arg(r.foreground.red())
@@ -98,7 +111,7 @@ bool ButtonAppearanceAdapter::eventFilter(QObject*, QEvent* e) {
         const auto name = static_cast<QDynamicPropertyChangeEvent*>(e)->propertyName();
         update = QList<QByteArray>{"buttonType", "danger",           "ghost",
                                    "loading",    "disabledByPolicy", "buttonSize",
-                                   "focusIndicatorVisible"}
+                                   "focusIndicatorVisible", "figmaPreviewState"}
                      .contains(name);
     }
     if (update && !queued) {

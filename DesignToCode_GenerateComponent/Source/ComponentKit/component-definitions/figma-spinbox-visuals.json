@@ -1,0 +1,456 @@
+{
+  "schemaVersion": 1,
+  "fileKey": "w92BKW1EcutKmTXkwzNHbf",
+  "status": "CAPTURED_LIGHT_NOT_DESIGN_APPROVED",
+  "appearance": "figma-light",
+  "sets": [
+    {
+      "pageId": "458:2",
+      "galleryId": "458:42",
+      "setId": "458:155",
+      "variants": [
+        {
+          "id": "458:47",
+          "name": "Controls=UpDown, State=Default",
+          "bounds": [
+            24,
+            24,
+            244,
+            32
+          ]
+        },
+        {
+          "id": "458:58",
+          "name": "Controls=UpDown, State=Focus",
+          "bounds": [
+            288,
+            24,
+            244,
+            32
+          ]
+        },
+        {
+          "id": "458:69",
+          "name": "Controls=UpDown, State=ReadOnly",
+          "bounds": [
+            552,
+            24,
+            244,
+            32
+          ]
+        },
+        {
+          "id": "458:80",
+          "name": "Controls=UpDown, State=Disabled",
+          "bounds": [
+            816,
+            24,
+            244,
+            32
+          ]
+        },
+        {
+          "id": "458:91",
+          "name": "Controls=PlusMinus, State=Default",
+          "bounds": [
+            24,
+            88,
+            244,
+            32
+          ]
+        },
+        {
+          "id": "458:102",
+          "name": "Controls=PlusMinus, State=Focus",
+          "bounds": [
+            288,
+            88,
+            244,
+            32
+          ]
+        },
+        {
+          "id": "458:113",
+          "name": "Controls=PlusMinus, State=ReadOnly",
+          "bounds": [
+            552,
+            88,
+            244,
+            32
+          ]
+        },
+        {
+          "id": "458:124",
+          "name": "Controls=PlusMinus, State=Disabled",
+          "bounds": [
+            816,
+            88,
+            244,
+            32
+          ]
+        },
+        {
+          "id": "458:135",
+          "name": "Controls=None, State=Default",
+          "bounds": [
+            24,
+            152,
+            244,
+            32
+          ]
+        },
+        {
+          "id": "458:140",
+          "name": "Controls=None, State=Focus",
+          "bounds": [
+            288,
+            152,
+            244,
+            32
+          ]
+        },
+        {
+          "id": "458:145",
+          "name": "Controls=None, State=ReadOnly",
+          "bounds": [
+            552,
+            152,
+            244,
+            32
+          ]
+        },
+        {
+          "id": "458:150",
+          "name": "Controls=None, State=Disabled",
+          "bounds": [
+            816,
+            152,
+            244,
+            32
+          ]
+        },
+        {
+          "id": "2004:80",
+          "name": "Controls=SplitPlusMinus, State=Default",
+          "bounds": [
+            24,
+            216,
+            244,
+            32
+          ]
+        },
+        {
+          "id": "2004:97",
+          "name": "Controls=SplitPlusMinus, State=Focus",
+          "bounds": [
+            288,
+            216,
+            244,
+            32
+          ]
+        },
+        {
+          "id": "2004:114",
+          "name": "Controls=SplitPlusMinus, State=ReadOnly",
+          "bounds": [
+            552,
+            216,
+            244,
+            32
+          ]
+        },
+        {
+          "id": "2004:131",
+          "name": "Controls=SplitPlusMinus, State=Disabled",
+          "bounds": [
+            816,
+            216,
+            244,
+            32
+          ]
+        }
+      ]
+    },
+    {
+      "pageId": "460:2",
+      "galleryId": "460:62",
+      "setId": "460:175",
+      "variants": [
+        {
+          "id": "460:67",
+          "name": "Controls=UpDown, State=Default",
+          "bounds": [
+            24,
+            24,
+            260,
+            32
+          ]
+        },
+        {
+          "id": "460:78",
+          "name": "Controls=UpDown, State=Focus",
+          "bounds": [
+            304,
+            24,
+            260,
+            32
+          ]
+        },
+        {
+          "id": "460:89",
+          "name": "Controls=UpDown, State=ReadOnly",
+          "bounds": [
+            584,
+            24,
+            260,
+            32
+          ]
+        },
+        {
+          "id": "460:100",
+          "name": "Controls=UpDown, State=Disabled",
+          "bounds": [
+            864,
+            24,
+            260,
+            32
+          ]
+        },
+        {
+          "id": "460:111",
+          "name": "Controls=PlusMinus, State=Default",
+          "bounds": [
+            24,
+            88,
+            260,
+            32
+          ]
+        },
+        {
+          "id": "460:122",
+          "name": "Controls=PlusMinus, State=Focus",
+          "bounds": [
+            304,
+            88,
+            260,
+            32
+          ]
+        },
+        {
+          "id": "460:133",
+          "name": "Controls=PlusMinus, State=ReadOnly",
+          "bounds": [
+            584,
+            88,
+            260,
+            32
+          ]
+        },
+        {
+          "id": "460:144",
+          "name": "Controls=PlusMinus, State=Disabled",
+          "bounds": [
+            864,
+            88,
+            260,
+            32
+          ]
+        },
+        {
+          "id": "460:155",
+          "name": "Controls=None, State=Default",
+          "bounds": [
+            24,
+            152,
+            260,
+            32
+          ]
+        },
+        {
+          "id": "460:160",
+          "name": "Controls=None, State=Focus",
+          "bounds": [
+            304,
+            152,
+            260,
+            32
+          ]
+        },
+        {
+          "id": "460:165",
+          "name": "Controls=None, State=ReadOnly",
+          "bounds": [
+            584,
+            152,
+            260,
+            32
+          ]
+        },
+        {
+          "id": "460:170",
+          "name": "Controls=None, State=Disabled",
+          "bounds": [
+            864,
+            152,
+            260,
+            32
+          ]
+        },
+        {
+          "id": "2005:80",
+          "name": "Controls=SplitPlusMinus, State=Default",
+          "bounds": [
+            24,
+            216,
+            260,
+            32
+          ]
+        },
+        {
+          "id": "2005:97",
+          "name": "Controls=SplitPlusMinus, State=Focus",
+          "bounds": [
+            304,
+            216,
+            260,
+            32
+          ]
+        },
+        {
+          "id": "2005:114",
+          "name": "Controls=SplitPlusMinus, State=ReadOnly",
+          "bounds": [
+            584,
+            216,
+            260,
+            32
+          ]
+        },
+        {
+          "id": "2005:131",
+          "name": "Controls=SplitPlusMinus, State=Disabled",
+          "bounds": [
+            864,
+            216,
+            260,
+            32
+          ]
+        }
+      ]
+    }
+  ],
+  "metrics": {
+    "height": 32,
+    "radius": 4,
+    "border": 1,
+    "focusBorder": 2,
+    "stackedControlsWidth": 43,
+    "stackedHalfHeight": 15.5,
+    "divider": 1,
+    "splitButtonWidth": 32,
+    "iconRootSize": 16,
+    "stackedIconOrigin": [
+      13.5,
+      -0.25
+    ],
+    "splitIconOrigin": [
+      8,
+      8
+    ],
+    "fieldPadding": [
+      12,
+      10
+    ],
+    "textGap": 4,
+    "numeric": {
+      "family": "Inter",
+      "style": "Medium",
+      "size": 14,
+      "lineHeight": 14
+    },
+    "affix": {
+      "family": "Inter",
+      "style": "Regular",
+      "size": 13,
+      "lineHeight": 19
+    }
+  },
+  "colors": {
+    "background": "#ffffff",
+    "border": "#a7a7a7",
+    "focus": "#6235f7",
+    "foreground": "#191919",
+    "affix": "#444444",
+    "disabledForeground": "#8a8a8a",
+    "disabledBorder": "#d0d0d0",
+    "readOnlyBackground": "#f3f3f3",
+    "controls": "#f3f3f3",
+    "divider": "#d0d0d0",
+    "setBackground": "#f7f9fc"
+  },
+  "assets": [
+    {
+      "resource": ":/figma/spinbox/PlusPrimary.svg",
+      "rootSize": [
+        16,
+        16
+      ]
+    },
+    {
+      "resource": ":/figma/spinbox/PlusDisabled.svg",
+      "rootSize": [
+        16,
+        16
+      ]
+    },
+    {
+      "resource": ":/figma/spinbox/MinusPrimary.svg",
+      "rootSize": [
+        16,
+        16
+      ]
+    },
+    {
+      "resource": ":/figma/spinbox/MinusDisabled.svg",
+      "rootSize": [
+        16,
+        16
+      ]
+    },
+    {
+      "resource": ":/figma/spinbox/UpPrimary.svg",
+      "rootSize": [
+        16,
+        16
+      ]
+    },
+    {
+      "resource": ":/figma/spinbox/UpDisabled.svg",
+      "rootSize": [
+        16,
+        16
+      ]
+    },
+    {
+      "resource": ":/figma/spinbox/DownPrimary.svg",
+      "rootSize": [
+        16,
+        16
+      ]
+    },
+    {
+      "resource": ":/figma/spinbox/DownDisabled.svg",
+      "rootSize": [
+        16,
+        16
+      ]
+    }
+  ],
+  "boundaries": [
+    "Native QSpinBox/QDoubleSpinBox and existing QLineEdit retain numeric ownership, validation, locale, selection, IME, stepping, auto-repeat and accessibility.",
+    "SplitPlusMinus positions native Up/Down subcontrols; no invented buttonSymbols enum or new SDK identity.",
+    "Idle, unselected text uses the source mixed numeric/affix typography. Actual editing/selection uses untouched native QLineEdit painting; mixed-font editing typography is not claimed as parity.",
+    "32px root height is implemented. Stacked halves are source-backed visual extents, not 32px touch targets.",
+    "Captured Light does not approve Theme parity or normalization."
+  ]
+}

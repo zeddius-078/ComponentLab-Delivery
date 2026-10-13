@@ -11,4 +11,4 @@ MappingGenerated.qss 是 mapping/page.qss 的可读副本；编译后的 .cpp �
 Qt Designer 展示结构占位；真实组件在装配后出现。
 
 ui-contract.json 是本次输入，mapping-report.json 给出来源、依赖及文件哈希。
-完整接入步骤见项目 docs/DesignMapping/Guide.md。
+完整接入步骤见项目 `docs/mainSkill/generate-component-pipeline/references/设计组件映射指南.md`。

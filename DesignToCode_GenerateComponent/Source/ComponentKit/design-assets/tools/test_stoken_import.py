@@ -151,6 +151,48 @@ class STokenModeContractTests(unittest.TestCase):
                     for role, mode_values in expected.items():
                         self.assertEqual(mode_values[theme_index], resolve(role), role)
 
+    def test_menu_bar_color_roles_preserve_approved_light_dark_values(self):
+        expected = {
+            "--color/background/hover": (
+                "rgba(243, 243, 243, 1)", "rgba(32, 32, 32, 1)"),
+            "--menu-bar/base/default/container/color": (
+                "rgba(255, 255, 255, 1)", "rgba(39, 39, 39, 1)"),
+            "--menu-bar/base/default/border/color": (
+                "rgba(208, 208, 208, 1)", "rgba(68, 68, 68, 1)"),
+            "--menu-bar-item/base/default/label/color": (
+                "rgba(25, 25, 25, 1)", "rgba(243, 243, 243, 1)"),
+            "--menu-bar-item/base/disabled/label/color": (
+                "rgba(138, 138, 138, 1)", "rgba(138, 138, 138, 1)"),
+            "--menu-bar-item/base/hover/container/color": (
+                "rgba(243, 243, 243, 1)", "rgba(32, 32, 32, 1)"),
+            "--menu-bar-item/base/open/container/color": (
+                "rgba(98, 53, 247, 1)", "rgba(98, 53, 247, 1)"),
+            "--menu-bar-item/base/focused/focus-ring/color": (
+                "rgba(98, 53, 247, 1)", "rgba(98, 53, 247, 1)"),
+            "--menu-bar-item/base/default/mnemonic/color": (
+                "rgba(98, 53, 247, 1)", "rgba(98, 53, 247, 1)"),
+        }
+        for profile in ("Standard", "Wide"):
+            for theme_index, theme in enumerate(("Light", "Dark")):
+                with self.subTest(profile=profile, theme=theme):
+                    values = {
+                        **self.collections["01.primitive"]["参数"],
+                        **self.collections["02.profile"][profile],
+                        **self.collections["03.semantic"]["Light"],
+                        **self.collections["04.component"]["default"],
+                    }
+                    if theme == "Dark":
+                        values.update(self.collections["03.semantic"]["Dark"])
+
+                    def resolve(name, seen=()):
+                        self.assertNotIn(name, seen, "cyclic source alias")
+                        value = values[name]
+                        match = STOKEN.VAR.fullmatch(str(value))
+                        return resolve(match[1], (*seen, name)) if match else value
+
+                    for role, mode_values in expected.items():
+                        self.assertEqual(mode_values[theme_index], resolve(role), role)
+
 
 if __name__ == "__main__":
     unittest.main()

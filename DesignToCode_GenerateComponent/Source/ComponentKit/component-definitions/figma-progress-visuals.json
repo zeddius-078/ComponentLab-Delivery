@@ -1,0 +1,2027 @@
+{
+  "schemaVersion": 1,
+  "fileKey": "w92BKW1EcutKmTXkwzNHbf",
+  "pageId": "410:13",
+  "galleryId": "2014:2291",
+  "componentSetId": "410:57",
+  "capturedAt": "2026-10-12",
+  "boundary": "Captured Light geometry. Completed is authored at 68%, retained as a visual status, not a native value mutation. Indeterminate slices contain no visible label and do not specify animation timing.",
+  "variants": [
+    {
+      "id": "410:21",
+      "name": "Orientation=Horizontal, State=Determinate, Inverted=False",
+      "rect": [
+        40,
+        40,
+        270,
+        24
+      ],
+      "fills": [],
+      "strokes": [],
+      "strokeWidth": 1,
+      "radius": 4,
+      "children": [
+        {
+          "id": "2052:155",
+          "name": "Rail / track",
+          "type": "RECTANGLE",
+          "visible": true,
+          "rect": [
+            1,
+            8,
+            150,
+            8
+          ],
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 0.9529411792755127,
+                "g": 0.9529411792755127,
+                "b": 0.9529411792755127
+              },
+              "opacity": 1
+            }
+          ],
+          "radius": 4
+        },
+        {
+          "id": "410:22",
+          "name": "Track / value 68",
+          "type": "RECTANGLE",
+          "visible": true,
+          "rect": [
+            1,
+            8,
+            102,
+            8
+          ],
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 0.3843137323856354,
+                "g": 0.2078431397676468,
+                "b": 0.9686274528503418
+              },
+              "opacity": 1
+            }
+          ],
+          "radius": 4
+        },
+        {
+          "id": "410:23",
+          "name": "Indicator / label",
+          "type": "TEXT",
+          "visible": true,
+          "rect": [
+            176,
+            0,
+            92,
+            24
+          ],
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 0.09803921729326248,
+                "g": 0.09803921729326248,
+                "b": 0.09803921729326248
+              },
+              "opacity": 1
+            }
+          ],
+          "text": "68%",
+          "font": {
+            "family": "Inter",
+            "style": "Medium",
+            "variationSettings": {
+              "wght": 500,
+              "slnt": 0
+            }
+          },
+          "size": 14,
+          "line": {
+            "unit": "PIXELS",
+            "value": 14
+          },
+          "align": "LEFT"
+        }
+      ]
+    },
+    {
+      "id": "410:24",
+      "name": "Orientation=Horizontal, State=Determinate, Inverted=True",
+      "rect": [
+        340,
+        40,
+        270,
+        24
+      ],
+      "fills": [],
+      "strokes": [],
+      "strokeWidth": 1,
+      "radius": 4,
+      "children": [
+        {
+          "id": "2052:156",
+          "name": "Rail / track",
+          "type": "RECTANGLE",
+          "visible": true,
+          "rect": [
+            17,
+            8,
+            150,
+            8
+          ],
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 0.9529411792755127,
+                "g": 0.9529411792755127,
+                "b": 0.9529411792755127
+              },
+              "opacity": 1
+            }
+          ],
+          "radius": 4
+        },
+        {
+          "id": "410:25",
+          "name": "Track / value 68",
+          "type": "RECTANGLE",
+          "visible": true,
+          "rect": [
+            65,
+            8,
+            102,
+            8
+          ],
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 0.3843137323856354,
+                "g": 0.2078431397676468,
+                "b": 0.9686274528503418
+              },
+              "opacity": 1
+            }
+          ],
+          "radius": 4
+        },
+        {
+          "id": "410:26",
+          "name": "Indicator / label",
+          "type": "TEXT",
+          "visible": true,
+          "rect": [
+            176,
+            0,
+            92,
+            24
+          ],
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 0.09803921729326248,
+                "g": 0.09803921729326248,
+                "b": 0.09803921729326248
+              },
+              "opacity": 1
+            }
+          ],
+          "text": "68%",
+          "font": {
+            "family": "Inter",
+            "style": "Medium",
+            "variationSettings": {
+              "wght": 500,
+              "slnt": 0
+            }
+          },
+          "size": 14,
+          "line": {
+            "unit": "PIXELS",
+            "value": 14
+          },
+          "align": "LEFT"
+        }
+      ]
+    },
+    {
+      "id": "410:27",
+      "name": "Orientation=Horizontal, State=Indeterminate, Inverted=False",
+      "rect": [
+        40,
+        122,
+        270,
+        24
+      ],
+      "fills": [],
+      "strokes": [],
+      "strokeWidth": 1,
+      "radius": 4,
+      "children": [
+        {
+          "id": "2052:157",
+          "name": "Rail / track",
+          "type": "RECTANGLE",
+          "visible": true,
+          "rect": [
+            1,
+            8,
+            150,
+            8
+          ],
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 0.9529411792755127,
+                "g": 0.9529411792755127,
+                "b": 0.9529411792755127
+              },
+              "opacity": 1
+            }
+          ],
+          "radius": 4
+        },
+        {
+          "id": "410:28",
+          "name": "Track / indeterminate snapshot",
+          "type": "RECTANGLE",
+          "visible": true,
+          "rect": [
+            44,
+            8,
+            64,
+            8
+          ],
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 0.3843137323856354,
+                "g": 0.2078431397676468,
+                "b": 0.9686274528503418
+              },
+              "opacity": 1
+            }
+          ],
+          "radius": 4
+        },
+        {
+          "id": "410:29",
+          "name": "Indicator / label",
+          "type": "TEXT",
+          "visible": false,
+          "rect": [
+            176,
+            0,
+            92,
+            24
+          ],
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 0.09803921729326248,
+                "g": 0.09803921729326248,
+                "b": 0.09803921729326248
+              },
+              "opacity": 1
+            }
+          ],
+          "text": "68%",
+          "font": {
+            "family": "Inter",
+            "style": "Medium",
+            "variationSettings": {
+              "wght": 500,
+              "slnt": 0
+            }
+          },
+          "size": 14,
+          "line": {
+            "unit": "PIXELS",
+            "value": 14
+          },
+          "align": "LEFT"
+        }
+      ]
+    },
+    {
+      "id": "410:30",
+      "name": "Orientation=Horizontal, State=Indeterminate, Inverted=True",
+      "rect": [
+        340,
+        122,
+        270,
+        24
+      ],
+      "fills": [],
+      "strokes": [],
+      "strokeWidth": 1,
+      "radius": 4,
+      "children": [
+        {
+          "id": "2052:158",
+          "name": "Rail / track",
+          "type": "RECTANGLE",
+          "visible": true,
+          "rect": [
+            17,
+            8,
+            150,
+            8
+          ],
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 0.9529411792755127,
+                "g": 0.9529411792755127,
+                "b": 0.9529411792755127
+              },
+              "opacity": 1
+            }
+          ],
+          "radius": 4
+        },
+        {
+          "id": "410:31",
+          "name": "Track / indeterminate snapshot",
+          "type": "RECTANGLE",
+          "visible": true,
+          "rect": [
+            60,
+            8,
+            64,
+            8
+          ],
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 0.3843137323856354,
+                "g": 0.2078431397676468,
+                "b": 0.9686274528503418
+              },
+              "opacity": 1
+            }
+          ],
+          "radius": 4
+        },
+        {
+          "id": "410:32",
+          "name": "Indicator / label",
+          "type": "TEXT",
+          "visible": false,
+          "rect": [
+            176,
+            0,
+            92,
+            24
+          ],
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 0.09803921729326248,
+                "g": 0.09803921729326248,
+                "b": 0.09803921729326248
+              },
+              "opacity": 1
+            }
+          ],
+          "text": "68%",
+          "font": {
+            "family": "Inter",
+            "style": "Medium",
+            "variationSettings": {
+              "wght": 500,
+              "slnt": 0
+            }
+          },
+          "size": 14,
+          "line": {
+            "unit": "PIXELS",
+            "value": 14
+          },
+          "align": "LEFT"
+        }
+      ]
+    },
+    {
+      "id": "410:33",
+      "name": "Orientation=Horizontal, State=Disabled, Inverted=False",
+      "rect": [
+        40,
+        204,
+        270,
+        24
+      ],
+      "fills": [],
+      "strokes": [],
+      "strokeWidth": 1,
+      "radius": 4,
+      "children": [
+        {
+          "id": "2052:159",
+          "name": "Rail / track",
+          "type": "RECTANGLE",
+          "visible": true,
+          "rect": [
+            1,
+            8,
+            150,
+            8
+          ],
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 0.9529411792755127,
+                "g": 0.9529411792755127,
+                "b": 0.9529411792755127
+              },
+              "opacity": 1
+            }
+          ],
+          "radius": 4
+        },
+        {
+          "id": "410:34",
+          "name": "Track / value 68",
+          "type": "RECTANGLE",
+          "visible": true,
+          "rect": [
+            1,
+            8,
+            102,
+            8
+          ],
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 0.3843137323856354,
+                "g": 0.2078431397676468,
+                "b": 0.9686274528503418
+              },
+              "opacity": 1
+            }
+          ],
+          "radius": 4
+        },
+        {
+          "id": "410:35",
+          "name": "Indicator / label",
+          "type": "TEXT",
+          "visible": true,
+          "rect": [
+            176,
+            0,
+            92,
+            24
+          ],
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 0.5411764979362488,
+                "g": 0.5411764979362488,
+                "b": 0.5411764979362488
+              },
+              "opacity": 1
+            }
+          ],
+          "text": "68%",
+          "font": {
+            "family": "Inter",
+            "style": "Medium",
+            "variationSettings": {
+              "wght": 500,
+              "slnt": 0
+            }
+          },
+          "size": 14,
+          "line": {
+            "unit": "PIXELS",
+            "value": 14
+          },
+          "align": "LEFT"
+        }
+      ]
+    },
+    {
+      "id": "410:36",
+      "name": "Orientation=Horizontal, State=Disabled, Inverted=True",
+      "rect": [
+        340,
+        204,
+        270,
+        24
+      ],
+      "fills": [],
+      "strokes": [],
+      "strokeWidth": 1,
+      "radius": 4,
+      "children": [
+        {
+          "id": "2052:160",
+          "name": "Rail / track",
+          "type": "RECTANGLE",
+          "visible": true,
+          "rect": [
+            17,
+            8,
+            150,
+            8
+          ],
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 0.9529411792755127,
+                "g": 0.9529411792755127,
+                "b": 0.9529411792755127
+              },
+              "opacity": 1
+            }
+          ],
+          "radius": 4
+        },
+        {
+          "id": "410:37",
+          "name": "Track / value 68",
+          "type": "RECTANGLE",
+          "visible": true,
+          "rect": [
+            65,
+            8,
+            102,
+            8
+          ],
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 0.3843137323856354,
+                "g": 0.2078431397676468,
+                "b": 0.9686274528503418
+              },
+              "opacity": 1
+            }
+          ],
+          "radius": 4
+        },
+        {
+          "id": "410:38",
+          "name": "Indicator / label",
+          "type": "TEXT",
+          "visible": true,
+          "rect": [
+            176,
+            0,
+            92,
+            24
+          ],
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 0.5411764979362488,
+                "g": 0.5411764979362488,
+                "b": 0.5411764979362488
+              },
+              "opacity": 1
+            }
+          ],
+          "text": "68%",
+          "font": {
+            "family": "Inter",
+            "style": "Medium",
+            "variationSettings": {
+              "wght": 500,
+              "slnt": 0
+            }
+          },
+          "size": 14,
+          "line": {
+            "unit": "PIXELS",
+            "value": 14
+          },
+          "align": "LEFT"
+        }
+      ]
+    },
+    {
+      "id": "410:39",
+      "name": "Orientation=Vertical, State=Determinate, Inverted=False",
+      "rect": [
+        900,
+        40,
+        32,
+        200
+      ],
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 1,
+            "g": 1,
+            "b": 1
+          },
+          "opacity": 1
+        }
+      ],
+      "strokes": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.6549019813537598,
+            "g": 0.6549019813537598,
+            "b": 0.6549019813537598
+          },
+          "opacity": 1
+        }
+      ],
+      "strokeWidth": 1,
+      "radius": 4,
+      "children": [
+        {
+          "id": "410:40",
+          "name": "Track / value 68",
+          "type": "RECTANGLE",
+          "visible": true,
+          "rect": [
+            1,
+            64,
+            30,
+            135
+          ],
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 0.3843137323856354,
+                "g": 0.2078431397676468,
+                "b": 0.9686274528503418
+              },
+              "opacity": 1
+            }
+          ],
+          "radius": 4
+        },
+        {
+          "id": "410:41",
+          "name": "Indicator / label",
+          "type": "TEXT",
+          "visible": true,
+          "rect": [
+            0,
+            82,
+            32,
+            36
+          ],
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 0.09803921729326248,
+                "g": 0.09803921729326248,
+                "b": 0.09803921729326248
+              },
+              "opacity": 1
+            }
+          ],
+          "text": "68%",
+          "font": {
+            "family": "Inter",
+            "style": "Medium",
+            "variationSettings": {
+              "wght": 500,
+              "slnt": 0
+            }
+          },
+          "size": 14,
+          "line": {
+            "unit": "PIXELS",
+            "value": 14
+          },
+          "align": "CENTER"
+        }
+      ]
+    },
+    {
+      "id": "410:42",
+      "name": "Orientation=Vertical, State=Determinate, Inverted=True",
+      "rect": [
+        990,
+        40,
+        32,
+        200
+      ],
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 1,
+            "g": 1,
+            "b": 1
+          },
+          "opacity": 1
+        }
+      ],
+      "strokes": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.6549019813537598,
+            "g": 0.6549019813537598,
+            "b": 0.6549019813537598
+          },
+          "opacity": 1
+        }
+      ],
+      "strokeWidth": 1,
+      "radius": 4,
+      "children": [
+        {
+          "id": "410:43",
+          "name": "Track / value 68",
+          "type": "RECTANGLE",
+          "visible": true,
+          "rect": [
+            1,
+            1,
+            30,
+            135
+          ],
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 0.3843137323856354,
+                "g": 0.2078431397676468,
+                "b": 0.9686274528503418
+              },
+              "opacity": 1
+            }
+          ],
+          "radius": 4
+        },
+        {
+          "id": "410:44",
+          "name": "Indicator / label",
+          "type": "TEXT",
+          "visible": true,
+          "rect": [
+            0,
+            82,
+            32,
+            36
+          ],
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 0.09803921729326248,
+                "g": 0.09803921729326248,
+                "b": 0.09803921729326248
+              },
+              "opacity": 1
+            }
+          ],
+          "text": "68%",
+          "font": {
+            "family": "Inter",
+            "style": "Medium",
+            "variationSettings": {
+              "wght": 500,
+              "slnt": 0
+            }
+          },
+          "size": 14,
+          "line": {
+            "unit": "PIXELS",
+            "value": 14
+          },
+          "align": "CENTER"
+        }
+      ]
+    },
+    {
+      "id": "410:45",
+      "name": "Orientation=Vertical, State=Indeterminate, Inverted=False",
+      "rect": [
+        1080,
+        40,
+        32,
+        200
+      ],
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 1,
+            "g": 1,
+            "b": 1
+          },
+          "opacity": 1
+        }
+      ],
+      "strokes": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.6549019813537598,
+            "g": 0.6549019813537598,
+            "b": 0.6549019813537598
+          },
+          "opacity": 1
+        }
+      ],
+      "strokeWidth": 1,
+      "radius": 4,
+      "children": [
+        {
+          "id": "410:46",
+          "name": "Track / indeterminate snapshot",
+          "type": "RECTANGLE",
+          "visible": true,
+          "rect": [
+            1,
+            68,
+            30,
+            64
+          ],
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 0.3843137323856354,
+                "g": 0.2078431397676468,
+                "b": 0.9686274528503418
+              },
+              "opacity": 1
+            }
+          ],
+          "radius": 4
+        },
+        {
+          "id": "410:47",
+          "name": "Indicator / label",
+          "type": "TEXT",
+          "visible": false,
+          "rect": [
+            0,
+            82,
+            32,
+            36
+          ],
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 0.09803921729326248,
+                "g": 0.09803921729326248,
+                "b": 0.09803921729326248
+              },
+              "opacity": 1
+            }
+          ],
+          "text": "68%",
+          "font": {
+            "family": "Inter",
+            "style": "Medium",
+            "variationSettings": {
+              "wght": 500,
+              "slnt": 0
+            }
+          },
+          "size": 14,
+          "line": {
+            "unit": "PIXELS",
+            "value": 14
+          },
+          "align": "CENTER"
+        }
+      ]
+    },
+    {
+      "id": "410:48",
+      "name": "Orientation=Vertical, State=Indeterminate, Inverted=True",
+      "rect": [
+        1170,
+        40,
+        32,
+        200
+      ],
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 1,
+            "g": 1,
+            "b": 1
+          },
+          "opacity": 1
+        }
+      ],
+      "strokes": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.6549019813537598,
+            "g": 0.6549019813537598,
+            "b": 0.6549019813537598
+          },
+          "opacity": 1
+        }
+      ],
+      "strokeWidth": 1,
+      "radius": 4,
+      "children": [
+        {
+          "id": "410:49",
+          "name": "Track / indeterminate snapshot",
+          "type": "RECTANGLE",
+          "visible": true,
+          "rect": [
+            1,
+            68,
+            30,
+            64
+          ],
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 0.3843137323856354,
+                "g": 0.2078431397676468,
+                "b": 0.9686274528503418
+              },
+              "opacity": 1
+            }
+          ],
+          "radius": 4
+        },
+        {
+          "id": "410:50",
+          "name": "Indicator / label",
+          "type": "TEXT",
+          "visible": false,
+          "rect": [
+            0,
+            82,
+            32,
+            36
+          ],
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 0.09803921729326248,
+                "g": 0.09803921729326248,
+                "b": 0.09803921729326248
+              },
+              "opacity": 1
+            }
+          ],
+          "text": "68%",
+          "font": {
+            "family": "Inter",
+            "style": "Medium",
+            "variationSettings": {
+              "wght": 500,
+              "slnt": 0
+            }
+          },
+          "size": 14,
+          "line": {
+            "unit": "PIXELS",
+            "value": 14
+          },
+          "align": "CENTER"
+        }
+      ]
+    },
+    {
+      "id": "410:51",
+      "name": "Orientation=Vertical, State=Disabled, Inverted=False",
+      "rect": [
+        1260,
+        40,
+        32,
+        200
+      ],
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.9529411792755127,
+            "g": 0.9529411792755127,
+            "b": 0.9529411792755127
+          },
+          "opacity": 1
+        }
+      ],
+      "strokes": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.8156862854957581,
+            "g": 0.8156862854957581,
+            "b": 0.8156862854957581
+          },
+          "opacity": 1
+        }
+      ],
+      "strokeWidth": 1,
+      "radius": 4,
+      "children": [
+        {
+          "id": "410:52",
+          "name": "Track / value 68",
+          "type": "RECTANGLE",
+          "visible": true,
+          "rect": [
+            1,
+            64,
+            30,
+            135
+          ],
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 0.3843137323856354,
+                "g": 0.2078431397676468,
+                "b": 0.9686274528503418
+              },
+              "opacity": 1
+            }
+          ],
+          "radius": 4
+        },
+        {
+          "id": "410:53",
+          "name": "Indicator / label",
+          "type": "TEXT",
+          "visible": true,
+          "rect": [
+            0,
+            82,
+            32,
+            36
+          ],
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 0.5411764979362488,
+                "g": 0.5411764979362488,
+                "b": 0.5411764979362488
+              },
+              "opacity": 1
+            }
+          ],
+          "text": "68%",
+          "font": {
+            "family": "Inter",
+            "style": "Medium",
+            "variationSettings": {
+              "wght": 500,
+              "slnt": 0
+            }
+          },
+          "size": 14,
+          "line": {
+            "unit": "PIXELS",
+            "value": 14
+          },
+          "align": "CENTER"
+        }
+      ]
+    },
+    {
+      "id": "410:54",
+      "name": "Orientation=Vertical, State=Disabled, Inverted=True",
+      "rect": [
+        1350,
+        40,
+        32,
+        200
+      ],
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.9529411792755127,
+            "g": 0.9529411792755127,
+            "b": 0.9529411792755127
+          },
+          "opacity": 1
+        }
+      ],
+      "strokes": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.8156862854957581,
+            "g": 0.8156862854957581,
+            "b": 0.8156862854957581
+          },
+          "opacity": 1
+        }
+      ],
+      "strokeWidth": 1,
+      "radius": 4,
+      "children": [
+        {
+          "id": "410:55",
+          "name": "Track / value 68",
+          "type": "RECTANGLE",
+          "visible": true,
+          "rect": [
+            1,
+            1,
+            30,
+            135
+          ],
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 0.3843137323856354,
+                "g": 0.2078431397676468,
+                "b": 0.9686274528503418
+              },
+              "opacity": 1
+            }
+          ],
+          "radius": 4
+        },
+        {
+          "id": "410:56",
+          "name": "Indicator / label",
+          "type": "TEXT",
+          "visible": true,
+          "rect": [
+            0,
+            82,
+            32,
+            36
+          ],
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 0.5411764979362488,
+                "g": 0.5411764979362488,
+                "b": 0.5411764979362488
+              },
+              "opacity": 1
+            }
+          ],
+          "text": "68%",
+          "font": {
+            "family": "Inter",
+            "style": "Medium",
+            "variationSettings": {
+              "wght": 500,
+              "slnt": 0
+            }
+          },
+          "size": 14,
+          "line": {
+            "unit": "PIXELS",
+            "value": 14
+          },
+          "align": "CENTER"
+        }
+      ]
+    },
+    {
+      "id": "2048:33",
+      "name": "Orientation=Horizontal, State=Paused, Inverted=False",
+      "rect": [
+        40,
+        286,
+        270,
+        24
+      ],
+      "fills": [],
+      "strokes": [],
+      "strokeWidth": 1,
+      "radius": 4,
+      "children": [
+        {
+          "id": "2052:161",
+          "name": "Rail / track",
+          "type": "RECTANGLE",
+          "visible": true,
+          "rect": [
+            1,
+            8,
+            150,
+            8
+          ],
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 0.9529411792755127,
+                "g": 0.9529411792755127,
+                "b": 0.9529411792755127
+              },
+              "opacity": 1
+            }
+          ],
+          "radius": 4
+        },
+        {
+          "id": "2048:34",
+          "name": "Track / paused 68",
+          "type": "RECTANGLE",
+          "visible": true,
+          "rect": [
+            1,
+            8,
+            102,
+            8
+          ],
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 0.9019607901573181,
+                "g": 0.686274528503418,
+                "b": 0.09803921729326248
+              },
+              "opacity": 1
+            }
+          ],
+          "radius": 4
+        },
+        {
+          "id": "2048:35",
+          "name": "Indicator / label",
+          "type": "TEXT",
+          "visible": true,
+          "rect": [
+            176,
+            0,
+            92,
+            24
+          ],
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 0.9019607901573181,
+                "g": 0.686274528503418,
+                "b": 0.09803921729326248
+              },
+              "opacity": 1
+            }
+          ],
+          "text": "Paused",
+          "font": {
+            "family": "Inter",
+            "style": "Medium",
+            "variationSettings": {
+              "wght": 500,
+              "slnt": 0
+            }
+          },
+          "size": 14,
+          "line": {
+            "unit": "PIXELS",
+            "value": 14
+          },
+          "align": "LEFT"
+        }
+      ]
+    },
+    {
+      "id": "2048:36",
+      "name": "Orientation=Horizontal, State=Paused, Inverted=True",
+      "rect": [
+        340,
+        286,
+        270,
+        24
+      ],
+      "fills": [],
+      "strokes": [],
+      "strokeWidth": 1,
+      "radius": 4,
+      "children": [
+        {
+          "id": "2052:162",
+          "name": "Rail / track",
+          "type": "RECTANGLE",
+          "visible": true,
+          "rect": [
+            17,
+            8,
+            150,
+            8
+          ],
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 0.9529411792755127,
+                "g": 0.9529411792755127,
+                "b": 0.9529411792755127
+              },
+              "opacity": 1
+            }
+          ],
+          "radius": 4
+        },
+        {
+          "id": "2048:37",
+          "name": "Track / paused 68",
+          "type": "RECTANGLE",
+          "visible": true,
+          "rect": [
+            65,
+            8,
+            102,
+            8
+          ],
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 0.9019607901573181,
+                "g": 0.686274528503418,
+                "b": 0.09803921729326248
+              },
+              "opacity": 1
+            }
+          ],
+          "radius": 4
+        },
+        {
+          "id": "2048:38",
+          "name": "Indicator / label",
+          "type": "TEXT",
+          "visible": true,
+          "rect": [
+            176,
+            0,
+            92,
+            24
+          ],
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 0.9019607901573181,
+                "g": 0.686274528503418,
+                "b": 0.09803921729326248
+              },
+              "opacity": 1
+            }
+          ],
+          "text": "Paused",
+          "font": {
+            "family": "Inter",
+            "style": "Medium",
+            "variationSettings": {
+              "wght": 500,
+              "slnt": 0
+            }
+          },
+          "size": 14,
+          "line": {
+            "unit": "PIXELS",
+            "value": 14
+          },
+          "align": "LEFT"
+        }
+      ]
+    },
+    {
+      "id": "2048:39",
+      "name": "Orientation=Horizontal, State=Error, Inverted=False",
+      "rect": [
+        40,
+        328,
+        270,
+        24
+      ],
+      "fills": [],
+      "strokes": [],
+      "strokeWidth": 1,
+      "radius": 4,
+      "children": [
+        {
+          "id": "2052:163",
+          "name": "Rail / track",
+          "type": "RECTANGLE",
+          "visible": true,
+          "rect": [
+            1,
+            8,
+            150,
+            8
+          ],
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 0.9529411792755127,
+                "g": 0.9529411792755127,
+                "b": 0.9529411792755127
+              },
+              "opacity": 1
+            }
+          ],
+          "radius": 4
+        },
+        {
+          "id": "2048:40",
+          "name": "Track / error 68",
+          "type": "RECTANGLE",
+          "visible": true,
+          "rect": [
+            1,
+            8,
+            102,
+            8
+          ],
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 0.8784313797950745,
+                "g": 0.12941177189350128,
+                "b": 0.1568627506494522
+              },
+              "opacity": 1
+            }
+          ],
+          "radius": 4
+        },
+        {
+          "id": "2048:41",
+          "name": "Indicator / label",
+          "type": "TEXT",
+          "visible": true,
+          "rect": [
+            176,
+            0,
+            92,
+            24
+          ],
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 0.8784313797950745,
+                "g": 0.12941177189350128,
+                "b": 0.1568627506494522
+              },
+              "opacity": 1
+            }
+          ],
+          "text": "Error",
+          "font": {
+            "family": "Inter",
+            "style": "Medium",
+            "variationSettings": {
+              "wght": 500,
+              "slnt": 0
+            }
+          },
+          "size": 14,
+          "line": {
+            "unit": "PIXELS",
+            "value": 14
+          },
+          "align": "LEFT"
+        }
+      ]
+    },
+    {
+      "id": "2048:42",
+      "name": "Orientation=Horizontal, State=Error, Inverted=True",
+      "rect": [
+        340,
+        328,
+        270,
+        24
+      ],
+      "fills": [],
+      "strokes": [],
+      "strokeWidth": 1,
+      "radius": 4,
+      "children": [
+        {
+          "id": "2052:164",
+          "name": "Rail / track",
+          "type": "RECTANGLE",
+          "visible": true,
+          "rect": [
+            17,
+            8,
+            150,
+            8
+          ],
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 0.9529411792755127,
+                "g": 0.9529411792755127,
+                "b": 0.9529411792755127
+              },
+              "opacity": 1
+            }
+          ],
+          "radius": 4
+        },
+        {
+          "id": "2048:43",
+          "name": "Track / error 68",
+          "type": "RECTANGLE",
+          "visible": true,
+          "rect": [
+            65,
+            8,
+            102,
+            8
+          ],
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 0.8784313797950745,
+                "g": 0.12941177189350128,
+                "b": 0.1568627506494522
+              },
+              "opacity": 1
+            }
+          ],
+          "radius": 4
+        },
+        {
+          "id": "2048:44",
+          "name": "Indicator / label",
+          "type": "TEXT",
+          "visible": true,
+          "rect": [
+            176,
+            0,
+            92,
+            24
+          ],
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 0.8784313797950745,
+                "g": 0.12941177189350128,
+                "b": 0.1568627506494522
+              },
+              "opacity": 1
+            }
+          ],
+          "text": "Error",
+          "font": {
+            "family": "Inter",
+            "style": "Medium",
+            "variationSettings": {
+              "wght": 500,
+              "slnt": 0
+            }
+          },
+          "size": 14,
+          "line": {
+            "unit": "PIXELS",
+            "value": 14
+          },
+          "align": "LEFT"
+        }
+      ]
+    },
+    {
+      "id": "2048:45",
+      "name": "Orientation=Horizontal, State=In-progress, Inverted=False",
+      "rect": [
+        40,
+        370,
+        270,
+        24
+      ],
+      "fills": [],
+      "strokes": [],
+      "strokeWidth": 1,
+      "radius": 4,
+      "children": [
+        {
+          "id": "2052:165",
+          "name": "Rail / track",
+          "type": "RECTANGLE",
+          "visible": true,
+          "rect": [
+            1,
+            8,
+            150,
+            8
+          ],
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 0.9529411792755127,
+                "g": 0.9529411792755127,
+                "b": 0.9529411792755127
+              },
+              "opacity": 1
+            }
+          ],
+          "radius": 4
+        },
+        {
+          "id": "2048:46",
+          "name": "Track / in-progress 68",
+          "type": "RECTANGLE",
+          "visible": true,
+          "rect": [
+            1,
+            8,
+            102,
+            8
+          ],
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 0.3843137323856354,
+                "g": 0.2078431397676468,
+                "b": 0.9686274528503418
+              },
+              "opacity": 1
+            }
+          ],
+          "radius": 4
+        },
+        {
+          "id": "2048:47",
+          "name": "Indicator / label",
+          "type": "TEXT",
+          "visible": true,
+          "rect": [
+            176,
+            0,
+            92,
+            24
+          ],
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 0.3843137323856354,
+                "g": 0.2078431397676468,
+                "b": 0.9686274528503418
+              },
+              "opacity": 1
+            }
+          ],
+          "text": "In progress",
+          "font": {
+            "family": "Inter",
+            "style": "Medium",
+            "variationSettings": {
+              "wght": 500,
+              "slnt": 0
+            }
+          },
+          "size": 14,
+          "line": {
+            "unit": "PIXELS",
+            "value": 14
+          },
+          "align": "LEFT"
+        }
+      ]
+    },
+    {
+      "id": "2048:48",
+      "name": "Orientation=Horizontal, State=In-progress, Inverted=True",
+      "rect": [
+        340,
+        370,
+        270,
+        24
+      ],
+      "fills": [],
+      "strokes": [],
+      "strokeWidth": 1,
+      "radius": 4,
+      "children": [
+        {
+          "id": "2052:166",
+          "name": "Rail / track",
+          "type": "RECTANGLE",
+          "visible": true,
+          "rect": [
+            17,
+            8,
+            150,
+            8
+          ],
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 0.9529411792755127,
+                "g": 0.9529411792755127,
+                "b": 0.9529411792755127
+              },
+              "opacity": 1
+            }
+          ],
+          "radius": 4
+        },
+        {
+          "id": "2048:49",
+          "name": "Track / in-progress 68",
+          "type": "RECTANGLE",
+          "visible": true,
+          "rect": [
+            65,
+            8,
+            102,
+            8
+          ],
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 0.3843137323856354,
+                "g": 0.2078431397676468,
+                "b": 0.9686274528503418
+              },
+              "opacity": 1
+            }
+          ],
+          "radius": 4
+        },
+        {
+          "id": "2048:50",
+          "name": "Indicator / label",
+          "type": "TEXT",
+          "visible": true,
+          "rect": [
+            176,
+            0,
+            92,
+            24
+          ],
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 0.3843137323856354,
+                "g": 0.2078431397676468,
+                "b": 0.9686274528503418
+              },
+              "opacity": 1
+            }
+          ],
+          "text": "In progress",
+          "font": {
+            "family": "Inter",
+            "style": "Medium",
+            "variationSettings": {
+              "wght": 500,
+              "slnt": 0
+            }
+          },
+          "size": 14,
+          "line": {
+            "unit": "PIXELS",
+            "value": 14
+          },
+          "align": "LEFT"
+        }
+      ]
+    },
+    {
+      "id": "2048:51",
+      "name": "Orientation=Horizontal, State=Completed, Inverted=False",
+      "rect": [
+        40,
+        412,
+        270,
+        24
+      ],
+      "fills": [],
+      "strokes": [],
+      "strokeWidth": 1,
+      "radius": 4,
+      "children": [
+        {
+          "id": "2052:167",
+          "name": "Rail / track",
+          "type": "RECTANGLE",
+          "visible": true,
+          "rect": [
+            1,
+            8,
+            150,
+            8
+          ],
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 0.9529411792755127,
+                "g": 0.9529411792755127,
+                "b": 0.9529411792755127
+              },
+              "opacity": 1
+            }
+          ],
+          "radius": 4
+        },
+        {
+          "id": "2048:52",
+          "name": "Track / completed 68",
+          "type": "RECTANGLE",
+          "visible": true,
+          "rect": [
+            1,
+            8,
+            102,
+            8
+          ],
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 0.0235294122248888,
+                "g": 0.47843137383461,
+                "b": 0.22745098173618317
+              },
+              "opacity": 1
+            }
+          ],
+          "radius": 4
+        },
+        {
+          "id": "2048:53",
+          "name": "Indicator / label",
+          "type": "TEXT",
+          "visible": true,
+          "rect": [
+            176,
+            0,
+            92,
+            24
+          ],
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 0.0235294122248888,
+                "g": 0.47843137383461,
+                "b": 0.22745098173618317
+              },
+              "opacity": 1
+            }
+          ],
+          "text": "Completed",
+          "font": {
+            "family": "Inter",
+            "style": "Medium",
+            "variationSettings": {
+              "wght": 500,
+              "slnt": 0
+            }
+          },
+          "size": 14,
+          "line": {
+            "unit": "PIXELS",
+            "value": 14
+          },
+          "align": "LEFT"
+        }
+      ]
+    },
+    {
+      "id": "2048:54",
+      "name": "Orientation=Horizontal, State=Completed, Inverted=True",
+      "rect": [
+        340,
+        412,
+        270,
+        24
+      ],
+      "fills": [],
+      "strokes": [],
+      "strokeWidth": 1,
+      "radius": 4,
+      "children": [
+        {
+          "id": "2052:168",
+          "name": "Rail / track",
+          "type": "RECTANGLE",
+          "visible": true,
+          "rect": [
+            17,
+            8,
+            150,
+            8
+          ],
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 0.9529411792755127,
+                "g": 0.9529411792755127,
+                "b": 0.9529411792755127
+              },
+              "opacity": 1
+            }
+          ],
+          "radius": 4
+        },
+        {
+          "id": "2048:55",
+          "name": "Track / completed 68",
+          "type": "RECTANGLE",
+          "visible": true,
+          "rect": [
+            65,
+            8,
+            102,
+            8
+          ],
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 0.0235294122248888,
+                "g": 0.47843137383461,
+                "b": 0.22745098173618317
+              },
+              "opacity": 1
+            }
+          ],
+          "radius": 4
+        },
+        {
+          "id": "2048:56",
+          "name": "Indicator / label",
+          "type": "TEXT",
+          "visible": true,
+          "rect": [
+            176,
+            0,
+            92,
+            24
+          ],
+          "fills": [
+            {
+              "type": "SOLID",
+              "color": {
+                "r": 0.0235294122248888,
+                "g": 0.47843137383461,
+                "b": 0.22745098173618317
+              },
+              "opacity": 1
+            }
+          ],
+          "text": "Completed",
+          "font": {
+            "family": "Inter",
+            "style": "Medium",
+            "variationSettings": {
+              "wght": 500,
+              "slnt": 0
+            }
+          },
+          "size": 14,
+          "line": {
+            "unit": "PIXELS",
+            "value": 14
+          },
+          "align": "LEFT"
+        }
+      ]
+    }
+  ]
+}

@@ -16,6 +16,7 @@
 class QApplication;
 class QEvent;
 class QPaintEvent;
+class QPainter;
 class QResizeEvent;
 
 namespace commonWidget {
@@ -125,6 +126,9 @@ private:
     QString visualState() const;
     void sync();
     void refreshVisual();
+    bool hasFigmaAppearance() const;
+    QString figmaState() const;
+    void paintFigmaAppearance(QPainter& painter);
     void watchParents();
     void applyLegacy(const QString& name);
     void requireIconContent(const QIcon& leading, bool leadingVisible,

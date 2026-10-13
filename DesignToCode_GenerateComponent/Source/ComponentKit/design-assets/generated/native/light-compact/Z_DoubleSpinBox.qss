@@ -16,4 +16,4 @@
     padding-left: 8px;
     padding-right: 8px;
 }
-*[designSystemClass="commonWidget::Z_DoubleSpinBox"]:focus { border-color: #6235f7; }
+*[designSystemClass="commonWidget::Z_DoubleSpinBox"]:focus[focusIndicatorVisible="true"] { border-color: #6235f7; }

@@ -262,5 +262,8 @@ def finish(root, profiles, token_types, config, metadata, check=False):
             raise ValueError("sToken mapping report drift")
     else:
         path.parent.mkdir(parents=True, exist_ok=True)
-        path.write_bytes(encoded)
+        # This report is also read by the catalog/check targets during an SDK
+        # build. Do not reopen unchanged evidence with a truncating write.
+        if not path.exists() or path.read_bytes() != encoded:
+            path.write_bytes(encoded)
     return report

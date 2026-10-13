@@ -3,7 +3,7 @@
 #include "Z_PushButton.h"
 #include <stdexcept>
 namespace button_generated {
-inline constexpr const char* sourceHash = "bdc3e50ba3578d10916d4f62e0c7610062200b228553706588aa86283919c3d8";
+inline constexpr const char* sourceHash = "79059ec4189ce0c4194a0cd6aa3160963870be5d42e024543b1c83fbf8bf395e";
 inline constexpr const char* fontFamily = "HarmonyOS Sans SC";
 inline constexpr int bodyFontSize = 14;
 inline constexpr double demoGlyphOccupancy = 0.75;

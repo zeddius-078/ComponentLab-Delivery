@@ -1,10 +1,11 @@
 # Build-only SDK configuration. Design parsers and component rules remain route-local.
 $D2CSourceRoot = $PSScriptRoot
 $D2CProjectRoot = Split-Path $D2CSourceRoot -Parent
+$D2CWorkspaceRoot = Split-Path $D2CProjectRoot -Parent
 $GeneratedComponentSDKRoot = if ($env:GENERATED_COMPONENT_SDK_ROOT) {
     [IO.Path]::GetFullPath($env:GENERATED_COMPONENT_SDK_ROOT)
 } else {
-    [IO.Path]::GetFullPath((Join-Path $D2CProjectRoot 'build/sdk'))
+    [IO.Path]::GetFullPath((Join-Path $D2CWorkspaceRoot 'DesignToCode_GenerateComponent/build/sdk'))
 }
 function Initialize-NativeTools {
     param([switch]$NeedNode)
@@ -49,14 +50,14 @@ function Copy-GeneratedComponentRuntime {
     $manifestPath = Join-Path $GeneratedComponentSDKRoot 'manifest/component-sdk.json'
     $runtimePath = Join-Path $GeneratedComponentSDKRoot 'lib/GeneratedComponentSDK.lib'
     if (-not (Test-Path -LiteralPath $manifestPath) -or -not (Test-Path -LiteralPath $runtimePath)) {
-        throw 'GeneratedComponentSDK is missing. Run Source/Import-GeneratedComponentSDK.ps1 first.'
+        throw 'Authoritative GeneratedComponentSDK is missing. Publish it from DesignToCode_GenerateComponent or set GENERATED_COMPONENT_SDK_ROOT.'
     }
     $manifest = Get-Content -LiteralPath $manifestPath -Raw | ConvertFrom-Json
     if ($manifest.owner -ne 'DesignToCode_GenerateComponent' -or -not $manifest.componentAuthority) {
-        throw 'The imported package is not an authorized GenerateComponent publication.'
+        throw 'The shared package is not an authorized GenerateComponent publication.'
     }
     New-Item -ItemType Directory -Force $Destination | Out-Null
-    # Component code is linked from the imported static SDK; the EXE needs no component DLL.
+    # Component code is linked from the shared static SDK; the EXE needs no component DLL.
     $licenseTarget = Join-Path $Destination 'licenses'
     New-Item -ItemType Directory -Force $licenseTarget | Out-Null
     Copy-Item -Path (Join-Path $GeneratedComponentSDKRoot 'licenses/*.txt') -Destination $licenseTarget -Force

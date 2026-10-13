@@ -15,6 +15,7 @@
 #include <QSplitter>
 #include <QTimer>
 #include <QTreeWidget>
+#include <type_traits>
 using commonWidget::Z_CheckBox;
 using commonWidget::Z_InputField;
 using commonWidget::Z_Select;
@@ -88,6 +89,8 @@ void commonControls(Page& page, T* preview, std::shared_ptr<const surface::Catal
     size->setCurrentText("md");
     auto* variant = combo(page.controls, QString::fromUtf8("形态"),
                           {"outlined", "filled", "borderless", "underlined"});
+    size->setObjectName(QString(appearanceName)+"Size");
+    variant->setObjectName(QString(appearanceName)+"Variant");
     auto* appearance = new QComboBox;
     appearance->setObjectName(appearanceName);
     for (const auto& id : catalog->presetIds())
@@ -95,6 +98,7 @@ void commonControls(Page& page, T* preview, std::shared_ptr<const surface::Catal
     page.controls->addRow(QString::fromUtf8("材质"), appearance);
     auto* status =
         combo(page.controls, QString::fromUtf8("校验状态"), {"none", "error", "warning"});
+    status->setObjectName(QString(appearanceName)+"Status");
     auto *readOnly = check(catalog, page.controls, "readOnly"),
          *disabled = check(catalog, page.controls, "disabled");
     QObject::connect(size, &QComboBox::currentTextChanged, preview, &T::setControlSize);
@@ -108,6 +112,20 @@ void commonControls(Page& page, T* preview, std::shared_ptr<const surface::Catal
     QObject::connect(readOnly, &QCheckBox::toggled, preview, &T::setReadOnly);
     QObject::connect(disabled, &QCheckBox::toggled, preview,
                      [preview](bool on) { preview->setEnabled(!on); });
+    if constexpr (std::is_same<T,Z_InputField>::value) {
+        appearance->insertItem(0,QString::fromUtf8("Figma 当前亮色"),"figma-light");
+        appearance->setCurrentIndex(0);
+        preview->setAppearance("figma-light");
+        auto* note=new QLabel;
+        note->setObjectName("inputAppearanceEvidence");note->setWordWrap(true);
+        page.controls->addRow(note);
+        auto describe=[preview,note] {
+            note->setText(preview->control()->isFigmaInputAppearance() ?
+                QString::fromUtf8("当前 Figma：outlined；Small / Medium / Large；Default / Hover / Focus / Filled / Error / Disabled。") :
+                QString::fromUtf8("SDK 兼容模式：当前 Figma 未定义该材质、形态或 warning 组合，不计作 Figma 变体。"));
+        };
+        QObject::connect(preview->control(),&field::Chrome::visualChanged,note,describe);describe();
+    }
 }
 QVector<Z_Select::Option> options() {
     return {
@@ -127,9 +145,21 @@ void DemoWindow::formPages() {
     inputPreview = field;
     auto* kind = combo(input.controls, QString::fromUtf8("类型"),
                        {"Text", "Password", "Search", "TextArea"});
+    kind->setObjectName("inputKindControl");
     connect(kind, qOverload<int>(&QComboBox::currentIndexChanged), field,
             [field](int index) { field->setKind(Z_InputField::Kind(index)); });
     commonControls(input, field, catalog, "inputAppearance");
+    auto* snapshot=combo(input.controls,QString::fromUtf8("状态预览"),
+        {QString::fromUtf8("实时交互"),"Default","Hover","Focus","Filled","Error","Disabled"});
+    snapshot->setObjectName("inputSnapshotStateControl");
+    connect(snapshot,&QComboBox::currentTextChanged,field,[field,snapshot](const QString& state) {
+        field->setSnapshotState(snapshot->currentIndex()==0?QString():state);
+    });
+    auto* revealed=check(catalog,input.controls,"passwordVisible");
+    revealed->setObjectName("inputPasswordVisibleControl");
+    connect(revealed,&QCheckBox::toggled,field,&Z_InputField::setPasswordVisible);
+    connect(field->findChild<QAbstractButton*>("PASSWORD_TOGGLE"),&QAbstractButton::toggled,
+        revealed,&QCheckBox::setChecked);
     auto *clear = check(catalog, input.controls, "allowClear", true),
          *count = check(catalog, input.controls, "showCount", true);
     auto *prefix = check(catalog, input.controls, "prefix / suffix"),

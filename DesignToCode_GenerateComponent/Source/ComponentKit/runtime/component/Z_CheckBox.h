@@ -34,6 +34,9 @@ class Z_CheckBox : public QCheckBox {
     QSize sizeHint() const override;
     QSize minimumSizeHint() const override;
     QRect indicatorRect() const;
+    // Bounds of the authored Figma row inside the accessible 32px hit target.
+    // The figma-light appearance is a captured Light design, not a Theme alias.
+    QRect designContentRect() const;
   public slots:
     void setText(const QString& text);
     void setIndeterminate(bool value);
@@ -68,6 +71,7 @@ class Z_CheckBox : public QCheckBox {
     QString preset = "solid", sizeName = "sm";
     QIcon checkIcon, mixedIcon;
     void refresh();
+    void refreshFigma();
     void arrange();
 };
 } // namespace commonWidget

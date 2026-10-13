@@ -2,18 +2,20 @@
 
 本项目把 Pixso 页面转换为 Qt 页面结构。当前只维护 **HTML + DSL** 路线：HTML 提供浏览器实测的布局与文字尺寸，Pixso DSL 提供节点层级、组件身份、实例属性和 Token 引用。两类输入必须来自同一设计版本。
 
-正式试点以 **light-compact + uic 四件套** 交付。平台维护工具和 SDK，业务侧开发者使用工具生成，再自行导入业务工程；工具不写业务仓库。执行标准、分工、阶段证据和未完成项统一维护在[唯一执行计划](docs/Gen_layout最小改造执行计划.md)。旧 QUiLoader 演示仅用于历史回归，不是正式页面交付合同。
+正式试点以 **light-compact + uic 四件套** 交付。本项目维护布局生成工具链并消费权威组件 SDK；业务侧开发者使用工具生成页面，再自行导入业务工程。工具不写业务仓库。执行标准、分工、阶段证据和未完成项统一维护在[布局生成执行与验收规则](docs/designRules/workflow/布局生成执行与验收规则.md)。旧 QUiLoader 演示仅用于回归，不是正式页面交付合同。
 
 | 目录 | 职责 |
 | --- | --- |
 | `Source/HtmlDsl` | 原始 HTML、Pixso DSL、合并规则、Qt XML 编译器和生成快照 |
 | `Source/Qt` | ReferencePage、V1、V2 与节点案例的 Qt 运行器 |
 | `Source/Validation` | 来源哈希、布局结构、SDK 引用和离线运行检查 |
-| `build/sdk` | 从 GenerateComponent 导入的组件 SDK；本项目只消费 |
+| `../DesignToCode_GenerateComponent/build/sdk` | 工作区唯一权威组件 SDK；本项目直接读取，不保存副本 |
 | `build/demo/page_examples` | 可运行的页面演示 |
 | `build/reports` | 本轮构建和测试结果 |
 | `build/delivery` | 正式模式的独立页面包；历史失败批次不能当成已验收版本 |
 | [docs](docs/README.md) | 数据流、映射规则和开发入口 |
+
+布局生成工具链通过命令行、输入清单和文件合同工作，不向业务工程提供需要链接的公共库 API，因此当前不命名为 SDK。后续只有在形成稳定的 C++ 公共 API、版本兼容策略和独立消费测试后，才评估单独发布 `LayoutGeneratorSDK`。
 
 ```text
 同源 Pixso HTML + DSL
@@ -47,7 +49,7 @@ pwsh -File Source/Validation/formal/Verify-RelocatedConsumer.ps1 -Batch '<三页
 直接生成旧预览使用 `Source/HtmlDsl/Generate.ps1 -Preview`。下列 V2 兼容入口已明确转发该开关，不会误生成正式四件套。
 
 ```powershell
-pwsh -File Source/Import-GeneratedComponentSDK.ps1 -Package '<GeneratedComponentSDK目录>'
+pwsh -File Source/Verify-GeneratedComponentSDK.ps1
 pwsh -File Source/Qt/V2/Build.ps1 -Test
 pwsh -File Source/Qt/V2/Verify.ps1
 python -B Source/Validation/check_delivery.py
@@ -55,4 +57,4 @@ python -B Source/Validation/check_delivery.py
 
 在 Qt Designer 查看 [V2 结果页](Source/HtmlDsl/generated/result-html.ui)。设计稿出现未映射组件时，回到 `DesignToCode_GenerateComponent` 增加设计契约、组件实现和 SDK 发布；本项目只装配已经发布的组件。
 
-正式 `.ui` 使用 SDK 公开的 `commonWidget::*` 或 `designer_widgets::*` 类及原生布局/页面容器。`designer_widgets::SelectOption` 已在新 SDK 发布，旧预览可继续使用旧 SDK 和私有适配器。不要把旧 `build/sdk` 未升级的状态误认为新公开类已存在；独立消费验证必须指定实际包含该类的发布 SDK。本项目不保存第二套组件实现。
+正式 `.ui` 使用 SDK 公开的 `commonWidget::*` 或 `designer_widgets::*` 类及原生布局/页面容器。`designer_widgets::SelectOption` 已在权威 SDK 发布；独立消费验证必须绑定该发布目录及其 manifest 哈希。本项目不保存第二套组件实现或 SDK 副本。

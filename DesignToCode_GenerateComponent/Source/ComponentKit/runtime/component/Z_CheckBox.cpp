@@ -3,14 +3,39 @@
 #include "FocusIndicator.h"
 #include <QAccessibleWidget>
 #include <QEvent>
+#include <QDynamicPropertyChangeEvent>
+#include <QFile>
+#include <QFontDatabase>
 #include <QFrame>
+#include <QJsonDocument>
 #include <QLabel>
 #include <QPainter>
 #include <QStyle>
 #include <QtMath>
+#include <stdexcept>
 
 namespace commonWidget {
 namespace {
+const QJsonObject& figmaValues() {
+    static const QJsonObject values = [] {
+        QFile file(":/figma/checkbox-gallery.json");
+        if (!file.open(QIODevice::ReadOnly))
+            throw std::runtime_error("Figma checkbox visual contract missing");
+        for (const auto* weight : {"Regular", "Medium", "SemiBold"})
+            if (QFontDatabase::addApplicationFont(QString(":/figma/fonts/Inter-%1.otf").arg(weight)) < 0)
+                throw std::runtime_error("Figma checkbox Inter font missing");
+        return QJsonDocument::fromJson(file.readAll()).object()["variables"].toObject();
+    }();
+    return values;
+}
+QString figmaValue(const QString& key) {
+    const auto value = figmaValues().value(key).toString();
+    if (value.isEmpty()) throw std::runtime_error("Figma checkbox token missing");
+    return value;
+}
+int figmaExtent(const QString& size) {
+    return figmaValue("checkbox/size/" + size + "/indicator/size").toInt();
+}
 class CheckBoxAccessible : public QAccessibleWidget {
   public:
     explicit CheckBoxAccessible(Z_CheckBox* w) : QAccessibleWidget(w, QAccessible::CheckBox) {}
@@ -127,7 +152,7 @@ void Z_CheckBox::setIndeterminate(bool value) {
     QAccessible::updateAccessibility(&e);
 }
 void Z_CheckBox::setAppearance(const QString& id) {
-    catalog->label(id);
+    if (id != "figma-light") catalog->label(id);
     if (preset == id)
         return;
     preset = id;
@@ -142,6 +167,11 @@ void Z_CheckBox::setControlSize(const QString& size) {
     refresh();
 }
 QString Z_CheckBox::interactionState() const {
+    if (preset == "figma-light" && isEnabled()) {
+        const auto forced = property("figmaPreviewState").toString().toLower();
+        if (forced == "default" || forced == "hover" || forced == "pressed" || forced == "focus-visible")
+            return forced;
+    }
     return !isEnabled() ? "disabled" : isDown() ? "pressed" : hovering ? "hover" : "default";
 }
 void Z_CheckBox::nextCheckState() {
@@ -151,6 +181,11 @@ void Z_CheckBox::nextCheckState() {
     emit checkedChangeRequested(requested);
 }
 QSize Z_CheckBox::sizeHint() const {
+    if (preset == "figma-light") {
+        const int slot = sizeName == "lg" ? 24 : 20;
+        const int gap = figmaValue("checkbox/base/default/content/gap").toInt();
+        return {qMax(32, 8 + slot + (text().isEmpty() ? 0 : gap + label->fontMetrics().horizontalAdvance(text()))), 32};
+    }
     auto m = catalog->checkboxMetrics(sizeName);
     const int edge = qCeil(catalog->focusWidth() + catalog->focusGap());
     const int indicator = m["indicator"].toInt();
@@ -165,9 +200,29 @@ QSize Z_CheckBox::minimumSizeHint() const {
 QRect Z_CheckBox::indicatorRect() const {
     return face->geometry();
 }
+QRect Z_CheckBox::designContentRect() const {
+    if (preset != "figma-light") return rect();
+    const int slot = sizeName == "lg" ? 24 : 20;
+    return QRect(4, (height() - slot) / 2, width() - 8, slot);
+}
 void Z_CheckBox::arrange() {
     if (!ready)
         return;
+    if (preset == "figma-light") {
+        const auto content = designContentRect();
+        const int extent = figmaExtent(sizeName), slot = content.height();
+        QRect indicator(content.x() + (slot - extent) / 2, (height() - extent) / 2, extent, extent);
+        const int start = content.x() + slot + figmaValue("checkbox/base/default/content/gap").toInt();
+        QRect labelRect(start, 0, qMax(0, width() - start - 4), height());
+        if (layoutDirection() == Qt::RightToLeft) {
+            indicator.moveLeft(width() - indicator.right() - 1);
+            labelRect.moveLeft(4);
+        }
+        face->setGeometry(indicator);glyph->setGeometry(face->rect());
+        label->setGeometry(labelRect);
+        label->setAlignment(Qt::AlignVCenter | (layoutDirection() == Qt::RightToLeft ? Qt::AlignRight : Qt::AlignLeft));
+        return;
+    }
     auto m = catalog->checkboxMetrics(sizeName);
     int extent = m["indicator"].toInt(), edge = qCeil(catalog->focusWidth() + catalog->focusGap());
     QRect faceRect(edge, (height() - extent) / 2, extent, extent);
@@ -187,6 +242,8 @@ void Z_CheckBox::arrange() {
 void Z_CheckBox::refresh() {
     if (!ready)
         return;
+    if (preset == "figma-light") {refreshFigma();return;}
+    inset->show();outer->setEnabled(true);
     auto r = catalog->checkbox(preset, isChecked() || mixed, interactionState());
     auto m = catalog->checkboxMetrics(sizeName);
     face->setProperty("surfacePreset", preset);
@@ -220,12 +277,59 @@ void Z_CheckBox::refresh() {
     updateGeometry();
     update();
 }
+void Z_CheckBox::refreshFigma() {
+    const auto state = interactionState();
+    const bool disabled = !isEnabled();
+    // Pending designer decision: retain a legible mixed state. The captured
+    // Figma enabled mixed mark is white on white; do not silently ship that.
+    const bool selected = isChecked() || (mixed && !disabled);
+    const QString base = "checkbox/base/";
+    QString fill = figmaValue(base + (disabled ? "disabled/indicator/background" :
+                                   selected ? "selected/indicator/color" : "default/indicator/background"));
+    QString border = figmaValue(base + (disabled ? (isChecked() ? "disabled/indicator/selected-border-color" : "disabled/indicator/border-color") :
+                                     selected ? "selected/indicator/color" : "default/indicator/border-color"));
+    if (!disabled && (state == "hover" || state == "pressed")) {
+        border = figmaValue(base + (selected ? state + "/indicator/color" : "selected/indicator/color"));
+        if (selected) fill = border;
+    }
+    face->setProperty("surfacePreset", preset);
+    face->setProperty("selectionState", selected ? "selected" : "unchecked");
+    face->setProperty("interactionState", state);
+    face->setStyleSheet(QString("QFrame[checkboxPart=\"FACE\"] {background:%1;border:%2px solid %3;border-radius:%4px;}")
+        .arg(fill,figmaValue(base+"default/indicator/border-width"),border,figmaValue(base+"default/indicator/radius")));
+    label->setStyleSheet(QString("QLabel {color:%1;font-family:'Inter';font-size:%2px;font-weight:500;background:transparent;border:0;}")
+        .arg(figmaValue(base+(disabled?"disabled/label/color":"default/label/color")),figmaValue("typography/font-size/data/numeric")));
+    inset->hide();outer->setEnabled(false);
+    const int extent=figmaExtent(sizeName);const qreal dpr=devicePixelRatioF();
+    QPixmap pixmap(qCeil(extent*dpr),qCeil(extent*dpr));pixmap.fill(Qt::transparent);pixmap.setDevicePixelRatio(dpr);
+    if (isChecked() || mixed) {
+        QPainter painter(&pixmap);painter.setRenderHint(QPainter::Antialiasing);
+        const QColor color(figmaValue(disabled?"color/icon/disabled":"color/icon/invert"));
+        if (mixed) {
+            painter.setPen(Qt::NoPen);painter.setBrush(color);
+            if (disabled) painter.drawRoundedRect(QRectF((extent-8)/2.,(extent-8)/2.,8,8),1,1);
+            else painter.drawRoundedRect(QRectF((extent-10)/2.,(extent-2)/2.,10,2),1,1);
+        } else {
+            const int iconSize=16;
+            const QIcon icon(":/figma/checkbox/check.svg");
+            icon.paint(&painter,QRect((extent-iconSize)/2,(extent-iconSize)/2,iconSize,iconSize));
+            painter.setCompositionMode(QPainter::CompositionMode_SourceIn);painter.fillRect(pixmap.rect(),color);
+        }
+    }
+    glyph->setPixmap(pixmap);
+    // A fixed specimen width is authoritative. Font rasterizers may round an
+    // advance one pixel differently from Figma; a state refresh must not resize it.
+    setMinimumSize(sizeHint().boundedTo(maximumSize()));arrange();updateGeometry();update();
+}
 bool Z_CheckBox::event(QEvent* e) {
     if (e->type() == QEvent::Enter)
         hovering = true;
     if (e->type() == QEvent::Leave)
         hovering = false;
     bool result = QCheckBox::event(e);
+    if (ready && e->type() == QEvent::DynamicPropertyChange &&
+        static_cast<QDynamicPropertyChangeEvent*>(e)->propertyName() == "figmaPreviewState")
+        refresh();
     if (ready && (e->type() == QEvent::Enter || e->type() == QEvent::Leave ||
                   e->type() == QEvent::EnabledChange || e->type() == QEvent::FocusIn ||
                   e->type() == QEvent::FocusOut || e->type() == QEvent::LayoutDirectionChange ||
@@ -234,6 +338,15 @@ bool Z_CheckBox::event(QEvent* e) {
     return result;
 }
 void Z_CheckBox::paintEvent(QPaintEvent*) {
+    if (preset == "figma-light") {
+        if (isEnabled() && (interactionState() == "focus-visible" || FocusIndicator::instance().visibleFor(this))) {
+            QPainter painter(this);painter.setRenderHint(QPainter::Antialiasing);painter.setBrush(Qt::NoBrush);
+            const int ringWidth=figmaValue("checkbox/base/focused/focus-ring/width").toInt();
+            painter.setPen(QPen(QColor(figmaValue("checkbox/base/focused/focus-ring/color")),ringWidth));
+            painter.drawRoundedRect(QRectF(face->geometry()).adjusted(-3,-3,3,3),7,7);
+        }
+        return;
+    }
     if (FocusIndicator::instance().visibleFor(this)) {
         QPainter p(this);
         p.setRenderHint(QPainter::Antialiasing);

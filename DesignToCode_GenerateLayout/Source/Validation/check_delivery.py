@@ -86,8 +86,19 @@ try:
     assert not (ROOT / "01_DSL").exists(), "Obsolete DSL-only route must be removed"
     assert not (ROOT / "02_HTML").exists(), "Ambiguous HTML route name must be removed"
     assert not (ROOT / "ComponentKit").exists(), "GenerateLayout must consume the published SDK"
-    sdk_manifest = PROJECT / "build/sdk/manifest/component-sdk.json"
-    assert json.loads(sdk_manifest.read_bytes())["owner"] == "DesignToCode_GenerateComponent"
+    assert not (PROJECT / "build/sdk").exists(), "GenerateLayout must not contain build/sdk"
+    assert not (ROOT / "Import-GeneratedComponentSDK.ps1").exists(), "Copy-based SDK import is retired"
+    assert (ROOT / "Verify-GeneratedComponentSDK.ps1").is_file()
+    sdk_root = Path(os.environ.get(
+        "GENERATED_COMPONENT_SDK_ROOT",
+        PROJECT.parent / "DesignToCode_GenerateComponent" / "build" / "sdk",
+    )).resolve()
+    sdk_manifest = sdk_root / "manifest/component-sdk.json"
+    sdk_metadata = json.loads(sdk_manifest.read_bytes())
+    assert sdk_metadata["owner"] == "DesignToCode_GenerateComponent"
+    assert sdk_metadata["componentAuthority"] and sdk_metadata["tokenAuthority"]
+    result["sdkAuthority"] = str(sdk_root)
+    result["sdkMode"] = "direct-reference"
     # Source 只保留生成器随产物输出的用法；正式说明集中在本项目 docs。
     assert not (ROOT / "05_Docs").exists(), "Maintain guides in project docs"
     assert not set(ROOT.rglob("*.md")), "Maintain layout documentation in project docs"
@@ -115,7 +126,7 @@ try:
             assert (file.parent / target).resolve().exists(), (file, target)
             # 只允许已确认的两份协同合同跨项目引用，不取消项目边界检查。
             permitted_contracts = {
-                (PROJECT.parent / 'DesignToCode_GenerateComponent/docs/Qt表格设计声明与原生映射.md').resolve(),
+                (PROJECT.parent / 'DesignToCode_GenerateComponent/docs/designRules/components/Qt表格设计与原生映射.md').resolve(),
                 (PROJECT.parent / 'DesignToCode_GenerateComponent/docs/Orders-Design-System-协同排期/README.md').resolve(),
             }
             resolved_target = (file.parent / target).resolve()

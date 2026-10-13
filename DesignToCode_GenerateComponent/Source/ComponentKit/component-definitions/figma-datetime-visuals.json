@@ -1,0 +1,371 @@
+{
+  "schemaVersion": 1,
+  "fileKey": "w92BKW1EcutKmTXkwzNHbf",
+  "status": "CAPTURED_LIGHT_NOT_DESIGN_APPROVED",
+  "appearance": "figma-light",
+  "sets": [
+    {
+      "pageId": "463:2",
+      "galleryId": "463:43",
+      "setId": "463:136",
+      "variants": [
+        {
+          "id": "463:48",
+          "name": "Calendar=Available, State=Default",
+          "bounds": [
+            24,
+            24,
+            336,
+            32
+          ]
+        },
+        {
+          "id": "463:57",
+          "name": "Calendar=Available, State=Focus",
+          "bounds": [
+            380,
+            24,
+            336,
+            32
+          ]
+        },
+        {
+          "id": "463:66",
+          "name": "Calendar=Available, State=ReadOnly",
+          "bounds": [
+            24,
+            88,
+            336,
+            32
+          ]
+        },
+        {
+          "id": "463:75",
+          "name": "Calendar=Available, State=Disabled",
+          "bounds": [
+            380,
+            88,
+            336,
+            32
+          ]
+        },
+        {
+          "id": "463:84",
+          "name": "Calendar=Hidden, State=Default",
+          "bounds": [
+            24,
+            152,
+            336,
+            32
+          ]
+        },
+        {
+          "id": "463:97",
+          "name": "Calendar=Hidden, State=Focus",
+          "bounds": [
+            380,
+            152,
+            336,
+            32
+          ]
+        },
+        {
+          "id": "463:110",
+          "name": "Calendar=Hidden, State=ReadOnly",
+          "bounds": [
+            24,
+            216,
+            336,
+            32
+          ]
+        },
+        {
+          "id": "463:123",
+          "name": "Calendar=Hidden, State=Disabled",
+          "bounds": [
+            380,
+            216,
+            336,
+            32
+          ]
+        }
+      ]
+    },
+    {
+      "pageId": "464:2",
+      "galleryId": "464:42",
+      "setId": "464:111",
+      "variants": [
+        {
+          "id": "464:47",
+          "name": "Calendar=Available, State=Default",
+          "bounds": [
+            24,
+            24,
+            280,
+            32
+          ]
+        },
+        {
+          "id": "464:53",
+          "name": "Calendar=Available, State=Focus",
+          "bounds": [
+            324,
+            24,
+            280,
+            32
+          ]
+        },
+        {
+          "id": "464:59",
+          "name": "Calendar=Available, State=ReadOnly",
+          "bounds": [
+            24,
+            88,
+            280,
+            32
+          ]
+        },
+        {
+          "id": "464:65",
+          "name": "Calendar=Available, State=Disabled",
+          "bounds": [
+            324,
+            88,
+            280,
+            32
+          ]
+        },
+        {
+          "id": "464:71",
+          "name": "Calendar=Hidden, State=Default",
+          "bounds": [
+            24,
+            152,
+            280,
+            32
+          ]
+        },
+        {
+          "id": "464:81",
+          "name": "Calendar=Hidden, State=Focus",
+          "bounds": [
+            324,
+            152,
+            280,
+            32
+          ]
+        },
+        {
+          "id": "464:91",
+          "name": "Calendar=Hidden, State=ReadOnly",
+          "bounds": [
+            24,
+            216,
+            280,
+            32
+          ]
+        },
+        {
+          "id": "464:101",
+          "name": "Calendar=Hidden, State=Disabled",
+          "bounds": [
+            324,
+            216,
+            280,
+            32
+          ]
+        }
+      ]
+    },
+    {
+      "pageId": "465:2",
+      "galleryId": "465:64",
+      "setId": "465:189",
+      "variants": [
+        {
+          "id": "465:69",
+          "name": "Format=24h, State=Default",
+          "bounds": [
+            24,
+            24,
+            280,
+            32
+          ]
+        },
+        {
+          "id": "465:84",
+          "name": "Format=24h, State=Focus",
+          "bounds": [
+            324,
+            24,
+            280,
+            32
+          ]
+        },
+        {
+          "id": "465:99",
+          "name": "Format=24h, State=ReadOnly",
+          "bounds": [
+            24,
+            88,
+            280,
+            32
+          ]
+        },
+        {
+          "id": "465:114",
+          "name": "Format=24h, State=Disabled",
+          "bounds": [
+            324,
+            88,
+            280,
+            32
+          ]
+        },
+        {
+          "id": "465:129",
+          "name": "Format=12h, State=Default",
+          "bounds": [
+            24,
+            152,
+            280,
+            32
+          ]
+        },
+        {
+          "id": "465:144",
+          "name": "Format=12h, State=Focus",
+          "bounds": [
+            324,
+            152,
+            280,
+            32
+          ]
+        },
+        {
+          "id": "465:159",
+          "name": "Format=12h, State=ReadOnly",
+          "bounds": [
+            24,
+            216,
+            280,
+            32
+          ]
+        },
+        {
+          "id": "465:174",
+          "name": "Format=12h, State=Disabled",
+          "bounds": [
+            324,
+            216,
+            280,
+            32
+          ]
+        }
+      ]
+    }
+  ],
+  "metrics": {
+    "height": 32,
+    "radius": 4,
+    "border": 1,
+    "focusBorder": 2,
+    "controlsWidth": 42,
+    "fieldPadding": [
+      10,
+      8
+    ],
+    "calendarIconOrigin": [
+      13,
+      8
+    ],
+    "stepIconInstanceSize": 12,
+    "stepIconRootSize": 16,
+    "stepIconOrigin": [
+      15,
+      1.75
+    ],
+    "stepHalfHeight": 15.5,
+    "divider": 1,
+    "dateHighlightWidth": 102,
+    "dateTimeHighlightWidth": 91,
+    "timeHighlightWidth": 28,
+    "numeric": {
+      "family": "Inter",
+      "style": "Medium",
+      "size": 14,
+      "lineHeight": 14
+    },
+    "separator": {
+      "family": "Inter",
+      "style": "Regular",
+      "size": 13,
+      "lineHeight": 19
+    },
+    "timeSpec": {
+      "family": "Inter",
+      "style": "Regular",
+      "size": 12,
+      "lineHeight": 18
+    },
+    "amPm": {
+      "family": "Inter",
+      "style": "Semi Bold",
+      "size": 12,
+      "lineHeight": 18
+    }
+  },
+  "assets": [
+    {
+      "resource": ":/figma/datetime/CalendarPrimary.svg",
+      "rootSize": [
+        16,
+        16
+      ]
+    },
+    {
+      "resource": ":/figma/datetime/CalendarDisabled.svg",
+      "rootSize": [
+        16,
+        16
+      ]
+    },
+    {
+      "resource": ":/figma/spinbox/UpPrimary.svg",
+      "rootSize": [
+        16,
+        16
+      ]
+    },
+    {
+      "resource": ":/figma/spinbox/UpDisabled.svg",
+      "rootSize": [
+        16,
+        16
+      ]
+    },
+    {
+      "resource": ":/figma/spinbox/DownPrimary.svg",
+      "rootSize": [
+        16,
+        16
+      ]
+    },
+    {
+      "resource": ":/figma/spinbox/DownDisabled.svg",
+      "rootSize": [
+        16,
+        16
+      ]
+    }
+  ],
+  "boundaries": [
+    "Native QDateTimeEdit/QDateEdit/QTimeEdit retain value, range, parsing, section selection, keyboard stepping, native calendar popup and the same QLineEdit.",
+    "Calendar Hidden means native stepper, not NoButtons. Native token QSS yields style ownership only for captured date/time instances, preserving the 42px native popup hit region.",
+    "DateTime's CST is inert source annotation, not a Qt::TimeSpec mapping or verified timezone policy. It is omitted when Show time is false.",
+    "The 24h source specimen is 02:30:45; the 12h specimen is 02:30:45 PM. Interactive format changes preserve the underlying value and range, including hidden time/seconds.",
+    "Idle unselected authored formats use source mixed typography; active native editing and custom formats use QLineEdit painting. Cross-renderer font parity is not claimed.",
+    "Captured Light does not approve Theme parity or normalization."
+  ]
+}

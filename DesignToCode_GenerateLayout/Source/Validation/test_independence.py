@@ -1,18 +1,25 @@
 """Validate that GenerateLayout consumes the published component SDK only."""
 import ast
 import json
+import os
 from pathlib import Path
 import unittest
 import xml.etree.ElementTree as ET
 
 ROOT = Path(__file__).resolve().parents[1]
 PROJECT = ROOT.parent
-SDK = PROJECT / 'build/sdk'
+SDK = Path(os.environ.get(
+    'GENERATED_COMPONENT_SDK_ROOT',
+    PROJECT.parent / 'DesignToCode_GenerateComponent' / 'build' / 'sdk',
+)).resolve()
 
 
 class IndependenceTests(unittest.TestCase):
     def test_resources_and_published_sdk(self):
-        # Layout-owned resources stay local; component contracts enter through the imported SDK.
+        # Layout-owned resources stay local; component contracts enter through the authoritative SDK.
+        self.assertFalse((PROJECT / 'build/sdk').exists())
+        self.assertFalse((ROOT / 'Import-GeneratedComponentSDK.ps1').exists())
+        self.assertTrue((ROOT / 'Verify-GeneratedComponentSDK.ps1').is_file())
         for qrc in ROOT.rglob('*.qrc'):
             for node in ET.parse(qrc).findall('.//file'):
                 resolved = (qrc.parent / node.text).resolve()

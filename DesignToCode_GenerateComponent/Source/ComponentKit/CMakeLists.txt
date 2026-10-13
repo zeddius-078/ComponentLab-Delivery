@@ -21,8 +21,30 @@ set(NATIVE_COMPONENT_REGISTRY_SOURCES
 add_library(d2c_components STATIC
     ${GENERATED_NATIVE_COMPONENT_SOURCES}
     ${NATIVE_COMPONENT_REGISTRY_SOURCES}
+    runtime/component/DesignComponentCatalog.cpp runtime/component/DesignComponentCatalog.h
+    runtime/component/LabelAppearance.cpp runtime/component/LabelAppearance.h
+    runtime/component/ProgressAppearance.cpp runtime/component/ProgressAppearance.h
+    runtime/component/RadioAppearance.cpp runtime/component/RadioAppearance.h
+    runtime/component/SpinBoxAppearance.cpp runtime/component/SpinBoxAppearance.h
+    runtime/component/DateTimeAppearance.cpp runtime/component/DateTimeAppearance.h
+    runtime/component/SliderAppearance.cpp runtime/component/SliderAppearance.h
+    runtime/component/ScrollBarAppearance.cpp runtime/component/ScrollBarAppearance.h
+    runtime/component/DialAppearance.cpp runtime/component/DialAppearance.h
+    runtime/component/LineEditAppearance.cpp runtime/component/LineEditAppearance.h
+    runtime/component/ShortcutAppearance.cpp runtime/component/ShortcutAppearance.h
+    runtime/component/ComboBoxAppearance.cpp runtime/component/ComboBoxAppearance.h
+    runtime/component/CommandLinkAppearance.cpp runtime/component/CommandLinkAppearance.h
+    runtime/component/ToolButtonAppearance.cpp runtime/component/ToolButtonAppearance.h
+    runtime/component/DialogButtonBoxAppearance.cpp runtime/component/DialogButtonBoxAppearance.h
+    runtime/component/TabAppearance.cpp runtime/component/TabAppearance.h
+    runtime/component/ToolBoxAppearance.cpp runtime/component/ToolBoxAppearance.h
+    runtime/component/DockWidgetAppearance.cpp runtime/component/DockWidgetAppearance.h
+    runtime/component/MdiAppearance.cpp runtime/component/MdiAppearance.h
+    runtime/component/NavigationAppearance.cpp runtime/component/NavigationAppearance.h
+    runtime/component/PageFlowAppearance.cpp runtime/component/PageFlowAppearance.h
     runtime/component/Z_PushButton.cpp runtime/component/Z_PushButton.h
     runtime/component/Z_CheckBox.cpp runtime/component/Z_CheckBox.h
+    runtime/component/Z_DesignComponents.cpp runtime/component/Z_DesignComponents.h
     runtime/component/Z_InputField.cpp runtime/component/Z_InputField.h
     runtime/component/Z_Select.cpp runtime/component/Z_Select.h
     runtime/component/Z_OtpInput.cpp runtime/component/Z_OtpInput.h
@@ -45,12 +67,34 @@ endif()
 # GenerateComponent publishes the only component implementation consumed by the two demos.
 set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
 set(GENERATED_COMPONENT_SOURCES
+    runtime/component/DateTimeAppearance.cpp runtime/component/DateTimeAppearance.h
+    runtime/component/SpinBoxAppearance.cpp runtime/component/SpinBoxAppearance.h
+    runtime/component/SliderAppearance.cpp runtime/component/SliderAppearance.h
+    runtime/component/ScrollBarAppearance.cpp runtime/component/ScrollBarAppearance.h
+    runtime/component/DialAppearance.cpp runtime/component/DialAppearance.h
+    runtime/component/LineEditAppearance.cpp runtime/component/LineEditAppearance.h
+    runtime/component/ShortcutAppearance.cpp runtime/component/ShortcutAppearance.h
+    runtime/component/ComboBoxAppearance.cpp runtime/component/ComboBoxAppearance.h
+    runtime/component/CommandLinkAppearance.cpp runtime/component/CommandLinkAppearance.h
+    runtime/component/ToolButtonAppearance.cpp runtime/component/ToolButtonAppearance.h
+    runtime/component/DialogButtonBoxAppearance.cpp runtime/component/DialogButtonBoxAppearance.h
+    runtime/component/TabAppearance.cpp runtime/component/TabAppearance.h
+    runtime/component/ToolBoxAppearance.cpp runtime/component/ToolBoxAppearance.h
+    runtime/component/DockWidgetAppearance.cpp runtime/component/DockWidgetAppearance.h
+    runtime/component/MdiAppearance.cpp runtime/component/MdiAppearance.h
+    runtime/component/LabelAppearance.cpp runtime/component/LabelAppearance.h
+    runtime/component/ProgressAppearance.cpp runtime/component/ProgressAppearance.h
+    runtime/component/RadioAppearance.cpp runtime/component/RadioAppearance.h
+    runtime/component/NavigationAppearance.cpp runtime/component/NavigationAppearance.h
+    runtime/component/PageFlowAppearance.cpp runtime/component/PageFlowAppearance.h
     runtime/component/ComponentFactory.cpp runtime/component/ComponentFactory.h
+    runtime/component/DesignComponentCatalog.cpp runtime/component/DesignComponentCatalog.h
     runtime/component/native/NativeComponents.h
     ${NATIVE_COMPONENT_REGISTRY_SOURCES}
     ${GENERATED_NATIVE_COMPONENT_SOURCES}
     runtime/component/Z_PushButton.cpp runtime/component/Z_PushButton.h
     runtime/component/Z_CheckBox.cpp runtime/component/Z_CheckBox.h
+    runtime/component/Z_DesignComponents.cpp runtime/component/Z_DesignComponents.h
     runtime/component/Z_InputField.cpp runtime/component/Z_InputField.h
     runtime/component/Z_Select.cpp runtime/component/Z_Select.h
     runtime/component/Z_OtpInput.cpp runtime/component/Z_OtpInput.h
@@ -84,6 +128,8 @@ if(GENERATED_COMPONENT_SDK_INSTALL)
     install(FILES runtime/adapter/ButtonAppearanceAdapter.h MyDesignSystem.h qt5152_msvc_compat.h
         DESTINATION include/MyDesignSystem)
     install(DIRECTORY licenses/ DESTINATION licenses)
+    install(FILES runtime/assets/fonts/Inter/LICENSE.txt DESTINATION licenses RENAME Inter-OFL.txt)
+    install(FILES runtime/assets/fonts/NotoSansSC/LICENSE.txt DESTINATION licenses RENAME NotoSansSC-OFL.txt)
 endif()
 add_library(d2c_theme STATIC runtime/theme/ComponentTheme.cpp runtime/theme/ComponentTheme.h)
 target_include_directories(d2c_theme PUBLIC runtime/theme)
@@ -130,9 +176,17 @@ if(D2C_BUILD_TOKEN_TOOLS)
         COMMAND "${Python3_EXECUTABLE}" -B "${CMAKE_CURRENT_SOURCE_DIR}/tools/generate_native_components.py"
         DEPENDS d2c_generate_tokens
         COMMENT "Generate one Z_* source and QSS contract per Qt visual component" VERBATIM)
+    add_custom_target(d2c_generate_design_component_catalog
+        COMMAND "${Python3_EXECUTABLE}" -B "${CMAKE_CURRENT_SOURCE_DIR}/tools/generate_design_component_catalog.py"
+        COMMENT "Generate the Figma public component catalog" VERBATIM)
     add_custom_target(d2c_check_native_components
         COMMAND "${Python3_EXECUTABLE}" -B "${CMAKE_CURRENT_SOURCE_DIR}/tools/generate_native_components.py" --check
         DEPENDS d2c_generate_native_components
         COMMENT "Check generated Z_* source and QSS contracts" VERBATIM)
-    add_dependencies(generated_component_sdk d2c_check_native_components)
+    add_custom_target(d2c_check_design_component_catalog
+        COMMAND "${Python3_EXECUTABLE}" -B "${CMAKE_CURRENT_SOURCE_DIR}/tools/generate_design_component_catalog.py" --check
+        DEPENDS d2c_generate_design_component_catalog
+        COMMENT "Check the Figma public component catalog" VERBATIM)
+    add_dependencies(generated_component_sdk d2c_check_native_components
+        d2c_check_design_component_catalog)
 endif()

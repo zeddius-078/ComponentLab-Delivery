@@ -10,6 +10,8 @@ class Z_InputField : public QWidget {
     Q_OBJECT
     Q_PROPERTY(QString value READ value WRITE setValue NOTIFY valueChanged)
     Q_PROPERTY(bool controlled READ isControlled WRITE setControlled)
+    Q_PROPERTY(QString appearance READ appearance WRITE setAppearance)
+    Q_PROPERTY(bool passwordVisible READ isPasswordVisible WRITE setPasswordVisible)
   public:
     enum class Kind { Text, Password, Search, TextArea };
     Q_ENUM(Kind)
@@ -17,6 +19,8 @@ class Z_InputField : public QWidget {
     ~Z_InputField() override;
     QString value() const;
     bool isControlled() const;
+    QString appearance() const;
+    bool isPasswordVisible() const;
     QLineEdit* lineEdit() const;
     QPlainTextEdit* textArea() const;
     field::Chrome* control() const;
@@ -28,6 +32,8 @@ class Z_InputField : public QWidget {
     void setControlSize(const QString&);
     void setVariant(const QString&);
     void setAppearance(const QString&);
+    void setSnapshotState(const QString&);
+    void setPasswordVisible(bool);
     void setStatus(const QString&);
     void setLabel(const QString&);
     void setHint(const QString&);

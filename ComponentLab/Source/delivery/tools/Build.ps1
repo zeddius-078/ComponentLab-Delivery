@@ -23,7 +23,7 @@ function Invoke-Step([string]$Name, [string]$Program, [string[]]$Arguments) {
 }
 Start-Transcript -LiteralPath (Join-Path $logs 'transcript.log')
 try {
-    if ($VsDir) { & (Join-Path $VsDir 'Common7\Tools\Launch-VsDevShell.ps1') -VsInstallationPath $VsDir -Arch amd64 -HostArch amd64 -SkipAutomaticLocation -NoLogo }
+    if ($VsDir) { & (Join-Path $VsDir 'Common7\Tools\Launch-VsDevShell.ps1') -VsInstallationPath $VsDir -Arch amd64 -HostArch amd64 -SkipAutomaticLocation }
     $env:PATH = (Join-Path $QtDir 'bin') + ';' + $NinjaDir + ';' + $env:PATH
     $env:VSLANG = '1033'
     $prefix = -join ([char[]]@(0x6ce8,0x610f,0x003a,0x0020,0x5305,0x542b,0x6587,0x4ef6,0x003a))

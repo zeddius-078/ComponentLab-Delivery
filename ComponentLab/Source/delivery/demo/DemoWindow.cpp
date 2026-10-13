@@ -12,8 +12,12 @@
 #include <QComboBox>
 #include <QDir>
 #include <QEvent>
+#include <QEventLoop>
 #include <QFormLayout>
 #include <QGridLayout>
+#include <QGraphicsView>
+#include <QGraphicsScene>
+#include <QGraphicsProxyWidget>
 #include <QHeaderView>
 #include <QJsonDocument>
 #include <QLabel>
@@ -31,6 +35,7 @@
 #include <QTimer>
 #include <QTabWidget>
 #include <QTableWidget>
+#include <QStackedWidget>
 #include <QTreeWidget>
 #include <stdexcept>
 using commonWidget::Z_CheckBox;
@@ -152,6 +157,15 @@ void DemoWindow::inspectPage() {
     auto* label = new QLineEdit(QString::fromUtf8("启用质量检查"));
     auto* preset = appearanceCombo(*catalog, settings);
     preset->setObjectName("checkboxAppearance");
+    preset->insertItem(0, QString::fromUtf8("Figma 当前画廊 / Light"), "figma-light");
+    preset->setCurrentIndex(0);
+    auto* variantValue = new QComboBox;
+    variantValue->setObjectName("checkboxFigmaValue");
+    variantValue->addItems({"Unchecked", "Checked", "Indeterminate", QString::fromUtf8("SDK checked + indeterminate（非 Figma 变体）")});
+    variantValue->setCurrentIndex(1);
+    auto* variantState = new QComboBox;
+    variantState->setObjectName("checkboxFigmaState");
+    variantState->addItems({QString::fromUtf8("交互 / Auto"), "Default", "Hover", "Pressed", "Focus-visible", "Disabled"});
     auto* size = new QComboBox;
     size->addItem("sm / 20px", "sm");
     size->addItem("lg / 24px", "lg");
@@ -164,6 +178,10 @@ void DemoWindow::inspectPage() {
     controls->addRow(QString::fromUtf8("文本"), label);
     controls->addRow(QString::fromUtf8("外观"), preset);
     controls->addRow(QString::fromUtf8("尺寸"), size);
+    controls->addRow(QString::fromUtf8("取值"), variantValue);
+    controls->addRow(QString::fromUtf8("状态"), variantState);
+    variantValue->setToolTip("Figma Value / SDK checked + indeterminate");
+    variantState->setToolTip(QString::fromUtf8("Figma State 预览；Auto 使用真实鼠标与键盘状态"));
     for (auto* c : {checked, mixed, disabled, controlled, accept})
         controls->addRow(c);
     auto* area = new QWidget;
@@ -172,6 +190,7 @@ void DemoWindow::inspectPage() {
     auto* box = new QVBoxLayout(host);
     box->setContentsMargins(36, 36, 36, 36);
     preview = new Z_CheckBox(catalog, label->text(), host);
+    preview->setAppearance("figma-light");
     preview->setChecked(true);
     checked->setChecked(true);
     box->addWidget(preview, 0, Qt::AlignCenter);
@@ -192,6 +211,24 @@ void DemoWindow::inspectPage() {
             [this, size] { preview->setControlSize(size->currentData().toString()); });
     connect(checked, &QCheckBox::toggled, preview, &Z_CheckBox::setChecked);
     connect(mixed, &QCheckBox::toggled, preview, &Z_CheckBox::setIndeterminate);
+    connect(variantValue, qOverload<int>(&QComboBox::currentIndexChanged), preview,
+            [this, checked, mixed](int index) {
+        preview->setChecked(index == 1 || index == 3);
+        preview->setIndeterminate(index == 2 || index == 3);
+        const QSignalBlocker checkedBlock(checked), mixedBlock(mixed);
+        checked->setChecked(preview->isChecked());mixed->setChecked(preview->isIndeterminate());
+    });
+    auto syncValue = [this, variantValue] {
+        const QSignalBlocker block(variantValue);
+        variantValue->setCurrentIndex(preview->isIndeterminate() ? (preview->isChecked() ? 3 : 2) : (preview->isChecked() ? 1 : 0));
+    };
+    connect(preview, &QAbstractButton::toggled, preview, syncValue);
+    connect(preview, &Z_CheckBox::indeterminateChanged, preview, syncValue);
+    connect(variantState, qOverload<int>(&QComboBox::currentIndexChanged), preview,
+            [this, variantState, disabled](int index) {
+        preview->setProperty("figmaPreviewState", index ? variantState->currentText() : QString());
+        disabled->setChecked(index == 5);
+    });
     connect(disabled, &QCheckBox::toggled, preview, [this](bool on) { preview->setEnabled(!on); });
     connect(controlled, &QCheckBox::toggled, preview, [this, describe](bool on) {
         preview->setControlled(on);
@@ -368,48 +405,78 @@ void DemoWindow::updateTrees() {
         pair.first->setUpdatesEnabled(true);
     }
 }
-void DemoWindow::capture(const QString& path) {
+void DemoWindow::capture(const QString& path, const QString& pageId) {
     if (!QDir().mkpath(path))
         throw std::runtime_error("Cannot create capture directory");
     QJsonArray navigation;
+    QJsonArray layoutDiagnostics;
     int captured = 0;
     auto* componentTree = findChild<QTreeWidget*>("componentTree");
-    const QStringList sampledComponents{
-        "commonWidget::Z_PushButton", "commonWidget::Z_CheckBox",
-        "commonWidget::Z_InputField", "commonWidget::Z_Select",
-        "commonWidget::Z_ToolButton", "commonWidget::Z_TableView"};
+    const QStringList sampledPages = pageId.isEmpty()
+        ? QStringList{"172:2710", "234:2717", "339:2", "242:2720", "443:2", "363:2"}
+        : QStringList{pageId};
     ui->nativeSections->setCurrentIndex(0);
-    for (int i = 0; i < sampledComponents.size(); ++i) {
+    for (int i = 0; i < sampledPages.size(); ++i) {
         QTreeWidgetItem* selected = nullptr;
-        for (auto* item : componentTree->findItems("*", Qt::MatchWildcard | Qt::MatchRecursive)) {
-            if (item->data(0, Qt::UserRole).toString() == sampledComponents[i]) {
-                selected = item;
-                break;
+        for (int group = 0; group < componentTree->topLevelItemCount() && !selected;
+             ++group) {
+            auto* branch = componentTree->topLevelItem(group);
+            for (int row = 0; row < branch->childCount(); ++row) {
+                auto* item = branch->child(row);
+                if (item->data(0, Qt::UserRole).toString() == sampledPages[i]) {
+                    selected = item;
+                    break;
+                }
             }
         }
         if (!selected)
-            throw std::runtime_error("Component tree entry missing during capture");
+            throw std::runtime_error(
+                QString("Component tree entry missing during capture: %1")
+                    .arg(sampledPages[i])
+                    .toStdString());
         componentTree->setCurrentItem(selected);
-        auto* page = findChild<QWidget*>("componentPages")->findChild<QWidget*>(
-            "componentPage_" + sampledComponents[i].section("::", -1), Qt::FindDirectChildrenOnly);
-        auto* sub = page ? page->findChild<QTabWidget*>("componentSections") : findChild<QTabWidget*>(
-            sampledComponents[i] == "commonWidget::Z_PushButton" ? "buttonSections" :
-            sampledComponents[i] == "commonWidget::Z_CheckBox" ? "checkboxSections" :
-            sampledComponents[i] == "commonWidget::Z_InputField" ? "inputSections" :
-            sampledComponents[i] == "commonWidget::Z_Select" ? "selectSections" : "");
+        auto* pageStack = findChild<QStackedWidget*>("componentPages");
+        auto* page = pageStack ? pageStack->currentWidget() : nullptr;
+        auto* sub = page ? page->findChild<QTabWidget*>("componentSections") : nullptr;
         QJsonArray children;
         const int sections = sub ? sub->count() : 1;
         for (int j = 0; j < sections; ++j) {
             if (sub) sub->setCurrentIndex(j);
             QApplication::processEvents();
+            // Newly selected, lazily built pages can post another layout request
+            // after scrollbars are polished. Capture after that frame has settled.
+            QEventLoop settled;
+            QTimer::singleShot(80,&settled,&QEventLoop::quit);
+            settled.exec(QEventLoop::ExcludeUserInputEvents);
             updateTrees();
             QApplication::processEvents();
+            if(j==0 && page) {
+                const auto inspectors=page->findChildren<QScrollArea*>("componentSettingsScroll");
+                for(auto* inspector:inspectors)if(inspector->isVisible())
+                    layoutDiagnostics.append(QJsonObject{{"pageId",sampledPages[i]},
+                        {"settingsViewportWidth",inspector->viewport()->width()},
+                        {"settingsContentWidth",inspector->widget()->width()},
+                        {"settingsHorizontalOverflow",inspector->horizontalScrollBar()->maximum()}});
+            }
             if (!grab().save(path + QString("/component-%1-%2.png").arg(i).arg(j)))
                 throw std::runtime_error("Screenshot failed");
+            if (j == 1) {
+                auto* gallery = page->findChild<QGraphicsView*>("figmaVariantGallery");
+                if (gallery) {
+                    for (auto* item : gallery->scene()->items()) {
+                        auto* proxy = qgraphicsitem_cast<QGraphicsProxyWidget*>(item);
+                        if (proxy && proxy->widget()->objectName() == "figmaGalleryCanvas"
+                            && !proxy->widget()->grab().save(path + "/figma-gallery.png"))
+                            throw std::runtime_error("Gallery canvas capture failed");
+                    }
+                }
+            }
             children.append(sub ? sub->tabText(j) : QString::fromUtf8("预览"));
             ++captured;
         }
-        navigation.append(QJsonObject{{"component", sampledComponents[i]}, {"sections", children}});
+        navigation.append(QJsonObject{{"pageId", sampledPages[i]},
+                                      {"page", selected->text(0)},
+                                      {"sections", children}});
         if (sub) sub->setCurrentIndex(0);
     }
     ui->nativeSections->setCurrentIndex(1);
@@ -427,9 +494,12 @@ void DemoWindow::capture(const QString& path) {
         {"screens", ui->tabs->count()},
         {"capturedPages", captured},
         {"designSystemComponents", findChild<QWidget*>("nativeGalleryPage")->property("componentCount").toInt()},
+        {"figmaComponentSets", findChild<QWidget*>("nativeGalleryPage")->property("componentSetCount").toInt()},
+        {"figmaVariants", findChild<QWidget*>("nativeGalleryPage")->property("variantCount").toInt()},
         {"nativeDescriptors", findChild<QWidget*>("nativeGalleryPage")->property("descriptorCount").toInt()},
         {"nativeRegistryRows", findChild<QTableWidget*>("nativeRegistryTable")->rowCount()},
         {"navigation", navigation},
+        {"layoutDiagnostics",layoutDiagnostics},
         {"presets", QJsonArray::fromStringList(catalog->presetIds())},
         {"buttonPresets", QJsonArray::fromStringList(catalog->buttonPresetIds())},
         {"buttonAppearance", buttonPreview->findChild<ButtonAppearanceAdapter*>()->appearance()},

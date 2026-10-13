@@ -33,7 +33,7 @@ int main(int argc, char *argv[]) {
                 return 7;
         }
     }
-    if (descriptors.size() != 62 || classes.size() != descriptors.size())
+    if (descriptors.size() != 86 || classes.size() != descriptors.size())
         return 4;
 
     auto* lineEdit = factory.create(QStringLiteral("commonWidget::Z_LineEdit"), &owner);
@@ -44,6 +44,39 @@ int main(int argc, char *argv[]) {
     if (lineEdit->property("placeholderText").toString() != QStringLiteral("SDK consumer"))
         return 5;
 
+    auto* chart = qobject_cast<commonWidget::Z_Chart*>(
+        factory.create(QStringLiteral("commonWidget::Z_Chart"), &owner));
+    if (!chart)
+        return 8;
+    chart->setVariantTuple(QStringLiteral("Kind=Line, State=Data"));
+    if (chart->variantValue(QStringLiteral("Kind")) != QStringLiteral("Line") ||
+        chart->property("figmaVariant").toString() != QStringLiteral("Kind=Line, State=Data"))
+        return 9;
+
+    auto* designSwitch = qobject_cast<commonWidget::Z_Switch*>(
+        factory.create(QStringLiteral("commonWidget::Z_Switch"), &owner));
+    if (!designSwitch)
+        return 10;
+    designSwitch->setVariantTuple(
+        QStringLiteral("Size=Small, Value=On, State=Focus-visible"));
+    if (!designSwitch->isChecked() ||
+        designSwitch->variantProperties().value(QStringLiteral("Size")).toString() !=
+            QStringLiteral("Small"))
+        return 11;
+
+    auto* bottomNavigation = qobject_cast<commonWidget::Z_DesktopBottomNavigation*>(
+        factory.create(QStringLiteral("commonWidget::Z_DesktopBottomNavigation"), &owner));
+    if (!bottomNavigation || bottomNavigation->primaryItems().size() != 3 ||
+        bottomNavigation->secondaryItems().size() != 3)
+        return 12;
+    bottomNavigation->setVariantTuple(QStringLiteral("IconPlacement=Start"));
+    if (bottomNavigation->sizeHint() != QSize(840, 122))
+        return 13;
+    QString focusError;
+    if (!factory.apply(bottomNavigation, QStringLiteral("setFocusRingEnabled"), false,
+                       &focusError) ||
+        commonWidget::FocusIndicator::instance().enabledFor(bottomNavigation))
+        return 14;
     return 0;
 }
 

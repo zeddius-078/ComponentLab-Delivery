@@ -1,0 +1,1132 @@
+{
+  "schemaVersion": 1,
+  "fileKey": "w92BKW1EcutKmTXkwzNHbf",
+  "pageId": "172:2710",
+  "galleryId": "2015:17140",
+  "capturedAt": "2026-10-12",
+  "evidence": "get_design_context for all seven component sets, get_variable_defs, screenshot and read-only paint/bounds inspection. Captured Light appearance; not Theme/Profile approval.",
+  "recipes": {
+    "PRIMARY": {
+      "default": {
+        "sourceNodeId": "173:2711",
+        "fill": [
+          98,
+          53,
+          247,
+          1
+        ],
+        "stroke": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "strokeWidth": 1,
+        "radius": 4,
+        "opacity": 1,
+        "dash": [],
+        "foreground": [
+          255,
+          255,
+          255,
+          1
+        ]
+      },
+      "hover": {
+        "sourceNodeId": "173:2716",
+        "fill": [
+          110,
+          88,
+          217,
+          1
+        ],
+        "stroke": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "strokeWidth": 1,
+        "radius": 4,
+        "opacity": 1,
+        "dash": [],
+        "foreground": [
+          255,
+          255,
+          255,
+          1
+        ]
+      },
+      "active": {
+        "sourceNodeId": "173:2721",
+        "fill": [
+          83,
+          44,
+          209,
+          1
+        ],
+        "stroke": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "strokeWidth": 1,
+        "radius": 4,
+        "opacity": 1,
+        "dash": [],
+        "foreground": [
+          255,
+          255,
+          255,
+          1
+        ]
+      },
+      "focus-visible": {
+        "sourceNodeId": "173:2726",
+        "fill": [
+          98,
+          53,
+          247,
+          1
+        ],
+        "stroke": [
+          98,
+          53,
+          247,
+          1
+        ],
+        "strokeWidth": 3,
+        "radius": 4,
+        "opacity": 1,
+        "dash": [],
+        "foreground": [
+          255,
+          255,
+          255,
+          1
+        ]
+      },
+      "disabled": {
+        "sourceNodeId": "173:2731",
+        "fill": [
+          243,
+          243,
+          243,
+          1
+        ],
+        "stroke": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "strokeWidth": 1,
+        "radius": 4,
+        "opacity": 1,
+        "dash": [],
+        "foreground": [
+          187,
+          187,
+          187,
+          1
+        ]
+      },
+      "loading": {
+        "sourceNodeId": "173:2736",
+        "fill": [
+          98,
+          53,
+          247,
+          1
+        ],
+        "stroke": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "strokeWidth": 1,
+        "radius": 4,
+        "opacity": 0.6499999761581421,
+        "dash": [],
+        "foreground": [
+          255,
+          255,
+          255,
+          1
+        ]
+      }
+    },
+    "DEFAULT": {
+      "default": {
+        "sourceNodeId": "173:2805",
+        "fill": [
+          255,
+          255,
+          255,
+          1
+        ],
+        "stroke": [
+          217,
+          217,
+          217,
+          1
+        ],
+        "strokeWidth": 1,
+        "radius": 4,
+        "opacity": 1,
+        "dash": [],
+        "foreground": [
+          0,
+          0,
+          0,
+          0.88
+        ]
+      },
+      "hover": {
+        "sourceNodeId": "173:2810",
+        "fill": [
+          255,
+          255,
+          255,
+          1
+        ],
+        "stroke": [
+          64,
+          150,
+          255,
+          1
+        ],
+        "strokeWidth": 1,
+        "radius": 4,
+        "opacity": 1,
+        "dash": [],
+        "foreground": [
+          64,
+          150,
+          255,
+          1
+        ]
+      },
+      "active": {
+        "sourceNodeId": "173:2815",
+        "fill": [
+          255,
+          255,
+          255,
+          1
+        ],
+        "stroke": [
+          9,
+          88,
+          217,
+          1
+        ],
+        "strokeWidth": 1,
+        "radius": 4,
+        "opacity": 1,
+        "dash": [],
+        "foreground": [
+          9,
+          88,
+          217,
+          1
+        ]
+      },
+      "focus-visible": {
+        "sourceNodeId": "173:2820",
+        "fill": [
+          255,
+          255,
+          255,
+          1
+        ],
+        "stroke": [
+          145,
+          202,
+          255,
+          1
+        ],
+        "strokeWidth": 3,
+        "radius": 4,
+        "opacity": 1,
+        "dash": [],
+        "foreground": [
+          0,
+          0,
+          0,
+          0.88
+        ]
+      },
+      "disabled": {
+        "sourceNodeId": "173:2825",
+        "fill": [
+          0,
+          0,
+          0,
+          0.04
+        ],
+        "stroke": [
+          217,
+          217,
+          217,
+          1
+        ],
+        "strokeWidth": 1,
+        "radius": 4,
+        "opacity": 1,
+        "dash": [],
+        "foreground": [
+          187,
+          187,
+          187,
+          1
+        ]
+      },
+      "loading": {
+        "sourceNodeId": "173:2830",
+        "fill": [
+          255,
+          255,
+          255,
+          1
+        ],
+        "stroke": [
+          217,
+          217,
+          217,
+          1
+        ],
+        "strokeWidth": 1,
+        "radius": 4,
+        "opacity": 0.6499999761581421,
+        "dash": [],
+        "foreground": [
+          0,
+          0,
+          0,
+          0.88
+        ]
+      }
+    },
+    "DASHED": {
+      "default": {
+        "sourceNodeId": "173:2899",
+        "fill": [
+          255,
+          255,
+          255,
+          1
+        ],
+        "stroke": [
+          217,
+          217,
+          217,
+          1
+        ],
+        "strokeWidth": 1,
+        "radius": 4,
+        "opacity": 1,
+        "dash": [
+          4,
+          3
+        ],
+        "foreground": [
+          0,
+          0,
+          0,
+          0.88
+        ]
+      },
+      "hover": {
+        "sourceNodeId": "173:2904",
+        "fill": [
+          255,
+          255,
+          255,
+          1
+        ],
+        "stroke": [
+          64,
+          150,
+          255,
+          1
+        ],
+        "strokeWidth": 1,
+        "radius": 4,
+        "opacity": 1,
+        "dash": [
+          4,
+          3
+        ],
+        "foreground": [
+          64,
+          150,
+          255,
+          1
+        ]
+      },
+      "active": {
+        "sourceNodeId": "173:2909",
+        "fill": [
+          255,
+          255,
+          255,
+          1
+        ],
+        "stroke": [
+          9,
+          88,
+          217,
+          1
+        ],
+        "strokeWidth": 1,
+        "radius": 4,
+        "opacity": 1,
+        "dash": [
+          4,
+          3
+        ],
+        "foreground": [
+          9,
+          88,
+          217,
+          1
+        ]
+      },
+      "focus-visible": {
+        "sourceNodeId": "173:2914",
+        "fill": [
+          255,
+          255,
+          255,
+          1
+        ],
+        "stroke": [
+          145,
+          202,
+          255,
+          1
+        ],
+        "strokeWidth": 3,
+        "radius": 4,
+        "opacity": 1,
+        "dash": [
+          4,
+          3
+        ],
+        "foreground": [
+          0,
+          0,
+          0,
+          0.88
+        ]
+      },
+      "disabled": {
+        "sourceNodeId": "173:2919",
+        "fill": [
+          0,
+          0,
+          0,
+          0.04
+        ],
+        "stroke": [
+          217,
+          217,
+          217,
+          1
+        ],
+        "strokeWidth": 1,
+        "radius": 4,
+        "opacity": 1,
+        "dash": [
+          4,
+          3
+        ],
+        "foreground": [
+          187,
+          187,
+          187,
+          1
+        ]
+      },
+      "loading": {
+        "sourceNodeId": "173:2924",
+        "fill": [
+          255,
+          255,
+          255,
+          1
+        ],
+        "stroke": [
+          217,
+          217,
+          217,
+          1
+        ],
+        "strokeWidth": 1,
+        "radius": 4,
+        "opacity": 0.6499999761581421,
+        "dash": [
+          4,
+          3
+        ],
+        "foreground": [
+          0,
+          0,
+          0,
+          0.88
+        ]
+      }
+    },
+    "TEXT": {
+      "default": {
+        "sourceNodeId": "173:2993",
+        "fill": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "stroke": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "strokeWidth": 1,
+        "radius": 4,
+        "opacity": 1,
+        "dash": [],
+        "foreground": [
+          0,
+          0,
+          0,
+          0.88
+        ]
+      },
+      "hover": {
+        "sourceNodeId": "173:2998",
+        "fill": [
+          0,
+          0,
+          0,
+          0.04
+        ],
+        "stroke": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "strokeWidth": 1,
+        "radius": 4,
+        "opacity": 1,
+        "dash": [],
+        "foreground": [
+          0,
+          0,
+          0,
+          0.88
+        ]
+      },
+      "active": {
+        "sourceNodeId": "173:3003",
+        "fill": [
+          0,
+          0,
+          0,
+          0.06
+        ],
+        "stroke": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "strokeWidth": 1,
+        "radius": 4,
+        "opacity": 1,
+        "dash": [],
+        "foreground": [
+          0,
+          0,
+          0,
+          0.88
+        ]
+      },
+      "focus-visible": {
+        "sourceNodeId": "173:3008",
+        "fill": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "stroke": [
+          145,
+          202,
+          255,
+          1
+        ],
+        "strokeWidth": 3,
+        "radius": 4,
+        "opacity": 1,
+        "dash": [],
+        "foreground": [
+          0,
+          0,
+          0,
+          0.88
+        ]
+      },
+      "disabled": {
+        "sourceNodeId": "173:3013",
+        "fill": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "stroke": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "strokeWidth": 1,
+        "radius": 4,
+        "opacity": 1,
+        "dash": [],
+        "foreground": [
+          187,
+          187,
+          187,
+          1
+        ]
+      },
+      "loading": {
+        "sourceNodeId": "173:3018",
+        "fill": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "stroke": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "strokeWidth": 1,
+        "radius": 4,
+        "opacity": 0.6499999761581421,
+        "dash": [],
+        "foreground": [
+          0,
+          0,
+          0,
+          0.88
+        ]
+      }
+    },
+    "LINK": {
+      "default": {
+        "sourceNodeId": "173:3087",
+        "fill": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "stroke": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "strokeWidth": 1,
+        "radius": 4,
+        "opacity": 1,
+        "dash": [],
+        "foreground": [
+          22,
+          119,
+          255,
+          1
+        ]
+      },
+      "hover": {
+        "sourceNodeId": "173:3092",
+        "fill": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "stroke": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "strokeWidth": 1,
+        "radius": 4,
+        "opacity": 1,
+        "dash": [],
+        "foreground": [
+          105,
+          177,
+          255,
+          1
+        ]
+      },
+      "active": {
+        "sourceNodeId": "173:3097",
+        "fill": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "stroke": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "strokeWidth": 1,
+        "radius": 4,
+        "opacity": 1,
+        "dash": [],
+        "foreground": [
+          9,
+          88,
+          217,
+          1
+        ]
+      },
+      "focus-visible": {
+        "sourceNodeId": "173:3102",
+        "fill": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "stroke": [
+          145,
+          202,
+          255,
+          1
+        ],
+        "strokeWidth": 3,
+        "radius": 4,
+        "opacity": 1,
+        "dash": [],
+        "foreground": [
+          22,
+          119,
+          255,
+          1
+        ]
+      },
+      "disabled": {
+        "sourceNodeId": "173:3107",
+        "fill": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "stroke": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "strokeWidth": 1,
+        "radius": 4,
+        "opacity": 1,
+        "dash": [],
+        "foreground": [
+          187,
+          187,
+          187,
+          1
+        ]
+      },
+      "loading": {
+        "sourceNodeId": "173:3112",
+        "fill": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "stroke": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "strokeWidth": 1,
+        "radius": 4,
+        "opacity": 0.6499999761581421,
+        "dash": [],
+        "foreground": [
+          22,
+          119,
+          255,
+          1
+        ]
+      }
+    },
+    "DANGER": {
+      "default": {
+        "sourceNodeId": "1135:21",
+        "fill": [
+          224,
+          33,
+          40,
+          1
+        ],
+        "stroke": [
+          224,
+          33,
+          40,
+          1
+        ],
+        "strokeWidth": 1,
+        "radius": 4,
+        "opacity": 1,
+        "dash": [],
+        "foreground": [
+          255,
+          255,
+          255,
+          1
+        ]
+      },
+      "hover": {
+        "sourceNodeId": "1135:26",
+        "fill": [
+          247,
+          110,
+          123,
+          1
+        ],
+        "stroke": [
+          247,
+          110,
+          123,
+          1
+        ],
+        "strokeWidth": 1,
+        "radius": 4,
+        "opacity": 1,
+        "dash": [],
+        "foreground": [
+          255,
+          255,
+          255,
+          1
+        ]
+      },
+      "active": {
+        "sourceNodeId": "1135:31",
+        "fill": [
+          224,
+          33,
+          40,
+          1
+        ],
+        "stroke": [
+          224,
+          33,
+          40,
+          1
+        ],
+        "strokeWidth": 1,
+        "radius": 4,
+        "opacity": 1,
+        "dash": [],
+        "foreground": [
+          255,
+          255,
+          255,
+          1
+        ]
+      },
+      "focus-visible": {
+        "sourceNodeId": "1135:36",
+        "fill": [
+          224,
+          33,
+          40,
+          1
+        ],
+        "stroke": [
+          247,
+          110,
+          123,
+          1
+        ],
+        "strokeWidth": 3,
+        "radius": 4,
+        "opacity": 1,
+        "dash": [],
+        "foreground": [
+          255,
+          255,
+          255,
+          1
+        ]
+      },
+      "disabled": {
+        "sourceNodeId": "1135:41",
+        "fill": [
+          243,
+          243,
+          243,
+          1
+        ],
+        "stroke": [
+          208,
+          208,
+          208,
+          1
+        ],
+        "strokeWidth": 1,
+        "radius": 4,
+        "opacity": 1,
+        "dash": [],
+        "foreground": [
+          187,
+          187,
+          187,
+          1
+        ]
+      },
+      "loading": {
+        "sourceNodeId": "1135:46",
+        "fill": [
+          224,
+          33,
+          40,
+          1
+        ],
+        "stroke": [
+          224,
+          33,
+          40,
+          1
+        ],
+        "strokeWidth": 1,
+        "radius": 4,
+        "opacity": 0.6499999761581421,
+        "dash": [],
+        "foreground": [
+          255,
+          255,
+          255,
+          1
+        ]
+      }
+    },
+    "ICONONLY": {
+      "default": {
+        "sourceNodeId": "1260:594",
+        "fill": [
+          255,
+          255,
+          255,
+          1
+        ],
+        "stroke": [
+          217,
+          217,
+          217,
+          1
+        ],
+        "strokeWidth": 1,
+        "radius": 4,
+        "opacity": 1,
+        "dash": [],
+        "foreground": [
+          0,
+          0,
+          0,
+          0.88
+        ]
+      },
+      "hover": {
+        "sourceNodeId": "1260:602",
+        "fill": [
+          255,
+          255,
+          255,
+          1
+        ],
+        "stroke": [
+          64,
+          150,
+          255,
+          1
+        ],
+        "strokeWidth": 1,
+        "radius": 4,
+        "opacity": 1,
+        "dash": [],
+        "foreground": [
+          64,
+          150,
+          255,
+          1
+        ]
+      },
+      "active": {
+        "sourceNodeId": "1260:610",
+        "fill": [
+          255,
+          255,
+          255,
+          1
+        ],
+        "stroke": [
+          9,
+          88,
+          217,
+          1
+        ],
+        "strokeWidth": 1,
+        "radius": 4,
+        "opacity": 1,
+        "dash": [],
+        "foreground": [
+          9,
+          88,
+          217,
+          1
+        ]
+      },
+      "focus-visible": {
+        "sourceNodeId": "1260:618",
+        "fill": [
+          255,
+          255,
+          255,
+          1
+        ],
+        "stroke": [
+          145,
+          202,
+          255,
+          1
+        ],
+        "strokeWidth": 3,
+        "radius": 4,
+        "opacity": 1,
+        "dash": [],
+        "foreground": [
+          0,
+          0,
+          0,
+          0.88
+        ]
+      },
+      "disabled": {
+        "sourceNodeId": "1260:626",
+        "fill": [
+          0,
+          0,
+          0,
+          0.04
+        ],
+        "stroke": [
+          217,
+          217,
+          217,
+          1
+        ],
+        "strokeWidth": 1,
+        "radius": 4,
+        "opacity": 1,
+        "dash": [],
+        "foreground": [
+          187,
+          187,
+          187,
+          1
+        ]
+      },
+      "loading": {
+        "sourceNodeId": "1260:634",
+        "fill": [
+          255,
+          255,
+          255,
+          1
+        ],
+        "stroke": [
+          217,
+          217,
+          217,
+          1
+        ],
+        "strokeWidth": 1,
+        "radius": 4,
+        "opacity": 0.6499999761581421,
+        "dash": [],
+        "foreground": [
+          0,
+          0,
+          0,
+          0.88
+        ]
+      }
+    }
+  },
+  "loadingSlots": {
+    "small": [
+      20,
+      7,
+      16,
+      16
+    ],
+    "medium": [
+      27,
+      6,
+      16,
+      16
+    ],
+    "large": [
+      28.5,
+      8,
+      16,
+      16
+    ]
+  },
+  "iconSlot": [
+    16,
+    16
+  ],
+  "label": {
+    "fontFamily": "Inter",
+    "fontWeight": 400,
+    "small": [
+      14,
+      22
+    ],
+    "medium": [
+      14,
+      22
+    ],
+    "large": [
+      16,
+      24
+    ]
+  }
+}

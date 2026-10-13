@@ -1,5 +1,12 @@
 {
   "project": "DesignToCode_GenerateComponent",
-  "status": "FAIL",
-  "error": "(WindowsPath('G:/ComponentLab-Delivery/DesignToCode_GenerateComponent/docs/Qt表格设计声明与原生映射.md'), '../../DesignToCode_GenerateLayout/docs/Qt表格设计声明与原生映射.md')"
+  "localLinks": 37,
+  "resourceFiles": 213,
+  "tokenChainFiles": 8,
+  "nativeComponentContracts": 59,
+  "figmaPublicComponents": 85,
+  "sdkAuthority": "build/sdk",
+  "sdkMode": "sole-publisher",
+  "sdkConsumerTest": "Source/SDKConsumerTest",
+  "status": "PASS"
 }

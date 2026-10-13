@@ -26,13 +26,12 @@ python -B -m unittest discover -s tests -p test_contract.py
 
 verify 不连接 Pixso。只需要工程合同校验时省略 --manifest 和 --current，仍会检查 Schema、artifact 哈希和跨文件关系。工具只用 Python 标准库；Schema 是标准 draft-2020-12，可另用兼容校验器检查。
 
-## 交付文档
+## 使用文档
 
-- [01 现状审计](docs/01_DesignEvidence现状审计.md)
-- [02 目标结构与职责](docs/02_DesignEvidence目标结构与职责.md)
-- [03 Canonical 字段说明](docs/03_CanonicalDesignContract字段说明.md)
-- [04 迁移方案与实施记录](docs/04_DesignEvidence迁移方案.md)
-- [05 工程消费接口](docs/05_工程消费接口说明.md)
-- [迁移前清单、哈希与最终位置](docs/migration-inventory.json)
+- [结构与职责](../../docs/mainSkill/generate-component-pipeline/references/design-evidence/DesignEvidence结构与职责.md)
+- [Canonical 字段参考](../../docs/mainSkill/generate-component-pipeline/references/design-evidence/CanonicalDesignContract字段参考.md)
+- [工程消费接口](../../docs/mainSkill/generate-component-pipeline/references/design-evidence/工程消费接口.md)
+
+阶段审计、迁移说明和迁移清单位于 `build/reports/document-history/design-evidence`，不参与运行时读取。
 
 实际页面绑定使用 32 个变量；补充 Button 变体使用其中 7 个。263 次绑定分为页面 256 次、补充变体 7 次；实际使用变量共 256 条逐模式终值。旧 39 个声明变量和 312 条终值继续保存在归档索引，不作为工程实际引用计数。

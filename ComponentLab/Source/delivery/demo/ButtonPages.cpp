@@ -73,6 +73,7 @@ void DemoWindow::buttonPage() {
     };
     c->danger = check("buttonDanger", "Danger");
     c->material = choices(form, QString::fromUtf8("材质"), "buttonAppearance", {});
+    c->material->addItem(QString::fromUtf8("Figma 当前画廊 / Light"),"figma-light");
     for (const auto& id : catalog->buttonPresetIds())
         c->material->addItem(catalog->label(id), id);
     c->ghost = check("buttonGhost", "Ghost");
@@ -91,7 +92,7 @@ void DemoWindow::buttonPage() {
     form->addRow(QString::fromUtf8("内容模式"), modes);
     c->iconSide =
         choices(form, QString::fromUtf8("独立图标来源"), "buttonIconSide", {"Leading", "Trailing"});
-    c->text = new QLineEdit(QString::fromUtf8("确认操作"));
+    c->text = new QLineEdit("Button");
     c->text->setObjectName("buttonText");
     c->name = new QLineEdit(c->text->text());
     c->name->setObjectName("buttonAccessibleName");
@@ -121,9 +122,9 @@ void DemoWindow::buttonPage() {
         });
         return input;
     };
-    c->leadingVisible = check("leadingVisible", "Leading visible", true);
+    c->leadingVisible = check("leadingVisible", "Leading visible", false);
     c->leading = source("leading", ":/icons/arrow-left.svg");
-    c->trailingVisible = check("trailingVisible", "Trailing visible", true);
+    c->trailingVisible = check("trailingVisible", "Trailing visible", false);
     c->trailing = source("trailing", ":/icons/arrow-right.svg");
     c->disabled = check("buttonDisabled", "Disabled");
     c->parentDisabled = check("buttonParentDisabled", "Parent disabled");
@@ -262,6 +263,8 @@ void DemoWindow::buttonPage() {
             b->setEnabled(!c->disabled->isChecked());
             b->setLoading(loading);
             appearance->setAppearance(material);
+            if(material=="figma-light" && c->danger->isChecked() && type!="PRIMARY")
+                changes << QString::fromUtf8("当前 Figma 未定义此 Danger 组合；使用既有 SDK 外观，不计入画廊一致性。");
             error->clear();
             status->setText(changes.join('\n'));
             valid = true;
@@ -305,6 +308,9 @@ void DemoWindow::buttonPage() {
                 b->setFocus(Qt::TabFocusReason);
         }
         appearance->refresh();
+        const QStringList previewStates{"","default","hover","active","focus-visible"};
+        b->setProperty("figmaPreviewState",valid && !loading && !policyDisabled?
+                       previewStates.value(c->state->currentIndex()):QString());
     };
     for (auto* w : {c->type, c->size, c->material, c->state, c->iconSide})
         connect(w, qOverload<int>(&QComboBox::currentIndexChanged), this, [apply] { apply(); });

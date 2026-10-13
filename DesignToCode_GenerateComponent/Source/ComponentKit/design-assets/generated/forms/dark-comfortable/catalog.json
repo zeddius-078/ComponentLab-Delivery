@@ -17,7 +17,7 @@
     },
     "id": "COMPONENT-LAB-FORMS-R4-STOKEN",
     "inputs": {
-        "DesignSystem/generated/runtime/tokens_qt.json": "d87561987bb669e4229e9524ab3b8d9c978e99857d61bb8f9bbcfc5d23746b1c",
+        "DesignSystem/generated/runtime/tokens_qt.json": "6d98b140251cb6633c46effe3b41b693320117b08d602e703bdd554f640f5d74",
         "styles/Z_Field.qss.in": "28f64be34ce79bbd53a631a9e2f2102bd25a23ae6da73004c434392b99d5be7a",
         "styles/Z_Select.qss.in": "4a8f58aa71ff07f6145b8d5dc19fbe18b30c2738c42ff05138fb6496dc57b083",
         "tokens/checkbox-contract.json": "4f09560bf675ba6de673be4dcf2ed2316fbd970a0c5cae544c4e13eb277dcfd9",
@@ -2234,7 +2234,7 @@
             "paddingInline": 8
         }
     },
-    "sourceHash": "8e1c258f58c0419aadb65d04291890f39c845b0b7376a85de2b2831e295f92b1",
+    "sourceHash": "d3b0962ffe69be6c637833437b18a8013444850c32cf3b66f7c0484b9b6716c0",
     "sourcePolicy": "sToken overlay via the canonical parser; Input and Select share component.basic.input. Unspecified popup bounds and layout defaults remain explicit project contract values.",
     "status": "PROJECT-ADAPTER-PROPOSAL"
 }

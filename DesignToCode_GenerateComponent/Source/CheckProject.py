@@ -36,6 +36,24 @@ def check():
         SOURCE / "ComponentKit/component-definitions/generated-component-source-map.json"
     ).read_text(encoding="utf-8"))
     assert len(source_map["components"]) == len(native_components)
+    design_catalog = json.loads((
+        SOURCE / "ComponentKit/component-definitions/generated-design-component-catalog.json"
+    ).read_text(encoding="utf-8"))
+    assert design_catalog["figmaFileKey"] == "w92BKW1EcutKmTXkwzNHbf"
+    assert design_catalog["componentCount"] == len(design_catalog["components"]) == 85
+    assert design_catalog["instantiableCount"] == 85
+    assert design_catalog["contractOnlyCount"] == 0
+    assert design_catalog["figmaSource"]["pageCount"] == len(design_catalog["figmaPages"]) == 73
+    assert design_catalog["figmaSource"]["componentSetCount"] == sum(
+        len(page["componentSets"]) for page in design_catalog["figmaPages"]
+    ) == 123
+    assert design_catalog["figmaSource"]["variantCount"] == sum(
+        len(component_set["variants"])
+        for page in design_catalog["figmaPages"]
+        for component_set in page["componentSets"]
+    ) == 1471
+    assert len({item["designComponent"] for item in design_catalog["components"]}) == 85
+    assert len({item["sdkClass"] for item in design_catalog["components"]}) == 85
     native_source = SOURCE / "ComponentKit/runtime/component/native"
     native_styles = SOURCE / "ComponentKit/design-assets/generated/native"
     for component in native_components:
@@ -51,12 +69,21 @@ def check():
         for profile in ("light-comfortable", "light-compact", "dark-comfortable", "dark-compact"):
             assert (native_styles / profile / f"{sdk_class}.qss").is_file(), (profile, sdk_class)
     sdk = PROJECT / "build/sdk"
+    # Exactly one first-level SDK output is allowed; build/cache remains disposable compiler state.
+    sdk_outputs = [path for path in (PROJECT / "build").iterdir()
+                   if path.is_dir() and "sdk" in path.name.lower()]
+    assert sdk_outputs == [sdk], ("unexpected SDK output", sdk_outputs)
     manifest = json.loads((sdk / "manifest/component-sdk.json").read_bytes())
     assert manifest["owner"] == PROJECT.name
     assert manifest["tokenAuthority"] and manifest["componentAuthority"]
+    assert manifest["designComponentCatalog"] == "resources/mappings/design-component-catalog.json"
     assert (sdk / "include/MyDesignSystem/MyDesignSystem.h").is_file()
     assert (sdk / "lib/GeneratedComponentSDK.lib").is_file()
     assert (sdk / "resources/tokens/default").is_dir()
+    published_catalog = json.loads((
+        sdk / manifest["designComponentCatalog"]
+    ).read_text(encoding="utf-8"))
+    assert published_catalog == design_catalog
     assert not list(sdk.rglob("*.exe")) and not list(sdk.rglob("*.dll"))
     assert not (PROJECT / "build/dist").exists()
     consumer_test = SOURCE / "SDKConsumerTest"
@@ -106,6 +133,9 @@ def check():
         assert "/ComponentLab-Delivery/DesignToCode/" not in content, (ninja, "retired path")
     result["tokenChainFiles"] = len(token_chain)
     result["nativeComponentContracts"] = len(native_components)
+    result["figmaPublicComponents"] = design_catalog["componentCount"]
+    result["sdkAuthority"] = "build/sdk"
+    result["sdkMode"] = "sole-publisher"
     result["sdkConsumerTest"] = "Source/SDKConsumerTest"
     result["status"] = "PASS"
     return result

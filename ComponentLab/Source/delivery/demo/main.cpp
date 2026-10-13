@@ -6,6 +6,7 @@
 #include <QCommandLineParser>
 #include <QMessageBox>
 #include <QStyleFactory>
+#include <QScreen>
 #include <QTimer>
 #include <cstdio>
 
@@ -23,6 +24,7 @@ int main(int argc, char** argv) {
     p.addOption({"appearance", "Initial surface preset", "id", "solid"});
     p.addOption({"focus-indicator", "Focus feedback: off, keyboard or always", "mode"});
     p.addOption({"capture-dir", "Capture all tabs", "path"});
+    p.addOption({"capture-page", "Capture a single Figma page and its native gallery canvas", "node-id"});
     p.addOption(
         {"token-dir", "Complete generated Token directory (verification override)", "path"});
     p.addOption({"quit-after", "Exit for verification", "ms"});
@@ -34,12 +36,17 @@ int main(int argc, char** argv) {
             commonWidget::FocusIndicator::instance().setMode(
                 commonWidget::FocusIndicator::parseMode(p.value("focus-indicator")));
         DemoWindow window(p.value("profile"));
-        window.setAppearancePreview(p.value("appearance"));
+        if (const auto* screen = window.screen()) {
+            const auto available = screen->availableGeometry().size() - QSize(48, 80);
+            window.resize(window.size().boundedTo(available.expandedTo(QSize(640, 480))));
+        }
+        if (p.isSet("appearance"))
+            window.setAppearancePreview(p.value("appearance"));
         window.show();
         if (p.isSet("capture-dir"))
             QTimer::singleShot(1000, &window, [&] {
                 try {
-                    window.capture(p.value("capture-dir"));
+                    window.capture(p.value("capture-dir"), p.value("capture-page"));
                 } catch (const std::exception& e) {
                     std::fprintf(stderr, "Capture: %s\n", e.what());
                     app.exit(2);

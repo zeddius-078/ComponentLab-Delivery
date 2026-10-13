@@ -1,0 +1,1463 @@
+{
+  "schemaVersion": 1,
+  "fileKey": "w92BKW1EcutKmTXkwzNHbf",
+  "pageId": "450:2",
+  "status": "CAPTURED_LIGHT_NOT_DESIGN_APPROVED",
+  "gallery": {
+    "id": "2015:18697",
+    "rect": [
+      64,
+      1170,
+      2256,
+      983
+    ]
+  },
+  "container": [
+    {
+      "id": "450:29",
+      "rect": [
+        28,
+        85,
+        2200,
+        870
+      ],
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.9800000190734863,
+            "g": 0.9800000190734863,
+            "b": 0.9800000190734863
+          },
+          "opacity": 1,
+          "visible": true
+        }
+      ]
+    }
+  ],
+  "set": {
+    "id": "450:102",
+    "rect": [
+      40,
+      120,
+      2000,
+      520
+    ],
+    "fills": [],
+    "properties": {
+      "Title#450:40": {
+        "type": "TEXT",
+        "defaultValue": "Create a new workspace"
+      },
+      "Description#450:41": {
+        "type": "TEXT",
+        "defaultValue": "Start with an empty workspace and configure it later."
+      },
+      "Show description#450:42": {
+        "type": "BOOLEAN",
+        "defaultValue": true
+      },
+      "Show icon#450:43": {
+        "type": "BOOLEAN",
+        "defaultValue": true
+      },
+      "Icon#987:0": {
+        "type": "INSTANCE_SWAP",
+        "defaultValue": "984:22"
+      },
+      "Surface": {
+        "type": "VARIANT",
+        "defaultValue": "Raised"
+      },
+      "State": {
+        "type": "VARIANT",
+        "defaultValue": "Default"
+      }
+    }
+  },
+  "variants": [
+    {
+      "id": "450:32",
+      "name": "Surface=Raised, State=Default",
+      "rect": [
+        220,
+        24,
+        360,
+        78
+      ],
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 1,
+            "g": 1,
+            "b": 1
+          },
+          "opacity": 1,
+          "visible": true
+        }
+      ],
+      "strokes": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.6549019813537598,
+            "g": 0.6549019813537598,
+            "b": 0.6549019813537598
+          },
+          "opacity": 1,
+          "visible": true
+        }
+      ],
+      "effects": [],
+      "strokeWeight": 1
+    },
+    {
+      "id": "450:39",
+      "name": "Surface=Raised, State=Hover",
+      "rect": [
+        610,
+        24,
+        360,
+        78
+      ],
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.9450980424880981,
+            "g": 0.9254902005195618,
+            "b": 1
+          },
+          "opacity": 1,
+          "visible": true
+        }
+      ],
+      "strokes": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.6549019813537598,
+            "g": 0.6549019813537598,
+            "b": 0.6549019813537598
+          },
+          "opacity": 1,
+          "visible": true
+        }
+      ],
+      "effects": [],
+      "strokeWeight": 1
+    },
+    {
+      "id": "450:46",
+      "name": "Surface=Raised, State=Pressed",
+      "rect": [
+        1000,
+        24,
+        360,
+        78
+      ],
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.9450980424880981,
+            "g": 0.9254902005195618,
+            "b": 1
+          },
+          "opacity": 1,
+          "visible": true
+        }
+      ],
+      "strokes": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.32549020648002625,
+            "g": 0.1725490242242813,
+            "b": 0.8196078538894653
+          },
+          "opacity": 1,
+          "visible": true
+        }
+      ],
+      "effects": [],
+      "strokeWeight": 1
+    },
+    {
+      "id": "450:53",
+      "name": "Surface=Raised, State=Focus",
+      "rect": [
+        1390,
+        24,
+        360,
+        80
+      ],
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 1,
+            "g": 1,
+            "b": 1
+          },
+          "opacity": 1,
+          "visible": true
+        }
+      ],
+      "strokes": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.3843137323856354,
+            "g": 0.2078431397676468,
+            "b": 0.9686274528503418
+          },
+          "opacity": 1,
+          "visible": true
+        }
+      ],
+      "effects": [],
+      "strokeWeight": 2
+    },
+    {
+      "id": "450:60",
+      "name": "Surface=Raised, State=Disabled",
+      "rect": [
+        1390,
+        154,
+        360,
+        78
+      ],
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.9529411792755127,
+            "g": 0.9529411792755127,
+            "b": 0.9529411792755127
+          },
+          "opacity": 1,
+          "visible": true
+        }
+      ],
+      "strokes": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.8156862854957581,
+            "g": 0.8156862854957581,
+            "b": 0.8156862854957581
+          },
+          "opacity": 1,
+          "visible": true
+        }
+      ],
+      "effects": [],
+      "strokeWeight": 1
+    },
+    {
+      "id": "450:67",
+      "name": "Surface=Flat, State=Default",
+      "rect": [
+        220,
+        284,
+        360,
+        78
+      ],
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0,
+            "g": 0,
+            "b": 0
+          },
+          "opacity": 0,
+          "visible": true
+        }
+      ],
+      "strokes": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0,
+            "g": 0,
+            "b": 0
+          },
+          "opacity": 0,
+          "visible": true
+        }
+      ],
+      "effects": [],
+      "strokeWeight": 1
+    },
+    {
+      "id": "450:74",
+      "name": "Surface=Flat, State=Hover",
+      "rect": [
+        610,
+        284,
+        360,
+        78
+      ],
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.9450980424880981,
+            "g": 0.9254902005195618,
+            "b": 1
+          },
+          "opacity": 1,
+          "visible": true
+        }
+      ],
+      "strokes": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.6549019813537598,
+            "g": 0.6549019813537598,
+            "b": 0.6549019813537598
+          },
+          "opacity": 1,
+          "visible": true
+        }
+      ],
+      "effects": [],
+      "strokeWeight": 1
+    },
+    {
+      "id": "450:81",
+      "name": "Surface=Flat, State=Pressed",
+      "rect": [
+        1000,
+        284,
+        360,
+        78
+      ],
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.9450980424880981,
+            "g": 0.9254902005195618,
+            "b": 1
+          },
+          "opacity": 1,
+          "visible": true
+        }
+      ],
+      "strokes": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.32549020648002625,
+            "g": 0.1725490242242813,
+            "b": 0.8196078538894653
+          },
+          "opacity": 1,
+          "visible": true
+        }
+      ],
+      "effects": [],
+      "strokeWeight": 1
+    },
+    {
+      "id": "450:88",
+      "name": "Surface=Flat, State=Focus",
+      "rect": [
+        1390,
+        284,
+        360,
+        80
+      ],
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0,
+            "g": 0,
+            "b": 0
+          },
+          "opacity": 0,
+          "visible": true
+        }
+      ],
+      "strokes": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.3843137323856354,
+            "g": 0.2078431397676468,
+            "b": 0.9686274528503418
+          },
+          "opacity": 1,
+          "visible": true
+        }
+      ],
+      "effects": [],
+      "strokeWeight": 2
+    },
+    {
+      "id": "450:95",
+      "name": "Surface=Flat, State=Disabled",
+      "rect": [
+        220,
+        414,
+        360,
+        78
+      ],
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.9529411792755127,
+            "g": 0.9529411792755127,
+            "b": 0.9529411792755127
+          },
+          "opacity": 1,
+          "visible": true
+        }
+      ],
+      "strokes": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.8156862854957581,
+            "g": 0.8156862854957581,
+            "b": 0.8156862854957581
+          },
+          "opacity": 1,
+          "visible": true
+        }
+      ],
+      "effects": [],
+      "strokeWeight": 1
+    },
+    {
+      "id": "1142:48",
+      "name": "Surface=Raised, State=Checked",
+      "rect": [
+        220,
+        154,
+        360,
+        78
+      ],
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.9529411792755127,
+            "g": 0.9372549057006836,
+            "b": 1
+          },
+          "opacity": 1,
+          "visible": true
+        }
+      ],
+      "strokes": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.3843137323856354,
+            "g": 0.2078431397676468,
+            "b": 0.9686274528503418
+          },
+          "opacity": 1,
+          "visible": true
+        }
+      ],
+      "effects": [],
+      "strokeWeight": 1
+    },
+    {
+      "id": "1142:57",
+      "name": "Surface=Raised, State=CheckedHover",
+      "rect": [
+        610,
+        154,
+        360,
+        78
+      ],
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.9450980424880981,
+            "g": 0.9254902005195618,
+            "b": 1
+          },
+          "opacity": 1,
+          "visible": true
+        }
+      ],
+      "strokes": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.3843137323856354,
+            "g": 0.2078431397676468,
+            "b": 0.9686274528503418
+          },
+          "opacity": 1,
+          "visible": true
+        }
+      ],
+      "effects": [],
+      "strokeWeight": 1
+    },
+    {
+      "id": "1142:66",
+      "name": "Surface=Raised, State=CheckedFocus",
+      "rect": [
+        1000,
+        154,
+        360,
+        80
+      ],
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.9529411792755127,
+            "g": 0.9372549057006836,
+            "b": 1
+          },
+          "opacity": 1,
+          "visible": true
+        }
+      ],
+      "strokes": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.3843137323856354,
+            "g": 0.2078431397676468,
+            "b": 0.9686274528503418
+          },
+          "opacity": 1,
+          "visible": true
+        }
+      ],
+      "effects": [],
+      "strokeWeight": 2
+    },
+    {
+      "id": "1142:75",
+      "name": "Surface=Flat, State=Checked",
+      "rect": [
+        610,
+        414,
+        360,
+        78
+      ],
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.9529411792755127,
+            "g": 0.9372549057006836,
+            "b": 1
+          },
+          "opacity": 1,
+          "visible": true
+        }
+      ],
+      "strokes": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.3843137323856354,
+            "g": 0.2078431397676468,
+            "b": 0.9686274528503418
+          },
+          "opacity": 1,
+          "visible": true
+        }
+      ],
+      "effects": [],
+      "strokeWeight": 1
+    },
+    {
+      "id": "1142:84",
+      "name": "Surface=Flat, State=CheckedHover",
+      "rect": [
+        1000,
+        414,
+        360,
+        78
+      ],
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.9450980424880981,
+            "g": 0.9254902005195618,
+            "b": 1
+          },
+          "opacity": 1,
+          "visible": true
+        }
+      ],
+      "strokes": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.3843137323856354,
+            "g": 0.2078431397676468,
+            "b": 0.9686274528503418
+          },
+          "opacity": 1,
+          "visible": true
+        }
+      ],
+      "effects": [],
+      "strokeWeight": 1
+    },
+    {
+      "id": "1142:93",
+      "name": "Surface=Flat, State=CheckedFocus",
+      "rect": [
+        1390,
+        414,
+        360,
+        80
+      ],
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.9529411792755127,
+            "g": 0.9372549057006836,
+            "b": 1
+          },
+          "opacity": 1,
+          "visible": true
+        }
+      ],
+      "strokes": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.3843137323856354,
+            "g": 0.2078431397676468,
+            "b": 0.9686274528503418
+          },
+          "opacity": 1,
+          "visible": true
+        }
+      ],
+      "effects": [],
+      "strokeWeight": 2
+    }
+  ],
+  "samples": [
+    {
+      "id": "450:32",
+      "name": "Surface=Raised, State=Default",
+      "type": "COMPONENT",
+      "rect": [
+        220,
+        24,
+        360,
+        78
+      ],
+      "visible": true,
+      "opacity": 1,
+      "strokeWeight": 1,
+      "strokeAlign": "INSIDE",
+      "cornerRadius": 4,
+      "effects": [],
+      "clipsContent": false,
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 1,
+            "g": 1,
+            "b": 1
+          },
+          "opacity": 1,
+          "visible": true
+        }
+      ],
+      "strokes": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.6549019813537598,
+            "g": 0.6549019813537598,
+            "b": 0.6549019813537598
+          },
+          "opacity": 1,
+          "visible": true
+        }
+      ],
+      "layout": [
+        "HORIZONTAL",
+        16,
+        12,
+        16,
+        12,
+        12
+      ],
+      "children": [
+        {
+          "id": "987:24",
+          "name": "Icon / destination arrow",
+          "type": "INSTANCE",
+          "rect": [
+            17,
+            27,
+            24,
+            24
+          ],
+          "visible": true,
+          "opacity": 1,
+          "strokeWeight": 1,
+          "strokeAlign": "INSIDE",
+          "cornerRadius": 0,
+          "effects": [],
+          "clipsContent": false,
+          "fills": [],
+          "strokes": [],
+          "layout": [
+            "NONE",
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "children": [
+            {
+              "id": "I987:24;984:23",
+              "name": "Vector",
+              "type": "FRAME",
+              "rect": [
+                0,
+                0,
+                16,
+                16
+              ],
+              "visible": true,
+              "opacity": 1,
+              "strokeWeight": 1,
+              "strokeAlign": "INSIDE",
+              "cornerRadius": 0,
+              "effects": [],
+              "clipsContent": true,
+              "fills": [],
+              "strokes": [],
+              "layout": [
+                "NONE",
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "children": [
+                {
+                  "id": "I987:24;984:24",
+                  "name": "Vector",
+                  "type": "VECTOR",
+                  "rect": [
+                    2,
+                    3.750659942626953,
+                    11.999340057373047,
+                    8.518048286437988
+                  ],
+                  "visible": true,
+                  "opacity": 1,
+                  "strokeWeight": 1,
+                  "strokeAlign": "INSIDE",
+                  "cornerRadius": 0,
+                  "effects": [],
+                  "fills": [
+                    {
+                      "type": "SOLID",
+                      "color": {
+                        "r": 0.09803921729326248,
+                        "g": 0.09803921729326248,
+                        "b": 0.09803921729326248
+                      },
+                      "opacity": 1,
+                      "visible": true
+                    }
+                  ],
+                  "strokes": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "450:36",
+          "name": "Content",
+          "type": "FRAME",
+          "rect": [
+            53,
+            13,
+            292,
+            52
+          ],
+          "visible": true,
+          "opacity": 1,
+          "strokeWeight": 1,
+          "strokeAlign": "INSIDE",
+          "cornerRadius": 0,
+          "effects": [],
+          "clipsContent": true,
+          "fills": [],
+          "strokes": [],
+          "layout": [
+            "VERTICAL",
+            0,
+            0,
+            0,
+            0,
+            4
+          ],
+          "children": [
+            {
+              "id": "450:37",
+              "name": "Title",
+              "type": "TEXT",
+              "rect": [
+                0,
+                0,
+                292,
+                22
+              ],
+              "visible": true,
+              "opacity": 1,
+              "strokeWeight": 1,
+              "strokeAlign": "OUTSIDE",
+              "effects": [],
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 0.09803921729326248,
+                    "g": 0.09803921729326248,
+                    "b": 0.09803921729326248
+                  },
+                  "opacity": 1,
+                  "visible": true
+                }
+              ],
+              "strokes": [],
+              "text": "Create a new workspace",
+              "font": {
+                "family": "Inter",
+                "style": "Medium",
+                "variationSettings": {
+                  "wght": 500,
+                  "slnt": 0
+                }
+              },
+              "size": 14,
+              "lineHeight": {
+                "unit": "PIXELS",
+                "value": 22
+              }
+            },
+            {
+              "id": "450:38",
+              "name": "Description",
+              "type": "TEXT",
+              "rect": [
+                0,
+                26,
+                292,
+                36
+              ],
+              "visible": true,
+              "opacity": 1,
+              "strokeWeight": 1,
+              "strokeAlign": "OUTSIDE",
+              "effects": [],
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 0.2666666805744171,
+                    "g": 0.2666666805744171,
+                    "b": 0.2666666805744171
+                  },
+                  "opacity": 1,
+                  "visible": true
+                }
+              ],
+              "strokes": [],
+              "text": "Start with an empty workspace and configure it later.",
+              "font": {
+                "family": "Inter",
+                "style": "Regular",
+                "variationSettings": {
+                  "wght": 400,
+                  "slnt": 0
+                }
+              },
+              "size": 12,
+              "lineHeight": {
+                "unit": "PIXELS",
+                "value": 18
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "450:53",
+      "name": "Surface=Raised, State=Focus",
+      "type": "COMPONENT",
+      "rect": [
+        1390,
+        24,
+        360,
+        80
+      ],
+      "visible": true,
+      "opacity": 1,
+      "strokeWeight": 2,
+      "strokeAlign": "INSIDE",
+      "cornerRadius": 4,
+      "effects": [],
+      "clipsContent": false,
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 1,
+            "g": 1,
+            "b": 1
+          },
+          "opacity": 1,
+          "visible": true
+        }
+      ],
+      "strokes": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.3843137323856354,
+            "g": 0.2078431397676468,
+            "b": 0.9686274528503418
+          },
+          "opacity": 1,
+          "visible": true
+        }
+      ],
+      "layout": [
+        "HORIZONTAL",
+        16,
+        12,
+        16,
+        12,
+        12
+      ],
+      "children": [
+        {
+          "id": "987:33",
+          "name": "Icon / destination arrow",
+          "type": "INSTANCE",
+          "rect": [
+            18,
+            28,
+            24,
+            24
+          ],
+          "visible": true,
+          "opacity": 1,
+          "strokeWeight": 1,
+          "strokeAlign": "INSIDE",
+          "cornerRadius": 0,
+          "effects": [],
+          "clipsContent": false,
+          "fills": [],
+          "strokes": [],
+          "layout": [
+            "NONE",
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "children": [
+            {
+              "id": "I987:33;984:23",
+              "name": "Vector",
+              "type": "FRAME",
+              "rect": [
+                0,
+                0,
+                16,
+                16
+              ],
+              "visible": true,
+              "opacity": 1,
+              "strokeWeight": 1,
+              "strokeAlign": "INSIDE",
+              "cornerRadius": 0,
+              "effects": [],
+              "clipsContent": true,
+              "fills": [],
+              "strokes": [],
+              "layout": [
+                "NONE",
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "children": [
+                {
+                  "id": "I987:33;984:24",
+                  "name": "Vector",
+                  "type": "VECTOR",
+                  "rect": [
+                    2,
+                    3.750659942626953,
+                    11.999340057373047,
+                    8.518048286437988
+                  ],
+                  "visible": true,
+                  "opacity": 1,
+                  "strokeWeight": 1,
+                  "strokeAlign": "INSIDE",
+                  "cornerRadius": 0,
+                  "effects": [],
+                  "fills": [
+                    {
+                      "type": "SOLID",
+                      "color": {
+                        "r": 0.09803921729326248,
+                        "g": 0.09803921729326248,
+                        "b": 0.09803921729326248
+                      },
+                      "opacity": 1,
+                      "visible": true
+                    }
+                  ],
+                  "strokes": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "450:57",
+          "name": "Content",
+          "type": "FRAME",
+          "rect": [
+            54,
+            14,
+            292,
+            52
+          ],
+          "visible": true,
+          "opacity": 1,
+          "strokeWeight": 1,
+          "strokeAlign": "INSIDE",
+          "cornerRadius": 0,
+          "effects": [],
+          "clipsContent": true,
+          "fills": [],
+          "strokes": [],
+          "layout": [
+            "VERTICAL",
+            0,
+            0,
+            0,
+            0,
+            4
+          ],
+          "children": [
+            {
+              "id": "450:58",
+              "name": "Title",
+              "type": "TEXT",
+              "rect": [
+                0,
+                0,
+                292,
+                22
+              ],
+              "visible": true,
+              "opacity": 1,
+              "strokeWeight": 1,
+              "strokeAlign": "OUTSIDE",
+              "effects": [],
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 0.09803921729326248,
+                    "g": 0.09803921729326248,
+                    "b": 0.09803921729326248
+                  },
+                  "opacity": 1,
+                  "visible": true
+                }
+              ],
+              "strokes": [],
+              "text": "Create a new workspace",
+              "font": {
+                "family": "Inter",
+                "style": "Medium",
+                "variationSettings": {
+                  "wght": 500,
+                  "slnt": 0
+                }
+              },
+              "size": 14,
+              "lineHeight": {
+                "unit": "PIXELS",
+                "value": 22
+              }
+            },
+            {
+              "id": "450:59",
+              "name": "Description",
+              "type": "TEXT",
+              "rect": [
+                0,
+                26,
+                292,
+                36
+              ],
+              "visible": true,
+              "opacity": 1,
+              "strokeWeight": 1,
+              "strokeAlign": "OUTSIDE",
+              "effects": [],
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 0.2666666805744171,
+                    "g": 0.2666666805744171,
+                    "b": 0.2666666805744171
+                  },
+                  "opacity": 1,
+                  "visible": true
+                }
+              ],
+              "strokes": [],
+              "text": "Start with an empty workspace and configure it later.",
+              "font": {
+                "family": "Inter",
+                "style": "Regular",
+                "variationSettings": {
+                  "wght": 400,
+                  "slnt": 0
+                }
+              },
+              "size": 12,
+              "lineHeight": {
+                "unit": "PIXELS",
+                "value": 18
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "1142:66",
+      "name": "Surface=Raised, State=CheckedFocus",
+      "type": "COMPONENT",
+      "rect": [
+        1000,
+        154,
+        360,
+        80
+      ],
+      "visible": true,
+      "opacity": 1,
+      "strokeWeight": 2,
+      "strokeAlign": "INSIDE",
+      "cornerRadius": 4,
+      "effects": [],
+      "clipsContent": false,
+      "fills": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.9529411792755127,
+            "g": 0.9372549057006836,
+            "b": 1
+          },
+          "opacity": 1,
+          "visible": true
+        }
+      ],
+      "strokes": [
+        {
+          "type": "SOLID",
+          "color": {
+            "r": 0.3843137323856354,
+            "g": 0.2078431397676468,
+            "b": 0.9686274528503418
+          },
+          "opacity": 1,
+          "visible": true
+        }
+      ],
+      "layout": [
+        "HORIZONTAL",
+        16,
+        12,
+        16,
+        12,
+        12
+      ],
+      "children": [
+        {
+          "id": "1142:67",
+          "name": "Icon / destination arrow",
+          "type": "INSTANCE",
+          "rect": [
+            18,
+            28,
+            24,
+            24
+          ],
+          "visible": true,
+          "opacity": 1,
+          "strokeWeight": 1,
+          "strokeAlign": "INSIDE",
+          "cornerRadius": 0,
+          "effects": [],
+          "clipsContent": false,
+          "fills": [],
+          "strokes": [],
+          "layout": [
+            "NONE",
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "children": [
+            {
+              "id": "I1142:67;984:23",
+              "name": "Vector",
+              "type": "FRAME",
+              "rect": [
+                0,
+                0,
+                16,
+                16
+              ],
+              "visible": true,
+              "opacity": 1,
+              "strokeWeight": 1,
+              "strokeAlign": "INSIDE",
+              "cornerRadius": 0,
+              "effects": [],
+              "clipsContent": true,
+              "fills": [],
+              "strokes": [],
+              "layout": [
+                "NONE",
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "children": [
+                {
+                  "id": "I1142:67;984:24",
+                  "name": "Vector",
+                  "type": "VECTOR",
+                  "rect": [
+                    2,
+                    3.750659942626953,
+                    11.999340057373047,
+                    8.518048286437988
+                  ],
+                  "visible": true,
+                  "opacity": 1,
+                  "strokeWeight": 1,
+                  "strokeAlign": "INSIDE",
+                  "cornerRadius": 0,
+                  "effects": [],
+                  "fills": [
+                    {
+                      "type": "SOLID",
+                      "color": {
+                        "r": 0.3843137323856354,
+                        "g": 0.2078431397676468,
+                        "b": 0.9686274528503418
+                      },
+                      "opacity": 1,
+                      "visible": true
+                    }
+                  ],
+                  "strokes": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "1142:68",
+          "name": "Content",
+          "type": "FRAME",
+          "rect": [
+            54,
+            14,
+            292,
+            52
+          ],
+          "visible": true,
+          "opacity": 1,
+          "strokeWeight": 1,
+          "strokeAlign": "INSIDE",
+          "cornerRadius": 0,
+          "effects": [],
+          "clipsContent": true,
+          "fills": [],
+          "strokes": [],
+          "layout": [
+            "VERTICAL",
+            0,
+            0,
+            0,
+            0,
+            4
+          ],
+          "children": [
+            {
+              "id": "1142:69",
+              "name": "Title",
+              "type": "TEXT",
+              "rect": [
+                0,
+                0,
+                292,
+                22
+              ],
+              "visible": true,
+              "opacity": 1,
+              "strokeWeight": 1,
+              "strokeAlign": "OUTSIDE",
+              "effects": [],
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 0.3843137323856354,
+                    "g": 0.2078431397676468,
+                    "b": 0.9686274528503418
+                  },
+                  "opacity": 1,
+                  "visible": true
+                }
+              ],
+              "strokes": [],
+              "text": "Create a new workspace",
+              "font": {
+                "family": "Inter",
+                "style": "Medium",
+                "variationSettings": {
+                  "wght": 500,
+                  "slnt": 0
+                }
+              },
+              "size": 14,
+              "lineHeight": {
+                "unit": "PIXELS",
+                "value": 22
+              }
+            },
+            {
+              "id": "1142:70",
+              "name": "Description",
+              "type": "TEXT",
+              "rect": [
+                0,
+                26,
+                292,
+                36
+              ],
+              "visible": true,
+              "opacity": 1,
+              "strokeWeight": 1,
+              "strokeAlign": "OUTSIDE",
+              "effects": [],
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "color": {
+                    "r": 0.2666666805744171,
+                    "g": 0.2666666805744171,
+                    "b": 0.2666666805744171
+                  },
+                  "opacity": 1,
+                  "visible": true
+                }
+              ],
+              "strokes": [],
+              "text": "Start with an empty workspace and configure it later.",
+              "font": {
+                "family": "Inter",
+                "style": "Regular",
+                "variationSettings": {
+                  "wght": 400,
+                  "slnt": 0
+                }
+              },
+              "size": 12,
+              "lineHeight": {
+                "unit": "PIXELS",
+                "value": 18
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "variables": {
+    "color/text/primary": "#191919",
+    "var(--component-native-command-link-foreground)": "#191919",
+    "typography/letter-spacing/default": "0",
+    "typography/font-size/heading/heading4": "14",
+    "typography/line-height/heading/heading4": "22",
+    "typography/font-weight/subemphasis": "500",
+    "DSM/Heading/H4": "Font(family: \"Inter\", style: Medium, size: typography/font-size/heading/heading4, weight: typography/font-weight/subemphasis, lineHeight: typography/line-height/heading/heading4, letterSpacing: typography/letter-spacing/default)",
+    "var(--component-native-command-link-description)": "#444444",
+    "DSM/Label/Caption": "Font(family: \"Inter\", style: Regular, size: 12, weight: 400, lineHeight: 18, letterSpacing: 0)",
+    "var(--component-native-command-link-gap)": "12",
+    "var(--component-native-command-link-padding)": "16",
+    "var(--component-native-command-link-radius)": "4",
+    "var(--component-native-command-link-background)": "#ffffff",
+    "var(--component-native-command-link-border)": "#a7a7a7",
+    "var(--component-native-command-link-hover-background)": "#f1ecff",
+    "var(--component-native-command-link-pressed-border)": "#532cd1",
+    "var(--component-native-command-link-focus-border)": "#6235f7",
+    "var(--qtlab-semantic-color-text-disabled)": "#8a8a8a",
+    "var(--component-native-command-link-disabled-foreground)": "#8a8a8a",
+    "var(--component-native-command-link-disabled-background)": "#f3f3f3",
+    "var(--component-native-command-link-disabled-border)": "#d0d0d0",
+    "var(--component-native-command-link-flat-background)": "#00000000",
+    "var(--component-native-command-link-accent)": "#6235f7",
+    "component/native/command-link/checked-foreground": "#6235f7",
+    "var(--component-native-command-link-checked-description)": "#444444",
+    "component/native/command-link/checked-background": "#f3efff",
+    "component/native/command-link/checked-border": "#6235f7",
+    "component/native/command-link/checked-hover-background": "#f1ecff"
+  },
+  "boundary": "Native QCommandLinkButton/Z_CommandLinkButton keeps text/description/flat/checkable/checked/default/autoDefault/shortcut/click authority. Show description/show icon are adapter authoring visibility, not native bool setters. Fixed Pressed/Focus never mutate down/focus. No intrinsic exclusive selection or wizard navigation. Source Content height 52 clips Title22 + gap4 + Description36 by 10px; gallery preserves clipping, live presentation reserves enough height and records design issue. Original 16px arrows sit at top-left of source 24px icon slots; no SVG resizing/recoloring. Design approval, native layout parity and full normalized export remain open."
+}

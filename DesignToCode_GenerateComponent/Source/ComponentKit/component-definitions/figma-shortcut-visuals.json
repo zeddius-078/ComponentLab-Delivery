@@ -1,0 +1,908 @@
+{
+  "schemaVersion": 1,
+  "fileKey": "w92BKW1EcutKmTXkwzNHbf",
+  "pageId": "478:337",
+  "galleryId": "478:42",
+  "status": "CAPTURED_LIGHT_NOT_DESIGN_APPROVED",
+  "set": {
+    "id": "478:439",
+    "rect": [
+      28,
+      85,
+      1256,
+      240
+    ],
+    "fills": [],
+    "properties": {
+      "Sequence#478:15": {
+        "type": "TEXT",
+        "defaultValue": "Ctrl + Shift + P"
+      },
+      "Show clear#478:16": {
+        "type": "BOOLEAN",
+        "defaultValue": true
+      },
+      "Show hint#478:17": {
+        "type": "BOOLEAN",
+        "defaultValue": true
+      },
+      "State": {
+        "type": "VARIANT",
+        "defaultValue": "Default",
+        "variantOptions": [
+          "Default",
+          "Focus",
+          "Recording",
+          "Conflict",
+          "Disabled",
+          "Empty"
+        ]
+      }
+    }
+  },
+  "variants": [
+    {
+      "id": "478:408",
+      "name": "State=Default",
+      "type": "COMPONENT",
+      "rect": [
+        24,
+        24,
+        280,
+        72
+      ],
+      "visible": true,
+      "cornerRadius": 0,
+      "strokeWeight": 1,
+      "strokeAlign": "INSIDE",
+      "effects": [],
+      "paddingLeft": 0,
+      "paddingRight": 0,
+      "itemSpacing": 0,
+      "children": [
+        {
+          "id": "478:409",
+          "name": "Field",
+          "type": "FRAME",
+          "rect": [
+            0,
+            0,
+            280,
+            40
+          ],
+          "visible": true,
+          "cornerRadius": 6,
+          "strokeWeight": 1,
+          "strokeAlign": "INSIDE",
+          "effects": [],
+          "paddingLeft": 0,
+          "paddingRight": 0,
+          "itemSpacing": 0,
+          "children": [
+            {
+              "id": "478:410",
+              "name": "Sequence",
+              "type": "TEXT",
+              "rect": [
+                12,
+                10,
+                99,
+                22
+              ],
+              "visible": true,
+              "strokeWeight": 1,
+              "strokeAlign": "OUTSIDE",
+              "effects": [],
+              "text": "Ctrl + Shift + P",
+              "font": {
+                "family": "Inter",
+                "style": "Semi Bold",
+                "variationSettings": {
+                  "wght": 600,
+                  "slnt": 0
+                }
+              },
+              "fontSize": 14,
+              "lineHeight": {
+                "unit": "PIXELS",
+                "value": 22
+              }
+            },
+            {
+              "id": "478:411",
+              "name": "Clear",
+              "type": "FRAME",
+              "rect": [
+                248,
+                8,
+                24,
+                24
+              ],
+              "visible": true,
+              "cornerRadius": 12,
+              "strokeWeight": 1,
+              "strokeAlign": "INSIDE",
+              "effects": [],
+              "paddingLeft": 0,
+              "paddingRight": 0,
+              "itemSpacing": 0
+            }
+          ]
+        },
+        {
+          "id": "478:413",
+          "name": "Hint",
+          "type": "TEXT",
+          "rect": [
+            4,
+            50,
+            144,
+            18
+          ],
+          "visible": true,
+          "strokeWeight": 1,
+          "strokeAlign": "OUTSIDE",
+          "effects": [],
+          "text": "Up to 4 chords · Qt 5.15.2",
+          "font": {
+            "family": "Inter",
+            "style": "Regular",
+            "variationSettings": {
+              "wght": 400,
+              "slnt": 0
+            }
+          },
+          "fontSize": 12,
+          "lineHeight": {
+            "unit": "PIXELS",
+            "value": 18
+          }
+        }
+      ]
+    },
+    {
+      "id": "478:414",
+      "name": "State=Focus",
+      "type": "COMPONENT",
+      "rect": [
+        316,
+        24,
+        280,
+        72
+      ],
+      "visible": true,
+      "cornerRadius": 0,
+      "strokeWeight": 1,
+      "strokeAlign": "INSIDE",
+      "effects": [],
+      "paddingLeft": 0,
+      "paddingRight": 0,
+      "itemSpacing": 0,
+      "children": [
+        {
+          "id": "925:32",
+          "name": "Focus outline",
+          "type": "RECTANGLE",
+          "rect": [
+            0,
+            0,
+            280,
+            40
+          ],
+          "visible": true,
+          "cornerRadius": 6,
+          "strokeWeight": 2,
+          "strokeAlign": "OUTSIDE",
+          "effects": []
+        },
+        {
+          "id": "478:415",
+          "name": "Field",
+          "type": "FRAME",
+          "rect": [
+            0,
+            0,
+            280,
+            40
+          ],
+          "visible": true,
+          "cornerRadius": 6,
+          "strokeWeight": 2,
+          "strokeAlign": "INSIDE",
+          "effects": [
+            {
+              "type": "DROP_SHADOW",
+              "visible": true,
+              "radius": 4,
+              "boundVariables": {},
+              "color": {
+                "r": 0.3799999952316284,
+                "g": 0.20999999344348907,
+                "b": 0.9700000286102295,
+                "a": 0.14000000059604645
+              },
+              "offset": {
+                "x": 0,
+                "y": 0
+              },
+              "spread": 1,
+              "blendMode": "NORMAL",
+              "showShadowBehindNode": true
+            }
+          ],
+          "paddingLeft": 0,
+          "paddingRight": 0,
+          "itemSpacing": 0,
+          "children": [
+            {
+              "id": "478:416",
+              "name": "Sequence",
+              "type": "TEXT",
+              "rect": [
+                12,
+                10,
+                99,
+                22
+              ],
+              "visible": true,
+              "strokeWeight": 1,
+              "strokeAlign": "OUTSIDE",
+              "effects": [],
+              "text": "Ctrl + Shift + P",
+              "font": {
+                "family": "Inter",
+                "style": "Semi Bold",
+                "variationSettings": {
+                  "wght": 600,
+                  "slnt": 0
+                }
+              },
+              "fontSize": 14,
+              "lineHeight": {
+                "unit": "PIXELS",
+                "value": 22
+              }
+            },
+            {
+              "id": "478:417",
+              "name": "Clear",
+              "type": "FRAME",
+              "rect": [
+                248,
+                8,
+                24,
+                24
+              ],
+              "visible": true,
+              "cornerRadius": 12,
+              "strokeWeight": 1,
+              "strokeAlign": "INSIDE",
+              "effects": [],
+              "paddingLeft": 0,
+              "paddingRight": 0,
+              "itemSpacing": 0
+            }
+          ]
+        },
+        {
+          "id": "478:419",
+          "name": "Hint",
+          "type": "TEXT",
+          "rect": [
+            4,
+            50,
+            194,
+            18
+          ],
+          "visible": true,
+          "strokeWeight": 1,
+          "strokeAlign": "OUTSIDE",
+          "effects": [],
+          "text": "Press shortcut · release to commit",
+          "font": {
+            "family": "Inter",
+            "style": "Regular",
+            "variationSettings": {
+              "wght": 400,
+              "slnt": 0
+            }
+          },
+          "fontSize": 12,
+          "lineHeight": {
+            "unit": "PIXELS",
+            "value": 18
+          }
+        }
+      ]
+    },
+    {
+      "id": "478:420",
+      "name": "State=Recording",
+      "type": "COMPONENT",
+      "rect": [
+        608,
+        24,
+        280,
+        72
+      ],
+      "visible": true,
+      "cornerRadius": 0,
+      "strokeWeight": 1,
+      "strokeAlign": "INSIDE",
+      "effects": [],
+      "paddingLeft": 0,
+      "paddingRight": 0,
+      "itemSpacing": 0,
+      "children": [
+        {
+          "id": "925:33",
+          "name": "Focus outline",
+          "type": "RECTANGLE",
+          "rect": [
+            0,
+            0,
+            280,
+            40
+          ],
+          "visible": true,
+          "cornerRadius": 6,
+          "strokeWeight": 2,
+          "strokeAlign": "OUTSIDE",
+          "effects": []
+        },
+        {
+          "id": "478:421",
+          "name": "Field",
+          "type": "FRAME",
+          "rect": [
+            0,
+            0,
+            280,
+            40
+          ],
+          "visible": true,
+          "cornerRadius": 6,
+          "strokeWeight": 2,
+          "strokeAlign": "INSIDE",
+          "effects": [],
+          "paddingLeft": 0,
+          "paddingRight": 0,
+          "itemSpacing": 0,
+          "children": [
+            {
+              "id": "478:422",
+              "name": "Recording indicator",
+              "type": "ELLIPSE",
+              "rect": [
+                12,
+                16,
+                8,
+                8
+              ],
+              "visible": true,
+              "cornerRadius": 0,
+              "strokeWeight": 1,
+              "strokeAlign": "INSIDE",
+              "effects": []
+            },
+            {
+              "id": "478:423",
+              "name": "Sequence",
+              "type": "TEXT",
+              "rect": [
+                28,
+                10,
+                99,
+                22
+              ],
+              "visible": true,
+              "strokeWeight": 1,
+              "strokeAlign": "OUTSIDE",
+              "effects": [],
+              "text": "Ctrl + Shift + P",
+              "font": {
+                "family": "Inter",
+                "style": "Semi Bold",
+                "variationSettings": {
+                  "wght": 600,
+                  "slnt": 0
+                }
+              },
+              "fontSize": 14,
+              "lineHeight": {
+                "unit": "PIXELS",
+                "value": 22
+              }
+            },
+            {
+              "id": "478:424",
+              "name": "Clear",
+              "type": "FRAME",
+              "rect": [
+                248,
+                8,
+                24,
+                24
+              ],
+              "visible": true,
+              "cornerRadius": 12,
+              "strokeWeight": 1,
+              "strokeAlign": "INSIDE",
+              "effects": [],
+              "paddingLeft": 0,
+              "paddingRight": 0,
+              "itemSpacing": 0
+            }
+          ]
+        },
+        {
+          "id": "478:426",
+          "name": "Hint",
+          "type": "TEXT",
+          "rect": [
+            4,
+            50,
+            161,
+            18
+          ],
+          "visible": true,
+          "strokeWeight": 1,
+          "strokeAlign": "OUTSIDE",
+          "effects": [],
+          "text": "Recording… · 1 s settle timer",
+          "font": {
+            "family": "Inter",
+            "style": "Regular",
+            "variationSettings": {
+              "wght": 400,
+              "slnt": 0
+            }
+          },
+          "fontSize": 12,
+          "lineHeight": {
+            "unit": "PIXELS",
+            "value": 18
+          }
+        }
+      ]
+    },
+    {
+      "id": "478:427",
+      "name": "State=Conflict",
+      "type": "COMPONENT",
+      "rect": [
+        900,
+        24,
+        280,
+        72
+      ],
+      "visible": true,
+      "cornerRadius": 0,
+      "strokeWeight": 1,
+      "strokeAlign": "INSIDE",
+      "effects": [],
+      "paddingLeft": 0,
+      "paddingRight": 0,
+      "itemSpacing": 0,
+      "children": [
+        {
+          "id": "478:428",
+          "name": "Field",
+          "type": "FRAME",
+          "rect": [
+            0,
+            0,
+            280,
+            40
+          ],
+          "visible": true,
+          "cornerRadius": 6,
+          "strokeWeight": 1,
+          "strokeAlign": "INSIDE",
+          "effects": [],
+          "paddingLeft": 0,
+          "paddingRight": 0,
+          "itemSpacing": 0,
+          "children": [
+            {
+              "id": "478:429",
+              "name": "Sequence",
+              "type": "TEXT",
+              "rect": [
+                12,
+                10,
+                99,
+                22
+              ],
+              "visible": true,
+              "strokeWeight": 1,
+              "strokeAlign": "OUTSIDE",
+              "effects": [],
+              "text": "Ctrl + Shift + P",
+              "font": {
+                "family": "Inter",
+                "style": "Semi Bold",
+                "variationSettings": {
+                  "wght": 600,
+                  "slnt": 0
+                }
+              },
+              "fontSize": 14,
+              "lineHeight": {
+                "unit": "PIXELS",
+                "value": 22
+              }
+            },
+            {
+              "id": "478:430",
+              "name": "Clear",
+              "type": "FRAME",
+              "rect": [
+                248,
+                8,
+                24,
+                24
+              ],
+              "visible": true,
+              "cornerRadius": 12,
+              "strokeWeight": 1,
+              "strokeAlign": "INSIDE",
+              "effects": [],
+              "paddingLeft": 0,
+              "paddingRight": 0,
+              "itemSpacing": 0
+            }
+          ]
+        },
+        {
+          "id": "478:432",
+          "name": "Hint",
+          "type": "TEXT",
+          "rect": [
+            4,
+            50,
+            182,
+            18
+          ],
+          "visible": true,
+          "strokeWeight": 1,
+          "strokeAlign": "OUTSIDE",
+          "effects": [],
+          "text": "Conflict · already bound to Save",
+          "font": {
+            "family": "Inter",
+            "style": "Regular",
+            "variationSettings": {
+              "wght": 400,
+              "slnt": 0
+            }
+          },
+          "fontSize": 12,
+          "lineHeight": {
+            "unit": "PIXELS",
+            "value": 18
+          }
+        }
+      ]
+    },
+    {
+      "id": "478:433",
+      "name": "State=Disabled",
+      "type": "COMPONENT",
+      "rect": [
+        24,
+        120,
+        280,
+        72
+      ],
+      "visible": true,
+      "cornerRadius": 0,
+      "strokeWeight": 1,
+      "strokeAlign": "INSIDE",
+      "effects": [],
+      "paddingLeft": 0,
+      "paddingRight": 0,
+      "itemSpacing": 0,
+      "children": [
+        {
+          "id": "478:434",
+          "name": "Field",
+          "type": "FRAME",
+          "rect": [
+            0,
+            0,
+            280,
+            40
+          ],
+          "visible": true,
+          "cornerRadius": 6,
+          "strokeWeight": 1,
+          "strokeAlign": "INSIDE",
+          "effects": [],
+          "paddingLeft": 0,
+          "paddingRight": 0,
+          "itemSpacing": 0,
+          "children": [
+            {
+              "id": "478:435",
+              "name": "Sequence",
+              "type": "TEXT",
+              "rect": [
+                12,
+                10,
+                99,
+                22
+              ],
+              "visible": true,
+              "strokeWeight": 1,
+              "strokeAlign": "OUTSIDE",
+              "effects": [],
+              "text": "Ctrl + Shift + P",
+              "font": {
+                "family": "Inter",
+                "style": "Semi Bold",
+                "variationSettings": {
+                  "wght": 600,
+                  "slnt": 0
+                }
+              },
+              "fontSize": 14,
+              "lineHeight": {
+                "unit": "PIXELS",
+                "value": 22
+              }
+            },
+            {
+              "id": "478:436",
+              "name": "Clear",
+              "type": "FRAME",
+              "rect": [
+                248,
+                8,
+                24,
+                24
+              ],
+              "visible": true,
+              "cornerRadius": 12,
+              "strokeWeight": 1,
+              "strokeAlign": "INSIDE",
+              "effects": [],
+              "paddingLeft": 0,
+              "paddingRight": 0,
+              "itemSpacing": 0
+            }
+          ]
+        },
+        {
+          "id": "478:438",
+          "name": "Hint",
+          "type": "TEXT",
+          "rect": [
+            4,
+            50,
+            116,
+            18
+          ],
+          "visible": true,
+          "strokeWeight": 1,
+          "strokeAlign": "OUTSIDE",
+          "effects": [],
+          "text": "Shortcut unavailable",
+          "font": {
+            "family": "Inter",
+            "style": "Regular",
+            "variationSettings": {
+              "wght": 400,
+              "slnt": 0
+            }
+          },
+          "fontSize": 12,
+          "lineHeight": {
+            "unit": "PIXELS",
+            "value": 18
+          }
+        }
+      ]
+    },
+    {
+      "id": "926:2",
+      "name": "State=Empty",
+      "type": "COMPONENT",
+      "rect": [
+        316,
+        120,
+        280,
+        72
+      ],
+      "visible": true,
+      "cornerRadius": 0,
+      "strokeWeight": 1,
+      "strokeAlign": "INSIDE",
+      "effects": [],
+      "paddingLeft": 0,
+      "paddingRight": 0,
+      "itemSpacing": 0,
+      "children": [
+        {
+          "id": "926:3",
+          "name": "Field",
+          "type": "FRAME",
+          "rect": [
+            0,
+            0,
+            280,
+            40
+          ],
+          "visible": true,
+          "cornerRadius": 6,
+          "strokeWeight": 1,
+          "strokeAlign": "INSIDE",
+          "effects": [],
+          "paddingLeft": 0,
+          "paddingRight": 0,
+          "itemSpacing": 0,
+          "children": [
+            {
+              "id": "926:4",
+              "name": "Sequence",
+              "type": "TEXT",
+              "rect": [
+                12,
+                10,
+                99,
+                22
+              ],
+              "visible": false,
+              "strokeWeight": 1,
+              "strokeAlign": "OUTSIDE",
+              "effects": [],
+              "text": "Ctrl + Shift + P",
+              "font": {
+                "family": "Inter",
+                "style": "Semi Bold",
+                "variationSettings": {
+                  "wght": 600,
+                  "slnt": 0
+                }
+              },
+              "fontSize": 14,
+              "lineHeight": {
+                "unit": "PIXELS",
+                "value": 22
+              }
+            },
+            {
+              "id": "926:5",
+              "name": "Clear",
+              "type": "FRAME",
+              "rect": [
+                248,
+                8,
+                24,
+                24
+              ],
+              "visible": true,
+              "cornerRadius": 12,
+              "strokeWeight": 1,
+              "strokeAlign": "INSIDE",
+              "effects": [],
+              "paddingLeft": 0,
+              "paddingRight": 0,
+              "itemSpacing": 0
+            },
+            {
+              "id": "926:8",
+              "name": "Placeholder",
+              "type": "TEXT",
+              "rect": [
+                12,
+                10,
+                97,
+                22
+              ],
+              "visible": true,
+              "strokeWeight": 1,
+              "strokeAlign": "OUTSIDE",
+              "effects": [],
+              "text": "Press shortcut",
+              "font": {
+                "family": "Inter",
+                "style": "Regular",
+                "variationSettings": {
+                  "wght": 400,
+                  "slnt": 0
+                }
+              },
+              "fontSize": 14,
+              "lineHeight": {
+                "unit": "PIXELS",
+                "value": 22
+              }
+            }
+          ]
+        },
+        {
+          "id": "926:7",
+          "name": "Hint",
+          "type": "TEXT",
+          "rect": [
+            4,
+            50,
+            176,
+            18
+          ],
+          "visible": true,
+          "strokeWeight": 1,
+          "strokeAlign": "OUTSIDE",
+          "effects": [],
+          "text": "Press shortcut · up to 4 chords",
+          "font": {
+            "family": "Inter",
+            "style": "Regular",
+            "variationSettings": {
+              "wght": 400,
+              "slnt": 0
+            }
+          },
+          "fontSize": 12,
+          "lineHeight": {
+            "unit": "PIXELS",
+            "value": 18
+          }
+        }
+      ]
+    }
+  ],
+  "variables": {
+    "var(--component-shortcut-input-foreground)": "#191919",
+    "typography/letter-spacing/default": "0",
+    "typography/font-size/label/emphasis": "14",
+    "typography/line-height/label/emphasis": "22",
+    "typography/font-weight/label-strong": "600",
+    "DSM/Label/Emphasis": "Font(family: \"Inter\", style: Semi Bold, size: typography/font-size/label/emphasis, weight: typography/font-weight/label-strong, lineHeight: typography/line-height/label/emphasis, letterSpacing: typography/letter-spacing/default)",
+    "var(--qtlab-semantic-color-text-primary)": "#191919",
+    "color/text/primary": "#191919",
+    "var(--component-shortcut-input-surface)": "#ffffff",
+    "var(--component-shortcut-input-border)": "#a7a7a7",
+    "var(--component-shortcut-input-helper)": "#444444",
+    "DSM/Label/Caption": "Font(family: \"Inter\", style: Regular, size: 12, weight: 400, lineHeight: 18, letterSpacing: 0)",
+    "var(--component-shortcut-input-focus-outline)": "#f3efff",
+    "var(--component-shortcut-input-focus-border)": "#6235f7",
+    "var(--component-shortcut-input-recording)": "#6235f7",
+    "var(--component-shortcut-input-conflict-surface)": "#fbe4e5",
+    "var(--component-shortcut-input-conflict)": "#e02128",
+    "var(--component-shortcut-input-disabled-text)": "#8a8a8a",
+    "var(--qtlab-semantic-color-text-disabled)": "#8a8a8a",
+    "var(--component-shortcut-input-disabled-surface)": "#f3f3f3",
+    "var(--component-shortcut-input-disabled-border)": "#d0d0d0",
+    "var(--component-shortcut-input-placeholder)": "#444444",
+    "typography/font-size/label/default": "14",
+    "typography/line-height/label/default": "22",
+    "typography/font-weight/body": "400",
+    "DSM/Label/Default": "Font(family: \"Inter\", style: Regular, size: typography/font-size/label/default, weight: typography/font-weight/body, lineHeight: typography/line-height/label/default, letterSpacing: typography/letter-spacing/default)"
+  },
+  "assets": [
+    {
+      "name": "ClosePrimary",
+      "root": [
+        16,
+        16
+      ]
+    },
+    {
+      "name": "CloseDisabled",
+      "root": [
+        16,
+        16
+      ]
+    },
+    {
+      "name": "RecordingIndicator",
+      "root": [
+        8,
+        8
+      ]
+    }
+  ],
+  "boundary": "Native QKeySequenceEdit/Z_KeySequenceEdit captures a candidate only. Native key parsing, up-to-four chords, recording timer and signals remain Qt 5.15.2 authority; QAction/QShortcut command binding and an external registry own assignment/conflicts/scope/reserved keys. Adapter clear calls QKeySequenceEdit::clear, not internal lineEdit clear. No Qt6 clearButtonEnabled/maximumSequenceLength API is invented. Source snapshots preserve authored spaced Sequence text; live display and PortableText roundtrip remain Qt-owned. Source Focus hint says release to commit; runtime hint describes native settle delay. No public type/normalization/approval promotion."
+}

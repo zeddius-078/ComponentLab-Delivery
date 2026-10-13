@@ -1,0 +1,2629 @@
+{
+  "schemaVersion": 1,
+  "fileKey": "w92BKW1EcutKmTXkwzNHbf",
+  "pageId": "516:11",
+  "galleryId": "516:45",
+  "capturedReadOnly": true,
+  "rowSchema": [
+    "id",
+    "parent",
+    "name",
+    "type",
+    "bounds",
+    "visible",
+    "opacity",
+    "solidFills",
+    "solidStrokes",
+    "strokeWeight",
+    "cornerRadius",
+    "clipsContent",
+    "textFontSizeLineAlignAutoResize"
+  ],
+  "templates": [
+    [
+      "516:48",
+      "516:62",
+      "State=Empty",
+      "COMPONENT",
+      [
+        0,
+        0,
+        300,
+        190
+      ],
+      true,
+      1,
+      [
+        [
+          {
+            "r": 1,
+            "g": 1,
+            "b": 1
+          },
+          1,
+          true
+        ]
+      ],
+      [
+        [
+          {
+            "r": 0.8156862854957581,
+            "g": 0.8156862854957581,
+            "b": 0.8156862854957581
+          },
+          1,
+          true
+        ]
+      ],
+      1,
+      8,
+      false,
+      null
+    ],
+    [
+      "516:49",
+      "516:48",
+      "Page label",
+      "TEXT",
+      [
+        14,
+        12,
+        110,
+        18
+      ],
+      true,
+      1,
+      [
+        [
+          {
+            "r": 0.09803921729326248,
+            "g": 0.09803921729326248,
+            "b": 0.09803921729326248
+          },
+          1,
+          true
+        ]
+      ],
+      [],
+      1,
+      null,
+      null,
+      [
+        "Current page · 1 / 3",
+        {
+          "family": "Inter",
+          "style": "Semi Bold",
+          "variationSettings": {
+            "wght": 600,
+            "slnt": 0
+          }
+        },
+        12,
+        {
+          "unit": "PIXELS",
+          "value": 18
+        },
+        "TOP",
+        "WIDTH_AND_HEIGHT"
+      ]
+    ],
+    [
+      "516:50",
+      "516:48",
+      "Empty slot",
+      "FRAME",
+      [
+        14,
+        44,
+        272,
+        122
+      ],
+      true,
+      1,
+      [
+        [
+          {
+            "r": 1,
+            "g": 1,
+            "b": 1
+          },
+          1,
+          true
+        ]
+      ],
+      [
+        [
+          {
+            "r": 0.8156862854957581,
+            "g": 0.8156862854957581,
+            "b": 0.8156862854957581
+          },
+          1,
+          true
+        ]
+      ],
+      1,
+      8,
+      true,
+      null
+    ],
+    [
+      "516:51",
+      "516:50",
+      "Empty copy",
+      "TEXT",
+      [
+        72,
+        46,
+        109,
+        19
+      ],
+      true,
+      1,
+      [
+        [
+          {
+            "r": 0.09803921729326248,
+            "g": 0.09803921729326248,
+            "b": 0.09803921729326248
+          },
+          1,
+          true
+        ]
+      ],
+      [],
+      1,
+      null,
+      null,
+      [
+        "currentIndex = -1",
+        {
+          "family": "Inter",
+          "style": "Regular",
+          "variationSettings": {
+            "wght": 400,
+            "slnt": 0
+          }
+        },
+        13,
+        {
+          "unit": "PIXELS",
+          "value": 19
+        },
+        "TOP",
+        "HEIGHT"
+      ]
+    ],
+    [
+      "516:52",
+      "516:62",
+      "State=Content",
+      "COMPONENT",
+      [
+        316,
+        0,
+        300,
+        190
+      ],
+      true,
+      1,
+      [
+        [
+          {
+            "r": 1,
+            "g": 1,
+            "b": 1
+          },
+          1,
+          true
+        ]
+      ],
+      [
+        [
+          {
+            "r": 0.8156862854957581,
+            "g": 0.8156862854957581,
+            "b": 0.8156862854957581
+          },
+          1,
+          true
+        ]
+      ],
+      1,
+      8,
+      false,
+      null
+    ],
+    [
+      "516:53",
+      "516:52",
+      "Page label",
+      "TEXT",
+      [
+        14,
+        12,
+        101,
+        36
+      ],
+      true,
+      1,
+      [
+        [
+          {
+            "r": 0.09803921729326248,
+            "g": 0.09803921729326248,
+            "b": 0.09803921729326248
+          },
+          1,
+          true
+        ]
+      ],
+      [],
+      1,
+      null,
+      null,
+      [
+        "Current page · 1 / 3",
+        {
+          "family": "Inter",
+          "style": "Semi Bold",
+          "variationSettings": {
+            "wght": 600,
+            "slnt": 0
+          }
+        },
+        12,
+        {
+          "unit": "PIXELS",
+          "value": 18
+        },
+        "TOP",
+        "HEIGHT"
+      ]
+    ],
+    [
+      "516:54",
+      "516:52",
+      "CONTENT slot",
+      "FRAME",
+      [
+        14,
+        44,
+        272,
+        126
+      ],
+      true,
+      1,
+      [
+        [
+          {
+            "r": 1,
+            "g": 1,
+            "b": 1
+          },
+          1,
+          true
+        ]
+      ],
+      [
+        [
+          {
+            "r": 0.8156862854957581,
+            "g": 0.8156862854957581,
+            "b": 0.8156862854957581
+          },
+          1,
+          true
+        ]
+      ],
+      1,
+      8,
+      true,
+      null
+    ],
+    [
+      "516:55",
+      "516:54",
+      "Content title",
+      "TEXT",
+      [
+        14,
+        16,
+        119,
+        44
+      ],
+      true,
+      1,
+      [
+        [
+          {
+            "r": 0.09803921729326248,
+            "g": 0.09803921729326248,
+            "b": 0.09803921729326248
+          },
+          1,
+          true
+        ]
+      ],
+      [],
+      1,
+      null,
+      null,
+      [
+        "Recipe parameters",
+        {
+          "family": "Inter",
+          "style": "Medium",
+          "variationSettings": {
+            "wght": 500,
+            "slnt": 0
+          }
+        },
+        14,
+        {
+          "unit": "PIXELS",
+          "value": 22
+        },
+        "TOP",
+        "HEIGHT"
+      ]
+    ],
+    [
+      "516:56",
+      "516:54",
+      "Content body",
+      "TEXT",
+      [
+        14,
+        48,
+        240,
+        38
+      ],
+      true,
+      1,
+      [
+        [
+          {
+            "r": 0.09803921729326248,
+            "g": 0.09803921729326248,
+            "b": 0.09803921729326248
+          },
+          1,
+          true
+        ]
+      ],
+      [],
+      1,
+      null,
+      null,
+      [
+        "Only this child page is visible; navigation is external.",
+        {
+          "family": "Inter",
+          "style": "Regular",
+          "variationSettings": {
+            "wght": 400,
+            "slnt": 0
+          }
+        },
+        12,
+        {
+          "unit": "PIXELS",
+          "value": 18
+        },
+        "TOP",
+        "NONE"
+      ]
+    ],
+    [
+      "516:57",
+      "516:62",
+      "State=Disabled",
+      "COMPONENT",
+      [
+        632,
+        0,
+        300,
+        190
+      ],
+      true,
+      1,
+      [
+        [
+          {
+            "r": 0.5411764979362488,
+            "g": 0.5411764979362488,
+            "b": 0.5411764979362488
+          },
+          1,
+          true
+        ]
+      ],
+      [
+        [
+          {
+            "r": 0.8156862854957581,
+            "g": 0.8156862854957581,
+            "b": 0.8156862854957581
+          },
+          1,
+          true
+        ]
+      ],
+      1,
+      8,
+      false,
+      null
+    ],
+    [
+      "516:58",
+      "516:57",
+      "Page label",
+      "TEXT",
+      [
+        14,
+        12,
+        101,
+        36
+      ],
+      true,
+      1,
+      [
+        [
+          {
+            "r": 0.5411764979362488,
+            "g": 0.5411764979362488,
+            "b": 0.5411764979362488
+          },
+          1,
+          true
+        ]
+      ],
+      [],
+      1,
+      null,
+      null,
+      [
+        "Current page · 1 / 3",
+        {
+          "family": "Inter",
+          "style": "Semi Bold",
+          "variationSettings": {
+            "wght": 600,
+            "slnt": 0
+          }
+        },
+        12,
+        {
+          "unit": "PIXELS",
+          "value": 18
+        },
+        "TOP",
+        "HEIGHT"
+      ]
+    ],
+    [
+      "516:59",
+      "516:57",
+      "CONTENT slot",
+      "FRAME",
+      [
+        14,
+        44,
+        272,
+        126
+      ],
+      true,
+      1,
+      [
+        [
+          {
+            "r": 1,
+            "g": 1,
+            "b": 1
+          },
+          1,
+          true
+        ]
+      ],
+      [
+        [
+          {
+            "r": 0.8156862854957581,
+            "g": 0.8156862854957581,
+            "b": 0.8156862854957581
+          },
+          1,
+          true
+        ]
+      ],
+      1,
+      8,
+      true,
+      null
+    ],
+    [
+      "516:60",
+      "516:59",
+      "Content title",
+      "TEXT",
+      [
+        14,
+        16,
+        90,
+        44
+      ],
+      true,
+      1,
+      [
+        [
+          {
+            "r": 0.5411764979362488,
+            "g": 0.5411764979362488,
+            "b": 0.5411764979362488
+          },
+          1,
+          true
+        ]
+      ],
+      [],
+      1,
+      null,
+      null,
+      [
+        "Disabled page",
+        {
+          "family": "Inter",
+          "style": "Medium",
+          "variationSettings": {
+            "wght": 500,
+            "slnt": 0
+          }
+        },
+        14,
+        {
+          "unit": "PIXELS",
+          "value": 22
+        },
+        "TOP",
+        "HEIGHT"
+      ]
+    ],
+    [
+      "516:61",
+      "516:59",
+      "Content body",
+      "TEXT",
+      [
+        14,
+        48,
+        240,
+        38
+      ],
+      true,
+      1,
+      [
+        [
+          {
+            "r": 0.5411764979362488,
+            "g": 0.5411764979362488,
+            "b": 0.5411764979362488
+          },
+          1,
+          true
+        ]
+      ],
+      [],
+      1,
+      null,
+      null,
+      [
+        "Only this child page is visible; navigation is external.",
+        {
+          "family": "Inter",
+          "style": "Regular",
+          "variationSettings": {
+            "wght": 400,
+            "slnt": 0
+          }
+        },
+        12,
+        {
+          "unit": "PIXELS",
+          "value": 18
+        },
+        "TOP",
+        "NONE"
+      ]
+    ],
+    [
+      "516:65",
+      "516:113",
+      "Kind=Standard, Completion=Incomplete",
+      "COMPONENT",
+      [
+        0,
+        0,
+        300,
+        218
+      ],
+      true,
+      1,
+      [
+        [
+          {
+            "r": 1,
+            "g": 1,
+            "b": 1
+          },
+          1,
+          true
+        ]
+      ],
+      [
+        [
+          {
+            "r": 0.8156862854957581,
+            "g": 0.8156862854957581,
+            "b": 0.8156862854957581
+          },
+          1,
+          true
+        ]
+      ],
+      1,
+      8,
+      false,
+      null
+    ],
+    [
+      "516:66",
+      "516:65",
+      "Page title",
+      "TEXT",
+      [
+        16,
+        14,
+        268,
+        22
+      ],
+      true,
+      1,
+      [
+        [
+          {
+            "r": 0.09803921729326248,
+            "g": 0.09803921729326248,
+            "b": 0.09803921729326248
+          },
+          1,
+          true
+        ]
+      ],
+      [],
+      1,
+      null,
+      null,
+      [
+        "Configure device",
+        {
+          "family": "Inter",
+          "style": "Medium",
+          "variationSettings": {
+            "wght": 500,
+            "slnt": 0
+          }
+        },
+        14,
+        {
+          "unit": "PIXELS",
+          "value": 22
+        },
+        "TOP",
+        "HEIGHT"
+      ]
+    ],
+    [
+      "516:67",
+      "516:65",
+      "Page subtitle",
+      "TEXT",
+      [
+        16,
+        40,
+        268,
+        44
+      ],
+      true,
+      1,
+      [
+        [
+          {
+            "r": 0.09803921729326248,
+            "g": 0.09803921729326248,
+            "b": 0.09803921729326248
+          },
+          1,
+          true
+        ]
+      ],
+      [],
+      1,
+      null,
+      null,
+      [
+        "Complete the required fields to continue.",
+        {
+          "family": "Inter",
+          "style": "Medium",
+          "variationSettings": {
+            "wght": 500,
+            "slnt": 0
+          }
+        },
+        14,
+        {
+          "unit": "PIXELS",
+          "value": 22
+        },
+        "TOP",
+        "HEIGHT"
+      ]
+    ],
+    [
+      "516:68",
+      "516:65",
+      "Form field",
+      "FRAME",
+      [
+        16,
+        80,
+        268,
+        66
+      ],
+      true,
+      1,
+      [
+        [
+          {
+            "r": 1,
+            "g": 1,
+            "b": 1
+          },
+          1,
+          true
+        ]
+      ],
+      [
+        [
+          {
+            "r": 0.8156862854957581,
+            "g": 0.8156862854957581,
+            "b": 0.8156862854957581
+          },
+          1,
+          true
+        ]
+      ],
+      1,
+      7,
+      true,
+      null
+    ],
+    [
+      "516:69",
+      "516:68",
+      "Field label",
+      "TEXT",
+      [
+        10,
+        8,
+        71,
+        15
+      ],
+      true,
+      1,
+      [
+        [
+          {
+            "r": 0.09803921729326248,
+            "g": 0.09803921729326248,
+            "b": 0.09803921729326248
+          },
+          1,
+          true
+        ]
+      ],
+      [],
+      1,
+      null,
+      null,
+      [
+        "Device name *",
+        {
+          "family": "Inter",
+          "style": "Regular",
+          "variationSettings": {
+            "wght": 400,
+            "slnt": 0
+          }
+        },
+        10,
+        {
+          "unit": "PIXELS",
+          "value": 15
+        },
+        "TOP",
+        "HEIGHT"
+      ]
+    ],
+    [
+      "516:70",
+      "516:68",
+      "Field value",
+      "TEXT",
+      [
+        10,
+        31,
+        120,
+        28
+      ],
+      true,
+      1,
+      [
+        [
+          {
+            "r": 0.09803921729326248,
+            "g": 0.09803921729326248,
+            "b": 0.09803921729326248
+          },
+          1,
+          true
+        ]
+      ],
+      [],
+      1,
+      null,
+      null,
+      [
+        "Required field is empty",
+        {
+          "family": "Inter",
+          "style": "Medium",
+          "variationSettings": {
+            "wght": 500,
+            "slnt": 0
+          }
+        },
+        14,
+        {
+          "unit": "PIXELS",
+          "value": 14
+        },
+        "TOP",
+        "HEIGHT"
+      ]
+    ],
+    [
+      "516:71",
+      "516:65",
+      "Completion status",
+      "FRAME",
+      [
+        16,
+        158,
+        268,
+        44
+      ],
+      true,
+      1,
+      [
+        [
+          {
+            "r": 1,
+            "g": 1,
+            "b": 1
+          },
+          1,
+          true
+        ]
+      ],
+      [],
+      1,
+      7,
+      true,
+      null
+    ],
+    [
+      "516:72",
+      "516:71",
+      "Status text",
+      "TEXT",
+      [
+        30,
+        14,
+        228,
+        18
+      ],
+      true,
+      1,
+      [
+        [
+          {
+            "r": 0.09803921729326248,
+            "g": 0.09803921729326248,
+            "b": 0.09803921729326248
+          },
+          1,
+          true
+        ]
+      ],
+      [],
+      1,
+      null,
+      null,
+      [
+        "Incomplete · Standard page",
+        {
+          "family": "Inter",
+          "style": "Semi Bold",
+          "variationSettings": {
+            "wght": 600,
+            "slnt": 0
+          }
+        },
+        12,
+        {
+          "unit": "PIXELS",
+          "value": 18
+        },
+        "TOP",
+        "HEIGHT"
+      ]
+    ],
+    [
+      "1073:2",
+      "516:71",
+      "Completion icon",
+      "INSTANCE",
+      [
+        10,
+        14,
+        16,
+        16
+      ],
+      true,
+      1,
+      [],
+      [],
+      1,
+      0,
+      false,
+      null
+    ],
+    [
+      "516:73",
+      "516:113",
+      "Kind=Standard, Completion=Complete",
+      "COMPONENT",
+      [
+        316,
+        0,
+        300,
+        218
+      ],
+      true,
+      1,
+      [
+        [
+          {
+            "r": 1,
+            "g": 1,
+            "b": 1
+          },
+          1,
+          true
+        ]
+      ],
+      [
+        [
+          {
+            "r": 0.3843137323856354,
+            "g": 0.2078431397676468,
+            "b": 0.9686274528503418
+          },
+          1,
+          true
+        ]
+      ],
+      1,
+      8,
+      false,
+      null
+    ],
+    [
+      "516:74",
+      "516:73",
+      "Page title",
+      "TEXT",
+      [
+        16,
+        14,
+        268,
+        22
+      ],
+      true,
+      1,
+      [
+        [
+          {
+            "r": 0.09803921729326248,
+            "g": 0.09803921729326248,
+            "b": 0.09803921729326248
+          },
+          1,
+          true
+        ]
+      ],
+      [],
+      1,
+      null,
+      null,
+      [
+        "Configure device",
+        {
+          "family": "Inter",
+          "style": "Medium",
+          "variationSettings": {
+            "wght": 500,
+            "slnt": 0
+          }
+        },
+        14,
+        {
+          "unit": "PIXELS",
+          "value": 22
+        },
+        "TOP",
+        "HEIGHT"
+      ]
+    ],
+    [
+      "516:75",
+      "516:73",
+      "Page subtitle",
+      "TEXT",
+      [
+        16,
+        40,
+        268,
+        44
+      ],
+      true,
+      1,
+      [
+        [
+          {
+            "r": 0.09803921729326248,
+            "g": 0.09803921729326248,
+            "b": 0.09803921729326248
+          },
+          1,
+          true
+        ]
+      ],
+      [],
+      1,
+      null,
+      null,
+      [
+        "Complete the required fields to continue.",
+        {
+          "family": "Inter",
+          "style": "Medium",
+          "variationSettings": {
+            "wght": 500,
+            "slnt": 0
+          }
+        },
+        14,
+        {
+          "unit": "PIXELS",
+          "value": 22
+        },
+        "TOP",
+        "HEIGHT"
+      ]
+    ],
+    [
+      "516:76",
+      "516:73",
+      "Form field",
+      "FRAME",
+      [
+        16,
+        80,
+        268,
+        66
+      ],
+      true,
+      1,
+      [
+        [
+          {
+            "r": 1,
+            "g": 1,
+            "b": 1
+          },
+          1,
+          true
+        ]
+      ],
+      [
+        [
+          {
+            "r": 0.3843137323856354,
+            "g": 0.2078431397676468,
+            "b": 0.9686274528503418
+          },
+          1,
+          true
+        ]
+      ],
+      1,
+      7,
+      true,
+      null
+    ],
+    [
+      "516:77",
+      "516:76",
+      "Field label",
+      "TEXT",
+      [
+        10,
+        8,
+        71,
+        15
+      ],
+      true,
+      1,
+      [
+        [
+          {
+            "r": 0.09803921729326248,
+            "g": 0.09803921729326248,
+            "b": 0.09803921729326248
+          },
+          1,
+          true
+        ]
+      ],
+      [],
+      1,
+      null,
+      null,
+      [
+        "Device name *",
+        {
+          "family": "Inter",
+          "style": "Regular",
+          "variationSettings": {
+            "wght": 400,
+            "slnt": 0
+          }
+        },
+        10,
+        {
+          "unit": "PIXELS",
+          "value": 15
+        },
+        "TOP",
+        "HEIGHT"
+      ]
+    ],
+    [
+      "516:78",
+      "516:76",
+      "Field value",
+      "TEXT",
+      [
+        10,
+        31,
+        47,
+        28
+      ],
+      true,
+      1,
+      [
+        [
+          {
+            "r": 0.09803921729326248,
+            "g": 0.09803921729326248,
+            "b": 0.09803921729326248
+          },
+          1,
+          true
+        ]
+      ],
+      [],
+      1,
+      null,
+      null,
+      [
+        "ETCH-01",
+        {
+          "family": "Inter",
+          "style": "Medium",
+          "variationSettings": {
+            "wght": 500,
+            "slnt": 0
+          }
+        },
+        14,
+        {
+          "unit": "PIXELS",
+          "value": 14
+        },
+        "TOP",
+        "HEIGHT"
+      ]
+    ],
+    [
+      "516:79",
+      "516:73",
+      "Completion status",
+      "FRAME",
+      [
+        16,
+        158,
+        268,
+        44
+      ],
+      true,
+      1,
+      [
+        [
+          {
+            "r": 0.3843137323856354,
+            "g": 0.2078431397676468,
+            "b": 0.9686274528503418
+          },
+          0.07999999821186066,
+          true
+        ]
+      ],
+      [],
+      1,
+      7,
+      true,
+      null
+    ],
+    [
+      "516:80",
+      "516:79",
+      "Status text",
+      "TEXT",
+      [
+        30,
+        14,
+        228,
+        18
+      ],
+      true,
+      1,
+      [
+        [
+          {
+            "r": 0.3843137323856354,
+            "g": 0.2078431397676468,
+            "b": 0.9686274528503418
+          },
+          1,
+          true
+        ]
+      ],
+      [],
+      1,
+      null,
+      null,
+      [
+        "Complete · Standard page",
+        {
+          "family": "Inter",
+          "style": "Semi Bold",
+          "variationSettings": {
+            "wght": 600,
+            "slnt": 0
+          }
+        },
+        12,
+        {
+          "unit": "PIXELS",
+          "value": 18
+        },
+        "TOP",
+        "HEIGHT"
+      ]
+    ],
+    [
+      "1073:6",
+      "516:79",
+      "Completion icon",
+      "INSTANCE",
+      [
+        10,
+        14,
+        16,
+        16
+      ],
+      true,
+      1,
+      [],
+      [],
+      1,
+      0,
+      false,
+      null
+    ],
+    [
+      "516:116",
+      "516:669",
+      "Style=Classic, Phase=Start",
+      "COMPONENT",
+      [
+        0,
+        0,
+        296,
+        234
+      ],
+      true,
+      1,
+      [
+        [
+          {
+            "r": 1,
+            "g": 1,
+            "b": 1
+          },
+          1,
+          true
+        ]
+      ],
+      [
+        [
+          {
+            "r": 0.8156862854957581,
+            "g": 0.8156862854957581,
+            "b": 0.8156862854957581
+          },
+          1,
+          true
+        ]
+      ],
+      1,
+      10,
+      true,
+      null
+    ],
+    [
+      "516:117",
+      "516:116",
+      "Header",
+      "FRAME",
+      [
+        0,
+        0,
+        296,
+        58
+      ],
+      true,
+      1,
+      [
+        [
+          {
+            "r": 1,
+            "g": 1,
+            "b": 1
+          },
+          1,
+          true
+        ]
+      ],
+      [],
+      1,
+      0,
+      true,
+      null
+    ],
+    [
+      "516:118",
+      "516:117",
+      "Header title",
+      "TEXT",
+      [
+        14,
+        10,
+        268,
+        22
+      ],
+      true,
+      1,
+      [
+        [
+          {
+            "r": 0.09803921729326248,
+            "g": 0.09803921729326248,
+            "b": 0.09803921729326248
+          },
+          1,
+          true
+        ]
+      ],
+      [],
+      1,
+      null,
+      null,
+      [
+        "Configure device",
+        {
+          "family": "Inter",
+          "style": "Medium",
+          "variationSettings": {
+            "wght": 500,
+            "slnt": 0
+          }
+        },
+        14,
+        {
+          "unit": "PIXELS",
+          "value": 22
+        },
+        "TOP",
+        "HEIGHT"
+      ]
+    ],
+    [
+      "516:119",
+      "516:117",
+      "Header subtitle",
+      "TEXT",
+      [
+        14,
+        34,
+        268,
+        22
+      ],
+      true,
+      1,
+      [
+        [
+          {
+            "r": 0.09803921729326248,
+            "g": 0.09803921729326248,
+            "b": 0.09803921729326248
+          },
+          1,
+          true
+        ]
+      ],
+      [],
+      1,
+      null,
+      null,
+      [
+        "ClassicStyle · Start",
+        {
+          "family": "Inter",
+          "style": "Medium",
+          "variationSettings": {
+            "wght": 500,
+            "slnt": 0
+          }
+        },
+        14,
+        {
+          "unit": "PIXELS",
+          "value": 22
+        },
+        "TOP",
+        "HEIGHT"
+      ]
+    ],
+    [
+      "516:120",
+      "516:116",
+      "Wizard content",
+      "FRAME",
+      [
+        14,
+        68,
+        268,
+        112
+      ],
+      true,
+      1,
+      [
+        [
+          {
+            "r": 1,
+            "g": 1,
+            "b": 1
+          },
+          1,
+          true
+        ]
+      ],
+      [],
+      1,
+      6,
+      true,
+      null
+    ],
+    [
+      "516:121",
+      "516:120",
+      "Content title",
+      "TEXT",
+      [
+        10,
+        10,
+        248,
+        22
+      ],
+      true,
+      1,
+      [
+        [
+          {
+            "r": 0.09803921729326248,
+            "g": 0.09803921729326248,
+            "b": 0.09803921729326248
+          },
+          1,
+          true
+        ]
+      ],
+      [],
+      1,
+      null,
+      null,
+      [
+        "Configure device",
+        {
+          "family": "Inter",
+          "style": "Medium",
+          "variationSettings": {
+            "wght": 500,
+            "slnt": 0
+          }
+        },
+        14,
+        {
+          "unit": "PIXELS",
+          "value": 22
+        },
+        "TOP",
+        "HEIGHT"
+      ]
+    ],
+    [
+      "516:122",
+      "516:120",
+      "Content body",
+      "TEXT",
+      [
+        10,
+        36,
+        248,
+        34
+      ],
+      true,
+      1,
+      [
+        [
+          {
+            "r": 0.09803921729326248,
+            "g": 0.09803921729326248,
+            "b": 0.09803921729326248
+          },
+          1,
+          true
+        ]
+      ],
+      [],
+      1,
+      null,
+      null,
+      [
+        "Required information",
+        {
+          "family": "Inter",
+          "style": "Regular",
+          "variationSettings": {
+            "wght": 400,
+            "slnt": 0
+          }
+        },
+        10,
+        {
+          "unit": "PIXELS",
+          "value": 15
+        },
+        "TOP",
+        "NONE"
+      ]
+    ],
+    [
+      "516:123",
+      "516:120",
+      "Progress",
+      "TEXT",
+      [
+        10,
+        82,
+        52,
+        15
+      ],
+      true,
+      1,
+      [
+        [
+          {
+            "r": 0.3843137323856354,
+            "g": 0.2078431397676468,
+            "b": 0.9686274528503418
+          },
+          1,
+          true
+        ]
+      ],
+      [],
+      1,
+      null,
+      null,
+      [
+        "Step 1 of 4",
+        {
+          "family": "Inter",
+          "style": "Regular",
+          "variationSettings": {
+            "wght": 400,
+            "slnt": 0
+          }
+        },
+        10,
+        {
+          "unit": "PIXELS",
+          "value": 15
+        },
+        "TOP",
+        "HEIGHT"
+      ]
+    ],
+    [
+      "516:124",
+      "516:116",
+      "Help action",
+      "TEXT",
+      [
+        10,
+        207,
+        23,
+        15
+      ],
+      false,
+      1,
+      [
+        [
+          {
+            "r": 0.3843137323856354,
+            "g": 0.2078431397676468,
+            "b": 0.9686274528503418
+          },
+          1,
+          true
+        ]
+      ],
+      [],
+      1,
+      null,
+      null,
+      [
+        "Help",
+        {
+          "family": "Inter",
+          "style": "Regular",
+          "variationSettings": {
+            "wght": 400,
+            "slnt": 0
+          }
+        },
+        10,
+        {
+          "unit": "PIXELS",
+          "value": 15
+        },
+        "TOP",
+        "HEIGHT"
+      ]
+    ],
+    [
+      "516:125",
+      "516:116",
+      "DSM/Button/Default",
+      "INSTANCE",
+      [
+        54,
+        196,
+        57,
+        32
+      ],
+      true,
+      1,
+      [
+        [
+          {
+            "r": 0,
+            "g": 0,
+            "b": 0
+          },
+          0.03999999910593033,
+          true
+        ]
+      ],
+      [
+        [
+          {
+            "r": 0.8509804010391235,
+            "g": 0.8509804010391235,
+            "b": 0.8509804010391235
+          },
+          1,
+          true
+        ]
+      ],
+      1,
+      4,
+      false,
+      null
+    ],
+    [
+      "516:136",
+      "516:116",
+      "DSM/Button/Primary",
+      "INSTANCE",
+      [
+        132,
+        196,
+        56,
+        32
+      ],
+      true,
+      1,
+      [
+        [
+          {
+            "r": 0.3843137323856354,
+            "g": 0.2078431397676468,
+            "b": 0.9686274528503418
+          },
+          1,
+          true
+        ]
+      ],
+      [
+        [
+          {
+            "r": 0,
+            "g": 0,
+            "b": 0
+          },
+          0,
+          true
+        ]
+      ],
+      1,
+      4,
+      false,
+      null
+    ],
+    [
+      "516:147",
+      "516:116",
+      "DSM/Button/Default",
+      "INSTANCE",
+      [
+        210,
+        196,
+        70,
+        32
+      ],
+      true,
+      1,
+      [
+        [
+          {
+            "r": 1,
+            "g": 1,
+            "b": 1
+          },
+          1,
+          true
+        ]
+      ],
+      [
+        [
+          {
+            "r": 0.8509804010391235,
+            "g": 0.8509804010391235,
+            "b": 0.8509804010391235
+          },
+          1,
+          true
+        ]
+      ],
+      1,
+      4,
+      false,
+      null
+    ],
+    [
+      "516:389",
+      "516:669",
+      "Style=Mac, Phase=Start",
+      "COMPONENT",
+      [
+        0,
+        500,
+        296,
+        234
+      ],
+      true,
+      1,
+      [
+        [
+          {
+            "r": 1,
+            "g": 1,
+            "b": 1
+          },
+          1,
+          true
+        ]
+      ],
+      [
+        [
+          {
+            "r": 0.8156862854957581,
+            "g": 0.8156862854957581,
+            "b": 0.8156862854957581
+          },
+          1,
+          true
+        ]
+      ],
+      1,
+      10,
+      true,
+      null
+    ],
+    [
+      "516:390",
+      "516:389",
+      "Mac side rail",
+      "FRAME",
+      [
+        0,
+        0,
+        66,
+        234
+      ],
+      true,
+      1,
+      [
+        [
+          {
+            "r": 1,
+            "g": 1,
+            "b": 1
+          },
+          1,
+          true
+        ]
+      ],
+      [],
+      1,
+      0,
+      true,
+      null
+    ],
+    [
+      "516:391",
+      "516:390",
+      "Step 1",
+      "FRAME",
+      [
+        21,
+        28,
+        24,
+        24
+      ],
+      true,
+      1,
+      [
+        [
+          {
+            "r": 0.3843137323856354,
+            "g": 0.2078431397676468,
+            "b": 0.9686274528503418
+          },
+          1,
+          true
+        ]
+      ],
+      [],
+      1,
+      12,
+      true,
+      null
+    ],
+    [
+      "516:392",
+      "516:391",
+      "Number",
+      "TEXT",
+      [
+        8,
+        6,
+        5,
+        14
+      ],
+      true,
+      1,
+      [
+        [
+          {
+            "r": 1,
+            "g": 1,
+            "b": 1
+          },
+          1,
+          true
+        ]
+      ],
+      [],
+      1,
+      null,
+      null,
+      [
+        "1",
+        {
+          "family": "Inter",
+          "style": "Medium",
+          "variationSettings": {
+            "wght": 500,
+            "slnt": 0
+          }
+        },
+        14,
+        {
+          "unit": "PIXELS",
+          "value": 14
+        },
+        "TOP",
+        "HEIGHT"
+      ]
+    ],
+    [
+      "516:393",
+      "516:390",
+      "Step 2",
+      "FRAME",
+      [
+        21,
+        70,
+        24,
+        24
+      ],
+      true,
+      1,
+      [
+        [
+          {
+            "r": 1,
+            "g": 1,
+            "b": 1
+          },
+          1,
+          true
+        ]
+      ],
+      [],
+      1,
+      12,
+      true,
+      null
+    ],
+    [
+      "516:394",
+      "516:393",
+      "Number",
+      "TEXT",
+      [
+        8,
+        6,
+        7,
+        14
+      ],
+      true,
+      1,
+      [
+        [
+          {
+            "r": 0.3843137323856354,
+            "g": 0.2078431397676468,
+            "b": 0.9686274528503418
+          },
+          1,
+          true
+        ]
+      ],
+      [],
+      1,
+      null,
+      null,
+      [
+        "2",
+        {
+          "family": "Inter",
+          "style": "Medium",
+          "variationSettings": {
+            "wght": 500,
+            "slnt": 0
+          }
+        },
+        14,
+        {
+          "unit": "PIXELS",
+          "value": 14
+        },
+        "TOP",
+        "HEIGHT"
+      ]
+    ],
+    [
+      "516:395",
+      "516:390",
+      "Step 3",
+      "FRAME",
+      [
+        21,
+        112,
+        24,
+        24
+      ],
+      true,
+      1,
+      [
+        [
+          {
+            "r": 1,
+            "g": 1,
+            "b": 1
+          },
+          1,
+          true
+        ]
+      ],
+      [],
+      1,
+      12,
+      true,
+      null
+    ],
+    [
+      "516:396",
+      "516:395",
+      "Number",
+      "TEXT",
+      [
+        8,
+        6,
+        7,
+        14
+      ],
+      true,
+      1,
+      [
+        [
+          {
+            "r": 0.3843137323856354,
+            "g": 0.2078431397676468,
+            "b": 0.9686274528503418
+          },
+          1,
+          true
+        ]
+      ],
+      [],
+      1,
+      null,
+      null,
+      [
+        "3",
+        {
+          "family": "Inter",
+          "style": "Medium",
+          "variationSettings": {
+            "wght": 500,
+            "slnt": 0
+          }
+        },
+        14,
+        {
+          "unit": "PIXELS",
+          "value": 14
+        },
+        "TOP",
+        "HEIGHT"
+      ]
+    ],
+    [
+      "516:397",
+      "516:389",
+      "Wizard content",
+      "FRAME",
+      [
+        78,
+        68,
+        204,
+        112
+      ],
+      true,
+      1,
+      [
+        [
+          {
+            "r": 1,
+            "g": 1,
+            "b": 1
+          },
+          1,
+          true
+        ]
+      ],
+      [],
+      1,
+      6,
+      true,
+      null
+    ],
+    [
+      "516:398",
+      "516:397",
+      "Content title",
+      "TEXT",
+      [
+        10,
+        10,
+        184,
+        22
+      ],
+      true,
+      1,
+      [
+        [
+          {
+            "r": 0.09803921729326248,
+            "g": 0.09803921729326248,
+            "b": 0.09803921729326248
+          },
+          1,
+          true
+        ]
+      ],
+      [],
+      1,
+      null,
+      null,
+      [
+        "Configure device",
+        {
+          "family": "Inter",
+          "style": "Medium",
+          "variationSettings": {
+            "wght": 500,
+            "slnt": 0
+          }
+        },
+        14,
+        {
+          "unit": "PIXELS",
+          "value": 22
+        },
+        "TOP",
+        "HEIGHT"
+      ]
+    ],
+    [
+      "516:399",
+      "516:397",
+      "Content body",
+      "TEXT",
+      [
+        10,
+        36,
+        184,
+        34
+      ],
+      true,
+      1,
+      [
+        [
+          {
+            "r": 0.09803921729326248,
+            "g": 0.09803921729326248,
+            "b": 0.09803921729326248
+          },
+          1,
+          true
+        ]
+      ],
+      [],
+      1,
+      null,
+      null,
+      [
+        "Required information",
+        {
+          "family": "Inter",
+          "style": "Regular",
+          "variationSettings": {
+            "wght": 400,
+            "slnt": 0
+          }
+        },
+        10,
+        {
+          "unit": "PIXELS",
+          "value": 15
+        },
+        "TOP",
+        "NONE"
+      ]
+    ],
+    [
+      "516:400",
+      "516:397",
+      "Progress",
+      "TEXT",
+      [
+        10,
+        82,
+        52,
+        15
+      ],
+      true,
+      1,
+      [
+        [
+          {
+            "r": 0.3843137323856354,
+            "g": 0.2078431397676468,
+            "b": 0.9686274528503418
+          },
+          1,
+          true
+        ]
+      ],
+      [],
+      1,
+      null,
+      null,
+      [
+        "Step 1 of 4",
+        {
+          "family": "Inter",
+          "style": "Regular",
+          "variationSettings": {
+            "wght": 400,
+            "slnt": 0
+          }
+        },
+        10,
+        {
+          "unit": "PIXELS",
+          "value": 15
+        },
+        "TOP",
+        "HEIGHT"
+      ]
+    ],
+    [
+      "516:401",
+      "516:389",
+      "Help action",
+      "TEXT",
+      [
+        10,
+        207,
+        23,
+        15
+      ],
+      false,
+      1,
+      [
+        [
+          {
+            "r": 0.3843137323856354,
+            "g": 0.2078431397676468,
+            "b": 0.9686274528503418
+          },
+          1,
+          true
+        ]
+      ],
+      [],
+      1,
+      null,
+      null,
+      [
+        "Help",
+        {
+          "family": "Inter",
+          "style": "Regular",
+          "variationSettings": {
+            "wght": 400,
+            "slnt": 0
+          }
+        },
+        10,
+        {
+          "unit": "PIXELS",
+          "value": 15
+        },
+        "TOP",
+        "HEIGHT"
+      ]
+    ],
+    [
+      "516:402",
+      "516:389",
+      "DSM/Button/Default",
+      "INSTANCE",
+      [
+        54,
+        196,
+        57,
+        32
+      ],
+      true,
+      1,
+      [
+        [
+          {
+            "r": 0,
+            "g": 0,
+            "b": 0
+          },
+          0.03999999910593033,
+          true
+        ]
+      ],
+      [
+        [
+          {
+            "r": 0.8509804010391235,
+            "g": 0.8509804010391235,
+            "b": 0.8509804010391235
+          },
+          1,
+          true
+        ]
+      ],
+      1,
+      4,
+      false,
+      null
+    ],
+    [
+      "516:410",
+      "516:389",
+      "DSM/Button/Primary",
+      "INSTANCE",
+      [
+        132,
+        196,
+        56,
+        32
+      ],
+      true,
+      1,
+      [
+        [
+          {
+            "r": 0.3843137323856354,
+            "g": 0.2078431397676468,
+            "b": 0.9686274528503418
+          },
+          1,
+          true
+        ]
+      ],
+      [
+        [
+          {
+            "r": 0,
+            "g": 0,
+            "b": 0
+          },
+          0,
+          true
+        ]
+      ],
+      1,
+      4,
+      false,
+      null
+    ],
+    [
+      "516:418",
+      "516:389",
+      "DSM/Button/Default",
+      "INSTANCE",
+      [
+        210,
+        196,
+        70,
+        32
+      ],
+      true,
+      1,
+      [
+        [
+          {
+            "r": 1,
+            "g": 1,
+            "b": 1
+          },
+          1,
+          true
+        ]
+      ],
+      [
+        [
+          {
+            "r": 0.8509804010391235,
+            "g": 0.8509804010391235,
+            "b": 0.8509804010391235
+          },
+          1,
+          true
+        ]
+      ],
+      1,
+      4,
+      false,
+      null
+    ]
+  ],
+  "properties": [
+    [
+      "516:62",
+      {
+        "Page label#516:3": {
+          "type": "TEXT",
+          "defaultValue": "Current page · 1 / 3"
+        },
+        "State": {
+          "type": "VARIANT",
+          "defaultValue": "Empty",
+          "variantOptions": [
+            "Empty",
+            "Content",
+            "Disabled"
+          ]
+        }
+      }
+    ],
+    [
+      "516:113",
+      {
+        "Title#516:22": {
+          "type": "TEXT",
+          "defaultValue": "Configure device"
+        },
+        "Subtitle#516:23": {
+          "type": "TEXT",
+          "defaultValue": "Complete the required fields to continue."
+        },
+        "Show subtitle#516:24": {
+          "type": "BOOLEAN",
+          "defaultValue": true
+        },
+        "Kind": {
+          "type": "VARIANT",
+          "defaultValue": "Standard",
+          "variantOptions": [
+            "Standard",
+            "Commit",
+            "Final"
+          ]
+        },
+        "Completion": {
+          "type": "VARIANT",
+          "defaultValue": "Incomplete",
+          "variantOptions": [
+            "Incomplete",
+            "Complete"
+          ]
+        }
+      }
+    ],
+    [
+      "516:669",
+      {
+        "Title#516:73": {
+          "type": "TEXT",
+          "defaultValue": "Configure device"
+        },
+        "Subtitle#516:74": {
+          "type": "TEXT",
+          "defaultValue": "Required information"
+        },
+        "Show help#516:75": {
+          "type": "BOOLEAN",
+          "defaultValue": false
+        },
+        "Style": {
+          "type": "VARIANT",
+          "defaultValue": "Classic",
+          "variantOptions": [
+            "Classic",
+            "Modern",
+            "Mac",
+            "Aero"
+          ]
+        },
+        "Phase": {
+          "type": "VARIANT",
+          "defaultValue": "Start",
+          "variantOptions": [
+            "Start",
+            "Middle",
+            "Commit",
+            "Finish"
+          ]
+        }
+      }
+    ]
+  ],
+  "sourceExceptions": [
+    "StackedWidget header/content wrap and overlap are retained in the passive gallery; live layouts reflow.",
+    "StackedWidget Disabled header uses the same #8a8a8a as its background.",
+    "Wizard Mac rail retains active step 1 in every authored Phase; live flow does not use it as navigation state.",
+    "WizardPage Complete status fill is Accent at 0.08 opacity (not opaque Accent as reference JSX omits opacity)."
+  ],
+  "boundary": "Gallery geometry is a passive source snapshot. Live QWizard style/platform layout, page graph, currentId, mandatory fields, validatePage, commit and accept/reject remain Qt authority. No Phase/Completion setters are introduced.",
+  "assets": [
+    {
+      "file": "Warning.svg",
+      "sourceNode": "1073:2",
+      "sourceAsset": "ec17d.svg",
+      "size": [
+        16,
+        16
+      ]
+    },
+    {
+      "file": "Check.svg",
+      "sourceNode": "1073:6",
+      "sourceAsset": "e4d0f.svg",
+      "size": [
+        16,
+        16
+      ]
+    }
+  ]
+}

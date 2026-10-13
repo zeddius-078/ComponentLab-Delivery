@@ -23,6 +23,11 @@ class FocusIndicator final : public QObject {
         return alpha;
     }
     QColor color(QColor source) const;
+    // Per-widget opt-out. The closest explicit setting on the widget or one of
+    // its ancestors wins, so a composed component can suppress all child rings
+    // without removing keyboard focus or activation behavior.
+    bool enabledFor(const QWidget* widget) const;
+    void setEnabledFor(QWidget* widget, bool enabled);
     bool visibleFor(const QWidget* widget) const;
     void watch(QWidget* widget);
 

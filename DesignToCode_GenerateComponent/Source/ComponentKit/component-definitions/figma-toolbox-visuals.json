@@ -1,0 +1,1826 @@
+{
+  "fileKey": "w92BKW1EcutKmTXkwzNHbf",
+  "pageId": "505:2",
+  "galleryId": "505:29",
+  "capturedReadOnly": true,
+  "rows": [
+    [
+      "505:29",
+      "Variant Gallery",
+      "FRAME",
+      [
+        64,
+        720,
+        1312,
+        783
+      ],
+      true,
+      [
+        {
+          "type": "SOLID",
+          "visible": true,
+          "opacity": 1,
+          "blendMode": "NORMAL",
+          "color": {
+            "r": 1,
+            "g": 1,
+            "b": 1
+          },
+          "boundVariables": {}
+        }
+      ],
+      {
+        "strokes": [],
+        "sw": 1,
+        "r": 16,
+        "clip": false
+      }
+    ],
+    [
+      "505:462",
+      "Variant key",
+      "FRAME",
+      [
+        28,
+        28,
+        528,
+        36
+      ],
+      true,
+      [
+        {
+          "type": "SOLID",
+          "visible": true,
+          "opacity": 1,
+          "blendMode": "NORMAL",
+          "color": {
+            "r": 0.9529411792755127,
+            "g": 0.9529411792755127,
+            "b": 0.9529411792755127
+          },
+          "boundVariables": {
+            "color": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:505:421"
+            }
+          }
+        }
+      ],
+      {
+        "strokes": [],
+        "sw": 1,
+        "r": 10,
+        "clip": true
+      }
+    ],
+    [
+      "505:463",
+      "Variant summary",
+      "TEXT",
+      [
+        14,
+        10,
+        500,
+        16
+      ],
+      true,
+      [
+        {
+          "type": "SOLID",
+          "visible": true,
+          "opacity": 1,
+          "blendMode": "NORMAL",
+          "color": {
+            "r": 0.09803921729326248,
+            "g": 0.09803921729326248,
+            "b": 0.09803921729326248
+          },
+          "boundVariables": {
+            "color": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:505:419"
+            }
+          }
+        }
+      ],
+      {
+        "text": "5 variants · State Default / Hover / Selected / Focus / Disabled · one current page",
+        "font": {
+          "family": "Inter",
+          "style": "Medium",
+          "variationSettings": {
+            "wght": 500,
+            "slnt": 0
+          }
+        },
+        "size": 13,
+        "line": {
+          "unit": "AUTO"
+        },
+        "spacing": {
+          "unit": "PERCENT",
+          "value": 0
+        }
+      }
+    ],
+    [
+      "505:553",
+      "ComponentLab/ToolBoxItem",
+      "COMPONENT_SET",
+      [
+        28,
+        85,
+        760,
+        304
+      ],
+      true,
+      [],
+      {
+        "strokes": [],
+        "sw": 1,
+        "r": 5,
+        "clip": true
+      }
+    ],
+    [
+      "505:464",
+      "State=Default",
+      "COMPONENT",
+      [
+        0,
+        0,
+        760,
+        48
+      ],
+      true,
+      [
+        {
+          "type": "SOLID",
+          "visible": true,
+          "opacity": 1,
+          "blendMode": "NORMAL",
+          "color": {
+            "r": 1,
+            "g": 1,
+            "b": 1
+          },
+          "boundVariables": {
+            "color": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:505:417"
+            }
+          }
+        }
+      ],
+      {
+        "strokes": [
+          {
+            "type": "SOLID",
+            "visible": true,
+            "opacity": 1,
+            "blendMode": "NORMAL",
+            "color": {
+              "r": 0.8156862854957581,
+              "g": 0.8156862854957581,
+              "b": 0.8156862854957581
+            },
+            "boundVariables": {
+              "color": {
+                "type": "VARIABLE_ALIAS",
+                "id": "VariableID:505:418"
+              }
+            }
+          }
+        ],
+        "sw": 1,
+        "r": 0,
+        "clip": false
+      }
+    ],
+    [
+      "974:13248",
+      "Icon",
+      "INSTANCE",
+      [
+        48,
+        15,
+        16,
+        16
+      ],
+      false,
+      [],
+      {
+        "strokes": [],
+        "sw": 1,
+        "r": 0,
+        "clip": false
+      }
+    ],
+    [
+      "505:523",
+      "Label",
+      "TEXT",
+      [
+        76,
+        15,
+        620,
+        18
+      ],
+      true,
+      [
+        {
+          "type": "SOLID",
+          "visible": true,
+          "opacity": 1,
+          "blendMode": "NORMAL",
+          "color": {
+            "r": 0.09803921729326248,
+            "g": 0.09803921729326248,
+            "b": 0.09803921729326248
+          },
+          "boundVariables": {
+            "color": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:505:419"
+            }
+          }
+        }
+      ],
+      {
+        "text": "General",
+        "font": {
+          "family": "Inter",
+          "style": "Semi Bold",
+          "variationSettings": {
+            "wght": 600,
+            "slnt": 0
+          }
+        },
+        "size": 14,
+        "line": {
+          "unit": "PIXELS",
+          "value": 22
+        },
+        "spacing": {
+          "unit": "PIXELS",
+          "value": 0
+        }
+      }
+    ],
+    [
+      "505:524",
+      "Mnemonic",
+      "TEXT",
+      [
+        694,
+        16,
+        50,
+        16
+      ],
+      false,
+      [
+        {
+          "type": "SOLID",
+          "visible": true,
+          "opacity": 1,
+          "blendMode": "NORMAL",
+          "color": {
+            "r": 0.3843137323856354,
+            "g": 0.2078431397676468,
+            "b": 0.9686274528503418
+          },
+          "boundVariables": {
+            "color": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:505:423"
+            }
+          }
+        }
+      ],
+      {
+        "text": "Alt+G",
+        "font": {
+          "family": "Inter",
+          "style": "Regular",
+          "variationSettings": {
+            "wght": 400,
+            "slnt": 0
+          }
+        },
+        "size": 12,
+        "line": {
+          "unit": "PIXELS",
+          "value": 18
+        },
+        "spacing": {
+          "unit": "PIXELS",
+          "value": 0
+        }
+      }
+    ],
+    [
+      "1085:96",
+      "Arrow",
+      "INSTANCE",
+      [
+        19,
+        16,
+        16,
+        16
+      ],
+      true,
+      [],
+      {
+        "strokes": [],
+        "sw": 1,
+        "r": 0,
+        "clip": false
+      }
+    ],
+    [
+      "505:525",
+      "State=Hover",
+      "COMPONENT",
+      [
+        0,
+        64,
+        760,
+        48
+      ],
+      true,
+      [
+        {
+          "type": "SOLID",
+          "visible": true,
+          "opacity": 1,
+          "blendMode": "NORMAL",
+          "color": {
+            "r": 0.9529411792755127,
+            "g": 0.9529411792755127,
+            "b": 0.9529411792755127
+          },
+          "boundVariables": {
+            "color": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:505:421"
+            }
+          }
+        }
+      ],
+      {
+        "strokes": [
+          {
+            "type": "SOLID",
+            "visible": true,
+            "opacity": 1,
+            "blendMode": "NORMAL",
+            "color": {
+              "r": 0.8156862854957581,
+              "g": 0.8156862854957581,
+              "b": 0.8156862854957581
+            },
+            "boundVariables": {
+              "color": {
+                "type": "VARIABLE_ALIAS",
+                "id": "VariableID:505:418"
+              }
+            }
+          }
+        ],
+        "sw": 1,
+        "r": 0,
+        "clip": false
+      }
+    ],
+    [
+      "974:13251",
+      "Icon",
+      "INSTANCE",
+      [
+        48,
+        15,
+        16,
+        16
+      ],
+      false,
+      [],
+      {
+        "strokes": [],
+        "sw": 1,
+        "r": 0,
+        "clip": false
+      }
+    ],
+    [
+      "505:536",
+      "Label",
+      "TEXT",
+      [
+        76,
+        15,
+        620,
+        18
+      ],
+      true,
+      [
+        {
+          "type": "SOLID",
+          "visible": true,
+          "opacity": 1,
+          "blendMode": "NORMAL",
+          "color": {
+            "r": 0.09803921729326248,
+            "g": 0.09803921729326248,
+            "b": 0.09803921729326248
+          },
+          "boundVariables": {
+            "color": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:505:419"
+            }
+          }
+        }
+      ],
+      {
+        "text": "General",
+        "font": {
+          "family": "Inter",
+          "style": "Semi Bold",
+          "variationSettings": {
+            "wght": 600,
+            "slnt": 0
+          }
+        },
+        "size": 14,
+        "line": {
+          "unit": "PIXELS",
+          "value": 22
+        },
+        "spacing": {
+          "unit": "PIXELS",
+          "value": 0
+        }
+      }
+    ],
+    [
+      "505:537",
+      "Mnemonic",
+      "TEXT",
+      [
+        694,
+        16,
+        50,
+        16
+      ],
+      false,
+      [
+        {
+          "type": "SOLID",
+          "visible": true,
+          "opacity": 1,
+          "blendMode": "NORMAL",
+          "color": {
+            "r": 0.3843137323856354,
+            "g": 0.2078431397676468,
+            "b": 0.9686274528503418
+          },
+          "boundVariables": {
+            "color": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:505:423"
+            }
+          }
+        }
+      ],
+      {
+        "text": "Alt+G",
+        "font": {
+          "family": "Inter",
+          "style": "Regular",
+          "variationSettings": {
+            "wght": 400,
+            "slnt": 0
+          }
+        },
+        "size": 12,
+        "line": {
+          "unit": "PIXELS",
+          "value": 18
+        },
+        "spacing": {
+          "unit": "PIXELS",
+          "value": 0
+        }
+      }
+    ],
+    [
+      "1085:99",
+      "Arrow",
+      "INSTANCE",
+      [
+        19,
+        16,
+        16,
+        16
+      ],
+      true,
+      [],
+      {
+        "strokes": [],
+        "sw": 1,
+        "r": 0,
+        "clip": false
+      }
+    ],
+    [
+      "505:538",
+      "State=Selected",
+      "COMPONENT",
+      [
+        0,
+        128,
+        760,
+        48
+      ],
+      true,
+      [
+        {
+          "type": "SOLID",
+          "visible": true,
+          "opacity": 1,
+          "blendMode": "NORMAL",
+          "color": {
+            "r": 0.9529411792755127,
+            "g": 0.9529411792755127,
+            "b": 0.9529411792755127
+          },
+          "boundVariables": {
+            "color": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:505:422"
+            }
+          }
+        }
+      ],
+      {
+        "strokes": [
+          {
+            "type": "SOLID",
+            "visible": true,
+            "opacity": 1,
+            "blendMode": "NORMAL",
+            "color": {
+              "r": 0.8156862854957581,
+              "g": 0.8156862854957581,
+              "b": 0.8156862854957581
+            },
+            "boundVariables": {
+              "color": {
+                "type": "VARIABLE_ALIAS",
+                "id": "VariableID:505:418"
+              }
+            }
+          }
+        ],
+        "sw": 1,
+        "r": 0,
+        "clip": false
+      }
+    ],
+    [
+      "974:13254",
+      "Icon",
+      "INSTANCE",
+      [
+        48,
+        15,
+        16,
+        16
+      ],
+      false,
+      [],
+      {
+        "strokes": [],
+        "sw": 1,
+        "r": 0,
+        "clip": false
+      }
+    ],
+    [
+      "505:541",
+      "Label",
+      "TEXT",
+      [
+        76,
+        15,
+        620,
+        18
+      ],
+      true,
+      [
+        {
+          "type": "SOLID",
+          "visible": true,
+          "opacity": 1,
+          "blendMode": "NORMAL",
+          "color": {
+            "r": 0.3843137323856354,
+            "g": 0.2078431397676468,
+            "b": 0.9686274528503418
+          },
+          "boundVariables": {
+            "color": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:505:423"
+            }
+          }
+        }
+      ],
+      {
+        "text": "General",
+        "font": {
+          "family": "Inter",
+          "style": "Semi Bold",
+          "variationSettings": {
+            "wght": 600,
+            "slnt": 0
+          }
+        },
+        "size": 14,
+        "line": {
+          "unit": "PIXELS",
+          "value": 22
+        },
+        "spacing": {
+          "unit": "PIXELS",
+          "value": 0
+        }
+      }
+    ],
+    [
+      "505:542",
+      "Mnemonic",
+      "TEXT",
+      [
+        694,
+        16,
+        50,
+        16
+      ],
+      false,
+      [
+        {
+          "type": "SOLID",
+          "visible": true,
+          "opacity": 1,
+          "blendMode": "NORMAL",
+          "color": {
+            "r": 0.3843137323856354,
+            "g": 0.2078431397676468,
+            "b": 0.9686274528503418
+          },
+          "boundVariables": {
+            "color": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:505:423"
+            }
+          }
+        }
+      ],
+      {
+        "text": "Alt+G",
+        "font": {
+          "family": "Inter",
+          "style": "Regular",
+          "variationSettings": {
+            "wght": 400,
+            "slnt": 0
+          }
+        },
+        "size": 12,
+        "line": {
+          "unit": "PIXELS",
+          "value": 18
+        },
+        "spacing": {
+          "unit": "PIXELS",
+          "value": 0
+        }
+      }
+    ],
+    [
+      "1085:102",
+      "Arrow",
+      "INSTANCE",
+      [
+        19,
+        16,
+        16,
+        16
+      ],
+      true,
+      [],
+      {
+        "strokes": [],
+        "sw": 1,
+        "r": 0,
+        "clip": false
+      }
+    ],
+    [
+      "505:543",
+      "State=Focus",
+      "COMPONENT",
+      [
+        0,
+        192,
+        760,
+        48
+      ],
+      true,
+      [
+        {
+          "type": "SOLID",
+          "visible": true,
+          "opacity": 1,
+          "blendMode": "NORMAL",
+          "color": {
+            "r": 1,
+            "g": 1,
+            "b": 1
+          },
+          "boundVariables": {
+            "color": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:505:417"
+            }
+          }
+        }
+      ],
+      {
+        "strokes": [
+          {
+            "type": "SOLID",
+            "visible": true,
+            "opacity": 1,
+            "blendMode": "NORMAL",
+            "color": {
+              "r": 0.3843137323856354,
+              "g": 0.2078431397676468,
+              "b": 0.9686274528503418
+            },
+            "boundVariables": {
+              "color": {
+                "type": "VARIABLE_ALIAS",
+                "id": "VariableID:505:424"
+              }
+            }
+          }
+        ],
+        "sw": 2,
+        "r": 0,
+        "clip": false
+      }
+    ],
+    [
+      "974:13257",
+      "Icon",
+      "INSTANCE",
+      [
+        48,
+        15,
+        16,
+        16
+      ],
+      false,
+      [],
+      {
+        "strokes": [],
+        "sw": 1,
+        "r": 0,
+        "clip": false
+      }
+    ],
+    [
+      "505:546",
+      "Label",
+      "TEXT",
+      [
+        76,
+        15,
+        620,
+        18
+      ],
+      true,
+      [
+        {
+          "type": "SOLID",
+          "visible": true,
+          "opacity": 1,
+          "blendMode": "NORMAL",
+          "color": {
+            "r": 0.09803921729326248,
+            "g": 0.09803921729326248,
+            "b": 0.09803921729326248
+          },
+          "boundVariables": {
+            "color": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:505:419"
+            }
+          }
+        }
+      ],
+      {
+        "text": "General",
+        "font": {
+          "family": "Inter",
+          "style": "Semi Bold",
+          "variationSettings": {
+            "wght": 600,
+            "slnt": 0
+          }
+        },
+        "size": 14,
+        "line": {
+          "unit": "PIXELS",
+          "value": 22
+        },
+        "spacing": {
+          "unit": "PIXELS",
+          "value": 0
+        }
+      }
+    ],
+    [
+      "505:547",
+      "Mnemonic",
+      "TEXT",
+      [
+        694,
+        16,
+        50,
+        16
+      ],
+      false,
+      [
+        {
+          "type": "SOLID",
+          "visible": true,
+          "opacity": 1,
+          "blendMode": "NORMAL",
+          "color": {
+            "r": 0.3843137323856354,
+            "g": 0.2078431397676468,
+            "b": 0.9686274528503418
+          },
+          "boundVariables": {
+            "color": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:505:423"
+            }
+          }
+        }
+      ],
+      {
+        "text": "Alt+G",
+        "font": {
+          "family": "Inter",
+          "style": "Regular",
+          "variationSettings": {
+            "wght": 400,
+            "slnt": 0
+          }
+        },
+        "size": 12,
+        "line": {
+          "unit": "PIXELS",
+          "value": 18
+        },
+        "spacing": {
+          "unit": "PIXELS",
+          "value": 0
+        }
+      }
+    ],
+    [
+      "1085:105",
+      "Arrow",
+      "INSTANCE",
+      [
+        19,
+        16,
+        16,
+        16
+      ],
+      true,
+      [],
+      {
+        "strokes": [],
+        "sw": 1,
+        "r": 0,
+        "clip": false
+      }
+    ],
+    [
+      "505:548",
+      "State=Disabled",
+      "COMPONENT",
+      [
+        0,
+        256,
+        760,
+        48
+      ],
+      true,
+      [
+        {
+          "type": "SOLID",
+          "visible": true,
+          "opacity": 1,
+          "blendMode": "NORMAL",
+          "color": {
+            "r": 1,
+            "g": 1,
+            "b": 1
+          },
+          "boundVariables": {
+            "color": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:505:417"
+            }
+          }
+        }
+      ],
+      {
+        "strokes": [
+          {
+            "type": "SOLID",
+            "visible": true,
+            "opacity": 1,
+            "blendMode": "NORMAL",
+            "color": {
+              "r": 0.8156862854957581,
+              "g": 0.8156862854957581,
+              "b": 0.8156862854957581
+            },
+            "boundVariables": {
+              "color": {
+                "type": "VARIABLE_ALIAS",
+                "id": "VariableID:505:418"
+              }
+            }
+          }
+        ],
+        "sw": 1,
+        "r": 0,
+        "clip": false
+      }
+    ],
+    [
+      "974:13260",
+      "Icon",
+      "INSTANCE",
+      [
+        48,
+        15,
+        16,
+        16
+      ],
+      false,
+      [],
+      {
+        "strokes": [],
+        "sw": 1,
+        "r": 0,
+        "clip": false
+      }
+    ],
+    [
+      "505:551",
+      "Label",
+      "TEXT",
+      [
+        76,
+        15,
+        620,
+        18
+      ],
+      true,
+      [
+        {
+          "type": "SOLID",
+          "visible": true,
+          "opacity": 1,
+          "blendMode": "NORMAL",
+          "color": {
+            "r": 0.5411764979362488,
+            "g": 0.5411764979362488,
+            "b": 0.5411764979362488
+          },
+          "boundVariables": {
+            "color": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:505:420"
+            }
+          }
+        }
+      ],
+      {
+        "text": "General",
+        "font": {
+          "family": "Inter",
+          "style": "Semi Bold",
+          "variationSettings": {
+            "wght": 600,
+            "slnt": 0
+          }
+        },
+        "size": 14,
+        "line": {
+          "unit": "PIXELS",
+          "value": 22
+        },
+        "spacing": {
+          "unit": "PIXELS",
+          "value": 0
+        }
+      }
+    ],
+    [
+      "505:552",
+      "Mnemonic",
+      "TEXT",
+      [
+        694,
+        16,
+        50,
+        16
+      ],
+      false,
+      [
+        {
+          "type": "SOLID",
+          "visible": true,
+          "opacity": 1,
+          "blendMode": "NORMAL",
+          "color": {
+            "r": 0.5411764979362488,
+            "g": 0.5411764979362488,
+            "b": 0.5411764979362488
+          },
+          "boundVariables": {
+            "color": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:505:420"
+            }
+          }
+        }
+      ],
+      {
+        "text": "Alt+G",
+        "font": {
+          "family": "Inter",
+          "style": "Regular",
+          "variationSettings": {
+            "wght": 400,
+            "slnt": 0
+          }
+        },
+        "size": 12,
+        "line": {
+          "unit": "PIXELS",
+          "value": 18
+        },
+        "spacing": {
+          "unit": "PIXELS",
+          "value": 0
+        }
+      }
+    ],
+    [
+      "1085:108",
+      "Arrow",
+      "INSTANCE",
+      [
+        19,
+        16,
+        16,
+        16
+      ],
+      true,
+      [],
+      {
+        "strokes": [],
+        "sw": 1,
+        "r": 0,
+        "clip": false
+      }
+    ],
+    [
+      "505:554",
+      "ToolBox runtime composition",
+      "FRAME",
+      [
+        28,
+        420,
+        1256,
+        335
+      ],
+      true,
+      [
+        {
+          "type": "SOLID",
+          "visible": true,
+          "opacity": 1,
+          "blendMode": "NORMAL",
+          "color": {
+            "r": 0.9529411792755127,
+            "g": 0.9529411792755127,
+            "b": 0.9529411792755127
+          },
+          "boundVariables": {
+            "color": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:505:421"
+            }
+          }
+        }
+      ],
+      {
+        "strokes": [],
+        "sw": 1,
+        "r": 12,
+        "clip": true
+      }
+    ],
+    [
+      "505:555",
+      "ComponentLab/ToolBox",
+      "COMPONENT",
+      [
+        20,
+        20,
+        800,
+        295
+      ],
+      true,
+      [
+        {
+          "type": "SOLID",
+          "visible": true,
+          "opacity": 1,
+          "blendMode": "NORMAL",
+          "color": {
+            "r": 1,
+            "g": 1,
+            "b": 1
+          },
+          "boundVariables": {
+            "color": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:505:425"
+            }
+          }
+        }
+      ],
+      {
+        "strokes": [
+          {
+            "type": "SOLID",
+            "visible": true,
+            "opacity": 1,
+            "blendMode": "NORMAL",
+            "color": {
+              "r": 0.8156862854957581,
+              "g": 0.8156862854957581,
+              "b": 0.8156862854957581
+            },
+            "boundVariables": {
+              "color": {
+                "type": "VARIABLE_ALIAS",
+                "id": "VariableID:505:418"
+              }
+            }
+          }
+        ],
+        "sw": 1,
+        "r": 10,
+        "clip": true
+      }
+    ],
+    [
+      "505:556",
+      "ComponentLab/ToolBoxItem",
+      "INSTANCE",
+      [
+        16,
+        16,
+        760,
+        48
+      ],
+      true,
+      [
+        {
+          "type": "SOLID",
+          "visible": true,
+          "opacity": 1,
+          "blendMode": "NORMAL",
+          "color": {
+            "r": 1,
+            "g": 1,
+            "b": 1
+          },
+          "boundVariables": {
+            "color": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:505:417"
+            }
+          }
+        }
+      ],
+      {
+        "strokes": [
+          {
+            "type": "SOLID",
+            "visible": true,
+            "opacity": 1,
+            "blendMode": "NORMAL",
+            "color": {
+              "r": 0.8156862854957581,
+              "g": 0.8156862854957581,
+              "b": 0.8156862854957581
+            },
+            "boundVariables": {
+              "color": {
+                "type": "VARIABLE_ALIAS",
+                "id": "VariableID:505:418"
+              }
+            }
+          }
+        ],
+        "sw": 1,
+        "r": 0,
+        "clip": false
+      }
+    ],
+    [
+      "505:561",
+      "ComponentLab/ToolBoxItem",
+      "INSTANCE",
+      [
+        16,
+        64,
+        760,
+        48
+      ],
+      true,
+      [
+        {
+          "type": "SOLID",
+          "visible": true,
+          "opacity": 1,
+          "blendMode": "NORMAL",
+          "color": {
+            "r": 0.9529411792755127,
+            "g": 0.9529411792755127,
+            "b": 0.9529411792755127
+          },
+          "boundVariables": {
+            "color": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:505:422"
+            }
+          }
+        }
+      ],
+      {
+        "strokes": [
+          {
+            "type": "SOLID",
+            "visible": true,
+            "opacity": 1,
+            "blendMode": "NORMAL",
+            "color": {
+              "r": 0.8156862854957581,
+              "g": 0.8156862854957581,
+              "b": 0.8156862854957581
+            },
+            "boundVariables": {
+              "color": {
+                "type": "VARIABLE_ALIAS",
+                "id": "VariableID:505:418"
+              }
+            }
+          }
+        ],
+        "sw": 1,
+        "r": 0,
+        "clip": false
+      }
+    ],
+    [
+      "505:566",
+      "ComponentLab/ToolBoxItem",
+      "INSTANCE",
+      [
+        16,
+        247,
+        760,
+        48
+      ],
+      true,
+      [
+        {
+          "type": "SOLID",
+          "visible": true,
+          "opacity": 1,
+          "blendMode": "NORMAL",
+          "color": {
+            "r": 1,
+            "g": 1,
+            "b": 1
+          },
+          "boundVariables": {
+            "color": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:505:417"
+            }
+          }
+        }
+      ],
+      {
+        "strokes": [
+          {
+            "type": "SOLID",
+            "visible": true,
+            "opacity": 1,
+            "blendMode": "NORMAL",
+            "color": {
+              "r": 0.8156862854957581,
+              "g": 0.8156862854957581,
+              "b": 0.8156862854957581
+            },
+            "boundVariables": {
+              "color": {
+                "type": "VARIABLE_ALIAS",
+                "id": "VariableID:505:418"
+              }
+            }
+          }
+        ],
+        "sw": 1,
+        "r": 0,
+        "clip": false
+      }
+    ],
+    [
+      "505:571",
+      "Current item page",
+      "RECTANGLE",
+      [
+        16,
+        112,
+        768,
+        135
+      ],
+      true,
+      [
+        {
+          "type": "SOLID",
+          "visible": true,
+          "opacity": 1,
+          "blendMode": "NORMAL",
+          "color": {
+            "r": 1,
+            "g": 1,
+            "b": 1
+          },
+          "boundVariables": {
+            "color": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:505:417"
+            }
+          }
+        }
+      ],
+      {
+        "strokes": [
+          {
+            "type": "SOLID",
+            "visible": true,
+            "opacity": 1,
+            "blendMode": "NORMAL",
+            "color": {
+              "r": 0.8156862854957581,
+              "g": 0.8156862854957581,
+              "b": 0.8156862854957581
+            },
+            "boundVariables": {
+              "color": {
+                "type": "VARIABLE_ALIAS",
+                "id": "VariableID:505:418"
+              }
+            }
+          }
+        ],
+        "sw": 1,
+        "r": 0
+      }
+    ],
+    [
+      "505:572",
+      "Page title",
+      "TEXT",
+      [
+        40,
+        136,
+        96,
+        26
+      ],
+      true,
+      [
+        {
+          "type": "SOLID",
+          "visible": true,
+          "opacity": 1,
+          "blendMode": "NORMAL",
+          "color": {
+            "r": 0.09803921729326248,
+            "g": 0.09803921729326248,
+            "b": 0.09803921729326248
+          },
+          "boundVariables": {
+            "color": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:505:419"
+            }
+          }
+        }
+      ],
+      {
+        "text": "Rules page",
+        "font": {
+          "family": "Inter",
+          "style": "Semi Bold",
+          "variationSettings": {
+            "wght": 600,
+            "slnt": 0
+          }
+        },
+        "size": 18,
+        "line": {
+          "unit": "PIXELS",
+          "value": 26
+        },
+        "spacing": {
+          "unit": "PIXELS",
+          "value": 0
+        }
+      }
+    ],
+    [
+      "505:573",
+      "Page body",
+      "TEXT",
+      [
+        40,
+        174,
+        700,
+        19
+      ],
+      true,
+      [
+        {
+          "type": "SOLID",
+          "visible": true,
+          "opacity": 1,
+          "blendMode": "NORMAL",
+          "color": {
+            "r": 0.09803921729326248,
+            "g": 0.09803921729326248,
+            "b": 0.09803921729326248
+          },
+          "boundVariables": {
+            "color": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:505:419"
+            }
+          }
+        }
+      ],
+      {
+        "text": "Only the current item widget is shown here. Other item widgets remain owned by the ToolBox until removed.",
+        "font": {
+          "family": "Inter",
+          "style": "Regular",
+          "variationSettings": {
+            "wght": 400,
+            "slnt": 0
+          }
+        },
+        "size": 13,
+        "line": {
+          "unit": "PIXELS",
+          "value": 19
+        },
+        "spacing": {
+          "unit": "PIXELS",
+          "value": 0
+        }
+      }
+    ],
+    [
+      "505:574",
+      "Collapse boundary",
+      "FRAME",
+      [
+        840,
+        20,
+        396,
+        295
+      ],
+      true,
+      [
+        {
+          "type": "SOLID",
+          "visible": true,
+          "opacity": 1,
+          "blendMode": "NORMAL",
+          "color": {
+            "r": 1,
+            "g": 1,
+            "b": 1
+          },
+          "boundVariables": {
+            "color": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:505:417"
+            }
+          }
+        }
+      ],
+      {
+        "strokes": [
+          {
+            "type": "SOLID",
+            "visible": true,
+            "opacity": 1,
+            "blendMode": "NORMAL",
+            "color": {
+              "r": 0.8156862854957581,
+              "g": 0.8156862854957581,
+              "b": 0.8156862854957581
+            },
+            "boundVariables": {
+              "color": {
+                "type": "VARIABLE_ALIAS",
+                "id": "VariableID:505:418"
+              }
+            }
+          }
+        ],
+        "sw": 1,
+        "r": 10,
+        "clip": true
+      }
+    ],
+    [
+      "505:575",
+      "Evidence tag",
+      "TEXT",
+      [
+        20,
+        20,
+        184,
+        13
+      ],
+      true,
+      [
+        {
+          "type": "SOLID",
+          "visible": true,
+          "opacity": 1,
+          "blendMode": "NORMAL",
+          "color": {
+            "r": 0.3843137323856354,
+            "g": 0.2078431397676468,
+            "b": 0.9686274528503418
+          },
+          "boundVariables": {
+            "color": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:505:423"
+            }
+          }
+        }
+      ],
+      {
+        "text": "QTOOLBOX ≠ GENERIC COLLAPSE",
+        "font": {
+          "family": "Inter",
+          "style": "Semi Bold",
+          "variationSettings": {
+            "wght": 600,
+            "slnt": 0
+          }
+        },
+        "size": 11,
+        "line": {
+          "unit": "AUTO"
+        },
+        "spacing": {
+          "unit": "PERCENT",
+          "value": 0
+        }
+      }
+    ],
+    [
+      "505:576",
+      "Evidence title",
+      "TEXT",
+      [
+        20,
+        48,
+        152,
+        19
+      ],
+      true,
+      [
+        {
+          "type": "SOLID",
+          "visible": true,
+          "opacity": 1,
+          "blendMode": "NORMAL",
+          "color": {
+            "r": 0.09803921729326248,
+            "g": 0.09803921729326248,
+            "b": 0.09803921729326248
+          },
+          "boundVariables": {
+            "color": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:505:419"
+            }
+          }
+        }
+      ],
+      {
+        "text": "Single current page",
+        "font": {
+          "family": "Inter",
+          "style": "Semi Bold",
+          "variationSettings": {
+            "wght": 600,
+            "slnt": 0
+          }
+        },
+        "size": 16,
+        "line": {
+          "unit": "AUTO"
+        },
+        "spacing": {
+          "unit": "PERCENT",
+          "value": 0
+        }
+      }
+    ],
+    [
+      "505:577",
+      "Evidence body",
+      "TEXT",
+      [
+        20,
+        82,
+        350,
+        48
+      ],
+      true,
+      [
+        {
+          "type": "SOLID",
+          "visible": true,
+          "opacity": 1,
+          "blendMode": "NORMAL",
+          "color": {
+            "r": 0.09803921729326248,
+            "g": 0.09803921729326248,
+            "b": 0.09803921729326248
+          },
+          "boundVariables": {
+            "color": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:505:419"
+            }
+          }
+        }
+      ],
+      {
+        "text": "QToolBox 的 currentIndex 指向唯一当前项；历史参考 Collapse 默认允许多开，也可全部收起，并提供 trigger、ghost、extra 与 destroyOnHidden。",
+        "font": {
+          "family": "Inter",
+          "style": "Regular",
+          "variationSettings": {
+            "wght": 400,
+            "slnt": 0
+          }
+        },
+        "size": 13,
+        "line": {
+          "unit": "AUTO"
+        },
+        "spacing": {
+          "unit": "PERCENT",
+          "value": 0
+        }
+      }
+    ],
+    [
+      "505:578",
+      "Boundary rule",
+      "TEXT",
+      [
+        20,
+        205,
+        350,
+        30
+      ],
+      true,
+      [
+        {
+          "type": "SOLID",
+          "visible": true,
+          "opacity": 1,
+          "blendMode": "NORMAL",
+          "color": {
+            "r": 0.5411764979362488,
+            "g": 0.5411764979362488,
+            "b": 0.5411764979362488
+          },
+          "boundVariables": {
+            "color": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:505:420"
+            }
+          }
+        }
+      ],
+      {
+        "text": "需要多开/全收起时新建 ComponentLab/Collapse，不在 ToolBox 上伪造 expanded[]。",
+        "font": {
+          "family": "Inter",
+          "style": "Medium",
+          "variationSettings": {
+            "wght": 500,
+            "slnt": 0
+          }
+        },
+        "size": 12,
+        "line": {
+          "unit": "AUTO"
+        },
+        "spacing": {
+          "unit": "PERCENT",
+          "value": 0
+        }
+      }
+    ]
+  ],
+  "sets": [
+    {
+      "id": "505:553",
+      "name": "ComponentLab/ToolBoxItem",
+      "properties": {
+        "Label#505:15": {
+          "type": "TEXT",
+          "defaultValue": "General"
+        },
+        "Show icon#505:16": {
+          "type": "BOOLEAN",
+          "defaultValue": false
+        },
+        "Show mnemonic#505:17": {
+          "type": "BOOLEAN",
+          "defaultValue": false
+        },
+        "Icon#974:21": {
+          "type": "INSTANCE_SWAP",
+          "defaultValue": "973:43",
+          "preferredValues": []
+        },
+        "State": {
+          "type": "VARIANT",
+          "defaultValue": "Default",
+          "variantOptions": [
+            "Default",
+            "Hover",
+            "Selected",
+            "Focus",
+            "Disabled"
+          ]
+        }
+      },
+      "description": "Classification: ComponentLab/ToolBox is the Native Component (QToolBox → commonWidget::Z_ToolBox). ToolBoxItem is internal design-system visual anatomy, not a standalone Qt QWidget or SDK public component. Selected previews the host currentIndex (writable int Q_PROPERTY); per-item Disabled is configured by setItemEnabled(index, bool), not an Item checked Q_PROPERTY. Focus and Hover are transient visual previews. Qt owns page widgets and currentChanged.\n\nQt QToolBox item contract. State variants support Label, Show icon, Icon and Show mnemonic. Icon is an INSTANCE_SWAP semantic glyph; host State owns the nested vector color override (Disabled→Disabled, otherwise Primary), so the replacement icon&#39;s standalone Tone is intentionally overridden. Page ownership, currentIndex, insertion/removal and mnemonic dispatch remain runtime-owned.\n\nAsset contract: Default, Hover and Focus use fixed ComponentLab/Icon/ChevronRight; Selected uses ChevronDown with Accent semantics; Disabled uses ChevronRight with Disabled semantics. The general Icon slot remains independently swappable, while expansion, currentIndex, mnemonic dispatch and accessible expanded state remain runtime-owned.\n\nSource verification · 2026-10-08: native-components.json generates commonWidget::Z_ToolBox, whose wrapper only inherits QToolBox and sets the three design-system identity properties. NativeComponentRegistry can create it and ComponentLab NativeGalleryPages exercises two basic pages. The current Z_ToolBox.qss.in contains root, root:disabled and a repeated root border rule only—no QToolBox::tab selected, hover, disabled, focus or mnemonic coverage—and no dedicated ToolBox contract test was found. Factory availability is verified; single-current navigation, complete tab styling, keyboard behavior and accessibility remain engineering-open."
+    }
+  ]
+}

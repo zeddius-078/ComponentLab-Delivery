@@ -1,0 +1,2220 @@
+{
+  "schemaVersion": 1,
+  "fileKey": "w92BKW1EcutKmTXkwzNHbf",
+  "pageId": "1116:2",
+  "galleryId": "2015:19735",
+  "status": "CAPTURED_LIGHT_NOT_DESIGN_APPROVED",
+  "set": {
+    "id": "1116:18",
+    "rect": [
+      28,
+      85,
+      2208,
+      264
+    ],
+    "fills": [],
+    "properties": {
+      "Value#339:90": {
+        "type": "TEXT",
+        "defaultValue": "Entered value"
+      },
+      "Placeholder#339:91": {
+        "type": "TEXT",
+        "defaultValue": "Input text"
+      },
+      "Show prefix#339:92": {
+        "type": "BOOLEAN",
+        "defaultValue": false
+      },
+      "Show suffix#339:93": {
+        "type": "BOOLEAN",
+        "defaultValue": false
+      },
+      "Allow clear#339:94": {
+        "type": "BOOLEAN",
+        "defaultValue": false
+      },
+      "Prefix icon#995:57": {
+        "type": "INSTANCE_SWAP",
+        "defaultValue": "994:55",
+        "preferredValues": [
+          {
+            "type": "COMPONENT",
+            "key": "7027a1e6e188fc5410424a024593a940da94ce3d"
+          },
+          {
+            "type": "COMPONENT",
+            "key": "7b1b97cc90b0dc91d833a581af52024b1a5963ff"
+          },
+          {
+            "type": "COMPONENT",
+            "key": "8c5407123246156171a21441ca49118f9dcf0339"
+          },
+          {
+            "type": "COMPONENT",
+            "key": "a6e08b808b3ca8ebe3ae8f4403b1c97bfc4f2299"
+          },
+          {
+            "type": "COMPONENT",
+            "key": "e3bcc402718d86266cbfd5191861d3548f345ed6"
+          },
+          {
+            "type": "COMPONENT",
+            "key": "0683afd50663956511a896b517343c179b491ff3"
+          },
+          {
+            "type": "COMPONENT",
+            "key": "298ae09654c0855ff7ffffdf8b1fac5bf835137e"
+          },
+          {
+            "type": "COMPONENT",
+            "key": "ddde77a75f7eee3b6848dcfdbab46f8e95aa56ad"
+          },
+          {
+            "type": "COMPONENT",
+            "key": "2b3e04ece07ef35f161e048527225856ba95623d"
+          },
+          {
+            "type": "COMPONENT",
+            "key": "126211c902385279507b42ebb4db43024f2066dc"
+          },
+          {
+            "type": "COMPONENT",
+            "key": "60cb35270afd56e799cd982ef6cf304b48502c02"
+          },
+          {
+            "type": "COMPONENT",
+            "key": "726f7eb8059efc9c8d239635cd65e28a14fdec86"
+          },
+          {
+            "type": "COMPONENT",
+            "key": "35c5f0e05baaae27bdde0bcab7cb8973628d15b3"
+          }
+        ]
+      },
+      "Suffix icon#995:76": {
+        "type": "INSTANCE_SWAP",
+        "defaultValue": "994:76",
+        "preferredValues": [
+          {
+            "type": "COMPONENT",
+            "key": "7027a1e6e188fc5410424a024593a940da94ce3d"
+          },
+          {
+            "type": "COMPONENT",
+            "key": "7b1b97cc90b0dc91d833a581af52024b1a5963ff"
+          },
+          {
+            "type": "COMPONENT",
+            "key": "8c5407123246156171a21441ca49118f9dcf0339"
+          },
+          {
+            "type": "COMPONENT",
+            "key": "a6e08b808b3ca8ebe3ae8f4403b1c97bfc4f2299"
+          },
+          {
+            "type": "COMPONENT",
+            "key": "e3bcc402718d86266cbfd5191861d3548f345ed6"
+          },
+          {
+            "type": "COMPONENT",
+            "key": "0683afd50663956511a896b517343c179b491ff3"
+          },
+          {
+            "type": "COMPONENT",
+            "key": "298ae09654c0855ff7ffffdf8b1fac5bf835137e"
+          },
+          {
+            "type": "COMPONENT",
+            "key": "ddde77a75f7eee3b6848dcfdbab46f8e95aa56ad"
+          },
+          {
+            "type": "COMPONENT",
+            "key": "2b3e04ece07ef35f161e048527225856ba95623d"
+          },
+          {
+            "type": "COMPONENT",
+            "key": "126211c902385279507b42ebb4db43024f2066dc"
+          },
+          {
+            "type": "COMPONENT",
+            "key": "60cb35270afd56e799cd982ef6cf304b48502c02"
+          },
+          {
+            "type": "COMPONENT",
+            "key": "726f7eb8059efc9c8d239635cd65e28a14fdec86"
+          },
+          {
+            "type": "COMPONENT",
+            "key": "35c5f0e05baaae27bdde0bcab7cb8973628d15b3"
+          }
+        ]
+      },
+      "Clear icon#995:95": {
+        "type": "INSTANCE_SWAP",
+        "defaultValue": "989:26",
+        "preferredValues": [
+          {
+            "type": "COMPONENT",
+            "key": "ddde77a75f7eee3b6848dcfdbab46f8e95aa56ad"
+          }
+        ]
+      },
+      "Size": {
+        "type": "VARIANT",
+        "defaultValue": "Small",
+        "variantOptions": [
+          "Small",
+          "Medium",
+          "Large"
+        ]
+      },
+      "State": {
+        "type": "VARIANT",
+        "defaultValue": "Default",
+        "variantOptions": [
+          "Default",
+          "Hover",
+          "Focus",
+          "Filled",
+          "Error",
+          "Disabled"
+        ]
+      }
+    }
+  },
+  "variants": [
+    {
+      "id": "1116:19",
+      "name": "Size=Small, State=Default",
+      "rect": [
+        24,
+        24,
+        320,
+        32
+      ],
+      "padding": [
+        8,
+        8
+      ],
+      "radius": 4,
+      "strokeWeight": 1,
+      "effects": [],
+      "children": [
+        {
+          "id": "1116:20",
+          "name": "prefix-icon",
+          "type": "INSTANCE",
+          "rect": [
+            0,
+            0,
+            14,
+            14
+          ],
+          "visible": false
+        },
+        {
+          "id": "1116:21",
+          "name": "Placeholder",
+          "type": "TEXT",
+          "rect": [
+            9,
+            6,
+            302,
+            20
+          ],
+          "visible": true,
+          "text": "Input text",
+          "font": {
+            "family": "Inter",
+            "style": "Regular",
+            "variationSettings": {
+              "wght": 400,
+              "slnt": 0
+            }
+          },
+          "fontSize": 14,
+          "lineHeight": {
+            "unit": "PIXELS",
+            "value": 22
+          }
+        },
+        {
+          "id": "1116:22",
+          "name": "Value",
+          "type": "TEXT",
+          "rect": [
+            0,
+            0,
+            120,
+            20
+          ],
+          "visible": false,
+          "text": "Entered value",
+          "font": {
+            "family": "Inter",
+            "style": "Medium",
+            "variationSettings": {
+              "wght": 500,
+              "slnt": 0
+            }
+          },
+          "fontSize": 14,
+          "lineHeight": {
+            "unit": "PIXELS",
+            "value": 14
+          }
+        },
+        {
+          "id": "1116:23",
+          "name": "clear-icon",
+          "type": "INSTANCE",
+          "rect": [
+            0,
+            0,
+            14,
+            14
+          ],
+          "visible": false
+        },
+        {
+          "id": "1116:24",
+          "name": "suffix-icon",
+          "type": "INSTANCE",
+          "rect": [
+            0,
+            0,
+            14,
+            14
+          ],
+          "visible": false
+        }
+      ]
+    },
+    {
+      "id": "1116:25",
+      "name": "Size=Small, State=Hover",
+      "rect": [
+        384,
+        24,
+        320,
+        32
+      ],
+      "padding": [
+        8,
+        8
+      ],
+      "radius": 4,
+      "strokeWeight": 1,
+      "effects": [],
+      "children": [
+        {
+          "id": "1116:26",
+          "name": "prefix-icon",
+          "type": "INSTANCE",
+          "rect": [
+            0,
+            0,
+            14,
+            14
+          ],
+          "visible": false
+        },
+        {
+          "id": "1116:27",
+          "name": "Placeholder",
+          "type": "TEXT",
+          "rect": [
+            9,
+            6,
+            302,
+            20
+          ],
+          "visible": true,
+          "text": "Input text",
+          "font": {
+            "family": "Inter",
+            "style": "Regular",
+            "variationSettings": {
+              "wght": 400,
+              "slnt": 0
+            }
+          },
+          "fontSize": 14,
+          "lineHeight": {
+            "unit": "PIXELS",
+            "value": 22
+          }
+        },
+        {
+          "id": "1116:28",
+          "name": "Value",
+          "type": "TEXT",
+          "rect": [
+            0,
+            0,
+            120,
+            20
+          ],
+          "visible": false,
+          "text": "Entered value",
+          "font": {
+            "family": "Inter",
+            "style": "Medium",
+            "variationSettings": {
+              "wght": 500,
+              "slnt": 0
+            }
+          },
+          "fontSize": 14,
+          "lineHeight": {
+            "unit": "PIXELS",
+            "value": 14
+          }
+        },
+        {
+          "id": "1116:29",
+          "name": "clear-icon",
+          "type": "INSTANCE",
+          "rect": [
+            0,
+            0,
+            14,
+            14
+          ],
+          "visible": false
+        },
+        {
+          "id": "1116:30",
+          "name": "suffix-icon",
+          "type": "INSTANCE",
+          "rect": [
+            0,
+            0,
+            14,
+            14
+          ],
+          "visible": false
+        }
+      ]
+    },
+    {
+      "id": "1116:31",
+      "name": "Size=Small, State=Focus",
+      "rect": [
+        744,
+        24,
+        320,
+        32
+      ],
+      "padding": [
+        8,
+        8
+      ],
+      "radius": 4,
+      "strokeWeight": 1,
+      "effects": [
+        {
+          "type": "DROP_SHADOW",
+          "visible": true,
+          "radius": 0,
+          "boundVariables": {
+            "color": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:132:2786"
+            }
+          },
+          "color": {
+            "r": 0.9529411792755127,
+            "g": 0.9372549057006836,
+            "b": 1,
+            "a": 1
+          },
+          "offset": {
+            "x": 0,
+            "y": 0
+          },
+          "spread": 2,
+          "blendMode": "NORMAL",
+          "showShadowBehindNode": true
+        }
+      ],
+      "children": [
+        {
+          "id": "1116:32",
+          "name": "prefix-icon",
+          "type": "INSTANCE",
+          "rect": [
+            0,
+            0,
+            14,
+            14
+          ],
+          "visible": false
+        },
+        {
+          "id": "1116:33",
+          "name": "Placeholder",
+          "type": "TEXT",
+          "rect": [
+            9,
+            6,
+            302,
+            20
+          ],
+          "visible": true,
+          "text": "Input text",
+          "font": {
+            "family": "Inter",
+            "style": "Regular",
+            "variationSettings": {
+              "wght": 400,
+              "slnt": 0
+            }
+          },
+          "fontSize": 14,
+          "lineHeight": {
+            "unit": "PIXELS",
+            "value": 22
+          }
+        },
+        {
+          "id": "1116:34",
+          "name": "Value",
+          "type": "TEXT",
+          "rect": [
+            0,
+            0,
+            120,
+            20
+          ],
+          "visible": false,
+          "text": "Entered value",
+          "font": {
+            "family": "Inter",
+            "style": "Medium",
+            "variationSettings": {
+              "wght": 500,
+              "slnt": 0
+            }
+          },
+          "fontSize": 14,
+          "lineHeight": {
+            "unit": "PIXELS",
+            "value": 14
+          }
+        },
+        {
+          "id": "1116:35",
+          "name": "clear-icon",
+          "type": "INSTANCE",
+          "rect": [
+            0,
+            0,
+            14,
+            14
+          ],
+          "visible": false
+        },
+        {
+          "id": "1116:36",
+          "name": "suffix-icon",
+          "type": "INSTANCE",
+          "rect": [
+            0,
+            0,
+            14,
+            14
+          ],
+          "visible": false
+        }
+      ]
+    },
+    {
+      "id": "1116:37",
+      "name": "Size=Small, State=Filled",
+      "rect": [
+        1104,
+        24,
+        320,
+        32
+      ],
+      "padding": [
+        8,
+        8
+      ],
+      "radius": 4,
+      "strokeWeight": 1,
+      "effects": [],
+      "children": [
+        {
+          "id": "1116:38",
+          "name": "prefix-icon",
+          "type": "INSTANCE",
+          "rect": [
+            0,
+            0,
+            14,
+            14
+          ],
+          "visible": false
+        },
+        {
+          "id": "1116:39",
+          "name": "Placeholder",
+          "type": "TEXT",
+          "rect": [
+            0,
+            0,
+            120,
+            20
+          ],
+          "visible": false,
+          "text": "Input text",
+          "font": {
+            "family": "Inter",
+            "style": "Regular",
+            "variationSettings": {
+              "wght": 400,
+              "slnt": 0
+            }
+          },
+          "fontSize": 14,
+          "lineHeight": {
+            "unit": "PIXELS",
+            "value": 22
+          }
+        },
+        {
+          "id": "1116:40",
+          "name": "Value",
+          "type": "TEXT",
+          "rect": [
+            9,
+            6,
+            302,
+            20
+          ],
+          "visible": true,
+          "text": "Entered value",
+          "font": {
+            "family": "Inter",
+            "style": "Medium",
+            "variationSettings": {
+              "wght": 500,
+              "slnt": 0
+            }
+          },
+          "fontSize": 14,
+          "lineHeight": {
+            "unit": "PIXELS",
+            "value": 14
+          }
+        },
+        {
+          "id": "1116:41",
+          "name": "clear-icon",
+          "type": "INSTANCE",
+          "rect": [
+            0,
+            0,
+            14,
+            14
+          ],
+          "visible": false
+        },
+        {
+          "id": "1116:42",
+          "name": "suffix-icon",
+          "type": "INSTANCE",
+          "rect": [
+            0,
+            0,
+            14,
+            14
+          ],
+          "visible": false
+        }
+      ]
+    },
+    {
+      "id": "1116:43",
+      "name": "Size=Small, State=Error",
+      "rect": [
+        1464,
+        24,
+        320,
+        32
+      ],
+      "padding": [
+        8,
+        8
+      ],
+      "radius": 4,
+      "strokeWeight": 1,
+      "effects": [],
+      "children": [
+        {
+          "id": "1116:44",
+          "name": "prefix-icon",
+          "type": "INSTANCE",
+          "rect": [
+            0,
+            0,
+            14,
+            14
+          ],
+          "visible": false
+        },
+        {
+          "id": "1116:45",
+          "name": "Placeholder",
+          "type": "TEXT",
+          "rect": [
+            9,
+            6,
+            302,
+            20
+          ],
+          "visible": true,
+          "text": "Input text",
+          "font": {
+            "family": "Inter",
+            "style": "Regular",
+            "variationSettings": {
+              "wght": 400,
+              "slnt": 0
+            }
+          },
+          "fontSize": 14,
+          "lineHeight": {
+            "unit": "PIXELS",
+            "value": 22
+          }
+        },
+        {
+          "id": "1116:46",
+          "name": "Value",
+          "type": "TEXT",
+          "rect": [
+            0,
+            0,
+            120,
+            20
+          ],
+          "visible": false,
+          "text": "Entered value",
+          "font": {
+            "family": "Inter",
+            "style": "Medium",
+            "variationSettings": {
+              "wght": 500,
+              "slnt": 0
+            }
+          },
+          "fontSize": 14,
+          "lineHeight": {
+            "unit": "PIXELS",
+            "value": 14
+          }
+        },
+        {
+          "id": "1116:47",
+          "name": "clear-icon",
+          "type": "INSTANCE",
+          "rect": [
+            0,
+            0,
+            14,
+            14
+          ],
+          "visible": false
+        },
+        {
+          "id": "1116:48",
+          "name": "suffix-icon",
+          "type": "INSTANCE",
+          "rect": [
+            0,
+            0,
+            14,
+            14
+          ],
+          "visible": false
+        }
+      ]
+    },
+    {
+      "id": "1116:49",
+      "name": "Size=Small, State=Disabled",
+      "rect": [
+        1824,
+        24,
+        320,
+        32
+      ],
+      "padding": [
+        8,
+        8
+      ],
+      "radius": 4,
+      "strokeWeight": 1,
+      "effects": [],
+      "children": [
+        {
+          "id": "1116:50",
+          "name": "prefix-icon",
+          "type": "INSTANCE",
+          "rect": [
+            0,
+            0,
+            14,
+            14
+          ],
+          "visible": false
+        },
+        {
+          "id": "1116:51",
+          "name": "Placeholder",
+          "type": "TEXT",
+          "rect": [
+            9,
+            6,
+            302,
+            20
+          ],
+          "visible": true,
+          "text": "Input text",
+          "font": {
+            "family": "Inter",
+            "style": "Regular",
+            "variationSettings": {
+              "wght": 400,
+              "slnt": 0
+            }
+          },
+          "fontSize": 14,
+          "lineHeight": {
+            "unit": "PIXELS",
+            "value": 22
+          }
+        },
+        {
+          "id": "1116:52",
+          "name": "Value",
+          "type": "TEXT",
+          "rect": [
+            0,
+            0,
+            120,
+            20
+          ],
+          "visible": false,
+          "text": "Entered value",
+          "font": {
+            "family": "Inter",
+            "style": "Medium",
+            "variationSettings": {
+              "wght": 500,
+              "slnt": 0
+            }
+          },
+          "fontSize": 14,
+          "lineHeight": {
+            "unit": "PIXELS",
+            "value": 14
+          }
+        },
+        {
+          "id": "1116:53",
+          "name": "clear-icon",
+          "type": "INSTANCE",
+          "rect": [
+            0,
+            0,
+            14,
+            14
+          ],
+          "visible": false
+        },
+        {
+          "id": "1116:54",
+          "name": "suffix-icon",
+          "type": "INSTANCE",
+          "rect": [
+            0,
+            0,
+            14,
+            14
+          ],
+          "visible": false
+        }
+      ]
+    },
+    {
+      "id": "1116:55",
+      "name": "Size=Medium, State=Default",
+      "rect": [
+        24,
+        96,
+        320,
+        32
+      ],
+      "padding": [
+        12,
+        12
+      ],
+      "radius": 4,
+      "strokeWeight": 1,
+      "effects": [],
+      "children": [
+        {
+          "id": "1116:56",
+          "name": "prefix-icon",
+          "type": "INSTANCE",
+          "rect": [
+            0,
+            0,
+            14,
+            14
+          ],
+          "visible": false
+        },
+        {
+          "id": "1116:57",
+          "name": "Placeholder",
+          "type": "TEXT",
+          "rect": [
+            13,
+            6,
+            294,
+            20
+          ],
+          "visible": true,
+          "text": "Input text",
+          "font": {
+            "family": "Inter",
+            "style": "Regular",
+            "variationSettings": {
+              "wght": 400,
+              "slnt": 0
+            }
+          },
+          "fontSize": 14,
+          "lineHeight": {
+            "unit": "PIXELS",
+            "value": 22
+          }
+        },
+        {
+          "id": "1116:58",
+          "name": "Value",
+          "type": "TEXT",
+          "rect": [
+            0,
+            0,
+            120,
+            20
+          ],
+          "visible": false,
+          "text": "Entered value",
+          "font": {
+            "family": "Inter",
+            "style": "Medium",
+            "variationSettings": {
+              "wght": 500,
+              "slnt": 0
+            }
+          },
+          "fontSize": 14,
+          "lineHeight": {
+            "unit": "PIXELS",
+            "value": 14
+          }
+        },
+        {
+          "id": "1116:59",
+          "name": "clear-icon",
+          "type": "INSTANCE",
+          "rect": [
+            0,
+            0,
+            14,
+            14
+          ],
+          "visible": false
+        },
+        {
+          "id": "1116:60",
+          "name": "suffix-icon",
+          "type": "INSTANCE",
+          "rect": [
+            0,
+            0,
+            14,
+            14
+          ],
+          "visible": false
+        }
+      ]
+    },
+    {
+      "id": "1116:61",
+      "name": "Size=Medium, State=Hover",
+      "rect": [
+        384,
+        96,
+        320,
+        32
+      ],
+      "padding": [
+        12,
+        12
+      ],
+      "radius": 4,
+      "strokeWeight": 1,
+      "effects": [],
+      "children": [
+        {
+          "id": "1116:62",
+          "name": "prefix-icon",
+          "type": "INSTANCE",
+          "rect": [
+            0,
+            0,
+            14,
+            14
+          ],
+          "visible": false
+        },
+        {
+          "id": "1116:63",
+          "name": "Placeholder",
+          "type": "TEXT",
+          "rect": [
+            13,
+            6,
+            294,
+            20
+          ],
+          "visible": true,
+          "text": "Input text",
+          "font": {
+            "family": "Inter",
+            "style": "Regular",
+            "variationSettings": {
+              "wght": 400,
+              "slnt": 0
+            }
+          },
+          "fontSize": 14,
+          "lineHeight": {
+            "unit": "PIXELS",
+            "value": 22
+          }
+        },
+        {
+          "id": "1116:64",
+          "name": "Value",
+          "type": "TEXT",
+          "rect": [
+            0,
+            0,
+            120,
+            20
+          ],
+          "visible": false,
+          "text": "Entered value",
+          "font": {
+            "family": "Inter",
+            "style": "Medium",
+            "variationSettings": {
+              "wght": 500,
+              "slnt": 0
+            }
+          },
+          "fontSize": 14,
+          "lineHeight": {
+            "unit": "PIXELS",
+            "value": 14
+          }
+        },
+        {
+          "id": "1116:65",
+          "name": "clear-icon",
+          "type": "INSTANCE",
+          "rect": [
+            0,
+            0,
+            14,
+            14
+          ],
+          "visible": false
+        },
+        {
+          "id": "1116:66",
+          "name": "suffix-icon",
+          "type": "INSTANCE",
+          "rect": [
+            0,
+            0,
+            14,
+            14
+          ],
+          "visible": false
+        }
+      ]
+    },
+    {
+      "id": "1116:67",
+      "name": "Size=Medium, State=Focus",
+      "rect": [
+        744,
+        96,
+        320,
+        32
+      ],
+      "padding": [
+        12,
+        12
+      ],
+      "radius": 4,
+      "strokeWeight": 1,
+      "effects": [
+        {
+          "type": "DROP_SHADOW",
+          "visible": true,
+          "radius": 0,
+          "boundVariables": {
+            "color": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:132:2786"
+            }
+          },
+          "color": {
+            "r": 0.9529411792755127,
+            "g": 0.9372549057006836,
+            "b": 1,
+            "a": 1
+          },
+          "offset": {
+            "x": 0,
+            "y": 0
+          },
+          "spread": 2,
+          "blendMode": "NORMAL",
+          "showShadowBehindNode": true
+        }
+      ],
+      "children": [
+        {
+          "id": "1116:68",
+          "name": "prefix-icon",
+          "type": "INSTANCE",
+          "rect": [
+            0,
+            0,
+            14,
+            14
+          ],
+          "visible": false
+        },
+        {
+          "id": "1116:69",
+          "name": "Placeholder",
+          "type": "TEXT",
+          "rect": [
+            13,
+            6,
+            294,
+            20
+          ],
+          "visible": true,
+          "text": "Input text",
+          "font": {
+            "family": "Inter",
+            "style": "Regular",
+            "variationSettings": {
+              "wght": 400,
+              "slnt": 0
+            }
+          },
+          "fontSize": 14,
+          "lineHeight": {
+            "unit": "PIXELS",
+            "value": 22
+          }
+        },
+        {
+          "id": "1116:70",
+          "name": "Value",
+          "type": "TEXT",
+          "rect": [
+            0,
+            0,
+            120,
+            20
+          ],
+          "visible": false,
+          "text": "Entered value",
+          "font": {
+            "family": "Inter",
+            "style": "Medium",
+            "variationSettings": {
+              "wght": 500,
+              "slnt": 0
+            }
+          },
+          "fontSize": 14,
+          "lineHeight": {
+            "unit": "PIXELS",
+            "value": 14
+          }
+        },
+        {
+          "id": "1116:71",
+          "name": "clear-icon",
+          "type": "INSTANCE",
+          "rect": [
+            0,
+            0,
+            14,
+            14
+          ],
+          "visible": false
+        },
+        {
+          "id": "1116:72",
+          "name": "suffix-icon",
+          "type": "INSTANCE",
+          "rect": [
+            0,
+            0,
+            14,
+            14
+          ],
+          "visible": false
+        }
+      ]
+    },
+    {
+      "id": "1116:73",
+      "name": "Size=Medium, State=Filled",
+      "rect": [
+        1104,
+        96,
+        320,
+        32
+      ],
+      "padding": [
+        12,
+        12
+      ],
+      "radius": 4,
+      "strokeWeight": 1,
+      "effects": [],
+      "children": [
+        {
+          "id": "1116:74",
+          "name": "prefix-icon",
+          "type": "INSTANCE",
+          "rect": [
+            0,
+            0,
+            14,
+            14
+          ],
+          "visible": false
+        },
+        {
+          "id": "1116:75",
+          "name": "Placeholder",
+          "type": "TEXT",
+          "rect": [
+            0,
+            0,
+            120,
+            20
+          ],
+          "visible": false,
+          "text": "Input text",
+          "font": {
+            "family": "Inter",
+            "style": "Regular",
+            "variationSettings": {
+              "wght": 400,
+              "slnt": 0
+            }
+          },
+          "fontSize": 14,
+          "lineHeight": {
+            "unit": "PIXELS",
+            "value": 22
+          }
+        },
+        {
+          "id": "1116:76",
+          "name": "Value",
+          "type": "TEXT",
+          "rect": [
+            13,
+            6,
+            294,
+            20
+          ],
+          "visible": true,
+          "text": "Entered value",
+          "font": {
+            "family": "Inter",
+            "style": "Medium",
+            "variationSettings": {
+              "wght": 500,
+              "slnt": 0
+            }
+          },
+          "fontSize": 14,
+          "lineHeight": {
+            "unit": "PIXELS",
+            "value": 14
+          }
+        },
+        {
+          "id": "1116:77",
+          "name": "clear-icon",
+          "type": "INSTANCE",
+          "rect": [
+            0,
+            0,
+            14,
+            14
+          ],
+          "visible": false
+        },
+        {
+          "id": "1116:78",
+          "name": "suffix-icon",
+          "type": "INSTANCE",
+          "rect": [
+            0,
+            0,
+            14,
+            14
+          ],
+          "visible": false
+        }
+      ]
+    },
+    {
+      "id": "1116:79",
+      "name": "Size=Medium, State=Error",
+      "rect": [
+        1464,
+        96,
+        320,
+        32
+      ],
+      "padding": [
+        12,
+        12
+      ],
+      "radius": 4,
+      "strokeWeight": 1,
+      "effects": [],
+      "children": [
+        {
+          "id": "1116:80",
+          "name": "prefix-icon",
+          "type": "INSTANCE",
+          "rect": [
+            0,
+            0,
+            14,
+            14
+          ],
+          "visible": false
+        },
+        {
+          "id": "1116:81",
+          "name": "Placeholder",
+          "type": "TEXT",
+          "rect": [
+            13,
+            6,
+            294,
+            20
+          ],
+          "visible": true,
+          "text": "Input text",
+          "font": {
+            "family": "Inter",
+            "style": "Regular",
+            "variationSettings": {
+              "wght": 400,
+              "slnt": 0
+            }
+          },
+          "fontSize": 14,
+          "lineHeight": {
+            "unit": "PIXELS",
+            "value": 22
+          }
+        },
+        {
+          "id": "1116:82",
+          "name": "Value",
+          "type": "TEXT",
+          "rect": [
+            0,
+            0,
+            120,
+            20
+          ],
+          "visible": false,
+          "text": "Entered value",
+          "font": {
+            "family": "Inter",
+            "style": "Medium",
+            "variationSettings": {
+              "wght": 500,
+              "slnt": 0
+            }
+          },
+          "fontSize": 14,
+          "lineHeight": {
+            "unit": "PIXELS",
+            "value": 14
+          }
+        },
+        {
+          "id": "1116:83",
+          "name": "clear-icon",
+          "type": "INSTANCE",
+          "rect": [
+            0,
+            0,
+            14,
+            14
+          ],
+          "visible": false
+        },
+        {
+          "id": "1116:84",
+          "name": "suffix-icon",
+          "type": "INSTANCE",
+          "rect": [
+            0,
+            0,
+            14,
+            14
+          ],
+          "visible": false
+        }
+      ]
+    },
+    {
+      "id": "1116:85",
+      "name": "Size=Medium, State=Disabled",
+      "rect": [
+        1824,
+        96,
+        320,
+        32
+      ],
+      "padding": [
+        12,
+        12
+      ],
+      "radius": 4,
+      "strokeWeight": 1,
+      "effects": [],
+      "children": [
+        {
+          "id": "1116:86",
+          "name": "prefix-icon",
+          "type": "INSTANCE",
+          "rect": [
+            0,
+            0,
+            14,
+            14
+          ],
+          "visible": false
+        },
+        {
+          "id": "1116:87",
+          "name": "Placeholder",
+          "type": "TEXT",
+          "rect": [
+            13,
+            6,
+            294,
+            20
+          ],
+          "visible": true,
+          "text": "Input text",
+          "font": {
+            "family": "Inter",
+            "style": "Regular",
+            "variationSettings": {
+              "wght": 400,
+              "slnt": 0
+            }
+          },
+          "fontSize": 14,
+          "lineHeight": {
+            "unit": "PIXELS",
+            "value": 22
+          }
+        },
+        {
+          "id": "1116:88",
+          "name": "Value",
+          "type": "TEXT",
+          "rect": [
+            0,
+            0,
+            120,
+            20
+          ],
+          "visible": false,
+          "text": "Entered value",
+          "font": {
+            "family": "Inter",
+            "style": "Medium",
+            "variationSettings": {
+              "wght": 500,
+              "slnt": 0
+            }
+          },
+          "fontSize": 14,
+          "lineHeight": {
+            "unit": "PIXELS",
+            "value": 14
+          }
+        },
+        {
+          "id": "1116:89",
+          "name": "clear-icon",
+          "type": "INSTANCE",
+          "rect": [
+            0,
+            0,
+            14,
+            14
+          ],
+          "visible": false
+        },
+        {
+          "id": "1116:90",
+          "name": "suffix-icon",
+          "type": "INSTANCE",
+          "rect": [
+            0,
+            0,
+            14,
+            14
+          ],
+          "visible": false
+        }
+      ]
+    },
+    {
+      "id": "1116:91",
+      "name": "Size=Large, State=Default",
+      "rect": [
+        24,
+        168,
+        320,
+        40
+      ],
+      "padding": [
+        16,
+        16
+      ],
+      "radius": 4,
+      "strokeWeight": 1,
+      "effects": [],
+      "children": [
+        {
+          "id": "1116:92",
+          "name": "prefix-icon",
+          "type": "INSTANCE",
+          "rect": [
+            0,
+            0,
+            14,
+            14
+          ],
+          "visible": false
+        },
+        {
+          "id": "1116:93",
+          "name": "Placeholder",
+          "type": "TEXT",
+          "rect": [
+            17,
+            10,
+            286,
+            20
+          ],
+          "visible": true,
+          "text": "Input text",
+          "font": {
+            "family": "Inter",
+            "style": "Regular",
+            "variationSettings": {
+              "wght": 400,
+              "slnt": 0
+            }
+          },
+          "fontSize": 14,
+          "lineHeight": {
+            "unit": "PIXELS",
+            "value": 22
+          }
+        },
+        {
+          "id": "1116:94",
+          "name": "Value",
+          "type": "TEXT",
+          "rect": [
+            0,
+            0,
+            120,
+            20
+          ],
+          "visible": false,
+          "text": "Entered value",
+          "font": {
+            "family": "Inter",
+            "style": "Medium",
+            "variationSettings": {
+              "wght": 500,
+              "slnt": 0
+            }
+          },
+          "fontSize": 14,
+          "lineHeight": {
+            "unit": "PIXELS",
+            "value": 14
+          }
+        },
+        {
+          "id": "1116:95",
+          "name": "clear-icon",
+          "type": "INSTANCE",
+          "rect": [
+            0,
+            0,
+            14,
+            14
+          ],
+          "visible": false
+        },
+        {
+          "id": "1116:96",
+          "name": "suffix-icon",
+          "type": "INSTANCE",
+          "rect": [
+            0,
+            0,
+            14,
+            14
+          ],
+          "visible": false
+        }
+      ]
+    },
+    {
+      "id": "1116:97",
+      "name": "Size=Large, State=Hover",
+      "rect": [
+        384,
+        168,
+        320,
+        40
+      ],
+      "padding": [
+        16,
+        16
+      ],
+      "radius": 4,
+      "strokeWeight": 1,
+      "effects": [],
+      "children": [
+        {
+          "id": "1116:98",
+          "name": "prefix-icon",
+          "type": "INSTANCE",
+          "rect": [
+            0,
+            0,
+            14,
+            14
+          ],
+          "visible": false
+        },
+        {
+          "id": "1116:99",
+          "name": "Placeholder",
+          "type": "TEXT",
+          "rect": [
+            17,
+            10,
+            286,
+            20
+          ],
+          "visible": true,
+          "text": "Input text",
+          "font": {
+            "family": "Inter",
+            "style": "Regular",
+            "variationSettings": {
+              "wght": 400,
+              "slnt": 0
+            }
+          },
+          "fontSize": 14,
+          "lineHeight": {
+            "unit": "PIXELS",
+            "value": 22
+          }
+        },
+        {
+          "id": "1116:100",
+          "name": "Value",
+          "type": "TEXT",
+          "rect": [
+            0,
+            0,
+            120,
+            20
+          ],
+          "visible": false,
+          "text": "Entered value",
+          "font": {
+            "family": "Inter",
+            "style": "Medium",
+            "variationSettings": {
+              "wght": 500,
+              "slnt": 0
+            }
+          },
+          "fontSize": 14,
+          "lineHeight": {
+            "unit": "PIXELS",
+            "value": 14
+          }
+        },
+        {
+          "id": "1116:101",
+          "name": "clear-icon",
+          "type": "INSTANCE",
+          "rect": [
+            0,
+            0,
+            14,
+            14
+          ],
+          "visible": false
+        },
+        {
+          "id": "1116:102",
+          "name": "suffix-icon",
+          "type": "INSTANCE",
+          "rect": [
+            0,
+            0,
+            14,
+            14
+          ],
+          "visible": false
+        }
+      ]
+    },
+    {
+      "id": "1116:103",
+      "name": "Size=Large, State=Focus",
+      "rect": [
+        744,
+        168,
+        320,
+        40
+      ],
+      "padding": [
+        16,
+        16
+      ],
+      "radius": 4,
+      "strokeWeight": 1,
+      "effects": [
+        {
+          "type": "DROP_SHADOW",
+          "visible": true,
+          "radius": 0,
+          "boundVariables": {
+            "color": {
+              "type": "VARIABLE_ALIAS",
+              "id": "VariableID:132:2786"
+            }
+          },
+          "color": {
+            "r": 0.9529411792755127,
+            "g": 0.9372549057006836,
+            "b": 1,
+            "a": 1
+          },
+          "offset": {
+            "x": 0,
+            "y": 0
+          },
+          "spread": 2,
+          "blendMode": "NORMAL",
+          "showShadowBehindNode": true
+        }
+      ],
+      "children": [
+        {
+          "id": "1116:104",
+          "name": "prefix-icon",
+          "type": "INSTANCE",
+          "rect": [
+            0,
+            0,
+            14,
+            14
+          ],
+          "visible": false
+        },
+        {
+          "id": "1116:105",
+          "name": "Placeholder",
+          "type": "TEXT",
+          "rect": [
+            17,
+            10,
+            286,
+            20
+          ],
+          "visible": true,
+          "text": "Input text",
+          "font": {
+            "family": "Inter",
+            "style": "Regular",
+            "variationSettings": {
+              "wght": 400,
+              "slnt": 0
+            }
+          },
+          "fontSize": 14,
+          "lineHeight": {
+            "unit": "PIXELS",
+            "value": 22
+          }
+        },
+        {
+          "id": "1116:106",
+          "name": "Value",
+          "type": "TEXT",
+          "rect": [
+            0,
+            0,
+            120,
+            20
+          ],
+          "visible": false,
+          "text": "Entered value",
+          "font": {
+            "family": "Inter",
+            "style": "Medium",
+            "variationSettings": {
+              "wght": 500,
+              "slnt": 0
+            }
+          },
+          "fontSize": 14,
+          "lineHeight": {
+            "unit": "PIXELS",
+            "value": 14
+          }
+        },
+        {
+          "id": "1116:107",
+          "name": "clear-icon",
+          "type": "INSTANCE",
+          "rect": [
+            0,
+            0,
+            14,
+            14
+          ],
+          "visible": false
+        },
+        {
+          "id": "1116:108",
+          "name": "suffix-icon",
+          "type": "INSTANCE",
+          "rect": [
+            0,
+            0,
+            14,
+            14
+          ],
+          "visible": false
+        }
+      ]
+    },
+    {
+      "id": "1116:109",
+      "name": "Size=Large, State=Filled",
+      "rect": [
+        1104,
+        168,
+        320,
+        40
+      ],
+      "padding": [
+        16,
+        16
+      ],
+      "radius": 4,
+      "strokeWeight": 1,
+      "effects": [],
+      "children": [
+        {
+          "id": "1116:110",
+          "name": "prefix-icon",
+          "type": "INSTANCE",
+          "rect": [
+            0,
+            0,
+            14,
+            14
+          ],
+          "visible": false
+        },
+        {
+          "id": "1116:111",
+          "name": "Placeholder",
+          "type": "TEXT",
+          "rect": [
+            0,
+            0,
+            120,
+            20
+          ],
+          "visible": false,
+          "text": "Input text",
+          "font": {
+            "family": "Inter",
+            "style": "Regular",
+            "variationSettings": {
+              "wght": 400,
+              "slnt": 0
+            }
+          },
+          "fontSize": 14,
+          "lineHeight": {
+            "unit": "PIXELS",
+            "value": 22
+          }
+        },
+        {
+          "id": "1116:112",
+          "name": "Value",
+          "type": "TEXT",
+          "rect": [
+            17,
+            10,
+            286,
+            20
+          ],
+          "visible": true,
+          "text": "Entered value",
+          "font": {
+            "family": "Inter",
+            "style": "Medium",
+            "variationSettings": {
+              "wght": 500,
+              "slnt": 0
+            }
+          },
+          "fontSize": 14,
+          "lineHeight": {
+            "unit": "PIXELS",
+            "value": 14
+          }
+        },
+        {
+          "id": "1116:113",
+          "name": "clear-icon",
+          "type": "INSTANCE",
+          "rect": [
+            0,
+            0,
+            14,
+            14
+          ],
+          "visible": false
+        },
+        {
+          "id": "1116:114",
+          "name": "suffix-icon",
+          "type": "INSTANCE",
+          "rect": [
+            0,
+            0,
+            14,
+            14
+          ],
+          "visible": false
+        }
+      ]
+    },
+    {
+      "id": "1116:115",
+      "name": "Size=Large, State=Error",
+      "rect": [
+        1464,
+        168,
+        320,
+        40
+      ],
+      "padding": [
+        16,
+        16
+      ],
+      "radius": 4,
+      "strokeWeight": 1,
+      "effects": [],
+      "children": [
+        {
+          "id": "1116:116",
+          "name": "prefix-icon",
+          "type": "INSTANCE",
+          "rect": [
+            0,
+            0,
+            14,
+            14
+          ],
+          "visible": false
+        },
+        {
+          "id": "1116:117",
+          "name": "Placeholder",
+          "type": "TEXT",
+          "rect": [
+            17,
+            10,
+            286,
+            20
+          ],
+          "visible": true,
+          "text": "Input text",
+          "font": {
+            "family": "Inter",
+            "style": "Regular",
+            "variationSettings": {
+              "wght": 400,
+              "slnt": 0
+            }
+          },
+          "fontSize": 14,
+          "lineHeight": {
+            "unit": "PIXELS",
+            "value": 22
+          }
+        },
+        {
+          "id": "1116:118",
+          "name": "Value",
+          "type": "TEXT",
+          "rect": [
+            0,
+            0,
+            120,
+            20
+          ],
+          "visible": false,
+          "text": "Entered value",
+          "font": {
+            "family": "Inter",
+            "style": "Medium",
+            "variationSettings": {
+              "wght": 500,
+              "slnt": 0
+            }
+          },
+          "fontSize": 14,
+          "lineHeight": {
+            "unit": "PIXELS",
+            "value": 14
+          }
+        },
+        {
+          "id": "1116:119",
+          "name": "clear-icon",
+          "type": "INSTANCE",
+          "rect": [
+            0,
+            0,
+            14,
+            14
+          ],
+          "visible": false
+        },
+        {
+          "id": "1116:120",
+          "name": "suffix-icon",
+          "type": "INSTANCE",
+          "rect": [
+            0,
+            0,
+            14,
+            14
+          ],
+          "visible": false
+        }
+      ]
+    },
+    {
+      "id": "1116:121",
+      "name": "Size=Large, State=Disabled",
+      "rect": [
+        1824,
+        168,
+        320,
+        40
+      ],
+      "padding": [
+        16,
+        16
+      ],
+      "radius": 4,
+      "strokeWeight": 1,
+      "effects": [],
+      "children": [
+        {
+          "id": "1116:122",
+          "name": "prefix-icon",
+          "type": "INSTANCE",
+          "rect": [
+            0,
+            0,
+            14,
+            14
+          ],
+          "visible": false
+        },
+        {
+          "id": "1116:123",
+          "name": "Placeholder",
+          "type": "TEXT",
+          "rect": [
+            17,
+            10,
+            286,
+            20
+          ],
+          "visible": true,
+          "text": "Input text",
+          "font": {
+            "family": "Inter",
+            "style": "Regular",
+            "variationSettings": {
+              "wght": 400,
+              "slnt": 0
+            }
+          },
+          "fontSize": 14,
+          "lineHeight": {
+            "unit": "PIXELS",
+            "value": 22
+          }
+        },
+        {
+          "id": "1116:124",
+          "name": "Value",
+          "type": "TEXT",
+          "rect": [
+            0,
+            0,
+            120,
+            20
+          ],
+          "visible": false,
+          "text": "Entered value",
+          "font": {
+            "family": "Inter",
+            "style": "Medium",
+            "variationSettings": {
+              "wght": 500,
+              "slnt": 0
+            }
+          },
+          "fontSize": 14,
+          "lineHeight": {
+            "unit": "PIXELS",
+            "value": 14
+          }
+        },
+        {
+          "id": "1116:125",
+          "name": "clear-icon",
+          "type": "INSTANCE",
+          "rect": [
+            0,
+            0,
+            14,
+            14
+          ],
+          "visible": false
+        },
+        {
+          "id": "1116:126",
+          "name": "suffix-icon",
+          "type": "INSTANCE",
+          "rect": [
+            0,
+            0,
+            14,
+            14
+          ],
+          "visible": false
+        }
+      ]
+    }
+  ],
+  "variables": {
+    "var(--component-basic-input-state-default-placeholder)": "#676767",
+    "typography/letter-spacing/default": "0",
+    "typography/font-size/label/default": "14",
+    "typography/line-height/label/default": "22",
+    "typography/font-weight/body": "400",
+    "DSM/Label/Default": "Font(family: \"Inter\", style: Regular, size: typography/font-size/label/default, weight: typography/font-weight/body, lineHeight: typography/line-height/label/default, letterSpacing: typography/letter-spacing/default)",
+    "line-edit/size/sm/container/padding-inline": "8",
+    "var(--component-basic-input-size-sm-height)": "32",
+    "var(--component-basic-input-radius)": "4",
+    "var(--component-basic-input-state-default-background)": "#ffffff",
+    "var(--component-basic-input-state-default-border)": "#a7a7a7",
+    "var(--component-basic-input-state-hover-border)": "#191919",
+    "var(--component-basic-input-state-focus-border)": "#6235f7",
+    "var(--component-basic-input-state-focus-outline)": "#f3efff",
+    "var(--component-basic-input-state-default-text)": "#191919",
+    "typography/font-size/data/numeric": "14",
+    "typography/line-height/data/numeric": "14",
+    "typography/font-weight/subemphasis": "500",
+    "DSM/Data/Numeric": "Font(family: \"Inter\", style: Medium, size: typography/font-size/data/numeric, weight: typography/font-weight/subemphasis, lineHeight: typography/line-height/data/numeric, letterSpacing: typography/letter-spacing/default)",
+    "var(--component-basic-input-state-error-background)": "#fbe4e5",
+    "var(--component-basic-input-state-error-border)": "#e02128",
+    "var(--component-basic-input-state-disabled-text)": "#8a8a8a",
+    "var(--component-basic-input-state-disabled-background)": "#f3f3f3",
+    "var(--component-basic-input-state-disabled-border)": "#d0d0d0",
+    "line-edit/size/md/container/padding-inline": "12",
+    "var(--component-basic-input-size-md-height)": "32",
+    "line-edit/size/lg/container/padding-inline": "16",
+    "var(--component-basic-input-size-lg-height)": "40"
+  },
+  "boundary": "Standalone native QLineEdit/Z_LineEdit, not Z_InputField. Error is a presentation adapter override, not a native validation result or normalized public property. Filled is content occupancy. Native editing, validation, IME, undo, selection, context menu, clearButtonEnabled and addAction remain Qt-owned. Optional native action spacing and hit area are Qt runtime geometry, separate from hidden Figma 14px slots; original icon roots remain 16px. No component API or approval promotion."
+}

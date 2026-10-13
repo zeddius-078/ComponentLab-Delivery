@@ -8,10 +8,18 @@
 #include <QJsonDocument>
 #include <QPainter>
 #include <QResizeEvent>
+#include <QSvgRenderer>
 #include <QtMath>
 #include <stdexcept>
 
 namespace field {
+const QJsonObject& inputVisuals() {
+    static const auto data = QJsonDocument::fromJson(
+        token_resources::read(":/figma/input-visuals.json")).object();
+    if (data["metrics"].toObject().isEmpty())
+        throw std::runtime_error("Captured Input design evidence missing");
+    return data;
+}
 QPixmap iconPixmap(const QIcon& icon, int logicalSize, qreal dpr, const QColor& color) {
     const int physical = qCeil(logicalSize * dpr);
     auto source = icon.pixmap(physical, physical);
@@ -125,6 +133,9 @@ Chrome::Chrome(std::shared_ptr<const Tokens> tokens, QWidget* parent)
     focus.watch(this);
 }
 int Chrome::controlHeight() const {
+    if (isFigmaInputAppearance())
+        return inputVisuals()["metrics"].toObject()["sizes"].toObject()[sizeName]
+            .toObject()["height"].toInt();
     const auto m = catalog->size(sizeName);
     int actionHeight = 0;
     for (auto* action : findChildren<Action*>())
@@ -165,7 +176,23 @@ void Chrome::setAppearance(const QString& value) {
     appearance = value;
     refresh();
 }
+void Chrome::setFigmaInputAppearance(bool on) {
+    figmaInput = on;
+    setControlHeight(controlHeight());
+    refresh();
+}
+bool Chrome::isFigmaInputAppearance() const {
+    return figmaInput && variant == "outlined" && status != "warning";
+}
+void Chrome::setSnapshotState(const QString& value) {
+    if (!QStringList{"", "Default", "Hover", "Focus", "Filled", "Error", "Disabled"}.contains(value))
+        throw std::invalid_argument("Unknown Input snapshot state");
+    snapshotState = value.toLower();
+    refresh();
+}
 QString Chrome::visualState() const {
+    if (isFigmaInputAppearance() && isEnabled() && !snapshotState.isEmpty())
+        return snapshotState == "filled" ? "default" : snapshotState;
     return !isEnabled()        ? "disabled"
            : !status.isEmpty() ? status
            : commonWidget::FocusIndicator::instance().visibleFor(this) ? "focus"
@@ -173,6 +200,27 @@ QString Chrome::visualState() const {
                                : "default";
 }
 void Chrome::refresh() {
+    const bool captured = isFigmaInputAppearance();
+    setProperty("figmaInputAppearance", captured);
+    setProperty("figmaInputCompatibilityFallback", figmaInput && !captured);
+    if (captured) {
+        setProperty("fieldState", visualState());
+        setProperty("fieldVariant", variant);
+        setProperty("fieldSize", sizeName);
+        setProperty("surfacePreset", "figma-light");
+        setStyleSheet("QFrame[fieldPart=\"CONTROL\"] {border:0;background:transparent;padding:0;}");
+        inset->hide();
+        surface::Recipe r;
+        r.radius = inputVisuals()["metrics"].toObject()["radius"].toDouble();
+        if (visualState() == "focus")
+            r.shadows = QJsonArray{QJsonObject{{"kind","outer"},{"x",0},{"y",0},{"blur",0},{"spread",2},
+                {"color",inputVisuals()["colors"].toObject()["focusOutline"]}}};
+        shadow->setRecipe(r);
+        update();
+        emit visualChanged();
+        return;
+    }
+    inset->show();
     // The optional focus stroke is drawn once in paintEvent; keep the base border underneath.
     const auto state = visualState();
     auto r = catalog->recipe(appearance, variant, state == "focus" ? "default" : state);
@@ -209,6 +257,20 @@ void Chrome::resizeEvent(QResizeEvent* e) {
     inset->setGeometry(rect());
 }
 void Chrome::paintEvent(QPaintEvent* e) {
+    if (isFigmaInputAppearance()) {
+        const auto colors = inputVisuals()["colors"].toObject();
+        const auto state = visualState();
+        const QString background = state == "disabled" ? "disabledBackground" :
+            state == "error" ? "errorBackground" : "background";
+        const QString border = state == "disabled" ? "disabledBorder" : state == "error" ? "errorBorder" :
+            state == "focus" ? "focusBorder" : state == "hover" ? "hoverBorder" : "border";
+        QPainter painter(this);
+        painter.setRenderHint(QPainter::Antialiasing);
+        painter.setBrush(QColor(colors[background].toString()));
+        painter.setPen(QPen(QColor(colors[border].toString()), 1));
+        painter.drawRoundedRect(QRectF(rect()).adjusted(.5,.5,-.5,-.5), 3.5, 3.5);
+        return;
+    }
     QFrame::paintEvent(e);
     if (commonWidget::FocusIndicator::instance().visibleFor(this)) {
         QPainter p(this);
@@ -239,5 +301,32 @@ void Action::setBusy(bool on) {
 }
 void Action::setIconSource(const QString& source) {
     setLeadingIconSource(source);
+}
+void Action::setFigmaGlyph(const QString& glyph) {
+    if (!glyph.isEmpty() && !QSvgRenderer(":/figma/input/" + glyph + ".svg").isValid())
+        throw std::invalid_argument("Unknown captured Input action glyph");
+    if (figmaGlyph == glyph)
+        return;
+    figmaGlyph = glyph;
+    setProperty("figmaInputGlyph", glyph);
+    if (!glyph.isEmpty()) {
+        setFixedSize(32, 32);
+        setProperty("figmaAssetBounds", QRect(9,9,16,16));
+    } else {
+        setMinimumSize(0,0);
+        setMaximumSize(QWIDGETSIZE_MAX,QWIDGETSIZE_MAX);
+    }
+    updateGeometry();
+    update();
+}
+void Action::paintEvent(QPaintEvent* e) {
+    if (figmaGlyph.isEmpty()) {
+        commonWidget::Z_PushButton::paintEvent(e);
+        return;
+    }
+    QPainter painter(this);
+    painter.setRenderHint(QPainter::Antialiasing);
+    QSvgRenderer svg(":/figma/input/" + figmaGlyph + ".svg");
+    svg.render(&painter, QRectF(9,9,16,16));
 }
 } // namespace field

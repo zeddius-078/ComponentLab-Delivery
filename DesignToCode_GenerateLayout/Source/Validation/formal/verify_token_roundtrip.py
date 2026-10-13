@@ -29,7 +29,8 @@ def main():
     report.mkdir(parents=True, exist_ok=True)
     source = args.component_root / 'Source/ComponentKit/design-assets'
     original = hashes(source)
-    tool_dir = args.component_root / 'build/cache/GeneratedComponentSDK'
+    # Token compilers run from the publisher's disposable build cache; this directory is not an SDK output.
+    compiler_build_dir = args.component_root / 'build/cache/GeneratedComponentSDK'
     env = dict(os.environ, QT_QPA_PLATFORM='offscreen')
     result = {'status': 'RUNNING', 'scope': 'Primitive -> Alias/Profile -> SDK generated artifacts -> page button pixel',
               'sourceToken': '--color/highlight/purple-100', 'phases': {}}
@@ -61,7 +62,7 @@ def main():
                     token_file.write_bytes(baseline_bytes)
                 run([sys.executable, '-B', source / 'tools/export_tokens.py', '--root', root], phase + '-resolve')
                 for family in ['button', 'checkbox', 'forms']:
-                    run([tool_dir / f'd2c_{family}_token_compiler.exe', root, root / 'generated' / family], phase + '-' + family)
+                    run([compiler_build_dir / f'd2c_{family}_token_compiler.exe', root, root / 'generated' / family], phase + '-' + family)
                 manifest = json.loads((root / 'generated/button/manifest.json').read_bytes())
                 profile = next(p for p in manifest['profiles'] if p['profile'] == 'light-compact')
                 observed = json.loads(run([args.probe, root / 'generated', report / (phase + '.png')], phase + '-probe'))

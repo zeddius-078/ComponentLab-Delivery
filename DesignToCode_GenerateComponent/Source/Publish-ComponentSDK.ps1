@@ -102,6 +102,29 @@ Get-ChildItem -LiteralPath "$kit/design-assets/generated" -Force |
 Copy-Item -LiteralPath "$sourceRoot/Qt/MappingWorkbench/mapping/qt-component-map.json" -Destination "$sdk/resources/mappings/qt-component-map.json"
 Copy-Item -LiteralPath "$sourceRoot/Qt/MappingWorkbench/mapping/qt-native-catalog.json" -Destination "$sdk/resources/mappings/qt-native-catalog.json"
 Copy-Item -LiteralPath "$kit/component-definitions/generated-component-source-map.json" -Destination "$sdk/resources/mappings/component-source-map.json"
+Copy-Item -LiteralPath "$kit/component-definitions/generated-design-component-catalog.json" -Destination "$sdk/resources/mappings/design-component-catalog.json"
+Copy-Item -LiteralPath "$kit/component-definitions/figma-gallery-layouts.json" -Destination "$sdk/resources/mappings/figma-gallery-layouts.json"
+Copy-Item -LiteralPath "$kit/component-definitions/figma-checkbox-gallery.json" -Destination "$sdk/resources/mappings/figma-checkbox-gallery.json"
+Copy-Item -LiteralPath "$kit/component-definitions/figma-button-visuals.json" -Destination "$sdk/resources/mappings/figma-button-visuals.json"
+Copy-Item -LiteralPath "$kit/component-definitions/figma-progress-visuals.json" -Destination "$sdk/resources/mappings/figma-progress-visuals.json"
+Copy-Item -LiteralPath "$kit/component-definitions/figma-radio-visuals.json" -Destination "$sdk/resources/mappings/figma-radio-visuals.json"
+Copy-Item -LiteralPath "$kit/component-definitions/figma-input-visuals.json" -Destination "$sdk/resources/mappings/figma-input-visuals.json"
+Copy-Item -LiteralPath "$kit/component-definitions/figma-spinbox-visuals.json" -Destination "$sdk/resources/mappings/figma-spinbox-visuals.json"
+Copy-Item -LiteralPath "$kit/component-definitions/figma-datetime-visuals.json" -Destination "$sdk/resources/mappings/figma-datetime-visuals.json"
+Copy-Item -LiteralPath "$kit/component-definitions/figma-slider-visuals.json" -Destination "$sdk/resources/mappings/figma-slider-visuals.json"
+Copy-Item -LiteralPath "$kit/component-definitions/figma-scrollbar-visuals.json" -Destination "$sdk/resources/mappings/figma-scrollbar-visuals.json"
+Copy-Item -LiteralPath "$kit/component-definitions/figma-dial-visuals.json" -Destination "$sdk/resources/mappings/figma-dial-visuals.json"
+Copy-Item -LiteralPath "$kit/component-definitions/figma-lineedit-visuals.json" -Destination "$sdk/resources/mappings/figma-lineedit-visuals.json"
+Copy-Item -LiteralPath "$kit/component-definitions/figma-shortcut-visuals.json" -Destination "$sdk/resources/mappings/figma-shortcut-visuals.json"
+Copy-Item -LiteralPath "$kit/component-definitions/figma-combo-visuals.json" -Destination "$sdk/resources/mappings/figma-combo-visuals.json"
+Copy-Item -LiteralPath "$kit/component-definitions/figma-commandlink-visuals.json" -Destination "$sdk/resources/mappings/figma-commandlink-visuals.json"
+Copy-Item -LiteralPath "$kit/component-definitions/figma-toolbutton-visuals.json" -Destination "$sdk/resources/mappings/figma-toolbutton-visuals.json"
+Copy-Item -LiteralPath "$kit/component-definitions/figma-dialogactions-visuals.json" -Destination "$sdk/resources/mappings/figma-dialogactions-visuals.json"
+Copy-Item -LiteralPath "$kit/component-definitions/figma-tabs-visuals.json" -Destination "$sdk/resources/mappings/figma-tabs-visuals.json"
+Copy-Item -LiteralPath "$kit/component-definitions/figma-toolbox-visuals.json" -Destination "$sdk/resources/mappings/figma-toolbox-visuals.json"
+Copy-Item -LiteralPath "$kit/component-definitions/figma-dockwidget-visuals.json" -Destination "$sdk/resources/mappings/figma-dockwidget-visuals.json"
+Copy-Item -LiteralPath "$kit/component-definitions/figma-mdi-visuals.json" -Destination "$sdk/resources/mappings/figma-mdi-visuals.json"
+Copy-Item -LiteralPath "$kit/component-definitions/figma-pageflow-visuals.json" -Destination "$sdk/resources/mappings/figma-pageflow-visuals.json"
 Copy-Item -LiteralPath "$kit/design-assets/tokens/figma-mapping.json" -Destination "$sdk/resources/mappings/design-component-map.json"
 $files = Get-ChildItem -LiteralPath $sdk -File -Recurse | Where-Object { $_.Name -ne 'component-sdk.json' }
 $manifest = [ordered]@{
@@ -116,6 +139,7 @@ $manifest = [ordered]@{
     componentMap = 'resources/mappings/qt-component-map.json'
     nativeCapabilityCatalog = 'resources/mappings/qt-native-catalog.json'
     componentSourceMap = 'resources/mappings/component-source-map.json'
+    designComponentCatalog = 'resources/mappings/design-component-catalog.json'
     designMap = 'resources/mappings/design-component-map.json'
     profiles = @('light-comfortable','light-compact','dark-comfortable','dark-compact')
     files = @($files | ForEach-Object {

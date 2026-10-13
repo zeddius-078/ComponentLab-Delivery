@@ -9,6 +9,7 @@
 #include <QVBoxLayout>
 #include <QTimer>
 #include <QDir>
+#include <QTreeWidget>
 #include <stdexcept>
 
 int main(int argc, char **argv) {
@@ -19,7 +20,8 @@ int main(int argc, char **argv) {
     parser.addOption({"token-dir", "Private generated Token directory", "path"});
     parser.addOption({"mapping-input", "Normalized UI Contract JSON", "path"});
     parser.addOption({"mapping-export", "Export into a new child directory", "parent"});
-    parser.addOption({"capture-dir", "Capture the three component mapping tabs", "path"});
+    parser.addOption({"capture-dir", "Capture the four component mapping tabs", "path"});
+    parser.addOption({"capture-page", "Select a Figma component page in catalog captures", "node-id"});
     parser.addOption({"quit-after", "Exit after milliseconds", "ms"});
     parser.process(application);
     try {
@@ -42,16 +44,19 @@ int main(int argc, char **argv) {
         auto *guide = new QWidget(&window);
         auto *flow = new QWidget(&window);
         auto *files = new QWidget(&window);
-        // 三个视图仅属于设计转换演示；组件状态演示留在独立的 ComponentLab。
-        for (auto *page : {guide, flow, files})
+        auto *catalog = new QWidget(&window);
+        // 四个视图仅属于设计转换演示；组件状态演示留在独立的 ComponentLab。
+        for (auto *page : {guide, catalog, flow, files})
             new QVBoxLayout(page);
         window.addTab(guide, QStringLiteral("方案与设计源"));
+        window.addTab(catalog, QStringLiteral("Figma 组件目录"));
         window.addTab(flow, QStringLiteral("流程与预览"));
         window.addTab(files, QStringLiteral("契约与产物"));
         design_mapping::populateGuide(guide);
+        design_mapping::populateCatalog(catalog);
         new design_mapping::MappingPage(profile, flow, files, &window);
         window.show();
-        // 截图与定时退出只供组件映射验证，逐页覆盖三个工作台视图。
+        // 截图与定时退出只供组件映射验证，逐页覆盖四个工作台视图。
         if (parser.isSet("capture-dir")) {
             QTimer::singleShot(800, &window, [&] {
                 QDir directory(parser.value("capture-dir"));
@@ -62,6 +67,15 @@ int main(int argc, char **argv) {
                 // 逐页触发布局和重绘，保存实际窗口画面。
                 for (int index = 0; index < window.count(); ++index) {
                     window.setCurrentIndex(index);
+                    if(index==1 && parser.isSet("capture-page")) {
+                        auto* tree=catalog->findChild<QTreeWidget*>("figmaComponentTree");
+                        bool found=false;
+                        for(QTreeWidgetItemIterator it(tree);*it;++it)
+                            if((*it)->data(0,Qt::UserRole).toString()==parser.value("capture-page")) {
+                                tree->setCurrentItem(*it);found=true;break;
+                            }
+                        if(!found){qCritical("Unknown Figma capture page");application.exit(2);return;}
+                    }
                     application.processEvents();
                     if (!window.grab().save(directory.filePath(QString("tab-%1.png").arg(index))))
                         application.exit(2);

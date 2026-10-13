@@ -1,19 +1,19 @@
 /* Z_TimeEdit <- QTimeEdit; compiled from the active Token profile. */
-*[designSystemClass="commonWidget::Z_TimeEdit"] {
+*[designSystemClass="commonWidget::Z_TimeEdit"][designSystemStyleOwner="tokens"] {
     color: #191919;
     background-color: #ffffff;
     font-size: 14px;
 }
-*[designSystemClass="commonWidget::Z_TimeEdit"]:disabled {
+*[designSystemClass="commonWidget::Z_TimeEdit"][designSystemStyleOwner="tokens"]:disabled {
     color: #8a8a8a;
     background-color: #f3f3f3;
     border-color: #d0d0d0;
 }
-*[designSystemClass="commonWidget::Z_TimeEdit"] {
+*[designSystemClass="commonWidget::Z_TimeEdit"][designSystemStyleOwner="tokens"] {
     min-height: 32px;
     border: 1px solid #a7a7a7;
     border-radius: 4px;
     padding-left: 8px;
     padding-right: 8px;
 }
-*[designSystemClass="commonWidget::Z_TimeEdit"]:focus { border-color: #6235f7; }
+*[designSystemClass="commonWidget::Z_TimeEdit"][designSystemStyleOwner="tokens"]:focus[focusIndicatorVisible="true"] { border-color: #6235f7; }

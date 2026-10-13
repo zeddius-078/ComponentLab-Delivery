@@ -1,5 +1,6 @@
 #include "FocusIndicator.h"
 #include <QApplication>
+#include <QDynamicPropertyChangeEvent>
 #include <QFocusEvent>
 #include <QKeyEvent>
 #include <QPointer>
@@ -58,13 +59,31 @@ QColor FocusIndicator::color(QColor source) const {
     source.setAlphaF(source.alphaF() * alpha);
     return source;
 }
+bool FocusIndicator::enabledFor(const QWidget* widget) const {
+    for (auto* current = widget; current; current = current->parentWidget()) {
+        const QVariant value = current->property("focusIndicatorEnabled");
+        if (value.isValid())
+            return value.toBool();
+    }
+    return true;
+}
+void FocusIndicator::setEnabledFor(QWidget* widget, bool enabled) {
+    if (!widget)
+        return;
+    if (widget->property("focusIndicatorEnabled") == QVariant(enabled))
+        return;
+    widget->setProperty("focusIndicatorEnabled", enabled);
+}
 bool FocusIndicator::visibleFor(const QWidget* widget) const {
     auto* target = QApplication::focusWidget();
-    return widget && widget->isEnabled() && target &&
+    return widget && enabledFor(widget) && widget->isEnabled() && target &&
            (target == widget || widget->isAncestorOf(target)) &&
            (currentMode == Mode::Always || (currentMode == Mode::Keyboard && keyboard));
 }
 void FocusIndicator::watch(QWidget* widget) {
+    if (!widget || widget->property("_focusIndicatorWatched").toBool())
+        return;
+    widget->setProperty("_focusIndicatorWatched", true);
     auto refresh = [this, widget] {
         const bool visible = visibleFor(widget);
         if (widget->property("focusIndicatorVisible") != QVariant(visible)) {
@@ -94,6 +113,11 @@ bool FocusIndicator::eventFilter(QObject*, QEvent* event) {
             next = true;
         else if (reason == Qt::MouseFocusReason)
             next = false;
+    } else if (event->type() == QEvent::DynamicPropertyChange &&
+               static_cast<QDynamicPropertyChangeEvent*>(event)->propertyName() ==
+                   "focusIndicatorEnabled") {
+        // Support direct QWidget::setProperty usage in addition to setEnabledFor().
+        emit changed();
     }
     if (keyboard != next) {
         keyboard = next;

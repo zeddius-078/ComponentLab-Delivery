@@ -1,8 +1,10 @@
 #include "ComponentFactory.h"
 #include "ButtonAppearanceAdapter.h"
+#include "FocusIndicator.h"
 #include "native/NativeComponents.h"
 #include "native/NativeComponentRegistry.h"
 #include "Z_CheckBox.h"
+#include "Z_DesignComponents.h"
 #include "Z_InputField.h"
 #include "Z_OtpInput.h"
 #include "Z_PushButton.h"
@@ -23,6 +25,30 @@ QList<NativeComponentDescriptor> nativeDescriptors() {
         {QStringLiteral("semantic"), QStringLiteral("commonWidget::Z_InputField"), QStringLiteral("ComponentLab/Input"), QStringLiteral("semantic-component")},
         {QStringLiteral("semantic"), QStringLiteral("commonWidget::Z_Select"), QStringLiteral("ComponentLab/Select"), QStringLiteral("semantic-component")},
         {QStringLiteral("semantic"), QStringLiteral("commonWidget::Z_OtpInput"), QStringLiteral("ComponentLab/OTP"), QStringLiteral("semantic-component")},
+        {QStringLiteral("QWidget composition"), QStringLiteral("commonWidget::Z_Navbar"), QStringLiteral("ComponentLab/Navbar"), QStringLiteral("composite")},
+        {QStringLiteral("QWidget composition"), QStringLiteral("commonWidget::Z_Sidebar"), QStringLiteral("ComponentLab/Sidebar"), QStringLiteral("composite")},
+        {QStringLiteral("QWidget composition"), QStringLiteral("commonWidget::Z_DesktopBottomNavigation"), QStringLiteral("ComponentLab/DesktopBottomNavigation"), QStringLiteral("composite")},
+        {QStringLiteral("QWidget"), QStringLiteral("commonWidget::Z_MetricCard"), QStringLiteral("ComponentLab/MetricCard"), QStringLiteral("composite")},
+        {QStringLiteral("QWidget"), QStringLiteral("commonWidget::Z_Chart"), QStringLiteral("ComponentLab/Chart"), QStringLiteral("composite")},
+        {QStringLiteral("QWidget"), QStringLiteral("commonWidget::Z_ImagePanel"), QStringLiteral("ComponentLab/ImagePanel"), QStringLiteral("composite")},
+        {QStringLiteral("QWidget"), QStringLiteral("commonWidget::Z_Empty"), QStringLiteral("ComponentLab/Empty"), QStringLiteral("composite")},
+        {QStringLiteral("QWidget"), QStringLiteral("commonWidget::Z_Statistic"), QStringLiteral("ComponentLab/Statistic"), QStringLiteral("composite")},
+        {QStringLiteral("QGridLayout composition"), QStringLiteral("commonWidget::Z_Descriptions"), QStringLiteral("ComponentLab/Descriptions"), QStringLiteral("composite")},
+        {QStringLiteral("QFormLayout composition"), QStringLiteral("commonWidget::Z_Form"), QStringLiteral("ComponentLab/Form"), QStringLiteral("composite")},
+        {QStringLiteral("QAbstractButton"), QStringLiteral("commonWidget::Z_Switch"), QStringLiteral("ComponentLab/Switch"), QStringLiteral("design-system")},
+        {QStringLiteral("QAbstractButton"), QStringLiteral("commonWidget::Z_Chip"), QStringLiteral("ComponentLab/Chip"), QStringLiteral("design-system")},
+        {QStringLiteral("QWidget"), QStringLiteral("commonWidget::Z_Card"), QStringLiteral("ComponentLab/Card"), QStringLiteral("design-system")},
+        {QStringLiteral("QWidget"), QStringLiteral("commonWidget::Z_IntegrationCard"), QStringLiteral("ComponentLab/IntegrationCard"), QStringLiteral("composite")},
+        {QStringLiteral("QWidget"), QStringLiteral("commonWidget::Z_Divider"), QStringLiteral("ComponentLab/Divider"), QStringLiteral("composite")},
+        {QStringLiteral("QWidget"), QStringLiteral("commonWidget::Z_Collapse"), QStringLiteral("ComponentLab/Collapse"), QStringLiteral("composite")},
+        {QStringLiteral("QWidget"), QStringLiteral("commonWidget::Z_OverlayDrawer"), QStringLiteral("ComponentLab/OverlayDrawer"), QStringLiteral("composite")},
+        {QStringLiteral("QTableWidget"), QStringLiteral("commonWidget::Z_DataTable"), QStringLiteral("ComponentLab/DataTable"), QStringLiteral("design-system")},
+        {QStringLiteral("QWidget"), QStringLiteral("commonWidget::Z_Alert"), QStringLiteral("ComponentLab/Alert"), QStringLiteral("composite")},
+        {QStringLiteral("QWidget"), QStringLiteral("commonWidget::Z_Message"), QStringLiteral("ComponentLab/Message"), QStringLiteral("composite")},
+        {QStringLiteral("QWidget"), QStringLiteral("commonWidget::Z_Notification"), QStringLiteral("ComponentLab/Notification"), QStringLiteral("composite")},
+        {QStringLiteral("QWidget"), QStringLiteral("commonWidget::Z_Spin"), QStringLiteral("ComponentLab/Spin"), QStringLiteral("composite")},
+        {QStringLiteral("QWidget"), QStringLiteral("commonWidget::Z_Result"), QStringLiteral("ComponentLab/Result"), QStringLiteral("composite")},
+        {QStringLiteral("QWidget"), QStringLiteral("commonWidget::Z_Skeleton"), QStringLiteral("ComponentLab/Skeleton"), QStringLiteral("composite")},
     });
     return descriptors;
 }
@@ -85,6 +111,30 @@ QWidget* ComponentFactory::create(const QString& name, QWidget* parent) const {
     if (name == "commonWidget::Z_InputField") return new Z_InputField(fields, parent);
     if (name == "commonWidget::Z_Select") return new Z_Select(fields, parent);
     if (name == "commonWidget::Z_OtpInput") return new Z_OtpInput(fields, 6, parent);
+    if (name == "commonWidget::Z_Navbar") return new Z_Navbar(parent);
+    if (name == "commonWidget::Z_Sidebar") return new Z_Sidebar(parent);
+    if (name == "commonWidget::Z_DesktopBottomNavigation") return new Z_DesktopBottomNavigation(parent);
+    if (name == "commonWidget::Z_MetricCard") return new Z_MetricCard(parent);
+    if (name == "commonWidget::Z_Chart") return new Z_Chart(parent);
+    if (name == "commonWidget::Z_ImagePanel") return new Z_ImagePanel(parent);
+    if (name == "commonWidget::Z_Empty") return new Z_Empty(parent);
+    if (name == "commonWidget::Z_Statistic") return new Z_Statistic(parent);
+    if (name == "commonWidget::Z_Descriptions") return new Z_Descriptions(parent);
+    if (name == "commonWidget::Z_Form") return new Z_Form(parent);
+    if (name == "commonWidget::Z_Switch") return new Z_Switch(parent);
+    if (name == "commonWidget::Z_Chip") return new Z_Chip(parent);
+    if (name == "commonWidget::Z_Card") return new Z_Card(parent);
+    if (name == "commonWidget::Z_IntegrationCard") return new Z_IntegrationCard(parent);
+    if (name == "commonWidget::Z_Divider") return new Z_Divider(parent);
+    if (name == "commonWidget::Z_Collapse") return new Z_Collapse(parent);
+    if (name == "commonWidget::Z_OverlayDrawer") return new Z_OverlayDrawer(parent);
+    if (name == "commonWidget::Z_DataTable") return new Z_DataTable(parent);
+    if (name == "commonWidget::Z_Alert") return new Z_Alert(parent);
+    if (name == "commonWidget::Z_Message") return new Z_Message(parent);
+    if (name == "commonWidget::Z_Notification") return new Z_Notification(parent);
+    if (name == "commonWidget::Z_Spin") return new Z_Spin(parent);
+    if (name == "commonWidget::Z_Result") return new Z_Result(parent);
+    if (name == "commonWidget::Z_Skeleton") return new Z_Skeleton(parent);
     if (auto* component = createGeneratedNativeComponent(name, parent)) return component;
     throw std::runtime_error(("UNREGISTERED_COMPONENT_CLASS: " + name).toStdString());
 }
@@ -99,6 +149,10 @@ bool ComponentFactory::apply(QWidget* widget, const QString& api, const QJsonVal
     auto* button = qobject_cast<Z_PushButton*>(widget);
     auto* check = qobject_cast<Z_CheckBox*>(widget);
     auto* input = qobject_cast<Z_InputField*>(widget);
+    if (api == "setFocusIndicatorEnabled" || api == "setFocusRingEnabled") {
+        FocusIndicator::instance().setEnabledFor(widget, value.toBool());
+        return true;
+    }
     if (api == "setType" && button) {
         const QMap<QString, ButtonType> values{{"Primary", ButtonType::Primary}, {"Default", ButtonType::Default}, {"Dashed", ButtonType::Dashed}, {"Text", ButtonType::Text}, {"Link", ButtonType::Link}};
         if (values.contains(text)) { button->setType(values[text]); return true; }

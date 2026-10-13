@@ -1,0 +1,209 @@
+{
+  "schemaVersion": 1,
+  "fileKey": "w92BKW1EcutKmTXkwzNHbf",
+  "status": "CAPTURED_LIGHT_NOT_DESIGN_APPROVED",
+  "appearance": "figma-light",
+  "pageId": "467:2",
+  "galleryId": "467:42",
+  "setId": "467:195",
+  "variants": [
+    {
+      "id": "467:47",
+      "name": "Orientation=Horizontal, State=Default",
+      "bounds": [
+        24,
+        24,
+        280,
+        80
+      ]
+    },
+    {
+      "id": "467:65",
+      "name": "Orientation=Horizontal, State=Focus",
+      "bounds": [
+        316,
+        24,
+        280,
+        80
+      ]
+    },
+    {
+      "id": "467:84",
+      "name": "Orientation=Horizontal, State=Dragging",
+      "bounds": [
+        608,
+        24,
+        280,
+        80
+      ]
+    },
+    {
+      "id": "467:103",
+      "name": "Orientation=Horizontal, State=Disabled",
+      "bounds": [
+        900,
+        24,
+        280,
+        80
+      ]
+    },
+    {
+      "id": "467:121",
+      "name": "Orientation=Vertical, State=Default",
+      "bounds": [
+        24,
+        128,
+        100,
+        260
+      ]
+    },
+    {
+      "id": "467:139",
+      "name": "Orientation=Vertical, State=Focus",
+      "bounds": [
+        144,
+        128,
+        100,
+        260
+      ]
+    },
+    {
+      "id": "467:158",
+      "name": "Orientation=Vertical, State=Dragging",
+      "bounds": [
+        264,
+        128,
+        100,
+        260
+      ]
+    },
+    {
+      "id": "467:177",
+      "name": "Orientation=Vertical, State=Disabled",
+      "bounds": [
+        384,
+        128,
+        100,
+        260
+      ]
+    }
+  ],
+  "metrics": {
+    "horizontalRoot": [
+      280,
+      80
+    ],
+    "verticalRoot": [
+      100,
+      260
+    ],
+    "horizontalRail": [
+      10,
+      34,
+      260,
+      6
+    ],
+    "verticalRail": [
+      47,
+      30,
+      6,
+      200
+    ],
+    "horizontalActive": [
+      10,
+      34,
+      104,
+      6
+    ],
+    "verticalActive": [
+      47,
+      150,
+      6,
+      80
+    ],
+    "horizontalHandle": [
+      108,
+      28,
+      18,
+      18
+    ],
+    "verticalHandle": [
+      41,
+      144,
+      18,
+      18
+    ],
+    "horizontalRing": [
+      105,
+      25,
+      24,
+      24
+    ],
+    "verticalRing": [
+      38,
+      141,
+      24,
+      24
+    ],
+    "horizontalBubble": [
+      95,
+      0,
+      19,
+      24
+    ],
+    "verticalBubble": [
+      0,
+      141,
+      19,
+      24
+    ],
+    "draggingDiameter": 20,
+    "ticks": 11,
+    "font": {
+      "family": "Inter",
+      "style": "Medium",
+      "size": 14,
+      "lineHeight": 14
+    }
+  },
+  "assets": [
+    {
+      "resource": ":/figma/slider/Handle.svg",
+      "rootSize": [
+        18,
+        18
+      ]
+    },
+    {
+      "resource": ":/figma/slider/HandleDisabled.svg",
+      "rootSize": [
+        18,
+        18
+      ]
+    },
+    {
+      "resource": ":/figma/slider/HandleDragging.svg",
+      "rootSize": [
+        20,
+        20
+      ]
+    },
+    {
+      "resource": ":/figma/slider/FocusRing.svg",
+      "rootSize": [
+        24,
+        24
+      ]
+    }
+  ],
+  "boundaries": [
+    "The source label 40, active track and handle are independent authoring facts. Snapshot geometry preserves the 3px handle-center/track-end offset and non-centered 19px bubble; it never parses label text or infers native value from pixels.",
+    "Gallery controls are native Z_Slider instances with an explicit demo value fixture, NoFocus and transparent mouse events. Native interactivity is provided on Appearance, where geometry derives from QStyleOptionSlider and QSlider values.",
+    "snapshotState changes appearance only; it never sets sliderDown, focus, tracking or value. Actual pointer, wheel, keyboard, page steps, inversion, RTL and signals remain QSlider-owned.",
+    "Qt 5.15.2 disabling calls setSliderDown(false), which commits a pending sliderPosition even if the slider was not pressed. Preserve this native commit boundary; disabling is not cancellation.",
+    "Show value and Value label are explicit composition properties, not native QSlider setters. Null label follows sliderPosition; arbitrary labels remain independent text.",
+    "Native tickPosition/tickInterval remain authoritative outside the gallery snapshot. Dense ranges are thinned only by whole interval multiples to at most 2049 ticks per side; no value or range modification.",
+    "Live bubble bounds are clamped horizontally; vertical live labels are elided in a 33px slot to avoid obscuring the track. The inspector retains full label and native numeric values. Authored snapshots retain exact source bounds.",
+    "Captured Light is not four-theme parity, normalized export readiness, or designer approval."
+  ]
+}

@@ -16,6 +16,7 @@ GENERATED_STYLE_DIR = ROOT / "design-assets/generated/native"
 SOURCE_MAP = ROOT / "component-definitions/generated-component-source-map.json"
 BUTTON_MANIFEST = ROOT / "design-assets/generated/button/manifest.json"
 RUNTIME_TOKENS = ROOT / "design-assets/DesignSystem/generated/runtime/tokens_qt.json"
+CAPTURED_STYLE_CLASSES = {"QDateTimeEdit", "QDateEdit", "QTimeEdit", "QSlider", "QScrollBar", "QDial", "QLineEdit", "QKeySequenceEdit", "QComboBox", "QFontComboBox", "QCommandLinkButton", "QToolButton", "QDialogButtonBox", "QTabWidget", "QToolBox", "QDockWidget", "QMdiArea", "QMdiSubWindow"}
 
 
 def load_inputs():
@@ -65,7 +66,10 @@ class {item["sdkClass"]} : public {item["qtClass"]} {{
 
 
 def source_text(item):
+    style_owner = ('    setProperty("designSystemStyleOwner", "tokens");\n'
+                   if item["qtClass"] in CAPTURED_STYLE_CLASSES else "")
     return f'''#include "{item["sdkClass"]}.h"
+#include "FocusIndicator.h"
 #include <QVariant>
 
 namespace commonWidget {{
@@ -74,6 +78,7 @@ namespace commonWidget {{
     setProperty("designSystemNative", true);
     setProperty("designSystemClass", "commonWidget::{item["sdkClass"]}");
     setProperty("nativeQtClass", "{item["qtClass"]}");
+{style_owner}    FocusIndicator::instance().watch(this);
 }}
 
 }} // namespace commonWidget
@@ -133,6 +138,10 @@ QWidget* createGeneratedNativeComponent(const QString& sdkClass, QWidget* parent
 
 def qss_template(item):
     selector = f'*[designSystemClass="commonWidget::{item["sdkClass"]}"]'
+    # Captured native subcontrols own their geometry; global QSS must not
+    # replace calendar/slider hit rectangles with generic Token boxes.
+    if item["qtClass"] in CAPTURED_STYLE_CLASSES:
+        selector += '[designSystemStyleOwner="tokens"]'
     common = f'''/* {item["sdkClass"]} <- {item["qtClass"]}; compiled from the active Token profile. */
 {selector} {{
     color: @FOREGROUND@;
@@ -156,7 +165,7 @@ def qss_template(item):
     padding-left: 8px;
     padding-right: 8px;
 }}
-{selector}:focus {{ border-color: @FOCUS@; }}
+{selector}:focus[focusIndicatorVisible="true"] {{ border-color: @FOCUS@; }}
 '''
     elif item["category"] == "button":
         common += f'''{selector} {{

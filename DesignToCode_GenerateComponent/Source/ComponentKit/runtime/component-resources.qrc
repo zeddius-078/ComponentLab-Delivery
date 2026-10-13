@@ -1,5 +1,208 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RCC>
+    <qresource prefix="/figma/mdi">
+        <file alias="Minus.svg">assets/icons/figma-mdi/Minus.svg</file>
+        <file alias="Maximize.svg">assets/icons/figma-mdi/Maximize.svg</file>
+        <file alias="Restore.svg">assets/icons/figma-mdi/Restore.svg</file>
+        <file alias="Close.svg">assets/icons/figma-mdi/Close.svg</file>
+        <file alias="MinusDisabled.svg">assets/icons/figma-mdi/MinusDisabled.svg</file>
+        <file alias="MaximizeDisabled.svg">assets/icons/figma-mdi/MaximizeDisabled.svg</file>
+        <file alias="CloseDisabled.svg">assets/icons/figma-mdi/CloseDisabled.svg</file>
+    </qresource>
+    <qresource prefix="/figma">
+        <file alias="mdi-visuals.json">../component-definitions/figma-mdi-visuals.json</file>
+    </qresource>
+    <qresource prefix="/figma/dockwidget">
+        <file alias="Close.svg">assets/icons/figma-dockwidget/Close.svg</file>
+        <file alias="Undock.svg">assets/icons/figma-dockwidget/Undock.svg</file>
+    </qresource>
+    <qresource prefix="/figma">
+        <file alias="dockwidget-visuals.json">../component-definitions/figma-dockwidget-visuals.json</file>
+    </qresource>
+    <qresource prefix="/figma/toolbox">
+        <file alias="ChevronRight.svg">assets/icons/figma-toolbox/ChevronRight.svg</file>
+        <file alias="ChevronDown.svg">assets/icons/figma-toolbox/ChevronDown.svg</file>
+        <file alias="ChevronDisabled.svg">assets/icons/figma-toolbox/ChevronDisabled.svg</file>
+        <file alias="SettingsComposition.svg">assets/icons/figma-toolbox/SettingsComposition.svg</file>
+        <file alias="SettingsPrimary.svg">assets/icons/figma-toolbox/SettingsPrimary.svg</file>
+        <file alias="SettingsDisabled.svg">assets/icons/figma-toolbox/SettingsDisabled.svg</file>
+    </qresource>
+    <qresource prefix="/figma">
+        <file alias="toolbox-visuals.json">../component-definitions/figma-toolbox-visuals.json</file>
+    </qresource>
+    <qresource prefix="/figma/tabs">
+        <file alias="ChevronLeft.svg">assets/icons/figma-tabs/ChevronLeft.svg</file>
+        <file alias="ChevronRight.svg">assets/icons/figma-tabs/ChevronRight.svg</file>
+        <file alias="ClosePrimary.svg">assets/icons/figma-tabs/ClosePrimary.svg</file>
+        <file alias="CloseDisabled.svg">assets/icons/figma-tabs/CloseDisabled.svg</file>
+        <file alias="DocumentPrimary.svg">assets/icons/figma-tabs/DocumentPrimary.svg</file>
+        <file alias="DocumentAccent.svg">assets/icons/figma-tabs/DocumentAccent.svg</file>
+        <file alias="DocumentDisabled.svg">assets/icons/figma-tabs/DocumentDisabled.svg</file>
+        <file alias="DocumentCompositionPrimary.svg">assets/icons/figma-tabs/DocumentCompositionPrimary.svg</file>
+        <file alias="DocumentCompositionAccent.svg">assets/icons/figma-tabs/DocumentCompositionAccent.svg</file>
+    </qresource>
+    <qresource prefix="/figma">
+        <file alias="tabs-visuals.json">../component-definitions/figma-tabs-visuals.json</file>
+    </qresource>
+    <qresource prefix="/figma/toolbutton">
+        <file alias="ActionPrimary.svg">assets/icons/figma-toolbutton/ActionPrimary.svg</file>
+        <file alias="ActionDisabled.svg">assets/icons/figma-toolbutton/ActionDisabled.svg</file>
+        <file alias="ActionAccent.svg">assets/icons/figma-toolbutton/ActionAccent.svg</file>
+    </qresource>
+    <qresource prefix="/figma">
+        <file alias="toolbutton-visuals.json">../component-definitions/figma-toolbutton-visuals.json</file>
+        <file alias="dialogactions-visuals.json">../component-definitions/figma-dialogactions-visuals.json</file>
+    </qresource>
+    <qresource prefix="/figma/commandlink">
+        <file alias="ArrowPrimary.svg">assets/icons/figma-commandlink/ArrowPrimary.svg</file>
+        <file alias="ArrowDisabled.svg">assets/icons/figma-commandlink/ArrowDisabled.svg</file>
+        <file alias="ArrowAccent.svg">assets/icons/figma-commandlink/ArrowAccent.svg</file>
+    </qresource>
+    <qresource prefix="/figma">
+        <file alias="commandlink-visuals.json">../component-definitions/figma-commandlink-visuals.json</file>
+    </qresource>
+    <qresource prefix="/figma/combo">
+        <file alias="ChevronDown.svg">assets/icons/figma-combo/ChevronDown.svg</file>
+        <file alias="Prefix.svg">assets/icons/figma-combo/Prefix.svg</file>
+        <file alias="Clear.svg">assets/icons/figma-combo/Clear.svg</file>
+    </qresource>
+    <qresource prefix="/figma">
+        <file alias="combo-visuals.json">../component-definitions/figma-combo-visuals.json</file>
+    </qresource>
+    <qresource prefix="/figma/shortcut">
+        <file alias="ClosePrimary.svg">assets/icons/figma-shortcut/ClosePrimary.svg</file>
+        <file alias="CloseDisabled.svg">assets/icons/figma-shortcut/CloseDisabled.svg</file>
+        <file alias="RecordingIndicator.svg">assets/icons/figma-shortcut/RecordingIndicator.svg</file>
+    </qresource>
+    <qresource prefix="/figma">
+        <file alias="shortcut-visuals.json">../component-definitions/figma-shortcut-visuals.json</file>
+    </qresource>
+    <qresource prefix="/figma/fonts">
+        <file alias="NotoSansSC-Bold.otf">assets/fonts/NotoSansSC/NotoSansSC-Bold.otf</file>
+        <file alias="NotoSansSC-Regular.otf">assets/fonts/NotoSansSC/NotoSansSC-Regular.otf</file>
+        <file alias="Inter-Regular.otf">assets/fonts/Inter/Inter-Regular.otf</file>
+        <file alias="Inter-Medium.otf">assets/fonts/Inter/Inter-Medium.otf</file>
+        <file alias="Inter-SemiBold.otf">assets/fonts/Inter/Inter-SemiBold.otf</file>
+        <file alias="LICENSE.txt">assets/fonts/Inter/LICENSE.txt</file>
+    </qresource>
+    <qresource prefix="/figma">
+        <file alias="lineedit/Prefix.svg">assets/icons/figma-lineedit/Prefix.svg</file>
+        <file alias="lineedit/Clear.svg">assets/icons/figma-lineedit/Clear.svg</file>
+        <file alias="lineedit/Suffix.svg">assets/icons/figma-lineedit/Suffix.svg</file>
+        <file alias="lineedit-visuals.json">../component-definitions/figma-lineedit-visuals.json</file>
+        <file alias="dial/RangeOff.svg">assets/icons/figma-dial/RangeOff.svg</file>
+        <file alias="dial/ActiveOff.svg">assets/icons/figma-dial/ActiveOff.svg</file>
+        <file alias="dial/PointerOff.svg">assets/icons/figma-dial/PointerOff.svg</file>
+        <file alias="dial/Hub.svg">assets/icons/figma-dial/Hub.svg</file>
+        <file alias="dial/FocusRing.svg">assets/icons/figma-dial/FocusRing.svg</file>
+        <file alias="dial/PointerOffDragging.svg">assets/icons/figma-dial/PointerOffDragging.svg</file>
+        <file alias="dial/HubDragging.svg">assets/icons/figma-dial/HubDragging.svg</file>
+        <file alias="dial/RangeOffDisabled.svg">assets/icons/figma-dial/RangeOffDisabled.svg</file>
+        <file alias="dial/ActiveOffDisabled.svg">assets/icons/figma-dial/ActiveOffDisabled.svg</file>
+        <file alias="dial/PointerOffDisabled.svg">assets/icons/figma-dial/PointerOffDisabled.svg</file>
+        <file alias="dial/HubDisabled.svg">assets/icons/figma-dial/HubDisabled.svg</file>
+        <file alias="dial/RangeOn.svg">assets/icons/figma-dial/RangeOn.svg</file>
+        <file alias="dial/ActiveOn.svg">assets/icons/figma-dial/ActiveOn.svg</file>
+        <file alias="dial/PointerOn.svg">assets/icons/figma-dial/PointerOn.svg</file>
+        <file alias="dial/PointerOnDragging.svg">assets/icons/figma-dial/PointerOnDragging.svg</file>
+        <file alias="dial/RangeOnDisabled.svg">assets/icons/figma-dial/RangeOnDisabled.svg</file>
+        <file alias="dial/ActiveOnDisabled.svg">assets/icons/figma-dial/ActiveOnDisabled.svg</file>
+        <file alias="dial/PointerOnDisabled.svg">assets/icons/figma-dial/PointerOnDisabled.svg</file>
+        <file alias="dial-visuals.json">../component-definitions/figma-dial-visuals.json</file>
+        <file alias="scrollbar/LeftPrimary.svg">assets/icons/figma-scrollbar/LeftPrimary.svg</file>
+        <file alias="scrollbar/LeftDisabled.svg">assets/icons/figma-scrollbar/LeftDisabled.svg</file>
+        <file alias="scrollbar/RightPrimary.svg">assets/icons/figma-scrollbar/RightPrimary.svg</file>
+        <file alias="scrollbar/RightDisabled.svg">assets/icons/figma-scrollbar/RightDisabled.svg</file>
+        <file alias="scrollbar/UpPrimary.svg">assets/icons/figma-scrollbar/UpPrimary.svg</file>
+        <file alias="scrollbar/UpDisabled.svg">assets/icons/figma-scrollbar/UpDisabled.svg</file>
+        <file alias="scrollbar/DownPrimary.svg">assets/icons/figma-scrollbar/DownPrimary.svg</file>
+        <file alias="scrollbar/DownDisabled.svg">assets/icons/figma-scrollbar/DownDisabled.svg</file>
+        <file alias="slider/Handle.svg">assets/icons/figma-slider/Handle.svg</file>
+        <file alias="slider/HandleDragging.svg">assets/icons/figma-slider/HandleDragging.svg</file>
+        <file alias="slider/HandleDisabled.svg">assets/icons/figma-slider/HandleDisabled.svg</file>
+        <file alias="slider/FocusRing.svg">assets/icons/figma-slider/FocusRing.svg</file>
+        <file alias="datetime/CalendarPrimary.svg">assets/icons/figma-datetime/CalendarPrimary.svg</file>
+        <file alias="datetime/CalendarDisabled.svg">assets/icons/figma-datetime/CalendarDisabled.svg</file>
+        <file alias="spinbox-visuals.json">../component-definitions/figma-spinbox-visuals.json</file>
+        <file alias="datetime-visuals.json">../component-definitions/figma-datetime-visuals.json</file>
+        <file alias="slider-visuals.json">../component-definitions/figma-slider-visuals.json</file>
+        <file alias="scrollbar-visuals.json">../component-definitions/figma-scrollbar-visuals.json</file>
+        <file alias="spinbox/PlusPrimary.svg">assets/icons/figma-spinbox/PlusPrimary.svg</file>
+        <file alias="spinbox/PlusDisabled.svg">assets/icons/figma-spinbox/PlusDisabled.svg</file>
+        <file alias="spinbox/MinusPrimary.svg">assets/icons/figma-spinbox/MinusPrimary.svg</file>
+        <file alias="spinbox/MinusDisabled.svg">assets/icons/figma-spinbox/MinusDisabled.svg</file>
+        <file alias="spinbox/UpPrimary.svg">assets/icons/figma-spinbox/UpPrimary.svg</file>
+        <file alias="spinbox/UpDisabled.svg">assets/icons/figma-spinbox/UpDisabled.svg</file>
+        <file alias="spinbox/DownPrimary.svg">assets/icons/figma-spinbox/DownPrimary.svg</file>
+        <file alias="spinbox/DownDisabled.svg">assets/icons/figma-spinbox/DownDisabled.svg</file>
+        <file alias="button-visuals.json">../component-definitions/figma-button-visuals.json</file>
+        <file alias="progress-visuals.json">../component-definitions/figma-progress-visuals.json</file>
+        <file alias="radio-visuals.json">../component-definitions/figma-radio-visuals.json</file>
+        <file alias="input-visuals.json">../component-definitions/figma-input-visuals.json</file>
+        <file alias="input/EyeOffPrimary.svg">assets/icons/figma-input/EyeOffPrimary.svg</file>
+        <file alias="input/EyeOffAccent.svg">assets/icons/figma-input/EyeOffAccent.svg</file>
+        <file alias="input/EyeOffDisabled.svg">assets/icons/figma-input/EyeOffDisabled.svg</file>
+        <file alias="input/EyeOffDanger.svg">assets/icons/figma-input/EyeOffDanger.svg</file>
+        <file alias="input/EyePrimary.svg">assets/icons/figma-input/EyePrimary.svg</file>
+        <file alias="input/EyeAccent.svg">assets/icons/figma-input/EyeAccent.svg</file>
+        <file alias="input/EyeDisabled.svg">assets/icons/figma-input/EyeDisabled.svg</file>
+        <file alias="input/EyeDanger.svg">assets/icons/figma-input/EyeDanger.svg</file>
+        <file alias="input/LoadingPrimary.svg">assets/icons/figma-input/LoadingPrimary.svg</file>
+        <file alias="input/SearchPrimary.svg">assets/icons/figma-input/SearchPrimary.svg</file>
+        <file alias="input/SearchDisabled.svg">assets/icons/figma-input/SearchDisabled.svg</file>
+        <file alias="input/ClosePrimary.svg">assets/icons/figma-input/ClosePrimary.svg</file>
+        <file alias="radio/unselected-default.svg">assets/icons/figma-radio/unselected-default.svg</file>
+        <file alias="radio/unselected-hover.svg">assets/icons/figma-radio/unselected-hover.svg</file>
+        <file alias="radio/unselected-pressed.svg">assets/icons/figma-radio/unselected-pressed.svg</file>
+        <file alias="radio/unselected-focus-visible.svg">assets/icons/figma-radio/unselected-focus-visible.svg</file>
+        <file alias="radio/unselected-disabled.svg">assets/icons/figma-radio/unselected-disabled.svg</file>
+        <file alias="radio/selected-default.svg">assets/icons/figma-radio/selected-default.svg</file>
+        <file alias="radio/selected-hover.svg">assets/icons/figma-radio/selected-hover.svg</file>
+        <file alias="radio/selected-pressed.svg">assets/icons/figma-radio/selected-pressed.svg</file>
+        <file alias="radio/selected-focus-visible.svg">assets/icons/figma-radio/selected-focus-visible.svg</file>
+        <file alias="radio/selected-disabled.svg">assets/icons/figma-radio/selected-disabled.svg</file>
+        <file alias="button/loading-primary.svg">assets/icons/figma-button/loading-primary.svg</file>
+        <file alias="button/loading-default.svg">assets/icons/figma-button/loading-default.svg</file>
+        <file alias="button/loading-link.svg">assets/icons/figma-button/loading-link.svg</file>
+        <file alias="button/loading-danger.svg">assets/icons/figma-button/loading-danger.svg</file>
+        <file alias="button/plus-default.svg">assets/icons/figma-button/plus-default.svg</file>
+        <file alias="button/plus-hover.svg">assets/icons/figma-button/plus-hover.svg</file>
+        <file alias="button/plus-active.svg">assets/icons/figma-button/plus-active.svg</file>
+        <file alias="button/plus-disabled.svg">assets/icons/figma-button/plus-disabled.svg</file>
+        <file alias="checkbox-gallery.json">../component-definitions/figma-checkbox-gallery.json</file>
+        <file alias="gallery-layouts.json">../component-definitions/figma-gallery-layouts.json</file>
+        <file alias="checkbox/check.svg">assets/icons/figma-checkbox/check.svg</file>
+        <file alias="navigation-visuals.json">../component-definitions/figma-navigation-visuals.json</file>
+        <file alias="navigation/action-primary.svg">assets/icons/figma-navigation/action-primary.svg</file>
+        <file alias="navigation/action-default.svg">assets/icons/figma-navigation/action-default.svg</file>
+        <file alias="navigation/action-disabled.svg">assets/icons/figma-navigation/action-disabled.svg</file>
+        <file alias="navigation/action-danger.svg">assets/icons/figma-navigation/action-danger.svg</file>
+        <file alias="navigation/chevron-right.svg">assets/icons/figma-navigation/chevron-right.svg</file>
+        <file alias="navigation/chevron-disabled.svg">assets/icons/figma-navigation/chevron-disabled.svg</file>
+        <file alias="pageflow-visuals.json">../component-definitions/figma-pageflow-visuals.json</file>
+    </qresource>
+    <qresource prefix="/figma/pageflow">
+        <file alias="Check.svg">assets/icons/figma-pageflow/Check.svg</file>
+        <file alias="Warning.svg">assets/icons/figma-pageflow/Warning.svg</file>
+    </qresource>
+    <qresource prefix="/figma/composite">
+        <file alias="search.svg">assets/icons/figma-composite/search.svg</file>
+        <file alias="notifications.svg">assets/icons/figma-composite/notifications.svg</file>
+        <file alias="notifications-compact.svg">assets/icons/figma-composite/notifications-compact.svg</file>
+        <file alias="chevron-down.svg">assets/icons/figma-composite/chevron-down.svg</file>
+        <file alias="chevron-left.svg">assets/icons/figma-composite/chevron-left.svg</file>
+        <file alias="chevron-right.svg">assets/icons/figma-composite/chevron-right.svg</file>
+        <file alias="home.svg">assets/icons/figma-composite/home.svg</file>
+        <file alias="home-accent.svg">assets/icons/figma-composite/home-accent.svg</file>
+        <file alias="home-disabled.svg">assets/icons/figma-composite/home-disabled.svg</file>
+        <file alias="dashboard-accent.svg">assets/icons/figma-composite/dashboard-accent.svg</file>
+        <file alias="document.svg">assets/icons/figma-composite/document.svg</file>
+        <file alias="settings.svg">assets/icons/figma-composite/settings.svg</file>
+        <file alias="tree-expanded.svg">assets/icons/figma-composite/tree-expanded.svg</file>
+        <file alias="tree-collapsed.svg">assets/icons/figma-composite/tree-collapsed.svg</file>
+        <file alias="branch-leaf.svg">assets/icons/figma-composite/branch-leaf.svg</file>
+        <file alias="sort.svg">assets/icons/figma-composite/sort.svg</file>
+    </qresource>
     <qresource prefix="/icons">
         <file alias="arrow-right.svg">assets/icons/arrow-right.svg</file>
         <file alias="x.svg">assets/icons/x.svg</file>

@@ -1,0 +1,2589 @@
+{
+  "fileKey": "w92BKW1EcutKmTXkwzNHbf",
+  "pageId": "447:2",
+  "galleryId": "2015:18178",
+  "status": "captured-source-not-approved",
+  "notes": [
+    "Figma order is illustrative; interactive QStyle order and native ButtonRole signals remain authoritative.",
+    "420x160 is the gallery host, not a required runtime widget size.",
+    "Host padding 16, gap 8, row min-height 32. Child canonical Button recipes reuse button-visuals.json.",
+    "Source 0.5px row centers round to Qt integer widget coordinates; no pixel parity approval."
+  ],
+  "set": [
+    "447:593",
+    "ComponentLab/DialogButtonGroup",
+    [
+      40,
+      110,
+      2040,
+      1570
+    ],
+    {
+      "Orientation": {
+        "type": "VARIANT",
+        "defaultValue": "Horizontal",
+        "variantOptions": [
+          "Horizontal",
+          "Vertical"
+        ]
+      },
+      "Centered": {
+        "type": "VARIANT",
+        "defaultValue": "False",
+        "variantOptions": [
+          "False",
+          "True"
+        ]
+      },
+      "Configuration": {
+        "type": "VARIANT",
+        "defaultValue": "Confirm",
+        "variantOptions": [
+          "Confirm",
+          "Apply",
+          "Help",
+          "Destructive"
+        ]
+      },
+      "State": {
+        "type": "VARIANT",
+        "defaultValue": "Default",
+        "variantOptions": [
+          "Default",
+          "Disabled"
+        ]
+      }
+    }
+  ],
+  "host": [
+    16,
+    16,
+    16,
+    16,
+    [
+      [
+        0,
+        0,
+        0,
+        0
+      ]
+    ]
+  ],
+  "row": [
+    8,
+    32,
+    true
+  ],
+  "styles": {
+    "RejectRole / Cancel/Default": [
+      [
+        [
+          255,
+          255,
+          255,
+          1
+        ]
+      ],
+      [
+        [
+          217,
+          217,
+          217,
+          1
+        ]
+      ],
+      1,
+      4,
+      {
+        "family": "Inter",
+        "style": "Regular",
+        "variationSettings": {
+          "wght": 400,
+          "slnt": 0
+        }
+      },
+      14,
+      {
+        "unit": "PIXELS",
+        "value": 22
+      },
+      [
+        [
+          0,
+          0,
+          0,
+          0.8799999952316284
+        ]
+      ]
+    ],
+    "AcceptRole / OK/Default": [
+      [
+        [
+          98,
+          53,
+          247,
+          1
+        ]
+      ],
+      [
+        [
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      1,
+      4,
+      {
+        "family": "Inter",
+        "style": "Regular",
+        "variationSettings": {
+          "wght": 400,
+          "slnt": 0
+        }
+      },
+      14,
+      {
+        "unit": "PIXELS",
+        "value": 22
+      },
+      [
+        [
+          255,
+          255,
+          255,
+          1
+        ]
+      ]
+    ],
+    "RejectRole / Cancel/Disabled": [
+      [
+        [
+          0,
+          0,
+          0,
+          0.03999999910593033
+        ]
+      ],
+      [
+        [
+          217,
+          217,
+          217,
+          1
+        ]
+      ],
+      1,
+      4,
+      {
+        "family": "Inter",
+        "style": "Regular",
+        "variationSettings": {
+          "wght": 400,
+          "slnt": 0
+        }
+      },
+      14,
+      {
+        "unit": "PIXELS",
+        "value": 22
+      },
+      [
+        [
+          187,
+          187,
+          187,
+          1
+        ]
+      ]
+    ],
+    "AcceptRole / OK/Disabled": [
+      [
+        [
+          243,
+          243,
+          243,
+          1
+        ]
+      ],
+      [
+        [
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      1,
+      4,
+      {
+        "family": "Inter",
+        "style": "Regular",
+        "variationSettings": {
+          "wght": 400,
+          "slnt": 0
+        }
+      },
+      14,
+      {
+        "unit": "PIXELS",
+        "value": 22
+      },
+      [
+        [
+          187,
+          187,
+          187,
+          1
+        ]
+      ]
+    ],
+    "ResetRole / Reset/Default": [
+      [
+        [
+          255,
+          255,
+          255,
+          1
+        ]
+      ],
+      [
+        [
+          217,
+          217,
+          217,
+          1
+        ]
+      ],
+      1,
+      4,
+      {
+        "family": "Inter",
+        "style": "Regular",
+        "variationSettings": {
+          "wght": 400,
+          "slnt": 0
+        }
+      },
+      14,
+      {
+        "unit": "PIXELS",
+        "value": 22
+      },
+      [
+        [
+          0,
+          0,
+          0,
+          0.8799999952316284
+        ]
+      ]
+    ],
+    "ApplyRole / Apply/Default": [
+      [
+        [
+          98,
+          53,
+          247,
+          1
+        ]
+      ],
+      [
+        [
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      1,
+      4,
+      {
+        "family": "Inter",
+        "style": "Regular",
+        "variationSettings": {
+          "wght": 400,
+          "slnt": 0
+        }
+      },
+      14,
+      {
+        "unit": "PIXELS",
+        "value": 22
+      },
+      [
+        [
+          255,
+          255,
+          255,
+          1
+        ]
+      ]
+    ],
+    "ResetRole / Reset/Disabled": [
+      [
+        [
+          0,
+          0,
+          0,
+          0.03999999910593033
+        ]
+      ],
+      [
+        [
+          217,
+          217,
+          217,
+          1
+        ]
+      ],
+      1,
+      4,
+      {
+        "family": "Inter",
+        "style": "Regular",
+        "variationSettings": {
+          "wght": 400,
+          "slnt": 0
+        }
+      },
+      14,
+      {
+        "unit": "PIXELS",
+        "value": 22
+      },
+      [
+        [
+          187,
+          187,
+          187,
+          1
+        ]
+      ]
+    ],
+    "ApplyRole / Apply/Disabled": [
+      [
+        [
+          243,
+          243,
+          243,
+          1
+        ]
+      ],
+      [
+        [
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      1,
+      4,
+      {
+        "family": "Inter",
+        "style": "Regular",
+        "variationSettings": {
+          "wght": 400,
+          "slnt": 0
+        }
+      },
+      14,
+      {
+        "unit": "PIXELS",
+        "value": 22
+      },
+      [
+        [
+          187,
+          187,
+          187,
+          1
+        ]
+      ]
+    ],
+    "HelpRole / Help/Default": [
+      [
+        [
+          255,
+          255,
+          255,
+          1
+        ]
+      ],
+      [
+        [
+          217,
+          217,
+          217,
+          1
+        ]
+      ],
+      1,
+      4,
+      {
+        "family": "Inter",
+        "style": "Regular",
+        "variationSettings": {
+          "wght": 400,
+          "slnt": 0
+        }
+      },
+      14,
+      {
+        "unit": "PIXELS",
+        "value": 22
+      },
+      [
+        [
+          0,
+          0,
+          0,
+          0.8799999952316284
+        ]
+      ]
+    ],
+    "HelpRole / Help/Disabled": [
+      [
+        [
+          0,
+          0,
+          0,
+          0.03999999910593033
+        ]
+      ],
+      [
+        [
+          217,
+          217,
+          217,
+          1
+        ]
+      ],
+      1,
+      4,
+      {
+        "family": "Inter",
+        "style": "Regular",
+        "variationSettings": {
+          "wght": 400,
+          "slnt": 0
+        }
+      },
+      14,
+      {
+        "unit": "PIXELS",
+        "value": 22
+      },
+      [
+        [
+          187,
+          187,
+          187,
+          1
+        ]
+      ]
+    ],
+    "DestructiveRole / Delete/Default": [
+      [
+        [
+          224,
+          33,
+          40,
+          1
+        ]
+      ],
+      [
+        [
+          224,
+          33,
+          40,
+          1
+        ]
+      ],
+      1,
+      4,
+      {
+        "family": "Inter",
+        "style": "Regular",
+        "variationSettings": {
+          "wght": 400,
+          "slnt": 0
+        }
+      },
+      14,
+      {
+        "unit": "PIXELS",
+        "value": 22
+      },
+      [
+        [
+          255,
+          255,
+          255,
+          1
+        ]
+      ]
+    ],
+    "DestructiveRole / Delete/Disabled": [
+      [
+        [
+          243,
+          243,
+          243,
+          1
+        ]
+      ],
+      [
+        [
+          208,
+          208,
+          208,
+          1
+        ]
+      ],
+      1,
+      4,
+      {
+        "family": "Inter",
+        "style": "Regular",
+        "variationSettings": {
+          "wght": 400,
+          "slnt": 0
+        }
+      },
+      14,
+      {
+        "unit": "PIXELS",
+        "value": 22
+      },
+      [
+        [
+          187,
+          187,
+          187,
+          1
+        ]
+      ]
+    ]
+  },
+  "variants": [
+    [
+      "447:21",
+      "Orientation=Horizontal, Centered=False, Configuration=Confirm, State=Default",
+      [
+        24,
+        24,
+        420,
+        160
+      ],
+      [
+        282,
+        64,
+        122,
+        32
+      ],
+      [
+        [
+          "447:23",
+          "RejectRole / Cancel",
+          [
+            0,
+            0,
+            70,
+            32
+          ],
+          "Cancel",
+          [
+            12,
+            5,
+            46,
+            22
+          ],
+          "RejectRole / Cancel/Default"
+        ],
+        [
+          "447:34",
+          "AcceptRole / OK",
+          [
+            78,
+            0,
+            44,
+            32
+          ],
+          "OK",
+          [
+            12,
+            5,
+            20,
+            22
+          ],
+          "AcceptRole / OK/Default"
+        ]
+      ]
+    ],
+    [
+      "447:45",
+      "Orientation=Horizontal, Centered=False, Configuration=Confirm, State=Disabled",
+      [
+        524,
+        24,
+        420,
+        160
+      ],
+      [
+        282,
+        64,
+        122,
+        32
+      ],
+      [
+        [
+          "447:47",
+          "RejectRole / Cancel",
+          [
+            0,
+            0,
+            70,
+            32
+          ],
+          "Cancel",
+          [
+            12,
+            5,
+            46,
+            22
+          ],
+          "RejectRole / Cancel/Disabled"
+        ],
+        [
+          "447:58",
+          "AcceptRole / OK",
+          [
+            78,
+            0,
+            44,
+            32
+          ],
+          "OK",
+          [
+            12,
+            5,
+            20,
+            22
+          ],
+          "AcceptRole / OK/Disabled"
+        ]
+      ]
+    ],
+    [
+      "447:69",
+      "Orientation=Horizontal, Centered=False, Configuration=Apply, State=Default",
+      [
+        1024,
+        24,
+        420,
+        160
+      ],
+      [
+        194,
+        64,
+        210,
+        32
+      ],
+      [
+        [
+          "447:71",
+          "ResetRole / Reset",
+          [
+            0,
+            0,
+            62,
+            32
+          ],
+          "Reset",
+          [
+            12,
+            5,
+            38,
+            22
+          ],
+          "ResetRole / Reset/Default"
+        ],
+        [
+          "447:79",
+          "RejectRole / Cancel",
+          [
+            70,
+            0,
+            70,
+            32
+          ],
+          "Cancel",
+          [
+            12,
+            5,
+            46,
+            22
+          ],
+          "RejectRole / Cancel/Default"
+        ],
+        [
+          "447:87",
+          "ApplyRole / Apply",
+          [
+            148,
+            0,
+            62,
+            32
+          ],
+          "Apply",
+          [
+            12,
+            5,
+            38,
+            22
+          ],
+          "ApplyRole / Apply/Default"
+        ]
+      ]
+    ],
+    [
+      "447:95",
+      "Orientation=Horizontal, Centered=False, Configuration=Apply, State=Disabled",
+      [
+        1524,
+        24,
+        420,
+        160
+      ],
+      [
+        194,
+        64,
+        210,
+        32
+      ],
+      [
+        [
+          "447:97",
+          "ResetRole / Reset",
+          [
+            0,
+            0,
+            62,
+            32
+          ],
+          "Reset",
+          [
+            12,
+            5,
+            38,
+            22
+          ],
+          "ResetRole / Reset/Disabled"
+        ],
+        [
+          "447:105",
+          "RejectRole / Cancel",
+          [
+            70,
+            0,
+            70,
+            32
+          ],
+          "Cancel",
+          [
+            12,
+            5,
+            46,
+            22
+          ],
+          "RejectRole / Cancel/Disabled"
+        ],
+        [
+          "447:113",
+          "ApplyRole / Apply",
+          [
+            148,
+            0,
+            62,
+            32
+          ],
+          "Apply",
+          [
+            12,
+            5,
+            38,
+            22
+          ],
+          "ApplyRole / Apply/Disabled"
+        ]
+      ]
+    ],
+    [
+      "447:121",
+      "Orientation=Horizontal, Centered=False, Configuration=Help, State=Default",
+      [
+        24,
+        214,
+        420,
+        160
+      ],
+      [
+        219,
+        64,
+        185,
+        32
+      ],
+      [
+        [
+          "447:123",
+          "HelpRole / Help",
+          [
+            0,
+            0,
+            55,
+            32
+          ],
+          "Help",
+          [
+            12,
+            5,
+            31,
+            22
+          ],
+          "HelpRole / Help/Default"
+        ],
+        [
+          "447:131",
+          "RejectRole / Cancel",
+          [
+            63,
+            0,
+            70,
+            32
+          ],
+          "Cancel",
+          [
+            12,
+            5,
+            46,
+            22
+          ],
+          "RejectRole / Cancel/Default"
+        ],
+        [
+          "447:139",
+          "AcceptRole / OK",
+          [
+            141,
+            0,
+            44,
+            32
+          ],
+          "OK",
+          [
+            12,
+            5,
+            20,
+            22
+          ],
+          "AcceptRole / OK/Default"
+        ]
+      ]
+    ],
+    [
+      "447:147",
+      "Orientation=Horizontal, Centered=False, Configuration=Help, State=Disabled",
+      [
+        524,
+        214,
+        420,
+        160
+      ],
+      [
+        219,
+        64,
+        185,
+        32
+      ],
+      [
+        [
+          "447:149",
+          "HelpRole / Help",
+          [
+            0,
+            0,
+            55,
+            32
+          ],
+          "Help",
+          [
+            12,
+            5,
+            31,
+            22
+          ],
+          "HelpRole / Help/Disabled"
+        ],
+        [
+          "447:157",
+          "RejectRole / Cancel",
+          [
+            63,
+            0,
+            70,
+            32
+          ],
+          "Cancel",
+          [
+            12,
+            5,
+            46,
+            22
+          ],
+          "RejectRole / Cancel/Disabled"
+        ],
+        [
+          "447:165",
+          "AcceptRole / OK",
+          [
+            141,
+            0,
+            44,
+            32
+          ],
+          "OK",
+          [
+            12,
+            5,
+            20,
+            22
+          ],
+          "AcceptRole / OK/Disabled"
+        ]
+      ]
+    ],
+    [
+      "447:173",
+      "Orientation=Horizontal, Centered=True, Configuration=Confirm, State=Default",
+      [
+        1024,
+        214,
+        420,
+        160
+      ],
+      [
+        149,
+        64,
+        122,
+        32
+      ],
+      [
+        [
+          "447:175",
+          "RejectRole / Cancel",
+          [
+            0,
+            0,
+            70,
+            32
+          ],
+          "Cancel",
+          [
+            12,
+            5,
+            46,
+            22
+          ],
+          "RejectRole / Cancel/Default"
+        ],
+        [
+          "447:183",
+          "AcceptRole / OK",
+          [
+            78,
+            0,
+            44,
+            32
+          ],
+          "OK",
+          [
+            12,
+            5,
+            20,
+            22
+          ],
+          "AcceptRole / OK/Default"
+        ]
+      ]
+    ],
+    [
+      "447:191",
+      "Orientation=Horizontal, Centered=True, Configuration=Confirm, State=Disabled",
+      [
+        1524,
+        214,
+        420,
+        160
+      ],
+      [
+        149,
+        64,
+        122,
+        32
+      ],
+      [
+        [
+          "447:193",
+          "RejectRole / Cancel",
+          [
+            0,
+            0,
+            70,
+            32
+          ],
+          "Cancel",
+          [
+            12,
+            5,
+            46,
+            22
+          ],
+          "RejectRole / Cancel/Disabled"
+        ],
+        [
+          "447:201",
+          "AcceptRole / OK",
+          [
+            78,
+            0,
+            44,
+            32
+          ],
+          "OK",
+          [
+            12,
+            5,
+            20,
+            22
+          ],
+          "AcceptRole / OK/Disabled"
+        ]
+      ]
+    ],
+    [
+      "447:209",
+      "Orientation=Horizontal, Centered=True, Configuration=Apply, State=Default",
+      [
+        24,
+        404,
+        420,
+        160
+      ],
+      [
+        105,
+        64,
+        210,
+        32
+      ],
+      [
+        [
+          "447:211",
+          "ResetRole / Reset",
+          [
+            0,
+            0,
+            62,
+            32
+          ],
+          "Reset",
+          [
+            12,
+            5,
+            38,
+            22
+          ],
+          "ResetRole / Reset/Default"
+        ],
+        [
+          "447:219",
+          "RejectRole / Cancel",
+          [
+            70,
+            0,
+            70,
+            32
+          ],
+          "Cancel",
+          [
+            12,
+            5,
+            46,
+            22
+          ],
+          "RejectRole / Cancel/Default"
+        ],
+        [
+          "447:227",
+          "ApplyRole / Apply",
+          [
+            148,
+            0,
+            62,
+            32
+          ],
+          "Apply",
+          [
+            12,
+            5,
+            38,
+            22
+          ],
+          "ApplyRole / Apply/Default"
+        ]
+      ]
+    ],
+    [
+      "447:235",
+      "Orientation=Horizontal, Centered=True, Configuration=Apply, State=Disabled",
+      [
+        524,
+        404,
+        420,
+        160
+      ],
+      [
+        105,
+        64,
+        210,
+        32
+      ],
+      [
+        [
+          "447:237",
+          "ResetRole / Reset",
+          [
+            0,
+            0,
+            62,
+            32
+          ],
+          "Reset",
+          [
+            12,
+            5,
+            38,
+            22
+          ],
+          "ResetRole / Reset/Disabled"
+        ],
+        [
+          "447:245",
+          "RejectRole / Cancel",
+          [
+            70,
+            0,
+            70,
+            32
+          ],
+          "Cancel",
+          [
+            12,
+            5,
+            46,
+            22
+          ],
+          "RejectRole / Cancel/Disabled"
+        ],
+        [
+          "447:253",
+          "ApplyRole / Apply",
+          [
+            148,
+            0,
+            62,
+            32
+          ],
+          "Apply",
+          [
+            12,
+            5,
+            38,
+            22
+          ],
+          "ApplyRole / Apply/Disabled"
+        ]
+      ]
+    ],
+    [
+      "447:261",
+      "Orientation=Horizontal, Centered=True, Configuration=Help, State=Default",
+      [
+        1024,
+        404,
+        420,
+        160
+      ],
+      [
+        117.5,
+        64,
+        185,
+        32
+      ],
+      [
+        [
+          "447:263",
+          "HelpRole / Help",
+          [
+            0,
+            0,
+            55,
+            32
+          ],
+          "Help",
+          [
+            12,
+            5,
+            31,
+            22
+          ],
+          "HelpRole / Help/Default"
+        ],
+        [
+          "447:271",
+          "RejectRole / Cancel",
+          [
+            63,
+            0,
+            70,
+            32
+          ],
+          "Cancel",
+          [
+            12,
+            5,
+            46,
+            22
+          ],
+          "RejectRole / Cancel/Default"
+        ],
+        [
+          "447:279",
+          "AcceptRole / OK",
+          [
+            141,
+            0,
+            44,
+            32
+          ],
+          "OK",
+          [
+            12,
+            5,
+            20,
+            22
+          ],
+          "AcceptRole / OK/Default"
+        ]
+      ]
+    ],
+    [
+      "447:287",
+      "Orientation=Horizontal, Centered=True, Configuration=Help, State=Disabled",
+      [
+        1524,
+        404,
+        420,
+        160
+      ],
+      [
+        117.5,
+        64,
+        185,
+        32
+      ],
+      [
+        [
+          "447:289",
+          "HelpRole / Help",
+          [
+            0,
+            0,
+            55,
+            32
+          ],
+          "Help",
+          [
+            12,
+            5,
+            31,
+            22
+          ],
+          "HelpRole / Help/Disabled"
+        ],
+        [
+          "447:297",
+          "RejectRole / Cancel",
+          [
+            63,
+            0,
+            70,
+            32
+          ],
+          "Cancel",
+          [
+            12,
+            5,
+            46,
+            22
+          ],
+          "RejectRole / Cancel/Disabled"
+        ],
+        [
+          "447:305",
+          "AcceptRole / OK",
+          [
+            141,
+            0,
+            44,
+            32
+          ],
+          "OK",
+          [
+            12,
+            5,
+            20,
+            22
+          ],
+          "AcceptRole / OK/Disabled"
+        ]
+      ]
+    ],
+    [
+      "447:313",
+      "Orientation=Vertical, Centered=False, Configuration=Confirm, State=Default",
+      [
+        24,
+        594,
+        420,
+        160
+      ],
+      [
+        334,
+        44,
+        70,
+        72
+      ],
+      [
+        [
+          "447:315",
+          "RejectRole / Cancel",
+          [
+            0,
+            0,
+            70,
+            32
+          ],
+          "Cancel",
+          [
+            12,
+            5,
+            46,
+            22
+          ],
+          "RejectRole / Cancel/Default"
+        ],
+        [
+          "447:323",
+          "AcceptRole / OK",
+          [
+            0,
+            40,
+            44,
+            32
+          ],
+          "OK",
+          [
+            12,
+            5,
+            20,
+            22
+          ],
+          "AcceptRole / OK/Default"
+        ]
+      ]
+    ],
+    [
+      "447:331",
+      "Orientation=Vertical, Centered=False, Configuration=Confirm, State=Disabled",
+      [
+        524,
+        594,
+        420,
+        160
+      ],
+      [
+        334,
+        44,
+        70,
+        72
+      ],
+      [
+        [
+          "447:333",
+          "RejectRole / Cancel",
+          [
+            0,
+            0,
+            70,
+            32
+          ],
+          "Cancel",
+          [
+            12,
+            5,
+            46,
+            22
+          ],
+          "RejectRole / Cancel/Disabled"
+        ],
+        [
+          "447:341",
+          "AcceptRole / OK",
+          [
+            0,
+            40,
+            44,
+            32
+          ],
+          "OK",
+          [
+            12,
+            5,
+            20,
+            22
+          ],
+          "AcceptRole / OK/Disabled"
+        ]
+      ]
+    ],
+    [
+      "447:349",
+      "Orientation=Vertical, Centered=False, Configuration=Apply, State=Default",
+      [
+        1024,
+        594,
+        420,
+        160
+      ],
+      [
+        334,
+        24,
+        70,
+        112
+      ],
+      [
+        [
+          "447:351",
+          "ResetRole / Reset",
+          [
+            0,
+            0,
+            62,
+            32
+          ],
+          "Reset",
+          [
+            12,
+            5,
+            38,
+            22
+          ],
+          "ResetRole / Reset/Default"
+        ],
+        [
+          "447:359",
+          "RejectRole / Cancel",
+          [
+            0,
+            40,
+            70,
+            32
+          ],
+          "Cancel",
+          [
+            12,
+            5,
+            46,
+            22
+          ],
+          "RejectRole / Cancel/Default"
+        ],
+        [
+          "447:367",
+          "ApplyRole / Apply",
+          [
+            0,
+            80,
+            62,
+            32
+          ],
+          "Apply",
+          [
+            12,
+            5,
+            38,
+            22
+          ],
+          "ApplyRole / Apply/Default"
+        ]
+      ]
+    ],
+    [
+      "447:375",
+      "Orientation=Vertical, Centered=False, Configuration=Apply, State=Disabled",
+      [
+        1524,
+        594,
+        420,
+        160
+      ],
+      [
+        334,
+        24,
+        70,
+        112
+      ],
+      [
+        [
+          "447:377",
+          "ResetRole / Reset",
+          [
+            0,
+            0,
+            62,
+            32
+          ],
+          "Reset",
+          [
+            12,
+            5,
+            38,
+            22
+          ],
+          "ResetRole / Reset/Disabled"
+        ],
+        [
+          "447:385",
+          "RejectRole / Cancel",
+          [
+            0,
+            40,
+            70,
+            32
+          ],
+          "Cancel",
+          [
+            12,
+            5,
+            46,
+            22
+          ],
+          "RejectRole / Cancel/Disabled"
+        ],
+        [
+          "447:393",
+          "ApplyRole / Apply",
+          [
+            0,
+            80,
+            62,
+            32
+          ],
+          "Apply",
+          [
+            12,
+            5,
+            38,
+            22
+          ],
+          "ApplyRole / Apply/Disabled"
+        ]
+      ]
+    ],
+    [
+      "447:401",
+      "Orientation=Vertical, Centered=False, Configuration=Help, State=Default",
+      [
+        24,
+        784,
+        420,
+        160
+      ],
+      [
+        334,
+        24,
+        70,
+        112
+      ],
+      [
+        [
+          "447:403",
+          "HelpRole / Help",
+          [
+            0,
+            0,
+            55,
+            32
+          ],
+          "Help",
+          [
+            12,
+            5,
+            31,
+            22
+          ],
+          "HelpRole / Help/Default"
+        ],
+        [
+          "447:411",
+          "RejectRole / Cancel",
+          [
+            0,
+            40,
+            70,
+            32
+          ],
+          "Cancel",
+          [
+            12,
+            5,
+            46,
+            22
+          ],
+          "RejectRole / Cancel/Default"
+        ],
+        [
+          "447:419",
+          "AcceptRole / OK",
+          [
+            0,
+            80,
+            44,
+            32
+          ],
+          "OK",
+          [
+            12,
+            5,
+            20,
+            22
+          ],
+          "AcceptRole / OK/Default"
+        ]
+      ]
+    ],
+    [
+      "447:427",
+      "Orientation=Vertical, Centered=False, Configuration=Help, State=Disabled",
+      [
+        524,
+        784,
+        420,
+        160
+      ],
+      [
+        334,
+        24,
+        70,
+        112
+      ],
+      [
+        [
+          "447:429",
+          "HelpRole / Help",
+          [
+            0,
+            0,
+            55,
+            32
+          ],
+          "Help",
+          [
+            12,
+            5,
+            31,
+            22
+          ],
+          "HelpRole / Help/Disabled"
+        ],
+        [
+          "447:437",
+          "RejectRole / Cancel",
+          [
+            0,
+            40,
+            70,
+            32
+          ],
+          "Cancel",
+          [
+            12,
+            5,
+            46,
+            22
+          ],
+          "RejectRole / Cancel/Disabled"
+        ],
+        [
+          "447:445",
+          "AcceptRole / OK",
+          [
+            0,
+            80,
+            44,
+            32
+          ],
+          "OK",
+          [
+            12,
+            5,
+            20,
+            22
+          ],
+          "AcceptRole / OK/Disabled"
+        ]
+      ]
+    ],
+    [
+      "447:453",
+      "Orientation=Vertical, Centered=True, Configuration=Confirm, State=Default",
+      [
+        1024,
+        784,
+        420,
+        160
+      ],
+      [
+        175,
+        44,
+        70,
+        72
+      ],
+      [
+        [
+          "447:455",
+          "RejectRole / Cancel",
+          [
+            0,
+            0,
+            70,
+            32
+          ],
+          "Cancel",
+          [
+            12,
+            5,
+            46,
+            22
+          ],
+          "RejectRole / Cancel/Default"
+        ],
+        [
+          "447:463",
+          "AcceptRole / OK",
+          [
+            0,
+            40,
+            44,
+            32
+          ],
+          "OK",
+          [
+            12,
+            5,
+            20,
+            22
+          ],
+          "AcceptRole / OK/Default"
+        ]
+      ]
+    ],
+    [
+      "447:471",
+      "Orientation=Vertical, Centered=True, Configuration=Confirm, State=Disabled",
+      [
+        1524,
+        784,
+        420,
+        160
+      ],
+      [
+        175,
+        44,
+        70,
+        72
+      ],
+      [
+        [
+          "447:473",
+          "RejectRole / Cancel",
+          [
+            0,
+            0,
+            70,
+            32
+          ],
+          "Cancel",
+          [
+            12,
+            5,
+            46,
+            22
+          ],
+          "RejectRole / Cancel/Disabled"
+        ],
+        [
+          "447:481",
+          "AcceptRole / OK",
+          [
+            0,
+            40,
+            44,
+            32
+          ],
+          "OK",
+          [
+            12,
+            5,
+            20,
+            22
+          ],
+          "AcceptRole / OK/Disabled"
+        ]
+      ]
+    ],
+    [
+      "447:489",
+      "Orientation=Vertical, Centered=True, Configuration=Apply, State=Default",
+      [
+        24,
+        974,
+        420,
+        160
+      ],
+      [
+        175,
+        24,
+        70,
+        112
+      ],
+      [
+        [
+          "447:491",
+          "ResetRole / Reset",
+          [
+            0,
+            0,
+            62,
+            32
+          ],
+          "Reset",
+          [
+            12,
+            5,
+            38,
+            22
+          ],
+          "ResetRole / Reset/Default"
+        ],
+        [
+          "447:499",
+          "RejectRole / Cancel",
+          [
+            0,
+            40,
+            70,
+            32
+          ],
+          "Cancel",
+          [
+            12,
+            5,
+            46,
+            22
+          ],
+          "RejectRole / Cancel/Default"
+        ],
+        [
+          "447:507",
+          "ApplyRole / Apply",
+          [
+            0,
+            80,
+            62,
+            32
+          ],
+          "Apply",
+          [
+            12,
+            5,
+            38,
+            22
+          ],
+          "ApplyRole / Apply/Default"
+        ]
+      ]
+    ],
+    [
+      "447:515",
+      "Orientation=Vertical, Centered=True, Configuration=Apply, State=Disabled",
+      [
+        524,
+        974,
+        420,
+        160
+      ],
+      [
+        175,
+        24,
+        70,
+        112
+      ],
+      [
+        [
+          "447:517",
+          "ResetRole / Reset",
+          [
+            0,
+            0,
+            62,
+            32
+          ],
+          "Reset",
+          [
+            12,
+            5,
+            38,
+            22
+          ],
+          "ResetRole / Reset/Disabled"
+        ],
+        [
+          "447:525",
+          "RejectRole / Cancel",
+          [
+            0,
+            40,
+            70,
+            32
+          ],
+          "Cancel",
+          [
+            12,
+            5,
+            46,
+            22
+          ],
+          "RejectRole / Cancel/Disabled"
+        ],
+        [
+          "447:533",
+          "ApplyRole / Apply",
+          [
+            0,
+            80,
+            62,
+            32
+          ],
+          "Apply",
+          [
+            12,
+            5,
+            38,
+            22
+          ],
+          "ApplyRole / Apply/Disabled"
+        ]
+      ]
+    ],
+    [
+      "447:541",
+      "Orientation=Vertical, Centered=True, Configuration=Help, State=Default",
+      [
+        1024,
+        974,
+        420,
+        160
+      ],
+      [
+        175,
+        24,
+        70,
+        112
+      ],
+      [
+        [
+          "447:543",
+          "HelpRole / Help",
+          [
+            0,
+            0,
+            55,
+            32
+          ],
+          "Help",
+          [
+            12,
+            5,
+            31,
+            22
+          ],
+          "HelpRole / Help/Default"
+        ],
+        [
+          "447:551",
+          "RejectRole / Cancel",
+          [
+            0,
+            40,
+            70,
+            32
+          ],
+          "Cancel",
+          [
+            12,
+            5,
+            46,
+            22
+          ],
+          "RejectRole / Cancel/Default"
+        ],
+        [
+          "447:559",
+          "AcceptRole / OK",
+          [
+            0,
+            80,
+            44,
+            32
+          ],
+          "OK",
+          [
+            12,
+            5,
+            20,
+            22
+          ],
+          "AcceptRole / OK/Default"
+        ]
+      ]
+    ],
+    [
+      "447:567",
+      "Orientation=Vertical, Centered=True, Configuration=Help, State=Disabled",
+      [
+        1524,
+        974,
+        420,
+        160
+      ],
+      [
+        175,
+        24,
+        70,
+        112
+      ],
+      [
+        [
+          "447:569",
+          "HelpRole / Help",
+          [
+            0,
+            0,
+            55,
+            32
+          ],
+          "Help",
+          [
+            12,
+            5,
+            31,
+            22
+          ],
+          "HelpRole / Help/Disabled"
+        ],
+        [
+          "447:577",
+          "RejectRole / Cancel",
+          [
+            0,
+            40,
+            70,
+            32
+          ],
+          "Cancel",
+          [
+            12,
+            5,
+            46,
+            22
+          ],
+          "RejectRole / Cancel/Disabled"
+        ],
+        [
+          "447:585",
+          "AcceptRole / OK",
+          [
+            0,
+            80,
+            44,
+            32
+          ],
+          "OK",
+          [
+            12,
+            5,
+            20,
+            22
+          ],
+          "AcceptRole / OK/Disabled"
+        ]
+      ]
+    ],
+    [
+      "1138:317",
+      "Orientation=Horizontal, Centered=False, Configuration=Destructive, State=Default",
+      [
+        24,
+        1164,
+        420,
+        160
+      ],
+      [
+        259,
+        64,
+        145,
+        32
+      ],
+      [
+        [
+          "1138:319",
+          "RejectRole / Cancel",
+          [
+            0,
+            0,
+            70,
+            32
+          ],
+          "Cancel",
+          [
+            12,
+            5,
+            46,
+            22
+          ],
+          "RejectRole / Cancel/Default"
+        ],
+        [
+          "1138:320",
+          "DestructiveRole / Delete",
+          [
+            78,
+            0,
+            67,
+            32
+          ],
+          "Delete",
+          [
+            12,
+            5,
+            43,
+            22
+          ],
+          "DestructiveRole / Delete/Default"
+        ]
+      ]
+    ],
+    [
+      "1138:351",
+      "Orientation=Horizontal, Centered=False, Configuration=Destructive, State=Disabled",
+      [
+        524,
+        1164,
+        420,
+        160
+      ],
+      [
+        259,
+        64,
+        145,
+        32
+      ],
+      [
+        [
+          "1138:353",
+          "RejectRole / Cancel",
+          [
+            0,
+            0,
+            70,
+            32
+          ],
+          "Cancel",
+          [
+            12,
+            5,
+            46,
+            22
+          ],
+          "RejectRole / Cancel/Disabled"
+        ],
+        [
+          "1138:354",
+          "DestructiveRole / Delete",
+          [
+            78,
+            0,
+            67,
+            32
+          ],
+          "Delete",
+          [
+            12,
+            5,
+            43,
+            22
+          ],
+          "DestructiveRole / Delete/Disabled"
+        ]
+      ]
+    ],
+    [
+      "1138:385",
+      "Orientation=Horizontal, Centered=True, Configuration=Destructive, State=Default",
+      [
+        1024,
+        1164,
+        420,
+        160
+      ],
+      [
+        137.5,
+        64,
+        145,
+        32
+      ],
+      [
+        [
+          "1138:387",
+          "RejectRole / Cancel",
+          [
+            0,
+            0,
+            70,
+            32
+          ],
+          "Cancel",
+          [
+            12,
+            5,
+            46,
+            22
+          ],
+          "RejectRole / Cancel/Default"
+        ],
+        [
+          "1138:388",
+          "DestructiveRole / Delete",
+          [
+            78,
+            0,
+            67,
+            32
+          ],
+          "Delete",
+          [
+            12,
+            5,
+            43,
+            22
+          ],
+          "DestructiveRole / Delete/Default"
+        ]
+      ]
+    ],
+    [
+      "1138:407",
+      "Orientation=Horizontal, Centered=True, Configuration=Destructive, State=Disabled",
+      [
+        1524,
+        1164,
+        420,
+        160
+      ],
+      [
+        137.5,
+        64,
+        145,
+        32
+      ],
+      [
+        [
+          "1138:409",
+          "RejectRole / Cancel",
+          [
+            0,
+            0,
+            70,
+            32
+          ],
+          "Cancel",
+          [
+            12,
+            5,
+            46,
+            22
+          ],
+          "RejectRole / Cancel/Disabled"
+        ],
+        [
+          "1138:410",
+          "DestructiveRole / Delete",
+          [
+            78,
+            0,
+            67,
+            32
+          ],
+          "Delete",
+          [
+            12,
+            5,
+            43,
+            22
+          ],
+          "DestructiveRole / Delete/Disabled"
+        ]
+      ]
+    ],
+    [
+      "1138:429",
+      "Orientation=Vertical, Centered=False, Configuration=Destructive, State=Default",
+      [
+        24,
+        1354,
+        420,
+        160
+      ],
+      [
+        334,
+        44,
+        70,
+        72
+      ],
+      [
+        [
+          "1138:431",
+          "RejectRole / Cancel",
+          [
+            0,
+            0,
+            70,
+            32
+          ],
+          "Cancel",
+          [
+            12,
+            5,
+            46,
+            22
+          ],
+          "RejectRole / Cancel/Default"
+        ],
+        [
+          "1138:432",
+          "DestructiveRole / Delete",
+          [
+            0,
+            40,
+            67,
+            32
+          ],
+          "Delete",
+          [
+            12,
+            5,
+            43,
+            22
+          ],
+          "DestructiveRole / Delete/Default"
+        ]
+      ]
+    ],
+    [
+      "1138:451",
+      "Orientation=Vertical, Centered=False, Configuration=Destructive, State=Disabled",
+      [
+        524,
+        1354,
+        420,
+        160
+      ],
+      [
+        334,
+        44,
+        70,
+        72
+      ],
+      [
+        [
+          "1138:453",
+          "RejectRole / Cancel",
+          [
+            0,
+            0,
+            70,
+            32
+          ],
+          "Cancel",
+          [
+            12,
+            5,
+            46,
+            22
+          ],
+          "RejectRole / Cancel/Disabled"
+        ],
+        [
+          "1138:454",
+          "DestructiveRole / Delete",
+          [
+            0,
+            40,
+            67,
+            32
+          ],
+          "Delete",
+          [
+            12,
+            5,
+            43,
+            22
+          ],
+          "DestructiveRole / Delete/Disabled"
+        ]
+      ]
+    ],
+    [
+      "1138:473",
+      "Orientation=Vertical, Centered=True, Configuration=Destructive, State=Default",
+      [
+        1024,
+        1354,
+        420,
+        160
+      ],
+      [
+        175,
+        44,
+        70,
+        72
+      ],
+      [
+        [
+          "1138:475",
+          "RejectRole / Cancel",
+          [
+            0,
+            0,
+            70,
+            32
+          ],
+          "Cancel",
+          [
+            12,
+            5,
+            46,
+            22
+          ],
+          "RejectRole / Cancel/Default"
+        ],
+        [
+          "1138:476",
+          "DestructiveRole / Delete",
+          [
+            0,
+            40,
+            67,
+            32
+          ],
+          "Delete",
+          [
+            12,
+            5,
+            43,
+            22
+          ],
+          "DestructiveRole / Delete/Default"
+        ]
+      ]
+    ],
+    [
+      "1138:495",
+      "Orientation=Vertical, Centered=True, Configuration=Destructive, State=Disabled",
+      [
+        1524,
+        1354,
+        420,
+        160
+      ],
+      [
+        175,
+        44,
+        70,
+        72
+      ],
+      [
+        [
+          "1138:497",
+          "RejectRole / Cancel",
+          [
+            0,
+            0,
+            70,
+            32
+          ],
+          "Cancel",
+          [
+            12,
+            5,
+            46,
+            22
+          ],
+          "RejectRole / Cancel/Disabled"
+        ],
+        [
+          "1138:498",
+          "DestructiveRole / Delete",
+          [
+            0,
+            40,
+            67,
+            32
+          ],
+          "Delete",
+          [
+            12,
+            5,
+            43,
+            22
+          ],
+          "DestructiveRole / Delete/Disabled"
+        ]
+      ]
+    ]
+  ]
+}

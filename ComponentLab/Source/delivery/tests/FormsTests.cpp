@@ -19,6 +19,10 @@
 #include <QAbstractButton>
 #include <QVBoxLayout>
 #include <QStackedWidget>
+#include <QSvgRenderer>
+#include <QTextBlock>
+#include <QFontInfo>
+#include <QFontDatabase>
 using commonWidget::Z_InputField;
 using commonWidget::Z_Select;
 
@@ -65,6 +69,84 @@ class FormsTests : public QObject {
         for (auto name : {"LABEL", "CONTROL", "PREFIX", "SUFFIX", "EDITOR", "TEXTAREA", "CLEAR",
                           "PASSWORD_TOGGLE", "SEARCH_ACTION", "FOOTER", "HINT", "COUNT"})
             QVERIFY2(w.findChild<QWidget*>(name), name);
+    }
+    void capturedInputPreservesEditorsAndNativeContracts() {
+        Z_InputField w(tokens);w.setAppearance("figma-light");w.setSnapshotState("Default");
+        auto* line=w.lineEdit();auto* area=w.textArea();
+        w.setPlaceholder("Input text");show(w,320);
+        for(const auto& size:QStringList{"sm","md","lg"}) {
+            w.setControlSize(size);QCoreApplication::processEvents();
+            QCOMPARE(w.control()->height(),size=="lg"?40:32);
+            QCOMPARE(line->height(),20);QCOMPARE(line->font().pixelSize(),14);
+            QCOMPARE(line->x(),size=="sm"?9:size=="md"?13:17);
+        }
+        w.setValue("ABCDE");line->setSelection(1,3);w.setSnapshotState("Hover");
+        QCOMPARE(w.lineEdit(),line);QCOMPARE(w.textArea(),area);QCOMPARE(line->selectedText(),QString("BCD"));
+        w.setKind(Z_InputField::Kind::Password);w.setPasswordVisible(true);
+        QCOMPARE(line->echoMode(),QLineEdit::Normal);QCOMPARE(w.value(),QString("ABCDE"));
+        auto* action=w.findChild<field::Action*>("PASSWORD_TOGGLE");
+        w.setSnapshotState("Focus");QCOMPARE(action->property("figmaInputGlyph").toString(),QString("EyeOffAccent"));
+        QCOMPARE(action->size(),QSize(32,32));QCOMPARE(action->property("figmaAssetBounds").toRect(),QRect(9,9,16,16));
+        action->click();QCOMPARE(line->echoMode(),QLineEdit::Password);
+        w.setSnapshotState("Error");QCOMPARE(action->property("figmaInputGlyph").toString(),QString("EyeDanger"));
+        w.setKind(Z_InputField::Kind::Search);w.setAllowClear(true);
+        QSignalSpy searches(&w,&Z_InputField::searchRequested);
+        w.setLoading(true);w.findChild<field::Action*>("SEARCH_ACTION")->click();QCOMPARE(searches.count(),0);
+        QCOMPARE(w.findChild<field::Action*>("SEARCH_ACTION")->property("figmaInputGlyph").toString(),QString("LoadingPrimary"));
+        w.setLoading(false);w.findChild<field::Action*>("SEARCH_ACTION")->click();QCOMPARE(searches.count(),1);
+        w.setControlled(true);QSignalSpy requests(&w,&Z_InputField::valueChangeRequested);
+        w.findChild<field::Action*>("CLEAR")->click();QCOMPARE(requests.count(),1);QCOMPARE(w.value(),QString("ABCDE"));
+        w.setControlled(false);w.findChild<field::Action*>("CLEAR")->click();QVERIFY(w.value().isEmpty());
+        w.setKind(Z_InputField::Kind::TextArea);w.setAutoSize(false,2,5);
+        QCOMPARE(w.control()->height(),54);w.setControlSize("sm");QCOMPARE(w.control()->height(),46);
+        w.setSnapshotState("Default");w.setPlaceholder("Describe the context...");
+        QCoreApplication::processEvents();
+        QVERIFY(w.value().isEmpty());QVERIFY(area->document()->isEmpty());
+        QCOMPARE(area->placeholderText(),QString("Describe the context..."));
+        if(!evidence.isEmpty())QVERIFY(w.grab().save(evidence+"/input-textarea-captured.png"));
+        w.setVariant("underlined");QVERIFY(!w.control()->isFigmaInputAppearance());
+        QVERIFY(w.control()->property("figmaInputCompatibilityFallback").toBool());
+        w.setVariant("outlined");QVERIFY(w.control()->isFigmaInputAppearance());
+        w.setAppearance("solid");QVERIFY(!w.control()->isFigmaInputAppearance());
+        w.setAppearance("figma-light");w.setKind(Z_InputField::Kind::Text);w.setSnapshotState("");
+        line->setFocus();QInputMethodEvent commit;commit.setCommitString(QString::fromUtf8("中文"));
+        QApplication::sendEvent(line,&commit);QCOMPARE(w.value(),QString::fromUtf8("中文"));
+        QVERIFY_EXCEPTION_THROWN(w.setSnapshotState("Pressed"),std::invalid_argument);
+    }
+    void capturedInputInitialTextRendering() {
+        Z_InputField w(tokens);w.setKind(Z_InputField::Kind::Password);
+        w.setAppearance("figma-light");w.setValue("secret42");w.setSnapshotState("Default");show(w,320);
+        QCOMPARE(w.lineEdit()->displayText(),QString(8,QChar(0x2022)));
+        QCOMPARE(QFontInfo(w.lineEdit()->font()).family(),QString("Inter"));
+        QCOMPARE(w.lineEdit()->font().weight(),int(QFont::Medium));
+        w.setAppearance("solid");QVERIFY(w.lineEdit()->displayText()!=QString(8,QChar(0x2022)));
+    }
+    void capturedInputInitialPlaceholderRendering() {
+        Z_InputField w(tokens);w.setKind(Z_InputField::Kind::TextArea);w.setAppearance("figma-light");
+        w.setPlaceholder("Describe the context...");w.setSnapshotState("Default");w.setReadOnly(true);show(w,320);
+        QSignalSpy nativeChanges(w.textArea(),&QPlainTextEdit::textChanged);
+        QSignalSpy valueChanges(&w,&Z_InputField::valueChanged);
+        const auto image=w.grab().toImage().convertToFormat(QImage::Format_ARGB32);
+        int textPixels=0;
+        for(int y=4;y<23;++y)for(int x=18;x<220;++x)
+            if(image.pixelColor(x,y).alpha()>0 && image.pixelColor(x,y).value()<210)++textPixels;
+        QVERIFY2(textPixels>20,qPrintable(QString("placeholder pixels=%1").arg(textPixels)));
+        QCOMPARE(nativeChanges.count(),0);QCOMPARE(valueChanges.count(),0);
+    }
+    void capturedTextAreaLineHeightKeepsNativeEditing() {
+        Z_InputField w(tokens);w.setKind(Z_InputField::Kind::TextArea);w.setAppearance("figma-light");
+        w.setValue("First line\nSecond line");show(w,320);
+        auto* area=w.textArea();auto* doc=area->document();
+        QCOMPARE(QFontInfo(area->font()).family(),QString("Inter"));
+        QCOMPARE(area->font().weight(),int(QFont::Medium));
+        QCOMPARE(doc->documentLayout()->blockBoundingRect(doc->begin()).height(),14.0);
+        auto cursor=area->textCursor();cursor.setPosition(0);area->setTextCursor(cursor);
+        const int firstY=area->cursorRect().y();
+        QTest::keyClick(area,Qt::Key_Down);QCOMPARE(area->cursorRect().y()-firstY,14);
+        area->moveCursor(QTextCursor::End);QTest::keyClicks(area,"!");
+        QCOMPARE(w.value(),QString("First line\nSecond line!"));
+        area->undo();QCOMPARE(w.value(),QString("First line\nSecond line"));
+        w.setAppearance("solid");QVERIFY(doc->documentLayout()->blockBoundingRect(doc->begin()).height()>14);
     }
     void editingGraphemesAndIme() {
         Z_InputField w(tokens);
@@ -160,6 +242,8 @@ class FormsTests : public QObject {
         QCOMPARE(search.count(), 2);
     }
     void textAreaAutosizeAndCount() {
+        // The gallery registers this CJK fallback before a user opens legacy Input examples.
+        QVERIFY(QFontDatabase::addApplicationFont(":/figma/fonts/NotoSansSC-Regular.otf") >= 0);
         Z_InputField w(tokens);
         w.setKind(Z_InputField::Kind::TextArea);
         w.setAutoSize(true, 2, 4);

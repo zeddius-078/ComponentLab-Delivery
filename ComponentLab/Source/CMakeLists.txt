@@ -32,6 +32,26 @@ target_link_libraries(component_lab_presentation PUBLIC GeneratedComponentSDK::C
 set(COMPONENT_LAB_DEMO_SOURCES
     delivery/demo/DemoWindow.h delivery/demo/DemoWindow.cpp
     delivery/demo/NativeGalleryPages.h delivery/demo/NativeGalleryPages.cpp
+    delivery/demo/NavigationGallery.h delivery/demo/NavigationGallery.cpp
+    delivery/demo/FigmaGalleryView.h delivery/demo/FigmaGalleryView.cpp
+    delivery/demo/FigmaLayoutEvidence.h delivery/demo/FigmaLayoutEvidence.cpp
+    delivery/demo/CheckboxGallery.h delivery/demo/CheckboxGallery.cpp
+    delivery/demo/ButtonGallery.h delivery/demo/ButtonGallery.cpp
+    delivery/demo/DisplayGallery.h delivery/demo/DisplayGallery.cpp
+    delivery/demo/ActionGallery.h delivery/demo/ActionGallery.cpp
+    delivery/demo/TabsGallery.h delivery/demo/TabsGallery.cpp
+    delivery/demo/ToolBoxGallery.h delivery/demo/ToolBoxGallery.cpp
+    delivery/demo/DockWidgetGallery.h delivery/demo/DockWidgetGallery.cpp
+    delivery/demo/MdiGallery.h delivery/demo/MdiGallery.cpp
+    delivery/demo/SelectionGallery.h delivery/demo/SelectionGallery.cpp
+    delivery/demo/InputGallery.h delivery/demo/InputGallery.cpp
+    delivery/demo/PageFlowGallery.h delivery/demo/PageFlowGallery.cpp
+    delivery/demo/CompositeGallery.h delivery/demo/CompositeGallery.cpp
+    delivery/demo/DataViewsGallery.h delivery/demo/DataViewsGallery.cpp
+    delivery/demo/WindowsGallery.h delivery/demo/WindowsGallery.cpp
+    delivery/demo/ContainersGallery.h delivery/demo/ContainersGallery.cpp
+    delivery/demo/NativeDisplayGallery.h delivery/demo/NativeDisplayGallery.cpp
+    delivery/demo/EvidenceGallery.h delivery/demo/EvidenceGallery.cpp
     delivery/demo/ButtonPages.cpp delivery/demo/FormPages.cpp
     delivery/demo/ComponentLab.ui)
 

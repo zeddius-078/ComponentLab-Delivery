@@ -7,7 +7,7 @@ if ([IO.Path]::GetExtension($zip) -ne '.zip' -or (Test-Path -LiteralPath $zip)) 
 if ($zip.StartsWith($project + '\', [StringComparison]::OrdinalIgnoreCase)) { throw 'Export outside the project.' }
 # Collect only this project's maintained files and deployable programs.
 $files = @((Get-Item -LiteralPath "$project/README.md"))
-foreach ($folder in @('Source','docs','build/sdk','build/demo')) {
+foreach ($folder in @('Source','docs','build/demo')) {
     $files += Get-ChildItem -LiteralPath "$project/$folder" -Recurse -File -Force |
         Where-Object { $_.FullName -notmatch '[\\/]__pycache__[\\/]' -and $_.Extension -notin '.pyc','.pdb','.obj' }
 }
@@ -23,7 +23,7 @@ try {
     }
     $entry = $archive.CreateEntry("$projectName/DELIVERY.json")
     $writer = [IO.StreamWriter]::new($entry.Open(),[Text.UTF8Encoding]::new($false))
-    try { $writer.Write((@{scope='Source, docs, build/sdk, build/demo';validation='Inventory only; see independently executed checks';files=$manifest} | ConvertTo-Json -Depth 6)) }
+    try { $writer.Write((@{scope='Source, docs, build/demo; SDK is an external authoritative dependency';validation='Inventory only; see independently executed checks';files=$manifest} | ConvertTo-Json -Depth 6)) }
     finally { $writer.Dispose() }
 } finally { $archive.Dispose() }
 Write-Output $zip

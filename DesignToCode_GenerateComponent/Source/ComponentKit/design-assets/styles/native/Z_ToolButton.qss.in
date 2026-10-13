@@ -1,19 +1,19 @@
 /* Z_ToolButton <- QToolButton; compiled from the active Token profile. */
-*[designSystemClass="commonWidget::Z_ToolButton"] {
+*[designSystemClass="commonWidget::Z_ToolButton"][designSystemStyleOwner="tokens"] {
     color: @FOREGROUND@;
     background-color: @SURFACE@;
     font-size: @FONT_SIZE@px;
 }
-*[designSystemClass="commonWidget::Z_ToolButton"]:disabled {
+*[designSystemClass="commonWidget::Z_ToolButton"][designSystemStyleOwner="tokens"]:disabled {
     color: @DISABLED_TEXT@;
     background-color: @DISABLED@;
     border-color: @DISABLED_BORDER@;
 }
-*[designSystemClass="commonWidget::Z_ToolButton"] {
+*[designSystemClass="commonWidget::Z_ToolButton"][designSystemStyleOwner="tokens"] {
     min-height: @HEIGHT@px;
     border: 1px solid @BORDER@;
     border-radius: @RADIUS@px;
     padding: 0 12px;
 }
-*[designSystemClass="commonWidget::Z_ToolButton"]:hover { background-color: @PRIMARY_SOFT@; }
-*[designSystemClass="commonWidget::Z_ToolButton"]:pressed { border-color: @PRIMARY@; }
+*[designSystemClass="commonWidget::Z_ToolButton"][designSystemStyleOwner="tokens"]:hover { background-color: @PRIMARY_SOFT@; }
+*[designSystemClass="commonWidget::Z_ToolButton"][designSystemStyleOwner="tokens"]:pressed { border-color: @PRIMARY@; }

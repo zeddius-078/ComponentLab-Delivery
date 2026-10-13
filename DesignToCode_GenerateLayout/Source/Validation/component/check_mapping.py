@@ -4,10 +4,14 @@
 # 检查使用 assert，执行时保留断言，使用 python -B 而不加 -O/-OO。
 import hashlib
 import json
+import os
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
-SDK = ROOT.parent / 'build/sdk'
+SDK = Path(os.environ.get(
+    'GENERATED_COMPONENT_SDK_ROOT',
+    ROOT.parent.parent / 'DesignToCode_GenerateComponent' / 'build' / 'sdk',
+)).resolve()
 raw = json.loads((ROOT / 'HtmlDsl/pipeline/design-inputs/node-12-382-full/canonical.raw.json').read_bytes())
 mapping = json.loads((ROOT / 'HtmlDsl/pipeline/mapping/component-mapping.json').read_bytes())
 definitions = {n['guid']: n for n in raw['pixComponentTreeDslNodes']}

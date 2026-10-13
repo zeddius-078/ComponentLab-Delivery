@@ -31,7 +31,7 @@ if (-not $Unverified) {
     if (-not $builds.Count -or -not $proofs.Count -or -not $native.Count) { throw 'Complete current build tests, Token proof and native verification, or explicitly use -Unverified' }
 }
 $items = [System.Collections.Generic.List[object]]::new()
-foreach ($folder in @('build/demo/component_gallery','build/sdk','Source','docs')) {
+foreach ($folder in @('build/demo/component_gallery','Source','docs')) {
     foreach ($file in Get-ChildItem -LiteralPath (Join-Path $root $folder) -Recurse -File -Force) {
         $relative = [IO.Path]::GetRelativePath($root,$file.FullName).Replace('\','/')
         if ($relative -match '^Source/(delivery/\.work|build|dist|release|delivery/tools/workspace)/' -or

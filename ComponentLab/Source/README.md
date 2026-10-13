@@ -6,7 +6,7 @@
 | `delivery/tests` | 外观、状态、组合与目录边界测试 |
 | `delivery/tools` | 构建、部署、检查和打包入口 |
 | `presentation` | 演示专用主题安装、图标样例和组合控制器 |
-| `GeneratedComponentDependency.cmake` | 构建时加载已导入 SDK |
-| `Import-GeneratedComponentSDK.ps1` | 校验发布者与哈希后复制 SDK 到本项目 build |
+| `GeneratedComponentDependency.cmake` | 构建时加载工作区唯一权威 SDK |
+| `Verify-GeneratedComponentSDK.ps1` | 校验权威 SDK 的发布者与逐文件哈希，不复制文件 |
 
-本目录不保存组件实现、DesignSystem 源或 Token 编译器。组件能力来自经哈希校验导入的 `build/sdk`。
+本目录不保存组件实现、DesignSystem 源、Token 编译器或 SDK 副本。组件能力直接来自 `DesignToCode_GenerateComponent/build/sdk`；外部工作区通过 `GENERATED_COMPONENT_SDK_ROOT` 指定同一权威发布目录。

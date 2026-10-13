@@ -1,0 +1,1758 @@
+{
+  "schemaVersion": 1,
+  "fileKey": "w92BKW1EcutKmTXkwzNHbf",
+  "status": "CAPTURED_LIGHT_NOT_DESIGN_APPROVED",
+  "pageId": "475:334",
+  "galleryId": "475:39",
+  "set": {
+    "id": "475:551",
+    "x": 28,
+    "y": 85,
+    "w": 1256,
+    "h": 430,
+    "fills": [],
+    "properties": {
+      "Value#475:24": {
+        "type": "TEXT",
+        "defaultValue": "40"
+      },
+      "Show value#475:25": {
+        "type": "BOOLEAN",
+        "defaultValue": true
+      },
+      "Show notches#475:26": {
+        "type": "BOOLEAN",
+        "defaultValue": true
+      },
+      "Wrapping": {
+        "type": "VARIANT",
+        "defaultValue": "Off",
+        "variantOptions": [
+          "Off",
+          "On"
+        ]
+      },
+      "State": {
+        "type": "VARIANT",
+        "defaultValue": "Default",
+        "variantOptions": [
+          "Default",
+          "Focus",
+          "Dragging",
+          "Disabled"
+        ]
+      }
+    }
+  },
+  "variants": [
+    {
+      "id": "475:405",
+      "name": "Wrapping=Off, State=Default",
+      "x": 24,
+      "y": 24,
+      "w": 180,
+      "h": 180
+    },
+    {
+      "id": "475:423",
+      "name": "Wrapping=Off, State=Focus",
+      "x": 224,
+      "y": 24,
+      "w": 180,
+      "h": 180
+    },
+    {
+      "id": "475:442",
+      "name": "Wrapping=Off, State=Dragging",
+      "x": 424,
+      "y": 24,
+      "w": 180,
+      "h": 180
+    },
+    {
+      "id": "475:460",
+      "name": "Wrapping=Off, State=Disabled",
+      "x": 624,
+      "y": 24,
+      "w": 180,
+      "h": 180
+    },
+    {
+      "id": "475:478",
+      "name": "Wrapping=On, State=Default",
+      "x": 24,
+      "y": 220,
+      "w": 180,
+      "h": 180
+    },
+    {
+      "id": "475:496",
+      "name": "Wrapping=On, State=Focus",
+      "x": 224,
+      "y": 220,
+      "w": 180,
+      "h": 180
+    },
+    {
+      "id": "475:515",
+      "name": "Wrapping=On, State=Dragging",
+      "x": 424,
+      "y": 220,
+      "w": 180,
+      "h": 180
+    },
+    {
+      "id": "475:533",
+      "name": "Wrapping=On, State=Disabled",
+      "x": 624,
+      "y": 220,
+      "w": 180,
+      "h": 180
+    }
+  ],
+  "sourceGeometry": {
+    "off": {
+      "id": "475:405",
+      "name": "Wrapping=Off, State=Default",
+      "type": "COMPONENT",
+      "x": 24,
+      "y": 24,
+      "w": 180,
+      "h": 180,
+      "transform": [
+        [
+          1,
+          0,
+          24
+        ],
+        [
+          0,
+          1,
+          24
+        ]
+      ],
+      "fills": [],
+      "strokeWeight": 1,
+      "radius": 0,
+      "children": [
+        {
+          "id": "475:406",
+          "name": "Range arc",
+          "type": "ELLIPSE",
+          "x": 30,
+          "y": 26,
+          "w": 120,
+          "h": 120,
+          "transform": [
+            [
+              1,
+              0,
+              30
+            ],
+            [
+              0,
+              1,
+              26
+            ]
+          ],
+          "fills": [
+            {
+              "type": "SOLID",
+              "visible": true,
+              "opacity": 1,
+              "blendMode": "NORMAL",
+              "color": {
+                "r": 0.8156862854957581,
+                "g": 0.8156862854957581,
+                "b": 0.8156862854957581
+              },
+              "boundVariables": {
+                "color": {
+                  "type": "VARIABLE_ALIAS",
+                  "id": "VariableID:475:2"
+                }
+              }
+            }
+          ],
+          "arc": {
+            "startingAngle": -2.356194496154785,
+            "endingAngle": 2.356194496154785,
+            "innerRadius": 0.8199999928474426
+          },
+          "strokeWeight": 1,
+          "radius": 0
+        },
+        {
+          "id": "475:407",
+          "name": "Active arc",
+          "type": "ELLIPSE",
+          "x": 30,
+          "y": 26,
+          "w": 120,
+          "h": 120,
+          "transform": [
+            [
+              1,
+              0,
+              30
+            ],
+            [
+              0,
+              1,
+              26
+            ]
+          ],
+          "fills": [
+            {
+              "type": "SOLID",
+              "visible": true,
+              "opacity": 1,
+              "blendMode": "NORMAL",
+              "color": {
+                "r": 0.3843137323856354,
+                "g": 0.2078431397676468,
+                "b": 0.9686274528503418
+              },
+              "boundVariables": {
+                "color": {
+                  "type": "VARIABLE_ALIAS",
+                  "id": "VariableID:1512:71"
+                }
+              }
+            }
+          ],
+          "arc": {
+            "startingAngle": -2.356194496154785,
+            "endingAngle": -0.471238911151886,
+            "innerRadius": 0.8199999928474426
+          },
+          "strokeWeight": 1,
+          "radius": 0
+        },
+        {
+          "id": "475:408",
+          "name": "Notch",
+          "type": "RECTANGLE",
+          "x": 41.623844146728516,
+          "y": 35.123844146728516,
+          "w": 2,
+          "h": 7,
+          "transform": [
+            [
+              0.7071068286895752,
+              -0.7071068286895752,
+              41.623844146728516
+            ],
+            [
+              0.7071068286895752,
+              0.7071068286895752,
+              35.123844146728516
+            ]
+          ],
+          "fills": [
+            {
+              "type": "SOLID",
+              "visible": true,
+              "opacity": 1,
+              "blendMode": "NORMAL",
+              "color": {
+                "r": 0.6549019813537598,
+                "g": 0.6549019813537598,
+                "b": 0.6549019813537598
+              },
+              "boundVariables": {
+                "color": {
+                  "type": "VARIABLE_ALIAS",
+                  "id": "VariableID:475:8"
+                }
+              }
+            }
+          ],
+          "strokeWeight": 1,
+          "radius": 1
+        },
+        {
+          "id": "475:409",
+          "name": "Notch",
+          "type": "RECTANGLE",
+          "x": 65.58589935302734,
+          "y": 19.724369049072266,
+          "w": 2,
+          "h": 7,
+          "transform": [
+            [
+              0.9369497299194336,
+              -0.34946417808532715,
+              65.58589935302734
+            ],
+            [
+              0.34946417808532715,
+              0.9369497299194336,
+              19.724369049072266
+            ]
+          ],
+          "fills": [
+            {
+              "type": "SOLID",
+              "visible": true,
+              "opacity": 1,
+              "blendMode": "NORMAL",
+              "color": {
+                "r": 0.6549019813537598,
+                "g": 0.6549019813537598,
+                "b": 0.6549019813537598
+              },
+              "boundVariables": {
+                "color": {
+                  "type": "VARIABLE_ALIAS",
+                  "id": "VariableID:475:8"
+                }
+              }
+            }
+          ],
+          "strokeWeight": 1,
+          "radius": 1
+        },
+        {
+          "id": "475:410",
+          "name": "Notch",
+          "type": "RECTANGLE",
+          "x": 93.77972412109375,
+          "y": 15.670708656311035,
+          "w": 2,
+          "h": 7,
+          "transform": [
+            [
+              0.9974521398544312,
+              0.0713391825556755,
+              93.77972412109375
+            ],
+            [
+              -0.0713391825556755,
+              0.9974521398544312,
+              15.670708656311035
+            ]
+          ],
+          "fills": [
+            {
+              "type": "SOLID",
+              "visible": true,
+              "opacity": 1,
+              "blendMode": "NORMAL",
+              "color": {
+                "r": 0.6549019813537598,
+                "g": 0.6549019813537598,
+                "b": 0.6549019813537598
+              },
+              "boundVariables": {
+                "color": {
+                  "type": "VARIABLE_ALIAS",
+                  "id": "VariableID:475:8"
+                }
+              }
+            }
+          ],
+          "strokeWeight": 1,
+          "radius": 1
+        },
+        {
+          "id": "475:411",
+          "name": "Notch",
+          "type": "RECTANGLE",
+          "x": 121.10968017578125,
+          "y": 23.695507049560547,
+          "w": 2,
+          "h": 7,
+          "transform": [
+            [
+              0.8776789903640747,
+              0.4792490005493164,
+              121.10968017578125
+            ],
+            [
+              -0.4792490005493164,
+              0.8776789903640747,
+              23.695507049560547
+            ]
+          ],
+          "fills": [
+            {
+              "type": "SOLID",
+              "visible": true,
+              "opacity": 1,
+              "blendMode": "NORMAL",
+              "color": {
+                "r": 0.6549019813537598,
+                "g": 0.6549019813537598,
+                "b": 0.6549019813537598
+              },
+              "boundVariables": {
+                "color": {
+                  "type": "VARIABLE_ALIAS",
+                  "id": "VariableID:475:8"
+                }
+              }
+            }
+          ],
+          "strokeWeight": 1,
+          "radius": 1
+        },
+        {
+          "id": "475:412",
+          "name": "Notch",
+          "type": "RECTANGLE",
+          "x": 142.63626098632812,
+          "y": 42.34839630126953,
+          "w": 2,
+          "h": 7,
+          "transform": [
+            [
+              0.5992777347564697,
+              0.8005412817001343,
+              142.63626098632812
+            ],
+            [
+              -0.8005412817001343,
+              0.5992777347564697,
+              42.34839630126953
+            ]
+          ],
+          "fills": [
+            {
+              "type": "SOLID",
+              "visible": true,
+              "opacity": 1,
+              "blendMode": "NORMAL",
+              "color": {
+                "r": 0.6549019813537598,
+                "g": 0.6549019813537598,
+                "b": 0.6549019813537598
+              },
+              "boundVariables": {
+                "color": {
+                  "type": "VARIABLE_ALIAS",
+                  "id": "VariableID:475:8"
+                }
+              }
+            }
+          ],
+          "strokeWeight": 1,
+          "radius": 1
+        },
+        {
+          "id": "475:413",
+          "name": "Notch",
+          "type": "RECTANGLE",
+          "x": 154.46884155273438,
+          "y": 68.25812530517578,
+          "w": 2,
+          "h": 7,
+          "transform": [
+            [
+              0.21256528794765472,
+              0.9771468639373779,
+              154.46884155273438
+            ],
+            [
+              -0.9771468639373779,
+              0.21256528794765472,
+              68.25812530517578
+            ]
+          ],
+          "fills": [
+            {
+              "type": "SOLID",
+              "visible": true,
+              "opacity": 1,
+              "blendMode": "NORMAL",
+              "color": {
+                "r": 0.6549019813537598,
+                "g": 0.6549019813537598,
+                "b": 0.6549019813537598
+              },
+              "boundVariables": {
+                "color": {
+                  "type": "VARIABLE_ALIAS",
+                  "id": "VariableID:475:8"
+                }
+              }
+            }
+          ],
+          "strokeWeight": 1,
+          "radius": 1
+        },
+        {
+          "id": "475:414",
+          "name": "Notch",
+          "type": "RECTANGLE",
+          "x": 154.46884155273438,
+          "y": 96.74187469482422,
+          "w": 2,
+          "h": 7,
+          "transform": [
+            [
+              -0.21256528794765472,
+              0.9771468639373779,
+              154.46884155273438
+            ],
+            [
+              -0.9771468639373779,
+              -0.21256528794765472,
+              96.74187469482422
+            ]
+          ],
+          "fills": [
+            {
+              "type": "SOLID",
+              "visible": true,
+              "opacity": 1,
+              "blendMode": "NORMAL",
+              "color": {
+                "r": 0.6549019813537598,
+                "g": 0.6549019813537598,
+                "b": 0.6549019813537598
+              },
+              "boundVariables": {
+                "color": {
+                  "type": "VARIABLE_ALIAS",
+                  "id": "VariableID:475:8"
+                }
+              }
+            }
+          ],
+          "strokeWeight": 1,
+          "radius": 1
+        },
+        {
+          "id": "475:415",
+          "name": "Notch",
+          "type": "RECTANGLE",
+          "x": 142.63626098632812,
+          "y": 122.65160369873047,
+          "w": 2,
+          "h": 7,
+          "transform": [
+            [
+              -0.5992777347564697,
+              0.8005412817001343,
+              142.63626098632812
+            ],
+            [
+              -0.8005412817001343,
+              -0.5992777347564697,
+              122.65160369873047
+            ]
+          ],
+          "fills": [
+            {
+              "type": "SOLID",
+              "visible": true,
+              "opacity": 1,
+              "blendMode": "NORMAL",
+              "color": {
+                "r": 0.6549019813537598,
+                "g": 0.6549019813537598,
+                "b": 0.6549019813537598
+              },
+              "boundVariables": {
+                "color": {
+                  "type": "VARIABLE_ALIAS",
+                  "id": "VariableID:475:8"
+                }
+              }
+            }
+          ],
+          "strokeWeight": 1,
+          "radius": 1
+        },
+        {
+          "id": "475:416",
+          "name": "Notch",
+          "type": "RECTANGLE",
+          "x": 121.10968017578125,
+          "y": 141.3044891357422,
+          "w": 2,
+          "h": 7,
+          "transform": [
+            [
+              -0.8776789903640747,
+              0.4792490005493164,
+              121.10968017578125
+            ],
+            [
+              -0.4792490005493164,
+              -0.8776789903640747,
+              141.3044891357422
+            ]
+          ],
+          "fills": [
+            {
+              "type": "SOLID",
+              "visible": true,
+              "opacity": 1,
+              "blendMode": "NORMAL",
+              "color": {
+                "r": 0.6549019813537598,
+                "g": 0.6549019813537598,
+                "b": 0.6549019813537598
+              },
+              "boundVariables": {
+                "color": {
+                  "type": "VARIABLE_ALIAS",
+                  "id": "VariableID:475:8"
+                }
+              }
+            }
+          ],
+          "strokeWeight": 1,
+          "radius": 1
+        },
+        {
+          "id": "475:417",
+          "name": "Notch",
+          "type": "RECTANGLE",
+          "x": 93.77972412109375,
+          "y": 149.32928466796875,
+          "w": 2,
+          "h": 7,
+          "transform": [
+            [
+              -0.9974521398544312,
+              0.0713391825556755,
+              93.77972412109375
+            ],
+            [
+              -0.0713391825556755,
+              -0.9974521398544312,
+              149.32928466796875
+            ]
+          ],
+          "fills": [
+            {
+              "type": "SOLID",
+              "visible": true,
+              "opacity": 1,
+              "blendMode": "NORMAL",
+              "color": {
+                "r": 0.6549019813537598,
+                "g": 0.6549019813537598,
+                "b": 0.6549019813537598
+              },
+              "boundVariables": {
+                "color": {
+                  "type": "VARIABLE_ALIAS",
+                  "id": "VariableID:475:8"
+                }
+              }
+            }
+          ],
+          "strokeWeight": 1,
+          "radius": 1
+        },
+        {
+          "id": "475:418",
+          "name": "Notch",
+          "type": "RECTANGLE",
+          "x": 65.58589935302734,
+          "y": 145.275634765625,
+          "w": 2,
+          "h": 7,
+          "transform": [
+            [
+              -0.9369497299194336,
+              -0.34946417808532715,
+              65.58589935302734
+            ],
+            [
+              0.34946417808532715,
+              -0.9369497299194336,
+              145.275634765625
+            ]
+          ],
+          "fills": [
+            {
+              "type": "SOLID",
+              "visible": true,
+              "opacity": 1,
+              "blendMode": "NORMAL",
+              "color": {
+                "r": 0.6549019813537598,
+                "g": 0.6549019813537598,
+                "b": 0.6549019813537598
+              },
+              "boundVariables": {
+                "color": {
+                  "type": "VARIABLE_ALIAS",
+                  "id": "VariableID:475:8"
+                }
+              }
+            }
+          ],
+          "strokeWeight": 1,
+          "radius": 1
+        },
+        {
+          "id": "475:419",
+          "name": "Notch",
+          "type": "RECTANGLE",
+          "x": 41.623844146728516,
+          "y": 129.87615966796875,
+          "w": 2,
+          "h": 7,
+          "transform": [
+            [
+              -0.7071068286895752,
+              -0.7071068286895752,
+              41.623844146728516
+            ],
+            [
+              0.7071068286895752,
+              -0.7071068286895752,
+              129.87615966796875
+            ]
+          ],
+          "fills": [
+            {
+              "type": "SOLID",
+              "visible": true,
+              "opacity": 1,
+              "blendMode": "NORMAL",
+              "color": {
+                "r": 0.6549019813537598,
+                "g": 0.6549019813537598,
+                "b": 0.6549019813537598
+              },
+              "boundVariables": {
+                "color": {
+                  "type": "VARIABLE_ALIAS",
+                  "id": "VariableID:475:8"
+                }
+              }
+            }
+          ],
+          "strokeWeight": 1,
+          "radius": 1
+        },
+        {
+          "id": "475:420",
+          "name": "Pointer",
+          "type": "LINE",
+          "x": 90,
+          "y": 86,
+          "w": 36,
+          "h": 0,
+          "transform": [
+            [
+              0.8910065293312073,
+              0.45399048924446106,
+              90
+            ],
+            [
+              -0.45399048924446106,
+              0.8910065293312073,
+              86
+            ]
+          ],
+          "fills": [],
+          "strokeWeight": 4
+        },
+        {
+          "id": "475:421",
+          "name": "Hub",
+          "type": "ELLIPSE",
+          "x": 82,
+          "y": 78,
+          "w": 16,
+          "h": 16,
+          "transform": [
+            [
+              1,
+              0,
+              82
+            ],
+            [
+              0,
+              1,
+              78
+            ]
+          ],
+          "fills": [
+            {
+              "type": "SOLID",
+              "visible": true,
+              "opacity": 1,
+              "blendMode": "NORMAL",
+              "color": {
+                "r": 1,
+                "g": 1,
+                "b": 1
+              },
+              "boundVariables": {
+                "color": {
+                  "type": "VARIABLE_ALIAS",
+                  "id": "VariableID:475:5"
+                }
+              }
+            }
+          ],
+          "arc": {
+            "startingAngle": 0,
+            "endingAngle": 6.2831854820251465,
+            "innerRadius": 0
+          },
+          "strokeWeight": 1,
+          "radius": 0
+        },
+        {
+          "id": "475:422",
+          "name": "Value",
+          "type": "TEXT",
+          "x": 80.5,
+          "y": 154,
+          "w": 19,
+          "h": 14,
+          "transform": [
+            [
+              1,
+              0,
+              80.5
+            ],
+            [
+              0,
+              1,
+              154
+            ]
+          ],
+          "fills": [
+            {
+              "type": "SOLID",
+              "visible": true,
+              "opacity": 1,
+              "blendMode": "NORMAL",
+              "color": {
+                "r": 0.09803921729326248,
+                "g": 0.09803921729326248,
+                "b": 0.09803921729326248
+              },
+              "boundVariables": {
+                "color": {
+                  "type": "VARIABLE_ALIAS",
+                  "id": "VariableID:475:6"
+                }
+              }
+            }
+          ],
+          "strokeWeight": 1
+        }
+      ]
+    },
+    "on": {
+      "id": "475:478",
+      "name": "Wrapping=On, State=Default",
+      "type": "COMPONENT",
+      "x": 24,
+      "y": 220,
+      "w": 180,
+      "h": 180,
+      "transform": [
+        [
+          1,
+          0,
+          24
+        ],
+        [
+          0,
+          1,
+          220
+        ]
+      ],
+      "fills": [],
+      "strokeWeight": 1,
+      "radius": 0,
+      "children": [
+        {
+          "id": "475:479",
+          "name": "Range arc",
+          "type": "ELLIPSE",
+          "x": 30,
+          "y": 26,
+          "w": 120,
+          "h": 120,
+          "transform": [
+            [
+              1,
+              0,
+              30
+            ],
+            [
+              0,
+              1,
+              26
+            ]
+          ],
+          "fills": [
+            {
+              "type": "SOLID",
+              "visible": true,
+              "opacity": 1,
+              "blendMode": "NORMAL",
+              "color": {
+                "r": 0.8156862854957581,
+                "g": 0.8156862854957581,
+                "b": 0.8156862854957581
+              },
+              "boundVariables": {
+                "color": {
+                  "type": "VARIABLE_ALIAS",
+                  "id": "VariableID:475:2"
+                }
+              }
+            }
+          ],
+          "arc": {
+            "startingAngle": -1.5707963705062866,
+            "endingAngle": 4.71238899230957,
+            "innerRadius": 0.8199999928474426
+          },
+          "strokeWeight": 1,
+          "radius": 0
+        },
+        {
+          "id": "475:480",
+          "name": "Active arc",
+          "type": "ELLIPSE",
+          "x": 30,
+          "y": 26,
+          "w": 120,
+          "h": 120,
+          "transform": [
+            [
+              1,
+              0,
+              30
+            ],
+            [
+              0,
+              1,
+              26
+            ]
+          ],
+          "fills": [
+            {
+              "type": "SOLID",
+              "visible": true,
+              "opacity": 1,
+              "blendMode": "NORMAL",
+              "color": {
+                "r": 0.3843137323856354,
+                "g": 0.2078431397676468,
+                "b": 0.9686274528503418
+              },
+              "boundVariables": {
+                "color": {
+                  "type": "VARIABLE_ALIAS",
+                  "id": "VariableID:1512:71"
+                }
+              }
+            }
+          ],
+          "arc": {
+            "startingAngle": -1.5707963705062866,
+            "endingAngle": 0.942477822303772,
+            "innerRadius": 0.8199999928474426
+          },
+          "strokeWeight": 1,
+          "radius": 0
+        },
+        {
+          "id": "475:481",
+          "name": "Notch",
+          "type": "RECTANGLE",
+          "x": 89,
+          "y": 15.5,
+          "w": 2,
+          "h": 7,
+          "transform": [
+            [
+              1,
+              0,
+              89
+            ],
+            [
+              0,
+              1,
+              15.5
+            ]
+          ],
+          "fills": [
+            {
+              "type": "SOLID",
+              "visible": true,
+              "opacity": 1,
+              "blendMode": "NORMAL",
+              "color": {
+                "r": 0.6549019813537598,
+                "g": 0.6549019813537598,
+                "b": 0.6549019813537598
+              },
+              "boundVariables": {
+                "color": {
+                  "type": "VARIABLE_ALIAS",
+                  "id": "VariableID:475:8"
+                }
+              }
+            }
+          ],
+          "strokeWeight": 1,
+          "radius": 1
+        },
+        {
+          "id": "475:482",
+          "name": "Notch",
+          "type": "RECTANGLE",
+          "x": 122.5,
+          "y": 24.47629737854004,
+          "w": 2,
+          "h": 7,
+          "transform": [
+            [
+              0.8660253882408142,
+              0.5,
+              122.5
+            ],
+            [
+              -0.5,
+              0.8660253882408142,
+              24.47629737854004
+            ]
+          ],
+          "fills": [
+            {
+              "type": "SOLID",
+              "visible": true,
+              "opacity": 1,
+              "blendMode": "NORMAL",
+              "color": {
+                "r": 0.6549019813537598,
+                "g": 0.6549019813537598,
+                "b": 0.6549019813537598
+              },
+              "boundVariables": {
+                "color": {
+                  "type": "VARIABLE_ALIAS",
+                  "id": "VariableID:475:8"
+                }
+              }
+            }
+          ],
+          "strokeWeight": 1,
+          "radius": 1
+        },
+        {
+          "id": "475:483",
+          "name": "Notch",
+          "type": "RECTANGLE",
+          "x": 147.02369689941406,
+          "y": 49,
+          "w": 2,
+          "h": 7,
+          "transform": [
+            [
+              0.5,
+              0.8660253882408142,
+              147.02369689941406
+            ],
+            [
+              -0.8660253882408142,
+              0.5,
+              49
+            ]
+          ],
+          "fills": [
+            {
+              "type": "SOLID",
+              "visible": true,
+              "opacity": 1,
+              "blendMode": "NORMAL",
+              "color": {
+                "r": 0.6549019813537598,
+                "g": 0.6549019813537598,
+                "b": 0.6549019813537598
+              },
+              "boundVariables": {
+                "color": {
+                  "type": "VARIABLE_ALIAS",
+                  "id": "VariableID:475:8"
+                }
+              }
+            }
+          ],
+          "strokeWeight": 1,
+          "radius": 1
+        },
+        {
+          "id": "475:484",
+          "name": "Notch",
+          "type": "RECTANGLE",
+          "x": 156,
+          "y": 82.5,
+          "w": 2,
+          "h": 7,
+          "transform": [
+            [
+              6.123234262925839e-17,
+              1,
+              156
+            ],
+            [
+              -1,
+              6.123234262925839e-17,
+              82.5
+            ]
+          ],
+          "fills": [
+            {
+              "type": "SOLID",
+              "visible": true,
+              "opacity": 1,
+              "blendMode": "NORMAL",
+              "color": {
+                "r": 0.6549019813537598,
+                "g": 0.6549019813537598,
+                "b": 0.6549019813537598
+              },
+              "boundVariables": {
+                "color": {
+                  "type": "VARIABLE_ALIAS",
+                  "id": "VariableID:475:8"
+                }
+              }
+            }
+          ],
+          "strokeWeight": 1,
+          "radius": 1
+        },
+        {
+          "id": "475:485",
+          "name": "Notch",
+          "type": "RECTANGLE",
+          "x": 147.02369689941406,
+          "y": 116,
+          "w": 2,
+          "h": 7,
+          "transform": [
+            [
+              -0.5,
+              0.8660253882408142,
+              147.02369689941406
+            ],
+            [
+              -0.8660253882408142,
+              -0.5,
+              116
+            ]
+          ],
+          "fills": [
+            {
+              "type": "SOLID",
+              "visible": true,
+              "opacity": 1,
+              "blendMode": "NORMAL",
+              "color": {
+                "r": 0.6549019813537598,
+                "g": 0.6549019813537598,
+                "b": 0.6549019813537598
+              },
+              "boundVariables": {
+                "color": {
+                  "type": "VARIABLE_ALIAS",
+                  "id": "VariableID:475:8"
+                }
+              }
+            }
+          ],
+          "strokeWeight": 1,
+          "radius": 1
+        },
+        {
+          "id": "475:486",
+          "name": "Notch",
+          "type": "RECTANGLE",
+          "x": 122.5,
+          "y": 140.52369689941406,
+          "w": 2,
+          "h": 7,
+          "transform": [
+            [
+              -0.8660253882408142,
+              0.5,
+              122.5
+            ],
+            [
+              -0.5,
+              -0.8660253882408142,
+              140.52369689941406
+            ]
+          ],
+          "fills": [
+            {
+              "type": "SOLID",
+              "visible": true,
+              "opacity": 1,
+              "blendMode": "NORMAL",
+              "color": {
+                "r": 0.6549019813537598,
+                "g": 0.6549019813537598,
+                "b": 0.6549019813537598
+              },
+              "boundVariables": {
+                "color": {
+                  "type": "VARIABLE_ALIAS",
+                  "id": "VariableID:475:8"
+                }
+              }
+            }
+          ],
+          "strokeWeight": 1,
+          "radius": 1
+        },
+        {
+          "id": "475:487",
+          "name": "Notch",
+          "type": "RECTANGLE",
+          "x": 89,
+          "y": 149.5,
+          "w": 2,
+          "h": 7,
+          "transform": [
+            [
+              -1,
+              1.2246468525851679e-16,
+              89
+            ],
+            [
+              -1.2246468525851679e-16,
+              -1,
+              149.5
+            ]
+          ],
+          "fills": [
+            {
+              "type": "SOLID",
+              "visible": true,
+              "opacity": 1,
+              "blendMode": "NORMAL",
+              "color": {
+                "r": 0.6549019813537598,
+                "g": 0.6549019813537598,
+                "b": 0.6549019813537598
+              },
+              "boundVariables": {
+                "color": {
+                  "type": "VARIABLE_ALIAS",
+                  "id": "VariableID:475:8"
+                }
+              }
+            }
+          ],
+          "strokeWeight": 1,
+          "radius": 1
+        },
+        {
+          "id": "475:488",
+          "name": "Notch",
+          "type": "RECTANGLE",
+          "x": 55.5,
+          "y": 140.52369689941406,
+          "w": 2,
+          "h": 7,
+          "transform": [
+            [
+              -0.8660253882408142,
+              -0.5,
+              55.5
+            ],
+            [
+              0.5,
+              -0.8660253882408142,
+              140.52369689941406
+            ]
+          ],
+          "fills": [
+            {
+              "type": "SOLID",
+              "visible": true,
+              "opacity": 1,
+              "blendMode": "NORMAL",
+              "color": {
+                "r": 0.6549019813537598,
+                "g": 0.6549019813537598,
+                "b": 0.6549019813537598
+              },
+              "boundVariables": {
+                "color": {
+                  "type": "VARIABLE_ALIAS",
+                  "id": "VariableID:475:8"
+                }
+              }
+            }
+          ],
+          "strokeWeight": 1,
+          "radius": 1
+        },
+        {
+          "id": "475:489",
+          "name": "Notch",
+          "type": "RECTANGLE",
+          "x": 30.97629737854004,
+          "y": 116,
+          "w": 2,
+          "h": 7,
+          "transform": [
+            [
+              -0.5,
+              -0.8660253882408142,
+              30.97629737854004
+            ],
+            [
+              0.8660253882408142,
+              -0.5,
+              116
+            ]
+          ],
+          "fills": [
+            {
+              "type": "SOLID",
+              "visible": true,
+              "opacity": 1,
+              "blendMode": "NORMAL",
+              "color": {
+                "r": 0.6549019813537598,
+                "g": 0.6549019813537598,
+                "b": 0.6549019813537598
+              },
+              "boundVariables": {
+                "color": {
+                  "type": "VARIABLE_ALIAS",
+                  "id": "VariableID:475:8"
+                }
+              }
+            }
+          ],
+          "strokeWeight": 1,
+          "radius": 1
+        },
+        {
+          "id": "475:490",
+          "name": "Notch",
+          "type": "RECTANGLE",
+          "x": 22,
+          "y": 82.5,
+          "w": 2,
+          "h": 7,
+          "transform": [
+            [
+              -1.8369701465288538e-16,
+              -1,
+              22
+            ],
+            [
+              1,
+              -1.8369701465288538e-16,
+              82.5
+            ]
+          ],
+          "fills": [
+            {
+              "type": "SOLID",
+              "visible": true,
+              "opacity": 1,
+              "blendMode": "NORMAL",
+              "color": {
+                "r": 0.6549019813537598,
+                "g": 0.6549019813537598,
+                "b": 0.6549019813537598
+              },
+              "boundVariables": {
+                "color": {
+                  "type": "VARIABLE_ALIAS",
+                  "id": "VariableID:475:8"
+                }
+              }
+            }
+          ],
+          "strokeWeight": 1,
+          "radius": 1
+        },
+        {
+          "id": "475:491",
+          "name": "Notch",
+          "type": "RECTANGLE",
+          "x": 30.97629737854004,
+          "y": 49,
+          "w": 2,
+          "h": 7,
+          "transform": [
+            [
+              0.5,
+              -0.8660253882408142,
+              30.97629737854004
+            ],
+            [
+              0.8660253882408142,
+              0.5,
+              49
+            ]
+          ],
+          "fills": [
+            {
+              "type": "SOLID",
+              "visible": true,
+              "opacity": 1,
+              "blendMode": "NORMAL",
+              "color": {
+                "r": 0.6549019813537598,
+                "g": 0.6549019813537598,
+                "b": 0.6549019813537598
+              },
+              "boundVariables": {
+                "color": {
+                  "type": "VARIABLE_ALIAS",
+                  "id": "VariableID:475:8"
+                }
+              }
+            }
+          ],
+          "strokeWeight": 1,
+          "radius": 1
+        },
+        {
+          "id": "475:492",
+          "name": "Notch",
+          "type": "RECTANGLE",
+          "x": 55.5,
+          "y": 24.47629737854004,
+          "w": 2,
+          "h": 7,
+          "transform": [
+            [
+              0.8660253882408142,
+              -0.5,
+              55.5
+            ],
+            [
+              0.5,
+              0.8660253882408142,
+              24.47629737854004
+            ]
+          ],
+          "fills": [
+            {
+              "type": "SOLID",
+              "visible": true,
+              "opacity": 1,
+              "blendMode": "NORMAL",
+              "color": {
+                "r": 0.6549019813537598,
+                "g": 0.6549019813537598,
+                "b": 0.6549019813537598
+              },
+              "boundVariables": {
+                "color": {
+                  "type": "VARIABLE_ALIAS",
+                  "id": "VariableID:475:8"
+                }
+              }
+            }
+          ],
+          "strokeWeight": 1,
+          "radius": 1
+        },
+        {
+          "id": "475:493",
+          "name": "Pointer",
+          "type": "LINE",
+          "x": 90,
+          "y": 86,
+          "w": 36,
+          "h": 0,
+          "transform": [
+            [
+              0.5877852439880371,
+              -0.80901700258255,
+              90
+            ],
+            [
+              0.80901700258255,
+              0.5877852439880371,
+              86
+            ]
+          ],
+          "fills": [],
+          "strokeWeight": 4
+        },
+        {
+          "id": "475:494",
+          "name": "Hub",
+          "type": "ELLIPSE",
+          "x": 82,
+          "y": 78,
+          "w": 16,
+          "h": 16,
+          "transform": [
+            [
+              1,
+              0,
+              82
+            ],
+            [
+              0,
+              1,
+              78
+            ]
+          ],
+          "fills": [
+            {
+              "type": "SOLID",
+              "visible": true,
+              "opacity": 1,
+              "blendMode": "NORMAL",
+              "color": {
+                "r": 1,
+                "g": 1,
+                "b": 1
+              },
+              "boundVariables": {
+                "color": {
+                  "type": "VARIABLE_ALIAS",
+                  "id": "VariableID:475:5"
+                }
+              }
+            }
+          ],
+          "arc": {
+            "startingAngle": 0,
+            "endingAngle": 6.2831854820251465,
+            "innerRadius": 0
+          },
+          "strokeWeight": 1,
+          "radius": 0
+        },
+        {
+          "id": "475:495",
+          "name": "Value",
+          "type": "TEXT",
+          "x": 80.5,
+          "y": 154,
+          "w": 19,
+          "h": 14,
+          "transform": [
+            [
+              1,
+              0,
+              80.5
+            ],
+            [
+              0,
+              1,
+              154
+            ]
+          ],
+          "fills": [
+            {
+              "type": "SOLID",
+              "visible": true,
+              "opacity": 1,
+              "blendMode": "NORMAL",
+              "color": {
+                "r": 0.09803921729326248,
+                "g": 0.09803921729326248,
+                "b": 0.09803921729326248
+              },
+              "boundVariables": {
+                "color": {
+                  "type": "VARIABLE_ALIAS",
+                  "id": "VariableID:475:6"
+                }
+              }
+            }
+          ],
+          "strokeWeight": 1
+        }
+      ]
+    },
+    "dragHub": [
+      {
+        "id": "475:458",
+        "name": "Hub",
+        "type": "ELLIPSE",
+        "x": 82,
+        "y": 78,
+        "w": 16,
+        "h": 16,
+        "transform": [
+          [
+            1,
+            0,
+            82
+          ],
+          [
+            0,
+            1,
+            78
+          ]
+        ],
+        "fills": [
+          {
+            "type": "SOLID",
+            "visible": true,
+            "opacity": 1,
+            "blendMode": "NORMAL",
+            "color": {
+              "r": 1,
+              "g": 1,
+              "b": 1
+            },
+            "boundVariables": {
+              "color": {
+                "type": "VARIABLE_ALIAS",
+                "id": "VariableID:475:5"
+              }
+            }
+          }
+        ],
+        "arc": {
+          "startingAngle": 0,
+          "endingAngle": 6.2831854820251465,
+          "innerRadius": 0
+        },
+        "effects": [
+          {
+            "type": "DROP_SHADOW",
+            "visible": true,
+            "radius": 6,
+            "boundVariables": {},
+            "color": {
+              "r": 0.23999999463558197,
+              "g": 0.11999999731779099,
+              "b": 0.800000011920929,
+              "a": 0.2199999988079071
+            },
+            "offset": {
+              "x": 0,
+              "y": 2
+            },
+            "spread": 0,
+            "blendMode": "NORMAL",
+            "showShadowBehindNode": true
+          }
+        ],
+        "strokeWeight": 1,
+        "radius": 0
+      }
+    ]
+  },
+  "assets": [
+    {
+      "name": "RangeOff",
+      "file": "runtime/assets/icons/figma-dial/RangeOff.svg",
+      "sourceAssetId": "51a1e"
+    },
+    {
+      "name": "ActiveOff",
+      "file": "runtime/assets/icons/figma-dial/ActiveOff.svg",
+      "sourceAssetId": "30e85"
+    },
+    {
+      "name": "PointerOff",
+      "file": "runtime/assets/icons/figma-dial/PointerOff.svg",
+      "sourceAssetId": "90ea8"
+    },
+    {
+      "name": "Hub",
+      "file": "runtime/assets/icons/figma-dial/Hub.svg",
+      "sourceAssetId": "6faf6"
+    },
+    {
+      "name": "FocusRing",
+      "file": "runtime/assets/icons/figma-dial/FocusRing.svg",
+      "sourceAssetId": "26bf6"
+    },
+    {
+      "name": "PointerOffDragging",
+      "file": "runtime/assets/icons/figma-dial/PointerOffDragging.svg",
+      "sourceAssetId": "ef011"
+    },
+    {
+      "name": "HubDragging",
+      "file": "runtime/assets/icons/figma-dial/HubDragging.svg",
+      "sourceAssetId": "37169"
+    },
+    {
+      "name": "RangeOffDisabled",
+      "file": "runtime/assets/icons/figma-dial/RangeOffDisabled.svg",
+      "sourceAssetId": "d8973"
+    },
+    {
+      "name": "ActiveOffDisabled",
+      "file": "runtime/assets/icons/figma-dial/ActiveOffDisabled.svg",
+      "sourceAssetId": "65813"
+    },
+    {
+      "name": "PointerOffDisabled",
+      "file": "runtime/assets/icons/figma-dial/PointerOffDisabled.svg",
+      "sourceAssetId": "8592b"
+    },
+    {
+      "name": "HubDisabled",
+      "file": "runtime/assets/icons/figma-dial/HubDisabled.svg",
+      "sourceAssetId": "124e6"
+    },
+    {
+      "name": "RangeOn",
+      "file": "runtime/assets/icons/figma-dial/RangeOn.svg",
+      "sourceAssetId": "a0f1b"
+    },
+    {
+      "name": "ActiveOn",
+      "file": "runtime/assets/icons/figma-dial/ActiveOn.svg",
+      "sourceAssetId": "2247f"
+    },
+    {
+      "name": "PointerOn",
+      "file": "runtime/assets/icons/figma-dial/PointerOn.svg",
+      "sourceAssetId": "7c5d9"
+    },
+    {
+      "name": "PointerOnDragging",
+      "file": "runtime/assets/icons/figma-dial/PointerOnDragging.svg",
+      "sourceAssetId": "e6ccb"
+    },
+    {
+      "name": "RangeOnDisabled",
+      "file": "runtime/assets/icons/figma-dial/RangeOnDisabled.svg",
+      "sourceAssetId": "7b2b2"
+    },
+    {
+      "name": "ActiveOnDisabled",
+      "file": "runtime/assets/icons/figma-dial/ActiveOnDisabled.svg",
+      "sourceAssetId": "98ebd"
+    },
+    {
+      "name": "PointerOnDisabled",
+      "file": "runtime/assets/icons/figma-dial/PointerOnDisabled.svg",
+      "sourceAssetId": "28bda"
+    }
+  ],
+  "nativeBoundary": {
+    "source": "Qt 5.15.2 qdial.cpp (valueFromPoint / notchSize)",
+    "url": "https://raw.githubusercontent.com/qt/qtbase/v5.15.2/src/widgets/widgets/qdial.cpp",
+    "snapshot": "Original 270-degree Off / 360-degree On arcs, authored transforms, center (90,86), independent label 40. Inert gallery specimens only.",
+    "interactive": "Native QDial handles input unchanged. Pointer, active arc and notches derive from native sliderPosition, range, wrapping and inversion. Off uses native 300-degree bottom-gap sweep; On starts at native bottom. Center follows widget midpoint. No mouse remapping.",
+    "valueText": "Composition label, not a native QDial property. Null label follows sliderPosition; explicit text does not set value.",
+    "notches": "Native notchSize is read-only, derived from notchTarget, singleStep, pageStep, range and widget size. Dynamic rendering thins dense intervals at whole multiples to at most 2049 marks.",
+    "demoSafety": "Inspector range is bounded to +/-1000000, steps to 10000, notchTarget to 0.1..100. Wrapping inspector requires nonzero range to avoid Qt5.15.2 modulo-zero boundary. Helper does not change range or other native properties.",
+    "inversion": "Qt5.15.2 mouse inversion uses maximum-bound(value); nonzero minimum can disagree with normalized visual inversion. Existing native behavior is retained, not silently patched.",
+    "approval": "No design approval, normalization promotion or new public identity."
+  }
+}

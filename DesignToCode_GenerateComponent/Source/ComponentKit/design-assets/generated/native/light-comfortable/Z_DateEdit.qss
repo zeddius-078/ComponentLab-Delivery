@@ -1,19 +1,19 @@
 /* Z_DateEdit <- QDateEdit; compiled from the active Token profile. */
-*[designSystemClass="commonWidget::Z_DateEdit"] {
+*[designSystemClass="commonWidget::Z_DateEdit"][designSystemStyleOwner="tokens"] {
     color: #191919;
     background-color: #ffffff;
     font-size: 14px;
 }
-*[designSystemClass="commonWidget::Z_DateEdit"]:disabled {
+*[designSystemClass="commonWidget::Z_DateEdit"][designSystemStyleOwner="tokens"]:disabled {
     color: #8a8a8a;
     background-color: #f3f3f3;
     border-color: #d0d0d0;
 }
-*[designSystemClass="commonWidget::Z_DateEdit"] {
+*[designSystemClass="commonWidget::Z_DateEdit"][designSystemStyleOwner="tokens"] {
     min-height: 32px;
     border: 1px solid #a7a7a7;
     border-radius: 4px;
     padding-left: 8px;
     padding-right: 8px;
 }
-*[designSystemClass="commonWidget::Z_DateEdit"]:focus { border-color: #6235f7; }
+*[designSystemClass="commonWidget::Z_DateEdit"][designSystemStyleOwner="tokens"]:focus[focusIndicatorVisible="true"] { border-color: #6235f7; }

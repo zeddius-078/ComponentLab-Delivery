@@ -1,0 +1,464 @@
+{
+  "fileKey": "w92BKW1EcutKmTXkwzNHbf",
+  "pageId": "234:2717",
+  "capturedAt": "2026-10-12",
+  "gallery": {
+    "id": "2015:20254",
+    "name": "Variant Gallery",
+    "type": "FRAME",
+    "x": 64,
+    "y": 1876,
+    "width": 1312,
+    "height": 991,
+    "children": [
+      {
+        "id": "2015:20255",
+        "name": "Variant key",
+        "type": "FRAME",
+        "x": 283.5,
+        "y": 28,
+        "width": 745,
+        "height": 39,
+        "children": [
+          {
+            "id": "2015:20256",
+            "name": "Key 1",
+            "type": "TEXT",
+            "x": 12,
+            "y": 12,
+            "width": 101,
+            "height": 15
+          },
+          {
+            "id": "2015:20257",
+            "name": "Key 2",
+            "type": "TEXT",
+            "x": 137,
+            "y": 12,
+            "width": 266,
+            "height": 15
+          },
+          {
+            "id": "2015:20258",
+            "name": "Key 3",
+            "type": "TEXT",
+            "x": 427,
+            "y": 12,
+            "width": 306,
+            "height": 15
+          }
+        ]
+      },
+      {
+        "id": "235:2710",
+        "name": "DSM/Checkbox",
+        "type": "COMPONENT_SET",
+        "x": 206,
+        "y": 85,
+        "width": 900,
+        "height": 540,
+        "properties": {
+          "Label#73:0": {
+            "type": "TEXT",
+            "defaultValue": "Checkbox"
+          },
+          "Show label#73:13": {
+            "type": "BOOLEAN",
+            "defaultValue": true
+          },
+          "Size": {
+            "type": "VARIANT",
+            "defaultValue": "LG",
+            "variantOptions": [
+              "LG",
+              "SM"
+            ]
+          },
+          "Value": {
+            "type": "VARIANT",
+            "defaultValue": "Unchecked",
+            "variantOptions": [
+              "Unchecked",
+              "Checked",
+              "Indeterminate"
+            ]
+          },
+          "State": {
+            "type": "VARIANT",
+            "defaultValue": "Default",
+            "variantOptions": [
+              "Default",
+              "Hover",
+              "Focus-visible",
+              "Disabled",
+              "Pressed"
+            ]
+          }
+        },
+        "children": [
+          {
+            "id": "235:2711",
+            "name": "Size=LG, Value=Unchecked, State=Default",
+            "type": "COMPONENT",
+            "x": 40,
+            "y": 48,
+            "width": 100,
+            "height": 24
+          },
+          {
+            "id": "235:2716",
+            "name": "Size=LG, Value=Unchecked, State=Hover",
+            "type": "COMPONENT",
+            "x": 220,
+            "y": 48,
+            "width": 100,
+            "height": 24
+          },
+          {
+            "id": "235:2721",
+            "name": "Size=LG, Value=Unchecked, State=Focus-visible",
+            "type": "COMPONENT",
+            "x": 580,
+            "y": 48,
+            "width": 100,
+            "height": 24
+          },
+          {
+            "id": "235:2726",
+            "name": "Size=LG, Value=Unchecked, State=Disabled",
+            "type": "COMPONENT",
+            "x": 760,
+            "y": 48,
+            "width": 100,
+            "height": 24
+          },
+          {
+            "id": "235:2731",
+            "name": "Size=LG, Value=Checked, State=Default",
+            "type": "COMPONENT",
+            "x": 40,
+            "y": 120,
+            "width": 100,
+            "height": 24
+          },
+          {
+            "id": "235:2738",
+            "name": "Size=LG, Value=Checked, State=Hover",
+            "type": "COMPONENT",
+            "x": 220,
+            "y": 120,
+            "width": 100,
+            "height": 24
+          },
+          {
+            "id": "235:2745",
+            "name": "Size=LG, Value=Checked, State=Focus-visible",
+            "type": "COMPONENT",
+            "x": 580,
+            "y": 120,
+            "width": 100,
+            "height": 24
+          },
+          {
+            "id": "235:2752",
+            "name": "Size=LG, Value=Checked, State=Disabled",
+            "type": "COMPONENT",
+            "x": 760,
+            "y": 120,
+            "width": 100,
+            "height": 24
+          },
+          {
+            "id": "235:2759",
+            "name": "Size=LG, Value=Indeterminate, State=Default",
+            "type": "COMPONENT",
+            "x": 40,
+            "y": 192,
+            "width": 100,
+            "height": 24
+          },
+          {
+            "id": "235:2765",
+            "name": "Size=LG, Value=Indeterminate, State=Hover",
+            "type": "COMPONENT",
+            "x": 220,
+            "y": 192,
+            "width": 100,
+            "height": 24
+          },
+          {
+            "id": "235:2771",
+            "name": "Size=LG, Value=Indeterminate, State=Focus-visible",
+            "type": "COMPONENT",
+            "x": 580,
+            "y": 192,
+            "width": 100,
+            "height": 24
+          },
+          {
+            "id": "235:2777",
+            "name": "Size=LG, Value=Indeterminate, State=Disabled",
+            "type": "COMPONENT",
+            "x": 760,
+            "y": 192,
+            "width": 100,
+            "height": 24
+          },
+          {
+            "id": "937:17",
+            "name": "Size=LG, Value=Unchecked, State=Pressed",
+            "type": "COMPONENT",
+            "x": 400,
+            "y": 48,
+            "width": 100,
+            "height": 24
+          },
+          {
+            "id": "937:22",
+            "name": "Size=LG, Value=Checked, State=Pressed",
+            "type": "COMPONENT",
+            "x": 400,
+            "y": 120,
+            "width": 100,
+            "height": 24
+          },
+          {
+            "id": "937:29",
+            "name": "Size=LG, Value=Indeterminate, State=Pressed",
+            "type": "COMPONENT",
+            "x": 400,
+            "y": 192,
+            "width": 100,
+            "height": 24
+          },
+          {
+            "id": "937:35",
+            "name": "Size=SM, Value=Unchecked, State=Default",
+            "type": "COMPONENT",
+            "x": 40,
+            "y": 312,
+            "width": 96,
+            "height": 20
+          },
+          {
+            "id": "937:40",
+            "name": "Size=SM, Value=Unchecked, State=Hover",
+            "type": "COMPONENT",
+            "x": 220,
+            "y": 312,
+            "width": 96,
+            "height": 20
+          },
+          {
+            "id": "937:45",
+            "name": "Size=SM, Value=Unchecked, State=Focus-visible",
+            "type": "COMPONENT",
+            "x": 580,
+            "y": 312,
+            "width": 96,
+            "height": 20
+          },
+          {
+            "id": "937:50",
+            "name": "Size=SM, Value=Unchecked, State=Disabled",
+            "type": "COMPONENT",
+            "x": 760,
+            "y": 312,
+            "width": 96,
+            "height": 20
+          },
+          {
+            "id": "937:55",
+            "name": "Size=SM, Value=Checked, State=Default",
+            "type": "COMPONENT",
+            "x": 40,
+            "y": 384,
+            "width": 96,
+            "height": 20
+          },
+          {
+            "id": "937:62",
+            "name": "Size=SM, Value=Checked, State=Hover",
+            "type": "COMPONENT",
+            "x": 220,
+            "y": 384,
+            "width": 96,
+            "height": 20
+          },
+          {
+            "id": "937:69",
+            "name": "Size=SM, Value=Checked, State=Focus-visible",
+            "type": "COMPONENT",
+            "x": 580,
+            "y": 384,
+            "width": 96,
+            "height": 20
+          },
+          {
+            "id": "937:76",
+            "name": "Size=SM, Value=Checked, State=Disabled",
+            "type": "COMPONENT",
+            "x": 760,
+            "y": 384,
+            "width": 96,
+            "height": 20
+          },
+          {
+            "id": "937:83",
+            "name": "Size=SM, Value=Indeterminate, State=Default",
+            "type": "COMPONENT",
+            "x": 40,
+            "y": 456,
+            "width": 96,
+            "height": 20
+          },
+          {
+            "id": "937:89",
+            "name": "Size=SM, Value=Indeterminate, State=Hover",
+            "type": "COMPONENT",
+            "x": 220,
+            "y": 456,
+            "width": 96,
+            "height": 20
+          },
+          {
+            "id": "937:95",
+            "name": "Size=SM, Value=Indeterminate, State=Focus-visible",
+            "type": "COMPONENT",
+            "x": 580,
+            "y": 456,
+            "width": 96,
+            "height": 20
+          },
+          {
+            "id": "937:101",
+            "name": "Size=SM, Value=Indeterminate, State=Disabled",
+            "type": "COMPONENT",
+            "x": 760,
+            "y": 456,
+            "width": 96,
+            "height": 20
+          },
+          {
+            "id": "937:107",
+            "name": "Size=SM, Value=Unchecked, State=Pressed",
+            "type": "COMPONENT",
+            "x": 400,
+            "y": 312,
+            "width": 96,
+            "height": 20
+          },
+          {
+            "id": "937:112",
+            "name": "Size=SM, Value=Checked, State=Pressed",
+            "type": "COMPONENT",
+            "x": 400,
+            "y": 384,
+            "width": 96,
+            "height": 20
+          },
+          {
+            "id": "937:119",
+            "name": "Size=SM, Value=Indeterminate, State=Pressed",
+            "type": "COMPONENT",
+            "x": 400,
+            "y": 456,
+            "width": 96,
+            "height": 20
+          }
+        ]
+      },
+      {
+        "id": "235:2783",
+        "name": "DSM/Checkbox/Group",
+        "type": "COMPONENT_SET",
+        "x": 279.5,
+        "y": 643,
+        "width": 753,
+        "height": 320,
+        "properties": {
+          "Layout": {
+            "type": "VARIANT",
+            "defaultValue": "Horizontal",
+            "variantOptions": [
+              "Horizontal",
+              "Vertical"
+            ]
+          },
+          "State": {
+            "type": "VARIANT",
+            "defaultValue": "Enabled",
+            "variantOptions": [
+              "Enabled",
+              "Disabled"
+            ]
+          }
+        },
+        "children": [
+          {
+            "id": "235:2784",
+            "name": "Layout=Horizontal, State=Enabled",
+            "type": "COMPONENT",
+            "x": 40,
+            "y": 40,
+            "width": 320,
+            "height": 24
+          },
+          {
+            "id": "235:2788",
+            "name": "Layout=Horizontal, State=Disabled",
+            "type": "COMPONENT",
+            "x": 400,
+            "y": 40,
+            "width": 320,
+            "height": 24
+          },
+          {
+            "id": "235:2792",
+            "name": "Layout=Vertical, State=Enabled",
+            "type": "COMPONENT",
+            "x": 40,
+            "y": 190,
+            "width": 91,
+            "height": 96
+          },
+          {
+            "id": "235:2796",
+            "name": "Layout=Vertical, State=Disabled",
+            "type": "COMPONENT",
+            "x": 400,
+            "y": 190,
+            "width": 91,
+            "height": 96
+          }
+        ]
+      }
+    ]
+  },
+  "variables": {
+    "checkbox/size/lg/indicator/size": "20",
+    "checkbox/base/default/indicator/radius": "4",
+    "checkbox/base/default/indicator/border-width": "1",
+    "checkbox/base/default/indicator/background": "#ffffff",
+    "checkbox/base/default/indicator/border-color": "#a7a7a7",
+    "checkbox/base/default/label/color": "#191919",
+    "typography/letter-spacing/default": "0",
+    "typography/font-size/data/numeric": "14",
+    "typography/line-height/data/numeric": "14",
+    "typography/font-weight/subemphasis": "500",
+    "DSM/Data/Numeric": "Font(family: \"Inter\", style: Medium, size: typography/font-size/data/numeric, weight: typography/font-weight/subemphasis, lineHeight: typography/line-height/data/numeric, letterSpacing: typography/letter-spacing/default)",
+    "checkbox/base/default/content/gap": "8",
+    "checkbox/base/hover/indicator/color": "#6e58d9",
+    "checkbox/base/focused/focus-ring/width": "2",
+    "checkbox/base/focused/focus-ring/color": "#6235f7",
+    "checkbox/base/disabled/indicator/background": "#f3f3f3",
+    "checkbox/base/disabled/indicator/border-color": "#d0d0d0",
+    "checkbox/base/disabled/label/color": "#8a8a8a",
+    "color/icon/invert": "#ffffff",
+    "checkbox/base/selected/indicator/color": "#6235f7",
+    "color/icon/disabled": "#8a8a8a",
+    "checkbox/base/disabled/indicator/selected-border-color": "#f3f3f3",
+    "checkbox/base/pressed/indicator/color": "#532cd1",
+    "checkbox/size/sm/indicator/size": "18"
+  }
+}

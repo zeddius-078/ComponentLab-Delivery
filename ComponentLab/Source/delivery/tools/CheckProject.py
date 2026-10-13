@@ -2,11 +2,15 @@
 import argparse
 import hashlib
 import json
+import os
 from pathlib import Path
 
 SOURCE = Path(__file__).resolve().parents[2]
 PROJECT = SOURCE.parent
-SDK = PROJECT / "build/sdk"
+SDK = Path(os.environ.get(
+    "GENERATED_COMPONENT_SDK_ROOT",
+    PROJECT.parent / "DesignToCode_GenerateComponent" / "build" / "sdk",
+)).resolve()
 
 
 def validation_inputs():
@@ -15,15 +19,38 @@ def validation_inputs():
     paths.extend((SOURCE / name) for name in
                  ("CMakeLists.txt", "GeneratedComponentDependency.cmake") )
     paths.append(SDK / "manifest/component-sdk.json")
-    return {p.relative_to(PROJECT).as_posix(): hashlib.sha256(p.read_bytes()).hexdigest()
-            for p in sorted(set(paths))}
+    result = {}
+    for path in sorted(set(paths)):
+        key = (path.relative_to(PROJECT).as_posix() if path.is_relative_to(PROJECT)
+               else "@generated-component-sdk/" + path.relative_to(SDK).as_posix())
+        result[key] = hashlib.sha256(path.read_bytes()).hexdigest()
+    return result
 
 
 def check():
+    # ComponentLab directly consumes the workspace authority and must never publish or cache an SDK copy.
+    assert not (PROJECT / "build/sdk").exists(), "ComponentLab must not contain build/sdk"
+    assert not (SOURCE / "Import-GeneratedComponentSDK.ps1").exists(), "Copy-based SDK import is retired"
+    assert (SOURCE / "Verify-GeneratedComponentSDK.ps1").is_file()
     manifest = json.loads((SDK / "manifest/component-sdk.json").read_bytes())
     assert manifest["owner"] == "DesignToCode_GenerateComponent"
     assert manifest["componentAuthority"] and manifest["tokenAuthority"]
     assert manifest["linkage"] == "static"
+    assert manifest["designComponentCatalog"] == "resources/mappings/design-component-catalog.json"
+    catalog = json.loads((SDK / manifest["designComponentCatalog"]).read_bytes())
+    assert catalog["figmaFileKey"] == "w92BKW1EcutKmTXkwzNHbf"
+    assert catalog["componentCount"] == len(catalog["components"]) == 85
+    assert catalog["instantiableCount"] == 85
+    assert catalog["contractOnlyCount"] == 0
+    assert catalog["figmaSource"]["pageCount"] == len(catalog["figmaPages"]) == 73
+    assert catalog["figmaSource"]["componentSetCount"] == sum(
+        len(page["componentSets"]) for page in catalog["figmaPages"]
+    ) == 123
+    assert catalog["figmaSource"]["variantCount"] == sum(
+        len(component_set["variants"])
+        for page in catalog["figmaPages"]
+        for component_set in page["componentSets"]
+    ) == 1471
     assert (SDK / "include/MyDesignSystem/MyDesignSystem.h").is_file()
     assert (SDK / "lib/GeneratedComponentSDK.lib").is_file()
     assert (SDK / "resources/tokens/default").is_dir()
@@ -42,7 +69,8 @@ def check():
     cmake = (SOURCE / "CMakeLists.txt").read_text(encoding="utf-8-sig")
     assert "GeneratedComponentSDK::Components" in cmake
     assert "COMPONENTLAB_BUILD_GENERATORS" not in cmake
-    return {"status": "PASS", "sdkManifestSha256": hashlib.sha256(
+    return {"status": "PASS", "sdkAuthority": str(SDK), "sdkMode": "direct-reference",
+        "sdkManifestSha256": hashlib.sha256(
         (SDK / "manifest/component-sdk.json").read_bytes()).hexdigest(),
         "sourceRoles": ["delivery", "presentation"]}
 

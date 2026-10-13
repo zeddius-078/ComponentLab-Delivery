@@ -16,12 +16,17 @@ try {
         $env:PATH = $Dist + ';' + $saved['PATH']
         & python (Join-Path $root 'delivery/tools/CheckProject.py') 2>&1 | Tee-Object -FilePath (Join-Path $output 'governance.log')
         if ($LASTEXITCODE -ne 0) { throw 'Project governance failed' }
-        $sdk = Join-Path (Split-Path $root -Parent) 'build/sdk'
+        $sdk = if ($env:GENERATED_COMPONENT_SDK_ROOT) {
+            [IO.Path]::GetFullPath($env:GENERATED_COMPONENT_SDK_ROOT)
+        } else {
+            $workspace = Split-Path (Split-Path $root -Parent) -Parent
+            [IO.Path]::GetFullPath((Join-Path $workspace 'DesignToCode_GenerateComponent/build/sdk'))
+        }
         $manifest = Get-Content -LiteralPath (Join-Path $sdk 'manifest/component-sdk.json') -Raw | ConvertFrom-Json
         foreach ($file in $manifest.files) {
             $path = Join-Path $sdk $file.path
             if (-not (Test-Path -LiteralPath $path) -or (Get-FileHash -LiteralPath $path).Hash -ne $file.sha256) {
-                throw "Imported SDK drift: $($file.path)"
+                throw "Authoritative SDK drift: $($file.path)"
             }
         }
     }
@@ -55,11 +60,11 @@ try {
             }
             $report = Get-Content -LiteralPath (Join-Path $capture 'runtime.json') -Raw | ConvertFrom-Json
             $expectedPresets = @('solid','gradient','inset','gradient-inset','outline','elevated','gradient-elevated')
-            if ($report.screens -ne 1 -or $report.capturedPages -ne 13 -or $report.designSystemComponents -ne 62 -or $report.nativeDescriptors -ne 59 -or $report.nativeRegistryRows -ne 62 -or ($report.presets -join ',') -ne ($expectedPresets -join ',') -or $report.appearance -ne $appearance) { throw 'Unexpected Demo configuration' }
-            $components = @('commonWidget::Z_PushButton','commonWidget::Z_CheckBox','commonWidget::Z_InputField','commonWidget::Z_Select','commonWidget::Z_ToolButton','commonWidget::Z_TableView')
+            if ($report.screens -ne 1 -or $report.capturedPages -ne 13 -or $report.designSystemComponents -ne 73 -or $report.figmaComponentSets -ne 123 -or $report.figmaVariants -ne 1471 -or $report.nativeDescriptors -ne 85 -or $report.nativeRegistryRows -ne 85 -or ($report.presets -join ',') -ne ($expectedPresets -join ',') -or $report.appearance -ne $appearance) { throw 'Unexpected Demo configuration' }
+            $pages = @('172:2710','234:2717','339:2','242:2720','443:2','363:2')
             foreach ($i in 0..5) {
                 $sections = '外观,分组与状态'
-                if ($report.navigation[$i].component -ne $components[$i] -or
+                if ($report.navigation[$i].pageId -ne $pages[$i] -or
                     ($report.navigation[$i].sections -join ',') -ne $sections) { throw 'Navigation contract failed' }
                 $count = 2
                 for ($j = 0; $j -lt $count; $j++) { if ((Get-Item -LiteralPath (Join-Path $capture "component-$i-$j.png")).Length -lt 5000) { throw 'Empty screenshot' } }

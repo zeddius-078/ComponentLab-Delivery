@@ -16,7 +16,7 @@ class DemoWindow : public QMainWindow {
   public:
     explicit DemoWindow(const QString& profile);
     ~DemoWindow() override;
-    void capture(const QString& path);
+    void capture(const QString& path, const QString& pageId = {});
     void setAppearancePreview(const QString& id);
 
   private:

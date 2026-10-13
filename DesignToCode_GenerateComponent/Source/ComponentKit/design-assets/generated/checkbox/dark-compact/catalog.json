@@ -558,7 +558,7 @@
         "mixed": ":/icons/checkbox-mixed.svg"
     },
     "inputs": {
-        "DesignSystem/generated/runtime/tokens_qt.json": "d87561987bb669e4229e9524ab3b8d9c978e99857d61bb8f9bbcfc5d23746b1c",
+        "DesignSystem/generated/runtime/tokens_qt.json": "6d98b140251cb6633c46effe3b41b693320117b08d602e703bdd554f640f5d74",
         "styles/Z_CheckBox.qss.in": "04b383548ff0621441ec2c727e53bbacdedd0d8dc911b729800c0b742a52515c",
         "tokens/button-contract.json": "4330947c680bc70aaf3d83a65f9a536b4ecb14368d8e44d38a1a5e04ffbf042f",
         "tokens/checkbox-contract.json": "4f09560bf675ba6de673be4dcf2ed2316fbd970a0c5cae544c4e13eb277dcfd9",
@@ -8536,5 +8536,5 @@
             "spacing": 8
         }
     },
-    "sourceHash": "10597a5821adc655172e75e9b7f7b3dfcf35aa86e03410580b27c6810e82d3e7"
+    "sourceHash": "faa4975eb4d1d4233f83f2e7f86d5ed7fa39552cf40a39b889d1f3366fd67daa"
 }

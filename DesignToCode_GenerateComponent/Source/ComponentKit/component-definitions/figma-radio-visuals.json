@@ -1,0 +1,1793 @@
+{
+  "schemaVersion": 1,
+  "fileKey": "w92BKW1EcutKmTXkwzNHbf",
+  "pageId": "341:2",
+  "galleryId": "2015:21292",
+  "capturedAt": "2026-10-12",
+  "status": "CAPTURED_LIGHT_NOT_DESIGN_APPROVED",
+  "notes": [
+    "Current variable and layer indicator size is 18px; descriptions still mention 20px.",
+    "Snapshot state is a visual-only preview; checked/enabled and exclusive behavior remain Qt runtime authority.",
+    "RadioGroup specimens use QButtonGroup and Z_RadioButton composition, not a new public SDK class."
+  ],
+  "assets": [
+    {
+      "name": "unselected-default",
+      "file": "2cec2.svg",
+      "local": "runtime/assets/icons/figma-radio/unselected-default.svg",
+      "nodeId": "341:4",
+      "rootSize": [
+        18,
+        18
+      ]
+    },
+    {
+      "name": "unselected-hover",
+      "file": "aa2a7.svg",
+      "local": "runtime/assets/icons/figma-radio/unselected-hover.svg",
+      "nodeId": "341:9",
+      "rootSize": [
+        18,
+        18
+      ]
+    },
+    {
+      "name": "unselected-pressed",
+      "file": "956f7.svg",
+      "local": "runtime/assets/icons/figma-radio/unselected-pressed.svg",
+      "nodeId": "341:14",
+      "rootSize": [
+        18,
+        18
+      ]
+    },
+    {
+      "name": "unselected-focus-visible",
+      "file": "f2ce2.svg",
+      "local": "runtime/assets/icons/figma-radio/unselected-focus-visible.svg",
+      "nodeId": "341:19",
+      "rootSize": [
+        22,
+        22
+      ]
+    },
+    {
+      "name": "unselected-disabled",
+      "file": "0c610.svg",
+      "local": "runtime/assets/icons/figma-radio/unselected-disabled.svg",
+      "nodeId": "341:24",
+      "rootSize": [
+        18,
+        18
+      ]
+    },
+    {
+      "name": "selected-default",
+      "file": "83fd7.svg",
+      "local": "runtime/assets/icons/figma-radio/selected-default.svg",
+      "nodeId": "341:29",
+      "rootSize": [
+        18,
+        18
+      ]
+    },
+    {
+      "name": "selected-hover",
+      "file": "89c84.svg",
+      "local": "runtime/assets/icons/figma-radio/selected-hover.svg",
+      "nodeId": "341:34",
+      "rootSize": [
+        18,
+        18
+      ]
+    },
+    {
+      "name": "selected-pressed",
+      "file": "76217.svg",
+      "local": "runtime/assets/icons/figma-radio/selected-pressed.svg",
+      "nodeId": "341:39",
+      "rootSize": [
+        18,
+        18
+      ]
+    },
+    {
+      "name": "selected-focus-visible",
+      "file": "2da43.svg",
+      "local": "runtime/assets/icons/figma-radio/selected-focus-visible.svg",
+      "nodeId": "341:44",
+      "rootSize": [
+        22,
+        22
+      ]
+    },
+    {
+      "name": "selected-disabled",
+      "file": "bcbb2.svg",
+      "local": "runtime/assets/icons/figma-radio/selected-disabled.svg",
+      "nodeId": "341:49",
+      "rootSize": [
+        18,
+        18
+      ]
+    }
+  ],
+  "sets": [
+    {
+      "id": "341:53",
+      "variants": [
+        {
+          "id": "341:3",
+          "name": "Value=Unselected, State=Default",
+          "type": "COMPONENT",
+          "rect": [
+            24,
+            24,
+            180,
+            32
+          ],
+          "visible": true,
+          "fills": [],
+          "children": [
+            {
+              "id": "341:4",
+              "name": "Indicator",
+              "type": "FRAME",
+              "rect": [
+                2,
+                7,
+                18,
+                18
+              ],
+              "visible": true,
+              "fills": []
+            },
+            {
+              "id": "341:7",
+              "name": "Label",
+              "type": "TEXT",
+              "rect": [
+                28,
+                6,
+                150,
+                20
+              ],
+              "visible": true,
+              "text": "Radio option",
+              "font": {
+                "family": "Inter",
+                "style": "Medium",
+                "variationSettings": {
+                  "wght": 500,
+                  "slnt": 0
+                }
+              },
+              "fontSize": 14,
+              "lineHeight": {
+                "unit": "PIXELS",
+                "value": 14
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "visible": true,
+                  "opacity": 1,
+                  "blendMode": "NORMAL",
+                  "color": {
+                    "r": 0.09803921729326248,
+                    "g": 0.09803921729326248,
+                    "b": 0.09803921729326248
+                  },
+                  "boundVariables": {
+                    "color": {
+                      "type": "VARIABLE_ALIAS",
+                      "id": "VariableID:337:9"
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "341:8",
+          "name": "Value=Unselected, State=Hover",
+          "type": "COMPONENT",
+          "rect": [
+            244,
+            24,
+            180,
+            32
+          ],
+          "visible": true,
+          "fills": [],
+          "children": [
+            {
+              "id": "341:9",
+              "name": "Indicator",
+              "type": "FRAME",
+              "rect": [
+                2,
+                7,
+                18,
+                18
+              ],
+              "visible": true,
+              "fills": []
+            },
+            {
+              "id": "341:12",
+              "name": "Label",
+              "type": "TEXT",
+              "rect": [
+                28,
+                6,
+                150,
+                20
+              ],
+              "visible": true,
+              "text": "Radio option",
+              "font": {
+                "family": "Inter",
+                "style": "Medium",
+                "variationSettings": {
+                  "wght": 500,
+                  "slnt": 0
+                }
+              },
+              "fontSize": 14,
+              "lineHeight": {
+                "unit": "PIXELS",
+                "value": 14
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "visible": true,
+                  "opacity": 1,
+                  "blendMode": "NORMAL",
+                  "color": {
+                    "r": 0.09803921729326248,
+                    "g": 0.09803921729326248,
+                    "b": 0.09803921729326248
+                  },
+                  "boundVariables": {
+                    "color": {
+                      "type": "VARIABLE_ALIAS",
+                      "id": "VariableID:337:9"
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "341:13",
+          "name": "Value=Unselected, State=Pressed",
+          "type": "COMPONENT",
+          "rect": [
+            464,
+            24,
+            180,
+            32
+          ],
+          "visible": true,
+          "fills": [],
+          "children": [
+            {
+              "id": "341:14",
+              "name": "Indicator",
+              "type": "FRAME",
+              "rect": [
+                2,
+                7,
+                18,
+                18
+              ],
+              "visible": true,
+              "fills": []
+            },
+            {
+              "id": "341:17",
+              "name": "Label",
+              "type": "TEXT",
+              "rect": [
+                28,
+                6,
+                150,
+                20
+              ],
+              "visible": true,
+              "text": "Radio option",
+              "font": {
+                "family": "Inter",
+                "style": "Medium",
+                "variationSettings": {
+                  "wght": 500,
+                  "slnt": 0
+                }
+              },
+              "fontSize": 14,
+              "lineHeight": {
+                "unit": "PIXELS",
+                "value": 14
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "visible": true,
+                  "opacity": 1,
+                  "blendMode": "NORMAL",
+                  "color": {
+                    "r": 0.09803921729326248,
+                    "g": 0.09803921729326248,
+                    "b": 0.09803921729326248
+                  },
+                  "boundVariables": {
+                    "color": {
+                      "type": "VARIABLE_ALIAS",
+                      "id": "VariableID:337:9"
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "341:18",
+          "name": "Value=Unselected, State=Focus-visible",
+          "type": "COMPONENT",
+          "rect": [
+            684,
+            24,
+            180,
+            32
+          ],
+          "visible": true,
+          "fills": [],
+          "children": [
+            {
+              "id": "341:19",
+              "name": "Indicator",
+              "type": "FRAME",
+              "rect": [
+                2,
+                7,
+                18,
+                18
+              ],
+              "visible": true,
+              "fills": []
+            },
+            {
+              "id": "341:22",
+              "name": "Label",
+              "type": "TEXT",
+              "rect": [
+                28,
+                6,
+                150,
+                20
+              ],
+              "visible": true,
+              "text": "Radio option",
+              "font": {
+                "family": "Inter",
+                "style": "Medium",
+                "variationSettings": {
+                  "wght": 500,
+                  "slnt": 0
+                }
+              },
+              "fontSize": 14,
+              "lineHeight": {
+                "unit": "PIXELS",
+                "value": 14
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "visible": true,
+                  "opacity": 1,
+                  "blendMode": "NORMAL",
+                  "color": {
+                    "r": 0.09803921729326248,
+                    "g": 0.09803921729326248,
+                    "b": 0.09803921729326248
+                  },
+                  "boundVariables": {
+                    "color": {
+                      "type": "VARIABLE_ALIAS",
+                      "id": "VariableID:337:9"
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "341:23",
+          "name": "Value=Unselected, State=Disabled",
+          "type": "COMPONENT",
+          "rect": [
+            904,
+            24,
+            180,
+            32
+          ],
+          "visible": true,
+          "fills": [],
+          "children": [
+            {
+              "id": "341:24",
+              "name": "Indicator",
+              "type": "FRAME",
+              "rect": [
+                2,
+                7,
+                18,
+                18
+              ],
+              "visible": true,
+              "fills": []
+            },
+            {
+              "id": "341:27",
+              "name": "Label",
+              "type": "TEXT",
+              "rect": [
+                28,
+                6,
+                150,
+                20
+              ],
+              "visible": true,
+              "text": "Radio option",
+              "font": {
+                "family": "Inter",
+                "style": "Medium",
+                "variationSettings": {
+                  "wght": 500,
+                  "slnt": 0
+                }
+              },
+              "fontSize": 14,
+              "lineHeight": {
+                "unit": "PIXELS",
+                "value": 14
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "visible": true,
+                  "opacity": 1,
+                  "blendMode": "NORMAL",
+                  "color": {
+                    "r": 0.5411764979362488,
+                    "g": 0.5411764979362488,
+                    "b": 0.5411764979362488
+                  },
+                  "boundVariables": {
+                    "color": {
+                      "type": "VARIABLE_ALIAS",
+                      "id": "VariableID:1448:122"
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "341:28",
+          "name": "Value=Selected, State=Default",
+          "type": "COMPONENT",
+          "rect": [
+            24,
+            88,
+            180,
+            32
+          ],
+          "visible": true,
+          "fills": [],
+          "children": [
+            {
+              "id": "341:29",
+              "name": "Indicator",
+              "type": "FRAME",
+              "rect": [
+                2,
+                7,
+                18,
+                18
+              ],
+              "visible": true,
+              "fills": []
+            },
+            {
+              "id": "341:32",
+              "name": "Label",
+              "type": "TEXT",
+              "rect": [
+                28,
+                6,
+                150,
+                20
+              ],
+              "visible": true,
+              "text": "Radio option",
+              "font": {
+                "family": "Inter",
+                "style": "Medium",
+                "variationSettings": {
+                  "wght": 500,
+                  "slnt": 0
+                }
+              },
+              "fontSize": 14,
+              "lineHeight": {
+                "unit": "PIXELS",
+                "value": 14
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "visible": true,
+                  "opacity": 1,
+                  "blendMode": "NORMAL",
+                  "color": {
+                    "r": 0.09803921729326248,
+                    "g": 0.09803921729326248,
+                    "b": 0.09803921729326248
+                  },
+                  "boundVariables": {
+                    "color": {
+                      "type": "VARIABLE_ALIAS",
+                      "id": "VariableID:337:9"
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "341:33",
+          "name": "Value=Selected, State=Hover",
+          "type": "COMPONENT",
+          "rect": [
+            244,
+            88,
+            180,
+            32
+          ],
+          "visible": true,
+          "fills": [],
+          "children": [
+            {
+              "id": "341:34",
+              "name": "Indicator",
+              "type": "FRAME",
+              "rect": [
+                2,
+                7,
+                18,
+                18
+              ],
+              "visible": true,
+              "fills": []
+            },
+            {
+              "id": "341:37",
+              "name": "Label",
+              "type": "TEXT",
+              "rect": [
+                28,
+                6,
+                150,
+                20
+              ],
+              "visible": true,
+              "text": "Radio option",
+              "font": {
+                "family": "Inter",
+                "style": "Medium",
+                "variationSettings": {
+                  "wght": 500,
+                  "slnt": 0
+                }
+              },
+              "fontSize": 14,
+              "lineHeight": {
+                "unit": "PIXELS",
+                "value": 14
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "visible": true,
+                  "opacity": 1,
+                  "blendMode": "NORMAL",
+                  "color": {
+                    "r": 0.09803921729326248,
+                    "g": 0.09803921729326248,
+                    "b": 0.09803921729326248
+                  },
+                  "boundVariables": {
+                    "color": {
+                      "type": "VARIABLE_ALIAS",
+                      "id": "VariableID:337:9"
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "341:38",
+          "name": "Value=Selected, State=Pressed",
+          "type": "COMPONENT",
+          "rect": [
+            464,
+            88,
+            180,
+            32
+          ],
+          "visible": true,
+          "fills": [],
+          "children": [
+            {
+              "id": "341:39",
+              "name": "Indicator",
+              "type": "FRAME",
+              "rect": [
+                2,
+                7,
+                18,
+                18
+              ],
+              "visible": true,
+              "fills": []
+            },
+            {
+              "id": "341:42",
+              "name": "Label",
+              "type": "TEXT",
+              "rect": [
+                28,
+                6,
+                150,
+                20
+              ],
+              "visible": true,
+              "text": "Radio option",
+              "font": {
+                "family": "Inter",
+                "style": "Medium",
+                "variationSettings": {
+                  "wght": 500,
+                  "slnt": 0
+                }
+              },
+              "fontSize": 14,
+              "lineHeight": {
+                "unit": "PIXELS",
+                "value": 14
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "visible": true,
+                  "opacity": 1,
+                  "blendMode": "NORMAL",
+                  "color": {
+                    "r": 0.09803921729326248,
+                    "g": 0.09803921729326248,
+                    "b": 0.09803921729326248
+                  },
+                  "boundVariables": {
+                    "color": {
+                      "type": "VARIABLE_ALIAS",
+                      "id": "VariableID:337:9"
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "341:43",
+          "name": "Value=Selected, State=Focus-visible",
+          "type": "COMPONENT",
+          "rect": [
+            684,
+            88,
+            180,
+            32
+          ],
+          "visible": true,
+          "fills": [],
+          "children": [
+            {
+              "id": "341:44",
+              "name": "Indicator",
+              "type": "FRAME",
+              "rect": [
+                2,
+                7,
+                18,
+                18
+              ],
+              "visible": true,
+              "fills": []
+            },
+            {
+              "id": "341:47",
+              "name": "Label",
+              "type": "TEXT",
+              "rect": [
+                28,
+                6,
+                150,
+                20
+              ],
+              "visible": true,
+              "text": "Radio option",
+              "font": {
+                "family": "Inter",
+                "style": "Medium",
+                "variationSettings": {
+                  "wght": 500,
+                  "slnt": 0
+                }
+              },
+              "fontSize": 14,
+              "lineHeight": {
+                "unit": "PIXELS",
+                "value": 14
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "visible": true,
+                  "opacity": 1,
+                  "blendMode": "NORMAL",
+                  "color": {
+                    "r": 0.09803921729326248,
+                    "g": 0.09803921729326248,
+                    "b": 0.09803921729326248
+                  },
+                  "boundVariables": {
+                    "color": {
+                      "type": "VARIABLE_ALIAS",
+                      "id": "VariableID:337:9"
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "341:48",
+          "name": "Value=Selected, State=Disabled",
+          "type": "COMPONENT",
+          "rect": [
+            904,
+            88,
+            180,
+            32
+          ],
+          "visible": true,
+          "fills": [],
+          "children": [
+            {
+              "id": "341:49",
+              "name": "Indicator",
+              "type": "FRAME",
+              "rect": [
+                2,
+                7,
+                18,
+                18
+              ],
+              "visible": true,
+              "fills": []
+            },
+            {
+              "id": "341:52",
+              "name": "Label",
+              "type": "TEXT",
+              "rect": [
+                28,
+                6,
+                150,
+                20
+              ],
+              "visible": true,
+              "text": "Radio option",
+              "font": {
+                "family": "Inter",
+                "style": "Medium",
+                "variationSettings": {
+                  "wght": 500,
+                  "slnt": 0
+                }
+              },
+              "fontSize": 14,
+              "lineHeight": {
+                "unit": "PIXELS",
+                "value": 14
+              },
+              "fills": [
+                {
+                  "type": "SOLID",
+                  "visible": true,
+                  "opacity": 1,
+                  "blendMode": "NORMAL",
+                  "color": {
+                    "r": 0.5411764979362488,
+                    "g": 0.5411764979362488,
+                    "b": 0.5411764979362488
+                  },
+                  "boundVariables": {
+                    "color": {
+                      "type": "VARIABLE_ALIAS",
+                      "id": "VariableID:1448:122"
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "341:118",
+      "variants": [
+        {
+          "id": "341:54",
+          "name": "Layout=Horizontal, State=Enabled",
+          "type": "COMPONENT",
+          "rect": [
+            24,
+            24,
+            580,
+            48
+          ],
+          "visible": true,
+          "fills": [],
+          "children": [
+            {
+              "id": "341:55",
+              "name": "Option 1",
+              "type": "INSTANCE",
+              "rect": [
+                8,
+                8,
+                180,
+                32
+              ],
+              "visible": true,
+              "fills": [],
+              "children": [
+                {
+                  "id": "I341:55;341:29",
+                  "name": "Indicator",
+                  "type": "FRAME",
+                  "rect": [
+                    2,
+                    7,
+                    18,
+                    18
+                  ],
+                  "visible": true,
+                  "fills": []
+                },
+                {
+                  "id": "I341:55;341:32",
+                  "name": "Label",
+                  "type": "TEXT",
+                  "rect": [
+                    28,
+                    6,
+                    150,
+                    20
+                  ],
+                  "visible": true,
+                  "text": "Option 1",
+                  "font": {
+                    "family": "Inter",
+                    "style": "Medium",
+                    "variationSettings": {
+                      "wght": 500,
+                      "slnt": 0
+                    }
+                  },
+                  "fontSize": 14,
+                  "lineHeight": {
+                    "unit": "PIXELS",
+                    "value": 14
+                  },
+                  "fills": [
+                    {
+                      "type": "SOLID",
+                      "visible": true,
+                      "opacity": 1,
+                      "blendMode": "NORMAL",
+                      "color": {
+                        "r": 0.09803921729326248,
+                        "g": 0.09803921729326248,
+                        "b": 0.09803921729326248
+                      },
+                      "boundVariables": {
+                        "color": {
+                          "type": "VARIABLE_ALIAS",
+                          "id": "VariableID:337:9"
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "341:60",
+              "name": "Option 2",
+              "type": "INSTANCE",
+              "rect": [
+                200,
+                8,
+                180,
+                32
+              ],
+              "visible": true,
+              "fills": [],
+              "children": [
+                {
+                  "id": "I341:60;341:4",
+                  "name": "Indicator",
+                  "type": "FRAME",
+                  "rect": [
+                    2,
+                    7,
+                    18,
+                    18
+                  ],
+                  "visible": true,
+                  "fills": []
+                },
+                {
+                  "id": "I341:60;341:7",
+                  "name": "Label",
+                  "type": "TEXT",
+                  "rect": [
+                    28,
+                    6,
+                    150,
+                    20
+                  ],
+                  "visible": true,
+                  "text": "Option 2",
+                  "font": {
+                    "family": "Inter",
+                    "style": "Medium",
+                    "variationSettings": {
+                      "wght": 500,
+                      "slnt": 0
+                    }
+                  },
+                  "fontSize": 14,
+                  "lineHeight": {
+                    "unit": "PIXELS",
+                    "value": 14
+                  },
+                  "fills": [
+                    {
+                      "type": "SOLID",
+                      "visible": true,
+                      "opacity": 1,
+                      "blendMode": "NORMAL",
+                      "color": {
+                        "r": 0.09803921729326248,
+                        "g": 0.09803921729326248,
+                        "b": 0.09803921729326248
+                      },
+                      "boundVariables": {
+                        "color": {
+                          "type": "VARIABLE_ALIAS",
+                          "id": "VariableID:337:9"
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "341:65",
+              "name": "Option 3",
+              "type": "INSTANCE",
+              "rect": [
+                392,
+                8,
+                180,
+                32
+              ],
+              "visible": true,
+              "fills": [],
+              "children": [
+                {
+                  "id": "I341:65;341:4",
+                  "name": "Indicator",
+                  "type": "FRAME",
+                  "rect": [
+                    2,
+                    7,
+                    18,
+                    18
+                  ],
+                  "visible": true,
+                  "fills": []
+                },
+                {
+                  "id": "I341:65;341:7",
+                  "name": "Label",
+                  "type": "TEXT",
+                  "rect": [
+                    28,
+                    6,
+                    150,
+                    20
+                  ],
+                  "visible": true,
+                  "text": "Option 3",
+                  "font": {
+                    "family": "Inter",
+                    "style": "Medium",
+                    "variationSettings": {
+                      "wght": 500,
+                      "slnt": 0
+                    }
+                  },
+                  "fontSize": 14,
+                  "lineHeight": {
+                    "unit": "PIXELS",
+                    "value": 14
+                  },
+                  "fills": [
+                    {
+                      "type": "SOLID",
+                      "visible": true,
+                      "opacity": 1,
+                      "blendMode": "NORMAL",
+                      "color": {
+                        "r": 0.09803921729326248,
+                        "g": 0.09803921729326248,
+                        "b": 0.09803921729326248
+                      },
+                      "boundVariables": {
+                        "color": {
+                          "type": "VARIABLE_ALIAS",
+                          "id": "VariableID:337:9"
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "341:70",
+          "name": "Layout=Horizontal, State=Disabled",
+          "type": "COMPONENT",
+          "rect": [
+            644,
+            24,
+            580,
+            48
+          ],
+          "visible": true,
+          "fills": [],
+          "children": [
+            {
+              "id": "341:71",
+              "name": "Option 1",
+              "type": "INSTANCE",
+              "rect": [
+                8,
+                8,
+                180,
+                32
+              ],
+              "visible": true,
+              "fills": [],
+              "children": [
+                {
+                  "id": "I341:71;341:49",
+                  "name": "Indicator",
+                  "type": "FRAME",
+                  "rect": [
+                    2,
+                    7,
+                    18,
+                    18
+                  ],
+                  "visible": true,
+                  "fills": []
+                },
+                {
+                  "id": "I341:71;341:52",
+                  "name": "Label",
+                  "type": "TEXT",
+                  "rect": [
+                    28,
+                    6,
+                    150,
+                    20
+                  ],
+                  "visible": true,
+                  "text": "Option 1",
+                  "font": {
+                    "family": "Inter",
+                    "style": "Medium",
+                    "variationSettings": {
+                      "wght": 500,
+                      "slnt": 0
+                    }
+                  },
+                  "fontSize": 14,
+                  "lineHeight": {
+                    "unit": "PIXELS",
+                    "value": 14
+                  },
+                  "fills": [
+                    {
+                      "type": "SOLID",
+                      "visible": true,
+                      "opacity": 1,
+                      "blendMode": "NORMAL",
+                      "color": {
+                        "r": 0.5411764979362488,
+                        "g": 0.5411764979362488,
+                        "b": 0.5411764979362488
+                      },
+                      "boundVariables": {
+                        "color": {
+                          "type": "VARIABLE_ALIAS",
+                          "id": "VariableID:1448:122"
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "341:76",
+              "name": "Option 2",
+              "type": "INSTANCE",
+              "rect": [
+                200,
+                8,
+                180,
+                32
+              ],
+              "visible": true,
+              "fills": [],
+              "children": [
+                {
+                  "id": "I341:76;341:24",
+                  "name": "Indicator",
+                  "type": "FRAME",
+                  "rect": [
+                    2,
+                    7,
+                    18,
+                    18
+                  ],
+                  "visible": true,
+                  "fills": []
+                },
+                {
+                  "id": "I341:76;341:27",
+                  "name": "Label",
+                  "type": "TEXT",
+                  "rect": [
+                    28,
+                    6,
+                    150,
+                    20
+                  ],
+                  "visible": true,
+                  "text": "Option 2",
+                  "font": {
+                    "family": "Inter",
+                    "style": "Medium",
+                    "variationSettings": {
+                      "wght": 500,
+                      "slnt": 0
+                    }
+                  },
+                  "fontSize": 14,
+                  "lineHeight": {
+                    "unit": "PIXELS",
+                    "value": 14
+                  },
+                  "fills": [
+                    {
+                      "type": "SOLID",
+                      "visible": true,
+                      "opacity": 1,
+                      "blendMode": "NORMAL",
+                      "color": {
+                        "r": 0.5411764979362488,
+                        "g": 0.5411764979362488,
+                        "b": 0.5411764979362488
+                      },
+                      "boundVariables": {
+                        "color": {
+                          "type": "VARIABLE_ALIAS",
+                          "id": "VariableID:1448:122"
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "341:81",
+              "name": "Option 3",
+              "type": "INSTANCE",
+              "rect": [
+                392,
+                8,
+                180,
+                32
+              ],
+              "visible": true,
+              "fills": [],
+              "children": [
+                {
+                  "id": "I341:81;341:24",
+                  "name": "Indicator",
+                  "type": "FRAME",
+                  "rect": [
+                    2,
+                    7,
+                    18,
+                    18
+                  ],
+                  "visible": true,
+                  "fills": []
+                },
+                {
+                  "id": "I341:81;341:27",
+                  "name": "Label",
+                  "type": "TEXT",
+                  "rect": [
+                    28,
+                    6,
+                    150,
+                    20
+                  ],
+                  "visible": true,
+                  "text": "Option 3",
+                  "font": {
+                    "family": "Inter",
+                    "style": "Medium",
+                    "variationSettings": {
+                      "wght": 500,
+                      "slnt": 0
+                    }
+                  },
+                  "fontSize": 14,
+                  "lineHeight": {
+                    "unit": "PIXELS",
+                    "value": 14
+                  },
+                  "fills": [
+                    {
+                      "type": "SOLID",
+                      "visible": true,
+                      "opacity": 1,
+                      "blendMode": "NORMAL",
+                      "color": {
+                        "r": 0.5411764979362488,
+                        "g": 0.5411764979362488,
+                        "b": 0.5411764979362488
+                      },
+                      "boundVariables": {
+                        "color": {
+                          "type": "VARIABLE_ALIAS",
+                          "id": "VariableID:1448:122"
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "341:86",
+          "name": "Layout=Vertical, State=Enabled",
+          "type": "COMPONENT",
+          "rect": [
+            24,
+            204,
+            196,
+            136
+          ],
+          "visible": true,
+          "fills": [],
+          "children": [
+            {
+              "id": "341:87",
+              "name": "Option 1",
+              "type": "INSTANCE",
+              "rect": [
+                8,
+                8,
+                180,
+                32
+              ],
+              "visible": true,
+              "fills": [],
+              "children": [
+                {
+                  "id": "I341:87;341:29",
+                  "name": "Indicator",
+                  "type": "FRAME",
+                  "rect": [
+                    2,
+                    7,
+                    18,
+                    18
+                  ],
+                  "visible": true,
+                  "fills": []
+                },
+                {
+                  "id": "I341:87;341:32",
+                  "name": "Label",
+                  "type": "TEXT",
+                  "rect": [
+                    28,
+                    6,
+                    150,
+                    20
+                  ],
+                  "visible": true,
+                  "text": "Option 1",
+                  "font": {
+                    "family": "Inter",
+                    "style": "Medium",
+                    "variationSettings": {
+                      "wght": 500,
+                      "slnt": 0
+                    }
+                  },
+                  "fontSize": 14,
+                  "lineHeight": {
+                    "unit": "PIXELS",
+                    "value": 14
+                  },
+                  "fills": [
+                    {
+                      "type": "SOLID",
+                      "visible": true,
+                      "opacity": 1,
+                      "blendMode": "NORMAL",
+                      "color": {
+                        "r": 0.09803921729326248,
+                        "g": 0.09803921729326248,
+                        "b": 0.09803921729326248
+                      },
+                      "boundVariables": {
+                        "color": {
+                          "type": "VARIABLE_ALIAS",
+                          "id": "VariableID:337:9"
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "341:92",
+              "name": "Option 2",
+              "type": "INSTANCE",
+              "rect": [
+                8,
+                52,
+                180,
+                32
+              ],
+              "visible": true,
+              "fills": [],
+              "children": [
+                {
+                  "id": "I341:92;341:4",
+                  "name": "Indicator",
+                  "type": "FRAME",
+                  "rect": [
+                    2,
+                    7,
+                    18,
+                    18
+                  ],
+                  "visible": true,
+                  "fills": []
+                },
+                {
+                  "id": "I341:92;341:7",
+                  "name": "Label",
+                  "type": "TEXT",
+                  "rect": [
+                    28,
+                    6,
+                    150,
+                    20
+                  ],
+                  "visible": true,
+                  "text": "Option 2",
+                  "font": {
+                    "family": "Inter",
+                    "style": "Medium",
+                    "variationSettings": {
+                      "wght": 500,
+                      "slnt": 0
+                    }
+                  },
+                  "fontSize": 14,
+                  "lineHeight": {
+                    "unit": "PIXELS",
+                    "value": 14
+                  },
+                  "fills": [
+                    {
+                      "type": "SOLID",
+                      "visible": true,
+                      "opacity": 1,
+                      "blendMode": "NORMAL",
+                      "color": {
+                        "r": 0.09803921729326248,
+                        "g": 0.09803921729326248,
+                        "b": 0.09803921729326248
+                      },
+                      "boundVariables": {
+                        "color": {
+                          "type": "VARIABLE_ALIAS",
+                          "id": "VariableID:337:9"
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "341:97",
+              "name": "Option 3",
+              "type": "INSTANCE",
+              "rect": [
+                8,
+                96,
+                180,
+                32
+              ],
+              "visible": true,
+              "fills": [],
+              "children": [
+                {
+                  "id": "I341:97;341:4",
+                  "name": "Indicator",
+                  "type": "FRAME",
+                  "rect": [
+                    2,
+                    7,
+                    18,
+                    18
+                  ],
+                  "visible": true,
+                  "fills": []
+                },
+                {
+                  "id": "I341:97;341:7",
+                  "name": "Label",
+                  "type": "TEXT",
+                  "rect": [
+                    28,
+                    6,
+                    150,
+                    20
+                  ],
+                  "visible": true,
+                  "text": "Option 3",
+                  "font": {
+                    "family": "Inter",
+                    "style": "Medium",
+                    "variationSettings": {
+                      "wght": 500,
+                      "slnt": 0
+                    }
+                  },
+                  "fontSize": 14,
+                  "lineHeight": {
+                    "unit": "PIXELS",
+                    "value": 14
+                  },
+                  "fills": [
+                    {
+                      "type": "SOLID",
+                      "visible": true,
+                      "opacity": 1,
+                      "blendMode": "NORMAL",
+                      "color": {
+                        "r": 0.09803921729326248,
+                        "g": 0.09803921729326248,
+                        "b": 0.09803921729326248
+                      },
+                      "boundVariables": {
+                        "color": {
+                          "type": "VARIABLE_ALIAS",
+                          "id": "VariableID:337:9"
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "341:102",
+          "name": "Layout=Vertical, State=Disabled",
+          "type": "COMPONENT",
+          "rect": [
+            644,
+            204,
+            196,
+            136
+          ],
+          "visible": true,
+          "fills": [],
+          "children": [
+            {
+              "id": "341:103",
+              "name": "Option 1",
+              "type": "INSTANCE",
+              "rect": [
+                8,
+                8,
+                180,
+                32
+              ],
+              "visible": true,
+              "fills": [],
+              "children": [
+                {
+                  "id": "I341:103;341:49",
+                  "name": "Indicator",
+                  "type": "FRAME",
+                  "rect": [
+                    2,
+                    7,
+                    18,
+                    18
+                  ],
+                  "visible": true,
+                  "fills": []
+                },
+                {
+                  "id": "I341:103;341:52",
+                  "name": "Label",
+                  "type": "TEXT",
+                  "rect": [
+                    28,
+                    6,
+                    150,
+                    20
+                  ],
+                  "visible": true,
+                  "text": "Option 1",
+                  "font": {
+                    "family": "Inter",
+                    "style": "Medium",
+                    "variationSettings": {
+                      "wght": 500,
+                      "slnt": 0
+                    }
+                  },
+                  "fontSize": 14,
+                  "lineHeight": {
+                    "unit": "PIXELS",
+                    "value": 14
+                  },
+                  "fills": [
+                    {
+                      "type": "SOLID",
+                      "visible": true,
+                      "opacity": 1,
+                      "blendMode": "NORMAL",
+                      "color": {
+                        "r": 0.5411764979362488,
+                        "g": 0.5411764979362488,
+                        "b": 0.5411764979362488
+                      },
+                      "boundVariables": {
+                        "color": {
+                          "type": "VARIABLE_ALIAS",
+                          "id": "VariableID:1448:122"
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "341:108",
+              "name": "Option 2",
+              "type": "INSTANCE",
+              "rect": [
+                8,
+                52,
+                180,
+                32
+              ],
+              "visible": true,
+              "fills": [],
+              "children": [
+                {
+                  "id": "I341:108;341:24",
+                  "name": "Indicator",
+                  "type": "FRAME",
+                  "rect": [
+                    2,
+                    7,
+                    18,
+                    18
+                  ],
+                  "visible": true,
+                  "fills": []
+                },
+                {
+                  "id": "I341:108;341:27",
+                  "name": "Label",
+                  "type": "TEXT",
+                  "rect": [
+                    28,
+                    6,
+                    150,
+                    20
+                  ],
+                  "visible": true,
+                  "text": "Option 2",
+                  "font": {
+                    "family": "Inter",
+                    "style": "Medium",
+                    "variationSettings": {
+                      "wght": 500,
+                      "slnt": 0
+                    }
+                  },
+                  "fontSize": 14,
+                  "lineHeight": {
+                    "unit": "PIXELS",
+                    "value": 14
+                  },
+                  "fills": [
+                    {
+                      "type": "SOLID",
+                      "visible": true,
+                      "opacity": 1,
+                      "blendMode": "NORMAL",
+                      "color": {
+                        "r": 0.5411764979362488,
+                        "g": 0.5411764979362488,
+                        "b": 0.5411764979362488
+                      },
+                      "boundVariables": {
+                        "color": {
+                          "type": "VARIABLE_ALIAS",
+                          "id": "VariableID:1448:122"
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "341:113",
+              "name": "Option 3",
+              "type": "INSTANCE",
+              "rect": [
+                8,
+                96,
+                180,
+                32
+              ],
+              "visible": true,
+              "fills": [],
+              "children": [
+                {
+                  "id": "I341:113;341:24",
+                  "name": "Indicator",
+                  "type": "FRAME",
+                  "rect": [
+                    2,
+                    7,
+                    18,
+                    18
+                  ],
+                  "visible": true,
+                  "fills": []
+                },
+                {
+                  "id": "I341:113;341:27",
+                  "name": "Label",
+                  "type": "TEXT",
+                  "rect": [
+                    28,
+                    6,
+                    150,
+                    20
+                  ],
+                  "visible": true,
+                  "text": "Option 3",
+                  "font": {
+                    "family": "Inter",
+                    "style": "Medium",
+                    "variationSettings": {
+                      "wght": 500,
+                      "slnt": 0
+                    }
+                  },
+                  "fontSize": 14,
+                  "lineHeight": {
+                    "unit": "PIXELS",
+                    "value": 14
+                  },
+                  "fills": [
+                    {
+                      "type": "SOLID",
+                      "visible": true,
+                      "opacity": 1,
+                      "blendMode": "NORMAL",
+                      "color": {
+                        "r": 0.5411764979362488,
+                        "g": 0.5411764979362488,
+                        "b": 0.5411764979362488
+                      },
+                      "boundVariables": {
+                        "color": {
+                          "type": "VARIABLE_ALIAS",
+                          "id": "VariableID:1448:122"
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

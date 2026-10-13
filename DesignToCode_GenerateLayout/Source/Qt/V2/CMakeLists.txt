@@ -1,4 +1,4 @@
-# V2 构建提供静态布局生成器和 XML 运行器；组件来自已导入 SDK。
+# V2 构建提供静态布局生成器和 XML 运行器；组件来自工作区权威 SDK。
 cmake_minimum_required(VERSION 3.21)
 project(DesignToCodeV2 LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 17)

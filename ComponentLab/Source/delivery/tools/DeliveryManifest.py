@@ -18,7 +18,7 @@ def digest(path):
 
 def inventory():
     paths = [PROJECT / "README.md"]
-    for name in ("Source", "docs", "build/demo/component_gallery", "build/sdk"):
+    for name in ("Source", "docs", "build/demo/component_gallery"):
         paths.extend(p for p in (PROJECT / name).rglob("*") if p.is_file()
                      and "__pycache__" not in p.parts)
     return [{"path": p.relative_to(PROJECT).as_posix(), "bytes": p.stat().st_size,
@@ -29,7 +29,7 @@ def refresh(results):
     inputs = validation_inputs()
     proof = json.loads((results / "build-verification.json").read_text(encoding="utf-8-sig"))
     if proof["status"] != "passed" or proof["validationInputs"] != inputs:
-        raise ValueError("Build evidence does not match current sources and imported SDK")
+        raise ValueError("Build evidence does not match current sources and authoritative SDK")
     exe_hash = digest(PROJECT / "build/demo/component_gallery/component_lab.exe")
     if proof["exeSha256"].upper() != exe_hash:
         raise ValueError("Build evidence does not match the delivered executable")
@@ -49,7 +49,7 @@ def refresh(results):
                 "entrypoints": {"run": "build/demo/component_gallery/Run.cmd", "source": "Source/CMakeLists.txt"},
                 "exeSha256": exe_hash, "validationStatus": "build-and-tests-passed",
                 "ctestGroups": record["ctestGroups"],
-                "fileListScope": "Source, docs, dist and imported SDK", "files": inventory()}
+                "fileListScope": "Source, docs and deployable demo; SDK is an external authoritative dependency", "files": inventory()}
     MANIFEST.write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
 

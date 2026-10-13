@@ -1,15 +1,15 @@
 /* Z_DockWidget <- QDockWidget; compiled from the active Token profile. */
-*[designSystemClass="commonWidget::Z_DockWidget"] {
+*[designSystemClass="commonWidget::Z_DockWidget"][designSystemStyleOwner="tokens"] {
     color: #191919;
     background-color: #ffffff;
     font-size: 14px;
 }
-*[designSystemClass="commonWidget::Z_DockWidget"]:disabled {
+*[designSystemClass="commonWidget::Z_DockWidget"][designSystemStyleOwner="tokens"]:disabled {
     color: #8a8a8a;
     background-color: #f3f3f3;
     border-color: #d0d0d0;
 }
-*[designSystemClass="commonWidget::Z_DockWidget"] {
+*[designSystemClass="commonWidget::Z_DockWidget"][designSystemStyleOwner="tokens"] {
     border: 1px solid #a7a7a7;
     border-radius: 4px;
 }

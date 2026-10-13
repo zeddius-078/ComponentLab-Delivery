@@ -4,6 +4,15 @@
 #include "FocusIndicator.h"
 #include <QApplication>
 #include <QElapsedTimer>
+#include <QDynamicPropertyChangeEvent>
+#include <QFile>
+#include <QFontDatabase>
+#include <QFontMetricsF>
+#include <QJsonArray>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QPainterPath>
+#include <QSvgRenderer>
 #include <QEvent>
 #include <QFrame>
 #include <QHBoxLayout>
@@ -15,10 +24,34 @@
 #include <QStyle>
 #include <QStyleOptionButton>
 #include <QTimer>
+#include <QtMath>
 #include <stdexcept>
 
 namespace commonWidget {
 namespace {
+const QJsonObject& figmaButtonVisuals() {
+    static const QJsonObject data = [] {
+        QFile file(":/figma/button-visuals.json");
+        if (!file.open(QIODevice::ReadOnly))
+            throw std::runtime_error("Captured Button appearance missing");
+        QFontDatabase::addApplicationFont(":/figma/fonts/Inter-Regular.otf");
+        return QJsonDocument::fromJson(file.readAll()).object();
+    }();
+    return data;
+}
+QColor capturedColor(const QJsonValue& value) {
+    const auto a=value.toArray();
+    return QColor(a[0].toInt(),a[1].toInt(),a[2].toInt(),qRound(a[3].toDouble()*255));
+}
+QFont capturedButtonFont(bool large) {
+    figmaButtonVisuals();
+    QFont font("Inter"); font.setPixelSize(large?16:14); font.setWeight(QFont::Normal);
+    return font;
+}
+void drawCapturedSvg(QPainter& painter,const QString& name,const QRectF& bounds) {
+    QSvgRenderer svg(":/figma/button/"+name+".svg");
+    svg.render(&painter,bounds);
+}
 std::shared_ptr<const button_detail::Runtime> runtime;
 const button_detail::Runtime& rt() {
     if (!runtime) throw std::logic_error("Install Button runtime first");
@@ -77,7 +110,10 @@ public:
     explicit Indicator(QWidget* parent) : QLabel(parent) {
         part(this, "LOADING");
         setObjectName("LoadingIndicator");
-        connect(&timer, &QTimer::timeout, this, [this] { update(); });
+        connect(&timer, &QTimer::timeout, this, [this] {
+            update();
+            if(parentWidget()->property("figmaAppearance").toBool()) parentWidget()->update();
+        });
     }
     void configure(const button_detail::Metrics& m, bool spinning) {
         setFixedSize(m.indicatorSize, m.indicatorSize);
@@ -86,6 +122,9 @@ public:
             elapsed.start(); timer.start(rt().frameMs);
         } else if (!spinning) timer.stop();
         update();
+    }
+    int angle() const {
+        return timer.isActive()?int((elapsed.elapsed()%rt().cycleMs)*360/rt().cycleMs):0;
     }
 protected:
     void paintEvent(QPaintEvent*) override {
@@ -282,11 +321,17 @@ void Z_PushButton::sync() {
     }
     applyDynamicProperty(d->leading.container,"iconContainerStyle",key(d->leading.style));
     applyDynamicProperty(d->trailing.container,"iconContainerStyle",key(d->trailing.style));
-    d->indicator->configure(m,d->loading && !policyDisabled && isVisible());
+    d->indicator->configure(m,d->loading && !policyDisabled && isVisible() && property("figmaInputGlyph").toString().isEmpty() &&
+                             property("figmaPreviewState").toString().isEmpty());
     d->indicator->setVisible(d->loading);
     d->indicator->move((width()-d->indicator->width())/2,
                        (height()-d->indicator->height())/2);
     d->indicator->raise();
+    if(hasFigmaAppearance() || !property("figmaInputGlyph").toString().isEmpty()) {
+        d->leading.host->hide(); d->content->hide(); d->trailing.host->hide();
+        d->indicator->hide();
+        if(!property("figmaInputGlyph").toString().isEmpty()) setFixedSize(32,32);
+    }
     d->syncing = false;
     refreshVisual(); updateGeometry(); update();
 }
@@ -320,6 +365,10 @@ bool Z_PushButton::eventFilter(QObject*, QEvent* e) {
 bool Z_PushButton::event(QEvent* e) {
     const bool result=QPushButton::event(e);
     if (!d || d->syncing) return result;
+    if(e->type()==QEvent::DynamicPropertyChange) {
+        const auto name=static_cast<QDynamicPropertyChangeEvent*>(e)->propertyName();
+        if(name=="figmaAppearance" || name=="figmaPreviewState" || name=="figmaInputGlyph") sync();
+    }
     if (e->type()==QEvent::ParentChange) { watchParents(); sync(); }
     else if (e->type()==QEvent::Show || e->type()==QEvent::Hide) sync();
     else if (e->type()==QEvent::Enter || e->type()==QEvent::Leave ||
@@ -336,12 +385,83 @@ bool Z_PushButton::event(QEvent* e) {
     return result;
 }
 void Z_PushButton::paintEvent(QPaintEvent*) {
+    if(hasFigmaAppearance()) {
+        QPainter painter(this); paintFigmaAppearance(painter); return;
+    }
     QStyleOptionButton option; initStyleOption(&option);
     if (!FocusIndicator::instance().visibleFor(this))
         option.state &= ~QStyle::State_HasFocus;
     option.text.clear(); option.icon=QIcon();
     QPainter p(this);
     style()->drawControl(QStyle::CE_PushButton,&option,&p,this);
+}
+bool Z_PushButton::hasFigmaAppearance() const {
+    // A captured Light recipe is explicit, not a substitute for global Theme/Profile.
+    // Ghost and non-primary Danger are not authored in these seven Figma sets.
+    return property("figmaAppearance").toBool() && !d->ghost &&
+           (!d->danger || d->type==ButtonType::Primary);
+}
+QString Z_PushButton::figmaState() const {
+    if(!d->requestedEnabled || (parentWidget() && !parentWidget()->isEnabled())) return "disabled";
+    if(d->loading) return "loading";
+    const auto preview=property("figmaPreviewState").toString().toLower();
+    if(QStringList{"default","hover","active","focus-visible"}.contains(preview)) return preview;
+    if(isDown()) return "active";
+    if(FocusIndicator::instance().visibleFor(this)) return "focus-visible";
+    return underMouse()?"hover":"default";
+}
+void Z_PushButton::paintFigmaAppearance(QPainter& painter) {
+    const auto state=figmaState();
+    const auto family=d->danger?QString("DANGER"):key(d->type);
+    const auto recipe=figmaButtonVisuals()["recipes"].toObject()[family].toObject()[state].toObject();
+    const qreal stroke=recipe["strokeWidth"].toDouble();
+    const qreal radius=recipe["radius"].toDouble();
+    // Composite opacity once, including overlapping fill/stroke/icon edges.
+    QPixmap layer(size()*devicePixelRatioF()); layer.setDevicePixelRatio(devicePixelRatioF());
+    layer.fill(Qt::transparent);
+    QPainter p(&layer); p.setRenderHint(QPainter::Antialiasing);
+    QPainterPath path; path.addRoundedRect(QRectF(rect()).adjusted(.5*stroke,.5*stroke,-.5*stroke,-.5*stroke),
+                                           qMax(0.,radius-.5*stroke),qMax(0.,radius-.5*stroke));
+    QPen pen(capturedColor(recipe["stroke"]),stroke);
+    pen.setCapStyle(Qt::FlatCap);
+    QVector<qreal> dash; for(const auto& v:recipe["dash"].toArray()) dash.append(v.toDouble()/stroke);
+    if(!dash.isEmpty()) pen.setDashPattern(dash);
+    p.setPen(pen);p.setBrush(capturedColor(recipe["fill"]));p.drawPath(path);
+    if(d->loading) {
+        QString asset=d->danger?"loading-danger":d->type==ButtonType::Primary?"loading-primary":
+                      d->type==ButtonType::Link?"loading-link":"loading-default";
+        QRectF slot((width()-16.)/2,(height()-16.)/2,16,16);
+        // Authored text-button loading slots are offset inside the 18/20/24 canvas.
+        // Preserve their captured location in the state gallery, but center live animation.
+        if(!d->iconOnly && !property("figmaPreviewState").toString().isEmpty()) {
+            const auto sizeKey=d->size==ButtonSize::L?"large":d->size==ButtonSize::M?"medium":"small";
+            const auto a=figmaButtonVisuals()["loadingSlots"].toObject()[sizeKey].toArray();
+            slot=QRectF(a[0].toDouble(),a[1].toDouble(),a[2].toDouble(),a[3].toDouble());
+        }
+        p.save();p.translate(slot.center());p.rotate(d->indicator->angle());
+        drawCapturedSvg(p,asset,QRectF(-8,-8,16,16));p.restore();
+    } else if(d->iconOnly && d->leading.source==":/figma/button/plus-default.svg") {
+        const auto suffix=QStringList{"hover","active","disabled"}.contains(state)?state:QString("default");
+        drawCapturedSvg(p,"plus-"+suffix,QRectF((width()-16.)/2,(height()-16.)/2,16,16));
+    } else {
+        const auto font=capturedButtonFont(d->size==ButtonSize::L);p.setFont(font);
+        const auto foreground=capturedColor(recipe["foreground"]);p.setPen(foreground);
+        const bool left=d->leading.visible && !d->leading.icon.isNull();
+        const bool right=d->trailing.visible && !d->trailing.icon.isNull() && (!d->iconOnly || !left);
+        const qreal textWidth=d->iconOnly?0:QFontMetricsF(font).horizontalAdvance(text());
+        qreal content=textWidth+(left?16:0)+(right?16:0);
+        if(textWidth>0)content+=(left?4:0)+(right?4:0);
+        else if(left && right)content+=4;
+        qreal x=(width()-content)/2.;
+        const auto icon=[&](const Impl::Slot& s) {
+            const auto pix=rt().renderIcon(s.icon,16,foreground,isEnabled()?QIcon::Normal:QIcon::Disabled,devicePixelRatioF());
+            p.drawPixmap(QRectF(x,(height()-16.)/2,16,16),pix,QRectF(pix.rect()));x+=20;
+        };
+        if(left)icon(d->leading);
+        if(textWidth>0) {p.drawText(QRectF(x,0,textWidth,height()),Qt::AlignCenter,text());x+=textWidth+4;}
+        if(right)icon(d->trailing);
+    }
+    p.end();painter.setOpacity(recipe["opacity"].toDouble(1));painter.drawPixmap(0,0,layer);
 }
 QColor Z_PushButton::focusIndicatorColor() const {
     const auto source = d->danger ? rt().dangerFocusColor
@@ -357,6 +477,15 @@ void Z_PushButton::resizeEvent(QResizeEvent* e) {
 QSize Z_PushButton::sizeHint() const {
     if (!d || !d->layout) return QPushButton::sizeHint();
     if (d->loading) return d->frozenSize;
+    if(hasFigmaAppearance()) {
+        const bool large=d->size==ButtonSize::L;
+        if(d->iconOnly) return QSize(large?40:32,large?40:32);
+        qreal width=QFontMetricsF(capturedButtonFont(large)).horizontalAdvance(text());
+        for(const auto* slot:{&d->leading,&d->trailing})
+            if(slot->visible && !slot->icon.isNull()) width+=16+(text().isEmpty()?0:4);
+        const int padding=large?16:d->size==ButtonSize::M?12:8;
+        return QSize(qCeil(width)+2*padding,large?40:32);
+    }
     QSize s=d->layout->sizeHint();
     const auto& m=rt().sizes.at(static_cast<size_t>(d->size));
     if (d->iconOnly) return QSize(m.iconOnlySize,m.iconOnlySize);
@@ -441,6 +570,7 @@ void Z_PushButton::setLoading(bool v) {
     if (v) {
         d->savedMinimum=minimumSize(); d->savedMaximum=maximumSize();
         d->frozenSize=isVisible()?size():sizeHint();
+        if(hasFigmaAppearance()) d->frozenSize=d->frozenSize.expandedTo(minimumSize()).boundedTo(maximumSize());
         for (auto* host : {d->leading.host,d->content,d->trailing.host}) {
             auto p=host->sizePolicy();
             // Only previously visible content reserves space.
