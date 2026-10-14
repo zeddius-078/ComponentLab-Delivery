@@ -1130,7 +1130,15 @@
       "version": "UNRESOLVED",
       "evidenceRefs": [
         "Source/ComponentKit/component-definitions/figma-component-inventory.json",
-        "Source/ComponentKit/runtime/component/ComponentFactory.cpp"
+        "Source/ComponentKit/runtime/component/ComponentFactory.cpp",
+        "docs/designRules/design-system/component-traceability-manifest.json",
+        "Source/ComponentKit/runtime/component/MdiAppearance.h",
+        "Source/ComponentKit/runtime/component/MdiAppearance.cpp",
+        "Source/SDKConsumerTest/main.cpp",
+        "ComponentLab/Source/delivery/demo/MdiGallery.cpp",
+        "ComponentLab/Source/delivery/tests/CompositionTests.cpp",
+        "DesignToCode_GenerateLayout/Source/HtmlDsl/pipeline/mapping/component-mapping.json",
+        "DesignToCode_GenerateLayout/Source/Validation/component/ComponentTests.cpp"
       ],
       "designOriginAction": "REUSE",
       "identityMigration": "NONE",
@@ -1140,14 +1148,26 @@
         "schema": "VERIFIED",
         "build": "VERIFIED",
         "runtime": "VERIFIED",
-        "runtimeScope": "FACTORY_INSTANTIATION_ONLY",
+        "runtimeScope": "SDK_FACTORY_COMPONENTLAB_GENERATELAYOUT",
         "factoryRegistration": "VERIFIED",
         "visual": "NOT_VERIFIED",
-        "downstreamConsumption": "NOT_VERIFIED",
+        "downstreamConsumption": "VERIFIED",
         "tokenBinding": "UNRESOLVED"
       },
       "governanceApprovalStatus": "NOT_REVIEWED",
-      "focusPolicy": "UNRESOLVED"
+      "focusPolicy": "MANAGED_SUBWINDOW_AND_TAB_NAVIGATION_OPTIONAL_INDICATOR",
+      "runtimeContract": {
+        "qtBaseClass": "QMdiArea/QMdiSubWindow document composition",
+        "variantAxes": [
+          "Presentation"
+        ],
+        "controlledProperties": [
+          "initial managed documents",
+          "authored preview geometry",
+          "TabbedView initial mode"
+        ],
+        "controllerBoundary": "Free, Cascade and Tile are deterministic authored geometry previews, not Qt viewMode values or arrangement commands. Tabbed maps to QMdiArea::TabbedView; subsequent arrangement, activation, lifecycle, close veto, persistence and ownership remain runtime-owned."
+      }
     },
     {
       "designComponent": "ComponentLab/MdiSubWindow",
@@ -1175,7 +1195,15 @@
       "version": "UNRESOLVED",
       "evidenceRefs": [
         "Source/ComponentKit/component-definitions/figma-component-inventory.json",
-        "Source/ComponentKit/runtime/component/ComponentFactory.cpp"
+        "Source/ComponentKit/runtime/component/ComponentFactory.cpp",
+        "docs/designRules/design-system/component-traceability-manifest.json",
+        "Source/ComponentKit/runtime/component/MdiAppearance.h",
+        "Source/ComponentKit/runtime/component/MdiAppearance.cpp",
+        "Source/SDKConsumerTest/main.cpp",
+        "ComponentLab/Source/delivery/demo/MdiGallery.cpp",
+        "ComponentLab/Source/delivery/tests/CompositionTests.cpp",
+        "DesignToCode_GenerateLayout/Source/HtmlDsl/pipeline/mapping/component-mapping.json",
+        "DesignToCode_GenerateLayout/Source/Validation/component/ComponentTests.cpp"
       ],
       "designOriginAction": "REUSE",
       "identityMigration": "NONE",
@@ -1185,14 +1213,28 @@
         "schema": "VERIFIED",
         "build": "VERIFIED",
         "runtime": "VERIFIED",
-        "runtimeScope": "FACTORY_INSTANTIATION_ONLY",
+        "runtimeScope": "SDK_FACTORY_COMPONENTLAB_GENERATELAYOUT",
         "factoryRegistration": "VERIFIED",
         "visual": "NOT_VERIFIED",
-        "downstreamConsumption": "NOT_VERIFIED",
+        "downstreamConsumption": "VERIFIED",
         "tokenBinding": "UNRESOLVED"
       },
       "governanceApprovalStatus": "NOT_REVIEWED",
-      "focusPolicy": "UNRESOLVED"
+      "focusPolicy": "CHILD_CONTENT_AND_TITLE_ACTIONS_OPTIONAL_INDICATOR",
+      "runtimeContract": {
+        "qtBaseClass": "QMdiSubWindow/QWidget child composition",
+        "variantAxes": [
+          "State"
+        ],
+        "controlledProperties": [
+          "title",
+          "child content",
+          "close glyph visibility",
+          "minimize glyph visibility",
+          "maximize glyph visibility"
+        ],
+        "controllerBoundary": "State is deterministic paint metadata. Activation, QWidget window states, enabled, WindowFlags, close veto, system menu, move/resize and ownership remain native runtime authority and are never inferred as one mutually exclusive property."
+      }
     },
     {
       "designComponent": "ComponentLab/StackedWidget",
@@ -7054,7 +7096,15 @@
       "version": "UNRESOLVED",
       "evidenceRefs": [
         "Source/ComponentKit/component-definitions/figma-component-inventory.json",
-        "Source/ComponentKit/runtime/component/ComponentFactory.cpp"
+        "Source/ComponentKit/runtime/component/ComponentFactory.cpp",
+        "docs/designRules/design-system/component-traceability-manifest.json",
+        "Source/ComponentKit/runtime/component/MdiAppearance.h",
+        "Source/ComponentKit/runtime/component/MdiAppearance.cpp",
+        "Source/SDKConsumerTest/main.cpp",
+        "ComponentLab/Source/delivery/demo/MdiGallery.cpp",
+        "ComponentLab/Source/delivery/tests/CompositionTests.cpp",
+        "DesignToCode_GenerateLayout/Source/HtmlDsl/pipeline/mapping/component-mapping.json",
+        "DesignToCode_GenerateLayout/Source/Validation/component/ComponentTests.cpp"
       ],
       "designOriginAction": "REUSE",
       "identityMigration": "NONE",
@@ -7064,14 +7114,26 @@
         "schema": "VERIFIED",
         "build": "VERIFIED",
         "runtime": "VERIFIED",
-        "runtimeScope": "FACTORY_INSTANTIATION_ONLY",
+        "runtimeScope": "SDK_FACTORY_COMPONENTLAB_GENERATELAYOUT",
         "factoryRegistration": "VERIFIED",
         "visual": "NOT_VERIFIED",
-        "downstreamConsumption": "NOT_VERIFIED",
+        "downstreamConsumption": "VERIFIED",
         "tokenBinding": "UNRESOLVED"
       },
       "governanceApprovalStatus": "NOT_REVIEWED",
-      "focusPolicy": "UNRESOLVED"
+      "focusPolicy": "MANAGED_SUBWINDOW_AND_TAB_NAVIGATION_OPTIONAL_INDICATOR",
+      "runtimeContract": {
+        "qtBaseClass": "QMdiArea/QMdiSubWindow document composition",
+        "variantAxes": [
+          "Presentation"
+        ],
+        "controlledProperties": [
+          "initial managed documents",
+          "authored preview geometry",
+          "TabbedView initial mode"
+        ],
+        "controllerBoundary": "Free, Cascade and Tile are deterministic authored geometry previews, not Qt viewMode values or arrangement commands. Tabbed maps to QMdiArea::TabbedView; subsequent arrangement, activation, lifecycle, close veto, persistence and ownership remain runtime-owned."
+      }
     },
     {
       "designComponent": "ComponentLab/MdiSubWindow",
@@ -7099,7 +7161,15 @@
       "version": "UNRESOLVED",
       "evidenceRefs": [
         "Source/ComponentKit/component-definitions/figma-component-inventory.json",
-        "Source/ComponentKit/runtime/component/ComponentFactory.cpp"
+        "Source/ComponentKit/runtime/component/ComponentFactory.cpp",
+        "docs/designRules/design-system/component-traceability-manifest.json",
+        "Source/ComponentKit/runtime/component/MdiAppearance.h",
+        "Source/ComponentKit/runtime/component/MdiAppearance.cpp",
+        "Source/SDKConsumerTest/main.cpp",
+        "ComponentLab/Source/delivery/demo/MdiGallery.cpp",
+        "ComponentLab/Source/delivery/tests/CompositionTests.cpp",
+        "DesignToCode_GenerateLayout/Source/HtmlDsl/pipeline/mapping/component-mapping.json",
+        "DesignToCode_GenerateLayout/Source/Validation/component/ComponentTests.cpp"
       ],
       "designOriginAction": "REUSE",
       "identityMigration": "NONE",
@@ -7109,14 +7179,28 @@
         "schema": "VERIFIED",
         "build": "VERIFIED",
         "runtime": "VERIFIED",
-        "runtimeScope": "FACTORY_INSTANTIATION_ONLY",
+        "runtimeScope": "SDK_FACTORY_COMPONENTLAB_GENERATELAYOUT",
         "factoryRegistration": "VERIFIED",
         "visual": "NOT_VERIFIED",
-        "downstreamConsumption": "NOT_VERIFIED",
+        "downstreamConsumption": "VERIFIED",
         "tokenBinding": "UNRESOLVED"
       },
       "governanceApprovalStatus": "NOT_REVIEWED",
-      "focusPolicy": "UNRESOLVED"
+      "focusPolicy": "CHILD_CONTENT_AND_TITLE_ACTIONS_OPTIONAL_INDICATOR",
+      "runtimeContract": {
+        "qtBaseClass": "QMdiSubWindow/QWidget child composition",
+        "variantAxes": [
+          "State"
+        ],
+        "controlledProperties": [
+          "title",
+          "child content",
+          "close glyph visibility",
+          "minimize glyph visibility",
+          "maximize glyph visibility"
+        ],
+        "controllerBoundary": "State is deterministic paint metadata. Activation, QWidget window states, enabled, WindowFlags, close veto, system menu, move/resize and ownership remain native runtime authority and are never inferred as one mutually exclusive property."
+      }
     },
     {
       "designComponent": "ComponentLab/StackedWidget",

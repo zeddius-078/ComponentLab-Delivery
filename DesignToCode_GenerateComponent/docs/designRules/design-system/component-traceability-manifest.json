@@ -408,6 +408,50 @@
         "DesignToCode_GenerateLayout/Source/Validation/component/ComponentTests.cpp"
       ]
     },
+    "ComponentLab/MdiSubWindow": {
+      "consumerEngineeringStatus": "IMPLEMENTED",
+      "runtimeScope": "SDK_FACTORY_COMPONENTLAB_GENERATELAYOUT",
+      "focusPolicy": "CHILD_CONTENT_AND_TITLE_ACTIONS_OPTIONAL_INDICATOR",
+      "runtimeContract": {
+        "qtBaseClass": "QMdiSubWindow/QWidget child composition",
+        "variantAxes": ["State"],
+        "controlledProperties": ["title", "child content", "close glyph visibility", "minimize glyph visibility", "maximize glyph visibility"],
+        "controllerBoundary": "State is deterministic paint metadata. Activation, QWidget window states, enabled, WindowFlags, close veto, system menu, move/resize and ownership remain native runtime authority and are never inferred as one mutually exclusive property."
+      },
+      "runtimeEvidence": [
+        "Source/ComponentKit/runtime/component/MdiAppearance.h",
+        "Source/ComponentKit/runtime/component/MdiAppearance.cpp",
+        "Source/SDKConsumerTest/main.cpp"
+      ],
+      "consumerEvidence": [
+        "ComponentLab/Source/delivery/demo/MdiGallery.cpp",
+        "ComponentLab/Source/delivery/tests/CompositionTests.cpp",
+        "DesignToCode_GenerateLayout/Source/HtmlDsl/pipeline/mapping/component-mapping.json",
+        "DesignToCode_GenerateLayout/Source/Validation/component/ComponentTests.cpp"
+      ]
+    },
+    "ComponentLab/MdiArea": {
+      "consumerEngineeringStatus": "IMPLEMENTED",
+      "runtimeScope": "SDK_FACTORY_COMPONENTLAB_GENERATELAYOUT",
+      "focusPolicy": "MANAGED_SUBWINDOW_AND_TAB_NAVIGATION_OPTIONAL_INDICATOR",
+      "runtimeContract": {
+        "qtBaseClass": "QMdiArea/QMdiSubWindow document composition",
+        "variantAxes": ["Presentation"],
+        "controlledProperties": ["initial managed documents", "authored preview geometry", "TabbedView initial mode"],
+        "controllerBoundary": "Free, Cascade and Tile are deterministic authored geometry previews, not Qt viewMode values or arrangement commands. Tabbed maps to QMdiArea::TabbedView; subsequent arrangement, activation, lifecycle, close veto, persistence and ownership remain runtime-owned."
+      },
+      "runtimeEvidence": [
+        "Source/ComponentKit/runtime/component/MdiAppearance.h",
+        "Source/ComponentKit/runtime/component/MdiAppearance.cpp",
+        "Source/SDKConsumerTest/main.cpp"
+      ],
+      "consumerEvidence": [
+        "ComponentLab/Source/delivery/demo/MdiGallery.cpp",
+        "ComponentLab/Source/delivery/tests/CompositionTests.cpp",
+        "DesignToCode_GenerateLayout/Source/HtmlDsl/pipeline/mapping/component-mapping.json",
+        "DesignToCode_GenerateLayout/Source/Validation/component/ComponentTests.cpp"
+      ]
+    },
     "ComponentLab/DesktopBottomNavigation": {
       "consumerEngineeringStatus": "IMPLEMENTED",
       "runtimeScope": "SDK_FACTORY_COMPONENTLAB_GENERATELAYOUT",

@@ -215,7 +215,8 @@ class FigmaCatalogContractTests(unittest.TestCase):
              "ComponentLab/Transfer", "ComponentLab/Upload",
              "ComponentLab/Menu", "ComponentLab/MenuBar", "ComponentLab/ToolBar",
              "ComponentLab/TabWidget", "ComponentLab/ToolBox",
-             "ComponentLab/DockWidget",
+             "ComponentLab/DockWidget", "ComponentLab/MdiSubWindow",
+             "ComponentLab/MdiArea",
              "ComponentLab/Navbar", "ComponentLab/Sidebar",
              "ComponentLab/DesktopBottomNavigation"},
             {entry["canonicalId"] for entry in entries

@@ -5,6 +5,7 @@
 #include "ComponentTheme.h"
 #include "NavigationAppearance.h"
 #include "DockWidgetAppearance.h"
+#include "MdiAppearance.h"
 #include "TabAppearance.h"
 #include "ToolBoxAppearance.h"
 #include "VisualAssetCatalog.h"
@@ -18,6 +19,8 @@
 #include "native/Z_TabWidget.h"
 #include "native/Z_ToolBox.h"
 #include "native/Z_DockWidget.h"
+#include "native/Z_MdiArea.h"
+#include "native/Z_MdiSubWindow.h"
 #include <QApplication>
 #include <QFile>
 #include <QJsonDocument>
@@ -27,6 +30,8 @@
 #include <QMenu>
 #include <QMenuBar>
 #include <QDockWidget>
+#include <QMdiArea>
+#include <QMdiSubWindow>
 #include <QSignalSpy>
 #include <QTest>
 #include <QToolButton>
@@ -566,6 +571,40 @@ private slots:
                      QString("dock.configureDockWidget"));
             QCOMPARE(trace.first().toObject()["properties"].toObject()["Area"].toString(),
                      QString("Bottom"));
+        }
+        {
+            const auto sample = fixture("511:124", "ComponentLab/MdiSubWindow",
+                                        {{"State", "Shaded"}});
+            d2c::ComponentConverter converter(sample.first, mapping);
+            std::unique_ptr<QWidget> widget(converter.convert(sample.second, nullptr));
+            auto* sub = qobject_cast<commonWidget::Z_MdiSubWindow*>(widget.get());
+            QVERIFY(sub);
+            QCOMPARE(sub->property("figmaMdiSnapshotState").toString(), QString("Shaded"));
+            QVERIFY(!sub->isShaded());
+            QVERIFY(sub->isEnabled());
+            QVERIFY(sub->widget());
+            QCOMPARE(sub->widget()->objectName(), QString("mdiDocument"));
+            const auto call = converter.trace().first().toObject()["calls"].toArray().first().toObject();
+            QCOMPARE(call["api"].toString(), QString("mdi.configureSubWindow"));
+            QCOMPARE(call["properties"].toObject()["State"].toString(), QString("Shaded"));
+        }
+        {
+            const auto sample = fixture("511:280", "ComponentLab/MdiArea",
+                                        {{"Presentation", "Tile"}});
+            d2c::ComponentConverter converter(sample.first, mapping);
+            std::unique_ptr<QWidget> widget(converter.convert(sample.second, nullptr));
+            auto* area = qobject_cast<commonWidget::Z_MdiArea*>(widget.get());
+            QVERIFY(area);
+            QCOMPARE(area->property("figmaMdiPresentationPreview").toString(),
+                     QString("Tile"));
+            QCOMPARE(area->viewMode(), QMdiArea::SubWindowView);
+            QCOMPARE(area->subWindowList().size(), 4);
+            QVERIFY(!area->subWindowList()[0]->geometry().intersects(
+                area->subWindowList()[1]->geometry()));
+            const auto call = converter.trace().first().toObject()["calls"].toArray().first().toObject();
+            QCOMPARE(call["api"].toString(), QString("mdi.configureArea"));
+            QCOMPARE(call["properties"].toObject()["Presentation"].toString(),
+                     QString("Tile"));
         }
 
         {

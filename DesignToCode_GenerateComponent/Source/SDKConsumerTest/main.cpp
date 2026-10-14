@@ -12,6 +12,8 @@
 #include <QListView>
 #include <QMenu>
 #include <QMenuBar>
+#include <QMdiArea>
+#include <QMdiSubWindow>
 #include <QSet>
 #include <QStringListModel>
 #include <QToolButton>
@@ -337,6 +339,48 @@ int main(int argc, char *argv[]) {
     }
     if (namedDockActions != 2)
         return 119;
+    auto* mdiSub = qobject_cast<commonWidget::Z_MdiSubWindow*>(
+        factory.create(QStringLiteral("commonWidget::Z_MdiSubWindow"), &owner));
+    if (!mdiSub)
+        return 120;
+    const auto mdiSubFlags = mdiSub->windowFlags();
+    const auto mdiSubState = mdiSub->windowState();
+    const bool mdiSubEnabled = mdiSub->isEnabled();
+    commonWidget::configureFigmaMdiSubWindow(
+        mdiSub, {{QStringLiteral("State"), QStringLiteral("Maximized")}});
+    if (mdiSub->property("figmaMdiSnapshotState").toString() !=
+            QStringLiteral("Maximized") ||
+        mdiSub->windowFlags() != mdiSubFlags || mdiSub->windowState() != mdiSubState ||
+        mdiSub->isEnabled() != mdiSubEnabled || !mdiSub->widget() ||
+        mdiSub->widget()->objectName() != QStringLiteral("mdiDocument"))
+        return 121;
+    auto* mdiArea = qobject_cast<commonWidget::Z_MdiArea*>(
+        factory.create(QStringLiteral("commonWidget::Z_MdiArea"), &owner));
+    if (!mdiArea)
+        return 122;
+    const auto activationOrder = mdiArea->activationOrder();
+    const bool tabsMovable = mdiArea->tabsMovable();
+    commonWidget::configureFigmaMdiArea(
+        mdiArea, {{QStringLiteral("Presentation"), QStringLiteral("Free")}});
+    if (mdiArea->property("figmaMdiPresentationPreview").toString() !=
+            QStringLiteral("Free") ||
+        mdiArea->viewMode() != QMdiArea::SubWindowView ||
+        mdiArea->subWindowList().size() != 2 ||
+        mdiArea->activationOrder() != activationOrder || mdiArea->tabsMovable() != tabsMovable ||
+        mdiArea->subWindowList().first()->windowTitle() != QStringLiteral("Trend"))
+        return 123;
+    commonWidget::configureFigmaMdiArea(
+        mdiArea, {{QStringLiteral("Presentation"), QStringLiteral("Tabbed")}});
+    if (mdiArea->viewMode() != QMdiArea::TabbedView ||
+        mdiArea->subWindowList().size() != 3 || !mdiArea->tabsClosable())
+        return 124;
+    if (!factory.apply(mdiSub, QStringLiteral("setFocusRingEnabled"), false,
+                       &menuFocusError) ||
+        commonWidget::FocusIndicator::instance().enabledFor(mdiSub) ||
+        !factory.apply(mdiArea, QStringLiteral("setFocusRingEnabled"), false,
+                       &menuFocusError) ||
+        commonWidget::FocusIndicator::instance().enabledFor(mdiArea))
+        return 125;
     if (layoutHelperIds != QSet<QString>{QStringLiteral("ComponentLab/Spacer"),
                                          QStringLiteral("ComponentLab/LayoutContainer")} ||
         assetIds != QSet<QString>{QStringLiteral("ComponentLab/IconAsset"),

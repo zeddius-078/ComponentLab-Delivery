@@ -4,6 +4,7 @@
 #include "IconAssetCatalog.h"
 #include "NavigationAppearance.h"
 #include "DockWidgetAppearance.h"
+#include "MdiAppearance.h"
 #include "TabAppearance.h"
 #include "ToolBoxAppearance.h"
 #include "Z_PushButton.h"
@@ -13,6 +14,8 @@
 #include <QMenu>
 #include <QMenuBar>
 #include <QDockWidget>
+#include <QMdiArea>
+#include <QMdiSubWindow>
 #include <QToolBar>
 #include <QTabWidget>
 #include <QToolBox>
@@ -155,7 +158,8 @@ QWidget* ComponentConverter::convert(const QJsonObject& n, QWidget* parent) {
     // 将一般变体翻译成 API 参数；Profile 和 state 分别由主题检查及状态规则处理。
     for (auto it = props.cbegin(); it != props.cend(); ++it) {
         // 跳过已分配给专门流程的字段，避免将状态或主题误当通用 setter。
-        if (it.key() == "Profile" || it.key() == stateProperty)
+        if (it.key() == "Profile" ||
+            (it.key() == stateProperty && !propertyRules.contains(it.key())))
             continue;
         const auto spec = propertyRules[it.key()].toObject();
         const auto domain = spec["values"].toObject();
@@ -222,6 +226,16 @@ QWidget* ComponentConverter::convert(const QJsonObject& n, QWidget* parent) {
             if (!dock)
                 fail("INVALID_COMPOSITION_TARGET", n, compositionApi);
             commonWidget::configureFigmaDockWidget(dock, compositionProperties);
+        } else if (compositionApi == QStringLiteral("mdi.configureSubWindow")) {
+            auto* sub = qobject_cast<QMdiSubWindow*>(w);
+            if (!sub)
+                fail("INVALID_COMPOSITION_TARGET", n, compositionApi);
+            commonWidget::configureFigmaMdiSubWindow(sub, compositionProperties);
+        } else if (compositionApi == QStringLiteral("mdi.configureArea")) {
+            auto* area = qobject_cast<QMdiArea*>(w);
+            if (!area)
+                fail("INVALID_COMPOSITION_TARGET", n, compositionApi);
+            commonWidget::configureFigmaMdiArea(area, compositionProperties);
         } else {
             fail("UNREGISTERED_COMPOSITION_API", n, compositionApi);
         }

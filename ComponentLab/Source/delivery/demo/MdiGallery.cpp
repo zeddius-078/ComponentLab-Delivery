@@ -128,8 +128,13 @@ QMdiSubWindow* makeSub(const std::shared_ptr<commonWidget::ComponentFactory>& fa
     sub->setWindowTitle(source ? "Trend window" : "Trend");
     sub->setAttribute(Qt::WA_DeleteOnClose, false);
     sub->setProperty("figmaMdiSourceSnapshot", source);
-    commonWidget::applyFigmaMdiSubWindowAppearance(sub, state);
-    populate(sub, state, source, tabbed);
+    if (source) {
+        commonWidget::applyFigmaMdiSubWindowAppearance(sub, state);
+        populate(sub, state, true, tabbed);
+    } else {
+        commonWidget::populateFigmaMdiSubWindow(sub);
+        commonWidget::applyFigmaMdiSubWindowAppearance(sub, state);
+    }
     return sub;
 }
 class SnapshotLayout final : public QObject {
@@ -306,37 +311,41 @@ void configureMdiEditor(QWidget* preview, QFormLayout* controls, QLineEdit* titl
             factory->create("commonWidget::Z_MdiArea", hostLayout->parentWidget()));
         area->setObjectName("mdiEditorWorkspace");
         hostLayout->insertWidget(2, area, 1);
-    } else {
-        for (auto* old : area->subWindowList())
-            delete old;
+    } else
         hostLayout->setStretchFactor(area, 1);
-    }
     area->setMinimumSize(300, 360);
     area->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     area->setActivationOrder(QMdiArea::ActivationHistoryOrder);
     commonWidget::applyFigmaMdiAreaAppearance(area);
     QList<QMdiSubWindow*> documents;
-    for (int i = 0; i < 3; ++i) {
-        auto* sub = i == 0 && rootSub ? rootSub : makeSub(factory, nullptr, {}, false);
-        if (sub == rootSub) {
-            commonWidget::applyFigmaMdiSubWindowAppearance(sub);
-            populate(sub, {}, false);
+    if (!rootSub) {
+        commonWidget::configureFigmaMdiArea(
+            area, {{QStringLiteral("Presentation"), QStringLiteral("Free")}});
+        documents = area->subWindowList();
+    } else {
+        for (int i = 0; i < 3; ++i) {
+            auto* sub = i == 0 ? rootSub : makeSub(factory, nullptr, {}, false);
+            if (sub == rootSub) {
+                commonWidget::populateFigmaMdiSubWindow(sub);
+                commonWidget::applyFigmaMdiSubWindowAppearance(sub);
+            }
+            sub->setWindowTitle(QStringList{"Trend", "Recipe", "Alarm"}[i]);
+            sub->setObjectName(sub == rootSub ? "componentInteractivePreview"
+                                              : "mdiEditorDocument" + QString::number(i));
+            sub->setMinimumSize(220, 140);
+            sub->setMaximumSize(QWIDGETSIZE_MAX, QWIDGETSIZE_MAX);
+            sub->setAttribute(Qt::WA_DeleteOnClose, false);
+            area->addSubWindow(sub);
+            sub->setGeometry(14 + i * 28, 18 + i * 32, 280, 190);
+            sub->show();
+            documents.append(sub);
         }
-        sub->setWindowTitle(QStringList{"Trend", "Recipe", "Alarm"}[i]);
-        sub->setObjectName(sub == rootSub ? "componentInteractivePreview"
-                                          : "mdiEditorDocument" + QString::number(i));
-        sub->setMinimumSize(220, 140);
-        sub->setMaximumSize(QWIDGETSIZE_MAX, QWIDGETSIZE_MAX);
-        sub->setAttribute(Qt::WA_DeleteOnClose, false);
-        area->addSubWindow(sub);
-        sub->setGeometry(14 + i * 28, 18 + i * 32, 280, 190);
-        sub->show();
-        documents.append(sub);
     }
     area->setActiveSubWindow(documents.first());
     auto* target = new QComboBox(settings);
     target->setObjectName("mdiTargetControl");
-    target->addItems({"Trend", "Recipe", "Alarm"});
+    for (auto* document : documents)
+        target->addItem(document->windowTitle());
     controls->addRow(QString::fromUtf8("操作的文档"), target);
     title->setEnabled(true);
     if (auto* l = qobject_cast<QLabel*>(controls->labelForField(title)))

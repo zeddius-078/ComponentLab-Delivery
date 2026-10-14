@@ -180,6 +180,37 @@
       "status":"Figma 507:443; eight Area x Placement variants; Closable and Floatable glyph visibility is not mapped to native feature flags"
     },
     {
+      "designComponentName":"ComponentLab/MdiSubWindow",
+      "designComponentSetId":"511:124",
+      "designComponentSet":"ComponentLab/MdiSubWindow",
+      "qtClass":"commonWidget::Z_MdiSubWindow",
+      "stateProperty":"State",
+      "compositionApi":"mdi.configureSubWindow",
+      "propertyMappings":{
+        "State":{"api":"mdi.configureSubWindow","values":{"Inactive":"Inactive","Active":"Active","Maximized":"Maximized","Minimized":"Minimized","Shaded":"Shaded","Disabled":"Disabled"}}
+      },
+      "stateMappings":{},
+      "slotMappings":[],
+      "resourceMappings":{"policy":"State is a deterministic paint specimen and never executes activation, QWidget window-state, enabled or WindowFlags changes; native lifecycle and commands remain runtime-owned"},
+      "fallback":"error",
+      "status":"Figma 511:124; six State previews; Closable, Minimizable and Maximizable remain glyph-visibility properties rather than native command flags"
+    },
+    {
+      "designComponentName":"ComponentLab/MdiArea",
+      "designComponentSetId":"511:280",
+      "designComponentSet":"ComponentLab/MdiArea",
+      "qtClass":"commonWidget::Z_MdiArea",
+      "compositionApi":"mdi.configureArea",
+      "propertyMappings":{
+        "Presentation":{"api":"mdi.configureArea","values":{"Free":"Free","Cascade":"Cascade","Tile":"Tile","Tabbed":"Tabbed"}}
+      },
+      "stateMappings":{},
+      "slotMappings":[],
+      "resourceMappings":{"policy":"SDK owns the initial managed-window composition; Free, Cascade and Tile use authored preview geometry without invoking arrangement commands, while Tabbed maps to QMdiArea::TabbedView"},
+      "fallback":"error",
+      "status":"Figma 511:280; four Presentation previews over one QMdiArea document model"
+    },
+    {
       "designComponentName":"ComponentLab/Badge",
       "designComponentSetId":"2132:21",
       "designComponentSet":"ComponentLab/Badge",

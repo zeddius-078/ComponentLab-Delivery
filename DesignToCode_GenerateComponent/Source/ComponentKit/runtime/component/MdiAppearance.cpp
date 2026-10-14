@@ -1,11 +1,14 @@
 #include "MdiAppearance.h"
 #include "FocusIndicator.h"
+#include "native/Z_MdiSubWindow.h"
 #include <QMdiArea>
 #include <QMdiSubWindow>
 #include <QTabBar>
 #include <QAbstractButton>
 #include <QEvent>
+#include <QCloseEvent>
 #include <QFontDatabase>
+#include <QLabel>
 #include <QPainter>
 #include <QPainterPath>
 #include <QProxyStyle>
@@ -16,15 +19,47 @@
 #include <QTextLayout>
 #include <QTimer>
 #include <QVariant>
+#include <QVBoxLayout>
 #include <stdexcept>
 
 namespace commonWidget {
 namespace {
+class MdiDemoDocument final : public QWidget {
+public:
+    explicit MdiDemoDocument(QWidget* parent = nullptr) : QWidget(parent) {
+        setObjectName(QStringLiteral("mdiDocument"));
+        setStyleSheet(QStringLiteral(
+            "QWidget#mdiDocument{background:white;border:0;}"));
+    }
+
+protected:
+    void closeEvent(QCloseEvent* event) override {
+        if (property("vetoClose").toBool())
+            event->ignore();
+        else
+            QWidget::closeEvent(event);
+    }
+};
+
 QFont font(int size, int weight = QFont::Normal) {
     QFont f("Inter");
     f.setPixelSize(size);
     f.setWeight(weight);
     return f;
+}
+
+QLabel* demoLabel(QWidget* parent, const QString& text, int size, int weight,
+                  const QString& color) {
+    auto* result = new QLabel(text, parent);
+    result->setObjectName(QStringLiteral("mdiDemoLabel"));
+    result->setTextFormat(Qt::PlainText);
+    result->setWordWrap(true);
+    result->setAlignment(Qt::AlignLeft | Qt::AlignTop);
+    result->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Preferred);
+    result->setFont(font(size, weight));
+    result->setStyleSheet(
+        QStringLiteral("background:transparent;border:0;color:%1;").arg(color));
+    return result;
 }
 
 void svg(QPainter* p, const QString& name, const QRectF& r) {
@@ -437,6 +472,51 @@ private:
 };
 }
 
+void populateFigmaMdiSubWindow(QMdiSubWindow* sub, const QString& title) {
+    if (!sub)
+        throw std::invalid_argument("MdiSubWindow is null");
+    if (auto* previous = sub->widget()) {
+        sub->setWidget(nullptr);
+        delete previous;
+    }
+    sub->setWindowTitle(title);
+    auto* page = new MdiDemoDocument;
+    auto* outer = new QVBoxLayout(page);
+    outer->setContentsMargins(16, 20, 16, 20);
+    outer->setSpacing(16);
+    auto* heading = demoLabel(page, QStringLiteral("Document content slot"), 12,
+                              QFont::Normal, QStringLiteral("#191919"));
+    auto* card = new QWidget(page);
+    card->setObjectName(QStringLiteral("mdiDataPreview"));
+    card->setStyleSheet(QStringLiteral(
+        "QWidget#mdiDataPreview{background:white;border:1px solid #d0d0d0;border-radius:8px;}"));
+    auto* inner = new QVBoxLayout(card);
+    inner->setContentsMargins(12, 12, 12, 12);
+    auto* detail = demoLabel(card, QStringLiteral("Pressure trend · 1.20 Pa"), 12,
+                             QFont::Normal, QStringLiteral("#191919"));
+    inner->addWidget(detail);
+    outer->addWidget(heading);
+    outer->addWidget(card);
+    outer->addStretch();
+    sub->setWidget(page);
+}
+
+void configureFigmaMdiSubWindow(QMdiSubWindow* sub,
+                                const QMap<QString, QString>& properties) {
+    if (!sub)
+        throw std::invalid_argument("MdiSubWindow is null");
+    const auto snapshot =
+        properties.value(QStringLiteral("State"), QStringLiteral("Inactive"));
+    if (!QStringList{QStringLiteral("Inactive"), QStringLiteral("Active"),
+                     QStringLiteral("Maximized"), QStringLiteral("Minimized"),
+                     QStringLiteral("Shaded"), QStringLiteral("Disabled")}
+             .contains(snapshot))
+        throw std::invalid_argument("Invalid MdiSubWindow State");
+    const auto title = properties.value(QStringLiteral("Title"), QStringLiteral("Trend"));
+    populateFigmaMdiSubWindow(sub, title);
+    applyFigmaMdiSubWindowAppearance(sub, snapshot);
+}
+
 void applyFigmaMdiSubWindowAppearance(QMdiSubWindow* sub, const QString& snapshot, bool closeGlyph,
                                       bool minimizeGlyph, bool maximizeGlyph) {
     if (!sub ||
@@ -457,6 +537,55 @@ void applyFigmaMdiSubWindowAppearance(QMdiSubWindow* sub, const QString& snapsho
     sub->update();
     if (!sub->findChild<QWidget*>("figmaMdiFrameOutline", Qt::FindDirectChildrenOnly))
         new FrameOutline(sub);
+}
+
+void configureFigmaMdiArea(QMdiArea* area, const QMap<QString, QString>& properties) {
+    if (!area)
+        throw std::invalid_argument("MdiArea is null");
+    const auto presentation =
+        properties.value(QStringLiteral("Presentation"), QStringLiteral("Free"));
+    if (!QStringList{QStringLiteral("Free"), QStringLiteral("Cascade"),
+                     QStringLiteral("Tile"), QStringLiteral("Tabbed")}
+             .contains(presentation))
+        throw std::invalid_argument("Invalid MdiArea Presentation");
+
+    for (auto* previous : area->subWindowList()) {
+        area->removeSubWindow(previous);
+        delete previous;
+    }
+    area->setProperty("figmaMdiPresentationPreview", presentation);
+    applyFigmaMdiAreaAppearance(area);
+    const QList<QRect> positions =
+        presentation == QStringLiteral("Free")
+            ? QList<QRect>{{36, 70, 280, 170}, {292, 158, 280, 170}}
+        : presentation == QStringLiteral("Cascade")
+            ? QList<QRect>{{18, 52, 280, 170}, {104, 92, 280, 170}, {190, 132, 280, 170}}
+            : QList<QRect>{{12, 42, 280, 170}, {312, 42, 280, 170},
+                           {12, 188, 280, 170}, {312, 188, 280, 170}};
+    const bool tabbed = presentation == QStringLiteral("Tabbed");
+    const int count = tabbed ? 3 : positions.size();
+    const QStringList titles{QStringLiteral("Trend"), QStringLiteral("Recipe"),
+                             QStringLiteral("Alarm"), QStringLiteral("Report")};
+    QList<QMdiSubWindow*> documents;
+    for (int i = 0; i < count; ++i) {
+        auto* sub = new Z_MdiSubWindow;
+        sub->setObjectName(QStringLiteral("mdiDemoDocument%1").arg(i));
+        sub->setAttribute(Qt::WA_DeleteOnClose, false);
+        populateFigmaMdiSubWindow(sub, titles[i]);
+        applyFigmaMdiSubWindowAppearance(sub);
+        area->addSubWindow(sub);
+        if (!tabbed)
+            sub->setGeometry(positions[i]);
+        sub->show();
+        documents.append(sub);
+    }
+    area->setViewMode(tabbed ? QMdiArea::TabbedView : QMdiArea::SubWindowView);
+    if (tabbed)
+        area->setTabsClosable(true);
+    if (!documents.isEmpty())
+        area->setActiveSubWindow(
+            presentation == QStringLiteral("Cascade") ? documents.last() : documents.first());
+    applyFigmaMdiAreaAppearance(area);
 }
 
 void applyFigmaMdiAreaAppearance(QMdiArea* area) {
