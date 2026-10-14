@@ -5,6 +5,8 @@
 #include <QJsonDocument>
 #include <QTest>
 #include <QLabel>
+#include <QFormLayout>
+#include <QGridLayout>
 
 QJsonObject read(const QString& path) {
     QFile f(QString(D2C_ROOT) + "/" + path);
@@ -343,6 +345,88 @@ private slots:
         QCOMPARE(label->height(), 20);
     }
 
+    // Grid 的行列与跨度必须直接进入 QGridLayout，不能被转换成线性插入顺序。
+    void gridPlacementAndStretch() {
+        QWidget owner;
+        owner.resize(260, 140);
+        const QJsonObject root{
+            {"autoLayout", QJsonObject{{"stackMode", "GRID"},
+                                        {"autoLayoutItemSpacing", 6},
+                                        {"autoLayoutPaddingLeft", 4},
+                                        {"autoLayoutPaddingTop", 5},
+                                        {"autoLayoutPaddingRight", 6},
+                                        {"autoLayoutPaddingBottom", 7},
+                                        {"gridColumnGap", 12},
+                                        {"gridRowGap", 8},
+                                        {"gridRowStretch", QJsonArray{1, 2}},
+                                        {"gridColumnStretch", QJsonArray{3, 1}}}},
+            {"childNode", QJsonArray{
+                QJsonObject{{"guid", "grid:B"}, {"width", 40}, {"height", 20},
+                             {"layoutItem", QJsonObject{{"gridRow", 1}, {"gridColumn", 0},
+                                                          {"gridColumnSpan", 2}}}},
+                QJsonObject{{"guid", "grid:A"}, {"width", 30}, {"height", 20},
+                             {"layoutItem", QJsonObject{{"gridRow", 0}, {"gridColumn", 0}}}}}}};
+        d2c::LayoutConverter converter(read("HtmlDsl/pipeline/mapping/layout-mapping.json"));
+        auto* layout = converter.convert(root, &owner, [](const QJsonObject& node, QWidget* parent) {
+            auto* widget = new MeasuredWidget(QSize(node["width"].toInt(), node["height"].toInt()), parent);
+            widget->setObjectName(node["guid"].toString());
+            return widget;
+        });
+        auto* grid = qobject_cast<QGridLayout*>(layout);
+        QVERIFY(grid);
+        QCOMPARE(grid->horizontalSpacing(), 12);
+        QCOMPARE(grid->verticalSpacing(), 8);
+        QCOMPARE(grid->rowStretch(0), 1);
+        QCOMPARE(grid->rowStretch(1), 2);
+        QCOMPARE(grid->columnStretch(0), 3);
+        QCOMPARE(grid->columnStretch(1), 1);
+        int row = -1, column = -1, rowSpan = -1, columnSpan = -1;
+        grid->getItemPosition(0, &row, &column, &rowSpan, &columnSpan);
+        QCOMPARE(row, 0);
+        QCOMPARE(column, 0);
+        QCOMPARE(rowSpan, 1);
+        QCOMPARE(columnSpan, 1);
+        grid->getItemPosition(1, &row, &column, &rowSpan, &columnSpan);
+        QCOMPARE(row, 1);
+        QCOMPARE(column, 0);
+        QCOMPARE(rowSpan, 1);
+        QCOMPARE(columnSpan, 2);
+        QCOMPARE(converter.trace().first().toObject()["items"].toArray().size(), 2);
+    }
+
+    // Form 的 Label/Field/Spanning 是独立角色，不能复用 Grid 的任意列跨度语义。
+    void formRolesAndPolicies() {
+        QWidget owner;
+        owner.resize(320, 160);
+        const QJsonObject root{
+            {"autoLayout", QJsonObject{{"stackMode", "FORM"},
+                                        {"autoLayoutItemSpacing", 5},
+                                        {"autoLayoutPaddingLeft", 3},
+                                        {"autoLayoutPaddingTop", 4},
+                                        {"autoLayoutPaddingRight", 5},
+                                        {"autoLayoutPaddingBottom", 6},
+                                        {"formFieldGrowthPolicy", "allNonFixedFieldsGrow"},
+                                        {"formRowWrapPolicy", "dontWrapRows"}}},
+            {"childNode", QJsonArray{
+                QJsonObject{{"guid", "form:field"}, {"width", 180}, {"height", 28},
+                             {"layoutItem", QJsonObject{{"formRow", 0}, {"formRole", "field"}}}},
+                QJsonObject{{"guid", "form:label"}, {"width", 70}, {"height", 28},
+                             {"layoutItem", QJsonObject{{"formRow", 0}, {"formRole", "label"}}}}}}};
+        d2c::LayoutConverter converter(read("HtmlDsl/pipeline/mapping/layout-mapping.json"));
+        auto* layout = converter.convert(root, &owner, [](const QJsonObject& node, QWidget* parent) {
+            auto* widget = new MeasuredWidget(QSize(node["width"].toInt(), node["height"].toInt()), parent);
+            widget->setObjectName(node["guid"].toString());
+            return widget;
+        });
+        auto* form = qobject_cast<QFormLayout*>(layout);
+        QVERIFY(form);
+        QCOMPARE(form->fieldGrowthPolicy(), QFormLayout::AllNonFixedFieldsGrow);
+        QCOMPARE(form->rowWrapPolicy(), QFormLayout::DontWrapRows);
+        QCOMPARE(form->itemAt(0, QFormLayout::LabelRole)->widget()->objectName(), QString("form:label"));
+        QCOMPARE(form->itemAt(0, QFormLayout::FieldRole)->widget()->objectName(), QString("form:field"));
+        QCOMPARE(converter.trace().first().toObject()["items"].toArray().size(), 2);
+    }
+
     // 负数、字符串尺寸、缺失固定尺寸、绝对定位和未知模式均应明确失败。
     void invalidFieldsAreRejected() {
         const auto rules = read("HtmlDsl/pipeline/mapping/layout-mapping.json");
@@ -390,6 +474,23 @@ private slots:
         auto bad = rules;
         bad["modes"] = QJsonObject{{"HORIZONTAL", "QAnything"}};
         rejects(valid, bad, "UNMAPPED_LAYOUT_MODE");
+        const QJsonObject gridChildA{{"guid", "grid-a"}, {"width", 20}, {"height", 10},
+                                     {"layoutItem", QJsonObject{{"gridRow", 0}, {"gridColumn", 0}}}};
+        const QJsonObject gridChildB{{"guid", "grid-b"}, {"width", 20}, {"height", 10},
+                                     {"layoutItem", QJsonObject{{"gridRow", 0}, {"gridColumn", 0}}}};
+        rejects({{"autoLayout", QJsonObject{{"stackMode", "GRID"}}},
+                 {"childNode", QJsonArray{gridChildA, gridChildB}}},
+                rules, "GRID_CELL_OVERLAP");
+        rejects({{"autoLayout", QJsonObject{{"stackMode", "GRID"}}},
+                 {"childNode", QJsonArray{validChild}}},
+                rules, "MISSING_GRID_PLACEMENT");
+        const QJsonObject formChildA{{"guid", "form-a"}, {"width", 20}, {"height", 10},
+                                     {"layoutItem", QJsonObject{{"formRow", 0}, {"formRole", "label"}}}};
+        const QJsonObject formChildB{{"guid", "form-b"}, {"width", 20}, {"height", 10},
+                                     {"layoutItem", QJsonObject{{"formRow", 0}, {"formRole", "label"}}}};
+        rejects({{"autoLayout", QJsonObject{{"stackMode", "FORM"}}},
+                 {"childNode", QJsonArray{formChildA, formChildB}}},
+                rules, "DUPLICATE_FORM_ROLE");
     }
 
     // 分别使用真实纵向页面和真实横向母版验证几何，而非由转换器反推期望值。

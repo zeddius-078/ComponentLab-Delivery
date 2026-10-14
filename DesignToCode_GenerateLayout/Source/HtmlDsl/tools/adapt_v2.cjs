@@ -13,25 +13,29 @@ const output = path.resolve(process.argv[2]);
 const report = process.argv[3] ? path.resolve(process.argv[3]) : path.resolve(root, '../../build/reports/v2/html-dsl-adaptation');
 const hash = data => crypto.createHash('sha256').update(data).digest('hex');
 const write = (name, data) => fs.writeFileSync(path.join(report, name), JSON.stringify(data, null, 2));
+// 清单内的相对路径以 capture.json 所在目录为基准，保证从任意工作目录调用都得到同一输入。
+const capturePath = process.argv[4] ? path.resolve(process.argv[4]) : null;
+const captureDirectory = capturePath ? path.dirname(capturePath) : null;
+const resolveCapturePath = value => {
+  if(!value) throw Error('CAPTURE_PATH_REQUIRED');
+  return path.isAbsolute(value) ? value : path.resolve(captureDirectory || process.cwd(), value);
+};
 async function main() {
   fs.mkdirSync(output, {recursive:true});fs.mkdirSync(report, {recursive:true});
-  // 新采集由清单显式指定；未提供清单时保留历史样例回归入口。
-  const capture = process.argv[4] ? JSON.parse(fs.readFileSync(process.argv[4], 'utf8')) : null;
-  const source = fs.readFileSync(capture ? capture.sourceHtml : path.join(root,'inputs/result-page/page.html'), 'utf8');
-  const rawBytes = fs.readFileSync(capture ? capture.sourceDsl : path.resolve(root,'pipeline/design-inputs/result-page/canonical.raw.json'));
+  if(!capturePath) throw Error('CAPTURE_MANIFEST_REQUIRED');
+  // 清单模式由 Generate.ps1 统一校验；此处只负责读取已经确定的输入路径。
+  const capture = JSON.parse(fs.readFileSync(capturePath, 'utf8'));
+  const source = fs.readFileSync(resolveCapturePath(capture.sourceHtml), 'utf8');
+  const rawBytes = fs.readFileSync(resolveCapturePath(capture.sourceDsl));
   const raw = JSON.parse(rawBytes);
   if(raw.pixTreeNodes?.length!==1)throw Error('EXPECTED_SINGLE_DESIGN_ROOT');
   if(capture && raw.pixTreeNodes[0].guid!==capture.expectedRootId)throw Error('CAPTURE_ROOT_MISMATCH');
   // 计算样式可能包含浏览器默认值；新采集必须提供独立设计属性证据，不能把默认零当成设计决策。
-  const referenceBytes = capture ? fs.readFileSync(capture.layoutReference) : null;
+  const referenceBytes = capture && capture.layoutReference ? fs.readFileSync(resolveCapturePath(capture.layoutReference)) : null;
   const reference = referenceBytes ? JSON.parse(referenceBytes) : null;
   const referencePage = reference?.pages.find(p=>p.id===capture.expectedRootId);
-  if(capture && (!referencePage || reference.fileKey!==capture.fileKey))throw Error('LAYOUT_REFERENCE_MISMATCH');
-  const assets = capture ? capture.resources.map(r=>[r.url,r.local]) : [
-    // URL 对应当前导出快照，替换前检查确实存在；来源改变后需重新核对这张表。
-    ['http://localhost:3667/assets/1790355461100/HarmonyOS_Sans_SC_Regular.ttf', path.resolve(root,'pipeline/resources/HarmonyOS_Sans_SC_Regular.ttf')],
-    ['http://localhost:3667/assets/1790355461100/GLYPHarrowleft.svg', path.join(root,'inputs/result-page/arrow-left.svg')]
-  ];
+  if(reference && (!referencePage || reference.fileKey!==capture.fileKey))throw Error('LAYOUT_REFERENCE_MISMATCH');
+  const assets = capture.resources.map(r=>[r.url,resolveCapturePath(r.local)]);
   let html=source;
   const resources=assets.map(([url,local])=>{
     // 替换前核对 URL 仍在原文中，防止资源表过期却继续生成看似完整的离线页面。
@@ -89,7 +93,7 @@ async function main() {
       return {tree:walk(tree),instances:instances.length,missingIdentity:instances.filter(el=>!el.hasAttribute('data-component-key')).length,
         cssVariables:[...getComputedStyle(document.documentElement)].filter(k=>k.startsWith('--')).length,
         fontLoaded:document.fonts.check(`14px "${fontFamily}"`)};
-    },{tree:shape(raw.pixTreeNodes[0]),fontFamily:capture?.fontFamily || 'HarmonyOS Sans SC-Regular'});
+    },{tree:shape(raw.pixTreeNodes[0]),fontFamily:capture.fontFamily});
     await page.screenshot({path:path.join(report,'html.png')});
     // 脚本、网络或字体失败会改变测量结果，因此先确认页面可用，再生成混合输入。
     if(errors.length||failures.length||!measured.fontLoaded)throw Error('HTML_RENDER_FAILED: '+JSON.stringify({errors,failures}));

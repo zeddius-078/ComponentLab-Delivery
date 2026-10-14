@@ -297,7 +297,7 @@
             "qtClass": "commonWidget::Z_PushButton"
         }
     ],
-    "designTreeSha256": "5fc2cc0c9d19e25e55f8c1ea8f6e3f9538aaeac71991faa8b038995e826436b5",
+    "designTreeSha256": "f1603935643d2715376d760f85a87f3e8d52c3ce85965f981d3e072530f4b631",
     "engineeringNamesSha256": "f8c32ebb2741730d1d0fa73f2a81146c818234782f8b11a6d88f596153c656ed",
     "generator": "C++ UiCompiler; build-time conversion only",
     "layoutNodeIds": [

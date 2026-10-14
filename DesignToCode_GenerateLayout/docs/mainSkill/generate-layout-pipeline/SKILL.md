@@ -28,7 +28,7 @@ description: 在 G:/ComponentLab-Delivery/DesignToCode_GenerateLayout 中维护 
 | Capture manifest | 来源 URL、文件/页面 ID、采集时间、输入哈希 | 证明两类输入可追溯且同版 |
 | Mapping | 组件映射、工程对象名、布局字段和异常规则 | 把设计语义编译为 Qt 结构 |
 | SDK | GenerateComponent 发布包与 manifest | 提供可实例化 `Z_*` 组件 |
-| 输出 | `.ui/.h/.cpp/.qss`，必要时 QRC | 供业务工程通过 uic 与 CMake 接入 |
+| 输出 | 正式页面包：`.ui/.h/.cpp/.qss/.qrc` | 供业务工程通过 uic、rcc 与 CMake 接入 |
 
 ## 关键目录
 
@@ -36,7 +36,7 @@ description: 在 G:/ComponentLab-Delivery/DesignToCode_GenerateLayout 中维护 
 | --- | --- |
 | `Source/HtmlDsl/inputs` | D2C HTML 和页面资源输入 |
 | `Source/HtmlDsl/pipeline/design-inputs` | Pixso MCP 原始 DSL 与核对文件 |
-| `Source/HtmlDsl/pipeline/capture` | DSL 采集与输入哈希验证 |
+| `Source/HtmlDsl/pipeline/capture` | MCP 原始采集、HTML+DSL 清单组装与输入哈希验证 |
 | `Source/HtmlDsl/pipeline/mapping` | 组件、布局、工程命名和扩展规则 |
 | `Source/HtmlDsl/pipeline/engines` | 节点、组件和布局转换逻辑 |
 | `Source/HtmlDsl/pipeline/compiler` | `.ui/.h/.cpp/.qss` 编译器 |
@@ -63,22 +63,40 @@ description: 在 G:/ComponentLab-Delivery/DesignToCode_GenerateLayout 中维护 
 | `.h` | 页面类型和业务需要的类型明确访问器 |
 | `.cpp` | 页面初始化、信号连接、运行时状态和非静态装配 |
 | `.qss` | 页面级静态视觉；组件公共样式来自 SDK |
-| `.qrc` | 页面专属图片、图标和字体资源 |
+| `.qrc` | 正式页面资源入口；注册页面 QSS，必要时追加页面专属图片、图标和字体 |
 
 SDK 组件内部对象不展开到页面 XML。业务逻辑、数据查询和权限判断不写入 `.ui` 或生成器映射。
 
 ## 页面生成流程
 
 1. 固定 Pixso 文件、页面、节点和设计版本。
-2. 采集 HTML、DSL 与资源，生成 capture manifest 和 SHA-256。
-3. 验证 HTML 与 DSL 的版本及节点 ID 一致性。
+2. 采集 HTML、DSL 与资源，使用 `pipeline/capture/capture_manifest.py` 生成 capture manifest 和 SHA-256。
+3. 验证 HTML、DSL、资源、字体、根节点和布局证据的一致性。
 4. 载入 SDK manifest 和公开组件注册表。
 5. 按 Node ID 合并为平台中立设计树。
 6. 解析 Auto Layout、尺寸模式、间距、对齐和容器边界。
 7. 用组件映射创建已发布 `Z_*` 类；缺少映射时停止。
 8. 用 `engineering-names.json` 生成稳定 lowerCamelCase objectName。
-9. 输出 `.ui/.h/.cpp/.qss`，必要时输出 QRC。
-10. 运行结构、uic、构建、交互和隔离消费验证。
+9. 输出 `.ui/.h/.cpp/.qss/.qrc`；正式页面 QRC 注册页面级 QSS，页面存在专属静态资源时一并登记。
+10. 运行结构矩阵、uic、构建、交互和隔离消费验证。
+
+结构矩阵必须覆盖至少六种输入：纵向根、横向根、横纵嵌套、Grid 定位、Form 角色和同一输入重复生成。页面样例测试只能验证页面行为，不能替代结构矩阵。当前结构能力以 `layout-mapping.json` 明确列出的 Qt5 `QVBoxLayout`、`QHBoxLayout`、`QGridLayout` 和 `QFormLayout` 为边界；Grid 必须提供行列/跨度，Form 必须提供行号/角色。遇到未登记方向、缺少专属定位信息、绝对定位或未支持节点类型时输出明确错误。
+
+## 组件初始化生成规则
+
+组件初始化只消费 `ComponentConverter` 已经解析并写入 `calls` 的公开 API 调用，不在页面编译器中复制组件映射表，也不创建新的公共组件接口。组件头文件和 `ComponentFactory` 的公开接口来自唯一权威 SDK：`../DesignToCode_GenerateComponent/build/sdk`。
+
+| 初始化内容 | 生成位置 | 规则 |
+| --- | --- | --- |
+| 类型、`objectName`、父子关系、布局和可声明 Qt 属性 | `.ui` | 由场景与布局编译器表达，使用 SDK 已注册的 `Z_*` 组件类或其 Qt 提升类声明 |
+| 运行时组件属性 | 页面 `.cpp` 构造函数 | `ui_->setupUi(this)` 后创建 `commonWidget::ComponentFactory`，按稳定 objectName 顺序调用 `factory.apply(...)`；调用失败抛出生成期记录的错误 |
+| 页面视觉样式 | 页面 `.qss` + 页面 QRC | 页面 QSS 写入 `view/res/qss/<Page>.qss`，QRC 别名为 `:/d2c/<Page>/qss/<Page>.qss`；构造函数在组件属性初始化后读取并设置页面 QSS |
+| 公共组件视觉样式、Token、状态绘制 | SDK | 由 GenerateComponent 发布的 SDK 主题和组件实现负责，页面生成器不重复写入组件内部 QSS |
+| 应用级主题 | 业务入口 | 业务启动阶段调用已确认的 `component_theme::install(QApplication&, profile)`；页面 `ThemeHost` 只消费已安装 Profile 并提供页面运行时服务 |
+
+构造函数的实际顺序固定为：`ThemeHost` 初始化 → `ui_->setupUi(this)` → `ComponentFactory` 应用组件运行时属性 → `Q_INIT_RESOURCE(<Page>)` 注册页面 QRC → 读取 `:/d2c/<Page>/qss/<Page>.qss`。业务 CMake 必须将生成的页面 QRC 加入页面目标；包外 `generation-record.json` 只用于追溯，不进入运行依赖。
+
+视觉属性不得无差别写入构造函数：颜色、字体、边框、状态样式优先由 SDK Token/QSS 消费；只有映射合同明确要求且 `.ui`、SDK 或页面 QSS 无法表达的运行时属性，才生成 `ComponentFactory::apply` 调用。生成器必须复用既有 `api` 和值类型，不能依据设计字段临时拼接 setter 名称。
 
 ## 工程命名
 
@@ -108,3 +126,5 @@ pwsh -File Source/Qt/V2/Verify.ps1
 ```
 
 完成条件：输入可追溯且同版；设计树无未解释节点冲突；正式四件套可由 uic 和业务式 CMake 工程编译；组件全部来自已校验的权威 SDK；隔离验证不依赖兄弟项目源码；验证结果写入 `build/reports`。
+
+预览回归也必须使用清单。`Generate.ps1 -Preview` 接收 `-CaptureManifest` 和 `-ReviewCaptureManifest`，分别对应结果页和复核页；不再从 `inputs/result-page` 或其他固定路径隐式读取页面。预览清单必须标记为 `preview-fixture`，正式模式拒绝消费该类型。

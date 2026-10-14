@@ -153,7 +153,7 @@
             "qtClass": "commonWidget::Z_InputField"
         }
     ],
-    "designTreeSha256": "1daf0f38c97f6ef024591d1f0c2f9fb15c1ab7c41723eb6690cba475b376c4d9",
+    "designTreeSha256": "31395d70481203d786b2913933a0e758c7462f9a788150fbb9226fd98c4c70bf",
     "engineeringNamesSha256": "f8c32ebb2741730d1d0fa73f2a81146c818234782f8b11a6d88f596153c656ed",
     "generator": "C++ UiCompiler; build-time conversion only",
     "layoutNodeIds": [
@@ -169,6 +169,6 @@
     "profile": "light-comfortable",
     "rootId": "19:45",
     "schemaVersion": 2,
-    "sourceSha256": "0ffb505672294b7d1fb89a6b4febb16281833f286540c183f9f4a649f2ed89b5",
+    "sourceSha256": "9b2c7d5d5632ef889beff06b6e2264d1dcdca8c395a39920f27d1332bb70b218",
     "structureSource": "sibling .ui XML"
 }

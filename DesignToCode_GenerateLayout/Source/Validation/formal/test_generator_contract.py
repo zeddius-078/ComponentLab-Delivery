@@ -243,13 +243,13 @@ class GeneratorContractTests(unittest.TestCase):
         self.assertIn("FORMAL_OUTPUT_OUTSIDE_DELIVERY", error)
         self.assertFalse((self.root / "business").exists())
 
-    def test_formal_four_files_without_runtime_trace_or_spacers(self):
+    def test_formal_page_package_contains_qrc_without_runtime_trace_or_spacers(self):
         self.compact_fixture()
         output = self.formal_output()
         code, error = self.generate(formal=True, output=output)
         self.assertEqual(code, 0, error)
         files = sorted(str(p.relative_to(output)).replace("\\", "/") for p in output.rglob("*") if p.is_file())
-        self.assertEqual(files, ["form/ReviewPage.ui", "include/ReviewPage.h", "src/ReviewPage.cpp", "view/res/qss/ReviewPage.qss"])
+        self.assertEqual(files, ["form/ReviewPage.ui", "include/ReviewPage.h", "src/ReviewPage.cpp", "view/res/ReviewPage.qrc", "view/res/qss/ReviewPage.qss"])
         record_path = PROJECT / 'build/reports/formal-delivery' / output.parent.name / output.name / 'generation-record.json'
         record = json.loads(record_path.read_bytes())
         self.assertEqual(set(record['outputSha256']), set(files))
@@ -267,13 +267,15 @@ class GeneratorContractTests(unittest.TestCase):
         # 原始复核页主轴为 end，交叉轴 Fill；不能把设计改成顶部对齐。
         self.assertIn("setAlignment(Qt::AlignBottom)", code)
         self.assertIn("getWorkOrderInput", code)
+        self.assertIn("Q_INIT_RESOURCE(ReviewPage)", code)
+        self.assertIn("PAGE_QSS_RESOURCE_MISSING", code)
         again, error = self.generate(formal=True, output=output)
         self.assertNotEqual(again, 0)
         self.assertIn("FORMAL_OUTPUT_ALREADY_EXISTS", error)
 
     def test_unknown_layout_and_absolute_child_fail(self):
         for field, value, message in [
-            ("stackMode", "GRID", "UNMAPPED_LAYOUT_MODE"),
+            ("stackMode", "DIAGONAL", "UNMAPPED_LAYOUT_MODE"),
             ("autoLayoutItemAbsolutePos", True, "UNMAPPED_ABSOLUTE_CHILD"),
         ]:
             with self.subTest(field=field):
@@ -284,6 +286,12 @@ class GeneratorContractTests(unittest.TestCase):
                 node.setdefault("autoLayout", {})[field] = value
                 self.assert_rejected(message)
                 self.raw = original
+
+    def test_grid_without_design_position_fails(self):
+        original = json.loads(json.dumps(self.raw))
+        self.raw["pixTreeNodes"][0]["autoLayout"]["stackMode"] = "GRID"
+        self.assert_rejected("MISSING_GRID_PLACEMENT")
+        self.raw = original
 
     def test_formal_failure_does_not_publish_partial_package(self):
         self.compact_fixture()
@@ -334,7 +342,8 @@ class GeneratorContractTests(unittest.TestCase):
         code, error = self.generate(formal=True, output=output)
         self.assertEqual(code, 0, error)
         qrc = ET.parse(output / "view/res/ReviewResultPage.qrc")
-        resource = qrc.getroot().find("qresource")
+        resource = next(node for node in qrc.getroot().findall("qresource")
+                        if node.get("prefix") == "/formal-fixture/result")
         self.assertEqual(resource.get("prefix"), "/formal-fixture/result")
         asset = resource.find("file")
         self.assertEqual(asset.get("alias"), "page-marker.svg")
@@ -349,7 +358,7 @@ class GeneratorContractTests(unittest.TestCase):
         output = self.formal_output()
         code, error = self.generate(formal=True, output=output)
         self.assertEqual(code, 0, error)
-        self.assertFalse(list(output.rglob("*.qrc")))
+        self.assertEqual([p.name for p in output.rglob("*.qrc")], ["ReviewPage.qrc"])
         self.assertFalse(list(output.rglob("*.svg")))
 
     def test_unknown_resource_ownership_is_rejected(self):

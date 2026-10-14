@@ -1,8 +1,8 @@
 #pragma once
-// 共享布局转换接口：将 Pixso 自布局字段映射为 Qt 横向/纵向布局。
+// 共享布局转换接口：将设计侧布局语义映射为 Qt 盒式、网格或表单布局。
 #include <QJsonObject>
 #include <QJsonArray>
-#include <QBoxLayout>
+#include <QLayout>
 #include <QWidget>
 #include <functional>
 
@@ -17,7 +17,7 @@ public:
         : mapping(std::move(mapping)), raw(std::move(raw)) {}
 
     // owner 必须尚无布局；返回值归 owner 所有，不支持的语义以异常报告。
-    QBoxLayout* convert(const QJsonObject& container, QWidget* owner, const Factory& factory);
+    QLayout* convert(const QJsonObject& container, QWidget* owner, const Factory& factory);
 
     // 输出方向、内边距、间距、对齐和实际添加顺序，用于与设计输入对照。
     QJsonArray trace() const {

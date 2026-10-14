@@ -4,6 +4,7 @@
 #include "DesignTree.h"
 #include "FormalResources.h"
 #include "FormalPublication.h"
+#include "ComponentInitializer.h"
 #include "ComponentTheme.h"
 #include <QApplication>
 #include <QCommandLineParser>
@@ -14,6 +15,9 @@
 #include <QDirIterator>
 #include <QLabel>
 #include <QAbstractButton>
+#include <QBoxLayout>
+#include <QGridLayout>
+#include <QFormLayout>
 #include <QCryptographicHash>
 #include <QTextStream>
 #include <QFileInfo>
@@ -165,7 +169,7 @@ public:
         }
         xml->writeEndElement();
         xml->writeStartElement("resources");
-        if (formal && resources.hasPageAssets()) {
+        if (formal && resources.hasPageResources()) {
             auto className = page->objectName(); className[0] = className[0].toUpper();
             xml->writeEmptyElement("include");
             xml->writeAttribute("location", "../view/res/" + className + ".qrc");
@@ -239,26 +243,31 @@ private:
         className[0] = className[0].toUpper();
         QString header = "#pragma once\n#include <DesignerWidgets.h>\n#include <Z_PushButton.h>\n"
                          "#include <QLabel>\n#include <QHBoxLayout>\n#include <QVBoxLayout>\n"
+                         "#include <QGridLayout>\n#include <QFormLayout>\n"
                          "#include <memory>\nnamespace Ui { class Generated_" + page->objectName() + "; }\n"
                          "// 页面结构由 uic 编译；业务通过公开对象、信号槽或继承接入。\nclass " + className +
                          " : public designer_widgets::ThemeHost {\npublic:\n    explicit " + className +
                          "(QWidget* parent = nullptr);\n    ~" + className + "() override;\n";
         QString code = "#include \"" + className + ".h\"\n#include \"ui_" + className +
-                       ".h\"\n#include <ComponentFactory.h>\n#include <QResource>\n#include <stdexcept>\n\n" +
+                       ".h\"\n#include <ComponentFactory.h>\n#include <QFile>\n#include <QResource>\n#include <stdexcept>\n\n" +
                        className + "::" + className + "(QWidget* parent)\n    : ThemeHost(" + literal(profile) +
                        ", parent), ui_(std::make_unique<Ui::Generated_" + page->objectName() + ">()) {\n"
                        "    ui_->setupUi(this);\n    commonWidget::ComponentFactory factory(" + literal(profile) +
                        ");\n    QString error;\n";
-        if (resources.hasPageAssets())
+        if (resources.hasPageResources())
             code += "    Q_INIT_RESOURCE(" + className + ");\n";
-        for (auto it = specs.cbegin(); it != specs.cend(); ++it) {
-            for (const auto& item : it.value()["calls"].toArray()) {
-                const auto call = item.toObject();
-                code += "    if (!factory.apply(ui_->" + it.key() + ", " + literal(call["api"].toString()) +
-                        ", QJsonValue(" + cppValue(call["value"]) + "), &error))\n"
-                        "        throw std::runtime_error(error.toStdString());\n";
-            }
-        }
+        code += v2::component_initializer::emitInitialization(
+            specs,
+            [this](const QString& value) { return literal(value); },
+            [this](const QJsonValue& value) { return cppValue(value); });
+        // 组件属性完成后加载页面级 QSS；组件内部样式继续由 SDK 主题和组件自身管理。
+        code += "    {\n"
+                "        QFile pageStyle(QStringLiteral(\":/d2c/" + className +
+                "/qss/" + className + ".qss\"));\n"
+                "        if (!pageStyle.open(QIODevice::ReadOnly))\n"
+                "            throw std::runtime_error(\"PAGE_QSS_RESOURCE_MISSING\");\n"
+                "        setStyleSheet(QString::fromUtf8(pageStyle.readAll()));\n"
+                "    }\n";
         code += layoutSetup + "}\n" + className + "::~" + className + "() = default;\n";
         for (auto it = publicObjects.cbegin(); it != publicObjects.cend(); ++it) {
             // 根页面也有公开访问；其余只暴露最终页面对象，不穿透 SDK 内部结构。
@@ -274,9 +283,8 @@ private:
         save(directory + "/form/" + className + ".ui", ui);
         save(directory + "/include/" + className + ".h", header.toUtf8());
         save(directory + "/src/" + className + ".cpp", code.toUtf8());
-        save(directory + "/view/res/qss/" + className + ".qss", qss.toUtf8());
-        resources.write(directory, className);
-        // uic 输出只用于验证，不作为第五个交付文件；C++ 链接由独立消费测试负责。
+        resources.write(directory, className, qss.toUtf8());
+        // uic 输出只用于验证；页面 QRC 随页面包交付，由业务 CMake 编译并链接。
         QProcess uic;
         uic.start(QLibraryInfo::location(QLibraryInfo::BinariesPath) + "/uic.exe",
                   QStringList{directory + "/form/" + className + ".ui"});
@@ -372,19 +380,28 @@ private:
     void emitLayout(QWidget* owner, bool flattened = false) {
         const auto id = owner->property("designNodeId").toString();
         const auto name = owner->objectName();
-        auto* box = qobject_cast<QBoxLayout*>(owner->layout());
-        if (!box)
+        auto* layout = owner->layout();
+        auto* box = qobject_cast<QBoxLayout*>(layout);
+        auto* grid = qobject_cast<QGridLayout*>(layout);
+        auto* form = qobject_cast<QFormLayout*>(layout);
+        if (!layout || (!box && !grid && !form))
             throw std::runtime_error("FRAME_LAYOUT_MISSING");
         const auto rule = layouts.value(id);
-        const bool horizontal = rule["qtLayout"] == "QHBoxLayout";
+        const auto qtLayout = rule["qtLayout"].toString();
+        const bool horizontal = qtLayout == "QHBoxLayout";
+        const bool linear = box != nullptr;
         xml->writeStartElement("layout");
-        xml->writeAttribute("class", rule["qtLayout"].toString());
+        xml->writeAttribute("class", qtLayout);
         const auto layoutName = formal ? name + "Layout" : "layout_" + name;
         if (formal) {
             if (publicObjects.contains(layoutName)) throw std::runtime_error("DUPLICATE_ENGINEERING_NAME");
-            publicObjects[layoutName] = rule["qtLayout"].toString();
-            const auto flags = alignment(box->alignment());
-            if (!flags.isEmpty()) layoutSetup += "    ui_->" + layoutName + "->setAlignment(" + flags + ");\n";
+            publicObjects[layoutName] = qtLayout;
+            // QBoxLayout 的容器对齐由运行时布局对象恢复；Grid/Form 的单元格位置写入 item 属性。
+            if (box) {
+                const auto flags = alignment(box->alignment());
+                if (!flags.isEmpty())
+                    layoutSetup += "    ui_->" + layoutName + "->setAlignment(" + flags + ");\n";
+            }
         }
         xml->writeAttribute("name", layoutName);
         if (formal ? flattened : owner->property("structuralFrame").toBool()) {
@@ -395,18 +412,45 @@ private:
                 property("designName", "string", owner->property("designName").toString(), true);
             }
         }
-        const auto m = box->contentsMargins();
+        const auto m = layout->contentsMargins();
         property("leftMargin", "number", QString::number(m.left()));
         property("topMargin", "number", QString::number(m.top()));
         property("rightMargin", "number", QString::number(m.right()));
         property("bottomMargin", "number", QString::number(m.bottom()));
-        property("spacing", "number", QString::number(box->spacing()));
+        if (box)
+            property("spacing", "number", QString::number(box->spacing()));
+        else if (grid) {
+            property("horizontalSpacing", "number", QString::number(grid->horizontalSpacing()));
+            property("verticalSpacing", "number", QString::number(grid->verticalSpacing()));
+            for (int row = 0; row < grid->rowCount(); ++row)
+                if (grid->rowStretch(row))
+                    layoutSetup += "    ui_->" + layoutName + "->setRowStretch(" +
+                                   QString::number(row) + ", " + QString::number(grid->rowStretch(row)) + ");\n";
+            for (int column = 0; column < grid->columnCount(); ++column)
+                if (grid->columnStretch(column))
+                    layoutSetup += "    ui_->" + layoutName + "->setColumnStretch(" +
+                                   QString::number(column) + ", " + QString::number(grid->columnStretch(column)) + ");\n";
+        } else {
+            property("horizontalSpacing", "number", QString::number(form->horizontalSpacing()));
+            property("verticalSpacing", "number", QString::number(form->verticalSpacing()));
+            property("fieldGrowthPolicy", "enum", QString("QFormLayout::%1").arg(
+                form->fieldGrowthPolicy() == QFormLayout::FieldsStayAtSizeHint ? "FieldsStayAtSizeHint" :
+                form->fieldGrowthPolicy() == QFormLayout::ExpandingFieldsGrow ? "ExpandingFieldsGrow" :
+                "AllNonFixedFieldsGrow"));
+            property("rowWrapPolicy", "enum", QString("QFormLayout::%1").arg(
+                form->rowWrapPolicy() == QFormLayout::DontWrapRows ? "DontWrapRows" :
+                form->rowWrapPolicy() == QFormLayout::WrapAllRows ? "WrapAllRows" : "WrapLongRows"));
+            const auto labelFlags = alignment(form->labelAlignment());
+            const auto formFlags = alignment(form->formAlignment());
+            if (!labelFlags.isEmpty()) property("labelAlignment", "set", labelFlags);
+            if (!formFlags.isEmpty()) property("formAlignment", "set", formFlags);
+        }
         const auto primary = rule["primary"].toString();
-        if (!formal && !owner->property("structuralFrame").toBool() &&
+        if (box && !formal && !owner->property("structuralFrame").toBool() &&
             (primary == "end" || primary == "center"))
             spacer("before_" + name, horizontal);
-        for (int i = 0; i < box->count(); ++i) {
-            auto* item = box->itemAt(i);
+        for (int i = 0; i < layout->count(); ++i) {
+            auto* item = layout->itemAt(i);
             if (!item->widget())
                 throw std::runtime_error("UNEXPECTED_SOURCE_SPACER");
             auto* child = item->widget();
@@ -419,7 +463,7 @@ private:
                 // 父级混有 Fill 子项时，纯子布局会取得整个交叉轴分配框，失去此 Hug
                 // 设计容器的独立宽/高上限。保留原容器的尺寸职责，不以空白层补位置。
                 const auto crossMask = horizontal ? Qt::AlignVertical_Mask : Qt::AlignHorizontal_Mask;
-                if (!(box->alignment() & crossMask) && (item->alignment() & crossMask))
+                if (box && !(box->alignment() & crossMask) && (item->alignment() & crossMask))
                     flatten = false;
                 structuralDecisions.append(QJsonObject{{"nodeId", child->property("designNodeId").toString()},
                     {"result", flatten ? "layout" : "original-container"},
@@ -429,8 +473,28 @@ private:
             const auto a = alignment(item->alignment());
             if (!a.isEmpty() && !flatten)
                 xml->writeAttribute("alignment", a);
+            if (grid) {
+                int row = 0, column = 0, rowSpan = 1, columnSpan = 1;
+                grid->getItemPosition(i, &row, &column, &rowSpan, &columnSpan);
+                xml->writeAttribute("row", QString::number(row));
+                xml->writeAttribute("column", QString::number(column));
+                if (rowSpan > 1) xml->writeAttribute("rowspan", QString::number(rowSpan));
+                if (columnSpan > 1) xml->writeAttribute("colspan", QString::number(columnSpan));
+            } else if (form) {
+                int row = 0;
+                QFormLayout::ItemRole role = QFormLayout::SpanningRole;
+                form->getItemPosition(i, &row, &role);
+                xml->writeAttribute("row", QString::number(row));
+                xml->writeAttribute("column", QString::number(
+                    role == QFormLayout::LabelRole ? 0 : role == QFormLayout::FieldRole ? 1 : 0));
+                if (role == QFormLayout::SpanningRole)
+                    xml->writeAttribute("colspan", "2");
+            }
             if (formal && flatten) {
                 emitLayout(child, true);
+            } else if (!linear && flatten) {
+                // Grid/Form 的嵌套结构直接保留为布局节点，避免用盒式锚定层改变行列语义。
+                emitLayout(child);
             } else if (!formal && flatten) {
                 const bool anchorHorizontal = !horizontal;
                 const auto counter = rule["counter"].toString();
@@ -452,7 +516,7 @@ private:
                 widget(child);
             xml->writeEndElement();
         }
-        if (!formal && !owner->property("structuralFrame").toBool() &&
+        if (box && !formal && !owner->property("structuralFrame").toBool() &&
             (primary == "start" || primary == "center"))
             spacer("after_" + name, horizontal);
         xml->writeEndElement();

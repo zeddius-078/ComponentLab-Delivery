@@ -1,6 +1,6 @@
 {
     "boundsSpace": "parent-local",
-    "inputKind": "full-dsl",
+    "inputKind": "html-plus-dsl",
     "nodes": [
         {
             "bounds": {
@@ -960,11 +960,149 @@
         }
     ],
     "provenance": {
+        "identity": "Pixso full DSL",
+        "layout": "HTML computed layout",
+        "sourceDslSha256": "0ffb505672294b7d1fb89a6b4febb16281833f286540c183f9f4a649f2ed89b5",
+        "sourceHtmlSha256": "7312253491c2963a59311124005666e7c4d19adc46be363c0c579c3a502b7aee"
     },
     "provider": "pixso",
     "rootIds": [
         "19:45"
     ],
     "schemaVersion": 1,
-    "sourceSha256": "0ffb505672294b7d1fb89a6b4febb16281833f286540c183f9f4a649f2ed89b5"
+    "sourceSha256": "9b2c7d5d5632ef889beff06b6e2264d1dcdca8c395a39920f27d1332bb70b218",
+    "variableValidation": {
+        "reachedVariableCount": 58,
+        "referenceCount": 63,
+        "scope": "exported page bindings; SDK rendering remains authoritative",
+        "status": "PASS",
+        "warnings": [
+            {
+                "actual": "COLOR",
+                "code": "VARIABLE_TYPE_HINT_MISMATCH",
+                "hint": "BOOLEAN",
+                "path": "pixTreeNodes[0].childNode[0].fillPaints[0].colorVar",
+                "variableId": "3:5336"
+            },
+            {
+                "actual": "COLOR",
+                "code": "VARIABLE_TYPE_HINT_MISMATCH",
+                "hint": "BOOLEAN",
+                "path": "pixTreeNodes[0].childNode[0].strokePaints[0].colorVar",
+                "variableId": "3:5345"
+            },
+            {
+                "actual": "COLOR",
+                "code": "VARIABLE_TYPE_HINT_MISMATCH",
+                "hint": "BOOLEAN",
+                "path": "pixTreeNodes[0].childNode[0].variablesAlias[7].data",
+                "variableId": "3:5336"
+            },
+            {
+                "actual": "COLOR",
+                "code": "VARIABLE_TYPE_HINT_MISMATCH",
+                "hint": "BOOLEAN",
+                "path": "pixTreeNodes[0].childNode[0].variablesAlias[8].data",
+                "variableId": "3:5345"
+            },
+            {
+                "actual": "COLOR",
+                "code": "VARIABLE_TYPE_HINT_MISMATCH",
+                "hint": "BOOLEAN",
+                "path": "pixTreeNodes[0].childNode[1].fillPaints[0].colorVar",
+                "variableId": "3:5226"
+            },
+            {
+                "actual": "COLOR",
+                "code": "VARIABLE_TYPE_HINT_MISMATCH",
+                "hint": "BOOLEAN",
+                "path": "pixTreeNodes[0].childNode[1].strokePaints[0].colorVar",
+                "variableId": "3:5254"
+            },
+            {
+                "actual": "COLOR",
+                "code": "VARIABLE_TYPE_HINT_MISMATCH",
+                "hint": "BOOLEAN",
+                "path": "pixTreeNodes[0].childNode[1].variablesAlias[7].data",
+                "variableId": "3:5226"
+            },
+            {
+                "actual": "COLOR",
+                "code": "VARIABLE_TYPE_HINT_MISMATCH",
+                "hint": "BOOLEAN",
+                "path": "pixTreeNodes[0].childNode[1].variablesAlias[8].data",
+                "variableId": "3:5254"
+            },
+            {
+                "actual": "COLOR",
+                "code": "VARIABLE_TYPE_HINT_MISMATCH",
+                "hint": "BOOLEAN",
+                "path": "pixTreeNodes[0].childNode[3].props[1].fillPaints[0].colorVar",
+                "variableId": "12:453"
+            },
+            {
+                "actual": "COLOR",
+                "code": "VARIABLE_TYPE_HINT_MISMATCH",
+                "hint": "BOOLEAN",
+                "path": "pixTreeNodes[0].childNode[3].props[1].variablesAlias[1].data",
+                "variableId": "12:453"
+            },
+            {
+                "actual": "COLOR",
+                "code": "VARIABLE_TYPE_HINT_MISMATCH",
+                "hint": "BOOLEAN",
+                "path": "pixTreeNodes[0].childNode[3].props[2].fillPaints[0].colorVar",
+                "variableId": "12:452"
+            },
+            {
+                "actual": "COLOR",
+                "code": "VARIABLE_TYPE_HINT_MISMATCH",
+                "hint": "BOOLEAN",
+                "path": "pixTreeNodes[0].childNode[3].props[2].strokePaints[0].colorVar",
+                "variableId": "12:455"
+            },
+            {
+                "actual": "COLOR",
+                "code": "VARIABLE_TYPE_HINT_MISMATCH",
+                "hint": "BOOLEAN",
+                "path": "pixTreeNodes[0].childNode[3].props[2].variablesAlias[6].data",
+                "variableId": "12:452"
+            },
+            {
+                "actual": "COLOR",
+                "code": "VARIABLE_TYPE_HINT_MISMATCH",
+                "hint": "BOOLEAN",
+                "path": "pixTreeNodes[0].childNode[3].props[2].variablesAlias[7].data",
+                "variableId": "12:455"
+            },
+            {
+                "actual": "COLOR",
+                "code": "VARIABLE_TYPE_HINT_MISMATCH",
+                "hint": "BOOLEAN",
+                "path": "pixTreeNodes[0].childNode[3].props[3].fillPaints[0].colorVar",
+                "variableId": "12:454"
+            },
+            {
+                "actual": "COLOR",
+                "code": "VARIABLE_TYPE_HINT_MISMATCH",
+                "hint": "BOOLEAN",
+                "path": "pixTreeNodes[0].childNode[3].props[3].variablesAlias[1].data",
+                "variableId": "12:454"
+            },
+            {
+                "actual": "COLOR",
+                "code": "VARIABLE_TYPE_HINT_MISMATCH",
+                "hint": "BOOLEAN",
+                "path": "pixTreeNodes[0].childNode[3].props[4].fillPaints[0].colorVar",
+                "variableId": "12:456"
+            },
+            {
+                "actual": "COLOR",
+                "code": "VARIABLE_TYPE_HINT_MISMATCH",
+                "hint": "BOOLEAN",
+                "path": "pixTreeNodes[0].childNode[3].props[4].variablesAlias[1].data",
+                "variableId": "12:456"
+            }
+        ]
+    }
 }

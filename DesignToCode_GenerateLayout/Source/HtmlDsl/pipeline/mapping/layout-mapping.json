@@ -1,7 +1,7 @@
 {
   "version":1,
   "modePath":"autoLayout.stackMode",
-  "modes":{"HORIZONTAL":"QHBoxLayout","VERTICAL":"QVBoxLayout"},
+  "modes":{"HORIZONTAL":"QHBoxLayout","VERTICAL":"QVBoxLayout","GRID":"QGridLayout","FORM":"QFormLayout"},
   "gapField":"autoLayoutItemSpacing",
   "paddingFields":["autoLayoutPaddingLeft","autoLayoutPaddingTop","autoLayoutPaddingRight","autoLayoutPaddingBottom"],
   "primaryAlignmentField":"autoLayoutPrimaryAlign",
@@ -15,6 +15,9 @@
   "parentCounterSizingModes":{"FIXED":"self","RESIZE_TO_FIT":"FILL_PARENT"},
   "parentPrimarySizingModes":{"FIXED":"self","RESIZE_TO_FIT":"RESIZE_TO_FIT","FILL_PARENT":"FILL_PARENT"},
   "resizeModes":{"width":{"0":"axis","1":"RESIZE_TO_FIT"},"height":{"0":"axis"}},
+  "grid":{"rowField":"gridRow","columnField":"gridColumn","rowSpanField":"gridRowSpan","columnSpanField":"gridColumnSpan"},
+  "form":{"rowField":"formRow","roleField":"formRole","roles":{"label":"LabelRole","field":"FieldRole","spanning":"SpanningRole"}},
+  "formPolicies":{"fieldGrowthPolicy":{"fieldsStayAtSizeHint":"FieldsStayAtSizeHint","expandingFieldsGrow":"ExpandingFieldsGrow","allNonFixedFieldsGrow":"AllNonFixedFieldsGrow"},"rowWrapPolicy":{"dontWrapRows":"DontWrapRows","wrapLongRows":"WrapLongRows","wrapAllRows":"WrapAllRows"}},
   "instanceSizingPrecedence":["master.autoLayout","instance.autoLayout","rootOverride.autoLayout","rootOverride sizing fields"],
   "fillStatus":"cross-axis Fill and parent-primary Hug/Fill use explicit size policies; unsupported modes fail",
   "nestedLayout":"structural frames emit nested QLayout; visual frames retain QWidget",

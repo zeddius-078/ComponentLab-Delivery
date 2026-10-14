@@ -5,6 +5,7 @@ param(
     [switch]$Formal,
     [switch]$Preview,
     [string]$CaptureManifest,
+    [string]$ReviewCaptureManifest,
     [string]$MappingDirectory,
     [string]$Font,
     [string]$Batch,
@@ -13,11 +14,12 @@ param(
 $ErrorActionPreference = 'Stop'
 if ($Formal -and $Preview) { throw 'FORMAL_AND_PREVIEW_ARE_EXCLUSIVE' }
 if ($Preview) {
-    foreach ($name in @('CaptureManifest','MappingDirectory','Font','Batch','Page')) {
+    foreach ($name in @('MappingDirectory','Font','Batch','Page')) {
         if ($PSBoundParameters.ContainsKey($name)) { throw 'PREVIEW_DOES_NOT_ACCEPT_FORMAL_ARGUMENTS' }
     }
+    if (-not $CaptureManifest -or -not $ReviewCaptureManifest) { throw 'PREVIEW_CAPTURE_MANIFESTS_REQUIRED' }
 }
-# 默认只生成正式交付；历史 QUiLoader 演示必须显式选择 Preview。
+# 默认只生成正式交付；预览也必须显式声明每个页面的采集清单。
 # 保留 Formal 开关兼容前轮已记录命令，不再把无开关调用解释为旧预览。
 $Formal = -not $Preview
 if ($Formal) {
@@ -26,6 +28,7 @@ if ($Formal) {
     foreach ($value in @($Batch,$Page)) {
         if (-not $value -or $value -notmatch '^[A-Za-z0-9][A-Za-z0-9_-]*$') { throw 'FORMAL_BATCH_AND_PAGE_REQUIRED' }
     }
+    if ($PSBoundParameters.ContainsKey('ReviewCaptureManifest')) { throw 'FORMAL_REVIEW_CAPTURE_NOT_SUPPORTED' }
     foreach ($file in @($CaptureManifest,$Font)) {
         if (-not $file -or -not (Test-Path -LiteralPath $file -PathType Leaf)) { throw 'FORMAL_INPUT_REQUIRED' }
     }
@@ -38,6 +41,18 @@ $previousNodePath = $env:NODE_PATH
 Initialize-NativeTools -NeedNode
 $pipeline = [IO.Path]::GetFullPath("$PSScriptRoot/pipeline")
 $node = $NativeNode
+$python = (Get-Command python -ErrorAction Stop).Source
+$manifestChecker = "$PSScriptRoot/pipeline/capture/capture_manifest.py"
+$manifestMode = if ($Formal) { 'formal' } else { 'preview' }
+# 生成前校验跨工具输入合同；适配器只接收已通过路径、根节点、资源和哈希检查的清单。
+foreach ($manifest in @($CaptureManifest, $(if ($Preview) { $ReviewCaptureManifest }))) {
+    $manifestPath = [IO.Path]::GetFullPath($manifest)
+    if (-not (Test-Path -LiteralPath $manifestPath -PathType Leaf)) { throw 'CAPTURE_MANIFEST_REQUIRED' }
+    & $python -B $manifestChecker verify --manifest $manifestPath --mode $manifestMode
+    if ($LASTEXITCODE -ne 0) { throw "CAPTURE_MANIFEST_INVALID: $manifestPath" }
+}
+$CaptureManifest = [IO.Path]::GetFullPath($CaptureManifest)
+if ($Preview) { $ReviewCaptureManifest = [IO.Path]::GetFullPath($ReviewCaptureManifest) }
 if ($Formal) {
     # 适配器也会写缓存和报告；在它启动前检查路径，不能只依赖后段 C++ 发布检查。
     foreach ($relative in @('build/cache', "build/reports/formal-delivery/$Batch/$Page/adaptation", "build/delivery/$Batch")) {
@@ -58,7 +73,7 @@ try {
         $report = "$D2CProjectRoot/build/reports/formal-delivery/$Batch/$Page/adaptation"
         $compiler = "$D2CProjectRoot/build/cache/V2-html-dsl/v2_ui_compiler.exe"
         if (-not (Test-Path -LiteralPath $compiler)) { throw '请先执行 Source/Qt/V2/Build.ps1 -CompileOnly' }
-        & $node "$PSScriptRoot/tools/adapt_v2.cjs" $scratch $report $CaptureManifest
+    & $node "$PSScriptRoot/tools/adapt_v2.cjs" $scratch $report $CaptureManifest
         if ($LASTEXITCODE -ne 0) { throw 'FORMAL_CAPTURE_ADAPTATION_FAILED' }
         $previousPlatform = $env:QT_QPA_PLATFORM
         try {
@@ -68,12 +83,19 @@ try {
         } finally { $env:QT_QPA_PLATFORM = $previousPlatform }
         return
     }
-    & $node "$PSScriptRoot/tools/adapt_v2.cjs" $scratch
-    # HTML 测量失败时停止编译，避免把缺字体或节点对应错误的数据用于 Qt 布局。
-    if ($LASTEXITCODE -ne 0) { throw 'HTML + DSL adaptation failed' }
+    $resultScratch = Join-Path $scratch 'result'
+    $reviewScratch = Join-Path $scratch 'review'
+    $resultReport = "$D2CProjectRoot/build/reports/v2/html-dsl-adaptation/result"
+    $reviewReport = "$D2CProjectRoot/build/reports/v2/html-dsl-adaptation/review"
+    & $node "$PSScriptRoot/tools/adapt_v2.cjs" $resultScratch $resultReport $CaptureManifest
+    # 结果页适配失败时停止编译，避免把旧混合输入复制进新预览。
+    if ($LASTEXITCODE -ne 0) { throw 'HTML + DSL result adaptation failed' }
+    & $node "$PSScriptRoot/tools/adapt_v2.cjs" $reviewScratch $reviewReport $ReviewCaptureManifest
+    # 复核页适配失败时同样停止，保证两个预览页来自本轮明确清单。
+    if ($LASTEXITCODE -ne 0) { throw 'HTML + DSL review adaptation failed' }
     $pages = [ordered]@{
-        review = "$pipeline/design-inputs/review-page/canonical.raw.json"
-        'result-html' = "$scratch/hybrid-result.json"
+        review = "$reviewScratch/hybrid-result.json"
+        'result-html' = "$resultScratch/hybrid-result.json"
     }
     & "$pipeline/Generate-Pages.ps1" -Pages $pages -OutputDirectory $OutputDirectory
 } finally {

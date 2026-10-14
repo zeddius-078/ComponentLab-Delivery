@@ -27,6 +27,8 @@ target_link_libraries(v2_widgets PUBLIC GeneratedComponentSDK::Components)
 # 构建期生成器链接共享转换引擎；运行库只链接组件工厂和 Qt UiTools。
 add_executable(v2_ui_compiler "${D2C_PIPELINE_ROOT}/compiler/SceneBuilder.cpp" "${D2C_PIPELINE_ROOT}/compiler/SceneBuilder.h" "${D2C_PIPELINE_ROOT}/compiler/UiCompiler.cpp")
 target_link_libraries(v2_ui_compiler PRIVATE d2c_engines v2_widgets)
+# 对外使用的生成器目标名称；v2_ui_compiler 保留为历史构建入口和兼容文件名。
+add_custom_target(layout_generator_demo DEPENDS v2_ui_compiler)
 add_library(v2_runtime STATIC src/UiPage.cpp src/UiPage.h src/WorkflowWindow.cpp src/WorkflowWindow.h)
 target_include_directories(v2_runtime PUBLIC src)
 target_link_libraries(v2_runtime PUBLIC v2_widgets Qt5::UiTools)

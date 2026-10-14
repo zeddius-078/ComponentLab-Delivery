@@ -12,13 +12,14 @@ New-Item -ItemType Directory -Force $out, "$D2CProjectRoot/build/reports/v2" | O
 & $NativeCMake -S $PSScriptRoot -B $build -G Ninja '-DCMAKE_BUILD_TYPE=Release' `
     "-DCMAKE_PREFIX_PATH=$env:QT_ROOT" "-DD2C_ROUTE_FOLDER=$folder"
 if ($LASTEXITCODE -ne 0) { throw 'Configure failed: HTML + DSL' }
-& $NativeCMake --build $build --target v2_ui_compiler d2c_v2 v2_tests
+& $NativeCMake --build $build --target layout_generator_demo d2c_v2 v2_tests
 if ($LASTEXITCODE -ne 0) { throw 'Build failed: HTML + DSL' }
 Copy-Item -LiteralPath "$build/d2c_v2.exe" -Destination "$out/d2c_v2.exe"
 Copy-GeneratedComponentRuntime -Destination $out
 if ($CompileOnly) { return }
 
-& "$root/$folder/Generate.ps1" -Preview
+# 统一经过 V2 包装入口，由包装入口显式绑定结果页和复核页 capture manifest。
+& "$PSScriptRoot/Generate.ps1"
 $target = "$out/data/html-dsl"
 New-Item -ItemType Directory -Force $target | Out-Null
 # 生成器内部保留 result-html 文件名；部署层统一为 result，运行时无需理解采集格式。

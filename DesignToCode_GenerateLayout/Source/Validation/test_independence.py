@@ -51,6 +51,11 @@ class IndependenceTests(unittest.TestCase):
                 continue
             raw = path.read_text(encoding='utf-8-sig')
             text = raw.replace('\\', '/')
+            # 组件项目只通过已发布的权威 SDK 接入；这条发布路径属于允许的边界依赖。
+            text = text.replace(
+                '/ComponentLab-Delivery/DesignToCode_GenerateComponent/build/sdk/',
+                '/AUTHORIZED_GENERATE_COMPONENT_SDK/',
+            )
             self.assertNotIn('MappingWorkbench', text, str(path))
             for name in ('ComponentLab', 'DesignToCode_GenerateComponent'):
                 self.assertNotIn('/' + name + '/', text, str(path))

@@ -72,16 +72,29 @@ public:
         return target;
     }
 
-    bool hasPageAssets() const { return !targets.isEmpty(); }
+    // 页面 QSS 与页面图片共用一个可编译的 QRC，确保运行时不依赖当前工作目录。
+    bool hasPageResources() const { return true; }
     QJsonArray trace() const { return records; }
 
-    void write(const QString& directory, const QString& pageClass) const {
-        if (!hasPageAssets()) return;
-        if (!QDir().mkpath(directory + "/view/res/images")) fail("RESOURCE_OUTPUT_FAILED", directory);
+    void write(const QString& directory, const QString& pageClass,
+               const QByteArray& pageQss) const {
+        // 页面 QSS 始终存在；图片目录只在确有页面图片时创建，避免空资源目录进入交付包。
+        if (!QDir().mkpath(directory + "/view/res/qss") ||
+            (!targets.isEmpty() && !QDir().mkpath(directory + "/view/res/images")))
+            fail("RESOURCE_OUTPUT_FAILED", directory);
         QByteArray bytes;
         QXmlStreamWriter xml(&bytes);
         xml.setAutoFormatting(true);
         xml.writeStartDocument(); xml.writeStartElement("RCC");
+        // 页面样式使用独立命名空间，避免覆盖 SDK 的公共资源路径。
+        xml.writeStartElement("qresource");
+        xml.writeAttribute("prefix", "/d2c/" + pageClass + "/qss");
+        xml.writeStartElement("file");
+        xml.writeAttribute("alias", pageClass + ".qss");
+        xml.writeCharacters("qss/" + pageClass + ".qss");
+        xml.writeEndElement();
+        xml.writeEndElement();
+        save(directory + "/view/res/qss/" + pageClass + ".qss", pageQss);
         for (const auto& asset : targets) {
             save(directory + "/view/res/" + asset.local, asset.bytes);
             xml.writeStartElement("qresource"); xml.writeAttribute("prefix", asset.prefix);

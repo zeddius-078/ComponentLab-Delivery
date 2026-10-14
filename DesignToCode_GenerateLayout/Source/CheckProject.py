@@ -12,6 +12,14 @@ OTHER = NAMES - {PROJECT.name}
 REPORT = PROJECT / "build/reports/project-check.json"
 
 
+def normalize_for_boundary_check(content):
+    # GenerateLayout 必须消费唯一权威组件 SDK；仅对这条已定义的发布路径保留白名单。
+    return content.replace(
+        "/ComponentLab-Delivery/DesignToCode_GenerateComponent/build/sdk/",
+        "/AUTHORIZED_GENERATE_COMPONENT_SDK/",
+    )
+
+
 def check():
     result = {"project": PROJECT.name, "localLinks": 0, "resourceFiles": 0}
     # Directory junctions would silently restore a shared dependency after a physical split.
@@ -20,7 +28,9 @@ def check():
         if not file.is_file() or file == Path(__file__):
             continue
         if file.suffix in {".cpp", ".h", ".ps1", ".py", ".cjs", ".cmd", ".qrc"} or file.name == "CMakeLists.txt":
-            code = file.read_text(encoding="utf-8-sig").replace("\\", "/")
+            code = normalize_for_boundary_check(
+                file.read_text(encoding="utf-8-sig").replace("\\", "/")
+            )
             # Names in design evidence are valid. Only file-path references are dependencies.
             for name in OTHER:
                 assert "/" + name + "/" not in code, (file, "sibling project path", name)
@@ -47,7 +57,9 @@ def check():
     for ninja in cache.rglob("build.ninja"):
         if "before-project-split" in ninja.relative_to(cache).parts:
             continue
-        content = ninja.read_text(encoding="utf-8").replace("\\", "/")
+        content = normalize_for_boundary_check(
+            ninja.read_text(encoding="utf-8").replace("\\", "/")
+        )
         for name in OTHER:
             assert "/ComponentLab-Delivery/" + name + "/" not in content, (ninja, name)
         assert "/ComponentLab-Delivery/DesignToCode/" not in content, (ninja, "retired path")

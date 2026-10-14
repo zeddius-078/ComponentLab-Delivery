@@ -68,6 +68,17 @@ try:
     finally:
         sys.path.pop(0)
         sys.modules.pop("capture_mcp", None)
+    # MCP 原始响应通过后，还要检查 HTML、DSL、资源和根节点是否被同一份清单绑定。
+    manifest_spec = importlib.util.spec_from_file_location(
+        route + "_capture_manifest",
+        ROOT / route / "pipeline/capture/capture_manifest.py",
+    )
+    manifest_module = importlib.util.module_from_spec(manifest_spec)
+    manifest_spec.loader.exec_module(manifest_module)
+    preview_manifests = sorted((ROOT / route / "inputs").glob("*/capture.json"))
+    result["captureManifestsVerified"] = [
+        manifest_module.verify(path, "preview")["manifest"] for path in preview_manifests
+    ]
     result["testFunctions"] = {}
     # 分别读取组件与布局测试结果，避免只检查其中一组就给出交付结论。
     for group in ("component", "layout"):
