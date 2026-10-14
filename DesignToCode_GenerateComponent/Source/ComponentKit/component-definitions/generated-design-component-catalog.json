@@ -1058,7 +1058,15 @@
       "version": "UNRESOLVED",
       "evidenceRefs": [
         "Source/ComponentKit/component-definitions/figma-component-inventory.json",
-        "Source/ComponentKit/runtime/component/ComponentFactory.cpp"
+        "Source/ComponentKit/runtime/component/ComponentFactory.cpp",
+        "docs/designRules/design-system/component-traceability-manifest.json",
+        "Source/ComponentKit/runtime/component/DockWidgetAppearance.h",
+        "Source/ComponentKit/runtime/component/DockWidgetAppearance.cpp",
+        "Source/SDKConsumerTest/main.cpp",
+        "ComponentLab/Source/delivery/demo/DockWidgetGallery.cpp",
+        "ComponentLab/Source/delivery/tests/CompositionTests.cpp",
+        "DesignToCode_GenerateLayout/Source/HtmlDsl/pipeline/mapping/component-mapping.json",
+        "DesignToCode_GenerateLayout/Source/Validation/component/ComponentTests.cpp"
       ],
       "designOriginAction": "REUSE",
       "identityMigration": "NONE",
@@ -1068,14 +1076,33 @@
         "schema": "VERIFIED",
         "build": "VERIFIED",
         "runtime": "VERIFIED",
-        "runtimeScope": "FACTORY_INSTANTIATION_ONLY",
+        "runtimeScope": "SDK_FACTORY_COMPONENTLAB_GENERATELAYOUT",
         "factoryRegistration": "VERIFIED",
         "visual": "NOT_VERIFIED",
-        "downstreamConsumption": "NOT_VERIFIED",
+        "downstreamConsumption": "VERIFIED",
         "tokenBinding": "UNRESOLVED"
       },
       "governanceApprovalStatus": "NOT_REVIEWED",
-      "focusPolicy": "UNRESOLVED"
+      "focusPolicy": "CHILD_CONTENT_AND_TITLE_ACTIONS_OPTIONAL_INDICATOR",
+      "runtimeContract": {
+        "qtBaseClass": "QDockWidget/QMainWindow/QWidget child composition",
+        "variantAxes": [
+          "Area",
+          "Placement"
+        ],
+        "controlledProperties": [
+          "title",
+          "child content",
+          "close glyph visibility",
+          "float glyph visibility"
+        ],
+        "signals": [
+          "dockLocationChanged",
+          "topLevelChanged",
+          "visibilityChanged"
+        ],
+        "controllerBoundary": "Area and Placement are design previews only. QMainWindow owns actual docking and tabification; floating, allowedAreas and DockWidgetFeatures remain native runtime authority and are never inferred from Figma variant values."
+      }
     },
     {
       "designComponent": "ComponentLab/MdiArea",
@@ -6955,7 +6982,15 @@
       "version": "UNRESOLVED",
       "evidenceRefs": [
         "Source/ComponentKit/component-definitions/figma-component-inventory.json",
-        "Source/ComponentKit/runtime/component/ComponentFactory.cpp"
+        "Source/ComponentKit/runtime/component/ComponentFactory.cpp",
+        "docs/designRules/design-system/component-traceability-manifest.json",
+        "Source/ComponentKit/runtime/component/DockWidgetAppearance.h",
+        "Source/ComponentKit/runtime/component/DockWidgetAppearance.cpp",
+        "Source/SDKConsumerTest/main.cpp",
+        "ComponentLab/Source/delivery/demo/DockWidgetGallery.cpp",
+        "ComponentLab/Source/delivery/tests/CompositionTests.cpp",
+        "DesignToCode_GenerateLayout/Source/HtmlDsl/pipeline/mapping/component-mapping.json",
+        "DesignToCode_GenerateLayout/Source/Validation/component/ComponentTests.cpp"
       ],
       "designOriginAction": "REUSE",
       "identityMigration": "NONE",
@@ -6965,14 +7000,33 @@
         "schema": "VERIFIED",
         "build": "VERIFIED",
         "runtime": "VERIFIED",
-        "runtimeScope": "FACTORY_INSTANTIATION_ONLY",
+        "runtimeScope": "SDK_FACTORY_COMPONENTLAB_GENERATELAYOUT",
         "factoryRegistration": "VERIFIED",
         "visual": "NOT_VERIFIED",
-        "downstreamConsumption": "NOT_VERIFIED",
+        "downstreamConsumption": "VERIFIED",
         "tokenBinding": "UNRESOLVED"
       },
       "governanceApprovalStatus": "NOT_REVIEWED",
-      "focusPolicy": "UNRESOLVED"
+      "focusPolicy": "CHILD_CONTENT_AND_TITLE_ACTIONS_OPTIONAL_INDICATOR",
+      "runtimeContract": {
+        "qtBaseClass": "QDockWidget/QMainWindow/QWidget child composition",
+        "variantAxes": [
+          "Area",
+          "Placement"
+        ],
+        "controlledProperties": [
+          "title",
+          "child content",
+          "close glyph visibility",
+          "float glyph visibility"
+        ],
+        "signals": [
+          "dockLocationChanged",
+          "topLevelChanged",
+          "visibilityChanged"
+        ],
+        "controllerBoundary": "Area and Placement are design previews only. QMainWindow owns actual docking and tabification; floating, allowedAreas and DockWidgetFeatures remain native runtime authority and are never inferred from Figma variant values."
+      }
     },
     {
       "designComponent": "ComponentLab/MdiArea",

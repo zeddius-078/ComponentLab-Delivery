@@ -49,31 +49,6 @@ QLabel* label(QWidget* p, const QString& text, const QRect& r, int px, int weigh
     return l;
 }
 } // namespace
-void populateDockWidgetDemo(QDockWidget* dock, const QString& caption) {
-    if (auto* previous = dock->widget()) {
-        dock->setWidget(nullptr);
-        delete previous;
-    }
-    auto* page = new QWidget;
-    page->setObjectName("dockDemoContent");
-    page->setStyleSheet("QWidget#dockDemoContent{background:transparent;border:0;}");
-    auto* outer = new QVBoxLayout(page);
-    outer->setContentsMargins(11, 10, 11, 11);
-    auto* card = new QWidget(page);
-    card->setObjectName("dockDemoCard");
-    card->setStyleSheet(
-        "QWidget#dockDemoCard{background:white;border:1px solid #d0d0d0;border-radius:6px;}");
-    auto* inner = new QVBoxLayout(card);
-    inner->setContentsMargins(13, 19, 13, 10);
-    inner->setSpacing(0);
-    auto* text = label(card, caption, QRect(), 12, QFont::Normal, "#191919", true);
-    text->setObjectName("dockDemoCaption");
-    text->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Preferred);
-    inner->addWidget(text);
-    inner->addStretch();
-    outer->addWidget(card);
-    dock->setWidget(page);
-}
 void configureDockWidgetEditor(QDockWidget* dock, QFormLayout* controls, QLineEdit* title,
                                QVBoxLayout* hostLayout, QWidget* settings, QComboBox* variant) {
     controls->setRowWrapPolicy(QFormLayout::WrapAllRows);
@@ -89,7 +64,8 @@ void configureDockWidgetEditor(QDockWidget* dock, QFormLayout* controls, QLineEd
     main->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     hostLayout->insertWidget(2, main, 1);
     dock->setWindowTitle("Inspector");
-    populateDockWidgetDemo(dock, QString::fromUtf8("可编辑的原生停靠面板内容"));
+    commonWidget::populateFigmaDockWidget(
+        dock, QString::fromUtf8("可编辑的原生停靠面板内容"));
     dock->widget()->setMinimumSize(220, 120);
     main->addDockWidget(Qt::LeftDockWidgetArea, dock);
     title->setEnabled(true);
@@ -241,7 +217,8 @@ void configureDockWidgetEditor(QDockWidget* dock, QFormLayout* controls, QLineEd
         if (!other) {
             other = new QDockWidget("Companion", main);
             other->setObjectName("dockCompanion");
-            populateDockWidgetDemo(other, QString::fromUtf8("Qt 页签化示例"));
+            commonWidget::populateFigmaDockWidget(other, QString::fromUtf8("Qt 页签化示例"),
+                                                   QStringLiteral("Companion"));
             commonWidget::applyFigmaDockWidgetAppearance(other);
             main->addDockWidget(Qt::LeftDockWidgetArea, other);
         }
@@ -311,7 +288,8 @@ QWidget* createDockWidgetGallery(const std::shared_ptr<commonWidget::ComponentFa
             dock->setProperty("figmaDockSourceBorderWidth", id == "507:453"           ? 1
                                                             : placement == "Floating" ? 2
                                                                                       : 1);
-            populateDockWidgetDemo(dock, area + " dock · " + placement);
+            commonWidget::populateFigmaDockWidget(dock, area + " dock · " + placement,
+                                                   dock->windowTitle());
             commonWidget::applyFigmaDockWidgetAppearance(dock, area, placement);
             dock->setProperty("figmaNodeId", id);
             dock->setProperty("figmaVariant", name);

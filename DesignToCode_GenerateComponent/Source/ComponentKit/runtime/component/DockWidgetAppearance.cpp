@@ -4,6 +4,7 @@
 #include <QEvent>
 #include <QFontDatabase>
 #include <QLayout>
+#include <QLabel>
 #include <QMainWindow>
 #include <QPainter>
 #include <QProxyStyle>
@@ -12,6 +13,7 @@
 #include <QSvgRenderer>
 #include <QTimer>
 #include <QVariant>
+#include <QVBoxLayout>
 #include <stdexcept>
 
 namespace commonWidget {
@@ -74,8 +76,12 @@ public:
         setObjectName("figmaDockBinding");
         dock->installEventFilter(this);
         for (auto* b : dock->findChildren<QAbstractButton*>(QString(), Qt::FindDirectChildrenOnly))
-            if (b->inherits("QDockWidgetTitleButton"))
+            if (b->inherits("QDockWidgetTitleButton")) {
+                const bool close = b->objectName() == QStringLiteral("qt_dockwidget_closebutton");
+                b->setAccessibleName(close ? QStringLiteral("Close dock panel")
+                                           : QStringLiteral("Float or dock panel"));
                 b->installEventFilter(this);
+            }
         QObject::connect(dock, &QDockWidget::dockLocationChanged, this, [this] {
             dock_->update();
         });
@@ -163,6 +169,61 @@ public:
 private:
     QDockWidget* dock_;
 };
+}
+
+void populateFigmaDockWidget(QDockWidget* dock, const QString& caption, const QString& title) {
+    if (!dock)
+        throw std::invalid_argument("DockWidget is null");
+    if (auto* previous = dock->widget()) {
+        dock->setWidget(nullptr);
+        delete previous;
+    }
+    dock->setWindowTitle(title);
+    auto* page = new QWidget;
+    page->setObjectName(QStringLiteral("dockDemoContent"));
+    page->setStyleSheet(QStringLiteral(
+        "QWidget#dockDemoContent{background:transparent;border:0;}"));
+    auto* outer = new QVBoxLayout(page);
+    outer->setContentsMargins(11, 10, 11, 11);
+    auto* card = new QWidget(page);
+    card->setObjectName(QStringLiteral("dockDemoCard"));
+    card->setStyleSheet(QStringLiteral(
+        "QWidget#dockDemoCard{background:white;border:1px solid #d0d0d0;border-radius:6px;}"));
+    auto* inner = new QVBoxLayout(card);
+    inner->setContentsMargins(13, 19, 13, 10);
+    inner->setSpacing(0);
+    auto* text = new QLabel(caption, card);
+    text->setObjectName(QStringLiteral("dockDemoCaption"));
+    text->setTextFormat(Qt::PlainText);
+    text->setWordWrap(true);
+    text->setAlignment(Qt::AlignLeft | Qt::AlignTop);
+    text->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Preferred);
+    QFont body(QStringLiteral("Inter"));
+    body.setPixelSize(12);
+    body.setWeight(QFont::Normal);
+    text->setFont(body);
+    text->setStyleSheet(QStringLiteral(
+        "background:transparent;border:0;color:#191919;font-family:'Inter';font-size:12px;"));
+    inner->addWidget(text);
+    inner->addStretch();
+    outer->addWidget(card);
+    dock->setWidget(page);
+}
+
+void configureFigmaDockWidget(QDockWidget* dock,
+                              const QMap<QString, QString>& properties) {
+    if (!dock)
+        throw std::invalid_argument("DockWidget is null");
+    const auto area = properties.value(QStringLiteral("Area"), QStringLiteral("Left"));
+    const auto placement =
+        properties.value(QStringLiteral("Placement"), QStringLiteral("Docked"));
+    if (!QStringList{QStringLiteral("Left"), QStringLiteral("Right"), QStringLiteral("Top"),
+                     QStringLiteral("Bottom")}.contains(area) ||
+        !QStringList{QStringLiteral("Docked"), QStringLiteral("Floating")}.contains(placement))
+        throw std::invalid_argument("Invalid DockWidget Area/Placement");
+    populateFigmaDockWidget(dock,
+                            QStringLiteral("%1 dock · %2").arg(area, placement));
+    applyFigmaDockWidgetAppearance(dock, area, placement);
 }
 
 void applyFigmaDockWidgetAppearance(QDockWidget* dock, const QString& area,

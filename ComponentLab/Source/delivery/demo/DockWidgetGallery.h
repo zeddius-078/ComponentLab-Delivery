@@ -11,7 +11,6 @@ namespace commonWidget {
 class ComponentFactory;
 }
 namespace native_gallery {
-void populateDockWidgetDemo(QDockWidget* dock, const QString& caption);
 void configureDockWidgetEditor(QDockWidget* dock, QFormLayout* controls, QLineEdit* title,
                                QVBoxLayout* hostLayout, QWidget* settings, QComboBox* variant);
 QWidget* createDockWidgetGallery(const std::shared_ptr<commonWidget::ComponentFactory>& factory,

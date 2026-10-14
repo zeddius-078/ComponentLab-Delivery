@@ -164,6 +164,22 @@
       "status":"Figma public component 505:555; five ToolBoxItem states in internal set 505:553 remain native QToolBox item states"
     },
     {
+      "designComponentName":"ComponentLab/DockWidget",
+      "designComponentSetId":"507:443",
+      "designComponentSet":"ComponentLab/DockWidget",
+      "qtClass":"commonWidget::Z_DockWidget",
+      "compositionApi":"dock.configureDockWidget",
+      "propertyMappings":{
+        "Area":{"api":"dock.configureDockWidget","values":{"Left":"Left","Right":"Right","Top":"Top","Bottom":"Bottom"}},
+        "Placement":{"api":"dock.configureDockWidget","values":{"Docked":"Docked","Floating":"Floating"}}
+      },
+      "stateMappings":{},
+      "slotMappings":[],
+      "resourceMappings":{"policy":"SDK owns the child composition and title-bar assets; Area and Placement are deterministic appearance specimens only and never mutate QMainWindow docking, floating, allowedAreas or QDockWidget feature flags"},
+      "fallback":"error",
+      "status":"Figma 507:443; eight Area x Placement variants; Closable and Floatable glyph visibility is not mapped to native feature flags"
+    },
+    {
       "designComponentName":"ComponentLab/Badge",
       "designComponentSetId":"2132:21",
       "designComponentSet":"ComponentLab/Badge",

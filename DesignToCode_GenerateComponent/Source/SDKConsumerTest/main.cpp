@@ -1,10 +1,13 @@
 #include <MyDesignSystem/MyDesignSystem.h>
 
 #include <QApplication>
+#include <QAbstractButton>
 #include <QAbstractSpinBox>
 #include <QColor>
+#include <QDockWidget>
 #include <QJsonArray>
 #include <QJsonObject>
+#include <QLabel>
 #include <QItemSelectionModel>
 #include <QListView>
 #include <QMenu>
@@ -302,6 +305,38 @@ int main(int argc, char *argv[]) {
                        &menuFocusError) ||
         commonWidget::FocusIndicator::instance().enabledFor(toolBox))
         return 114;
+    auto* dock = qobject_cast<commonWidget::Z_DockWidget*>(
+        factory.create(QStringLiteral("commonWidget::Z_DockWidget"), &owner));
+    if (!dock)
+        return 115;
+    const auto dockFeatures = dock->features();
+    const auto dockAllowedAreas = dock->allowedAreas();
+    commonWidget::configureFigmaDockWidget(
+        dock, {{QStringLiteral("Area"), QStringLiteral("Bottom")},
+               {QStringLiteral("Placement"), QStringLiteral("Floating")}});
+    auto* dockCaption = dock->findChild<QLabel*>(QStringLiteral("dockDemoCaption"));
+    if (!dockCaption || dockCaption->text() != QString::fromUtf8("Bottom dock · Floating") ||
+        dock->windowTitle() != QStringLiteral("Inspector") ||
+        dock->property("figmaDockAreaPreview").toString() != QStringLiteral("Bottom") ||
+        dock->property("figmaDockPlacementPreview").toString() != QStringLiteral("Floating") ||
+        dock->features() != dockFeatures || dock->allowedAreas() != dockAllowedAreas ||
+        dock->isFloating())
+        return 116;
+    if (!factory.apply(dock, QStringLiteral("setFocusRingEnabled"), false,
+                       &menuFocusError) ||
+        commonWidget::FocusIndicator::instance().enabledFor(dock))
+        return 117;
+    int namedDockActions = 0;
+    for (auto* action :
+         dock->findChildren<QAbstractButton*>(QString(), Qt::FindDirectChildrenOnly)) {
+        if (!action->inherits("QDockWidgetTitleButton"))
+            continue;
+        if (action->accessibleName().isEmpty())
+            return 118;
+        ++namedDockActions;
+    }
+    if (namedDockActions != 2)
+        return 119;
     if (layoutHelperIds != QSet<QString>{QStringLiteral("ComponentLab/Spacer"),
                                          QStringLiteral("ComponentLab/LayoutContainer")} ||
         assetIds != QSet<QString>{QStringLiteral("ComponentLab/IconAsset"),

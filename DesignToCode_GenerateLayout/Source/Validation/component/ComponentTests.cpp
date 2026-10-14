@@ -4,6 +4,7 @@
 #include "LayoutConverter.h"
 #include "ComponentTheme.h"
 #include "NavigationAppearance.h"
+#include "DockWidgetAppearance.h"
 #include "TabAppearance.h"
 #include "ToolBoxAppearance.h"
 #include "VisualAssetCatalog.h"
@@ -16,6 +17,7 @@
 #include "native/Z_ToolBar.h"
 #include "native/Z_TabWidget.h"
 #include "native/Z_ToolBox.h"
+#include "native/Z_DockWidget.h"
 #include <QApplication>
 #include <QFile>
 #include <QJsonDocument>
@@ -24,6 +26,7 @@
 #include <QListView>
 #include <QMenu>
 #include <QMenuBar>
+#include <QDockWidget>
 #include <QSignalSpy>
 #include <QTest>
 #include <QToolButton>
@@ -533,6 +536,36 @@ private slots:
             const auto trace = converter.trace().first().toObject()["calls"].toArray();
             QCOMPARE(trace.first().toObject()["api"].toString(),
                      QString("toolbox.populateToolBox"));
+        }
+        {
+            const auto sample = fixture("507:443", "ComponentLab/DockWidget",
+                                        {{"Area", "Bottom"},
+                                         {"Placement", "Floating"}});
+            d2c::ComponentConverter converter(sample.first, mapping);
+            std::unique_ptr<QWidget> widget(converter.convert(sample.second, nullptr));
+            auto* dock = qobject_cast<commonWidget::Z_DockWidget*>(widget.get());
+            QVERIFY(dock);
+            commonWidget::Z_DockWidget nativeBaseline;
+            const auto originalFeatures = dock->features();
+            const auto originalAllowedAreas = dock->allowedAreas();
+            QCOMPARE(dock->isFloating(), nativeBaseline.isFloating());
+            QCOMPARE(dock->windowTitle(), QString("Inspector"));
+            QCOMPARE(dock->property("figmaDockAreaPreview").toString(), QString("Bottom"));
+            QCOMPARE(dock->property("figmaDockPlacementPreview").toString(),
+                     QString("Floating"));
+            QVERIFY(dock->widget());
+            QCOMPARE(dock->widget()->objectName(), QString("dockDemoContent"));
+            auto* caption = dock->findChild<QLabel*>("dockDemoCaption");
+            QVERIFY(caption);
+            QCOMPARE(caption->text(), QString::fromUtf8("Bottom dock · Floating"));
+            QCOMPARE(dock->features(), originalFeatures);
+            QCOMPARE(dock->allowedAreas(), originalAllowedAreas);
+            QCOMPARE(dock->isFloating(), nativeBaseline.isFloating());
+            const auto trace = converter.trace().first().toObject()["calls"].toArray();
+            QCOMPARE(trace.first().toObject()["api"].toString(),
+                     QString("dock.configureDockWidget"));
+            QCOMPARE(trace.first().toObject()["properties"].toObject()["Area"].toString(),
+                     QString("Bottom"));
         }
 
         {

@@ -3,6 +3,7 @@
 #include "ComponentFactory.h"
 #include "IconAssetCatalog.h"
 #include "NavigationAppearance.h"
+#include "DockWidgetAppearance.h"
 #include "TabAppearance.h"
 #include "ToolBoxAppearance.h"
 #include "Z_PushButton.h"
@@ -11,6 +12,7 @@
 #include <QMap>
 #include <QMenu>
 #include <QMenuBar>
+#include <QDockWidget>
 #include <QToolBar>
 #include <QTabWidget>
 #include <QToolBox>
@@ -215,6 +217,11 @@ QWidget* ComponentConverter::convert(const QJsonObject& n, QWidget* parent) {
             if (!toolBox)
                 fail("INVALID_COMPOSITION_TARGET", n, compositionApi);
             commonWidget::populateFigmaToolBox(toolBox);
+        } else if (compositionApi == QStringLiteral("dock.configureDockWidget")) {
+            auto* dock = qobject_cast<QDockWidget*>(w);
+            if (!dock)
+                fail("INVALID_COMPOSITION_TARGET", n, compositionApi);
+            commonWidget::configureFigmaDockWidget(dock, compositionProperties);
         } else {
             fail("UNREGISTERED_COMPOSITION_API", n, compositionApi);
         }
