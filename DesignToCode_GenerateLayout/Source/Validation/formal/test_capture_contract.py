@@ -8,6 +8,20 @@ import unittest
 
 PROJECT = Path(__file__).resolve().parents[3]
 ADAPTER = PROJECT / "Source/HtmlDsl/tools/adapt_v2.cjs"
+DEFAULT_NODE_MODULES = Path(r"D:\DevTools\ComponentLabNode\node_modules")
+
+
+def node_environment():
+    """为每次 Node 适配调用建立独立、可复现的模块搜索路径。"""
+    environment = dict(os.environ)
+    module_root = Path(environment.get("D2C_NODE_MODULES", DEFAULT_NODE_MODULES))
+    if not (module_root / "playwright").is_dir():
+        raise RuntimeError(
+            "Playwright module missing. Set D2C_NODE_MODULES to its node_modules directory: "
+            f"{module_root}"
+        )
+    environment["NODE_PATH"] = str(module_root)
+    return environment
 
 
 class CaptureContractTests(unittest.TestCase):
@@ -38,7 +52,7 @@ justify-content:flex-start} #fixture_2{width:20px;height:20px}
         (self.root / "capture.json").write_text(json.dumps(self.capture), encoding="utf-8")
         result = subprocess.run(["node", str(ADAPTER), str(self.root / "working"),
             str(self.root / "report"), str(self.root / "capture.json")],
-            capture_output=True, timeout=45, env=dict(os.environ))
+            capture_output=True, timeout=45, env=node_environment())
         report = json.loads((self.root / "report/html-result.json").read_bytes())
         return result, report
 

@@ -2,7 +2,13 @@
 param([switch]$Test, [switch]$CompileOnly)
 $ErrorActionPreference = 'Stop'
 . "$PSScriptRoot/../../NativeTools.ps1"
-Initialize-NativeTools
+# CompileOnly 只需要 Qt/CMake；完整生成和测试还会执行 HTML + DSL 适配器，
+# 因此在进入生成链路前显式初始化 Node/Playwright 模块路径。
+if ($CompileOnly) {
+    Initialize-NativeTools
+} else {
+    Initialize-NativeTools -NeedNode
+}
 $root = [IO.Path]::GetFullPath("$PSScriptRoot/../..")
 $folder = 'HtmlDsl'
 $build = "$D2CProjectRoot/build/cache/V2-html-dsl"
