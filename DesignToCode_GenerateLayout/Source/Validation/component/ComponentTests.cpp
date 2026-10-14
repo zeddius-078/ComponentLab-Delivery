@@ -6,6 +6,7 @@
 #include "NavigationAppearance.h"
 #include "DockWidgetAppearance.h"
 #include "MdiAppearance.h"
+#include "PageFlowAppearance.h"
 #include "TabAppearance.h"
 #include "ToolBoxAppearance.h"
 #include "VisualAssetCatalog.h"
@@ -21,6 +22,9 @@
 #include "native/Z_DockWidget.h"
 #include "native/Z_MdiArea.h"
 #include "native/Z_MdiSubWindow.h"
+#include "native/Z_StackedWidget.h"
+#include "native/Z_Wizard.h"
+#include "native/Z_WizardPage.h"
 #include <QApplication>
 #include <QFile>
 #include <QJsonDocument>
@@ -32,6 +36,9 @@
 #include <QDockWidget>
 #include <QMdiArea>
 #include <QMdiSubWindow>
+#include <QStackedWidget>
+#include <QWizard>
+#include <QWizardPage>
 #include <QSignalSpy>
 #include <QTest>
 #include <QToolButton>
@@ -605,6 +612,38 @@ private slots:
             QCOMPARE(call["api"].toString(), QString("mdi.configureArea"));
             QCOMPARE(call["properties"].toObject()["Presentation"].toString(),
                      QString("Tile"));
+        }
+        {
+            const auto sample = fixture("516:62", "ComponentLab/StackedWidget",
+                                        {{"State", "Disabled"}});
+            d2c::ComponentConverter converter(sample.first, mapping);
+            std::unique_ptr<QWidget> widget(converter.convert(sample.second, nullptr));
+            auto* stack = qobject_cast<commonWidget::Z_StackedWidget*>(widget.get());
+            QVERIFY(stack);QCOMPARE(stack->count(), 1);QVERIFY(!stack->isEnabled());
+            QCOMPARE(stack->property("figmaFlowStatePreview").toString(),QString("Disabled"));
+            QCOMPARE(converter.trace().first().toObject()["calls"].toArray().first().toObject()["api"].toString(),QString("pageflow.configureStack"));
+        }
+        {
+            const auto sample = fixture("516:113", "ComponentLab/WizardPage",
+                                        {{"Kind", "Final"}, {"Completion", "Incomplete"}});
+            d2c::ComponentConverter converter(sample.first, mapping);
+            std::unique_ptr<QWidget> widget(converter.convert(sample.second, nullptr));
+            auto* page = qobject_cast<commonWidget::Z_WizardPage*>(widget.get());
+            QVERIFY(page);QVERIFY(!page->isCommitPage());
+            QCOMPARE(page->property("figmaFlowKindPreview").toString(),QString("Final"));
+            QVERIFY(page->isComplete());
+            QCOMPARE(page->property("figmaFlowCompletionPreview").toString(),QString("Incomplete"));
+        }
+        {
+            const auto sample = fixture("516:669", "ComponentLab/Wizard",
+                                        {{"Style", "Modern"}, {"Phase", "Commit"}});
+            d2c::ComponentConverter converter(sample.first, mapping);
+            std::unique_ptr<QWidget> widget(converter.convert(sample.second, nullptr));
+            auto* wizard = qobject_cast<commonWidget::Z_Wizard*>(widget.get());
+            QVERIFY(wizard);QCOMPARE(wizard->wizardStyle(),QWizard::ModernStyle);
+            QCOMPARE(wizard->currentId(),0);QCOMPARE(wizard->pageIds().size(),4);
+            QVERIFY(wizard->page(2)->isCommitPage());QVERIFY(wizard->page(3)->isFinalPage());
+            QCOMPARE(wizard->property("figmaFlowPhasePreview").toString(),QString("Commit"));
         }
 
         {

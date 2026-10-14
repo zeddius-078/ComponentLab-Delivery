@@ -452,6 +452,42 @@
         "DesignToCode_GenerateLayout/Source/Validation/component/ComponentTests.cpp"
       ]
     },
+    "ComponentLab/StackedWidget": {
+      "consumerEngineeringStatus": "IMPLEMENTED",
+      "runtimeScope": "SDK_FACTORY_COMPONENTLAB_GENERATELAYOUT",
+      "focusPolicy": "CHILD_PAGE_CONTENT_OPTIONAL_INDICATOR",
+      "runtimeContract": {
+        "qtBaseClass": "QStackedWidget/QWidget page composition",
+        "variantAxes": ["State"],
+        "controllerBoundary": "Empty, Content and Disabled map to native page count/currentWidget/enabled semantics. The stack has no selector, route history or transition policy; removeWidget retains ownership and generated-page controllers own routing."
+      },
+      "runtimeEvidence": ["Source/ComponentKit/runtime/component/PageFlowAppearance.h", "Source/ComponentKit/runtime/component/PageFlowAppearance.cpp", "Source/SDKConsumerTest/main.cpp"],
+      "consumerEvidence": ["ComponentLab/Source/delivery/demo/PageFlowGallery.cpp", "ComponentLab/Source/delivery/tests/CompositionTests.cpp", "DesignToCode_GenerateLayout/Source/HtmlDsl/pipeline/mapping/component-mapping.json", "DesignToCode_GenerateLayout/Source/Validation/component/ComponentTests.cpp"]
+    },
+    "ComponentLab/WizardPage": {
+      "consumerEngineeringStatus": "IMPLEMENTED",
+      "runtimeScope": "SDK_FACTORY_COMPONENTLAB_GENERATELAYOUT",
+      "focusPolicy": "CHILD_FIELD_NAVIGATION_OPTIONAL_INDICATOR",
+      "runtimeContract": {
+        "qtBaseClass": "QWizardPage/QWidget field composition",
+        "variantAxes": ["Kind", "Completion"],
+        "controllerBoundary": "Kind maps to setCommitPage/setFinalPage. Completion is paint metadata only and never replaces isComplete, mandatory fields, validatePage, nextId or initialize/cleanup lifecycle hooks."
+      },
+      "runtimeEvidence": ["Source/ComponentKit/runtime/component/PageFlowAppearance.h", "Source/ComponentKit/runtime/component/PageFlowAppearance.cpp", "Source/SDKConsumerTest/main.cpp"],
+      "consumerEvidence": ["ComponentLab/Source/delivery/demo/PageFlowGallery.cpp", "ComponentLab/Source/delivery/tests/CompositionTests.cpp", "DesignToCode_GenerateLayout/Source/HtmlDsl/pipeline/mapping/component-mapping.json", "DesignToCode_GenerateLayout/Source/Validation/component/ComponentTests.cpp"]
+    },
+    "ComponentLab/Wizard": {
+      "consumerEngineeringStatus": "IMPLEMENTED",
+      "runtimeScope": "SDK_FACTORY_COMPONENTLAB_GENERATELAYOUT",
+      "focusPolicy": "CHILD_BUTTON_AND_FIELD_NAVIGATION_OPTIONAL_INDICATOR",
+      "runtimeContract": {
+        "qtBaseClass": "QWizard/QWizardPage/QAbstractButton composition",
+        "variantAxes": ["Style", "Phase"],
+        "controllerBoundary": "Style maps to the writable wizardStyle property. Phase is workflow preview metadata and never writes read-only currentId or visitedIds; branching, validation, button roles and accept/reject lifecycle remain QWizard authority."
+      },
+      "runtimeEvidence": ["Source/ComponentKit/runtime/component/PageFlowAppearance.h", "Source/ComponentKit/runtime/component/PageFlowAppearance.cpp", "Source/SDKConsumerTest/main.cpp"],
+      "consumerEvidence": ["ComponentLab/Source/delivery/demo/PageFlowGallery.cpp", "ComponentLab/Source/delivery/tests/CompositionTests.cpp", "DesignToCode_GenerateLayout/Source/HtmlDsl/pipeline/mapping/component-mapping.json", "DesignToCode_GenerateLayout/Source/Validation/component/ComponentTests.cpp"]
+    },
     "ComponentLab/DesktopBottomNavigation": {
       "consumerEngineeringStatus": "IMPLEMENTED",
       "runtimeScope": "SDK_FACTORY_COMPONENTLAB_GENERATELAYOUT",

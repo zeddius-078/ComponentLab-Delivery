@@ -5,6 +5,7 @@
 #include "NavigationAppearance.h"
 #include "DockWidgetAppearance.h"
 #include "MdiAppearance.h"
+#include "PageFlowAppearance.h"
 #include "TabAppearance.h"
 #include "ToolBoxAppearance.h"
 #include "Z_PushButton.h"
@@ -16,6 +17,9 @@
 #include <QDockWidget>
 #include <QMdiArea>
 #include <QMdiSubWindow>
+#include <QStackedWidget>
+#include <QWizard>
+#include <QWizardPage>
 #include <QToolBar>
 #include <QTabWidget>
 #include <QToolBox>
@@ -236,6 +240,21 @@ QWidget* ComponentConverter::convert(const QJsonObject& n, QWidget* parent) {
             if (!area)
                 fail("INVALID_COMPOSITION_TARGET", n, compositionApi);
             commonWidget::configureFigmaMdiArea(area, compositionProperties);
+        } else if (compositionApi == QStringLiteral("pageflow.configureStack")) {
+            auto* stack = qobject_cast<QStackedWidget*>(w);
+            if (!stack)
+                fail("INVALID_COMPOSITION_TARGET", n, compositionApi);
+            commonWidget::configureFigmaStackedWidget(stack, compositionProperties);
+        } else if (compositionApi == QStringLiteral("pageflow.configureWizardPage")) {
+            auto* page = qobject_cast<QWizardPage*>(w);
+            if (!page)
+                fail("INVALID_COMPOSITION_TARGET", n, compositionApi);
+            commonWidget::configureFigmaWizardPage(page, compositionProperties);
+        } else if (compositionApi == QStringLiteral("pageflow.configureWizard")) {
+            auto* wizard = qobject_cast<QWizard*>(w);
+            if (!wizard)
+                fail("INVALID_COMPOSITION_TARGET", n, compositionApi);
+            commonWidget::configureFigmaWizard(wizard, compositionProperties);
         } else {
             fail("UNREGISTERED_COMPOSITION_API", n, compositionApi);
         }

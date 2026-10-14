@@ -211,6 +211,52 @@
       "status":"Figma 511:280; four Presentation previews over one QMdiArea document model"
     },
     {
+      "designComponentName":"ComponentLab/StackedWidget",
+      "designComponentSetId":"516:62",
+      "designComponentSet":"ComponentLab/StackedWidget",
+      "qtClass":"commonWidget::Z_StackedWidget",
+      "stateProperty":"State",
+      "compositionApi":"pageflow.configureStack",
+      "propertyMappings":{"State":{"api":"pageflow.configureStack","values":{"Empty":"Empty","Content":"Content","Disabled":"Disabled"}}},
+      "stateMappings":{},
+      "slotMappings":[],
+      "resourceMappings":{"policy":"SDK owns the initial page specimen; QStackedWidget remains a selector-free page owner and route/history stay generated-page responsibilities"},
+      "fallback":"error",
+      "status":"Figma 516:62; Empty, Content and Disabled states map to native count/currentWidget/enabled semantics"
+    },
+    {
+      "designComponentName":"ComponentLab/WizardPage",
+      "designComponentSetId":"516:113",
+      "designComponentSet":"ComponentLab/WizardPage",
+      "qtClass":"commonWidget::Z_WizardPage",
+      "compositionApi":"pageflow.configureWizardPage",
+      "propertyMappings":{
+        "Kind":{"api":"pageflow.configureWizardPage","values":{"Standard":"Standard","Commit":"Commit","Final":"Final"}},
+        "Completion":{"api":"pageflow.configureWizardPage","values":{"Incomplete":"Incomplete","Complete":"Complete"}}
+      },
+      "stateMappings":{},
+      "slotMappings":[],
+      "resourceMappings":{"policy":"Kind maps to setCommitPage/setFinalPage; Completion remains preview metadata and never replaces isComplete, mandatory fields or validatePage"},
+      "fallback":"error",
+      "status":"Figma 516:113; six Kind x Completion specimens over one native QWizardPage contract"
+    },
+    {
+      "designComponentName":"ComponentLab/Wizard",
+      "designComponentSetId":"516:669",
+      "designComponentSet":"ComponentLab/Wizard",
+      "qtClass":"commonWidget::Z_Wizard",
+      "compositionApi":"pageflow.configureWizard",
+      "propertyMappings":{
+        "Style":{"api":"pageflow.configureWizard","values":{"Classic":"Classic","Modern":"Modern","Mac":"Mac","Aero":"Aero"}},
+        "Phase":{"api":"pageflow.configureWizard","values":{"Start":"Start","Middle":"Middle","Commit":"Commit","Finish":"Finish"}}
+      },
+      "stateMappings":{},
+      "slotMappings":[],
+      "resourceMappings":{"policy":"SDK owns a four-page native flow; Style maps to wizardStyle while Phase remains preview metadata and never writes read-only currentId or visitedIds"},
+      "fallback":"error",
+      "status":"Figma 516:669; sixteen Style x Phase specimens with native page graph, button roles and lifecycle preserved"
+    },
+    {
       "designComponentName":"ComponentLab/Badge",
       "designComponentSetId":"2132:21",
       "designComponentSet":"ComponentLab/Badge",

@@ -18,6 +18,7 @@
 #include "ToolBoxAppearance.h"
 #include "DockWidgetAppearance.h"
 #include "MdiAppearance.h"
+#include "PageFlowAppearance.h"
 #include "ComponentTheme.h"
 #include "DesignerWidgets.h"
 #include "FocusIndicator.h"

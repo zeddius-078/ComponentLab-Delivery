@@ -135,7 +135,7 @@ QWidget* createPageFlowPreview(const QString& sdkClass,const std::shared_ptr<com
     if(sdkClass=="commonWidget::Z_WizardPage")return new DemoPage(parent);
     auto* result=factory->create(sdkClass,parent);
     if(auto* wizard=qobject_cast<QWizard*>(result)){wizard->setWindowFlags(Qt::Widget);populateWizard(wizard);}
-    if(auto* stack=qobject_cast<QStackedWidget*>(result))commonWidget::applyFigmaStackedWidgetAppearance(stack);
+    if(auto* stack=qobject_cast<QStackedWidget*>(result))commonWidget::populateFigmaStackedWidget(stack,3);
     return result;
 }
 QWidget* createPageFlowGallery(const std::shared_ptr<commonWidget::ComponentFactory>& factory,QWidget* parent) {
@@ -174,7 +174,7 @@ void configurePageFlowEditor(QWidget* preview,QFormLayout* controls,QLineEdit* t
         command(QString::fromUtf8("removeWidget（保留所有权）"),"flowRemovePageControl",[=]{if(auto* page=stack->currentWidget()){stack->removeWidget(page);removed->append(page);}refresh();});
         command(QString::fromUtf8("重新插入移除的页面"),"flowReinsertPageControl",[=]{if(!removed->isEmpty())stack->addWidget(removed->takeLast());refresh();});
         QObject::connect(index,qOverload<int>(&QSpinBox::valueChanged),stack,[=](int n){stack->setCurrentIndex(n);refresh();});QObject::connect(stack,&QStackedWidget::currentChanged,settings,[=]{refresh();});QObject::connect(stack,&QStackedWidget::widgetRemoved,settings,[=]{refresh();});
-        add();add();add();refresh();return;
+        if(stack->count()==0){add();add();add();}refresh();return;
     }
     auto* wizard=qobject_cast<QWizard*>(preview);auto* standalone=dynamic_cast<DemoPage*>(preview);
     if(standalone){standalone->setMinimumSize(300,260);hostLayout->setStretchFactor(standalone,1);}

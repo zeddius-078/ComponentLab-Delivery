@@ -14,6 +14,9 @@
 #include <QMenuBar>
 #include <QMdiArea>
 #include <QMdiSubWindow>
+#include <QStackedWidget>
+#include <QWizard>
+#include <QWizardPage>
 #include <QSet>
 #include <QStringListModel>
 #include <QToolButton>
@@ -381,6 +384,43 @@ int main(int argc, char *argv[]) {
                        &menuFocusError) ||
         commonWidget::FocusIndicator::instance().enabledFor(mdiArea))
         return 125;
+    auto* flowStack = qobject_cast<commonWidget::Z_StackedWidget*>(
+        factory.create(QStringLiteral("commonWidget::Z_StackedWidget"), &owner));
+    auto* flowPage = qobject_cast<commonWidget::Z_WizardPage*>(
+        factory.create(QStringLiteral("commonWidget::Z_WizardPage"), &owner));
+    auto* flowWizard = qobject_cast<commonWidget::Z_Wizard*>(
+        factory.create(QStringLiteral("commonWidget::Z_Wizard"), &owner));
+    if (!flowStack || !flowPage || !flowWizard)
+        return 126;
+    commonWidget::configureFigmaStackedWidget(
+        flowStack, {{QStringLiteral("State"), QStringLiteral("Disabled")}});
+    if (flowStack->count() != 1 || flowStack->isEnabled() ||
+        flowStack->property("figmaFlowStatePreview").toString() != QStringLiteral("Disabled"))
+        return 127;
+    commonWidget::configureFigmaWizardPage(
+        flowPage, {{QStringLiteral("Kind"), QStringLiteral("Commit")},
+                   {QStringLiteral("Completion"), QStringLiteral("Incomplete")}});
+    // isFinalPage() is contextual: an unattached page is also the terminal page.
+    // Verify the explicit Figma kind metadata plus the writable commit flag instead.
+    if (!flowPage->isCommitPage() || !flowPage->isComplete() ||
+        flowPage->property("figmaFlowKindPreview").toString() != QStringLiteral("Commit") ||
+        flowPage->property("figmaFlowCompletionPreview").toString() !=
+            QStringLiteral("Incomplete"))
+        return 128;
+    commonWidget::configureFigmaWizard(
+        flowWizard, {{QStringLiteral("Style"), QStringLiteral("Modern")},
+                     {QStringLiteral("Phase"), QStringLiteral("Finish")}});
+    if (flowWizard->wizardStyle() != QWizard::ModernStyle || flowWizard->currentId() != 0 ||
+        flowWizard->pageIds().size() != 4 || !flowWizard->page(2)->isCommitPage() ||
+        !flowWizard->page(3)->isFinalPage() ||
+        flowWizard->property("figmaFlowPhasePreview").toString() != QStringLiteral("Finish"))
+        return 129;
+    for (auto* flow : {static_cast<QWidget*>(flowStack), static_cast<QWidget*>(flowPage),
+                       static_cast<QWidget*>(flowWizard)})
+        if (!factory.apply(flow, QStringLiteral("setFocusRingEnabled"), false,
+                           &menuFocusError) ||
+            commonWidget::FocusIndicator::instance().enabledFor(flow))
+            return 130;
     if (layoutHelperIds != QSet<QString>{QStringLiteral("ComponentLab/Spacer"),
                                          QStringLiteral("ComponentLab/LayoutContainer")} ||
         assetIds != QSet<QString>{QStringLiteral("ComponentLab/IconAsset"),
