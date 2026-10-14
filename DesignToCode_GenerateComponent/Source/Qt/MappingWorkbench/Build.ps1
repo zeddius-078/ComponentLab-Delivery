@@ -3,6 +3,8 @@ param(
     [string]$BuildDirectory,
     [string]$Cmake = 'cmake',
     [string]$Generator = 'Ninja',
+    [ValidateRange(1, 64)]
+    [int]$Jobs = 4,
     [switch]$GenerateTokens,
     [switch]$Test,
     [switch]$Deploy
@@ -32,12 +34,12 @@ if ($GenerateTokens) {
     & $Cmake --build $BuildDirectory --config Release --target d2c_check_tokens
     if ($LASTEXITCODE) { throw 'Private Token verification failed.' }
 }
-& $Cmake --build $BuildDirectory --config Release --parallel 4
+& $Cmake --build $BuildDirectory --config Release --parallel $Jobs
 if ($LASTEXITCODE) { throw 'Build failed.' }
 if ($Test) {
     $env:PATH = "$QtRoot/bin;" + $env:PATH
     $ctest = Join-Path (Split-Path (Get-Command $Cmake).Source) 'ctest.exe'
-    & $ctest --test-dir $BuildDirectory -C Release -j 4 --output-on-failure --output-junit "$D2CProjectRoot/build/reports/Workbench/ctest.xml"
+    & $ctest --test-dir $BuildDirectory -C Release -j $Jobs --output-on-failure --output-junit "$D2CProjectRoot/build/reports/Workbench/ctest.xml"
     if ($LASTEXITCODE) { throw 'Tests failed.' }
 }
 if ($Deploy) {

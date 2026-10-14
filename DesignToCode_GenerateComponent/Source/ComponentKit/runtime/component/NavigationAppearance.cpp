@@ -272,6 +272,8 @@ class Handle final : public QWidget {
 
 public:
     Handle(bool v, QWidget* p) : QWidget(p), vertical(v) {
+        setObjectName("figmaToolBarHandle");
+        setAccessibleName("Move handle");
         setFixedSize(v ? QSize(56, 12) : QSize(12, 32));
     }
 
@@ -401,6 +403,23 @@ void populateMenuBar(QMenuBar* bar, const QStringList& requested) {
     corner->setFixedSize(32, 32);
     corner->setStyleSheet("QToolButton {border:0;background:#f3f3f3;border-radius:4px;}");
     bar->setCornerWidget(corner);
+}
+
+void setMenuBarCornerVisible(QMenuBar* bar, bool visible) {
+    if (!bar)
+        return;
+    if (!bar->cornerWidget() && visible) {
+        auto* corner = new QToolButton(bar);
+        corner->setObjectName("menuBarCorner");
+        corner->setText("…");
+        corner->setFixedSize(32, 32);
+        corner->setStyleSheet(
+            "QToolButton {border:0;background:#f3f3f3;border-radius:4px;}");
+        bar->setCornerWidget(corner);
+    }
+    if (auto* corner = bar->cornerWidget())
+        corner->setVisible(visible);
+    bar->setProperty("showCorner", visible);
 }
 
 void configureToolBar(QToolBar* bar, const QMap<QString, QString>& props) {

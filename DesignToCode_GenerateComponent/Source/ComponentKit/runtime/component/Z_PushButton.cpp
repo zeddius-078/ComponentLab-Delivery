@@ -530,12 +530,12 @@ QString Z_PushButton::trailingIconSource() const { return d->trailing.source; }
 void Z_PushButton::setLeadingIconSource(const QString& source) {
     const QString path=IconSource::resolve(source);
     const QIcon icon=IconSource::load(path);
-    setLeadingIcon(icon); d->leading.source=path;
+    setLeadingIcon(icon); d->leading.source=source.trimmed();
 }
 void Z_PushButton::setTrailingIconSource(const QString& source) {
     const QString path=IconSource::resolve(source);
     const QIcon icon=IconSource::load(path);
-    setTrailingIcon(icon); d->trailing.source=path;
+    setTrailingIcon(icon); d->trailing.source=source.trimmed();
 }
 bool Z_PushButton::isIconOnly() const { return d->iconOnly; }
 void Z_PushButton::setIconOnly(bool value) {

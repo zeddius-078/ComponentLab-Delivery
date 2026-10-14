@@ -14,7 +14,6 @@
 #include <QRegion>
 #include <QScrollArea>
 #include <QToolBox>
-#include <QVBoxLayout>
 #include <functional>
 #include <stdexcept>
 
@@ -45,37 +44,6 @@ QScrollArea* pageArea(QToolBox* box, int index) {
     return qobject_cast<QScrollArea*>(box->widget(index)->parentWidget()->parentWidget());
 }
 } // namespace
-void populateToolBoxDemo(QToolBox* box, bool sourceSnapshot) {
-    while (box->count()) {
-        auto* page = box->widget(0);
-        box->removeItem(0);
-        delete page;
-    }
-    for (const auto& name : {QString("General"), QString("Rules"), QString("Notifications")}) {
-        auto* page = new QWidget;
-        page->setObjectName("toolBoxDemo" + name);
-        auto* title =
-            label(page, name + " page", QRect(23, 23, 700, 26), 18, QFont::DemiBold, "#191919");
-        auto* body = label(page,
-                           "Only the current item widget is shown here. Other item widgets remain "
-                           "owned by the ToolBox until removed.",
-                           QRect(23, 61, 700, 19), 13, QFont::Normal, "#191919", !sourceSnapshot);
-        if (!sourceSnapshot) {
-            auto* layout = new QVBoxLayout(page);
-            layout->setContentsMargins(23, 23, 23, 20);
-            layout->setSpacing(12);
-            for (auto* text : {title, body}) {
-                text->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Preferred);
-                layout->addWidget(text);
-            }
-            layout->addStretch();
-        }
-        box->addItem(page, name == "General" ? "&General" : name);
-    }
-    box->setItemIcon(1, commonWidget::figmaToolBoxSettingsIcon(true));
-    box->setItemEnabled(2, false);
-    box->setCurrentIndex(1);
-}
 QWidget* createToolBoxGallery(const std::shared_ptr<commonWidget::ComponentFactory>& factory,
                               QWidget* parent) {
     QFile file(":/figma/gallery-layouts.json");
@@ -108,7 +76,7 @@ QWidget* createToolBoxGallery(const std::shared_ptr<commonWidget::ComponentFacto
                 box->addItem(new QWidget, "General");
                 box->setItemEnabled(0, name != "State=Disabled");
             } else
-                populateToolBoxDemo(box, true);
+                commonWidget::populateFigmaToolBox(box, true);
             commonWidget::applyFigmaToolBoxAppearance(
                 box, anatomy ? name.section('=', 1) : QString(), anatomy ? 0 : -1, !anatomy);
             if (anatomy)

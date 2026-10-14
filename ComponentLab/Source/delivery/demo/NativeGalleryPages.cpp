@@ -51,6 +51,7 @@
 #include <QFormLayout>
 #include <QGraphicsScene>
 #include <QGraphicsView>
+#include <QGridLayout>
 #include <QGroupBox>
 #include <QHeaderView>
 #include <QInputDialog>
@@ -62,6 +63,7 @@
 #include <QRegularExpressionValidator>
 #include <QListView>
 #include <QListWidget>
+#include <QPainter>
 #include <QMdiArea>
 #include <QMdiSubWindow>
 #include <QMenu>
@@ -111,6 +113,7 @@ namespace native_gallery {
 namespace {
 
 using commonWidget::DesignComponentDescriptor;
+using commonWidget::DesignLibraryEntry;
 using commonWidget::DesignComponentPage;
 using commonWidget::DesignComponentSet;
 
@@ -528,7 +531,7 @@ QWidget* createNativeAppearance(const DesignComponentDescriptor& descriptor,
         configurePageFlowEditor(preview,controls,content,hostLayout,settings,variant,factory);
     if (auto* box=qobject_cast<QToolBox*>(preview);box&&componentSet.id=="505:553") {
         controls->setRowWrapPolicy(QFormLayout::WrapAllRows);controls->setContentsMargins(12,12,12,12);variant->setMinimumContentsLength(1);variant->setSizePolicy(QSizePolicy::Ignored,QSizePolicy::Fixed);
-        populateToolBoxDemo(box);box->setMinimumSize(300,350);box->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);hostLayout->setStretchFactor(box,1);
+        commonWidget::populateFigmaToolBox(box);box->setMinimumSize(300,350);box->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);hostLayout->setStretchFactor(box,1);
         auto* target=new QSpinBox(settings);target->setObjectName("toolBoxTargetControl");target->setRange(0,box->count()-1);controls->addRow(QString::fromUtf8("编辑的条目索引"),target);
         auto* current=new QSpinBox(settings);current->setObjectName("toolBoxCurrentControl");current->setRange(0,box->count()-1);controls->addRow("currentIndex",current);
         auto* itemEnabled=new QCheckBox("itemEnabled(index)",settings);itemEnabled->setObjectName("toolBoxEnabledControl");controls->addRow(itemEnabled);
@@ -559,7 +562,7 @@ QWidget* createNativeAppearance(const DesignComponentDescriptor& descriptor,
         controls->setRowWrapPolicy(QFormLayout::WrapAllRows);
         controls->setContentsMargins(12,12,12,12);
         variant->setMinimumContentsLength(1);variant->setSizePolicy(QSizePolicy::Ignored,QSizePolicy::Fixed);
-        populateTabsDemo(tabs);
+        commonWidget::populateFigmaTabWidget(tabs);
         tabs->setMinimumSize(300,300);
         tabs->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
         hostLayout->setStretchFactor(tabs,1);
@@ -591,7 +594,7 @@ QWidget* createNativeAppearance(const DesignComponentDescriptor& descriptor,
         QObject::connect(content,&QLineEdit::textChanged,tabs,[=](const QString& text){tabs->setTabText(target->value(),text);});
         QObject::connect(tabEnabled,&QCheckBox::toggled,tabs,[=](bool on){tabs->setTabEnabled(target->value(),on);sync();});
         QObject::connect(icon,&QCheckBox::toggled,tabs,[=](bool on){tabs->setTabIcon(target->value(),on?commonWidget::figmaTabDocumentIcon(true):QIcon());});
-        QObject::connect(close,qOverload<int>(&QComboBox::currentIndexChanged),tabs,[=](int n){setTabsDemoClosePolicy(tabs,n!=2,n==0);appearance();});
+        QObject::connect(close,qOverload<int>(&QComboBox::currentIndexChanged),tabs,[=](int n){commonWidget::setFigmaTabClosePolicy(tabs,n!=2,n==0);appearance();});
         QObject::connect(movable,&QCheckBox::toggled,tabs,&QTabWidget::setMovable);
         QObject::connect(scroll,&QCheckBox::toggled,tabs,&QTabWidget::setUsesScrollButtons);
         QObject::connect(elide,qOverload<int>(&QComboBox::currentIndexChanged),tabs,[=]{tabs->setElideMode(static_cast<Qt::TextElideMode>(elide->currentData().toInt()));});
@@ -1314,7 +1317,10 @@ QWidget* createRadioGroupAppearance(const DesignComponentSet& componentSet,
 
 QWidget* createContractPage(const DesignComponentDescriptor& descriptor, QWidget* parent) {
     auto* page = new QWidget(parent);
-    page->setObjectName("componentContractPage_" + descriptor.sdkClass.section("::", -1));
+    const auto stableName = descriptor.sdkClass.isEmpty()
+        ? descriptor.designComponent.section('/', -1)
+        : descriptor.sdkClass.section("::", -1);
+    page->setObjectName("componentContractPage_" + stableName);
     page->setProperty("contractOnly", true);
     auto* layout = new QVBoxLayout(page);
     layout->setContentsMargins(24, 24, 24, 24);
@@ -1388,8 +1394,11 @@ DesignComponentDescriptor descriptorForSet(
     const DesignComponentSet& componentSet,
     const QList<DesignComponentDescriptor>& descriptors,
     bool* found) {
-    // TabItem is the native TabWidget's internal variant anatomy, not a new SDK type.
-    const QString designComponent = componentSet.id == "500:847"
+    // These item sets are internal variant anatomy owned by public composite nodes,
+    // not additional SDK identities.
+    const QString designComponent = componentSet.id == "482:490"
+        ? QStringLiteral("ComponentLab/Menu") : componentSet.id == "487:22"
+        ? QStringLiteral("ComponentLab/MenuBar") : componentSet.id == "500:847"
         ? QStringLiteral("ComponentLab/TabWidget") : componentSet.id == "505:553"
         ? QStringLiteral("ComponentLab/ToolBox") : mappedDesignComponent(componentSet.name);
     for (const auto& descriptor : descriptors) {
@@ -1533,6 +1542,124 @@ void applyVariant(QWidget* widget, const DesignComponentSet& componentSet,
                             {"cvd-02", "CVD-02", {}, false},
                             {"cmp-03", "CMP-03", {}, false}});
         select->setValues({"etch-01"});
+    }
+    if (auto* badge = qobject_cast<commonWidget::Z_Badge*>(widget)) {
+        badge->setKind(properties.value("Kind"));
+        badge->setTone(properties.value("Tone"));
+        badge->resize(badge->sizeHint());
+    }
+    if (auto* indicator = qobject_cast<commonWidget::Z_StatusIndicator*>(widget)) {
+        indicator->setSize(properties.value("Size"));
+        indicator->setTone(properties.value("Tone"));
+        indicator->resize(indicator->sizeHint());
+    }
+    if (auto* link = qobject_cast<commonWidget::Z_Link*>(widget)) {
+        link->setSnapshotState(properties.value("State"));
+        link->resize(link->sizeHint());
+    }
+    if (auto* tag = qobject_cast<commonWidget::Z_Tag*>(widget)) {
+        tag->setSize(properties.value("Size"));
+        tag->setTone(properties.value("Tone"));
+        tag->setDismissible(properties.value("Dismissible").compare(
+                                "True", Qt::CaseInsensitive) == 0);
+        tag->resize(tag->sizeHint());
+    }
+    if (auto* tooltip = qobject_cast<commonWidget::Z_Tooltip*>(widget)) {
+        tooltip->setPlacement(properties.value("Placement"));
+        tooltip->resize(tooltip->sizeHint());
+    }
+    if (auto* search = qobject_cast<commonWidget::Z_SearchInput*>(widget)) {
+        search->setSnapshotState(properties.value("State"));
+        search->setValue(properties.value("State") == "Filled"
+                             ? QStringLiteral("ETCH-01") : QString());
+        search->resize(search->sizeHint());
+    }
+    if (auto* number = qobject_cast<commonWidget::Z_NumberInput*>(widget)) {
+        number->setType(properties.value("Type"));
+        number->setSnapshotState(properties.value("State"));
+        number->setValue(properties.value("Type") == "Decimal" ? 12.5 : 12.0);
+        number->resize(number->sizeHint());
+    }
+    if (auto* colorPicker = qobject_cast<commonWidget::Z_ColorPicker*>(widget)) {
+        colorPicker->setColor(QColor(QStringLiteral("#5B5BD6")));
+        colorPicker->setSnapshotState(properties.value("State"));
+        colorPicker->resize(colorPicker->sizeHint());
+    }
+    if (auto* transfer = qobject_cast<commonWidget::Z_Transfer*>(widget)) {
+        auto* available = new QStandardItemModel(transfer);
+        for (const auto& label : {QStringLiteral("□ Chamber A"),
+                                  QStringLiteral("□ Chamber B"),
+                                  QStringLiteral("□ Chamber C")})
+            available->appendRow(new QStandardItem(label));
+        auto* selected = new QStandardItemModel(transfer);
+        selected->appendRow(new QStandardItem(
+            properties.value("State") == QStringLiteral("Loading")
+                ? QStringLiteral("Synchronizing")
+                : QStringLiteral("□ Chamber D")));
+        transfer->setAvailableModel(available);
+        transfer->setSelectedModel(selected);
+        transfer->setSnapshotState(properties.value("State"));
+        transfer->resize(transfer->sizeHint());
+    }
+    if (auto* upload = qobject_cast<commonWidget::Z_Upload*>(widget)) {
+        upload->setSnapshotState(properties.value("State"));
+        upload->setFileName(QStringLiteral("recipe"));
+        upload->setProgress(48);
+        upload->setHelperText(QStringLiteral("CSV, JSON · max 20 MB"));
+        upload->resize(upload->sizeHint());
+    }
+    if (auto* keypad = qobject_cast<commonWidget::Z_NumericKeypad*>(widget)) {
+        keypad->setDensity(properties.value("Density"));
+        keypad->resize(keypad->sizeHint());
+    }
+    if (auto* overflow = qobject_cast<commonWidget::Z_OverflowMenuButton*>(widget)) {
+        overflow->setSnapshotState(properties.value("State"));
+        overflow->resize(overflow->sizeHint());
+    }
+    if (auto* segmented = qobject_cast<commonWidget::Z_SegmentedControl*>(widget)) {
+        const int count = properties.value("Segments").toInt();
+        segmented->setSegmentCount(count);
+        segmented->setCurrentIndex(qMax(0, count - 2));
+        segmented->resize(segmented->sizeHint());
+    }
+    if (auto* stepper = qobject_cast<commonWidget::Z_Stepper*>(widget)) {
+        stepper->setSnapshotState(properties.value("State"));
+        stepper->resize(stepper->sizeHint());
+    }
+    if (auto* timeline = qobject_cast<commonWidget::Z_Timeline*>(widget)) {
+        timeline->setDensity(properties.value("Density"));
+        timeline->resize(timeline->sizeHint());
+    }
+    if (auto* anchor = qobject_cast<commonWidget::Z_AnchorNavigation*>(widget)) {
+        anchor->setOrientation(properties.value("Orientation"));
+        anchor->setSnapshotState(properties.value("State"));
+        anchor->resize(anchor->sizeHint());
+    }
+    if (auto* filter = qobject_cast<commonWidget::Z_Filter*>(widget)) {
+        filter->setLayoutMode(properties.value("Layout"));
+        filter->setSnapshotState(properties.value("State"));
+        const bool applied = properties.value("State") == QStringLiteral("Applied");
+        filter->setCriteria(applied
+            ? QStringList{QStringLiteral("Material: Si"), QStringLiteral("Status")}
+            : QStringList{QStringLiteral("Material"), QStringLiteral("Status")});
+        filter->setApplyLabel(applied ? QStringLiteral("Apply 1") : QStringLiteral("Apply"));
+        filter->resize(filter->sizeHint());
+    }
+    if (auto* pagination = qobject_cast<commonWidget::Z_Pagination*>(widget)) {
+        pagination->setDensity(properties.value("Density"));
+        pagination->setSnapshotState(properties.value("State"));
+        pagination->setPageCount(3);
+        pagination->setCurrentPage(2);
+        pagination->resize(pagination->sizeHint());
+    }
+    if (auto* pageHeader = qobject_cast<commonWidget::Z_PageHeader*>(widget)) {
+        pageHeader->setDensity(properties.value("Density"));
+        pageHeader->setActionsVisible(properties.value("Actions") == "On");
+        pageHeader->resize(pageHeader->sizeHint());
+    }
+    if (auto* titleBar = qobject_cast<commonWidget::Z_TitleBar*>(widget)) {
+        titleBar->setSnapshotState(properties.value("State"));
+        titleBar->resize(titleBar->sizeHint());
     }
 
     const QString orientation = properties.value("Orientation").toLower();
@@ -1740,10 +1867,289 @@ QTableWidget* createVariantMatrix(
     return table;
 }
 
+QPixmap tintedIconAsset(const QString& assetId, int extent, const QColor& color) {
+    QPixmap result = commonWidget::IconSource::load(assetId).pixmap(extent, extent);
+    QPainter painter(&result);
+    painter.setCompositionMode(QPainter::CompositionMode_SourceIn);
+    painter.fillRect(result.rect(), color);
+    return result;
+}
+
+QWidget* createIconAssetGallery(bool includeCatalog, QWidget* parent) {
+    auto* root = new QWidget(parent);
+    root->setObjectName(includeCatalog ? QStringLiteral("iconAssetGallery")
+                                       : QStringLiteral("iconAssetVariantGallery"));
+    const auto assets = commonWidget::IconAssetCatalog::descriptors();
+    root->setProperty("iconAssetDescriptorCount", assets.size());
+    root->setProperty("iconAssetVariantCount", 6);
+    root->setProperty("iconAssetUsesSdkCatalog", true);
+    auto* layout = new QVBoxLayout(root);
+    layout->setContentsMargins(8, 8, 8, 8);
+    layout->setSpacing(10);
+
+    auto* contract = new QLabel(QString::fromUtf8(
+        "Figma 合同：Size 16 / 20 / 24 × Tone Primary / Secondary。"
+        "以下预览与 GenerateLayout 使用同一 SDK 语义资产目录。"), root);
+    contract->setWordWrap(true);
+    contract->setObjectName("iconAssetContract");
+    layout->addWidget(contract);
+
+    auto* variants = new QWidget(root);
+    variants->setObjectName("iconAssetVariants");
+    auto* grid = new QGridLayout(variants);
+    grid->setContentsMargins(0, 0, 0, 0);
+    grid->setSpacing(8);
+    const QList<int> sizes{16, 20, 24};
+    const QList<QPair<QString, QColor>> tones{
+        {QStringLiteral("Primary"), QColor(QStringLiteral("#6235f7"))},
+        {QStringLiteral("Secondary"), QColor(QStringLiteral("#444444"))},
+    };
+    for (int toneIndex = 0; toneIndex < tones.size(); ++toneIndex) {
+        for (int sizeIndex = 0; sizeIndex < sizes.size(); ++sizeIndex) {
+            const int extent = sizes[sizeIndex];
+            auto* tile = new QFrame(variants);
+            tile->setObjectName(QStringLiteral("iconAsset_%1_%2")
+                                    .arg(extent).arg(tones[toneIndex].first));
+            tile->setProperty("assetId", QStringLiteral("icon.action.search"));
+            tile->setProperty("figmaSize", extent);
+            tile->setProperty("figmaTone", tones[toneIndex].first);
+            tile->setFrameShape(QFrame::StyledPanel);
+            tile->setMinimumSize(112, 84);
+            auto* tileLayout = new QVBoxLayout(tile);
+            auto* glyph = new QLabel(tile);
+            glyph->setObjectName("iconAssetGlyph");
+            glyph->setAlignment(Qt::AlignCenter);
+            glyph->setPixmap(tintedIconAsset(QStringLiteral("icon.action.search"), extent,
+                                             tones[toneIndex].second));
+            tileLayout->addWidget(glyph, 1);
+            auto* label = new QLabel(QStringLiteral("%1 px · %2")
+                                         .arg(extent).arg(tones[toneIndex].first), tile);
+            label->setAlignment(Qt::AlignCenter);
+            tileLayout->addWidget(label);
+            grid->addWidget(tile, toneIndex, sizeIndex);
+        }
+    }
+    layout->addWidget(variants);
+
+    if (includeCatalog) {
+        auto* table = new QTableWidget(assets.size(), 6, root);
+        table->setObjectName("iconAssetCatalogTable");
+        table->setHorizontalHeaderLabels({QString::fromUtf8("预览"),
+                                          QStringLiteral("Stable ID"),
+                                          QString::fromUtf8("可访问名称"),
+                                          QString::fromUtf8("尺寸 / 色调"),
+                                          QString::fromUtf8("格式 / 可着色"),
+                                          QString::fromUtf8("来源 / 许可")});
+        table->verticalHeader()->hide();
+        table->setEditTriggers(QAbstractItemView::NoEditTriggers);
+        table->setSelectionBehavior(QAbstractItemView::SelectRows);
+        for (int row = 0; row < assets.size(); ++row) {
+            const auto& asset = assets[row];
+            auto* preview = new QLabel(table);
+            preview->setAlignment(Qt::AlignCenter);
+            preview->setPixmap(tintedIconAsset(asset.id, 20, QColor(QStringLiteral("#6235f7"))));
+            table->setCellWidget(row, 0, preview);
+            table->setItem(row, 1, new QTableWidgetItem(asset.id));
+            table->setItem(row, 2, new QTableWidgetItem(asset.accessibleName));
+            QStringList sizesText;
+            for (const int size : asset.supportedSizes)
+                sizesText.append(QString::number(size));
+            table->setItem(row, 3, new QTableWidgetItem(
+                sizesText.join(QStringLiteral(" / ")) + QStringLiteral(" · ") +
+                asset.supportedTones.join(QStringLiteral(" / "))));
+            table->setItem(row, 4, new QTableWidgetItem(
+                asset.format + QStringLiteral(" · ") +
+                (asset.tintable ? QString::fromUtf8("可着色") : QString::fromUtf8("原色"))));
+            table->setItem(row, 5, new QTableWidgetItem(asset.source + QStringLiteral(" · ") + asset.license));
+        }
+        table->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+        table->horizontalHeader()->setSectionResizeMode(1, QHeaderView::Stretch);
+        table->setMinimumHeight(assets.size() * 34 + 36);
+        layout->addWidget(table, 1);
+        auto* missing = new QLabel(QString::fromUtf8(
+            "缺失策略：未知语义 ID 明确返回 UNMAPPED_RESOURCE；不回退为相似图标。"), root);
+        missing->setObjectName("iconAssetMissingPolicy");
+        layout->addWidget(missing);
+    }
+    return root;
+}
+
+QTableWidget* createVisualAssetMetadataTable(
+    const QList<commonWidget::VisualAssetDescriptor>& assets, QWidget* parent) {
+    auto* table = new QTableWidget(assets.size(), 7, parent);
+    table->setObjectName("visualAssetCatalogTable");
+    table->setHorizontalHeaderLabels({QStringLiteral("Stable ID"),
+                                      QString::fromUtf8("类型"),
+                                      QString::fromUtf8("固有尺寸"),
+                                      QString::fromUtf8("状态"),
+                                      QString::fromUtf8("适配"),
+                                      QString::fromUtf8("格式"),
+                                      QString::fromUtf8("来源 / 许可 / SHA-256")});
+    table->verticalHeader()->hide();
+    table->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    table->setSelectionBehavior(QAbstractItemView::SelectRows);
+    for (int row = 0; row < assets.size(); ++row) {
+        const auto& asset = assets[row];
+        const QString defaultState = asset.kind == commonWidget::VisualAssetKind::Image
+            ? QStringLiteral("Loaded") : QStringLiteral("Ready");
+        table->setItem(row, 0, new QTableWidgetItem(asset.id));
+        table->setItem(row, 1, new QTableWidgetItem(
+            asset.kind == commonWidget::VisualAssetKind::Image
+                ? QStringLiteral("Image") : QStringLiteral("Model2D")));
+        table->setItem(row, 2, new QTableWidgetItem(
+            QStringLiteral("%1 × %2").arg(asset.intrinsicSize.width())
+                                      .arg(asset.intrinsicSize.height())));
+        table->setItem(row, 3, new QTableWidgetItem(asset.supportedStates.join(" / ")));
+        table->setItem(row, 4, new QTableWidgetItem(asset.supportedFits.join(" / ")));
+        table->setItem(row, 5, new QTableWidgetItem(
+            asset.format + (asset.scalable ? QString::fromUtf8(" · 可缩放") : QString())));
+        table->setItem(row, 6, new QTableWidgetItem(
+            asset.source + QStringLiteral(" · ") + asset.license + QStringLiteral(" · ") +
+            commonWidget::VisualAssetCatalog::sha256(asset.id, defaultState)));
+    }
+    table->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+    table->horizontalHeader()->setSectionResizeMode(0, QHeaderView::Stretch);
+    table->horizontalHeader()->setSectionResizeMode(6, QHeaderView::Stretch);
+    table->setMinimumHeight(assets.size() * 34 + 36);
+    return table;
+}
+
+QWidget* createImageAssetGallery(const QString& profile, bool includeCatalog, QWidget* parent) {
+    auto* root = new QWidget(parent);
+    root->setObjectName(includeCatalog ? QStringLiteral("imageAssetGallery")
+                                       : QStringLiteral("imageAssetVariantGallery"));
+    const auto assets = commonWidget::VisualAssetCatalog::imageDescriptors();
+    root->setProperty("imageAssetDescriptorCount", assets.size());
+    root->setProperty("imageAssetVariantCount", 6);
+    root->setProperty("imageAssetUsesSdkCatalog", true);
+    auto* layout = new QVBoxLayout(root);
+    layout->setContentsMargins(8, 8, 8, 8);
+    layout->setSpacing(10);
+    auto* contract = new QLabel(QString::fromUtf8(
+        "Figma 合同：Fit Contain / Cover × State Loaded / Empty / Error。"
+        "Loaded 使用 SDK 稳定资产 ID；Empty 与 Error 是已知无载荷状态。"), root);
+    contract->setWordWrap(true);
+    layout->addWidget(contract);
+
+    auto* variants = new QWidget(root);
+    auto* grid = new QGridLayout(variants);
+    grid->setContentsMargins(0, 0, 0, 0);
+    grid->setSpacing(8);
+    const QStringList fits{QStringLiteral("Contain"), QStringLiteral("Cover")};
+    const QStringList states{QStringLiteral("Loaded"), QStringLiteral("Empty"),
+                             QStringLiteral("Error")};
+    for (int fitIndex = 0; fitIndex < fits.size(); ++fitIndex) {
+        for (int stateIndex = 0; stateIndex < states.size(); ++stateIndex) {
+            const QString fit = fits[fitIndex];
+            const QString state = states[stateIndex];
+            auto* tile = new QFrame(variants);
+            tile->setObjectName(QStringLiteral("imageAsset_%1_%2").arg(fit, state));
+            tile->setProperty("assetId", QStringLiteral("image.foundation.geometric-preview"));
+            tile->setProperty("figmaFit", fit);
+            tile->setProperty("figmaState", state);
+            tile->setFrameShape(QFrame::StyledPanel);
+            tile->setFixedSize(320, 210);
+            auto* tileLayout = new QVBoxLayout(tile);
+            tileLayout->setContentsMargins(14, 12, 14, 12);
+            tileLayout->setSpacing(10);
+            auto* viewport = new QLabel(tile);
+            viewport->setObjectName("imageAssetViewport");
+            viewport->setAlignment(Qt::AlignCenter);
+            viewport->setFixedSize(fit == QStringLiteral("Contain") ? QSize(230, 145)
+                                                                      : QSize(280, 145));
+            if (state == QStringLiteral("Loaded")) {
+                viewport->setPixmap(commonWidget::VisualAssetCatalog::render(
+                    QStringLiteral("image.foundation.geometric-preview"), state,
+                    viewport->size(), fit, profile, viewport->devicePixelRatioF()));
+            } else {
+                viewport->setText(state == QStringLiteral("Empty")
+                    ? QStringLiteral("Empty image") : QStringLiteral("Image error"));
+                viewport->setStyleSheet(state == QStringLiteral("Error")
+                    ? QStringLiteral("border:2px solid #e02128;border-radius:8px;color:#e02128;")
+                    : QStringLiteral("border:1px solid #d0d0d0;border-radius:8px;color:#444444;"));
+            }
+            tileLayout->addWidget(viewport, 0, Qt::AlignHCenter);
+            auto* label = new QLabel(fit + QStringLiteral(" · ") + state, tile);
+            label->setAlignment(Qt::AlignCenter);
+            tileLayout->addWidget(label);
+            grid->addWidget(tile, fitIndex, stateIndex);
+        }
+    }
+    layout->addWidget(variants);
+    if (includeCatalog) {
+        layout->addWidget(createVisualAssetMetadataTable(assets, root));
+        auto* policy = new QLabel(QString::fromUtf8(
+            "适配策略：Contain 完整显示，Cover 等比放大并居中裁切；SVG 按设备像素比渲染。"
+            "未知 ID 明确返回 UNMAPPED_RESOURCE。"), root);
+        policy->setWordWrap(true);
+        layout->addWidget(policy);
+    }
+    return root;
+}
+
+QWidget* createModelAssetGallery(const QString& profile, bool includeCatalog, QWidget* parent) {
+    auto* root = new QWidget(parent);
+    root->setObjectName(includeCatalog ? QStringLiteral("modelAssetGallery")
+                                       : QStringLiteral("modelAssetVariantGallery"));
+    const auto assets = commonWidget::VisualAssetCatalog::modelDescriptors();
+    root->setProperty("modelAssetDescriptorCount", assets.size());
+    root->setProperty("modelAssetVariantCount", 3);
+    root->setProperty("modelAssetUsesSdkCatalog", true);
+    root->setProperty("modelAssetIs2D", true);
+    auto* layout = new QVBoxLayout(root);
+    layout->setContentsMargins(8, 8, 8, 8);
+    layout->setSpacing(10);
+    auto* contract = new QLabel(QString::fromUtf8(
+        "Figma 合同：State Ready / Loading / Error。该资产是 2D 原理图基础，"
+        "不代表 3D 模型、QAbstractItemModel 或运行时交互画布。"), root);
+    contract->setWordWrap(true);
+    layout->addWidget(contract);
+    auto* variants = new QWidget(root);
+    auto* row = new QHBoxLayout(variants);
+    row->setContentsMargins(0, 0, 0, 0);
+    row->setSpacing(8);
+    for (const QString& state : {QStringLiteral("Ready"), QStringLiteral("Loading"),
+                                 QStringLiteral("Error")}) {
+        auto* tile = new QFrame(variants);
+        tile->setObjectName(QStringLiteral("modelAsset_%1").arg(state));
+        tile->setProperty("assetId", QStringLiteral("model.foundation.schematic"));
+        tile->setProperty("figmaState", state);
+        tile->setFrameShape(QFrame::StyledPanel);
+        tile->setFixedSize(360, 230);
+        auto* tileLayout = new QVBoxLayout(tile);
+        tileLayout->setContentsMargins(14, 12, 14, 12);
+        tileLayout->setSpacing(8);
+        auto* viewport = new QLabel(tile);
+        viewport->setObjectName("modelAssetViewport");
+        viewport->setAlignment(Qt::AlignCenter);
+        viewport->setFixedSize(310, 156);
+        viewport->setPixmap(commonWidget::VisualAssetCatalog::render(
+            QStringLiteral("model.foundation.schematic"), state, viewport->size(),
+            QStringLiteral("Contain"), profile, viewport->devicePixelRatioF()));
+        tileLayout->addWidget(viewport, 0, Qt::AlignHCenter);
+        auto* title = new QLabel(state == QStringLiteral("Ready")
+            ? QStringLiteral("2D schematic ready")
+            : state == QStringLiteral("Loading")
+            ? QStringLiteral("Loading schematic…")
+            : QStringLiteral("Schematic unavailable"), tile);
+        title->setAlignment(Qt::AlignCenter);
+        tileLayout->addWidget(title);
+        auto* note = new QLabel(QStringLiteral("Large visualization foundation asset"), tile);
+        note->setAlignment(Qt::AlignCenter);
+        tileLayout->addWidget(note);
+        row->addWidget(tile);
+    }
+    layout->addWidget(variants);
+    if (includeCatalog)
+        layout->addWidget(createVisualAssetMetadataTable(assets, root));
+    return root;
+}
+
 QWidget* createFigmaPage(const DesignComponentPage& figmaPage,
                          const QList<DesignComponentDescriptor>& descriptors,
                          const std::shared_ptr<commonWidget::ComponentFactory>& factory,
                          const QMap<QString, QWidget*>& detailedPages,
+                         const QString& profile,
                          QWidget* parent) {
     auto* page = new QWidget(parent);
     page->setObjectName("figmaPage_" + QString(figmaPage.id).replace(':', '_'));
@@ -1774,7 +2180,13 @@ QWidget* createFigmaPage(const DesignComponentPage& figmaPage,
         {"242:2720", "commonWidget::Z_Select"}};
     auto* existingPage = detailedPages.value(editorClasses.value(figmaPage.id), nullptr);
     auto* existingSections = existingPage ? existingPage->findChild<QTabWidget*>() : nullptr;
-    if (hasNavigationGallery(figmaPage.id)) {
+    if (figmaPage.id == QStringLiteral("2127:3")) {
+        appearanceLayout->addWidget(createIconAssetGallery(true, appearance));
+    } else if (figmaPage.id == QStringLiteral("2127:4")) {
+        appearanceLayout->addWidget(createImageAssetGallery(profile, true, appearance));
+    } else if (figmaPage.id == QStringLiteral("2127:5")) {
+        appearanceLayout->addWidget(createModelAssetGallery(profile, true, appearance));
+    } else if (hasNavigationGallery(figmaPage.id)) {
         appearanceLayout->addWidget(createNavigationAppearance(figmaPage.id, appearance));
     } else if (existingSections && existingSections->count()) {
         // Keep the original editor, its signal wiring and QObject inspector alive.
@@ -1820,6 +2232,19 @@ QWidget* createFigmaPage(const DesignComponentPage& figmaPage,
     auto* variants = new QWidget(sections);
     auto* variantsLayout = new QVBoxLayout(variants);
     variantsLayout->setContentsMargins(0, 8, 0, 0);
+    if (figmaPage.id == QStringLiteral("2127:3")) {
+        variantsLayout->addWidget(createIconAssetGallery(false, variants));
+        sections->addTab(variants, QString::fromUtf8("分组与状态"));
+        return page;
+    } else if (figmaPage.id == QStringLiteral("2127:4")) {
+        variantsLayout->addWidget(createImageAssetGallery(profile, false, variants));
+        sections->addTab(variants, QString::fromUtf8("分组与状态"));
+        return page;
+    } else if (figmaPage.id == QStringLiteral("2127:5")) {
+        variantsLayout->addWidget(createModelAssetGallery(profile, false, variants));
+        sections->addTab(variants, QString::fromUtf8("分组与状态"));
+        return page;
+    }
     if (hasNavigationGallery(figmaPage.id)) {
         variantsLayout->addWidget(createNavigationGallery(figmaPage.id, variants));
         sections->addTab(variants, QString::fromUtf8("分组与状态"));
@@ -1861,7 +2286,7 @@ QWidget* createFigmaPage(const DesignComponentPage& figmaPage,
         sections->addTab(variants,QString::fromUtf8("分组与状态"));return page;
     }
     if(hasCompositeGallery(figmaPage.id)) {
-        variantsLayout->addWidget(createCompositeGallery(figmaPage.id,variants));
+        variantsLayout->addWidget(createCompositeGallery(figmaPage.id,*factory,variants));
         sections->addTab(variants,QString::fromUtf8("分组与状态"));return page;
     }
     if(hasDataViewsGallery(figmaPage.id)) {
@@ -1934,6 +2359,7 @@ QWidget* createGallery(const QString& profile, const QMap<QString, QWidget*>& de
     auto* root = new QWidget(parent);
     root->setObjectName("nativeGalleryPage");
     const auto descriptors = commonWidget::designComponentDescriptors();
+    const auto libraryEntries = commonWidget::designLibraryEntries();
     const auto groups = commonWidget::figmaComponentCategories();
     const auto figmaPages = commonWidget::figmaComponentPages();
     const int instantiableCount = std::count_if(
@@ -1946,8 +2372,30 @@ QWidget* createGallery(const QString& profile, const QMap<QString, QWidget*>& de
         for (const auto& componentSet : figmaPage.componentSets)
             variantCount += componentSet.variants.size();
     }
+    QMap<QString, QString> pageSections;
+    QMap<QString, int> sectionEntryCounts;
+    for (const auto& entry : libraryEntries) {
+        const QString section = entry.kind == QStringLiteral("LayoutHelper")
+            ? QStringLiteral("layout")
+            : entry.kind == QStringLiteral("Asset")
+            ? QStringLiteral("assets")
+            : QStringLiteral("components");
+        pageSections.insert(entry.pageId, section);
+        ++sectionEntryCounts[section];
+    }
+    QMap<QString, int> sectionPageCounts;
+    for (const auto& figmaPage : figmaPages)
+        ++sectionPageCounts[pageSections.value(figmaPage.id, QStringLiteral("components"))];
     root->setProperty("descriptorCount", descriptors.size());
-    root->setProperty("componentCount", figmaPages.size());
+    root->setProperty("libraryEntryCount", libraryEntries.size());
+    root->setProperty("componentCount", sectionEntryCounts.value("components"));
+    root->setProperty("pageCount", figmaPages.size());
+    root->setProperty("componentPageCount", sectionPageCounts.value("components"));
+    root->setProperty("layoutHelperCount", sectionEntryCounts.value("layout"));
+    root->setProperty("layoutPageCount", sectionPageCounts.value("layout"));
+    root->setProperty("assetCount", sectionEntryCounts.value("assets"));
+    root->setProperty("assetPageCount", sectionPageCounts.value("assets"));
+    root->setProperty("sectionCount", 3);
     root->setProperty("componentSetCount", componentSetCount);
     root->setProperty("variantCount", variantCount);
     root->setProperty("instantiableCount", instantiableCount);
@@ -1970,22 +2418,47 @@ QWidget* createGallery(const QString& profile, const QMap<QString, QWidget*>& de
     QMap<QString, DesignComponentDescriptor> byClass;
     for (const auto& descriptor : descriptors)
         byClass.insert(descriptor.sdkClass, descriptor);
-    for (const auto& group : groups) {
-        auto* branch = new QTreeWidgetItem(componentTree, {group.label});
-        branch->setData(0, Qt::UserRole, group.id);
-        for (const auto& figmaPage : figmaPages) {
-            if (figmaPage.categoryId != group.id)
+    struct GallerySection { QString id; QString label; };
+    const QList<GallerySection> sections{
+        {QStringLiteral("components"), QString::fromUtf8("组件")},
+        {QStringLiteral("layout"), QString::fromUtf8("布局辅助")},
+        {QStringLiteral("assets"), QString::fromUtf8("资产")},
+    };
+    for (const auto& section : sections) {
+        auto* sectionItem = new QTreeWidgetItem(componentTree);
+        sectionItem->setData(0, Qt::UserRole, QStringLiteral("section:") + section.id);
+        sectionItem->setData(0, Qt::UserRole + 3, section.id);
+        for (const auto& group : groups) {
+            QTreeWidgetItem* branch = nullptr;
+            for (const auto& figmaPage : figmaPages) {
+                if (figmaPage.categoryId != group.id ||
+                    pageSections.value(figmaPage.id, QStringLiteral("components")) != section.id)
+                    continue;
+                if (!branch) {
+                    branch = new QTreeWidgetItem(sectionItem, {group.label});
+                    branch->setData(0, Qt::UserRole, group.id);
+                    branch->setData(0, Qt::UserRole + 3, section.id);
+                }
+                auto* leaf = new QTreeWidgetItem(branch, {figmaPage.name});
+                leaf->setData(0, Qt::UserRole, figmaPage.id);
+                leaf->setData(0, Qt::UserRole + 1, figmaPage.categoryId);
+                leaf->setData(0, Qt::UserRole + 2, figmaPage.componentSets.size());
+                leaf->setData(0, Qt::UserRole + 3, section.id);
+                leaf->setToolTip(0, leaf->text(0));
+            }
+            if (!branch)
                 continue;
-            auto* leaf = new QTreeWidgetItem(branch, {figmaPage.name});
-            leaf->setData(0, Qt::UserRole, figmaPage.id);
-            leaf->setData(0, Qt::UserRole + 1, figmaPage.categoryId);
-            leaf->setData(0, Qt::UserRole + 2, figmaPage.componentSets.size());
+            branch->setText(0, QString("%1 (%2)").arg(group.label).arg(branch->childCount()));
+            branch->setToolTip(0, branch->text(0));
+            branch->setExpanded(section.id == QStringLiteral("components") &&
+                                group.id == QStringLiteral("20.1"));
         }
-        branch->setText(0, QString("%1 (%2)").arg(group.label).arg(branch->childCount()));
-        branch->setToolTip(0, branch->text(0));
-        for (int childIndex = 0; childIndex < branch->childCount(); ++childIndex)
-            branch->child(childIndex)->setToolTip(0, branch->child(childIndex)->text(0));
-        branch->setExpanded(group.id == "20.1");
+        sectionItem->setText(0, QString::fromUtf8("%1 (%2 项 / %3 页)")
+            .arg(section.label)
+            .arg(sectionEntryCounts.value(section.id))
+            .arg(sectionPageCounts.value(section.id)));
+        sectionItem->setToolTip(0, sectionItem->text(0));
+        sectionItem->setExpanded(true);
     }
 
     auto factory = std::make_shared<commonWidget::ComponentFactory>(profile);
@@ -1994,13 +2467,17 @@ QWidget* createGallery(const QString& profile, const QMap<QString, QWidget*>& de
         byId.insert(figmaPage.id, figmaPage);
     auto pageById = std::make_shared<QMap<QString, QWidget*>>();
     QObject::connect(componentTree, &QTreeWidget::currentItemChanged, root,
-                     [root, pages, byId, descriptors, factory, detailedPages, pageById](QTreeWidgetItem* current) {
-        if (!current || !current->parent())
+                     [root, pages, byId, descriptors, factory, detailedPages, pageById,
+                      profile](QTreeWidgetItem* current) {
+        if (!current)
             return;
         const QString pageId = current->data(0, Qt::UserRole).toString();
+        if (!byId.contains(pageId))
+            return;
         QWidget* page = pageById->value(pageId, nullptr);
         if (!page) {
-            page = createFigmaPage(byId.value(pageId), descriptors, factory, detailedPages, pages);
+            page = createFigmaPage(byId.value(pageId), descriptors, factory, detailedPages,
+                                   profile, pages);
             pages->addWidget(page);
             pageById->insert(pageId, page);
         }
@@ -2008,7 +2485,19 @@ QWidget* createGallery(const QString& profile, const QMap<QString, QWidget*>& de
         root->setProperty("activePageId", pageId);
         root->setProperty("visibleDescriptorCount", 1);
     });
-    componentTree->setCurrentItem(componentTree->topLevelItem(0)->child(0));
+    QTreeWidgetItem* firstLeaf = nullptr;
+    for (int sectionIndex = 0; sectionIndex < componentTree->topLevelItemCount() && !firstLeaf;
+         ++sectionIndex) {
+        auto* sectionItem = componentTree->topLevelItem(sectionIndex);
+        for (int categoryIndex = 0; categoryIndex < sectionItem->childCount() && !firstLeaf;
+             ++categoryIndex) {
+            auto* categoryItem = sectionItem->child(categoryIndex);
+            if (categoryItem->childCount())
+                firstLeaf = categoryItem->child(0);
+        }
+    }
+    if (firstLeaf)
+        componentTree->setCurrentItem(firstLeaf);
     return root;
 }
 
@@ -2023,16 +2512,19 @@ QWidget* createRegistry(QWidget* parent) {
     layout->addWidget(summary);
 
     const auto descriptors = commonWidget::designComponentDescriptors();
+    const auto libraryEntries = commonWidget::designLibraryEntries();
     const auto categories = commonWidget::designComponentCategories();
     const int instantiableCount = std::count_if(
         descriptors.begin(), descriptors.end(),
         [](const auto& descriptor) { return descriptor.instantiable; });
     root->setProperty("componentCount", descriptors.size());
+    root->setProperty("libraryEntryCount", libraryEntries.size());
     root->setProperty("instantiableCount", instantiableCount);
     root->setProperty("contractOnlyCount", descriptors.size() - instantiableCount);
     summary->setText(QString::fromUtf8(
-        "当前 Figma 公共目录：%1 项；%2 项可实例化，%3 项仅有设计合同。未获审批的设计身份不会被标记为发布完成。")
-        .arg(descriptors.size()).arg(instantiableCount).arg(descriptors.size() - instantiableCount));
+        "当前规范库：%1 项，其中组件身份 %2 项；%3 项可实例化，%4 项仅有设计合同。布局辅助和资产不进入组件 Factory。未获审批的设计身份不会被标记为发布完成。")
+        .arg(libraryEntries.size()).arg(descriptors.size()).arg(instantiableCount)
+        .arg(descriptors.size() - instantiableCount));
     auto* table = new QTableWidget(descriptors.size(), 6, root);
     table->setObjectName("nativeRegistryTable");
     table->setHorizontalHeaderLabels({QString::fromUtf8("Z-DesignSystem 组件"),

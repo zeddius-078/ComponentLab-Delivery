@@ -1,5 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RCC>
+    <qresource prefix="/assets/images">
+        <file alias="geometric-preview.svg">assets/images/geometric-preview.svg</file>
+    </qresource>
+    <qresource prefix="/assets/models">
+        <file alias="foundation-schematic-ready.svg">assets/models/foundation-schematic-ready.svg</file>
+        <file alias="foundation-schematic-loading.svg">assets/models/foundation-schematic-loading.svg</file>
+        <file alias="foundation-schematic-error.svg">assets/models/foundation-schematic-error.svg</file>
+    </qresource>
+    <qresource prefix="/figma/timeline">
+        <file alias="created.svg">assets/timeline/created.svg</file>
+        <file alias="processing.svg">assets/timeline/processing.svg</file>
+        <file alias="completed.svg">assets/timeline/completed.svg</file>
+    </qresource>
     <qresource prefix="/figma/mdi">
         <file alias="Minus.svg">assets/icons/figma-mdi/Minus.svg</file>
         <file alias="Maximize.svg">assets/icons/figma-mdi/Maximize.svg</file>
@@ -250,6 +263,9 @@
         <file alias="light-compact/native-components.qss">../design-assets/generated/native/light-compact/native-components.qss</file>
         <file alias="dark-comfortable/native-components.qss">../design-assets/generated/native/dark-comfortable/native-components.qss</file>
         <file alias="dark-compact/native-components.qss">../design-assets/generated/native/dark-compact/native-components.qss</file>
+    </qresource>
+    <qresource prefix="/tokens">
+        <file alias="tokens_qt.json">../design-assets/DesignSystem/generated/runtime/tokens_qt.json</file>
     </qresource>
     <qresource prefix="/icons">
         <file alias="checkbox-check.svg">assets/icons/checkbox-check.svg</file>

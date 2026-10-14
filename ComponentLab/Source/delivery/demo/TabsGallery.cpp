@@ -10,7 +10,6 @@
 #include <QLabel>
 #include <QTabBar>
 #include <QTabWidget>
-#include <QVBoxLayout>
 #include <functional>
 #include <stdexcept>
 
@@ -38,58 +37,6 @@ QLabel* label(QWidget* parent, const QString& text, const QRect& rect, int size,
     return result;
 }
 } // namespace
-void setTabsDemoClosePolicy(QTabWidget* tabs, bool closable, bool behaviorOnly) {
-    tabs->setTabsClosable(false);
-    tabs->setTabsClosable(closable);
-    if (closable && behaviorOnly)
-        for (int i = 0; i < tabs->count(); ++i)
-            if (tabs->widget(i)->objectName() != "tabDemoBehavior") {
-                for (auto side : {QTabBar::LeftSide, QTabBar::RightSide})
-                    if (auto* button = tabs->tabBar()->tabButton(i, side)) {
-                        tabs->tabBar()->setTabButton(i, side, nullptr);
-                        button->deleteLater();
-                    }
-            }
-}
-void populateTabsDemo(QTabWidget* tabs, bool sourceSnapshot) {
-    while (tabs->count()) {
-        auto* page = tabs->widget(0);
-        tabs->removeTab(0);
-        delete page;
-    }
-    for (const auto& name :
-         {QString("Overview"), QString("Appearance"), QString("Behavior"), QString("Advanced")}) {
-        auto* page = new QWidget;
-        page->setObjectName("tabDemo" + name);
-        auto* title =
-            label(page, name + " page", QRect(23, 27, 700, 26), 18, QFont::DemiBold, "#191919");
-        auto* description =
-            label(page,
-                  "Only the current page is visible. Selection, focus, close requests and page "
-                  "ownership remain distinct contracts.",
-                  QRect(23, 63, 700, 19), 13, QFont::Normal, "#191919");
-        auto* note = label(page, "removeTab() detaches the page; it does not delete it.",
-                           QRect(23, 127, 700, 18), 12, QFont::Normal, "#8a8a8a");
-        if (!sourceSnapshot) {
-            auto* layout = new QVBoxLayout(page);
-            layout->setContentsMargins(23, 27, 23, 20);
-            layout->setSpacing(10);
-            for (auto* text : {title, description, note}) {
-                text->setMinimumWidth(0);
-                text->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Preferred);
-                layout->addWidget(text);
-            }
-            layout->addStretch();
-        }
-        tabs->addTab(page, name);
-    }
-    tabs->setTabIcon(0, commonWidget::figmaTabDocumentIcon(true));
-    tabs->setTabIcon(1, commonWidget::figmaTabDocumentIcon(true));
-    tabs->setIconSize(QSize(16, 16));
-    tabs->setTabEnabled(3, false);
-    setTabsDemoClosePolicy(tabs, true, true);
-    tabs->setCurrentIndex(0);
-}
 QWidget* createTabsGallery(const std::shared_ptr<commonWidget::ComponentFactory>& factory,
                            QWidget* parent) {
     QFile file(":/figma/gallery-layouts.json");
@@ -129,8 +76,7 @@ QWidget* createTabsGallery(const std::shared_ptr<commonWidget::ComponentFactory>
                 tabs->setTabEnabled(0, state != "Disabled");
                 commonWidget::applyFigmaTabWidgetAppearance(tabs, state, 0, true, true);
             } else {
-                populateTabsDemo(tabs, true);
-                commonWidget::applyFigmaTabWidgetAppearance(tabs, {}, -1, true);
+                commonWidget::populateFigmaTabWidget(tabs, true);
             }
             tabs->setProperty("figmaNodeId", id);
             tabs->setProperty("figmaVariant", name);

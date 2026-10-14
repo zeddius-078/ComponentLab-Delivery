@@ -20,6 +20,7 @@ if(MSVC)
   endif()
 endif()
 # 引入布局转换引擎；组件类型只从已发布 SDK 取得。
+set(D2C_TEST_REPORT_ROOT "${D2C}/../build/reports/v2-subtests")
 add_subdirectory("${D2C}" "${CMAKE_BINARY_DIR}/v1")
 add_library(v2_widgets STATIC "${D2C_PIPELINE_ROOT}/runtime/WidgetRegistry.cpp" "${D2C_PIPELINE_ROOT}/runtime/WidgetRegistry.h")
 target_include_directories(v2_widgets PUBLIC "${D2C_PIPELINE_ROOT}/runtime")

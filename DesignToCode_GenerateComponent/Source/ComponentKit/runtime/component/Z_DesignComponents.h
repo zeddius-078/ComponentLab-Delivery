@@ -14,6 +14,7 @@ class QFormLayout;
 class QGridLayout;
 class QButtonGroup;
 class QHBoxLayout;
+class QLabel;
 class QMouseEvent;
 class QPaintEvent;
 class QTimer;
@@ -108,8 +109,6 @@ class ClassName final : public Z_DesignComponent { \
     explicit ClassName(QWidget* parent = nullptr); \
 };
 
-Z_DECLARE_CANVAS_COMPONENT(Z_Navbar)
-Z_DECLARE_CANVAS_COMPONENT(Z_Sidebar)
 Z_DECLARE_CANVAS_COMPONENT(Z_MetricCard)
 Z_DECLARE_CANVAS_COMPONENT(Z_Chart)
 Z_DECLARE_CANVAS_COMPONENT(Z_ImagePanel)
@@ -120,6 +119,9 @@ Z_DECLARE_CANVAS_COMPONENT(Z_IntegrationCard)
 Z_DECLARE_CANVAS_COMPONENT(Z_Divider)
 Z_DECLARE_CANVAS_COMPONENT(Z_Collapse)
 Z_DECLARE_CANVAS_COMPONENT(Z_OverlayDrawer)
+// Canonical SDK source name. Z_OverlayDrawer remains the implementation type
+// for source/binary compatibility and must not create a second catalog identity.
+using Z_Drawer = Z_OverlayDrawer;
 Z_DECLARE_CANVAS_COMPONENT(Z_Alert)
 Z_DECLARE_CANVAS_COMPONENT(Z_Message)
 Z_DECLARE_CANVAS_COMPONENT(Z_Notification)
@@ -128,6 +130,133 @@ Z_DECLARE_CANVAS_COMPONENT(Z_Result)
 Z_DECLARE_CANVAS_COMPONENT(Z_Skeleton)
 
 #undef Z_DECLARE_CANVAS_COMPONENT
+
+class Z_InputField;
+
+// Figma public set ComponentLab/Navbar (380:113). The root is a presentation
+// container; search, notification and profile actions own keyboard focus.
+class Z_Navbar final : public QWidget {
+    Q_OBJECT
+    Q_PROPERTY(QString variantTuple READ variantTuple WRITE setVariantTuple NOTIFY variantChanged)
+    Q_PROPERTY(QVariantMap variantProperties READ variantProperties NOTIFY variantChanged)
+    Q_PROPERTY(QString density READ density WRITE setDensity NOTIFY densityChanged)
+    Q_PROPERTY(QString profileName READ profileName WRITE setProfileName NOTIFY profileNameChanged)
+    Q_PROPERTY(QString searchText READ searchText WRITE setSearchText NOTIFY searchTextChanged)
+
+  public:
+    explicit Z_Navbar(QWidget* parent = nullptr);
+    explicit Z_Navbar(const QString& profile, QWidget* parent = nullptr);
+    QString variantTuple() const;
+    QVariantMap variantProperties() const;
+    QString density() const;
+    QString profileName() const;
+    QString searchText() const;
+    bool focusIndicatorEnabled() const;
+    Z_InputField* searchInput() const;
+    QToolButton* notificationButton() const;
+    QToolButton* profileButton() const;
+    QSize sizeHint() const override;
+    QSize minimumSizeHint() const override;
+
+  public slots:
+    void setVariantTuple(const QString& tuple);
+    void setVariantProperty(const QString& axis, const QString& value);
+    void setDensity(const QString& value);
+    void setProfileName(const QString& value);
+    void setSearchText(const QString& value);
+    void setFocusIndicatorEnabled(bool enabled);
+
+  signals:
+    void variantChanged(const QString& tuple);
+    void densityChanged(const QString& value);
+    void profileNameChanged(const QString& value);
+    void searchTextChanged(const QString& value);
+    void notificationRequested();
+    void profileRequested();
+    void focusIndicatorEnabledChanged(bool enabled);
+
+  private:
+    void refreshGeometryAndStyle();
+    QString m_profile;
+    QString m_variantTuple;
+    QVariantMap m_variantProperties;
+    QString m_density = QStringLiteral("Comfortable");
+    QString m_profileName = QStringLiteral("Alex Morgan");
+    QHBoxLayout* m_layout = nullptr;
+    QLabel* m_brandLogo = nullptr;
+    QLabel* m_brandTitle = nullptr;
+    Z_InputField* m_search = nullptr;
+    QToolButton* m_notification = nullptr;
+    QToolButton* m_profileAction = nullptr;
+};
+
+// Figma public set ComponentLab/Sidebar (392:216). Internal NavItem variants
+// remain implementation anatomy and do not create another SDK identity.
+class Z_Sidebar final : public QWidget {
+    Q_OBJECT
+    Q_PROPERTY(QString variantTuple READ variantTuple WRITE setVariantTuple NOTIFY variantChanged)
+    Q_PROPERTY(QVariantMap variantProperties READ variantProperties NOTIFY variantChanged)
+    Q_PROPERTY(QString density READ density WRITE setDensity NOTIFY densityChanged)
+    Q_PROPERTY(bool collapsed READ isCollapsed WRITE setCollapsed NOTIFY collapsedChanged)
+    Q_PROPERTY(QString activeRoute READ activeRoute WRITE setActiveRoute NOTIFY activeRouteChanged)
+    Q_PROPERTY(QStringList routeIds READ routeIds WRITE setRouteIds NOTIFY routesChanged)
+    Q_PROPERTY(QStringList routeLabels READ routeLabels WRITE setRouteLabels NOTIFY routesChanged)
+
+  public:
+    explicit Z_Sidebar(QWidget* parent = nullptr);
+    explicit Z_Sidebar(const QString& profile, QWidget* parent = nullptr);
+    QString variantTuple() const;
+    QVariantMap variantProperties() const;
+    QString density() const;
+    bool isCollapsed() const;
+    QString activeRoute() const;
+    QStringList routeIds() const;
+    QStringList routeLabels() const;
+    bool focusIndicatorEnabled() const;
+    QToolButton* collapseButton() const;
+    QSize sizeHint() const override;
+    QSize minimumSizeHint() const override;
+
+  public slots:
+    void setVariantTuple(const QString& tuple);
+    void setVariantProperty(const QString& axis, const QString& value);
+    void setDensity(const QString& value);
+    void setCollapsed(bool value);
+    void setActiveRoute(const QString& value);
+    void setRouteIds(const QStringList& values);
+    void setRouteLabels(const QStringList& values);
+    void setFocusIndicatorEnabled(bool enabled);
+
+  signals:
+    void variantChanged(const QString& tuple);
+    void densityChanged(const QString& value);
+    void collapsedChanged(bool value);
+    void activeRouteChanged(const QString& value);
+    void routesChanged();
+    void routeRequested(const QString& routeId);
+    void collapsedChangeRequested(bool collapsed);
+    void focusIndicatorEnabledChanged(bool enabled);
+
+  private:
+    void rebuildRoutes();
+    void refreshGeometryAndStyle();
+    void updateSelection();
+    QString m_profile;
+    QString m_variantTuple;
+    QVariantMap m_variantProperties;
+    QString m_density = QStringLiteral("Comfortable");
+    bool m_collapsed = false;
+    QString m_activeRoute = QStringLiteral("dashboard");
+    QStringList m_routeIds;
+    QStringList m_routeLabels;
+    QLabel* m_brandLogo = nullptr;
+    QLabel* m_brandTitle = nullptr;
+    QToolButton* m_collapseAction = nullptr;
+    QWidget* m_routeHost = nullptr;
+    QVBoxLayout* m_routeLayout = nullptr;
+    QButtonGroup* m_routeGroup = nullptr;
+    QVector<QToolButton*> m_routeButtons;
+};
 
 // Figma public set ComponentLab/DesktopBottomNavigation (1312:96).
 // This is a real Qt composition: text-only QPushButtons in the upper tier,
@@ -141,9 +270,11 @@ class Z_DesktopBottomNavigation final : public QWidget {
     Q_PROPERTY(QStringList secondaryItems READ secondaryItems WRITE setSecondaryItems NOTIFY itemsChanged)
     Q_PROPERTY(int currentIndex READ currentIndex WRITE setCurrentIndex NOTIFY currentIndexChanged)
     Q_PROPERTY(int secondaryIndex READ secondaryIndex WRITE setSecondaryIndex NOTIFY secondaryIndexChanged)
+    Q_PROPERTY(QString iconPlacement READ iconPlacement WRITE setIconPlacement NOTIFY variantChanged)
 
   public:
     explicit Z_DesktopBottomNavigation(QWidget* parent = nullptr);
+    explicit Z_DesktopBottomNavigation(const QString& profile, QWidget* parent = nullptr);
     QString variantTuple() const;
     QVariantMap variantProperties() const;
     QStringList primaryItems() const;
@@ -151,6 +282,7 @@ class Z_DesktopBottomNavigation final : public QWidget {
     QStringList secondaryItems() const;
     int currentIndex() const;
     int secondaryIndex() const;
+    QString iconPlacement() const;
     bool focusIndicatorEnabled() const;
     QSize sizeHint() const override;
     QSize minimumSizeHint() const override;
@@ -163,6 +295,7 @@ class Z_DesktopBottomNavigation final : public QWidget {
     void setSecondaryItems(const QStringList& items);
     void setCurrentIndex(int index);
     void setSecondaryIndex(int index);
+    void setIconPlacement(const QString& value);
     void setFocusIndicatorEnabled(bool enabled);
 
   signals:
@@ -179,6 +312,8 @@ class Z_DesktopBottomNavigation final : public QWidget {
     void rebuildPrimaryTier();
     void updatePlacement();
     void updateSelection();
+    void refreshStyle();
+    QString m_profile;
     QString m_variantTuple;
     QVariantMap m_variantProperties;
     QStringList m_primaryItems;

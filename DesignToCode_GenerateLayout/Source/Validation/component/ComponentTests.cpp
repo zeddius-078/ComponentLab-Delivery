@@ -3,15 +3,31 @@
 #include "ComponentConverter.h"
 #include "LayoutConverter.h"
 #include "ComponentTheme.h"
+#include "NavigationAppearance.h"
+#include "TabAppearance.h"
+#include "ToolBoxAppearance.h"
+#include "VisualAssetCatalog.h"
 #include "Z_CheckBox.h"
+#include "Z_DesignComponents.h"
+#include "Z_FoundationComponents.h"
 #include "Z_InputField.h"
+#include "native/Z_Menu.h"
+#include "native/Z_MenuBar.h"
+#include "native/Z_ToolBar.h"
+#include "native/Z_TabWidget.h"
+#include "native/Z_ToolBox.h"
 #include <QApplication>
 #include <QFile>
 #include <QJsonDocument>
 #include <QLineEdit>
 #include <QLabel>
+#include <QListView>
+#include <QMenu>
+#include <QMenuBar>
 #include <QSignalSpy>
 #include <QTest>
+#include <QToolButton>
+#include <QTabBar>
 
 // 测试根路径由 CMake 注入；读取失败应立即终止，避免空数据让断言失去意义。
 QJsonObject read(const QString& relative) {
@@ -97,7 +113,12 @@ private slots:
                 // 跳过布局或文本节点，本测试只覆盖具有组件映射契约的实例。
                 if (node["type"] != "INSTANCE")
                     continue;
-                std::unique_ptr<QWidget> widget(engine.convert(node, nullptr));
+                std::unique_ptr<QWidget> widget;
+                try {
+                    widget.reset(engine.convert(node, nullptr));
+                } catch (const std::exception& error) {
+                    QFAIL(error.what());
+                }
                 widget->show();
                 QApplication::processEvents();
                 // 按原生组件类型执行对应检查：输入只读、复选框切换、按钮 loading 后恢复原禁用值。
@@ -234,13 +255,13 @@ private slots:
             QCOMPARE(button->isIconOnly(), mode == "IconOnly");
             // 前侧或双侧模式必须解析到左箭头资源，验证前插槽映射。
             if (mode == "Leading" || mode == "Dual")
-                QCOMPARE(button->leadingIconSource(), QString(":/icons/arrow-left.svg"));
+                QCOMPARE(button->leadingIconSource(), QString("icon.action.previous"));
             // 后侧或双侧模式必须解析到右箭头资源，验证后插槽映射。
             if (mode == "Trailing" || mode == "Dual")
-                QCOMPARE(button->trailingIconSource(), QString(":/icons/arrow-right.svg"));
+                QCOMPARE(button->trailingIconSource(), QString("icon.action.next"));
             // 独立图标模式同时核对资源与可访问名称，避免去掉文本后丢失操作含义。
             if (mode == "IconOnly") {
-                QCOMPARE(button->leadingIconSource(), QString(":/icons/search.svg"));
+                QCOMPARE(button->leadingIconSource(), QString("icon.action.search"));
                 QCOMPARE(button->accessibleName(), QString::fromUtf8("搜索"));
             }
             button->show();
@@ -252,6 +273,43 @@ private slots:
         QFile output(QString(D2C_ROOT) + "/../build/reports/component/resource-calls.json");
         QVERIFY(output.open(QIODevice::WriteOnly));
         output.write(QJsonDocument(engine.trace()).toJson());
+    }
+
+    // ImageAsset 与 ModelAsset 仅声明稳定语义 ID；具体文件、Profile Token
+    // 替换和高 DPI 渲染由 GenerateComponent SDK 统一负责。
+    void publicVisualAssetMappingsUseSdkCatalog() {
+        const auto mapping = read("HtmlDsl/pipeline/mapping/component-mapping.json");
+        const auto entries = mapping["publicAssetMappings"].toObject()["entries"].toObject();
+        QCOMPARE(entries.size(), 2);
+        const QMap<QString, commonWidget::VisualAssetKind> expected{
+            {QStringLiteral("image.foundation.geometric-preview"),
+             commonWidget::VisualAssetKind::Image},
+            {QStringLiteral("model.foundation.schematic"),
+             commonWidget::VisualAssetKind::Model2D},
+        };
+        for (auto it = expected.cbegin(); it != expected.cend(); ++it) {
+            const auto declaration = entries[it.key()].toObject();
+            QCOMPARE(declaration["ownership"].toString(), QStringLiteral("shared"));
+            QCOMPARE(declaration["assetId"].toString(), it.key());
+            QVERIFY(!declaration.contains("source"));
+            QVERIFY(commonWidget::VisualAssetCatalog::contains(it.key()));
+            QVERIFY(commonWidget::VisualAssetCatalog::descriptor(it.key()).kind == it.value());
+            QVERIFY(QFile::exists(commonWidget::VisualAssetCatalog::resolve(it.key())));
+            QCOMPARE(commonWidget::VisualAssetCatalog::sha256(it.key()).size(), 64);
+        }
+        const auto image = commonWidget::VisualAssetCatalog::render(
+            QStringLiteral("image.foundation.geometric-preview"), QStringLiteral("Loaded"),
+            QSize(280, 145), QStringLiteral("Cover"), QStringLiteral("light-comfortable"));
+        const auto model = commonWidget::VisualAssetCatalog::render(
+            QStringLiteral("model.foundation.schematic"), QStringLiteral("Error"),
+            QSize(310, 156), QStringLiteral("Contain"), QStringLiteral("dark-comfortable"));
+        QVERIFY(!image.isNull());
+        QVERIFY(!model.isNull());
+        QCOMPARE(image.size(), QSize(280, 145));
+        QCOMPARE(model.size(), QSize(310, 156));
+        QVERIFY_EXCEPTION_THROWN(
+            commonWidget::VisualAssetCatalog::resolve(QStringLiteral("model.unknown")),
+            std::invalid_argument);
     }
 
     // Login 页的四个真实实例：核对文字覆盖、placeholder 和可调用的组件行为。
@@ -296,6 +354,470 @@ private slots:
         QFile output(QString(D2C_ROOT) + "/../build/reports/component/runtime-calls.json");
         QVERIFY(output.open(QIODevice::WriteOnly));
         output.write(QJsonDocument(engine.trace()).toJson());
+    }
+
+    // 当前 Figma 新组件集以 component-set ID 为身份，且不再依赖旧 Profile 变体轴。
+    // 本测试证明当前增量设计合同均经 GenerateComponent SDK Factory 创建并应用公开属性。
+    void currentFigmaSemanticComponentsUseSdkFactory() {
+        try {
+        const auto mapping = read("HtmlDsl/pipeline/mapping/component-mapping.json");
+        const auto fixture = [](const QString& setId, const QString& name,
+                                const QList<QPair<QString, QString>>& properties) {
+            QJsonArray variants;
+            for (const auto& property : properties)
+                variants.append(QJsonObject{{"name", property.first},
+                                            {"value", property.second},
+                                            {"type", "variant"}});
+            const QString masterId = setId + ":master";
+            const QString componentKey = setId + ":component-key";
+            const QJsonArray textNodes{
+                QJsonObject{{"guid", masterId + ":label"},
+                            {"name", "Label"},
+                            {"nodeText", "Mapped label"},
+                            {"childNode", QJsonArray{}}},
+                QJsonObject{{"guid", masterId + ":content"},
+                            {"name", "Content"},
+                            {"nodeText", "Mapped content"},
+                            {"childNode", QJsonArray{}}},
+                QJsonObject{{"guid", masterId + ":profile-name"},
+                            {"name", "ProfileName"},
+                            {"nodeText", "Mapped profile"},
+                            {"childNode", QJsonArray{}}},
+            };
+            QJsonObject master{{"guid", masterId},
+                               {"name", name + " master"},
+                               {"componentKey", componentKey},
+                               {"propRefMap", QJsonObject{{"variant", variants}}},
+                               {"childNode", textNodes}};
+            QJsonObject family{{"guid", setId},
+                               {"name", name},
+                               {"componentKey", setId + ":family-key"},
+                               {"childNode", QJsonArray{master}}};
+            QJsonObject instance = master;
+            instance["type"] = "INSTANCE";
+            instance["guid"] = setId + ":fixture";
+            instance["name"] = name + " fixture";
+            instance["mainStateGroup"] = setId;
+            instance["mainComponent"] = masterId;
+            instance["props"] = QJsonArray{};
+            return qMakePair(QJsonObject{{"pixComponentTreeDslNodes", QJsonArray{family}},
+                                         {"pixTreeNodes", QJsonArray{}}},
+                             instance);
+        };
+        const auto standaloneFixture = [](const QString& componentId, const QString& name,
+                                          const QList<QPair<QString, QString>>& properties) {
+            QJsonArray variants;
+            for (const auto& property : properties)
+                variants.append(QJsonObject{{"name", property.first},
+                                            {"value", property.second},
+                                            {"type", "variant"}});
+            const QString componentKey = componentId + ":component-key";
+            QJsonObject definition{{"guid", componentId},
+                                   {"name", name},
+                                   {"componentKey", componentKey},
+                                   {"propRefMap", QJsonObject{{"variant", variants}}},
+                                   {"childNode", QJsonArray{}}};
+            QJsonObject instance = definition;
+            instance["type"] = "INSTANCE";
+            instance["guid"] = componentId + ":fixture";
+            instance["name"] = name + " fixture";
+            instance["mainStateGroup"] = "";
+            instance["mainComponent"] = componentId;
+            instance["props"] = QJsonArray{};
+            return qMakePair(
+                QJsonObject{{"pixComponentTreeDslNodes", QJsonArray{definition}},
+                            {"pixTreeNodes", QJsonArray{}}},
+                instance);
+        };
+
+        {
+            const auto sample = standaloneFixture("482:491", "ComponentLab/Menu", {});
+            d2c::ComponentConverter converter(sample.first, mapping);
+            std::unique_ptr<QWidget> widget(converter.convert(sample.second, nullptr));
+            auto* menu = qobject_cast<commonWidget::Z_Menu*>(widget.get());
+            QVERIFY(menu);
+            QCOMPARE(menu->actions().size(), 8);
+            QVERIFY(menu->actions().at(2)->isSeparator());
+            QVERIFY(menu->actions().at(3)->isCheckable());
+            QVERIFY(menu->actions().at(3)->isChecked());
+            QVERIFY(menu->actions().at(5)->menu());
+            QVERIFY(!menu->actions().at(6)->isEnabled());
+            QCOMPARE(menu->actions().at(1)->shortcut(), QKeySequence("Ctrl+O"));
+            const auto trace = converter.trace();
+            QCOMPARE(trace.size(), 1);
+            QCOMPARE(trace.first().toObject()["calls"].toArray().first().toObject()["api"].toString(),
+                     QString("navigation.populateMenu"));
+        }
+        {
+            const auto sample = standaloneFixture("487:23", "ComponentLab/MenuBar",
+                                                  {{"Show corner", "False"}});
+            d2c::ComponentConverter converter(sample.first, mapping);
+            std::unique_ptr<QWidget> widget(converter.convert(sample.second, nullptr));
+            auto* menuBar = qobject_cast<commonWidget::Z_MenuBar*>(widget.get());
+            QVERIFY(menuBar);
+            QCOMPARE(menuBar->actions().size(), 5);
+            QVERIFY(menuBar->actions().first()->menu());
+            QVERIFY(menuBar->cornerWidget());
+            QVERIFY(menuBar->cornerWidget()->isHidden());
+            QCOMPARE(menuBar->property("showCorner").toBool(), false);
+            commonWidget::navigation::setMenuBarCornerVisible(menuBar, true);
+            QVERIFY(!menuBar->cornerWidget()->isHidden());
+        }
+        {
+            const auto sample = fixture("494:370", "ComponentLab/ToolBar",
+                                        {{"Orientation", "Vertical"},
+                                         {"Placement", "Floating"},
+                                         {"Capacity", "Overflow"},
+                                         {"Presentation", "TextBesideIcon"},
+                                         {"Show handle", "False"}});
+            d2c::ComponentConverter converter(sample.first, mapping);
+            std::unique_ptr<QWidget> widget(converter.convert(sample.second, nullptr));
+            auto* toolBar = qobject_cast<commonWidget::Z_ToolBar*>(widget.get());
+            QVERIFY(toolBar);
+            QCOMPARE(toolBar->orientation(), Qt::Vertical);
+            QCOMPARE(toolBar->size(), QSize(120, 220));
+            QCOMPARE(toolBar->property("figmaPlacementPreview").toString(),
+                     QString("Floating"));
+            QVERIFY(toolBar->graphicsEffect());
+            QVERIFY(!toolBar->findChild<QWidget*>("figmaToolBarHandle"));
+            auto* overflow = toolBar->findChild<QToolButton*>("figmaOverflowButton");
+            QVERIFY(overflow);
+            QVERIFY(overflow->menu());
+            QCOMPARE(overflow->popupMode(), QToolButton::InstantPopup);
+            const auto actionButtons = toolBar->findChildren<QToolButton*>();
+            int commandButtonCount = 0;
+            for (auto* button : actionButtons) {
+                if (!button->defaultAction())
+                    continue;
+                ++commandButtonCount;
+                QCOMPARE(button->toolButtonStyle(), Qt::ToolButtonTextBesideIcon);
+            }
+            QCOMPARE(commandButtonCount, 2);
+            const auto trace = converter.trace().first().toObject()["calls"].toArray();
+            QCOMPARE(trace.first().toObject()["api"].toString(),
+                     QString("navigation.configureToolBar"));
+            QCOMPARE(trace.first().toObject()["properties"].toObject()["Show handle"].toString(),
+                     QString("false"));
+        }
+        {
+            const auto sample = standaloneFixture("500:849", "ComponentLab/TabWidget", {});
+            d2c::ComponentConverter converter(sample.first, mapping);
+            std::unique_ptr<QWidget> widget(converter.convert(sample.second, nullptr));
+            auto* tabs = qobject_cast<commonWidget::Z_TabWidget*>(widget.get());
+            QVERIFY(tabs);
+            QCOMPARE(tabs->count(), 4);
+            QCOMPARE(tabs->currentIndex(), 0);
+            QCOMPARE(tabs->tabText(0), QString("Overview"));
+            QCOMPARE(tabs->widget(2)->objectName(), QString("tabDemoBehavior"));
+            QVERIFY(!tabs->isTabEnabled(3));
+            QVERIFY(tabs->tabsClosable());
+            QVERIFY(tabs->tabBar()->tabButton(0, QTabBar::LeftSide) == nullptr);
+            QVERIFY(tabs->tabBar()->tabButton(0, QTabBar::RightSide) == nullptr);
+            QVERIFY(tabs->tabBar()->tabButton(2, QTabBar::LeftSide) != nullptr ||
+                    tabs->tabBar()->tabButton(2, QTabBar::RightSide) != nullptr);
+            const auto trace = converter.trace().first().toObject()["calls"].toArray();
+            QCOMPARE(trace.first().toObject()["api"].toString(),
+                     QString("tabs.populateTabWidget"));
+        }
+        {
+            const auto sample = standaloneFixture("505:555", "ComponentLab/ToolBox", {});
+            d2c::ComponentConverter converter(sample.first, mapping);
+            std::unique_ptr<QWidget> widget(converter.convert(sample.second, nullptr));
+            auto* box = qobject_cast<commonWidget::Z_ToolBox*>(widget.get());
+            QVERIFY(box);
+            QCOMPARE(box->count(), 3);
+            QCOMPARE(box->currentIndex(), 1);
+            QCOMPARE(box->itemText(0), QString("&General"));
+            QCOMPARE(box->widget(1)->objectName(), QString("toolBoxDemoRules"));
+            QVERIFY(!box->isItemEnabled(2));
+            const auto trace = converter.trace().first().toObject()["calls"].toArray();
+            QCOMPARE(trace.first().toObject()["api"].toString(),
+                     QString("toolbox.populateToolBox"));
+        }
+
+        {
+            const auto sample = fixture("2132:21", "ComponentLab/Badge",
+                                        {{"Kind", "Dot"}, {"Tone", "Danger"}});
+            d2c::ComponentConverter converter(sample.first, mapping);
+            std::unique_ptr<QWidget> widget(converter.convert(sample.second, nullptr));
+            auto* badge = qobject_cast<commonWidget::Z_Badge*>(widget.get());
+            QVERIFY(badge);
+            QCOMPARE(badge->kind(), QString("Dot"));
+            QCOMPARE(badge->tone(), QString("Danger"));
+            QCOMPARE(badge->label(), QString("Mapped label"));
+            QCOMPARE(badge->focusPolicy(), Qt::NoFocus);
+        }
+        {
+            const auto sample = fixture("2132:69", "ComponentLab/StatusIndicator",
+                                        {{"Size", "Medium"}, {"Tone", "Process"}});
+            d2c::ComponentConverter converter(sample.first, mapping);
+            std::unique_ptr<QWidget> widget(converter.convert(sample.second, nullptr));
+            auto* indicator = qobject_cast<commonWidget::Z_StatusIndicator*>(widget.get());
+            QVERIFY(indicator);
+            QCOMPARE(indicator->size(), QString("Medium"));
+            QCOMPARE(indicator->tone(), QString("Process"));
+            QCOMPARE(indicator->label(), QString("Mapped label"));
+            QVERIFY(indicator->showLabel());
+            QCOMPARE(indicator->focusPolicy(), Qt::NoFocus);
+        }
+        {
+            const auto sample = fixture("2132:102", "ComponentLab/Link",
+                                        {{"State", "Disabled"}});
+            d2c::ComponentConverter converter(sample.first, mapping);
+            std::unique_ptr<QWidget> widget(converter.convert(sample.second, nullptr));
+            auto* link = qobject_cast<commonWidget::Z_Link*>(widget.get());
+            QVERIFY(link);
+            QCOMPARE(link->text(), QString("Mapped label"));
+            QCOMPARE(link->snapshotState(), QString("Disabled"));
+            QVERIFY(!link->isEnabled());
+            QCOMPARE(link->focusPolicy(), Qt::StrongFocus);
+        }
+        {
+            const auto sample = fixture("2132:150", "ComponentLab/Tag",
+                                        {{"Size", "Medium"}, {"Tone", "Warning"},
+                                         {"Dismissible", "True"}});
+            d2c::ComponentConverter converter(sample.first, mapping);
+            std::unique_ptr<QWidget> widget(converter.convert(sample.second, nullptr));
+            auto* tag = qobject_cast<commonWidget::Z_Tag*>(widget.get());
+            QVERIFY(tag);
+            QCOMPARE(tag->size(), QString("Medium"));
+            QCOMPARE(tag->tone(), QString("Warning"));
+            QCOMPARE(tag->label(), QString("Mapped label"));
+            QVERIFY(tag->isDismissible());
+            QCOMPARE(tag->focusPolicy(), Qt::NoFocus);
+            const auto actions = tag->findChildren<QToolButton*>();
+            QCOMPARE(actions.size(), 1);
+            QCOMPARE(actions.first()->focusPolicy(), Qt::StrongFocus);
+            QSignalSpy dismissed(tag, &commonWidget::Z_Tag::dismissed);
+            actions.first()->click();
+            QCOMPARE(dismissed.count(), 1);
+        }
+        {
+            const auto sample = fixture("2132:189", "ComponentLab/Tooltip",
+                                        {{"Placement", "Right"}});
+            d2c::ComponentConverter converter(sample.first, mapping);
+            std::unique_ptr<QWidget> widget(converter.convert(sample.second, nullptr));
+            auto* tooltip = qobject_cast<commonWidget::Z_Tooltip*>(widget.get());
+            QVERIFY(tooltip);
+            QCOMPARE(tooltip->placement(), QString("Right"));
+            QCOMPARE(tooltip->content(), QString("Mapped content"));
+            QVERIFY(tooltip->showArrow());
+            QCOMPARE(tooltip->focusPolicy(), Qt::NoFocus);
+        }
+        {
+            const auto sample = fixture("2147:768", "ComponentLab/SearchInput",
+                                        {{"State", "Error"}});
+            d2c::ComponentConverter converter(sample.first, mapping);
+            std::unique_ptr<QWidget> widget(converter.convert(sample.second, nullptr));
+            auto* search = qobject_cast<commonWidget::Z_SearchInput*>(widget.get());
+            QVERIFY(search);
+            QCOMPARE(search->snapshotState(), QString("Error"));
+            QCOMPARE(search->focusPolicy(), Qt::NoFocus);
+            QVERIFY(search->lineEdit()->focusPolicy() != Qt::NoFocus);
+        }
+        {
+            const auto sample = fixture("2147:985", "ComponentLab/NumberInput",
+                                        {{"Type", "Decimal"}, {"State", "Focus"}});
+            d2c::ComponentConverter converter(sample.first, mapping);
+            std::unique_ptr<QWidget> widget(converter.convert(sample.second, nullptr));
+            auto* number = qobject_cast<commonWidget::Z_NumberInput*>(widget.get());
+            QVERIFY(number);
+            QCOMPARE(number->type(), QString("Decimal"));
+            QCOMPARE(number->snapshotState(), QString("Focus"));
+        }
+        {
+            const auto sample = fixture("2147:1192", "ComponentLab/OverflowMenuButton",
+                                        {{"State", "Disabled"}});
+            d2c::ComponentConverter converter(sample.first, mapping);
+            std::unique_ptr<QWidget> widget(converter.convert(sample.second, nullptr));
+            auto* overflow = qobject_cast<commonWidget::Z_OverflowMenuButton*>(widget.get());
+            QVERIFY(overflow);
+            QVERIFY(!overflow->isEnabled());
+        }
+        {
+            const auto sample = fixture("2148:1240", "ComponentLab/SegmentedControl",
+                                        {{"Segments", "4"}, {"State", "Default"}});
+            d2c::ComponentConverter converter(sample.first, mapping);
+            std::unique_ptr<QWidget> widget(converter.convert(sample.second, nullptr));
+            auto* segmented = qobject_cast<commonWidget::Z_SegmentedControl*>(widget.get());
+            QVERIFY(segmented);
+            QCOMPARE(segmented->segmentCount(), 4);
+            QVERIFY(segmented->isEnabled());
+        }
+        {
+            const auto sample = fixture("2147:35", "ComponentLab/Timeline",
+                                        {{"Density", "Compact"}});
+            d2c::ComponentConverter converter(sample.first, mapping);
+            std::unique_ptr<QWidget> widget(converter.convert(sample.second, nullptr));
+            auto* timeline = qobject_cast<commonWidget::Z_Timeline*>(widget.get());
+            QVERIFY(timeline);
+            QCOMPARE(timeline->density(), QString("Compact"));
+            QCOMPARE(timeline->sizeHint(), QSize(420, 190));
+            QCOMPARE(timeline->focusPolicy(), Qt::NoFocus);
+        }
+        {
+            const auto sample = fixture("2150:82", "ComponentLab/AnchorNavigation",
+                                        {{"Orientation", "Horizontal"},
+                                         {"State", "Scrolled"}});
+            d2c::ComponentConverter converter(sample.first, mapping);
+            std::unique_ptr<QWidget> widget(converter.convert(sample.second, nullptr));
+            auto* anchor = qobject_cast<commonWidget::Z_AnchorNavigation*>(widget.get());
+            QVERIFY(anchor);
+            QCOMPARE(anchor->orientation(), QString("Horizontal"));
+            QCOMPARE(anchor->snapshotState(), QString("Scrolled"));
+            QCOMPARE(anchor->currentIndex(), 1);
+            QCOMPARE(anchor->sizeHint(), QSize(520, 64));
+            QCOMPARE(anchor->focusPolicy(), Qt::NoFocus);
+            QCOMPARE(anchor->findChildren<QToolButton*>().size(), 3);
+        }
+        {
+            const auto sample = fixture("2148:244", "ComponentLab/Filter",
+                                        {{"Layout", "Panel"},
+                                         {"State", "Applied"}});
+            d2c::ComponentConverter converter(sample.first, mapping);
+            std::unique_ptr<QWidget> widget(converter.convert(sample.second, nullptr));
+            auto* filter = qobject_cast<commonWidget::Z_Filter*>(widget.get());
+            QVERIFY(filter);
+            QCOMPARE(filter->layoutMode(), QString("Panel"));
+            QCOMPARE(filter->snapshotState(), QString("Applied"));
+            QCOMPARE(filter->sizeHint(), QSize(430, 112));
+            QCOMPARE(filter->focusPolicy(), Qt::NoFocus);
+            QCOMPARE(filter->findChildren<QToolButton*>().size(), 3);
+        }
+        {
+            const auto sample = fixture("2147:1390", "ComponentLab/ColorPicker",
+                                        {{"State", "Focus"}});
+            d2c::ComponentConverter converter(sample.first, mapping);
+            std::unique_ptr<QWidget> widget(converter.convert(sample.second, nullptr));
+            auto* colorPicker = qobject_cast<commonWidget::Z_ColorPicker*>(widget.get());
+            QVERIFY(colorPicker);
+            QCOMPARE(colorPicker->snapshotState(), QString("Focus"));
+            QCOMPARE(colorPicker->color(), QColor("#5B5BD6"));
+            QCOMPARE(colorPicker->colorText(), QString("#5B5BD6"));
+            QCOMPARE(colorPicker->sizeHint(), QSize(300, 40));
+            QCOMPARE(colorPicker->focusPolicy(), Qt::StrongFocus);
+        }
+        {
+            const auto sample = fixture("2148:640", "ComponentLab/Transfer",
+                                        {{"State", "Loading"}});
+            d2c::ComponentConverter converter(sample.first, mapping);
+            std::unique_ptr<QWidget> widget(converter.convert(sample.second, nullptr));
+            auto* transfer = qobject_cast<commonWidget::Z_Transfer*>(widget.get());
+            QVERIFY(transfer);
+            QCOMPARE(transfer->snapshotState(), QString("Loading"));
+            QCOMPARE(transfer->sizeHint(), QSize(520, 210));
+            QCOMPARE(transfer->focusPolicy(), Qt::NoFocus);
+            QCOMPARE(transfer->findChildren<QListView*>().size(), 2);
+            QCOMPARE(transfer->findChildren<QToolButton*>().size(), 2);
+        }
+        {
+            const auto sample = fixture("2148:818", "ComponentLab/Upload",
+                                      {{"State", "Uploading"}});
+            d2c::ComponentConverter converter(sample.first, mapping);
+            std::unique_ptr<QWidget> widget(converter.convert(sample.second, nullptr));
+            auto* upload = qobject_cast<commonWidget::Z_Upload*>(widget.get());
+            QVERIFY(upload);
+            QCOMPARE(upload->snapshotState(), QString("Uploading"));
+            QCOMPARE(upload->sizeHint(), QSize(390, 150));
+            QCOMPARE(upload->focusPolicy(), Qt::StrongFocus);
+            QCOMPARE(upload->progress(), 0);
+        }
+        {
+            const auto sample = fixture("2148:1018", "ComponentLab/NumericKeypad",
+                                        {{"Density", "Compact"}});
+            d2c::ComponentConverter converter(sample.first, mapping);
+            std::unique_ptr<QWidget> widget(converter.convert(sample.second, nullptr));
+            auto* keypad = qobject_cast<commonWidget::Z_NumericKeypad*>(widget.get());
+            QVERIFY(keypad);
+            QCOMPARE(keypad->density(), QString("Compact"));
+            QCOMPARE(keypad->sizeHint(), QSize(260, 250));
+            QCOMPARE(keypad->focusPolicy(), Qt::NoFocus);
+            QCOMPARE(keypad->findChildren<QToolButton*>().size(), 12);
+        }
+        {
+            const auto sample = fixture("2147:515", "ComponentLab/Stepper",
+                                        {{"State", "Completed"}});
+            d2c::ComponentConverter converter(sample.first, mapping);
+            std::unique_ptr<QWidget> widget(converter.convert(sample.second, nullptr));
+            auto* stepper = qobject_cast<commonWidget::Z_Stepper*>(widget.get());
+            QVERIFY(stepper);
+            QCOMPARE(stepper->snapshotState(), QString("Completed"));
+            QCOMPARE(stepper->focusPolicy(), Qt::NoFocus);
+        }
+        {
+            const auto sample = fixture("2148:438", "ComponentLab/Pagination",
+                                        {{"Density", "Compact"}, {"State", "Disabled"}});
+            d2c::ComponentConverter converter(sample.first, mapping);
+            std::unique_ptr<QWidget> widget(converter.convert(sample.second, nullptr));
+            auto* pagination = qobject_cast<commonWidget::Z_Pagination*>(widget.get());
+            QVERIFY(pagination);
+            QCOMPARE(pagination->density(), QString("Compact"));
+            QCOMPARE(pagination->snapshotState(), QString("Disabled"));
+            QVERIFY(!pagination->isEnabled());
+        }
+        {
+            const auto sample = fixture("2148:74", "ComponentLab/PageHeader",
+                                        {{"Density", "Compact"}, {"Actions", "Off"}});
+            d2c::ComponentConverter converter(sample.first, mapping);
+            std::unique_ptr<QWidget> widget(converter.convert(sample.second, nullptr));
+            auto* pageHeader = qobject_cast<commonWidget::Z_PageHeader*>(widget.get());
+            QVERIFY(pageHeader);
+            QCOMPARE(pageHeader->density(), QString("Compact"));
+            QVERIFY(!pageHeader->actionsVisible());
+        }
+        {
+            const auto sample = fixture("2150:436", "ComponentLab/TitleBar",
+                                        {{"State", "Maximized"}});
+            d2c::ComponentConverter converter(sample.first, mapping);
+            std::unique_ptr<QWidget> widget(converter.convert(sample.second, nullptr));
+            auto* titleBar = qobject_cast<commonWidget::Z_TitleBar*>(widget.get());
+            QVERIFY(titleBar);
+            QVERIFY(titleBar->isMaximizedState());
+            QCOMPARE(titleBar->findChildren<QToolButton*>().size(), 3);
+        }
+        {
+            const auto sample = fixture("380:113", "ComponentLab/Navbar",
+                                        {{"Density", "Compact"}});
+            d2c::ComponentConverter converter(sample.first, mapping);
+            std::unique_ptr<QWidget> widget(converter.convert(sample.second, nullptr));
+            auto* navbar = qobject_cast<commonWidget::Z_Navbar*>(widget.get());
+            QVERIFY(navbar);
+            QCOMPARE(navbar->density(), QString("Compact"));
+            QCOMPARE(navbar->sizeHint(), QSize(1200, 56));
+            QCOMPARE(navbar->focusPolicy(), Qt::NoFocus);
+            QVERIFY(navbar->searchInput());
+            QCOMPARE(navbar->notificationButton()->focusPolicy(), Qt::StrongFocus);
+            QCOMPARE(navbar->profileButton()->focusPolicy(), Qt::StrongFocus);
+        }
+        {
+            const auto sample = fixture("392:216", "ComponentLab/Sidebar",
+                                        {{"Density", "Compact"}, {"Collapsed", "True"}});
+            d2c::ComponentConverter converter(sample.first, mapping);
+            std::unique_ptr<QWidget> widget(converter.convert(sample.second, nullptr));
+            auto* sidebar = qobject_cast<commonWidget::Z_Sidebar*>(widget.get());
+            QVERIFY(sidebar);
+            QCOMPARE(sidebar->density(), QString("Compact"));
+            QVERIFY(sidebar->isCollapsed());
+            QCOMPARE(sidebar->sizeHint(), QSize(80, 466));
+            QCOMPARE(sidebar->focusPolicy(), Qt::NoFocus);
+            QCOMPARE(sidebar->findChildren<QToolButton*>().size(), 7);
+        }
+        {
+            const auto sample = fixture("1312:96", "ComponentLab/DesktopBottomNavigation",
+                                        {{"IconPlacement", "Start"}});
+            d2c::ComponentConverter converter(sample.first, mapping);
+            std::unique_ptr<QWidget> widget(converter.convert(sample.second, nullptr));
+            auto* bottom = qobject_cast<commonWidget::Z_DesktopBottomNavigation*>(widget.get());
+            QVERIFY(bottom);
+            QCOMPARE(bottom->iconPlacement(), QString("Start"));
+            QCOMPARE(bottom->sizeHint(), QSize(840, 122));
+            QCOMPARE(bottom->focusPolicy(), Qt::NoFocus);
+            QCOMPARE(bottom->findChildren<QToolButton*>().size(), 3);
+            QCOMPARE(bottom->findChildren<QPushButton*>().size(), 3);
+        }
+        } catch (const std::exception& error) {
+            QFAIL(error.what());
+        }
     }
 
     // 更改实例显示名称和位置后仍按母版引用匹配，排除依赖名称猜组件的实现。

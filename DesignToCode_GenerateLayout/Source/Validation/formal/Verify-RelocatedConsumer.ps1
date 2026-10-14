@@ -36,7 +36,7 @@ try {
         if ($original -ne $copied) { throw "COPY_HASH_MISMATCH: $relative" }
         @{path=$relative; sha256=$original}
     })
-    & "$VisualStudioRoot\Common7\Tools\Launch-VsDevShell.ps1" -VsInstallationPath $VisualStudioRoot -Arch amd64 -HostArch amd64 -SkipAutomaticLocation -NoLogo
+    & "$VisualStudioRoot\Common7\Tools\Launch-VsDevShell.ps1" -VsInstallationPath $VisualStudioRoot -Arch amd64 -HostArch amd64 -SkipAutomaticLocation
     $env:PATH="$QtRoot\bin;$NinjaRoot;"+$env:PATH
     & $CMake -S "$isolated\consumer" -B "$isolated\build" -G Ninja '-DCMAKE_BUILD_TYPE=Release' "-DCMAKE_PREFIX_PATH=$QtRoot" "-DGeneratedComponentSDK_DIR=$isolated/sdk/cmake" "-DFORMAL_PAGE_ROOT=$isolated/pages/review" *> "$report\configure.txt"
     if ($LASTEXITCODE -ne 0) { throw 'RELOCATED_CONFIGURE_FAILED' }

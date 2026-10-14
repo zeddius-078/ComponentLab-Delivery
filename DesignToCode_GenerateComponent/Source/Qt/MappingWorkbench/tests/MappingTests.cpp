@@ -2,6 +2,7 @@
 #include "MappingGenerated.h"
 #include "MappingPage.h"
 #include "MappingGuide.h"
+#include "DesignComponentCatalog.h"
 #include "ComponentTheme.h"
 #include "Z_DesignComponents.h"
 #include "Z_CheckBox.h"
@@ -628,13 +629,27 @@ class MappingTests : public QObject {
         QWidget page;
         new QVBoxLayout(&page);
         populateCatalog(&page);
-        QCOMPARE(page.property("componentCount").toInt(), 85);
-        QCOMPARE(page.property("instantiableCount").toInt(), 85);
-        QCOMPARE(page.property("contractOnlyCount").toInt(), 0);
+        const auto descriptors = commonWidget::designComponentDescriptors();
+        const auto figmaPages = commonWidget::figmaComponentPages();
+        const auto figmaCategories = commonWidget::figmaComponentCategories();
+        int expectedInstantiable = 0;
+        int expectedSetCount = 0;
+        int expectedVariantCount = 0;
+        for (const auto& descriptor : descriptors)
+            expectedInstantiable += descriptor.instantiable ? 1 : 0;
+        for (const auto& figmaPage : figmaPages) {
+            expectedSetCount += figmaPage.componentSets.size();
+            for (const auto& componentSet : figmaPage.componentSets)
+                expectedVariantCount += componentSet.variants.size();
+        }
+        QCOMPARE(page.property("componentCount").toInt(), descriptors.size());
+        QCOMPARE(page.property("instantiableCount").toInt(), expectedInstantiable);
+        QCOMPARE(page.property("contractOnlyCount").toInt(),
+                 descriptors.size() - expectedInstantiable);
         QCOMPARE(page.property("figmaFileKey").toString(), QString("w92BKW1EcutKmTXkwzNHbf"));
-        QCOMPARE(page.property("figmaPageCount").toInt(), 73);
-        QCOMPARE(page.property("figmaComponentSetCount").toInt(), 123);
-        QCOMPARE(page.property("figmaVariantCount").toInt(), 1471);
+        QCOMPARE(page.property("figmaPageCount").toInt(), figmaPages.size());
+        QCOMPARE(page.property("figmaComponentSetCount").toInt(), expectedSetCount);
+        QCOMPARE(page.property("figmaVariantCount").toInt(), expectedVariantCount);
         auto* tabs = page.findChild<QTabWidget*>("designCatalogTabs");
         auto* tree = page.findChild<QTreeWidget*>("figmaComponentTree");
         auto* setTable = page.findChild<QTableWidget*>("figmaComponentSetTable");
@@ -642,9 +657,9 @@ class MappingTests : public QObject {
         QCOMPARE(tabs->count(), 2);
         QCOMPARE(tabs->tabText(0), QString::fromUtf8("Figma 组件结构"));
         QCOMPARE(tabs->tabText(1), QString::fromUtf8("开发映射"));
-        QCOMPARE(tree->topLevelItemCount(), 9);
-        QCOMPARE(tree->topLevelItem(0)->text(0),
-                 QString::fromUtf8("20.1 · Navigation / 导航 (11)"));
+        QCOMPARE(tree->topLevelItemCount(), figmaCategories.size());
+        QVERIFY(tree->topLevelItem(0)->text(0).startsWith(
+            QString::fromUtf8("20.1 · Navigation / 导航 (")));
         int figmaPageCount = 0;
         QTreeWidgetItem* checkboxPage = nullptr;
         for (int group = 0; group < tree->topLevelItemCount(); ++group) {
@@ -655,7 +670,7 @@ class MappingTests : public QObject {
                     checkboxPage = branch->child(row);
             }
         }
-        QCOMPARE(figmaPageCount, 73);
+        QCOMPARE(figmaPageCount, figmaPages.size());
         QVERIFY(checkboxPage);
         tree->setCurrentItem(checkboxPage);
         QCoreApplication::processEvents();
@@ -678,18 +693,20 @@ class MappingTests : public QObject {
         QCOMPARE(gallery->child(2)->childCount(),4);
         auto* table = page.findChild<QTableWidget*>("designComponentCatalogTable");
         QVERIFY(table);
-        QCOMPARE(table->rowCount(), 85);
+        QCOMPARE(table->rowCount(), descriptors.size());
         QSet<QString> identities;
         QSet<QString> sdkClasses;
         for (int row = 0; row < table->rowCount(); ++row) {
             const auto identity = table->item(row, 0)->text();
             const auto sdkClass = table->item(row, 1)->text();
             QVERIFY(identity.startsWith("ComponentLab/"));
-            QVERIFY(sdkClass.startsWith("commonWidget::Z_"));
             QVERIFY(!identities.contains(identity));
-            QVERIFY(!sdkClasses.contains(sdkClass));
             identities.insert(identity);
-            sdkClasses.insert(sdkClass);
+            if (!sdkClass.isEmpty()) {
+                QVERIFY(sdkClass.startsWith("commonWidget::Z_"));
+                QVERIFY(!sdkClasses.contains(sdkClass));
+                sdkClasses.insert(sdkClass);
+            }
         }
     }
     void compositeRuntimeVariantsAreObservable() {

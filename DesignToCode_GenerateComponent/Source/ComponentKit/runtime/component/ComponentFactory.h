@@ -35,6 +35,7 @@ class ComponentFactory {
     static bool isRegistered(const QString& sdkClass);
 
   private:
+    QString profile;
     std::shared_ptr<const surface::Catalog> catalog;
     std::shared_ptr<const field::Tokens> fields;
 };

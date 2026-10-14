@@ -5,6 +5,7 @@
 #include "native/NativeComponentRegistry.h"
 #include "Z_CheckBox.h"
 #include "Z_DesignComponents.h"
+#include "Z_FoundationComponents.h"
 #include "Z_InputField.h"
 #include "Z_OtpInput.h"
 #include "Z_PushButton.h"
@@ -25,6 +26,26 @@ QList<NativeComponentDescriptor> nativeDescriptors() {
         {QStringLiteral("semantic"), QStringLiteral("commonWidget::Z_InputField"), QStringLiteral("ComponentLab/Input"), QStringLiteral("semantic-component")},
         {QStringLiteral("semantic"), QStringLiteral("commonWidget::Z_Select"), QStringLiteral("ComponentLab/Select"), QStringLiteral("semantic-component")},
         {QStringLiteral("semantic"), QStringLiteral("commonWidget::Z_OtpInput"), QStringLiteral("ComponentLab/OTP"), QStringLiteral("semantic-component")},
+        {QStringLiteral("QWidget"), QStringLiteral("commonWidget::Z_Badge"), QStringLiteral("ComponentLab/Badge"), QStringLiteral("design-system")},
+        {QStringLiteral("QWidget"), QStringLiteral("commonWidget::Z_StatusIndicator"), QStringLiteral("ComponentLab/StatusIndicator"), QStringLiteral("design-system")},
+        {QStringLiteral("QAbstractButton"), QStringLiteral("commonWidget::Z_Link"), QStringLiteral("ComponentLab/Link"), QStringLiteral("design-system")},
+        {QStringLiteral("QWidget composition"), QStringLiteral("commonWidget::Z_Tag"), QStringLiteral("ComponentLab/Tag"), QStringLiteral("composite")},
+        {QStringLiteral("QWidget"), QStringLiteral("commonWidget::Z_Tooltip"), QStringLiteral("ComponentLab/Tooltip"), QStringLiteral("design-system")},
+        {QStringLiteral("QWidget composition"), QStringLiteral("commonWidget::Z_SearchInput"), QStringLiteral("ComponentLab/SearchInput"), QStringLiteral("composite")},
+        {QStringLiteral("QWidget composition"), QStringLiteral("commonWidget::Z_NumberInput"), QStringLiteral("ComponentLab/NumberInput"), QStringLiteral("composite")},
+        {QStringLiteral("QAbstractButton field adapter"), QStringLiteral("commonWidget::Z_ColorPicker"), QStringLiteral("ComponentLab/ColorPicker"), QStringLiteral("composite")},
+        {QStringLiteral("QWidget dual-list composition"), QStringLiteral("commonWidget::Z_Transfer"), QStringLiteral("ComponentLab/Transfer"), QStringLiteral("composite")},
+        {QStringLiteral("QAbstractButton drop surface"), QStringLiteral("commonWidget::Z_Upload"), QStringLiteral("ComponentLab/Upload"), QStringLiteral("composite")},
+        {QStringLiteral("QGridLayout composition"), QStringLiteral("commonWidget::Z_NumericKeypad"), QStringLiteral("ComponentLab/NumericKeypad"), QStringLiteral("composite")},
+        {QStringLiteral("QToolButton"), QStringLiteral("commonWidget::Z_OverflowMenuButton"), QStringLiteral("ComponentLab/OverflowMenuButton"), QStringLiteral("design-system")},
+        {QStringLiteral("QWidget composition"), QStringLiteral("commonWidget::Z_SegmentedControl"), QStringLiteral("ComponentLab/SegmentedControl"), QStringLiteral("composite")},
+        {QStringLiteral("QWidget"), QStringLiteral("commonWidget::Z_Stepper"), QStringLiteral("ComponentLab/Stepper"), QStringLiteral("composite")},
+        {QStringLiteral("QWidget"), QStringLiteral("commonWidget::Z_Timeline"), QStringLiteral("ComponentLab/Timeline"), QStringLiteral("composite")},
+        {QStringLiteral("QWidget composition"), QStringLiteral("commonWidget::Z_AnchorNavigation"), QStringLiteral("ComponentLab/AnchorNavigation"), QStringLiteral("composite")},
+        {QStringLiteral("QWidget composition"), QStringLiteral("commonWidget::Z_Filter"), QStringLiteral("ComponentLab/Filter"), QStringLiteral("composite")},
+        {QStringLiteral("QWidget composition"), QStringLiteral("commonWidget::Z_Pagination"), QStringLiteral("ComponentLab/Pagination"), QStringLiteral("composite")},
+        {QStringLiteral("QWidget composition"), QStringLiteral("commonWidget::Z_PageHeader"), QStringLiteral("ComponentLab/PageHeader"), QStringLiteral("composite")},
+        {QStringLiteral("QWidget composition"), QStringLiteral("commonWidget::Z_TitleBar"), QStringLiteral("ComponentLab/TitleBar"), QStringLiteral("composite")},
         {QStringLiteral("QWidget composition"), QStringLiteral("commonWidget::Z_Navbar"), QStringLiteral("ComponentLab/Navbar"), QStringLiteral("composite")},
         {QStringLiteral("QWidget composition"), QStringLiteral("commonWidget::Z_Sidebar"), QStringLiteral("ComponentLab/Sidebar"), QStringLiteral("composite")},
         {QStringLiteral("QWidget composition"), QStringLiteral("commonWidget::Z_DesktopBottomNavigation"), QStringLiteral("ComponentLab/DesktopBottomNavigation"), QStringLiteral("composite")},
@@ -41,7 +62,7 @@ QList<NativeComponentDescriptor> nativeDescriptors() {
         {QStringLiteral("QWidget"), QStringLiteral("commonWidget::Z_IntegrationCard"), QStringLiteral("ComponentLab/IntegrationCard"), QStringLiteral("composite")},
         {QStringLiteral("QWidget"), QStringLiteral("commonWidget::Z_Divider"), QStringLiteral("ComponentLab/Divider"), QStringLiteral("composite")},
         {QStringLiteral("QWidget"), QStringLiteral("commonWidget::Z_Collapse"), QStringLiteral("ComponentLab/Collapse"), QStringLiteral("composite")},
-        {QStringLiteral("QWidget"), QStringLiteral("commonWidget::Z_OverlayDrawer"), QStringLiteral("ComponentLab/OverlayDrawer"), QStringLiteral("composite")},
+        {QStringLiteral("QWidget"), QStringLiteral("commonWidget::Z_Drawer"), QStringLiteral("ComponentLab/Drawer"), QStringLiteral("composite")},
         {QStringLiteral("QTableWidget"), QStringLiteral("commonWidget::Z_DataTable"), QStringLiteral("ComponentLab/DataTable"), QStringLiteral("design-system")},
         {QStringLiteral("QWidget"), QStringLiteral("commonWidget::Z_Alert"), QStringLiteral("ComponentLab/Alert"), QStringLiteral("composite")},
         {QStringLiteral("QWidget"), QStringLiteral("commonWidget::Z_Message"), QStringLiteral("ComponentLab/Message"), QStringLiteral("composite")},
@@ -102,7 +123,7 @@ bool setMetaProperty(QWidget* widget, const QString& propertyName, const QJsonVa
 } // namespace
 
 ComponentFactory::ComponentFactory(const QString& profile)
-    : catalog(std::make_shared<surface::Catalog>(profile)),
+    : profile(profile), catalog(std::make_shared<surface::Catalog>(profile)),
       fields(std::make_shared<field::Tokens>(profile)) {}
 
 QWidget* ComponentFactory::create(const QString& name, QWidget* parent) const {
@@ -111,9 +132,29 @@ QWidget* ComponentFactory::create(const QString& name, QWidget* parent) const {
     if (name == "commonWidget::Z_InputField") return new Z_InputField(fields, parent);
     if (name == "commonWidget::Z_Select") return new Z_Select(fields, parent);
     if (name == "commonWidget::Z_OtpInput") return new Z_OtpInput(fields, 6, parent);
-    if (name == "commonWidget::Z_Navbar") return new Z_Navbar(parent);
-    if (name == "commonWidget::Z_Sidebar") return new Z_Sidebar(parent);
-    if (name == "commonWidget::Z_DesktopBottomNavigation") return new Z_DesktopBottomNavigation(parent);
+    if (name == "commonWidget::Z_Badge") return new Z_Badge(profile, parent);
+    if (name == "commonWidget::Z_StatusIndicator") return new Z_StatusIndicator(profile, parent);
+    if (name == "commonWidget::Z_Link") return new Z_Link(profile, parent);
+    if (name == "commonWidget::Z_Tag") return new Z_Tag(profile, parent);
+    if (name == "commonWidget::Z_Tooltip") return new Z_Tooltip(profile, parent);
+    if (name == "commonWidget::Z_SearchInput") return new Z_SearchInput(profile, parent);
+    if (name == "commonWidget::Z_NumberInput") return new Z_NumberInput(profile, parent);
+    if (name == "commonWidget::Z_ColorPicker") return new Z_ColorPicker(profile, parent);
+    if (name == "commonWidget::Z_Transfer") return new Z_Transfer(profile, parent);
+    if (name == "commonWidget::Z_Upload") return new Z_Upload(profile, parent);
+    if (name == "commonWidget::Z_NumericKeypad") return new Z_NumericKeypad(profile, parent);
+    if (name == "commonWidget::Z_OverflowMenuButton") return new Z_OverflowMenuButton(profile, parent);
+    if (name == "commonWidget::Z_SegmentedControl") return new Z_SegmentedControl(profile, parent);
+    if (name == "commonWidget::Z_Stepper") return new Z_Stepper(profile, parent);
+    if (name == "commonWidget::Z_Timeline") return new Z_Timeline(profile, parent);
+    if (name == "commonWidget::Z_AnchorNavigation") return new Z_AnchorNavigation(profile, parent);
+    if (name == "commonWidget::Z_Filter") return new Z_Filter(profile, parent);
+    if (name == "commonWidget::Z_Pagination") return new Z_Pagination(profile, parent);
+    if (name == "commonWidget::Z_PageHeader") return new Z_PageHeader(profile, parent);
+    if (name == "commonWidget::Z_TitleBar") return new Z_TitleBar(profile, parent);
+    if (name == "commonWidget::Z_Navbar") return new Z_Navbar(profile, parent);
+    if (name == "commonWidget::Z_Sidebar") return new Z_Sidebar(profile, parent);
+    if (name == "commonWidget::Z_DesktopBottomNavigation") return new Z_DesktopBottomNavigation(profile, parent);
     if (name == "commonWidget::Z_MetricCard") return new Z_MetricCard(parent);
     if (name == "commonWidget::Z_Chart") return new Z_Chart(parent);
     if (name == "commonWidget::Z_ImagePanel") return new Z_ImagePanel(parent);
@@ -127,7 +168,8 @@ QWidget* ComponentFactory::create(const QString& name, QWidget* parent) const {
     if (name == "commonWidget::Z_IntegrationCard") return new Z_IntegrationCard(parent);
     if (name == "commonWidget::Z_Divider") return new Z_Divider(parent);
     if (name == "commonWidget::Z_Collapse") return new Z_Collapse(parent);
-    if (name == "commonWidget::Z_OverlayDrawer") return new Z_OverlayDrawer(parent);
+    if (name == "commonWidget::Z_Drawer" || name == "commonWidget::Z_OverlayDrawer")
+        return new Z_Drawer(parent);
     if (name == "commonWidget::Z_DataTable") return new Z_DataTable(parent);
     if (name == "commonWidget::Z_Alert") return new Z_Alert(parent);
     if (name == "commonWidget::Z_Message") return new Z_Message(parent);
@@ -225,7 +267,8 @@ QStringList ComponentFactory::registeredClasses() {
 }
 
 bool ComponentFactory::isRegistered(const QString& sdkClass) {
-    return registeredClasses().contains(sdkClass);
+    return registeredClasses().contains(sdkClass) ||
+           sdkClass == QStringLiteral("commonWidget::Z_OverlayDrawer");
 }
 
 } // namespace commonWidget

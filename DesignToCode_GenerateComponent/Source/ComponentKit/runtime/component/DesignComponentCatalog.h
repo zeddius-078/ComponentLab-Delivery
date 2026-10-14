@@ -16,11 +16,29 @@ struct DesignComponentDescriptor {
     QString category;
     QString pageId;
     QString componentSetId;
+    QString publicDesignNodeId;
+    QString variantSourceComponentSetId;
     int variantCount;
     bool instantiable;
     QString figmaStatus;
     QString approvalStatus;
     QString runtimeStatus;
+};
+
+// Full canonical library inventory. Widget/Composite entries may also appear in
+// DesignComponentDescriptor; LayoutHelper and Asset entries deliberately do not.
+struct DesignLibraryEntry {
+    QString canonicalId;
+    QString name;
+    QString kind;
+    QString category;
+    QString pageId;
+    QString componentSetId;
+    QString publicDesignNodeId;
+    QString variantSourceComponentSetId;
+    QString engineeringStatus;
+    QString approvalStatus;
+    bool instantiable;
 };
 
 struct DesignComponentCategory {
@@ -49,6 +67,7 @@ struct DesignComponentPage {
 
 QList<DesignComponentCategory> designComponentCategories();
 QList<DesignComponentDescriptor> designComponentDescriptors();
+QList<DesignLibraryEntry> designLibraryEntries();
 QList<DesignComponentCategory> figmaComponentCategories();
 QList<DesignComponentPage> figmaComponentPages();
 

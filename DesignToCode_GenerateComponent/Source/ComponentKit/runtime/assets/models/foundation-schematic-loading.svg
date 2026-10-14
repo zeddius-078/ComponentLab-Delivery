@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="310" height="156" viewBox="0 0 310 156">
+  <rect x="0.5" y="0.5" width="309" height="155" rx="8" fill="#f3f3f3" stroke="#d0d0d0"/>
+  <g fill="#d0d0d0"><rect x="63" y="44" width="76" height="4" rx="2"/><rect x="169" y="44" width="76" height="4" rx="2"/><rect x="137" y="46" width="4" height="52" rx="2"/><rect x="139" y="96" width="66" height="4" rx="2"/><rect x="27" y="27" width="48" height="34" rx="7"/><rect x="139" y="27" width="48" height="34" rx="7"/><rect x="245" y="27" width="48" height="34" rx="7"/><rect x="125" y="95" width="72" height="34" rx="7"/><rect x="205" y="79" width="48" height="34" rx="7"/></g>
+  <g fill="#f3f3f3" font-family="Inter,Arial,sans-serif" font-size="9" font-weight="600" text-anchor="middle"><text x="51" y="48">SRC</text><text x="163" y="48">CTRL</text><text x="269" y="48">OUT</text><text x="161" y="116">SENSOR</text><text x="229" y="100">VALVE</text></g>
+</svg>

@@ -44,10 +44,13 @@ add_library(d2c_components STATIC
     runtime/component/PageFlowAppearance.cpp runtime/component/PageFlowAppearance.h
     runtime/component/Z_PushButton.cpp runtime/component/Z_PushButton.h
     runtime/component/Z_CheckBox.cpp runtime/component/Z_CheckBox.h
+    runtime/component/Z_FoundationComponents.cpp runtime/component/Z_FoundationComponents.h
     runtime/component/Z_DesignComponents.cpp runtime/component/Z_DesignComponents.h
     runtime/component/Z_InputField.cpp runtime/component/Z_InputField.h
     runtime/component/Z_Select.cpp runtime/component/Z_Select.h
     runtime/component/Z_OtpInput.cpp runtime/component/Z_OtpInput.h
+    runtime/component/IconAssetCatalog.cpp runtime/component/IconAssetCatalog.h
+    runtime/component/VisualAssetCatalog.cpp runtime/component/VisualAssetCatalog.h
     runtime/component/IconSource.cpp runtime/component/IconSource.h
     runtime/component/FocusIndicator.cpp runtime/component/FocusIndicator.h
     runtime/surface/Surface.cpp runtime/surface/Surface.h
@@ -94,10 +97,13 @@ set(GENERATED_COMPONENT_SOURCES
     ${GENERATED_NATIVE_COMPONENT_SOURCES}
     runtime/component/Z_PushButton.cpp runtime/component/Z_PushButton.h
     runtime/component/Z_CheckBox.cpp runtime/component/Z_CheckBox.h
+    runtime/component/Z_FoundationComponents.cpp runtime/component/Z_FoundationComponents.h
     runtime/component/Z_DesignComponents.cpp runtime/component/Z_DesignComponents.h
     runtime/component/Z_InputField.cpp runtime/component/Z_InputField.h
     runtime/component/Z_Select.cpp runtime/component/Z_Select.h
     runtime/component/Z_OtpInput.cpp runtime/component/Z_OtpInput.h
+    runtime/component/IconAssetCatalog.cpp runtime/component/IconAssetCatalog.h
+    runtime/component/VisualAssetCatalog.cpp runtime/component/VisualAssetCatalog.h
     runtime/component/IconSource.cpp runtime/component/IconSource.h
     runtime/component/FocusIndicator.cpp runtime/component/FocusIndicator.h
     runtime/surface/Surface.cpp runtime/surface/Surface.h

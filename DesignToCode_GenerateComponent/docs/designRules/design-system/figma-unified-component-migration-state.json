@@ -1,0 +1,1031 @@
+{
+  "runId": "figma-unified-components-2026-10-14",
+  "scope": "reconciliation-update",
+  "fileKey": "w92BKW1EcutKmTXkwzNHbf",
+  "sourceInventoryCount": 48,
+  "baselinePublicComponentCount": 85,
+  "mappingPolicy": "public-identity-1-to-1-no-alias",
+  "traceabilityManifest": "DesignToCode_GenerateComponent/docs/designRules/design-system/component-traceability-manifest.json",
+  "entities": {
+    "pages": {
+      "overview": "320:2710",
+      "unifiedLibrary": "127:2710",
+      "assetsCategory": "2127:2",
+      "iconAsset": "2127:3",
+      "imageAsset": "2127:4",
+      "modelAsset": "2127:5",
+      "unifiedInventory": "2127:6",
+      "sidebar": "392:2",
+      "statistic": "436:8",
+      "toolButton": "443:2",
+      "drawer": "567:2",
+      "badge": "2131:2",
+      "statusIndicator": "2131:3",
+      "tag": "2131:4",
+      "link": "2131:5",
+      "tooltip": "2131:6",
+      "timeline": "2147:2",
+      "spacer": "2147:239",
+      "stepper": "2147:454",
+      "searchInput": "2147:747",
+      "numberInput": "2147:960",
+      "overflowMenuButton": "2147:1181",
+      "colorPicker": "2147:1374",
+      "pageHeader": "2148:2",
+      "filter": "2148:164",
+      "pagination": "2148:342",
+      "transfer": "2148:552",
+      "upload": "2148:746",
+      "numericKeypad": "2148:908",
+      "segmentedControl": "2148:1146",
+      "anchorNavigation": "2150:2",
+      "layoutContainer": "2150:180",
+      "titleBar": "2150:362"
+    },
+    "frames": {
+      "overview": "321:2",
+      "unifiedInventory": "2128:2",
+      "badgeContract": "2139:7",
+      "statusIndicatorContract": "2139:14970",
+      "tagContract": "2139:15549",
+      "linkContract": "2139:16128",
+      "tooltipContract": "2139:16707",
+      "badgeReview": "2132:22",
+      "statusIndicatorReview": "2132:70",
+      "linkReview": "2132:103",
+      "tagReview": "2132:151",
+      "tagDismissibleFalseReview": "2145:42",
+      "tooltipReview": "2132:190",
+      "timelineContract": "2147:36",
+      "timelineReview": "2147:97",
+      "spacerContract": "2147:265",
+      "spacerReview": "2147:326",
+      "stepperContract": "2147:516",
+      "stepperReview": "2147:577",
+      "searchInputContract": "2147:769",
+      "searchInputReview": "2147:830",
+      "numberInputContract": "2147:986",
+      "numberInputReview": "2147:1047",
+      "overflowMenuButtonContract": "2147:1193",
+      "overflowMenuButtonReview": "2147:1254",
+      "colorPickerContract": "2147:1391",
+      "colorPickerReview": "2147:1452",
+      "pageHeaderContract": "2148:3",
+      "pageHeaderReview": "2148:93",
+      "filterContract": "2148:165",
+      "filterReview": "2148:263",
+      "paginationContract": "2148:343",
+      "paginationReview": "2148:457",
+      "transferContract": "2148:553",
+      "transferReview": "2148:659",
+      "uploadContract": "2148:747",
+      "uploadReview": "2148:837",
+      "numericKeypadContract": "2148:909",
+      "numericKeypadReview": "2148:1037",
+      "segmentedControlContract": "2148:1147",
+      "segmentedControlReview": "2148:1259",
+      "anchorNavigationContract": "2150:3",
+      "anchorNavigationReview": "2150:101",
+      "layoutContainerContract": "2150:181",
+      "layoutContainerReview": "2150:281",
+      "titleBarContract": "2150:363",
+      "titleBarReview": "2150:455",
+      "iconAssetContract": "2150:528",
+      "iconAssetReview": "2150:616",
+      "imageAssetContract": "2150:685",
+      "imageAssetReview": "2150:779",
+      "modelAssetContract": "2150:854",
+      "modelAssetReview": "2150:948"
+    },
+    "components": {
+      "ComponentLab/Badge": "2132:21",
+      "ComponentLab/StatusIndicator": "2132:69",
+      "ComponentLab/Link": "2132:102",
+      "ComponentLab/Tag": "2132:150",
+      "ComponentLab/Tooltip": "2132:189",
+      "ComponentLab/Timeline": "2147:35",
+      "ComponentLab/Spacer": "2147:264",
+      "ComponentLab/Stepper": "2147:515",
+      "ComponentLab/SearchInput": "2147:768",
+      "ComponentLab/NumberInput": "2147:985",
+      "ComponentLab/OverflowMenuButton": "2147:1192",
+      "ComponentLab/ColorPicker": "2147:1390",
+      "ComponentLab/PageHeader": "2148:74",
+      "ComponentLab/Filter": "2148:244",
+      "ComponentLab/Pagination": "2148:438",
+      "ComponentLab/Transfer": "2148:640",
+      "ComponentLab/Upload": "2148:818",
+      "ComponentLab/NumericKeypad": "2148:1018",
+      "ComponentLab/SegmentedControl": "2148:1240",
+      "ComponentLab/AnchorNavigation": "2150:82",
+      "ComponentLab/LayoutContainer": "2150:262",
+      "ComponentLab/TitleBar": "2150:436",
+      "ComponentLab/IconAsset": "2150:597",
+      "ComponentLab/ImageAsset": "2150:760",
+      "ComponentLab/ModelAsset": "2150:929",
+      "ComponentLab/Sidebar": "392:216",
+      "ComponentLab/Statistic": "436:79",
+      "ComponentLab/ToolButton": "443:222",
+      "ComponentLab/Drawer": "569:632"
+    }
+  },
+  "referencePolicy": {
+    "visualAuthority": "current ComponentLab tokens and component conventions",
+    "behaviorReferences": [
+      "Ant Design",
+      "Fluent UI",
+      "PatternFly"
+    ],
+    "moodboardOnly": "Pinterest",
+    "copyRestriction": "External projects inform anatomy and interaction boundaries only; no branded visual copying."
+  },
+  "classification": {
+    "merge": 23,
+    "add": 25,
+    "review": 0,
+    "figmaBuiltFromAdd": 25,
+    "remainingAdd": 0
+  },
+  "traceability": {
+    "tokenBound": 48,
+    "figmaIdentityPresent": 48,
+    "engineeringVerified": 43,
+    "engineeringNameSyncRequired": 0,
+    "engineeringGap": 5,
+    "developmentScope": "canonical-catalog-reconciled-foundation-semantic-input-selection-navigation-structure-timeline-anchor-navigation-filter-numeric-keypad-color-picker-upload-and-transfer-runtime-batches-verified"
+  },
+  "canonicalCatalog": {
+    "capturedAt": "2026-10-15",
+    "figmaPages": 98,
+    "figmaComponentSets": 148,
+    "figmaVariants": 1608,
+    "libraryEntries": 110,
+    "componentIdentities": 105,
+    "widgets": 71,
+    "composites": 34,
+    "layoutHelpers": 2,
+    "assets": 3,
+    "instantiableComponents": 105,
+    "registeredCanonicalRuntimeComponents": 105,
+    "contractOnlyComponents": 0,
+    "implementedAssets": 3,
+    "unmappedAssets": 0,
+    "engineeringGaps": 0,
+    "identityMigrations": 1,
+    "approvalStatus": "independent-not-inferred-from-implementation"
+  },
+  "completedSteps": [
+    "live-page-inventory",
+    "governance-rule-authored",
+    "overview-policy-updated",
+    "page-name-normalization",
+    "actions-numbering-repaired",
+    "container-order-repaired",
+    "assets-section-created",
+    "unified-inventory-created",
+    "structural-readback-passed",
+    "visual-review-passed",
+    "reference-research-completed",
+    "badge-local-rebuild-verified",
+    "status-indicator-local-rebuild-verified",
+    "link-local-rebuild-verified",
+    "tag-local-rebuild-verified",
+    "tooltip-local-rebuild-verified",
+    "badge-tag-contrast-repair-verified",
+    "component-contract-template-audited",
+    "first-five-component-pages-standardized",
+    "first-five-system-position-contracts-authored",
+    "first-five-standard-page-visual-review-passed",
+    "tag-dismissible-true-false-variants-built",
+    "tag-dismissible-visual-review-passed",
+    "component-contract-template-residue-removed",
+    "remaining-twenty-add-assets-built",
+    "remaining-twenty-add-assets-visual-review-passed",
+    "remaining-twenty-add-assets-structural-audit-passed",
+    "component-pages-number-order-repaired",
+    "unified-inventory-add-items-closed",
+    "model-asset-redefined-as-2d-schematic-visualization-foundation",
+    "model-asset-2d-visual-review-passed",
+    "sidebar-public-identity-normalized",
+    "statistic-data-value-boundary-confirmed",
+    "toolbutton-menu-capability-boundary-confirmed",
+    "overlay-drawer-renamed-to-canonical-drawer-in-figma",
+    "remaining-four-review-items-closed",
+    "unified-inventory-23-merge-25-built-visual-review-passed",
+    "token-to-figma-to-governance-to-engineering-traceability-audited",
+    "component-traceability-manifest-authored",
+    "unified-inventory-engineering-status-aligned",
+    "traceability-visual-and-structural-review-passed",
+    "canonical-catalog-reconciled-from-live-figma-and-engineering-catalog",
+    "drawer-canonical-sdk-and-factory-identity-published-with-legacy-compatibility",
+    "componentlab-and-mappingworkbench-count-checks-made-dynamic",
+    "componentlab-navigation-separated-by-canonical-entry-kind",
+    "generatelayout-canonical-layout-helper-contracts-verified",
+    "all-figma-component-sets-accounted-for-by-canonical-reference-or-explicit-role",
+    "foundation-display-feedback-sdk-batch-implemented-and-verified",
+    "semantic-input-action-sdk-and-generatelayout-batch-implemented-and-verified",
+    "navigation-structure-sdk-and-generatelayout-batch-implemented-and-verified",
+    "icon-asset-catalog-sdk-and-consumer-chain-implemented-and-verified",
+    "visual-asset-catalog-sdk-and-consumer-chain-implemented-and-verified",
+    "timeline-sdk-factory-componentlab-and-generatelayout-chain-implemented-and-verified",
+    "anchor-navigation-sdk-factory-componentlab-and-generatelayout-chain-implemented-and-verified",
+    "base-button-checkbox-input-downstream-evidence-reconciled",
+    "filter-sdk-factory-componentlab-and-generatelayout-chain-implemented-and-verified",
+    "numeric-keypad-sdk-factory-componentlab-and-generatelayout-chain-implemented-and-verified",
+    "color-picker-sdk-factory-componentlab-and-generatelayout-chain-implemented-and-verified",
+    "upload-sdk-factory-componentlab-and-generatelayout-chain-implemented-and-verified",
+    "transfer-sdk-factory-componentlab-and-generatelayout-chain-implemented-and-verified"
+  ],
+  "pendingValidations": [
+    "define-strong-success-and-process-indicator-semantic-tokens-in-source",
+    "split-grouped-family-pages-into-one-public-identity-per-spec-page",
+    "remove-or-rename-duplicate-menuitem-set-from-metriccard-page",
+    "decide-button-icononly-proposal-admission-without-creating-a-second-public-identity",
+    "retire-drawer-legacy-class-and-factory-alias-after-external-consumer-evidence",
+    "connect-live-figma-normalization-to-layout-helper-contracts",
+    "implement-layout-helper-runtime-demos-from-generatelayout-contracts",
+    "collect-runtime-profile-evidence-for-built-assets",
+    "verify-model-asset-2d-scene-schema-and-stable-qt-rendering-object",
+    "refresh-figma-unified-inventory-engineering-status-after-runtime-batches"
+  ],
+  "batches": [
+    {
+      "id": "A1-canonical-catalog-reconciliation",
+      "date": "2026-10-14",
+      "status": "VERIFIED",
+      "inputs": [
+        "Figma unified inventory 2127:6",
+        "48-row component traceability manifest",
+        "existing 85-item engineering catalog"
+      ],
+      "outputs": [
+        "98-page Figma inventory",
+        "110-entry canonical library catalog",
+        "105 runtime component identities",
+        "dynamic C++ and Python catalog checks"
+      ],
+      "verification": [
+        "catalog generator --check passed",
+        "catalog Python tests 9/9 passed",
+        "token import tests 9/9 passed",
+        "token export --check passed",
+        "GenerateComponent governance check passed",
+        "MappingWorkbench CTest 11/11 passed",
+        "ComponentLab CTest 17/17 passed"
+      ],
+      "open": [
+        "20 component identities remain contract-only",
+        "Drawer canonical registry is published; legacy class and Factory aliases remain until external consumer evidence permits removal",
+        "25 new Figma pages do not yet have captured runtime gallery layouts",
+        "ComponentLab navigation is separated; layout-helper and asset runtime capabilities remain to be implemented"
+      ]
+    },
+    {
+      "id": "B1-drawer-canonical-identity",
+      "date": "2026-10-15",
+      "status": "VERIFIED",
+      "inputs": [
+        "Figma ComponentLab/Drawer component set 569:632",
+        "existing commonWidget::Z_OverlayDrawer implementation",
+        "GenerateComponent, ComponentLab and GenerateLayout consumer search"
+      ],
+      "outputs": [
+        "canonical ComponentLab/Drawer catalog identity",
+        "canonical commonWidget::Z_Drawer SDK alias and Factory key",
+        "runtime designComponent and designSystemClass canonical properties",
+        "explicit commonWidget::Z_OverlayDrawer legacy compatibility key without duplicate implementation",
+        "Visual Studio 2022-compatible GenerateLayout environment bootstrap"
+      ],
+      "verification": [
+        "catalog generator --check passed",
+        "catalog Python tests 9/9 passed",
+        "GenerateComponent SDK publish passed",
+        "SDK consumer CTest 1/1 passed for canonical and legacy Drawer Factory keys",
+        "ComponentLab CTest 17/17 passed",
+        "MappingWorkbench CTest 11/11 passed",
+        "GenerateLayout SDK hash and project-boundary checks passed",
+        "GenerateLayout build passed and CTest 2/2 passed"
+      ],
+      "open": [
+        "Drawer visual parity has not been re-approved in this engineering batch",
+        "legacy Drawer class and Factory key retirement remains deferred until external consumer evidence is collected",
+        "20 component identities remain contract-only"
+      ]
+    },
+    {
+      "id": "C1-componentlab-kind-navigation",
+      "date": "2026-10-15",
+      "status": "VERIFIED",
+      "inputs": [
+        "110-entry generated canonical catalog",
+        "105-entry public component descriptor API",
+        "98-page Figma inventory"
+      ],
+      "outputs": [
+        "public designLibraryEntries C++ API for all canonical entry kinds",
+        "ComponentLab component, layout-helper and asset navigation sections with dynamic counts",
+        "component registry retained as a component-only Factory view",
+        "no LayoutHelper or Asset added to ComponentFactory"
+      ],
+      "verification": [
+        "catalog generator write and --check passed",
+        "catalog Python tests 10/10 passed",
+        "GenerateComponent SDK publish passed",
+        "SDK consumer CTest 1/1 passed with kind and identity invariants",
+        "ComponentLab compiled against the republished SDK",
+        "ComponentLab CTest 17/17 passed across four profiles"
+      ],
+      "open": [
+        "Spacer and LayoutContainer sections do not yet prove GenerateLayout parsing or Qt layout generation",
+        "IconAsset, ImageAsset and ModelAsset sections do not yet use a unified public asset resolver",
+        "layout and asset visual evidence remains not approved"
+      ]
+    },
+    {
+      "id": "C2-generatelayout-layout-helper-contracts",
+      "date": "2026-10-15",
+      "status": "VERIFIED",
+      "inputs": [
+        "canonical ComponentLab/Spacer and ComponentLab/LayoutContainer identities",
+        "Figma Spacer Direction x Size and LayoutContainer Columns x Density contracts",
+        "published GenerateComponent designLibraryEntries API"
+      ],
+      "outputs": [
+        "GenerateLayout layoutHelper contract definitions with canonical ID validation",
+        "Spacer conversion to QSpacerItem with Fixed, Minimum and Stretch runtime policies",
+        "LayoutContainer conversion to governed QGridLayout placement",
+        "explicit rejection of unknown identities, assets used as helpers and invalid helper combinations"
+      ],
+      "verification": [
+        "live Figma metadata read confirmed Spacer 2147:239 and LayoutContainer 2150:180 identities and variant axes",
+        "catalog generator write and --check passed with type-specific engineering status",
+        "catalog Python tests 10/10 passed",
+        "GenerateComponent SDK publish passed",
+        "SDK consumer CTest 1/1 passed",
+        "GenerateLayout compiled against the published GenerateComponent SDK",
+        "GenerateLayout component_converter CTest passed",
+        "GenerateLayout layout_converter CTest passed",
+        "GenerateLayout CTest 2/2 passed",
+        "ComponentLab CTest 17/17 passed across four profiles",
+        "published SDK manifest SHA256 21a4291eeff92a5b591ad0fb32341613144e8d245aeb391cec934c6ce746d6b1"
+      ],
+      "open": [
+        "current Figma normalization has not yet been proven to emit the layoutHelper contract",
+        "ComponentLab layout section does not yet render these converter outputs",
+        "LayoutContainer density is validated and traced but numeric gap and padding remain explicit autoLayout input",
+        "Spacer Minimum and Stretch are runtime policies, not claimed Figma variant axes"
+      ]
+    },
+    {
+      "id": "A2-component-set-governance",
+      "date": "2026-10-15",
+      "status": "VERIFIED",
+      "inputs": [
+        "148-set Figma inventory captured on 2026-10-14",
+        "133 Component Sets referenced by 110 Canonical Library entries",
+        "live 2026-10-15 read-only audit of Button, Menu and MetricCard identities"
+      ],
+      "outputs": [
+        "machine-readable classification for all 15 non-canonical Component Sets",
+        "13 INTERNAL anatomy or contract sets",
+        "1 Button/IconOnly PROPOSAL owned by ComponentLab/Button",
+        "1 duplicate MenuItem RESIDUE on the MetricCard page",
+        "generation failure when a Component Set is unaccounted, multiply owned or ambiguously classified"
+      ],
+      "verification": [
+        "catalog generator write and --check passed",
+        "catalog Python tests 12/12 passed",
+        "all 148 Component Sets are covered exactly once by canonical reference or explicit non-public classification",
+        "Button/IconOnly does not create a second Button canonical identity",
+        "MetricCard duplicate MenuItem is tied to canonical MenuItem Component Set 482:490 as residue",
+        "GenerateComponent governance check passed",
+        "GenerateComponent SDK republished and SDK consumer CTest 1/1 passed",
+        "published SDK manifest SHA256 3b82c62c6cea10290dac73cdbfe223f01ee1f04791255cb17545a5a2797dea1e"
+      ],
+      "open": [
+        "MetricCard-page MenuItem residue still requires a Figma-side remove, rename or internalize action",
+        "Button/IconOnly remains a proposal until design approval",
+        "internal Component Sets remain implementation details and must not appear as public ComponentLab navigation entries"
+      ]
+    },
+    {
+      "id": "B2-foundation-display-feedback-runtime",
+      "date": "2026-10-15",
+      "status": "VERIFIED",
+      "inputs": [
+        "live Figma component sets for Badge 2132:21, StatusIndicator 2132:69, Link 2132:102, Tag 2132:150 and Tooltip 2132:189",
+        "current generated Token profiles",
+        "existing FocusIndicator runtime policy"
+      ],
+      "outputs": [
+        "public SDK implementations and Factory registrations for Badge, StatusIndicator, Link, Tag and Tooltip",
+        "Figma variant axes reflected by SDK properties and ComponentLab runtime specimen matrices",
+        "component-specific focus ownership: non-interactive, root-owned, child-action-owned and target-owned",
+        "catalog and traceability counts advanced from 85 to 90 registered runtime components"
+      ],
+      "verification": [
+        "live Figma design context, variables and screenshots read for all five component sets",
+        "catalog generator write and --check passed",
+        "catalog Python tests 12/12 passed",
+        "GenerateComponent SDK publish passed",
+        "SDK consumer CTest 1/1 passed",
+        "ComponentLab and composition tests compiled against the published SDK",
+        "ComponentLab CTest 17/17 passed across four profiles",
+        "runtime specimen counts verified as Badge 10, StatusIndicator 10, Tag 20, Link 5 and Tooltip 4"
+      ],
+      "open": [
+        "visual pixel parity is not yet approved and remains NOT_VERIFIED",
+        "GenerateLayout does not yet normalize or consume these five component contracts",
+        "15 Widget/Composite identities remain explicit engineering gaps",
+        "85 previously registered components still require per-component focus-policy resolution"
+      ]
+    },
+    {
+      "id": "B3-semantic-input-action-runtime",
+      "date": "2026-10-15",
+      "status": "VERIFIED",
+      "inputs": [
+        "live Figma component sets SearchInput 2147:768, NumberInput 2147:985, OverflowMenuButton 2147:1192 and SegmentedControl 2148:1240",
+        "current Figma State, Type and Segments variant axes and bound variables",
+        "GenerateComponent SDK Factory, ComponentLab canonical gallery and GenerateLayout ComponentConverter"
+      ],
+      "outputs": [
+        "public SDK implementations and Factory registrations for four canonical component identities",
+        "ComponentLab runtime specimens for all 22 current Figma variants",
+        "GenerateLayout component-set-ID mappings that create components only through the published SDK Factory",
+        "explicit composite focus ownership and optional FocusIndicator behavior",
+        "catalog counts advanced from 90 to 94 registered runtime components and remaining component gaps reduced from 15 to 11"
+      ],
+      "verification": [
+        "live Figma design context, variables, screenshots and Code Connect status read for all four component sets",
+        "catalog generator write and --check passed with 110 canonical entries and 94 registered runtime components",
+        "GenerateComponent SDK publish and SDK consumer CTest 1/1 passed",
+        "ComponentLab CTest 17/17 passed across four profiles",
+        "GenerateLayout mapping static check passed and CTest 3/3 passed",
+        "GenerateLayout runtime fixtures verified current title-case variant axes without a legacy Profile variant"
+      ],
+      "open": [
+        "visual pixel parity is not yet approved and remains NOT_VERIFIED",
+        "Code Connect is absent for these four Figma component sets",
+        "11 Widget/Composite identities and 3 Asset entries remain explicit engineering gaps",
+        "the five B2 display and feedback components still lack GenerateLayout consumption mappings"
+      ]
+    },
+    {
+      "id": "B4-navigation-structure-runtime",
+      "date": "2026-10-15",
+      "status": "VERIFIED",
+      "inputs": [
+        "live Figma component sets Stepper 2147:515, Pagination 2148:438, PageHeader 2148:74 and TitleBar 2150:436",
+        "current Figma State, Density and Actions variant axes and bound variables",
+        "GenerateComponent SDK Factory, ComponentLab canonical gallery and GenerateLayout ComponentConverter"
+      ],
+      "outputs": [
+        "public SDK implementations and Factory registrations for four canonical Composite identities",
+        "ComponentLab runtime specimens for all 14 current Figma variants",
+        "GenerateLayout component-set-ID mappings that create the four components only through the published SDK Factory",
+        "presentation-root and child-action focus ownership contracts for all four components",
+        "TitleBar host action and drag signals without direct ownership of window lifecycle",
+        "catalog counts advanced from 94 to 98 registered runtime components and remaining component gaps reduced from 11 to 7"
+      ],
+      "verification": [
+        "live Figma design context, variables, screenshots and Code Connect status read for all four component sets",
+        "catalog generator write and --check passed with 110 canonical entries and 98 registered runtime components",
+        "catalog Python tests 12/12 passed",
+        "GenerateComponent SDK publish and SDK consumer CTest 1/1 passed",
+        "ComponentLab CTest 17/17 passed across four profiles",
+        "GenerateLayout mapping static check passed and CTest 3/3 passed",
+        "PageHeader regression fixture proves components without a State axis bypass only state validation while retaining property-domain validation"
+      ],
+      "open": [
+        "visual pixel parity is not yet approved and remains NOT_VERIFIED",
+        "Code Connect is absent for these four Figma component sets",
+        "7 Widget/Composite identities and 3 Asset entries remain explicit engineering gaps",
+        "the five B2 display and feedback components still lack GenerateLayout consumption mappings"
+      ]
+    },
+    {
+      "id": "C3-icon-asset-catalog",
+      "date": "2026-10-15",
+      "status": "VERIFIED",
+      "inputs": [
+        "live Figma ComponentLab/IconAsset component set 2150:597",
+        "Figma Size=16/20/24 and Tone=Primary/Secondary variant axes",
+        "existing SDK-owned SVG resources and Lucide license evidence",
+        "GenerateLayout shared GLYPH resource mappings"
+      ],
+      "outputs": [
+        "public GenerateComponent IconAssetCatalog with seven stable semantic IDs, metadata and explicit resolution",
+        "SDK-owned QRC resolution and UNMAPPED_RESOURCE failure for unknown public IDs",
+        "GenerateLayout and MappingWorkbench consumption of semantic IDs without a duplicate public path catalog",
+        "ComponentLab asset gallery with six Figma variants and SDK descriptor metadata",
+        "Button leading and trailing icon properties preserve the stable semantic ID"
+      ],
+      "verification": [
+        "live Figma design context and screenshot read for IconAsset 2150:597",
+        "catalog generator write and --check passed with 110 canonical entries and two unmapped assets",
+        "catalog Python tests 12/12 passed",
+        "GenerateComponent SDK publish passed",
+        "SDK consumer CTest 1/1 passed including unknown-ID rejection",
+        "ComponentLab CTest 17/17 passed across four profiles",
+        "MappingWorkbench CTest 4/4 passed across four profiles",
+        "GenerateLayout mapping static check passed and CTest 2/2 passed",
+        "GenerateLayout formal package generation contract test passed",
+        "GenerateComponent, ComponentLab and GenerateLayout project checks passed"
+      ],
+      "open": [
+        "IconAsset visual pixel parity is not yet approved and remains NOT_VERIFIED",
+        "the public catalog currently promotes seven shared icons; component-private icons remain internal until a public identity is justified",
+        "ImageAsset and ModelAsset were unresolved in this batch and were subsequently implemented by C4-image-model-asset-catalog",
+        "the formal unknown-shared-resource unit requires its generated hybrid-result fixture; SDK and converter rejection paths are verified independently"
+      ]
+    },
+    {
+      "id": "C4-image-model-asset-catalog",
+      "date": "2026-10-15",
+      "status": "VERIFIED",
+      "inputs": [
+        "live Figma ComponentLab/ImageAsset component set 2150:760 with Fit=Contain/Cover and State=Loaded/Empty/Error",
+        "live Figma ComponentLab/ModelAsset component set 2150:929 with State=Ready/Loading/Error",
+        "Figma token values and measured vector-layer geometry",
+        "GenerateLayout public asset ownership boundary"
+      ],
+      "outputs": [
+        "public GenerateComponent VisualAssetCatalog with image.foundation.geometric-preview and model.foundation.schematic stable IDs",
+        "SDK-owned SVG sources, SHA-256 integrity metadata, device-pixel-ratio-aware rendering and Profile token substitution",
+        "explicit UNMAPPED_RESOURCE and NO_ASSET_PAYLOAD failure contracts",
+        "ComponentLab ImageAsset six-variant and ModelAsset three-state galleries sourced only from the published SDK",
+        "GenerateLayout publicAssetMappings and FormalResources resolution through the published SDK without duplicated QRC paths",
+        "canonical catalog advanced to three implemented assets, zero unmapped assets and seven total engineering gaps"
+      ],
+      "verification": [
+        "live Figma design context, variables, screenshots, Code Connect status and asset-download metadata read for ImageAsset 2150:760 and ModelAsset 2150:929",
+        "Figma component-set raster exports were rejected as runtime assets because no raw image or SVG asset was published",
+        "catalog generator write and --check passed with 110 canonical entries and zero unmapped assets",
+        "catalog Python tests 12/12 passed",
+        "GenerateComponent SDK publish and SDK consumer CTest 1/1 passed",
+        "ComponentLab CTest 17/17 passed across four profiles",
+        "GenerateLayout V1 CTest 2/2 and V2 CTest 3/3 passed",
+        "GenerateLayout mapping static check passed with both public visual asset IDs"
+      ],
+      "open": [
+        "ImageAsset and ModelAsset visual pixel parity is not yet approved and remains NOT_VERIFIED",
+        "the public catalog currently contains one shared image identity and one shared 2D schematic identity; additional assets require explicit Figma public identities",
+        "Figma publishes no raw image or SVG payload for these two component sets, so the runtime vectors are project-owned reconstructions from measured design layers rather than exported source assets",
+        "ModelAsset interaction, hit testing, zooming and live process schema remain runtime-owned and outside the current 2D asset contract",
+        "seven formal resource tests remain blocked by the pre-existing missing build/cache/formal-inputs/result/hybrid-result.json fixture"
+      ]
+    },
+    {
+      "id": "B5-timeline-runtime",
+      "date": "2026-10-15",
+      "status": "VERIFIED",
+      "inputs": [
+        "live Figma ComponentLab/Timeline component set 2147:35",
+        "Figma Density=Comfortable/Compact variant axis and measured component geometry",
+        "Figma brand, text, process, success, surface and border token values",
+        "three exact 12 by 12 SVG marker assets downloaded from the Figma component set",
+        "Figma description that separates read-only event history from Stepper navigation"
+      ],
+      "outputs": [
+        "public GenerateComponent Z_Timeline implementation and Factory registration",
+        "validated Density and dynamic event label, time and semantic-state SDK contracts",
+        "ComponentLab specimens for both current Figma density variants",
+        "GenerateLayout component-set-ID mapping that creates Timeline only through the published SDK Factory",
+        "presentation-only focus policy and accessible event-summary contract",
+        "catalog counts advanced from 98 to 99 registered runtime components and remaining component gaps reduced from 7 to 6"
+      ],
+      "verification": [
+        "live Figma design context, variables, screenshot, Code Connect status and marker asset downloads read for Timeline 2147:35",
+        "catalog generator write and --check passed with 110 canonical entries and 99 registered runtime components",
+        "catalog Python tests 12/12 passed",
+        "GenerateComponent SDK publish and SDK consumer CTest 1/1 passed",
+        "ComponentLab CTest 17/17 passed across four profiles",
+        "GenerateLayout V1 CTest 2/2 and V2 CTest 3/3 passed",
+        "GenerateLayout mapping static check passed for Timeline component set 2147:35",
+        "light-comfortable runtime screenshot inspected at 420 by 190 with SDK-rendered event rows and Figma marker assets"
+      ],
+      "open": [
+        "Timeline visual pixel parity is not yet approved and remains NOT_VERIFIED",
+        "the pale Completed marker intentionally follows the current Figma success token and still needs design approval in the full Profile review",
+        "Code Connect is absent for the Timeline component set",
+        "event content remains page-owned runtime data and Timeline intentionally provides no step navigation behavior",
+        "Figma UnifiedInventory 2128:2 still labels Timeline and several subsequently implemented BUILT items as ENGINEERING_GAP; design identities remain valid but embedded engineering status text requires a separate evidence-driven refresh"
+      ]
+    },
+    {
+      "id": "B6-anchor-navigation-runtime",
+      "date": "2026-10-15",
+      "status": "VERIFIED",
+      "inputs": [
+        "live Figma ComponentLab/AnchorNavigation component set 2150:82 with Orientation=Vertical/Horizontal and State=Default/Scrolled",
+        "Figma root and item geometry, brand, surface, text and border token values",
+        "Figma description that defines section location and synchronized current-reading position",
+        "absence of Code Connect mappings for this component set"
+      ],
+      "outputs": [
+        "public GenerateComponent Z_AnchorNavigation implementation and Factory registration",
+        "controlled anchorActivated request contract with page-owned scrolling and currentIndex feedback",
+        "validated Orientation, snapshot State, dynamic items and current-index SDK properties",
+        "child-action keyboard navigation with component-level optional FocusIndicator inheritance",
+        "ComponentLab specimens for all four current Figma variants",
+        "GenerateLayout component-set-ID mapping that creates AnchorNavigation only through the published SDK Factory",
+        "catalog counts advanced from 99 to 100 registered runtime components and remaining component gaps reduced from 6 to 5"
+      ],
+      "verification": [
+        "live Figma design context, variables, screenshot and Code Connect status read for AnchorNavigation 2150:82",
+        "catalog generator write and --check passed with 110 canonical entries and 100 registered runtime components",
+        "catalog Python tests 12/12 passed",
+        "GenerateComponent SDK publish and SDK consumer CTest 1/1 passed",
+        "ComponentLab CTest 17/17 passed across four profiles",
+        "GenerateLayout V1 CTest 2/2 and V2 CTest 3/3 passed",
+        "GenerateLayout mapping static check passed for AnchorNavigation component set 2150:82",
+        "light-comfortable horizontal 520 by 64 and vertical 240 by 180 runtime screenshots inspected against the Figma structure",
+        "catalog test rejected and exposed an accidental Filter trace mutation before the generated catalog could be accepted"
+      ],
+      "open": [
+        "AnchorNavigation visual pixel parity is not yet formally approved and remains NOT_VERIFIED",
+        "Code Connect is absent for the AnchorNavigation component set",
+        "actual page scrolling, anchor target resolution and reading-position observation remain generated-page responsibilities and still require a page-level end-to-end test",
+        "Figma UnifiedInventory 2128:2 still contains stale engineering status text and requires a separate evidence-driven refresh"
+      ]
+    },
+    {
+      "id": "B7-filter-runtime-and-base-consumer-evidence",
+      "date": "2026-10-15",
+      "status": "VERIFIED",
+      "inputs": [
+        "live Figma ComponentLab/Filter component set 2148:244 with Layout=Inline/Panel and State=Default/Applied",
+        "live Figma Filter contract frame 2148:165 defining Actions ownership, QWidget composition and external filter-controller responsibilities",
+        "Figma token values and exact child geometry for all four variants",
+        "existing GenerateLayout runtime evidence for Button, Checkbox and Input",
+        "absence of Code Connect mappings for the Filter component set"
+      ],
+      "outputs": [
+        "public GenerateComponent Z_Filter implementation and Factory registration",
+        "controlled criterionActivated and applyRequested contracts without duplicating validation, clear, persistence or state-machine ownership",
+        "validated Layout, snapshot State, two external criterion labels and apply-label SDK properties",
+        "child-action keyboard navigation with component-level optional FocusIndicator inheritance",
+        "ComponentLab specimens for all four current Figma variants",
+        "GenerateLayout component-set-ID mapping that creates Filter only through the published SDK Factory",
+        "general downstreamEvidenceOverrides input that records real Button, Checkbox and Input consumer evidence without editing generated Catalog output",
+        "catalog counts advanced from 100 to 101 registered runtime components and remaining component gaps reduced from 5 to 4"
+      ],
+      "verification": [
+        "live Figma design context, contract context, variables, screenshot, metadata and Code Connect status read for Filter 2148:244",
+        "catalog generator write and --check passed with 110 canonical entries and 101 registered runtime components",
+        "catalog Python tests 12/12 passed including 14 verified SDK-to-GenerateLayout component chains",
+        "GenerateComponent SDK publish and SDK consumer CTest 1/1 passed",
+        "ComponentLab CTest 17/17 passed across four profiles",
+        "GenerateLayout V1 CTest 2/2 and V2 CTest 3/3 passed",
+        "GenerateLayout mapping static check passed for Filter component set 2148:244",
+        "light-comfortable 430 by 58 Inline Applied and 430 by 112 Panel Default runtime screenshots inspected against current Figma geometry"
+      ],
+      "open": [
+        "Filter visual pixel parity is not yet formally approved and remains NOT_VERIFIED",
+        "the current Panel design places the first criterion at y=-8 and the Apply action at y=84 with a 36px height inside a 112px root, clipping eight pixels at both ends; implementation preserves this source geometry pending design correction",
+        "the design description names a clear operation but the current four Figma variants contain no visible clear affordance; clear remains external and needs a design decision before SDK UI exposure",
+        "Code Connect is absent for the Filter component set",
+        "Figma UnifiedInventory 2128:2 still contains stale engineering status text and requires a separate evidence-driven refresh"
+      ]
+    },
+    {
+      "id": "B8-numeric-keypad-runtime-and-consumer-chain",
+      "date": "2026-10-15",
+      "status": "VERIFIED",
+      "inputs": [
+        "live Figma ComponentLab/NumericKeypad page 2148:908, contract frame 2148:909 and component set 2148:1018",
+        "live Figma Density=Comfortable 2148:960 and Density=Compact 2148:989 variants",
+        "Figma 260-pixel root, 3-by-4 semantic key grid, 68-pixel key width, 50/42-pixel density heights and token values",
+        "Figma controller boundary for target field, locale parsing, backspace and commit policy",
+        "absence of Code Connect mappings for the NumericKeypad component set"
+      ],
+      "outputs": [
+        "public GenerateComponent Z_NumericKeypad implementation and Factory registration",
+        "validated Density, twelve unique semantic keys, allowed-key subset and decimal-separator SDK properties",
+        "controlled keyPressed and configurable commitRequested contracts without owning target text or numeric parsing",
+        "3-by-4 child-action arrow navigation with StrongFocus actions and component-level optional FocusIndicator inheritance",
+        "ComponentLab specimens for both current Figma density variants",
+        "GenerateLayout component-set-ID mapping that creates NumericKeypad only through the published SDK Factory",
+        "catalog counts advanced from 101 to 102 registered runtime components and remaining component gaps reduced from 4 to 3"
+      ],
+      "verification": [
+        "live Figma design context, contract context, variables, screenshot, metadata and Code Connect status read for NumericKeypad 2148:1018",
+        "catalog generator write and --check passed with 110 canonical entries and 102 registered runtime components",
+        "catalog Python tests 12/12 passed including 15 verified SDK-to-GenerateLayout component chains",
+        "GenerateComponent SDK publish and SDK consumer CTest 1/1 passed with MSVC 19.51 isolated caches",
+        "ComponentLab CTest 17/17 passed across four profiles",
+        "GenerateLayout V1 CTest 2/2 and V2 CTest 3/3 passed",
+        "GenerateLayout mapping static check passed for NumericKeypad component set 2148:1018",
+        "light-comfortable 260 by 290 Comfortable and 260 by 250 Compact runtime screenshots inspected against the current Figma structure",
+        "all three project CheckProject.py checks passed"
+      ],
+      "open": [
+        "NumericKeypad visual pixel parity is not yet formally approved and remains NOT_VERIFIED",
+        "the current two default Figma variants do not expose a visible commit key; the SDK supports a configurable commit semantic while the external controller retains commit policy",
+        "Code Connect is absent for the NumericKeypad component set",
+        "Figma UnifiedInventory 2128:2 still contains stale engineering status text and requires a separate evidence-driven refresh",
+        "the pre-existing CMake caches selected MSVC 19.44 binaries against 19.51 headers; this batch used isolated 19.51 build caches and did not destructively rewrite old caches"
+      ]
+    },
+    {
+      "id": "B9-color-picker-runtime-and-consumer-chain",
+      "date": "2026-10-15",
+      "status": "VERIFIED",
+      "inputs": [
+        "live Figma ComponentLab/ColorPicker page 2147:1374, contract frame 2147:1391 and component set 2147:1390",
+        "live Figma State=Default 2147:1375, State=Focus 2147:1380 and State=Disabled 2147:1385 variants",
+        "Figma 300-by-40 field geometry, 24-pixel swatch, value text, Open action and token bindings",
+        "Figma boundary that ColorPicker remains distinct from ColorDialog and delegates preview, commit/cancel, alpha policy and recent colors to the selection flow",
+        "absence of Code Connect mappings for the ColorPicker component set"
+      ],
+      "outputs": [
+        "public GenerateComponent Z_ColorPicker field adapter and Factory registration",
+        "controlled QColor, explicit HexRgb/Qt-HexArgb display format and Default/Focus/Disabled snapshot properties",
+        "pickerRequested activation contract without constructing or duplicating Z_ColorDialog",
+        "profile adapter that preserves current Figma base tokens in Light and uses existing semantic surface/text/border tokens in Dark so the value remains readable",
+        "StrongFocus root action with Space, Return and Enter activation, accessible current-color text and component-level optional FocusIndicator",
+        "ComponentLab specimens for all three current Figma state variants",
+        "GenerateLayout component-set-ID mapping that creates ColorPicker only through the published SDK Factory",
+        "GenerateLayout V2 isolates its embedded V1 Qt XML reports under build/reports/v2-subtests so standalone V1 and V2 validation can run concurrently",
+        "catalog counts advanced from 102 to 103 registered runtime components and remaining component gaps reduced from 3 to 2"
+      ],
+      "verification": [
+        "live Figma design context, contract context, variables, screenshot, metadata and Code Connect status read for ColorPicker 2147:1390",
+        "catalog generator write and --check passed with 110 canonical entries and 103 registered runtime components",
+        "catalog Python tests 12/12 passed including 16 verified SDK-to-GenerateLayout component chains",
+        "GenerateComponent SDK publish and SDK consumer CTest 1/1 passed with MSVC 19.51 isolated caches",
+        "ComponentLab CTest 17/17 passed across four profiles, followed by a focused evidence recapture test 1/1",
+        "GenerateLayout V1 CTest 2/2 and V2 CTest 3/3 passed concurrently after report-path isolation, with separate standalone V1, V2-subtest and V2 workflow XML evidence",
+        "GenerateLayout mapping static check passed for ColorPicker component set 2147:1390",
+        "light-comfortable 300-by-40 Default, Focus and Disabled runtime screenshots inspected against the current Figma structure",
+        "dark-comfortable runtime screenshot re-read after semantic profile adaptation and confirmed readable current-color text"
+      ],
+      "open": [
+        "ColorPicker visual pixel parity is not yet formally approved and remains NOT_VERIFIED",
+        "the current Figma swatch uses brand default #6235F7 while its visible value text says #5B5BD6, contradicting the contract that swatch and value represent the same current color; the SDK keeps both driven by one QColor pending a Figma correction",
+        "Code Connect is absent for the ColorPicker component set",
+        "Figma contract and UnifiedInventory status text still say engineering mapping pending and require a separate evidence-driven refresh",
+        "dialog choice, color-space conversion, alpha policy, recent colors, preview, commit and cancel still require a generated-page controller integration test"
+      ]
+    },
+    {
+      "id": "B10-upload-runtime-and-consumer-chain",
+      "date": "2026-10-15",
+      "status": "VERIFIED",
+      "inputs": [
+        "live Figma ComponentLab/Upload page 2148:746, contract frame 2148:747 and component set 2148:818",
+        "live Figma Default 2148:798, Hover 2148:802, Uploading 2148:806, Success 2148:810 and Error 2148:814 variants",
+        "Figma 390-by-150 drop-surface geometry, lifecycle text, progress value and token bindings",
+        "Figma boundary that Upload remains distinct from QFileDialog and delegates validation, transport, authentication, cancellation, retry and error handling to the upload service",
+        "absence of Code Connect mappings for the Upload component set"
+      ],
+      "outputs": [
+        "public GenerateComponent Z_Upload drop-surface implementation and Factory registration",
+        "controlled Default/Hover/Uploading/Success/Error lifecycle, 0-to-100 progress, file-name and helper-text SDK properties",
+        "browseRequested and filesDropped acquisition contracts without constructing QFileDialog or owning upload transport",
+        "StrongFocus root action with Space, Return and Enter activation, accessible lifecycle text and component-level optional FocusIndicator",
+        "ComponentLab specimens for all five current Figma state variants",
+        "GenerateLayout component-set-ID mapping that creates Upload only through the published SDK Factory",
+        "deterministic state evidence that separates Default and Hover from keyboard-focus rendering",
+        "catalog counts advanced from 103 to 104 registered runtime components and remaining component gaps reduced from 2 to 1"
+      ],
+      "verification": [
+        "live Figma design context, contract context, variables, screenshot, metadata and Code Connect status read for Upload 2148:818",
+        "catalog generator write and --check passed with 110 canonical entries and 104 registered runtime components",
+        "catalog Python tests 12/12 passed including 17 verified SDK-to-GenerateLayout component chains",
+        "GenerateComponent SDK publish and SDK consumer CTest 1/1 passed with MSVC 19.51 isolated caches",
+        "ComponentLab CTest 17/17 passed across four profiles, followed by focused composition evidence recapture 4/4",
+        "GenerateLayout V1 CTest 2/2 and V2 CTest 3/3 passed",
+        "GenerateLayout mapping static check passed for Upload component set 2148:818",
+        "light-comfortable Default, Hover, Uploading, Success and Error runtime screenshots inspected at 390 by 150; dark-profile specimens were also inspected for readability"
+      ],
+      "open": [
+        "Upload visual pixel parity is not yet formally approved and remains NOT_VERIFIED",
+        "the current Figma Success glyph uses color/status/success/default #F3FAF6 on background/surface #F3F3F3 and is nearly invisible; the SDK uses semantic.color.status.success as a deliberate legibility exception pending a Figma token correction",
+        "Code Connect is absent for the Upload component set",
+        "Figma contract and UnifiedInventory status text still say engineering mapping pending and require a separate evidence-driven refresh",
+        "file-dialog choice, validation, transport, authentication, cancellation, retry and service error handling still require a generated-page controller integration test"
+      ]
+    },
+    {
+      "id": "B11-transfer-runtime-and-consumer-chain",
+      "date": "2026-10-15",
+      "status": "VERIFIED",
+      "inputs": [
+        "live Figma ComponentLab/Transfer page 2148:552, contract frame 2148:553 and component set 2148:640",
+        "live Figma Default 2148:604, Disabled 2148:616 and Loading 2148:628 variants",
+        "Figma 520-by-210 dual-list geometry, 205-by-180 panels, 44-by-36 move actions and token bindings",
+        "Figma boundary that collection query, item movement, sorting, permission and error recovery remain model/controller responsibilities",
+        "absence of Code Connect mappings for the Transfer component set"
+      ],
+      "outputs": [
+        "public GenerateComponent Z_Transfer dual-list composition and Factory registration",
+        "controlled Default/Disabled/Loading snapshot, caller-owned available and selected QAbstractItemModel inputs, and title/permission properties",
+        "selectionChanged plus moveToSelectedRequested and moveToAvailableRequested intent contracts without mutating caller-owned models",
+        "NoFocus composition root with StrongFocus list views and command actions under the optional inherited FocusIndicator policy",
+        "ComponentLab specimens for all three current Figma variants using external QStandardItemModel examples",
+        "GenerateLayout component-set-ID mapping that creates Transfer only through the published SDK Factory and records page-controller model ownership",
+        "catalog counts advanced from 104 to 105 registered runtime components and canonical component engineering gaps reduced from 1 to 0"
+      ],
+      "verification": [
+        "live Figma design context, contract context, variables, screenshot, metadata and Code Connect status read for Transfer 2148:640",
+        "catalog generator write and --check passed with 110 canonical entries and 105 registered runtime components",
+        "catalog Python tests 12/12 passed including 18 verified SDK-to-GenerateLayout component chains",
+        "GenerateComponent SDK publish and SDK consumer CTest 1/1 passed with MSVC 19.51 isolated caches",
+        "ComponentLab CTest 17/17 passed serially across four profiles; an earlier one-off parallel dark-comfortable failure passed on focused rerun and on this serial full suite",
+        "GenerateLayout V1 CTest 2/2 and V2 CTest 3/3 passed",
+        "GenerateLayout mapping static check passed for Transfer component set 2148:640",
+        "all three project CheckProject.py checks passed, reporting 105 of 105 runtime components and zero canonical component engineering gaps",
+        "light-comfortable Default, Disabled and Loading runtime screenshots inspected at 520 by 210 against the current Figma structure"
+      ],
+      "open": [
+        "Transfer visual pixel parity is not yet formally approved and remains NOT_VERIFIED",
+        "Code Connect is absent for the Transfer component set",
+        "the current Figma variants do not show an item-selected state although move commands depend on selection; runtime QListView selection remains available and needs design review",
+        "collection query, actual model mutation, sorting, permission failures and error recovery still require a generated-page controller integration test",
+        "Figma contract and UnifiedInventory status text still say engineering mapping pending and require a separate evidence-driven refresh"
+      ]
+    },
+    {
+      "id": "B12-foundation-display-feedback-generatelayout-chain",
+      "date": "2026-10-15",
+      "status": "VERIFIED",
+      "inputs": [
+        "live Figma component sets Badge 2132:21, StatusIndicator 2132:69, Link 2132:102, Tag 2132:150 and Tooltip 2132:189",
+        "current Figma Kind, Tone, Size, State, Dismissible and Placement variant axes",
+        "current Figma Label, Dismiss and Content child-slot names",
+        "published GenerateComponent SDK Factory and GenerateLayout ComponentConverter"
+      ],
+      "outputs": [
+        "GenerateLayout mappings keyed by the five exact Figma Component Set IDs",
+        "strict current-domain validation and SDK API application for all five component contracts",
+        "public Z_Link snapshotState contract for deterministic generated and evidence states with empty-value native-interaction restoration",
+        "traceability advanced from 18 to 23 verified SDK-to-GenerateLayout component chains",
+        "ComponentLab remains a pure published-SDK consumer with no duplicate component implementation"
+      ],
+      "verification": [
+        "live Figma design context, metadata, screenshots and Code Connect status read for all five component sets",
+        "catalog generator write and --check passed with 110 canonical entries and 105 registered runtime components",
+        "catalog Python tests 12/12 passed including 23 verified SDK-to-GenerateLayout component chains",
+        "GenerateComponent SDK publish and SDK consumer CTest 1/1 passed with MSVC 19.51 isolated caches",
+        "ComponentLab CTest 17/17 passed serially across four profiles",
+        "ComponentLab formal offline build and delivery-manifest refresh passed with 388 packaged files",
+        "ComponentLab native offline verification passed 8/8 profile and appearance combinations with clean PATH and deliberately invalid external Qt plugin paths",
+        "GenerateLayout V1 CTest 2/2 and V2 CTest 3/3 passed",
+        "GenerateLayout mapping static check and all three project governance checks passed"
+      ],
+      "open": [
+        "visual pixel parity for these five components is not yet formally approved and remains NOT_VERIFIED",
+        "Code Connect is absent for all five Figma component sets",
+        "Figma engineering-status text still says mapping pending and requires a separate evidence-driven design-source refresh",
+        "Tooltip target resolution and attachTo lifecycle still require a generated-page integration test",
+        "Tag removal, persistence and undo still require a generated-page controller integration test",
+        "Link snapshotState must be cleared by an interactive page when native hover, press and focus resolution should resume"
+      ]
+    },
+    {
+      "id": "B13-navigation-composites-runtime-and-consumer-chain",
+      "date": "2026-10-15",
+      "status": "VERIFIED",
+      "inputs": [
+        "live Figma Navbar component set 380:113 with Density=Comfortable/Compact and ProfileName content property",
+        "live Figma Sidebar component set 392:216 with Density=Comfortable/Compact and Collapsed=False/True",
+        "live Figma DesktopBottomNavigation component set 1312:96 with IconPlacement=Top/Start",
+        "current public-versus-INTERNAL anatomy boundaries and absence of Code Connect mappings for all three public sets"
+      ],
+      "outputs": [
+        "real SDK QWidget compositions for Navbar and Sidebar instead of generic painted placeholders",
+        "profile-aware DesktopBottomNavigation tokens instead of hard-coded light colors",
+        "Factory-only construction of all three public navigation composites in ComponentLab",
+        "GenerateLayout mappings keyed by the exact public Figma Component Set IDs and explicit generated-page controller boundaries",
+        "NoFocus composition roots with StrongFocus child actions and component-level optional inherited FocusIndicator control",
+        "traceability advanced from 23 to 26 verified SDK-to-GenerateLayout component chains"
+      ],
+      "verification": [
+        "live Figma design context, metadata, screenshots and Code Connect status read for Navbar, Sidebar and DesktopBottomNavigation",
+        "GenerateComponent SDK publish and SDK consumer CTest 1/1 passed with MSVC 19.51 isolated caches",
+        "ComponentLab CTest 17/17 passed across four profiles, with focused light/dark navigation evidence recapture",
+        "GenerateLayout V1 CTest 2/2 and V2 CTest 3/3 passed",
+        "catalog generator write and --check passed with 110 canonical entries, 105 registered runtime components and 26 verified full chains",
+        "catalog Python tests 12/12 and GenerateLayout static mapping check passed",
+        "Navbar and Sidebar light/dark runtime screenshots were inspected after the final geometry and icon fixes",
+        "Windows-platform navigation evidence test passed and confirmed DesktopBottomNavigation Chinese labels render correctly at devicePixelRatio 2"
+      ],
+      "open": [
+        "visual pixel parity for all three navigation composites remains NOT_VERIFIED pending formal design approval",
+        "Code Connect is absent for all three public Figma component sets",
+        "the Qt offscreen font engine renders DesktopBottomNavigation CJK glyphs as fallback bars even though code points are correct; the Windows-platform evidence passes, so this remains a test-platform artifact rather than a Windows runtime defect",
+        "Sidebar currently reuses the available document icon for several routes because the Figma route-specific icon asset contract is not yet published",
+        "route navigation, search execution, notification/profile data, bottom-navigation page routing and persistence remain generated-page controller responsibilities"
+      ]
+    },
+    {
+      "id": "B14-menu-menubar-public-identity-consumer-chain",
+      "date": "2026-10-15",
+      "status": "VERIFIED",
+      "inputs": [
+        "live Figma public Menu component 482:491 and internal MenuItem component set 482:490 with Type by State variants",
+        "live Figma public MenuBar component 487:23 and internal MenuBarItem component set 487:22 with five item states",
+        "existing GenerateComponent NavigationAppearance SDK implementation and ComponentLab NavigationGallery evidence",
+        "public-node versus internal-anatomy identity correction from the current Figma structure"
+      ],
+      "outputs": [
+        "GenerateLayout mappings keyed by public designIdentityId 482:491 and 487:23 instead of internal component-set IDs",
+        "declared SDK composition APIs for Menu and MenuBar without duplicating QAction, QMenu or item construction in GenerateLayout",
+        "public setMenuBarCornerVisible API and Show corner mapping",
+        "focus-ring disable verification for both native wrappers while retaining Qt QAction keyboard navigation",
+        "traceability advanced from 26 to 28 verified SDK-to-GenerateLayout component chains and focus-policy unresolved count reduced from 82 to 80"
+      ],
+      "verification": [
+        "catalog generator write and --check passed with 110 canonical entries and 105 registered runtime components",
+        "catalog Python tests 13/13 passed including public-node and internal-variant-source identity assertions",
+        "GenerateComponent SDK build, publish and SDK consumer CTest 1/1 passed",
+        "ComponentLab CTest 17/17 passed across four profiles",
+        "GenerateLayout V1 CTest 2/2, V2 CTest 3/3 and static mapping check passed",
+        "all three project CheckProject.py checks passed",
+        "git diff --check passed with line-ending warnings only"
+      ],
+      "open": [
+        "Menu and MenuBar visual pixel parity remains NOT_VERIFIED pending formal design approval",
+        "NavigationAppearance still resolves its current colors from figma-navigation-visuals.json and hard-coded fallback values rather than the shared TokenResources pipeline, so tokenBinding remains UNRESOLVED",
+        "cross-platform native menu-bar integration, menu roles, screen-edge popup flipping, RTL and assistive-technology behavior still require platform evidence",
+        "the Figma engineering notes still describe older root-only QSS gaps and should be refreshed only after the token and platform evidence is complete"
+      ]
+    },
+    {
+      "id": "B15-toolbar-runtime-and-consumer-chain",
+      "date": "2026-10-15",
+      "status": "VERIFIED",
+      "inputs": [
+        "live Figma ComponentLab/ToolBar component set 494:370",
+        "current Figma Orientation, Placement, Capacity and Presentation axes with 16 combinations",
+        "current Figma Show handle boolean property and toolbar variable definitions",
+        "existing GenerateComponent navigation.configureToolBar implementation and ComponentLab 16-specimen gallery",
+        "absence of Code Connect mappings for ToolBar 494:370"
+      ],
+      "outputs": [
+        "GenerateLayout mapping keyed by exact component-set ID 494:370",
+        "composition-property dispatch that passes only validated ToolBar properties to the published SDK API",
+        "SDK-generated horizontal/vertical, docked/floating appearance, fit/overflow and icon/text specimens without a parallel GenerateLayout implementation",
+        "Show handle true/false support with a stable accessible handle identity",
+        "focus-ring disable verification while preserving child QAction and QToolButton keyboard behavior",
+        "traceability advanced from 28 to 29 verified SDK-to-GenerateLayout component chains and focus-policy unresolved count reduced from 80 to 79"
+      ],
+      "verification": [
+        "live Figma design context with screenshot, variable definitions and Code Connect status read for ToolBar 494:370",
+        "catalog generator write and --check passed with 110 canonical entries and 105 registered runtime components",
+        "catalog Python tests 13/13 passed",
+        "GenerateComponent SDK build, publish and SDK consumer CTest 1/1 passed",
+        "ComponentLab CTest 17/17 passed across four profiles",
+        "GenerateLayout V1 CTest 2/2, V2 CTest 3/3 and static mapping check passed",
+        "the initial ToolBar test correctly exposed Qt's private extension button; the final test counts the two public QAction buttons separately from Qt internals and passes"
+      ],
+      "open": [
+        "ToolBar visual pixel parity remains NOT_VERIFIED pending formal design approval",
+        "ToolBar variable values are still consumed through the navigation visual contract and some QSS fallback literals rather than the shared TokenResources pipeline, so tokenBinding remains UNRESOLVED",
+        "Placement=Floating is a deterministic Figma appearance specimen; real floating, docking areas, movable state and topLevelChanged lifecycle remain QMainWindow responsibilities",
+        "native overflow behavior for QWidgetAction and arbitrary widgets outside QMainWindow still requires platform integration evidence",
+        "Code Connect is absent for ToolBar 494:370"
+      ]
+    },
+    {
+      "id": "B16-tabwidget-toolbox-public-composition-chain",
+      "date": "2026-10-15",
+      "status": "VERIFIED",
+      "inputs": [
+        "live Figma public TabWidget component 500:849 and internal TabItem component set 500:847 with Position by State variants",
+        "live Figma public ToolBox component 505:555 and internal ToolBoxItem component set 505:553 with five item states",
+        "existing GenerateComponent TabAppearance and ToolBoxAppearance native-state implementations",
+        "ComponentLab-owned default page construction that prevented GenerateLayout from consuming one shared composition contract"
+      ],
+      "outputs": [
+        "public SDK populateFigmaTabWidget and populateFigmaToolBox composition APIs",
+        "SDK-owned four-tab and three-toolbox-item default data, icons, disabled items, current selection and page content",
+        "explicit per-tab close policy that preserves Qt tabCloseRequested semantics and does not delete pages",
+        "ComponentLab galleries and interactive previews changed to consume the SDK composition APIs instead of maintaining duplicate construction",
+        "GenerateLayout mappings keyed by standalone public designIdentityId 500:849 and 505:555 while internal item sets remain anatomy only",
+        "focus-ring disable verification for both wrappers while retaining child tab and item navigation",
+        "traceability advanced from 29 to 31 verified SDK-to-GenerateLayout component chains, factory-only count reduced from 76 to 74, focus-policy unresolved count reduced from 79 to 77, and relatively complete count advanced from 23 to 24"
+      ],
+      "verification": [
+        "live Figma design context with screenshots, variables, component properties and Code Connect status read for both public components and internal variant sources",
+        "catalog generator write and --check passed with 110 canonical entries and 105 registered runtime components",
+        "catalog Python tests 13/13 passed",
+        "GenerateComponent SDK build, publish and SDK consumer CTest 1/1 passed",
+        "ComponentLab CTest 17/17 passed serially across four profiles",
+        "GenerateLayout V1 CTest 2/2, V2 CTest 3/3 and static mapping check passed",
+        "all three project CheckProject.py checks passed"
+      ],
+      "open": [
+        "TabWidget and ToolBox visual pixel parity remains NOT_VERIFIED pending formal design approval",
+        "ToolBox still uses appearance-layer color literals rather than the shared TokenResources pipeline, so its tokenBinding remains UNRESOLVED; TabWidget retains its existing BOUND_VERIFIED evidence",
+        "Code Connect is absent for both public components and their internal item sets",
+        "Tab close confirmation, page deletion and persistence remain generated-page controller responsibilities",
+        "ToolBox deliberately supports one current page only; all-collapsed or multi-open behavior belongs to ComponentLab/Collapse",
+        "the Figma engineering notes describing root-only QSS and missing tests are stale relative to the verified SDK implementation and should be refreshed after visual approval"
+      ]
+    }
+  ],
+  "notes": "The 85 + 48 figures must not be arithmetically added. Their fused result is the current 110-entry canonical library: 105 Widget/Composite component identities, 2 LayoutHelpers and 3 Assets. The 48-item source inventory remains classified as 23 MERGE plus 25 BUILT with zero REVIEW. Sidebar, Statistic and ToolButton absorb overlapping capabilities under one public identity each. ComponentLab/Drawer and commonWidget::Z_Drawer are the canonical design and SDK/Factory identities; commonWidget::Z_OverlayDrawer remains one explicitly recorded LEGACY_COMPATIBILITY implementation and Factory key, without adding a catalog identity. All 105 Widget/Composite identities are now instantiable and registered; this closes the canonical component engineering-count gap but does not imply visual approval or controller-level end-to-end completion. The public C++ Catalog exposes all 110 entries through designLibraryEntries while the component descriptor API remains component-only; ComponentLab uses this distinction for separate component, layout-helper and asset navigation. GenerateLayout validates and converts the two canonical LayoutHelper contracts and consumes 31 canonical components through the GenerateComponent SDK Factory. Menu, MenuBar, TabWidget and ToolBox use their public standalone Figma component nodes as GenerateLayout identities while MenuItem, MenuBarItem, TabItem and ToolBoxItem remain internal anatomy and variant sources; ToolBar consumes its 16 Figma variants and Show handle property through the shared SDK composition API. ComponentLab now consumes SDK-owned public composition data for all four standalone public navigation components instead of owning duplicate constructors. Generated pages retain route synchronization, search execution, notification/profile data, bottom-navigation page routing, tab close confirmation and persistence. Button, Checkbox and Input receive verified downstream status from the general downstreamEvidenceOverrides input rather than being under-reported as factory-only. All three Asset entries have public SDK catalogs and consumer chains: IconAsset uses stable icon IDs and QRC resolution, while ImageAsset and ModelAsset use VisualAssetCatalog for stateful SVG resolution, integrity metadata, high-DPI rendering and Profile token substitution. ComponentLab consumes the same catalogs and GenerateLayout stores only stable IDs and contracts, not parallel public paths. The current canonical component engineering gap is zero. All 148 Figma Component Sets are accounted for exactly once: 129 are referenced by canonical component-set identities, 17 are INTERNAL anatomy or contracts, Button/IconOnly is one PROPOSAL owned by ComponentLab/Button, and the duplicate ComponentLab/MenuItem on the MetricCard page is one RESIDUE tied to canonical set 482:490. The four standalone public component identities Menu, MenuBar, TabWidget and ToolBox are tracked separately from their internal variant-source sets. All 110 entries remain NOT_VERIFIED for visual approval and NOT_REVIEWED for governance approval; owner and version fields remain unresolved. Across the 105 components, 77 focus policies remain unresolved; across all 110 library entries, 61 token-binding statuses remain unresolved. ModelAsset remains the 2D schematic visualization foundation and excludes 3D models, QAbstractItemModel and the runtime interaction canvas."
+}

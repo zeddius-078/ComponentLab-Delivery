@@ -1,4 +1,4 @@
-/* GENERATED | dark-compact | 79059ec4189ce0c4194a0cd6aa3160963870be5d42e024543b1c83fbf8bf395e | DEMO-PROPOSAL */
+/* GENERATED | dark-compact | e35b1f706bbffcc0447194bcddf9631373de3b8e6cdf52628d78588694e6e5b0 | DEMO-PROPOSAL */
 /* Z_PushButton.qss.in -> generated Z_PushButton.qss */
 commonWidget--Z_PushButton[buttonColor="PRIMARY"][buttonVariant="SOLID"][ghost="false"][buttonSize="XS"] {
     background: #6235f7;

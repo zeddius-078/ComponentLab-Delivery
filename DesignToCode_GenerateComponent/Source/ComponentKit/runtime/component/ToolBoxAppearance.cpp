@@ -3,6 +3,7 @@
 #include <QAbstractButton>
 #include <QEvent>
 #include <QFontDatabase>
+#include <QLabel>
 #include <QLayout>
 #include <QPainter>
 #include <QPointer>
@@ -14,15 +15,73 @@
 #include <QTimer>
 #include <QToolBox>
 #include <QVariant>
+#include <QVBoxLayout>
 #include <stdexcept>
 
 namespace commonWidget {
 namespace {
+QLabel* compositionLabel(QWidget* parent, const QString& text, const QRect& rect, int size,
+                         int weight, const QString& color, bool wrap = false) {
+    auto* result = new QLabel(text, parent);
+    result->setTextFormat(Qt::PlainText);
+    result->setGeometry(rect);
+    result->setWordWrap(wrap);
+    result->setAlignment(Qt::AlignLeft | Qt::AlignTop);
+    QFont labelFont("Inter");
+    labelFont.setPixelSize(size);
+    labelFont.setWeight(weight);
+    result->setFont(labelFont);
+    result->setStyleSheet(
+        QString("background:transparent;border:0;color:%1;font-family:'Inter';font-size:%2px;")
+            .arg(color)
+            .arg(size));
+    return result;
+}
+
 QFont labelFont() {
     QFont f("Inter");
     f.setPixelSize(14);
     f.setWeight(QFont::DemiBold);
     return f;
+}
+
+void populateFigmaToolBoxImpl(QToolBox* box, bool sourceSnapshot) {
+    if (!box)
+        throw std::invalid_argument("ToolBox is null");
+    while (box->count()) {
+        auto* page = box->widget(0);
+        box->removeItem(0);
+        delete page;
+    }
+    for (const auto& name : {QStringLiteral("General"), QStringLiteral("Rules"),
+                             QStringLiteral("Notifications")}) {
+        auto* page = new QWidget;
+        page->setObjectName(QStringLiteral("toolBoxDemo") + name);
+        auto* title = compositionLabel(page, name + QStringLiteral(" page"),
+                                       QRect(23, 23, 700, 26), 18, QFont::DemiBold,
+                                       QStringLiteral("#191919"));
+        auto* body = compositionLabel(
+            page,
+            QStringLiteral("Only the current item widget is shown here. Other item widgets remain "
+                           "owned by the ToolBox until removed."),
+            QRect(23, 61, 700, 19), 13, QFont::Normal, QStringLiteral("#191919"),
+            !sourceSnapshot);
+        if (!sourceSnapshot) {
+            auto* layout = new QVBoxLayout(page);
+            layout->setContentsMargins(23, 23, 23, 20);
+            layout->setSpacing(12);
+            for (auto* text : {title, body}) {
+                text->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Preferred);
+                layout->addWidget(text);
+            }
+            layout->addStretch();
+        }
+        box->addItem(page, name == QStringLiteral("General") ? QStringLiteral("&General") : name);
+    }
+    box->setItemIcon(1, figmaToolBoxSettingsIcon(true));
+    box->setItemEnabled(2, false);
+    box->setCurrentIndex(1);
+    applyFigmaToolBoxAppearance(box);
 }
 
 void svg(QPainter* p, const QString& name, const QRect& rect) {
@@ -204,6 +263,10 @@ private:
     QToolBox* box_;
     bool queued_ = false;
 };
+}
+
+void populateFigmaToolBox(QToolBox* box, bool sourceSnapshot) {
+    populateFigmaToolBoxImpl(box, sourceSnapshot);
 }
 
 QIcon figmaToolBoxSettingsIcon(bool composition) {

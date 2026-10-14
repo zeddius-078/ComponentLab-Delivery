@@ -10,18 +10,28 @@ $saved = @{}
 foreach ($key in @('PATH','QT_PLUGIN_PATH','QT_QPA_PLATFORM_PLUGIN_PATH','QT_QPA_PLATFORM','QT_SCALE_FACTOR')) {
     $saved[$key] = [Environment]::GetEnvironmentVariable($key, 'Process')
 }
+$sdk = if ($env:GENERATED_COMPONENT_SDK_ROOT) {
+    [IO.Path]::GetFullPath($env:GENERATED_COMPONENT_SDK_ROOT)
+} else {
+    $workspace = Split-Path (Split-Path $root -Parent) -Parent
+    [IO.Path]::GetFullPath((Join-Path $workspace 'DesignToCode_GenerateComponent/build/sdk'))
+}
+$catalogPath = Join-Path $sdk 'resources/mappings/design-component-catalog.json'
+if (-not (Test-Path -LiteralPath $catalogPath)) {
+    throw "Authoritative design component catalog missing: $catalogPath"
+}
+$designCatalog = Get-Content -LiteralPath $catalogPath -Raw | ConvertFrom-Json
+$expectedComponents = [int]$designCatalog.componentCount
+$expectedSets = [int]$designCatalog.statistics.figmaComponentSetCount
+$expectedVariants = [int](($designCatalog.figmaPages | ForEach-Object {
+    ($_.componentSets | ForEach-Object { $_.variants.Count } | Measure-Object -Sum).Sum
+} | Measure-Object -Sum).Sum)
 $results = @()
 try {
     if (-not $SkipCompilerChecks) {
         $env:PATH = $Dist + ';' + $saved['PATH']
         & python (Join-Path $root 'delivery/tools/CheckProject.py') 2>&1 | Tee-Object -FilePath (Join-Path $output 'governance.log')
         if ($LASTEXITCODE -ne 0) { throw 'Project governance failed' }
-        $sdk = if ($env:GENERATED_COMPONENT_SDK_ROOT) {
-            [IO.Path]::GetFullPath($env:GENERATED_COMPONENT_SDK_ROOT)
-        } else {
-            $workspace = Split-Path (Split-Path $root -Parent) -Parent
-            [IO.Path]::GetFullPath((Join-Path $workspace 'DesignToCode_GenerateComponent/build/sdk'))
-        }
         $manifest = Get-Content -LiteralPath (Join-Path $sdk 'manifest/component-sdk.json') -Raw | ConvertFrom-Json
         foreach ($file in $manifest.files) {
             $path = Join-Path $sdk $file.path
@@ -60,7 +70,14 @@ try {
             }
             $report = Get-Content -LiteralPath (Join-Path $capture 'runtime.json') -Raw | ConvertFrom-Json
             $expectedPresets = @('solid','gradient','inset','gradient-inset','outline','elevated','gradient-elevated')
-            if ($report.screens -ne 1 -or $report.capturedPages -ne 13 -or $report.designSystemComponents -ne 73 -or $report.figmaComponentSets -ne 123 -or $report.figmaVariants -ne 1471 -or $report.nativeDescriptors -ne 85 -or $report.nativeRegistryRows -ne 85 -or ($report.presets -join ',') -ne ($expectedPresets -join ',') -or $report.appearance -ne $appearance) { throw 'Unexpected Demo configuration' }
+            if ($report.screens -ne 1 -or $report.capturedPages -ne 13 -or
+                $report.designSystemComponents -ne $expectedComponents -or
+                $report.figmaComponentSets -ne $expectedSets -or
+                $report.figmaVariants -ne $expectedVariants -or
+                $report.nativeDescriptors -ne $expectedComponents -or
+                $report.nativeRegistryRows -ne $expectedComponents -or
+                ($report.presets -join ',') -ne ($expectedPresets -join ',') -or
+                $report.appearance -ne $appearance) { throw 'Unexpected Demo configuration' }
             $pages = @('172:2710','234:2717','339:2','242:2720','443:2','363:2')
             foreach ($i in 0..5) {
                 $sections = '外观,分组与状态'

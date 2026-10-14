@@ -23,6 +23,9 @@ QByteArray read(const QString& resource) {
             path = generatedRoot + "/button/manifest.json";
         else if (resource.startsWith(":/checkbox/") || resource.startsWith(":/forms/"))
             path = generatedRoot + '/' + resource.mid(2);
+        else if (resource == ":/tokens/tokens_qt.json")
+            path = QDir(generatedRoot).absoluteFilePath(
+                "../DesignSystem/generated/runtime/tokens_qt.json");
         else {
             auto m =
                 QRegularExpression("^:/button/(light|dark)-(comfortable|compact)(-demo)?\\.qss$")

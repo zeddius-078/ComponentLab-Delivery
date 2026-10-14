@@ -1,4 +1,5 @@
 #include "CompositeGallery.h"
+#include "ComponentFactory.h"
 #include "FigmaGalleryView.h"
 #include "Z_DesignComponents.h"
 #include <QPainter>
@@ -13,11 +14,8 @@ namespace {
 
 const QColor kText(0x19, 0x19, 0x19);
 const QColor kAccent(0x62, 0x35, 0xf7);
-const QColor kOnBrand(Qt::white);
 const QColor kMutedBg(0xf3, 0xf3, 0xf3);
 const QColor kBorderSubtle(0xd0, 0xd0, 0xd0);
-const QColor kBorderInput(0xa7, 0xa7, 0xa7);
-const QColor kPlaceholder(0x67, 0x67, 0x67);
 const QColor kDisabledText(0x8a, 0x8a, 0x8a);
 const QColor kKeyBg(0xf7, 0xf9, 0xfc);
 const QColor kKeyText(0x50, 0x58, 0x68);
@@ -104,81 +102,6 @@ void paintNavItem(QPainter& p, const QRect& bounds, const QString& label,
     p.restore();
 }
 
-void paintNavbarSpecimen(QPainter& p, const QRect& bounds, bool compact) {
-    p.save();
-    p.translate(bounds.topLeft());
-    p.fillRect(QRectF(0, 0, bounds.width(), bounds.height()), Qt::white);
-    const qreal brandX = compact ? 16 : 24;
-    const qreal brandY = compact ? 12 : 15.5;
-    const qreal brandLogoX = brandX;
-    fillRounded(p, QRectF(brandLogoX, brandY, 32, 32), 10, kAccent);
-    drawText(p, QRectF(brandLogoX, brandY + 7, 32, 18), QStringLiteral("CL"), 12,
-             QFont::DemiBold, kOnBrand, Qt::AlignCenter);
-    drawText(p, QRectF(brandX + 42, brandY + 5, 104, 22), QStringLiteral("ComponentLab"), 14,
-             QFont::Medium, kText, Qt::AlignLeft | Qt::AlignVCenter);
-    const qreal searchX = brandX + 146 + (compact ? 12 : 16);
-    const qreal searchY = compact ? 12 : 11.5;
-    const qreal searchH = compact ? 32 : 40;
-    const qreal searchPad = compact ? 12 : 16;
-    fillRounded(p, QRectF(searchX, searchY, 320, searchH), 4, Qt::white, kBorderInput, 1);
-    drawIcon(p, QRectF(searchX + searchPad, searchY + (searchH - 14) / 2, 14, 14),
-             QStringLiteral("search.svg"));
-    drawText(p, QRectF(searchX + searchPad + 22, searchY + (searchH - 20) / 2,
-                       320 - searchPad - 22, 20),
-             QStringLiteral("Search workspace"), 14, QFont::Normal, kPlaceholder,
-             Qt::AlignLeft | Qt::AlignVCenter);
-    const qreal notifyX = compact ? 993 : 971;
-    const qreal notifyY = compact ? 12 : 10.5;
-    const qreal notifySize = compact ? 32 : 42;
-    drawIcon(p, QRectF(notifyX, notifyY, notifySize, notifySize),
-             compact ? "notifications-compact.svg" : "notifications.svg");
-    const qreal profileX = compact ? 1037 : 1029;
-    const qreal profileY = compact ? 12 : 10.5;
-    const qreal avatarY = compact ? profileY : profileY + 5;
-    fillRounded(p, QRectF(profileX, avatarY, 32, 32), 16, kAccent);
-    drawText(p, QRectF(profileX, avatarY + 7, 32, 18), QStringLiteral("AM"), 12,
-             QFont::DemiBold, kOnBrand, Qt::AlignCenter);
-    drawText(p, QRectF(profileX + 40, profileY + (compact ? 5 : 10), 83, 22),
-             QStringLiteral("Alex Morgan"), 14, QFont::Normal, kText,
-             Qt::AlignLeft | Qt::AlignVCenter);
-    drawIcon(p, QRectF(profileX + 131, profileY + (compact ? 8 : 13), 16, 16),
-             QStringLiteral("chevron-down.svg"));
-    p.fillRect(QRectF(0, bounds.height() - 1, bounds.width(), 1), kBorderSubtle);
-    p.restore();
-}
-
-void paintSidebarSpecimen(QPainter& p, const QRect& bounds, bool collapsed, bool compact) {
-    p.save();
-    p.translate(bounds.topLeft());
-    p.fillRect(QRectF(0, 0, bounds.width(), bounds.height()), Qt::white);
-    const int itemH = compact ? 40 : 46;
-    const qreal innerW = collapsed ? 48 : 248;
-    const QRectF logo(16, 20, 32, 32);
-    fillRounded(p, logo, 10, kAccent);
-    drawText(p, QRectF(logo.x(), logo.y() + 7, 32, 18), QStringLiteral("CL"), 12,
-             QFont::DemiBold, kOnBrand, Qt::AlignCenter);
-    if (!collapsed) {
-        drawText(p, QRectF(16 + 42, 16 + 9, 180, 22), QStringLiteral("ComponentLab"), 14,
-                 QFont::Medium, kText, Qt::AlignLeft | Qt::AlignVCenter);
-        drawIcon(p, QRectF(16 + 232, 16 + 12, 16, 16), QStringLiteral("chevron-left.svg"));
-    } else {
-        drawIcon(p, QRectF(16 + 40, 16 + 12, 16, 16), QStringLiteral("chevron-right.svg"));
-    }
-    p.fillRect(QRectF(16, 66, innerW, 1), kBorderSubtle);
-    const QStringList labels{QStringLiteral("Dashboard"), QStringLiteral("Orders"),
-                             QStringLiteral("Products"), QStringLiteral("Integrations"),
-                             QStringLiteral("Chats")};
-    const qreal step = compact ? 44 : 50;
-    for (int i = 0; i < labels.size(); ++i)
-        paintNavItem(p, QRect(16, 77 + int(i * step), int(innerW), itemH), labels[i],
-                     i == 0 ? QStringLiteral("Selected") : QStringLiteral("Default"),
-                     collapsed, compact);
-    const qreal settingsY = compact ? 410 : 458;
-    paintNavItem(p, QRect(16, int(settingsY), int(innerW), itemH), QStringLiteral("Settings"),
-                 QStringLiteral("Default"), collapsed, compact);
-    p.restore();
-}
-
 void paintSubItem(QPainter& p, const QRect& bounds, const QString& label,
                   const QString& state) {
     p.save();
@@ -238,50 +161,18 @@ void paintMainItem(QPainter& p, const QRect& bounds, const QString& label,
     p.restore();
 }
 
-void paintDbnSpecimen(QPainter& p, const QRect& bounds, bool startPlacement) {
-    p.save();
-    p.translate(bounds.topLeft());
-    fillRounded(p, QRectF(0, 0, bounds.width(), bounds.height()), 0, Qt::white, kBorderSubtle,
-                1);
-    p.fillRect(QRectF(9, 9, 822, 48), kMutedBg);
-    paintSubItem(p, QRect(321, 17, 55, 32), QStringLiteral("概览"),
-                 QStringLiteral("Selected"));
-    p.fillRect(QRectF(384, 21, 1, 24), kBorderSubtle);
-    paintSubItem(p, QRect(393, 17, 55, 32), QStringLiteral("最近"),
-                 QStringLiteral("Default"));
-    p.fillRect(QRectF(456, 21, 1, 24), kBorderSubtle);
-    paintSubItem(p, QRect(465, 17, 55, 32), QStringLiteral("收藏"),
-                 QStringLiteral("Default"));
-    const qreal tierY = 65;
-    if (startPlacement) {
-        paintMainItem(p, QRect(9, int(tierY), 71, 48), QStringLiteral("首页"),
-                      QStringLiteral("Selected"), true, QStringLiteral("home.svg"));
-        paintMainItem(p, QRect(385, int(tierY), 71, 48), QStringLiteral("内容"),
-                      QStringLiteral("Default"), true, QStringLiteral("document.svg"));
-        paintMainItem(p, QRect(760, int(tierY), 71, 48), QStringLiteral("设置"),
-                      QStringLiteral("Default"), true, QStringLiteral("settings.svg"));
-    } else {
-        paintMainItem(p, QRect(9, int(tierY), 120, 64), QStringLiteral("首页"),
-                      QStringLiteral("Selected"), false, QStringLiteral("home.svg"));
-        paintMainItem(p, QRect(360, int(tierY), 120, 64), QStringLiteral("内容"),
-                      QStringLiteral("Default"), false, QStringLiteral("document.svg"));
-        paintMainItem(p, QRect(711, int(tierY), 120, 64), QStringLiteral("设置"),
-                      QStringLiteral("Default"), false, QStringLiteral("settings.svg"));
-    }
-    p.restore();
-}
-
 } // namespace
 
 bool hasCompositeGallery(const QString& pageId) {
     return pageId == "380:2" || pageId == "392:2" || pageId == "1307:2";
 }
 
-QWidget* createCompositeGallery(const QString& pageId, QWidget* parent) {
+QWidget* createCompositeGallery(const QString& pageId,
+                                const commonWidget::ComponentFactory& factory,
+                                QWidget* parent) {
     auto* canvas = new CompositeCanvas;
     canvas->setObjectName("figmaGalleryCanvas");
     canvas->setStyleSheet("QWidget#figmaGalleryCanvas {background:white;border-radius:16px;}");
-    canvas->setAttribute(Qt::WA_TransparentForMouseEvents);
     if (pageId == "380:2") {
         canvas->setFixedSize(2576, 256);
         canvas->setProperty("galleryNodeId", "2013:28");
@@ -294,9 +185,24 @@ QWidget* createCompositeGallery(const QString& pageId, QWidget* parent) {
                      QStringLiteral("States · default / hover / selected / disabled / custom")},
                     {QRectF(929, 40, 99, 15), QRectF(1052, 40, 266, 15),
                      QRectF(1342, 40, 306, 15)});
-            paintNavbarSpecimen(p, QRect(68, 125, 1200, 63), false);
-            paintNavbarSpecimen(p, QRect(1308, 125, 1200, 56), true);
         };
+        auto* comfortable = qobject_cast<commonWidget::Z_Navbar*>(
+            factory.create(QStringLiteral("commonWidget::Z_Navbar"), canvas));
+        auto* compact = qobject_cast<commonWidget::Z_Navbar*>(
+            factory.create(QStringLiteral("commonWidget::Z_Navbar"), canvas));
+        if (!comfortable || !compact)
+            throw std::runtime_error("SDK Factory did not create Navbar");
+        comfortable->setObjectName(QStringLiteral("figmaNavbarComfortable"));
+        comfortable->setVariantTuple(QStringLiteral("Density=Comfortable"));
+        comfortable->setGeometry(68, 125, 1200, 63);
+        comfortable->setProperty("figmaNodeId", QStringLiteral("380:21"));
+        comfortable->setProperty("figmaDesignBounds", QRect(68, 125, 1200, 63));
+        compact->setObjectName(QStringLiteral("figmaNavbarCompact"));
+        compact->setVariantTuple(QStringLiteral("Density=Compact"));
+        compact->setGeometry(1308, 125, 1200, 56);
+        compact->setProperty("figmaNodeId", QStringLiteral("380:73"));
+        compact->setProperty("figmaDesignBounds", QRect(1308, 125, 1200, 56));
+        canvas->setProperty("runtimeSpecimenCount", 2);
     } else if (pageId == "392:2") {
         canvas->setFixedSize(1312, 1059);
         canvas->setProperty("galleryNodeId", "2010:1360");
@@ -328,11 +234,30 @@ QWidget* createCompositeGallery(const QString& pageId, QWidget* parent) {
                 paintNavItem(p, QRect(item.x, item.y, item.w, item.h),
                              QStringLiteral("Navigation item"), item.state, item.collapsed,
                              item.h == 40);
-            paintSidebarSpecimen(p, QRect(236, 471, 280, 520), false, false);
-            paintSidebarSpecimen(p, QRect(556, 471, 80, 520), true, false);
-            paintSidebarSpecimen(p, QRect(676, 471, 280, 466), false, true);
-            paintSidebarSpecimen(p, QRect(996, 471, 80, 466), true, true);
         };
+        struct SidebarRuntimeSpec {
+            QRect bounds;
+            const char* tuple;
+            const char* nodeId;
+        };
+        const SidebarRuntimeSpec specimens[] = {
+            {QRect(236, 471, 280, 520), "Density=Comfortable, Collapsed=False", "392:216"},
+            {QRect(556, 471, 80, 520), "Density=Comfortable, Collapsed=True", "392:216"},
+            {QRect(676, 471, 280, 466), "Density=Compact, Collapsed=False", "392:216"},
+            {QRect(996, 471, 80, 466), "Density=Compact, Collapsed=True", "392:216"},
+        };
+        for (int index = 0; index < 4; ++index) {
+            auto* sidebar = qobject_cast<commonWidget::Z_Sidebar*>(
+                factory.create(QStringLiteral("commonWidget::Z_Sidebar"), canvas));
+            if (!sidebar)
+                throw std::runtime_error("SDK Factory did not create Sidebar");
+            sidebar->setObjectName(QStringLiteral("figmaSidebar%1").arg(index));
+            sidebar->setVariantTuple(QString::fromLatin1(specimens[index].tuple));
+            sidebar->setGeometry(specimens[index].bounds);
+            sidebar->setProperty("figmaNodeId", QString::fromLatin1(specimens[index].nodeId));
+            sidebar->setProperty("figmaDesignBounds", specimens[index].bounds);
+        }
+        canvas->setProperty("runtimeSpecimenCount", 4);
     } else if (pageId == "1307:2") {
         canvas->setFixedSize(1312, 846);
         canvas->setProperty("galleryNodeId", "2014:66");
@@ -362,13 +287,19 @@ QWidget* createCompositeGallery(const QString& pageId, QWidget* parent) {
                                   QStringLiteral("home.svg"));
                 }
         };
-        auto* top = new commonWidget::Z_DesktopBottomNavigation(canvas);
+        auto* top = qobject_cast<commonWidget::Z_DesktopBottomNavigation*>(
+            factory.create(QStringLiteral("commonWidget::Z_DesktopBottomNavigation"), canvas));
+        if (!top)
+            throw std::runtime_error("SDK Factory did not create DesktopBottomNavigation");
         top->setObjectName(QStringLiteral("figmaDesktopBottomNavigationTop"));
         top->setVariantTuple(QStringLiteral("IconPlacement=Top"));
         top->setGeometry(236, 475, 840, 138);
         top->setProperty("figmaNodeId", QStringLiteral("1312:26"));
         top->setProperty("figmaDesignBounds", QRect(236, 475, 840, 138));
-        auto* start = new commonWidget::Z_DesktopBottomNavigation(canvas);
+        auto* start = qobject_cast<commonWidget::Z_DesktopBottomNavigation*>(
+            factory.create(QStringLiteral("commonWidget::Z_DesktopBottomNavigation"), canvas));
+        if (!start)
+            throw std::runtime_error("SDK Factory did not create DesktopBottomNavigation");
         start->setObjectName(QStringLiteral("figmaDesktopBottomNavigationStart"));
         start->setVariantTuple(QStringLiteral("IconPlacement=Start"));
         start->setGeometry(236, 656, 840, 122);

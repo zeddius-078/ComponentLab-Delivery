@@ -5,11 +5,13 @@
 #include "Z_Select.h"
 #include "Z_CheckBox.h"
 #include "Z_DesignComponents.h"
+#include "Z_FoundationComponents.h"
 #include "SolidInnerShadow.h"
 #include "FocusIndicator.h"
 #include "Z_OtpInput.h"
 #include "NavigationGallery.h"
 #include "FigmaLayoutEvidence.h"
+#include "DesignComponentCatalog.h"
 #include <QGraphicsView>
 #include <QGraphicsProxyWidget>
 #include <QMenu>
@@ -33,6 +35,7 @@
 #include <QDial>
 #include <QLabel>
 #include <QFontInfo>
+#include <QItemSelectionModel>
 #include <QRawFont>
 #include <QLineEdit>
 #include <QKeySequenceEdit>
@@ -40,6 +43,7 @@
 #include <QListWidget>
 #include <QPainter>
 #include <QRadioButton>
+#include <QRegularExpression>
 #include <QButtonGroup>
 #include <QSet>
 #include <QPushButton>
@@ -54,6 +58,7 @@
 #include <QSplitter>
 #include <QSignalSpy>
 #include <QStackedWidget>
+#include <QStringListModel>
 #include <QWizard>
 #include <QWizardPage>
 #include <QColumnView>
@@ -77,6 +82,9 @@
 #include <QTreeWidget>
 #include <QTest>
 #include <QVBoxLayout>
+#include <QDragEnterEvent>
+#include <QDropEvent>
+#include <QMimeData>
 
 using namespace commonWidget;
 class CompositionTests : public QObject {
@@ -86,6 +94,12 @@ class CompositionTests : public QObject {
     std::unique_ptr<DemoWindow> window;
     template <class T> T* part(const char* name) {
         return window->findChild<T*>(name);
+    }
+    QTreeWidgetItem* pageItem(QTreeWidget* tree, const QString& pageId) {
+        for (QTreeWidgetItemIterator it(tree); *it; ++it)
+            if ((*it)->data(0, Qt::UserRole).toString() == pageId)
+                return *it;
+        return nullptr;
     }
     void edit(const char* name, const QString& value) {
         auto* editor = part<QLineEdit>(name);
@@ -174,7 +188,7 @@ auto* secondEditor=editors->widget(1);auto* area=secondEditor->findChild<QMdiAre
         auto* nativeSections = tabs->widget(0)->findChild<QTabWidget*>("nativeSections");
         QVERIFY(nativeSections);
         QCOMPARE(nativeSections->count(), 2);
-        QCOMPARE(nativeSections->tabText(0), QString::fromUtf8("组件图库"));
+        QCOMPARE(nativeSections->tabText(0), QString::fromUtf8("设计系统图库"));
         QCOMPARE(nativeSections->tabText(1), QString::fromUtf8("组件映射"));
 
         auto* gallery = part<QWidget>("nativeGalleryPage");
@@ -182,45 +196,91 @@ auto* secondEditor=editors->widget(1);auto* area=secondEditor->findChild<QMdiAre
         auto* pages = part<QStackedWidget>("componentPages");
         auto* registry = part<QTableWidget>("nativeRegistryTable");
         QVERIFY(gallery && tree && pages && registry);
-        QCOMPARE(gallery->property("descriptorCount").toInt(), 85);
-        QCOMPARE(gallery->property("componentCount").toInt(), 73);
-        QCOMPARE(gallery->property("componentSetCount").toInt(), 123);
-        QCOMPARE(gallery->property("variantCount").toInt(), 1471);
-        QCOMPARE(gallery->property("instantiableCount").toInt(), 85);
-        QCOMPARE(gallery->property("contractOnlyCount").toInt(), 0);
+        const auto descriptors = commonWidget::designComponentDescriptors();
+        const auto libraryEntries = commonWidget::designLibraryEntries();
+        const auto figmaPages = commonWidget::figmaComponentPages();
+        const auto figmaCategories = commonWidget::figmaComponentCategories();
+        int expectedInstantiable = 0;
+        int expectedSetCount = 0;
+        int expectedVariantCount = 0;
+        int expectedComponentCount = 0;
+        int expectedLayoutCount = 0;
+        int expectedAssetCount = 0;
+        QMap<QString, QString> expectedPageSection;
+        for (const auto& entry : libraryEntries) {
+            const QString section = entry.kind == QStringLiteral("LayoutHelper")
+                ? QStringLiteral("layout")
+                : entry.kind == QStringLiteral("Asset")
+                ? QStringLiteral("assets")
+                : QStringLiteral("components");
+            expectedPageSection.insert(entry.pageId, section);
+            if (section == QStringLiteral("components")) ++expectedComponentCount;
+            if (section == QStringLiteral("layout")) ++expectedLayoutCount;
+            if (section == QStringLiteral("assets")) ++expectedAssetCount;
+        }
+        for (const auto& descriptor : descriptors)
+            expectedInstantiable += descriptor.instantiable ? 1 : 0;
+        for (const auto& figmaPage : figmaPages) {
+            expectedSetCount += figmaPage.componentSets.size();
+            for (const auto& componentSet : figmaPage.componentSets)
+                expectedVariantCount += componentSet.variants.size();
+        }
+        QCOMPARE(gallery->property("descriptorCount").toInt(), descriptors.size());
+        QCOMPARE(gallery->property("libraryEntryCount").toInt(), libraryEntries.size());
+        QCOMPARE(gallery->property("componentCount").toInt(), expectedComponentCount);
+        QCOMPARE(gallery->property("pageCount").toInt(), figmaPages.size());
+        QCOMPARE(gallery->property("layoutHelperCount").toInt(), expectedLayoutCount);
+        QCOMPARE(gallery->property("assetCount").toInt(), expectedAssetCount);
+        QCOMPARE(gallery->property("sectionCount").toInt(), 3);
+        QCOMPARE(gallery->property("componentSetCount").toInt(), expectedSetCount);
+        QCOMPARE(gallery->property("variantCount").toInt(), expectedVariantCount);
+        QCOMPARE(gallery->property("instantiableCount").toInt(), expectedInstantiable);
+        QCOMPARE(gallery->property("contractOnlyCount").toInt(),
+                 descriptors.size() - expectedInstantiable);
         QCOMPARE(gallery->property("figmaFileKey").toString(),
                  QString("w92BKW1EcutKmTXkwzNHbf"));
-        QCOMPARE(tree->topLevelItemCount(), 9);
-        QCOMPARE(registry->rowCount(), 85);
+        QCOMPARE(tree->topLevelItemCount(), 3);
+        QCOMPARE(tree->topLevelItem(0)->data(0, Qt::UserRole + 3).toString(),
+                 QStringLiteral("components"));
+        QCOMPARE(tree->topLevelItem(1)->data(0, Qt::UserRole + 3).toString(),
+                 QStringLiteral("layout"));
+        QCOMPARE(tree->topLevelItem(2)->data(0, Qt::UserRole + 3).toString(),
+                 QStringLiteral("assets"));
+        QVERIFY(tree->topLevelItem(0)->text(0).startsWith(QString::fromUtf8("组件 (")));
+        QVERIFY(tree->topLevelItem(1)->text(0).startsWith(QString::fromUtf8("布局辅助 (")));
+        QVERIFY(tree->topLevelItem(2)->text(0).startsWith(QString::fromUtf8("资产 (")));
+        QCOMPARE(registry->rowCount(), descriptors.size());
 
         int pageCount = 0;
         QSet<QString> pageIds;
-        for (int group = 0; group < tree->topLevelItemCount(); ++group) {
-            auto* branch = tree->topLevelItem(group);
-            QVERIFY(branch->childCount() > 0);
-            for (int row = 0; row < branch->childCount(); ++row) {
-                auto* leaf = branch->child(row);
-                const QString pageId = leaf->data(0, Qt::UserRole).toString();
-                QVERIFY(!pageId.isEmpty());
-                QVERIFY(!pageIds.contains(pageId));
-                pageIds.insert(pageId);
-                QVERIFY(leaf->text(0).startsWith("20."));
-                ++pageCount;
-            }
-        }
-        QCOMPARE(pageCount, 73);
-        QCOMPARE(pageIds.size(), 73);
-
-        QTreeWidgetItem* mdiPage = nullptr;
-        for (int group = 0; group < tree->topLevelItemCount() && !mdiPage; ++group) {
-            auto* branch = tree->topLevelItem(group);
-            for (int row = 0; row < branch->childCount(); ++row) {
-                if (branch->child(row)->data(0, Qt::UserRole).toString() == "511:11") {
-                    mdiPage = branch->child(row);
-                    break;
+        QSet<QString> validCategoryIds;
+        for (const auto& category : figmaCategories)
+            validCategoryIds.insert(category.id);
+        for (int section = 0; section < tree->topLevelItemCount(); ++section) {
+            auto* sectionItem = tree->topLevelItem(section);
+            QVERIFY(sectionItem->childCount() > 0);
+            const QString sectionId = sectionItem->data(0, Qt::UserRole + 3).toString();
+            for (int group = 0; group < sectionItem->childCount(); ++group) {
+                auto* branch = sectionItem->child(group);
+                QVERIFY(validCategoryIds.contains(branch->data(0, Qt::UserRole).toString()));
+                QVERIFY(branch->childCount() > 0);
+                for (int row = 0; row < branch->childCount(); ++row) {
+                    auto* leaf = branch->child(row);
+                    const QString pageId = leaf->data(0, Qt::UserRole).toString();
+                    QVERIFY(!pageId.isEmpty());
+                    QVERIFY(!pageIds.contains(pageId));
+                    pageIds.insert(pageId);
+                    QCOMPARE(leaf->data(0, Qt::UserRole + 3).toString(), sectionId);
+                    QCOMPARE(expectedPageSection.value(pageId), sectionId);
+                    QVERIFY(leaf->text(0).startsWith("20."));
+                    ++pageCount;
                 }
             }
         }
+        QCOMPARE(pageCount, figmaPages.size());
+        QCOMPARE(pageIds.size(), figmaPages.size());
+
+        QTreeWidgetItem* mdiPage = pageItem(tree, QStringLiteral("511:11"));
         QVERIFY(mdiPage);
         tree->setCurrentItem(mdiPage);
         QCoreApplication::processEvents();
@@ -233,25 +293,67 @@ auto* secondEditor=editors->widget(1);auto* area=secondEditor->findChild<QMdiAre
         QVERIFY(pages->currentWidget()->findChild<QGraphicsView*>("figmaVariantGallery"));
         QVERIFY(!window->findChild<QWidget*>("mappingTab"));
         QVERIFY(!window->findChild<QWidget*>("mappingImplementationGuide"));
+
+        QTreeWidgetItem* iconAssetPage = pageItem(tree, QStringLiteral("2127:3"));
+        QVERIFY(iconAssetPage);
+        QCOMPARE(iconAssetPage->data(0, Qt::UserRole + 3).toString(), QStringLiteral("assets"));
+        tree->setCurrentItem(iconAssetPage);
+        QCoreApplication::processEvents();
+        auto* iconGallery = pages->currentWidget()->findChild<QWidget*>("iconAssetGallery");
+        auto* iconTable = pages->currentWidget()->findChild<QTableWidget*>("iconAssetCatalogTable");
+        QVERIFY(iconGallery && iconTable);
+        QVERIFY(iconGallery->property("iconAssetUsesSdkCatalog").toBool());
+        QCOMPARE(iconGallery->property("iconAssetVariantCount").toInt(), 6);
+        QCOMPARE(iconTable->rowCount(), commonWidget::IconAssetCatalog::descriptors().size());
+        QCOMPARE(iconTable->item(0, 1)->text(), QStringLiteral("icon.action.previous"));
+        QVERIFY(!commonWidget::ComponentFactory::isRegistered(
+            QStringLiteral("commonWidget::IconAsset")));
+
+        QTreeWidgetItem* imageAssetPage = pageItem(tree, QStringLiteral("2127:4"));
+        QVERIFY(imageAssetPage);
+        QCOMPARE(imageAssetPage->data(0, Qt::UserRole + 3).toString(), QStringLiteral("assets"));
+        tree->setCurrentItem(imageAssetPage);
+        QCoreApplication::processEvents();
+        auto* imageGallery = pages->currentWidget()->findChild<QWidget*>("imageAssetGallery");
+        auto* imageTable = pages->currentWidget()->findChild<QTableWidget*>(
+            "visualAssetCatalogTable");
+        QVERIFY(imageGallery && imageTable);
+        QVERIFY(imageGallery->property("imageAssetUsesSdkCatalog").toBool());
+        QCOMPARE(imageGallery->property("imageAssetVariantCount").toInt(), 6);
+        QCOMPARE(imageTable->rowCount(),
+                 commonWidget::VisualAssetCatalog::imageDescriptors().size());
+        QCOMPARE(imageTable->item(0, 0)->text(),
+                 QStringLiteral("image.foundation.geometric-preview"));
+        QVERIFY(!commonWidget::ComponentFactory::isRegistered(
+            QStringLiteral("commonWidget::ImageAsset")));
+
+        QTreeWidgetItem* modelAssetPage = pageItem(tree, QStringLiteral("2127:5"));
+        QVERIFY(modelAssetPage);
+        QCOMPARE(modelAssetPage->data(0, Qt::UserRole + 3).toString(), QStringLiteral("assets"));
+        tree->setCurrentItem(modelAssetPage);
+        QCoreApplication::processEvents();
+        auto* modelGallery = pages->currentWidget()->findChild<QWidget*>("modelAssetGallery");
+        auto* modelTable = pages->currentWidget()->findChild<QTableWidget*>(
+            "visualAssetCatalogTable");
+        QVERIFY(modelGallery && modelTable);
+        QVERIFY(modelGallery->property("modelAssetUsesSdkCatalog").toBool());
+        QVERIFY(modelGallery->property("modelAssetIs2D").toBool());
+        QCOMPARE(modelGallery->property("modelAssetVariantCount").toInt(), 3);
+        QCOMPARE(modelTable->rowCount(),
+                 commonWidget::VisualAssetCatalog::modelDescriptors().size());
+        QCOMPARE(modelTable->item(0, 0)->text(),
+                 QStringLiteral("model.foundation.schematic"));
+        QVERIFY(!commonWidget::ComponentFactory::isRegistered(
+            QStringLiteral("commonWidget::ModelAsset")));
     }
     void figmaPageAndVariantContract() {
         auto* tree = part<QTreeWidget>("componentTree");
         QVERIFY(tree);
-        QCOMPARE(tree->topLevelItemCount(), 9);
-        QCOMPARE(tree->topLevelItem(0)->text(0),
-                 QString::fromUtf8("20.1 · Navigation / 导航 (11)"));
+        QCOMPARE(tree->topLevelItemCount(), 3);
+        QVERIFY(tree->topLevelItem(0)->child(0)->text(0).startsWith(
+            QString::fromUtf8("20.1 · Navigation / 导航 (")));
 
-        QTreeWidgetItem* checkboxPage = nullptr;
-        for (int group = 0; group < tree->topLevelItemCount() && !checkboxPage; ++group) {
-            auto* branch = tree->topLevelItem(group);
-            for (int row = 0; row < branch->childCount(); ++row) {
-                if (branch->child(row)->text(0) ==
-                    QString::fromUtf8("20.5.01 · Checkbox / 复选框")) {
-                    checkboxPage = branch->child(row);
-                    break;
-                }
-            }
-        }
+        QTreeWidgetItem* checkboxPage = pageItem(tree, QStringLiteral("234:2717"));
         QVERIFY(checkboxPage);
         tree->setCurrentItem(checkboxPage);
         QCoreApplication::processEvents();
@@ -915,13 +1017,7 @@ auto* secondEditor=editors->widget(1);auto* area=secondEditor->findChild<QMdiAre
             {"172:2710", "buttonAppearanceTab"}, {"234:2717", "checkboxAppearanceTab"},
             {"339:2", "inputAppearanceTab"}, {"242:2720", "selectAppearanceTab"}};
         for (const auto& entry : expected) {
-            QTreeWidgetItem* selected = nullptr;
-            for (int group = 0; group < tree->topLevelItemCount(); ++group) {
-                auto* branch = tree->topLevelItem(group);
-                for (int row = 0; row < branch->childCount(); ++row)
-                    if (branch->child(row)->data(0, Qt::UserRole).toString() == entry.first)
-                        selected = branch->child(row);
-            }
+            QTreeWidgetItem* selected = pageItem(tree, entry.first);
             QVERIFY(selected);
             tree->setCurrentItem(selected);
             QCoreApplication::processEvents();
@@ -1574,7 +1670,7 @@ auto* secondEditor=editors->widget(1);auto* area=secondEditor->findChild<QMdiAre
         for(auto* editor:{stackEditor,pageEditor,wizardEditor})
             QCOMPARE(editor->findChild<QScrollArea*>("componentSettingsScroll")->horizontalScrollBar()->maximum(),0);
     }
-    void compositeGalleriesReproduceBlockedNavigationContracts() {
+    void compositeGalleriesConsumePublishedNavigationContracts() {
         for(const auto& asset:{"home.svg","home-accent.svg","home-disabled.svg","search.svg","notifications.svg","chevron-down.svg","chevron-left.svg","chevron-right.svg","document.svg","settings.svg"})
             QVERIFY(QFile::exists(QStringLiteral(":/figma/composite/%1").arg(asset)));
         window->resize(1600,920);auto* tree=part<QTreeWidget>("componentTree");
@@ -1590,6 +1686,9 @@ auto* secondEditor=editors->widget(1);auto* area=secondEditor->findChild<QMdiAre
             QVERIFY(canvas);
             const QImage pixels=canvas->grab().toImage().convertToFormat(QImage::Format_ARGB32);
             const auto nonWhite=[&pixels](QRect area){
+                const qreal dpr=pixels.devicePixelRatio();
+                area=QRect(qRound(area.x()*dpr),qRound(area.y()*dpr),
+                           qRound(area.width()*dpr),qRound(area.height()*dpr));
                 area=area.intersected(pixels.rect());int count=0;
                 for(int y=area.top();y<=area.bottom();++y)for(int x=area.left();x<=area.right();++x){
                     const QColor color=pixels.pixelColor(x,y);
@@ -1599,10 +1698,18 @@ auto* secondEditor=editors->widget(1);auto* area=secondEditor->findChild<QMdiAre
             };
             if(entry.first=="380:2"){
                 QCOMPARE(view->property("variantSpecimenCount").toInt(),2);QCOMPARE(view->property("componentSetCount").toInt(),1);QCOMPARE(canvas->size(),QSize(2576,256));
+                const auto navbars=canvas->findChildren<Z_Navbar*>();QCOMPARE(navbars.size(),2);QCOMPARE(canvas->property("runtimeSpecimenCount").toInt(),2);
+                QSet<QString> tuples;
+                for(auto* navbar:navbars){tuples.insert(navbar->variantTuple());QCOMPARE(navbar->geometry(),navbar->property("figmaDesignBounds").toRect());QCOMPARE(navbar->focusPolicy(),Qt::NoFocus);QVERIFY(navbar->searchInput());QCOMPARE(navbar->notificationButton()->focusPolicy(),Qt::StrongFocus);QCOMPARE(navbar->profileButton()->focusPolicy(),Qt::StrongFocus);QVERIFY(navbar->grab().save(evidence+"/navbar-"+navbar->density().toLower()+".png"));}
+                QCOMPARE(tuples,QSet<QString>({QStringLiteral("Density=Comfortable"),QStringLiteral("Density=Compact")}));
                 QVERIFY(nonWhite(QRect(68,125,1200,63))>500);QVERIFY(nonWhite(QRect(1308,125,1200,56))>500);
             }
             if(entry.first=="392:2"){
                 QCOMPARE(view->property("variantSpecimenCount").toInt(),20);QCOMPARE(view->property("componentSetCount").toInt(),2);QCOMPARE(canvas->size(),QSize(1312,1059));
+                const auto sidebars=canvas->findChildren<Z_Sidebar*>();QCOMPARE(sidebars.size(),4);QCOMPARE(canvas->property("runtimeSpecimenCount").toInt(),4);
+                QSet<QString> tuples;
+                for(auto* sidebar:sidebars){tuples.insert(sidebar->variantTuple());QCOMPARE(sidebar->geometry(),sidebar->property("figmaDesignBounds").toRect());QCOMPARE(sidebar->focusPolicy(),Qt::NoFocus);QCOMPARE(sidebar->findChildren<QToolButton*>(QRegularExpression("sidebarRoute.*")).size(),6);QCOMPARE(sidebar->collapseButton()->focusPolicy(),Qt::StrongFocus);QVERIFY(sidebar->grab().save(evidence+"/sidebar-"+sidebar->density().toLower()+(sidebar->isCollapsed()?"-collapsed":"-expanded")+".png"));}
+                QCOMPARE(tuples,QSet<QString>({QStringLiteral("Density=Comfortable, Collapsed=False"),QStringLiteral("Density=Comfortable, Collapsed=True"),QStringLiteral("Density=Compact, Collapsed=False"),QStringLiteral("Density=Compact, Collapsed=True")}));
                 for(const QRect& area:{QRect(236,471,280,520),QRect(556,471,80,520),QRect(676,471,280,466),QRect(996,471,80,466)})QVERIFY(nonWhite(area)>300);
             }
             if(entry.first=="1307:2"){
@@ -1613,6 +1720,7 @@ auto* secondEditor=editors->widget(1);auto* area=secondEditor->findChild<QMdiAre
                     tuples.insert(bar->variantTuple());QCOMPARE(bar->geometry(),bar->property("figmaDesignBounds").toRect());
                     QCOMPARE(bar->findChildren<QToolButton*>().size(),3);QCOMPARE(bar->findChildren<QPushButton*>().size(),3);
                     QCOMPARE(bar->findChildren<QFrame*>(QStringLiteral("desktopBottomNavigationSeparator")).size(),2);
+                    QVERIFY(bar->grab().save(evidence+"/desktop-bottom-navigation-"+bar->iconPlacement().toLower()+".png"));
                 }
                 QCOMPARE(tuples,QSet<QString>({QStringLiteral("IconPlacement=Top"),QStringLiteral("IconPlacement=Start")}));
                 QVERIFY(nonWhite(QRect(236,475,840,138))>1000);QVERIFY(nonWhite(QRect(236,656,840,122))>1000);
@@ -1871,6 +1979,517 @@ auto* secondEditor=editors->widget(1);auto* area=secondEditor->findChild<QMdiAre
         auto* dataTable = variantCanvas(QStringLiteral("363:2"));
         QVERIFY(dataTable);
         QCOMPARE(dataTable->findChildren<commonWidget::Z_DataTable*>("figmaRuntimeSpecimen").size(), 15);
+    }
+    void foundationComponentsUseSdkVariantsAndFocusContracts() {
+        auto* tree = part<QTreeWidget>("componentTree");
+        struct Expected { QString pageId; int count; };
+        const QList<Expected> pages{{"2131:2", 10}, {"2131:3", 10}, {"2131:4", 20},
+                                    {"2131:5", 5}, {"2131:6", 4}};
+        for (const auto& expected : pages) {
+            auto* item = pageItem(tree, expected.pageId);
+            QVERIFY2(item, qPrintable(expected.pageId));
+            tree->setCurrentItem(item);
+            QCoreApplication::processEvents();
+            auto* page = part<QStackedWidget>("componentPages")->currentWidget();
+            auto* sections = page->findChild<QTabWidget*>("componentSections");
+            QVERIFY(sections);
+            sections->setCurrentIndex(1);
+            QCoreApplication::processEvents();
+            int runtimeVariants = 0;
+            for (auto* widget : page->findChildren<QWidget*>())
+                if (widget->objectName().startsWith("variantPreview_") &&
+                    widget->property("runtimeImplementation").toBool())
+                    ++runtimeVariants;
+            QCOMPARE(runtimeVariants, expected.count);
+        }
+        auto* badgePage = part<QStackedWidget>("componentPages")->currentWidget();
+        Q_UNUSED(badgePage);
+        commonWidget::ComponentFactory factory(profile);
+        std::unique_ptr<QWidget> badge(factory.create("commonWidget::Z_Badge"));
+        std::unique_ptr<QWidget> indicator(factory.create("commonWidget::Z_StatusIndicator"));
+        std::unique_ptr<QWidget> link(factory.create("commonWidget::Z_Link"));
+        std::unique_ptr<QWidget> tag(factory.create("commonWidget::Z_Tag"));
+        std::unique_ptr<QWidget> tooltip(factory.create("commonWidget::Z_Tooltip"));
+        auto* linkControl = qobject_cast<commonWidget::Z_Link*>(link.get());
+        QVERIFY(linkControl);
+        QCOMPARE(badge->focusPolicy(), Qt::NoFocus);
+        QCOMPARE(indicator->focusPolicy(), Qt::NoFocus);
+        QCOMPARE(link->focusPolicy(), Qt::StrongFocus);
+        QCOMPARE(tag->focusPolicy(), Qt::NoFocus);
+        QCOMPARE(tooltip->focusPolicy(), Qt::NoFocus);
+        commonWidget::FocusIndicator::instance().setEnabledFor(link.get(), false);
+        QVERIFY(!commonWidget::FocusIndicator::instance().enabledFor(link.get()));
+        linkControl->setSnapshotState("Disabled");
+        QCOMPARE(linkControl->snapshotState(), QString("Disabled"));
+        QVERIFY(!linkControl->isEnabled());
+        linkControl->setSnapshotState(QString());
+        QVERIFY(linkControl->isEnabled());
+        QVERIFY_EXCEPTION_THROWN(linkControl->setSnapshotState("Selected"),
+                                 std::invalid_argument);
+    }
+    void interactionComponentsUseSdkVariantsAndFocusContracts() {
+        auto* tree = part<QTreeWidget>("componentTree");
+        struct Expected { QString pageId; int count; };
+        const QList<Expected> pages{{"2147:2", 2}, {"2147:747", 5}, {"2147:960", 6},
+                                    {"2147:1181", 5}, {"2148:1146", 6},
+                                    {"2147:454", 4}, {"2148:342", 4},
+                                    {"2148:2", 4}, {"2150:362", 2},
+                                    {"2150:2", 4}, {"2148:164", 4},
+                                    {"2148:908", 2}, {"2147:1374", 3},
+                                    {"2148:552", 3},
+                                    {"2148:746", 5}};
+        for (const auto& expected : pages) {
+            auto* item = pageItem(tree, expected.pageId);
+            QVERIFY2(item, qPrintable(expected.pageId));
+            tree->setCurrentItem(item);
+            QCoreApplication::processEvents();
+            auto* page = part<QStackedWidget>("componentPages")->currentWidget();
+            auto* sections = page->findChild<QTabWidget*>("componentSections");
+            QVERIFY(sections);
+            sections->setCurrentIndex(1);
+            QCoreApplication::processEvents();
+            int runtimeVariants = 0;
+            for (auto* widget : page->findChildren<QWidget*>())
+                if (widget->objectName().startsWith("variantPreview_") &&
+                    widget->property("runtimeImplementation").toBool())
+                    ++runtimeVariants;
+            QCOMPARE(runtimeVariants, expected.count);
+        }
+
+        // Isolate the standalone keyboard-focus probes from the gallery window.
+        // The offscreen platform otherwise may reactivate the last selected
+        // Upload specimen while another top-level probe is exercising arrows.
+        window->hide();
+        QApplication::processEvents();
+
+        commonWidget::ComponentFactory factory(profile);
+        std::unique_ptr<QWidget> searchWidget(factory.create("commonWidget::Z_SearchInput"));
+        std::unique_ptr<QWidget> numberWidget(factory.create("commonWidget::Z_NumberInput"));
+        std::unique_ptr<QWidget> colorPickerWidget(
+            factory.create("commonWidget::Z_ColorPicker"));
+        std::unique_ptr<QWidget> numericKeypadWidget(
+            factory.create("commonWidget::Z_NumericKeypad"));
+        std::unique_ptr<QWidget> overflowWidget(
+            factory.create("commonWidget::Z_OverflowMenuButton"));
+        std::unique_ptr<QWidget> segmentedWidget(
+            factory.create("commonWidget::Z_SegmentedControl"));
+        std::unique_ptr<QWidget> stepperWidget(factory.create("commonWidget::Z_Stepper"));
+        std::unique_ptr<QWidget> timelineWidget(factory.create("commonWidget::Z_Timeline"));
+        std::unique_ptr<QWidget> anchorWidget(
+            factory.create("commonWidget::Z_AnchorNavigation"));
+        std::unique_ptr<QWidget> filterWidget(factory.create("commonWidget::Z_Filter"));
+        std::unique_ptr<QWidget> paginationWidget(factory.create("commonWidget::Z_Pagination"));
+        std::unique_ptr<QWidget> pageHeaderWidget(factory.create("commonWidget::Z_PageHeader"));
+        std::unique_ptr<QWidget> titleBarWidget(factory.create("commonWidget::Z_TitleBar"));
+        auto* search = qobject_cast<commonWidget::Z_SearchInput*>(searchWidget.get());
+        auto* number = qobject_cast<commonWidget::Z_NumberInput*>(numberWidget.get());
+        auto* colorPicker = qobject_cast<commonWidget::Z_ColorPicker*>(
+            colorPickerWidget.get());
+        auto* numericKeypad = qobject_cast<commonWidget::Z_NumericKeypad*>(
+            numericKeypadWidget.get());
+        auto* overflow = qobject_cast<commonWidget::Z_OverflowMenuButton*>(overflowWidget.get());
+        auto* segmented = qobject_cast<commonWidget::Z_SegmentedControl*>(segmentedWidget.get());
+        auto* stepper = qobject_cast<commonWidget::Z_Stepper*>(stepperWidget.get());
+        auto* timeline = qobject_cast<commonWidget::Z_Timeline*>(timelineWidget.get());
+        auto* anchor = qobject_cast<commonWidget::Z_AnchorNavigation*>(anchorWidget.get());
+        auto* filter = qobject_cast<commonWidget::Z_Filter*>(filterWidget.get());
+        auto* pagination = qobject_cast<commonWidget::Z_Pagination*>(paginationWidget.get());
+        auto* pageHeader = qobject_cast<commonWidget::Z_PageHeader*>(pageHeaderWidget.get());
+        auto* titleBar = qobject_cast<commonWidget::Z_TitleBar*>(titleBarWidget.get());
+        QVERIFY(search && number && colorPicker && numericKeypad && overflow && segmented && stepper && timeline && anchor && filter &&
+                pagination && pageHeader && titleBar);
+
+        QCOMPARE(search->focusPolicy(), Qt::NoFocus);
+        QVERIFY(search->lineEdit());
+        QVERIFY(search->lineEdit()->focusPolicy() != Qt::NoFocus);
+        search->setSnapshotState("Filled");
+        search->setValue("wafer");
+        QCOMPARE(search->value(), QString("wafer"));
+
+        QCOMPARE(number->focusPolicy(), Qt::NoFocus);
+        number->setType("Decimal");
+        number->setValue(12.5);
+        QCOMPARE(number->type(), QString("Decimal"));
+        QVERIFY(qAbs(number->value() - 12.5) < 0.0001);
+        QVERIFY(number->findChild<QAbstractSpinBox*>()->focusPolicy() != Qt::NoFocus);
+
+        QCOMPARE(colorPicker->focusPolicy(), Qt::StrongFocus);
+        QCOMPARE(colorPicker->sizeHint(), QSize(300, 40));
+        QCOMPARE(colorPicker->color(), QColor("#5B5BD6"));
+        QCOMPARE(colorPicker->colorText(), QString("#5B5BD6"));
+        QSignalSpy pickerRequests(colorPicker, &commonWidget::Z_ColorPicker::pickerRequested);
+        QSignalSpy colorChanges(colorPicker, &commonWidget::Z_ColorPicker::colorChanged);
+        colorPicker->click();
+        QCOMPARE(pickerRequests.count(), 1);
+        QCOMPARE(pickerRequests.takeFirst().at(0).value<QColor>(), QColor("#5B5BD6"));
+        colorPicker->setColor(QColor(0x12, 0x34, 0x56, 0x80));
+        QCOMPARE(colorChanges.count(), 1);
+        QCOMPARE(colorPicker->colorText(), QString("#123456"));
+        colorPicker->setColorFormat("HexArgb");
+        QCOMPARE(colorPicker->colorText(), QString("#80123456"));
+        QVERIFY(colorPicker->accessibleDescription().contains("#80123456"));
+        QVERIFY_EXCEPTION_THROWN(colorPicker->setColor(QColor()), std::invalid_argument);
+        QVERIFY_EXCEPTION_THROWN(colorPicker->setColorFormat("CssHex"), std::invalid_argument);
+        QVERIFY_EXCEPTION_THROWN(colorPicker->setSnapshotState("Pressed"), std::invalid_argument);
+        colorPicker->setColor(QColor("#5B5BD6"));
+        colorPicker->setColorFormat("HexRgb");
+        colorPicker->setSnapshotState("Default");
+        colorPicker->resize(colorPicker->sizeHint());
+        colorPicker->show();
+        colorPicker->activateWindow();
+        QApplication::processEvents();
+        colorPicker->setFocus(Qt::TabFocusReason);
+        QTest::keyClick(colorPicker, Qt::Key_Return);
+        QCOMPARE(pickerRequests.count(), 1);
+        commonWidget::FocusIndicator::instance().setEnabledFor(colorPicker, false);
+        QVERIFY(!commonWidget::FocusIndicator::instance().enabledFor(colorPicker));
+        if (!evidence.isEmpty()) {
+            colorPicker->setSnapshotState("Default");
+            QVERIFY(colorPicker->grab().save(evidence + "/color-picker-default.png"));
+            colorPicker->setSnapshotState("Focus");
+            QVERIFY(colorPicker->grab().save(evidence + "/color-picker-focus.png"));
+            colorPicker->setSnapshotState("Disabled");
+            QVERIFY(colorPicker->grab().save(evidence + "/color-picker-disabled.png"));
+        }
+        colorPicker->setSnapshotState("Default");
+        commonWidget::FocusIndicator::instance().setEnabledFor(colorPicker, true);
+
+        QCOMPARE(numericKeypad->focusPolicy(), Qt::NoFocus);
+        QCOMPARE(numericKeypad->density(), QString("Comfortable"));
+        QCOMPARE(numericKeypad->sizeHint(), QSize(260, 290));
+        QCOMPARE(numericKeypad->keyLayout().size(), 12);
+        const auto keypadButtons = numericKeypad->findChildren<QToolButton*>();
+        QCOMPARE(keypadButtons.size(), 12);
+        for (auto* button : keypadButtons)
+            QCOMPARE(button->focusPolicy(), Qt::StrongFocus);
+        auto* sevenKey = numericKeypad->findChild<QToolButton*>("numericKeypadKey0");
+        auto* eightKey = numericKeypad->findChild<QToolButton*>("numericKeypadKey1");
+        auto* fiveKey = numericKeypad->findChild<QToolButton*>("numericKeypadKey4");
+        auto* decimalKey = numericKeypad->findChild<QToolButton*>("numericKeypadKey9");
+        auto* zeroKey = numericKeypad->findChild<QToolButton*>("numericKeypadKey10");
+        auto* finalKey = numericKeypad->findChild<QToolButton*>("numericKeypadKey11");
+        QVERIFY(sevenKey && eightKey && fiveKey && decimalKey && zeroKey && finalKey);
+        QSignalSpy keyRequests(numericKeypad, &commonWidget::Z_NumericKeypad::keyPressed);
+        QSignalSpy commitRequests(numericKeypad, &commonWidget::Z_NumericKeypad::commitRequested);
+        zeroKey->click();
+        QCOMPARE(keyRequests.count(), 1);
+        QCOMPARE(keyRequests.takeFirst().at(0).toString(), QString("0"));
+        numericKeypad->setAllowedKeys({"decimal", "0"});
+        QVERIFY(!sevenKey->isEnabled());
+        QVERIFY(decimalKey->isEnabled());
+        numericKeypad->setDecimalSeparator(",");
+        QCOMPARE(decimalKey->text(), QString(","));
+        auto commitLayout = numericKeypad->keyLayout();
+        commitLayout[11] = QStringLiteral("commit");
+        numericKeypad->setKeyLayout(commitLayout);
+        numericKeypad->setAllowedKeys({});
+        finalKey->click();
+        QCOMPARE(commitRequests.count(), 1);
+        QCOMPARE(keyRequests.takeFirst().at(0).toString(), QString("commit"));
+        numericKeypad->show();
+        numericKeypad->activateWindow();
+        QApplication::processEvents();
+        sevenKey->setFocus(Qt::TabFocusReason);
+        QTest::keyClick(sevenKey, Qt::Key_Right);
+        QTRY_COMPARE(QApplication::focusWidget(), eightKey);
+        QTest::keyClick(eightKey, Qt::Key_Down);
+        QTRY_COMPARE(QApplication::focusWidget(), fiveKey);
+        commonWidget::FocusIndicator::instance().setEnabledFor(numericKeypad, false);
+        QVERIFY(!commonWidget::FocusIndicator::instance().enabledFor(fiveKey));
+        QVERIFY_EXCEPTION_THROWN(numericKeypad->setDensity("Dense"), std::invalid_argument);
+        QVERIFY_EXCEPTION_THROWN(numericKeypad->setKeyLayout({"1"}), std::invalid_argument);
+        QVERIFY_EXCEPTION_THROWN(numericKeypad->setAllowedKeys({"unknown"}), std::invalid_argument);
+        QVERIFY_EXCEPTION_THROWN(numericKeypad->setDecimalSeparator(""), std::invalid_argument);
+        numericKeypad->setKeyLayout({"7", "8", "9", "4", "5", "6",
+                                     "1", "2", "3", "decimal", "0", "backspace"});
+        numericKeypad->setDecimalSeparator(".");
+        numericKeypad->setDensity("Comfortable");
+        numericKeypad->resize(numericKeypad->sizeHint());
+        QApplication::processEvents();
+        QCOMPARE(numericKeypad->size(), QSize(260, 290));
+        QCOMPARE(sevenKey->minimumHeight(), 50);
+        QCOMPARE(sevenKey->maximumHeight(), 50);
+        QCOMPARE(sevenKey->size(), QSize(68, 50));
+        if (!evidence.isEmpty())
+            QVERIFY(numericKeypad->grab().save(evidence + "/numeric-keypad-comfortable.png"));
+        numericKeypad->setDensity("Compact");
+        numericKeypad->resize(numericKeypad->sizeHint());
+        QApplication::processEvents();
+        QCOMPARE(numericKeypad->sizeHint(), QSize(260, 250));
+        QCOMPARE(sevenKey->size(), QSize(68, 42));
+        if (!evidence.isEmpty())
+            QVERIFY(numericKeypad->grab().save(evidence + "/numeric-keypad-compact.png"));
+
+        QCOMPARE(overflow->focusPolicy(), Qt::StrongFocus);
+        commonWidget::FocusIndicator::instance().setEnabledFor(overflow, false);
+        QVERIFY(!commonWidget::FocusIndicator::instance().enabledFor(overflow));
+
+        QCOMPARE(segmented->focusPolicy(), Qt::NoFocus);
+        segmented->setSegmentCount(4);
+        segmented->setCurrentIndex(2);
+        QCOMPARE(segmented->segmentCount(), 4);
+        QCOMPARE(segmented->currentIndex(), 2);
+        const auto segmentButtons = segmented->findChildren<QToolButton*>();
+        QCOMPARE(segmentButtons.size(), 4);
+        for (auto* button : segmentButtons)
+            QCOMPARE(button->focusPolicy(), Qt::StrongFocus);
+
+        QCOMPARE(stepper->focusPolicy(), Qt::NoFocus);
+        stepper->setSnapshotState("Error");
+        QCOMPARE(stepper->snapshotState(), QString("Error"));
+
+        QCOMPARE(timeline->focusPolicy(), Qt::NoFocus);
+        timeline->setDensity("Compact");
+        QCOMPARE(timeline->sizeHint(), QSize(420, 190));
+        timeline->setEvents({"Queued", "Running", "Completed"},
+                            {"09:10", "09:20", "10:05"},
+                            {"Brand", "Process", "Success"});
+        QCOMPARE(timeline->eventLabels().last(), QString("Completed"));
+        QVERIFY(timeline->accessibleDescription().contains("Completed"));
+        QVERIFY_EXCEPTION_THROWN(timeline->setDensity("Dense"), std::invalid_argument);
+        QVERIFY_EXCEPTION_THROWN(
+            timeline->setEvents({"Only"}, {}, {"Brand"}), std::invalid_argument);
+        timeline->resize(timeline->sizeHint());
+        if (!evidence.isEmpty())
+            QVERIFY(timeline->grab().save(evidence + "/timeline.png"));
+
+        QCOMPARE(anchor->focusPolicy(), Qt::NoFocus);
+        anchor->setOrientation("Horizontal");
+        anchor->setSnapshotState("Scrolled");
+        QCOMPARE(anchor->sizeHint(), QSize(520, 64));
+        QCOMPARE(anchor->currentIndex(), 1);
+        QCOMPARE(anchor->snapshotState(), QString("Scrolled"));
+        QVERIFY(anchor->accessibleDescription().contains("Parameters"));
+        const auto anchorButtons = anchor->findChildren<QToolButton*>();
+        QCOMPARE(anchorButtons.size(), 3);
+        for (auto* button : anchorButtons)
+            QCOMPARE(button->focusPolicy(), Qt::StrongFocus);
+        QSignalSpy anchorRequests(anchor, &commonWidget::Z_AnchorNavigation::anchorActivated);
+        anchorButtons[2]->click();
+        QCOMPARE(anchorRequests.count(), 1);
+        QCOMPARE(anchorRequests.takeFirst().at(0).toInt(), 2);
+        QCOMPARE(anchor->currentIndex(), 1);
+        anchor->show();
+        anchor->activateWindow();
+        QApplication::processEvents();
+        anchorButtons[0]->setFocus(Qt::TabFocusReason);
+        QApplication::processEvents();
+        QTest::keyClick(anchorButtons[0], Qt::Key_Right);
+        QTRY_COMPARE(QApplication::focusWidget(), anchorButtons[1]);
+        commonWidget::FocusIndicator::instance().setEnabledFor(anchor, false);
+        QVERIFY(!commonWidget::FocusIndicator::instance().enabledFor(anchorButtons[1]));
+        QVERIFY_EXCEPTION_THROWN(anchor->setOrientation("Diagonal"), std::invalid_argument);
+        QVERIFY_EXCEPTION_THROWN(anchor->setItems({"Only"}), std::invalid_argument);
+        anchor->resize(anchor->sizeHint());
+        if (!evidence.isEmpty())
+            QVERIFY(anchor->grab().save(evidence + "/anchor-navigation-horizontal.png"));
+        anchor->setOrientation("Vertical");
+        anchor->setSnapshotState("Default");
+        anchor->resize(anchor->sizeHint());
+        if (!evidence.isEmpty())
+            QVERIFY(anchor->grab().save(evidence + "/anchor-navigation-vertical.png"));
+
+        QCOMPARE(filter->focusPolicy(), Qt::NoFocus);
+        filter->setLayoutMode("Inline");
+        filter->setSnapshotState("Applied");
+        filter->setCriteria({"Material: Si", "Status"});
+        filter->setApplyLabel("Apply 1");
+        filter->resize(filter->sizeHint());
+        QCOMPARE(filter->sizeHint(), QSize(430, 58));
+        QCOMPARE(filter->criteria(), QStringList({"Material: Si", "Status"}));
+        QCOMPARE(filter->findChildren<QToolButton*>().size(), 3);
+        auto* material = filter->findChild<QToolButton*>("filterCriterion0");
+        auto* status = filter->findChild<QToolButton*>("filterCriterion1");
+        auto* apply = filter->findChild<QToolButton*>("filterApply");
+        QVERIFY(material && status && apply);
+        for (auto* button : {material, status, apply})
+            QCOMPARE(button->focusPolicy(), Qt::StrongFocus);
+        QSignalSpy criterionRequests(filter, &commonWidget::Z_Filter::criterionActivated);
+        QSignalSpy applyRequests(filter, &commonWidget::Z_Filter::applyRequested);
+        material->click();
+        apply->click();
+        QCOMPARE(criterionRequests.count(), 1);
+        QCOMPARE(criterionRequests.takeFirst().at(0).toInt(), 0);
+        QCOMPARE(applyRequests.count(), 1);
+        QCOMPARE(filter->snapshotState(), QString("Applied"));
+        filter->show();
+        filter->activateWindow();
+        QApplication::processEvents();
+        material->setFocus(Qt::TabFocusReason);
+        QTest::keyClick(material, Qt::Key_Right);
+        QTRY_COMPARE(QApplication::focusWidget(), status);
+        commonWidget::FocusIndicator::instance().setEnabledFor(filter, false);
+        QVERIFY(!commonWidget::FocusIndicator::instance().enabledFor(status));
+        QVERIFY_EXCEPTION_THROWN(filter->setLayoutMode("Drawer"), std::invalid_argument);
+        QVERIFY_EXCEPTION_THROWN(filter->setSnapshotState("Cleared"), std::invalid_argument);
+        QVERIFY_EXCEPTION_THROWN(filter->setCriteria({"Only"}), std::invalid_argument);
+        QVERIFY_EXCEPTION_THROWN(filter->setApplyLabel(""), std::invalid_argument);
+        if (!evidence.isEmpty())
+            QVERIFY(filter->grab().save(evidence + "/filter-inline-applied.png"));
+        filter->setLayoutMode("Panel");
+        filter->setSnapshotState("Default");
+        filter->setCriteria({"Material", "Status"});
+        filter->setApplyLabel("Apply");
+        filter->resize(filter->sizeHint());
+        QCOMPARE(filter->sizeHint(), QSize(430, 112));
+        QCOMPARE(material->geometry(), QRect(15, -8, 145, 36));
+        QCOMPARE(status->geometry(), QRect(15, 38, 110, 36));
+        QCOMPARE(apply->geometry(), QRect(15, 84, 90, 36));
+        if (!evidence.isEmpty())
+            QVERIFY(filter->grab().save(evidence + "/filter-panel-default.png"));
+
+        QCOMPARE(pagination->focusPolicy(), Qt::NoFocus);
+        pagination->setPageCount(7);
+        pagination->setCurrentPage(4);
+        QCOMPARE(pagination->findChildren<QToolButton*>().size(), 5);
+        for (auto* button : pagination->findChildren<QToolButton*>())
+            QCOMPARE(button->focusPolicy(), Qt::StrongFocus);
+
+        QCOMPARE(pageHeader->focusPolicy(), Qt::NoFocus);
+        QVERIFY(pageHeader->actionButton());
+        QCOMPARE(pageHeader->actionButton()->focusPolicy(), Qt::StrongFocus);
+        pageHeader->setActionsVisible(false);
+        QVERIFY(!pageHeader->actionsVisible());
+
+        QCOMPARE(titleBar->focusPolicy(), Qt::NoFocus);
+        QCOMPARE(titleBar->findChildren<QToolButton*>().size(), 3);
+        for (auto* button : titleBar->findChildren<QToolButton*>())
+            QCOMPARE(button->focusPolicy(), Qt::StrongFocus);
+    }
+
+    void transferUsesSdkControlledModelsAndFocusContract() {
+        commonWidget::ComponentFactory factory(profile);
+        std::unique_ptr<QWidget> transferWidget(factory.create("commonWidget::Z_Transfer"));
+        auto* transfer = qobject_cast<commonWidget::Z_Transfer*>(transferWidget.get());
+        QVERIFY(transfer);
+        QCOMPARE(transfer->focusPolicy(), Qt::NoFocus);
+        QCOMPARE(transfer->sizeHint(), QSize(520, 210));
+        QCOMPARE(transfer->snapshotState(), QString("Default"));
+        QCOMPARE(transfer->findChildren<QListView*>().size(), 2);
+        QCOMPARE(transfer->findChildren<QToolButton*>().size(), 2);
+        QCOMPARE(transfer->availableView()->focusPolicy(), Qt::StrongFocus);
+        QCOMPARE(transfer->selectedView()->focusPolicy(), Qt::StrongFocus);
+        QCOMPARE(transfer->moveToSelectedButton()->focusPolicy(), Qt::StrongFocus);
+        QCOMPARE(transfer->moveToAvailableButton()->focusPolicy(), Qt::StrongFocus);
+
+        QStringListModel available(
+            {QStringLiteral("□ Chamber A"), QStringLiteral("□ Chamber B"),
+             QStringLiteral("□ Chamber C")});
+        QStringListModel selected({QStringLiteral("□ Chamber D")});
+        transfer->setAvailableModel(&available);
+        transfer->setSelectedModel(&selected);
+        QCOMPARE(transfer->availableModel(), &available);
+        QCOMPARE(transfer->selectedModel(), &selected);
+        QSignalSpy selectionChanges(transfer, &commonWidget::Z_Transfer::selectionChanged);
+        transfer->availableView()->selectionModel()->select(
+            available.index(1, 0),
+            QItemSelectionModel::Select | QItemSelectionModel::Rows);
+        QCOMPARE(selectionChanges.count(), 1);
+
+        bool moveRightRequested = false;
+        QObject::connect(transfer, &commonWidget::Z_Transfer::moveToSelectedRequested,
+                         [&moveRightRequested](const QModelIndexList& rows) {
+                             moveRightRequested = rows.size() == 1 && rows.first().row() == 1;
+                         });
+        transfer->moveToSelectedButton()->click();
+        QVERIFY(moveRightRequested);
+        QCOMPARE(available.rowCount(), 3);
+        QCOMPARE(selected.rowCount(), 1);
+
+        transfer->setMoveToSelectedAllowed(false);
+        QVERIFY(!transfer->moveToSelectedButton()->isEnabled());
+        transfer->setMoveToSelectedAllowed(true);
+        QVERIFY(transfer->moveToSelectedButton()->isEnabled());
+        QVERIFY_EXCEPTION_THROWN(transfer->setSnapshotState("Error"), std::invalid_argument);
+        transfer->setSnapshotState("Loading");
+        QVERIFY(transfer->isEnabled());
+        QVERIFY(transfer->accessibleDescription().contains("state Loading"));
+        transfer->setSnapshotState("Disabled");
+        QVERIFY(!transfer->isEnabled());
+        transfer->setSnapshotState("Default");
+        QVERIFY(transfer->isEnabled());
+
+        commonWidget::FocusIndicator::instance().setEnabledFor(transfer, false);
+        QVERIFY(!commonWidget::FocusIndicator::instance().enabledFor(
+            transfer->availableView()));
+        transfer->resize(transfer->sizeHint());
+        if (!evidence.isEmpty()) {
+            transfer->clearFocus();
+            transfer->availableView()->clearSelection();
+            transfer->selectedView()->clearSelection();
+            transfer->setAttribute(Qt::WA_UnderMouse, false);
+            const QStringList states{"Default", "Disabled", "Loading"};
+            for (const auto& state : states) {
+                if (state == QStringLiteral("Loading"))
+                    selected.setStringList({QStringLiteral("Synchronizing")});
+                else
+                    selected.setStringList({QStringLiteral("□ Chamber D")});
+                transfer->setSnapshotState(state);
+                QVERIFY(transfer->grab().save(
+                    evidence + "/transfer-" + state.toLower() + ".png"));
+            }
+        }
+        transfer->setSnapshotState("Default");
+        commonWidget::FocusIndicator::instance().setEnabledFor(transfer, true);
+    }
+
+    void uploadUsesSdkLifecycleContract() {
+        commonWidget::ComponentFactory factory(profile);
+        std::unique_ptr<QWidget> uploadWidget(factory.create("commonWidget::Z_Upload"));
+        auto* upload = qobject_cast<commonWidget::Z_Upload*>(uploadWidget.get());
+        QVERIFY(upload);
+        QCOMPARE(upload->focusPolicy(), Qt::StrongFocus);
+        QCOMPARE(upload->sizeHint(), QSize(390, 150));
+        QCOMPARE(upload->snapshotState(), QString("Default"));
+        QCOMPARE(upload->progress(), 0);
+        QCOMPARE(upload->helperText(), QString::fromUtf8("CSV, JSON · max 20 MB"));
+        QSignalSpy browseRequests(upload, &commonWidget::Z_Upload::browseRequested);
+        QSignalSpy droppedFiles(upload, &commonWidget::Z_Upload::filesDropped);
+        QSignalSpy progressChanges(upload, &commonWidget::Z_Upload::progressChanged);
+        upload->click();
+        QCOMPARE(browseRequests.count(), 1);
+        upload->setFileName("recipe");
+        upload->setProgress(48);
+        QCOMPARE(progressChanges.count(), 1);
+        QVERIFY_EXCEPTION_THROWN(upload->setProgress(-1), std::invalid_argument);
+        QVERIFY_EXCEPTION_THROWN(upload->setProgress(101), std::invalid_argument);
+        QVERIFY_EXCEPTION_THROWN(upload->setSnapshotState("Disabled"), std::invalid_argument);
+        upload->setSnapshotState("Uploading");
+        QVERIFY(upload->accessibleDescription().contains("48 percent"));
+        upload->click();
+        QCOMPARE(browseRequests.count(), 1);
+        upload->setSnapshotState("Default");
+        QMimeData mimeData;
+        mimeData.setUrls({QUrl::fromLocalFile("C:/fixtures/recipe.csv")});
+        QDragEnterEvent dragEnter(QPoint(12, 12), Qt::CopyAction, &mimeData,
+                                  Qt::LeftButton, Qt::NoModifier);
+        QApplication::sendEvent(upload, &dragEnter);
+        QVERIFY(dragEnter.isAccepted());
+        QDropEvent drop(QPointF(12, 12), Qt::CopyAction, &mimeData,
+                        Qt::LeftButton, Qt::NoModifier);
+        QApplication::sendEvent(upload, &drop);
+        QCOMPARE(droppedFiles.count(), 1);
+        QCOMPARE(droppedFiles.takeFirst().at(0).toStringList(),
+                 QStringList({QStringLiteral("C:/fixtures/recipe.csv")}));
+        upload->resize(upload->sizeHint());
+        QTest::keyClick(upload, Qt::Key_Return);
+        QCOMPARE(browseRequests.count(), 2);
+        commonWidget::FocusIndicator::instance().setEnabledFor(upload, false);
+        QVERIFY(!commonWidget::FocusIndicator::instance().enabledFor(upload));
+        if (!evidence.isEmpty()) {
+            // QPixmap::grab() may leave WA_UnderMouse set in the offscreen
+            // platform plugin. Keep state specimens deterministic; keyboard
+            // focus and live hover behavior are asserted separately.
+            upload->clearFocus();
+            upload->setAttribute(Qt::WA_UnderMouse, false);
+            const QStringList states{"Default", "Hover", "Uploading", "Success", "Error"};
+            for (const auto& state : states) {
+                upload->setSnapshotState(state);
+                QVERIFY(upload->grab().save(evidence + "/upload-" + state.toLower() + ".png"));
+            }
+        }
+        upload->setSnapshotState("Default");
+        commonWidget::FocusIndicator::instance().setEnabledFor(upload, true);
     }
 };
 int main(int argc, char** argv) {

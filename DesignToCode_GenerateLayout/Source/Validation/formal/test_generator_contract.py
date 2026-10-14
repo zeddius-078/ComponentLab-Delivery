@@ -321,6 +321,8 @@ class GeneratorContractTests(unittest.TestCase):
         path = self.root / "mapping/component-mapping.json"
         mapping = json.loads(path.read_bytes())
         entry = mapping["rules"][0]["resourceMappings"]["entries"]["GLYPH / arrow-left"]
+        if update.get("ownership") == "page":
+            entry.pop("assetId", None)
         entry.update(update)
         path.write_text(json.dumps(mapping), encoding="utf-8")
 
@@ -382,11 +384,11 @@ class GeneratorContractTests(unittest.TestCase):
 
     def test_missing_shared_resource_is_not_local_fallback(self):
         self.result_fixture()
-        self.resource_entry({"source": ":/icons/absent-formal-test.svg"})
+        self.resource_entry({"assetId": "icon.action.absent-formal-test"})
         output = self.formal_output()
         code, error = self.generate(formal=True, output=output)
         self.assertNotEqual(code, 0)
-        self.assertIn("Cannot open icon", error)
+        self.assertIn("UNMAPPED_RESOURCE", error)
         self.assertFalse(output.exists())
 
     def test_business_files_are_unchanged_when_output_is_rejected(self):

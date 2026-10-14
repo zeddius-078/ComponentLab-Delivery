@@ -1,11 +1,13 @@
 // 尺寸求值在此集中完成，组件转换器无需重复解释布局字段。
 #include "LayoutConverter.h"
+#include "DesignComponentCatalog.h"
 #include <QJsonDocument>
 #include <QFormLayout>
 #include <QGridLayout>
 #include <QHBoxLayout>
 #include <QSet>
 #include <QVBoxLayout>
+#include <QSpacerItem>
 #include <QtMath>
 #include <stdexcept>
 #include <cmath>
@@ -35,6 +37,35 @@ int integerMetric(const QJsonObject& o, const QString& key, int fallback = 0) {
         throw std::runtime_error(("INVALID_LAYOUT_INDEX: " + key).toStdString());
     return value.toInt();
 }
+
+QJsonObject layoutHelperDefinition(const QJsonObject& mapping,
+                                   const QJsonObject& contract,
+                                   const QString& expectedRole) {
+    const auto rules = mapping["layoutHelpers"].toObject();
+    const auto idField = rules["canonicalIdField"].toString();
+    if (idField.isEmpty())
+        throw std::runtime_error("INVALID_LAYOUT_HELPER_RULE");
+    const auto canonicalId = contract[idField].toString();
+    if (canonicalId.isEmpty())
+        throw std::runtime_error("MISSING_LAYOUT_HELPER_ID");
+    bool catalogMatch = false;
+    for (const auto& entry : commonWidget::designLibraryEntries()) {
+        if (entry.canonicalId != canonicalId)
+            continue;
+        if (entry.kind != QStringLiteral("LayoutHelper"))
+            throw std::runtime_error("CANONICAL_ENTRY_IS_NOT_LAYOUT_HELPER");
+        catalogMatch = true;
+        break;
+    }
+    if (!catalogMatch)
+        throw std::runtime_error("UNKNOWN_LAYOUT_HELPER");
+    const auto definition = rules["definitions"].toObject()[canonicalId].toObject();
+    if (definition.isEmpty())
+        throw std::runtime_error("UNMAPPED_LAYOUT_HELPER");
+    if (definition["role"].toString() != expectedRole)
+        throw std::runtime_error("LAYOUT_HELPER_ROLE_MISMATCH");
+    return definition;
+}
 }
 
 QLayout* LayoutConverter::convert(const QJsonObject& node, QWidget* owner,
@@ -47,6 +78,30 @@ QLayout* LayoutConverter::convert(const QJsonObject& node, QWidget* owner,
     if (target != "QHBoxLayout" && target != "QVBoxLayout" &&
         target != "QGridLayout" && target != "QFormLayout")
         throw std::runtime_error("UNMAPPED_LAYOUT_MODE");
+    const auto helperRules = mapping["layoutHelpers"].toObject();
+    const auto helperField = helperRules["contractField"].toString();
+    if (helperField.isEmpty())
+        throw std::runtime_error("INVALID_LAYOUT_HELPER_RULE");
+    if (node.contains(helperField) && !node[helperField].isObject())
+        throw std::runtime_error("INVALID_LAYOUT_HELPER_CONTRACT");
+    const auto containerContract = node[helperField].toObject();
+    QJsonObject containerDefinition;
+    int layoutContainerColumns = 0;
+    QString layoutContainerDensity;
+    if (!containerContract.isEmpty()) {
+        containerDefinition = layoutHelperDefinition(
+            mapping, containerContract, QStringLiteral("container"));
+        if (containerDefinition["requiredQtLayout"].toString() != target)
+            throw std::runtime_error("LAYOUT_CONTAINER_MODE_MISMATCH");
+        const auto columnsField = containerDefinition["columnsField"].toString();
+        const auto densityField = containerDefinition["densityField"].toString();
+        layoutContainerColumns = integerMetric(containerContract, columnsField);
+        if (!containerDefinition["columns"].toArray().contains(layoutContainerColumns))
+            throw std::runtime_error("UNMAPPED_LAYOUT_CONTAINER_COLUMNS");
+        layoutContainerDensity = containerContract[densityField].toString();
+        if (!containerDefinition["densities"].toArray().contains(layoutContainerDensity))
+            throw std::runtime_error("UNMAPPED_LAYOUT_CONTAINER_DENSITY");
+    }
     // 同一个 QWidget 只能由一个顶层布局管理，提前拒绝重复安装。
     if (owner->layout())
         throw std::runtime_error("OWNER_ALREADY_HAS_LAYOUT");
@@ -192,6 +247,8 @@ QLayout* LayoutConverter::convert(const QJsonObject& node, QWidget* owner,
     QJsonArray items;
     QSet<QString> occupiedCells;
     QSet<QString> formRoles;
+    int layoutContainerPlacementMode = 0; // 0 unknown, 1 automatic, 2 explicit
+    int layoutContainerItemIndex = 0;
     // 生成顺序必须有明确契约；当前转换器只实现 reverse-childNode。
     if (mapping["childOrder"] != "reverse-childNode")
         throw std::runtime_error("UNMAPPED_CHILD_ORDER");
@@ -240,6 +297,58 @@ QLayout* LayoutConverter::convert(const QJsonObject& node, QWidget* owner,
         // 绝对定位不属于当前自布局实现，拒绝后可避免错误参与排布。
         if (ca["autoLayoutItemAbsolutePos"].toBool())
             throw std::runtime_error("UNMAPPED_ABSOLUTE_CHILD");
+        if (child.contains(helperField) && !child[helperField].isObject())
+            throw std::runtime_error("INVALID_LAYOUT_HELPER_CONTRACT");
+        const auto childHelper = child[helperField].toObject();
+        if (!childHelper.isEmpty()) {
+            const auto spacerDefinition = layoutHelperDefinition(
+                mapping, childHelper, QStringLiteral("spacer"));
+            auto* box = qobject_cast<QBoxLayout*>(layout);
+            if (!box)
+                throw std::runtime_error("SPACER_REQUIRES_BOX_LAYOUT");
+            const auto directionField = spacerDefinition["directionField"].toString();
+            const auto sizeField = spacerDefinition["sizeField"].toString();
+            const auto behaviorField = spacerDefinition["behaviorField"].toString();
+            const auto direction = spacerDefinition["directions"].toObject()
+                                       [childHelper[directionField].toString()].toString();
+            if (direction.isEmpty())
+                throw std::runtime_error("UNMAPPED_SPACER_DIRECTION");
+            if ((direction == QStringLiteral("horizontal")) != horizontal)
+                throw std::runtime_error("SPACER_DIRECTION_MISMATCH");
+            const auto requestedBehavior = childHelper[behaviorField].toString(
+                spacerDefinition["defaultBehavior"].toString());
+            const auto behavior = spacerDefinition["behaviors"].toObject()
+                                      [requestedBehavior].toString();
+            if (behavior.isEmpty())
+                throw std::runtime_error("UNMAPPED_SPACER_BEHAVIOR");
+            const int size = metric(childHelper, sizeField);
+            if (child["guid"].toString().isEmpty())
+                throw std::runtime_error("MISSING_LAYOUT_HELPER_NODE_ID");
+            const auto visibility = mapping["visibilityField"].toString();
+            if (child.contains(visibility)) {
+                if (!child[visibility].isBool())
+                    throw std::runtime_error("INVALID_VISIBILITY");
+                if (!child[visibility].toBool())
+                    throw std::runtime_error("HIDDEN_LAYOUT_HELPER_UNSUPPORTED");
+            }
+            const QSizePolicy::Policy mainPolicy = behavior == QStringLiteral("stretch")
+                ? QSizePolicy::Expanding
+                : behavior == QStringLiteral("minimum")
+                ? QSizePolicy::Minimum
+                : QSizePolicy::Fixed;
+            auto* spacer = direction == QStringLiteral("horizontal")
+                ? new QSpacerItem(size, 0, mainPolicy, QSizePolicy::Fixed)
+                : new QSpacerItem(0, size, QSizePolicy::Fixed, mainPolicy);
+            box->addSpacerItem(spacer);
+            order.append(child["guid"]);
+            items.append(QJsonObject{{"nodeId", child["guid"]},
+                                     {"kind", "LayoutHelper"},
+                                     {"canonicalId", childHelper[helperRules["canonicalIdField"].toString()]},
+                                     {"direction", direction},
+                                     {"size", size},
+                                     {"behavior", behavior}});
+            continue;
+        }
         QWidget* widget = factory(child, owner);
         // 工厂必须返回有效控件，避免后续尺寸设置访问空指针。
         if (!widget)
@@ -368,14 +477,38 @@ QLayout* LayoutConverter::convert(const QJsonObject& node, QWidget* owner,
             const auto columnKey = gridRules["columnField"].toString("gridColumn");
             const auto rowSpanKey = gridRules["rowSpanField"].toString("gridRowSpan");
             const auto columnSpanKey = gridRules["columnSpanField"].toString("gridColumnSpan");
-            if (!ca.contains(rowKey) || !ca.contains(columnKey))
+            const bool hasRow = ca.contains(rowKey);
+            const bool hasColumn = ca.contains(columnKey);
+            if (hasRow != hasColumn)
                 throw std::runtime_error("MISSING_GRID_PLACEMENT");
-            const int row = integerMetric(ca, rowKey);
-            const int column = integerMetric(ca, columnKey);
+            int row = 0;
+            int column = 0;
+            if (!containerDefinition.isEmpty()) {
+                const int placementMode = hasRow ? 2 : 1;
+                if (layoutContainerPlacementMode &&
+                    layoutContainerPlacementMode != placementMode)
+                    throw std::runtime_error("PARTIAL_LAYOUT_CONTAINER_PLACEMENT");
+                layoutContainerPlacementMode = placementMode;
+                if (placementMode == 1) {
+                    row = layoutContainerItemIndex / layoutContainerColumns;
+                    column = layoutContainerItemIndex % layoutContainerColumns;
+                } else {
+                    row = integerMetric(ca, rowKey);
+                    column = integerMetric(ca, columnKey);
+                }
+            } else {
+                if (!hasRow)
+                    throw std::runtime_error("MISSING_GRID_PLACEMENT");
+                row = integerMetric(ca, rowKey);
+                column = integerMetric(ca, columnKey);
+            }
             const int rowSpan = integerMetric(ca, rowSpanKey, 1);
             const int columnSpan = integerMetric(ca, columnSpanKey, 1);
             if (rowSpan < 1 || columnSpan < 1)
                 throw std::runtime_error("INVALID_GRID_SPAN");
+            if (!containerDefinition.isEmpty() && layoutContainerPlacementMode == 1 &&
+                (rowSpan != 1 || columnSpan != 1))
+                throw std::runtime_error("AUTO_LAYOUT_CONTAINER_SPAN_UNSUPPORTED");
             // 跨度覆盖的每个格子都登记，重复占用直接失败，避免 Qt 以隐式顺序重排设计内容。
             for (int r = row; r < row + rowSpan; ++r)
                 for (int c = column; c < column + columnSpan; ++c) {
@@ -388,6 +521,7 @@ QLayout* LayoutConverter::convert(const QJsonObject& node, QWidget* owner,
             items.append(QJsonObject{{"nodeId", child["guid"]}, {"row", row},
                                      {"column", column}, {"rowSpan", rowSpan},
                                      {"columnSpan", columnSpan}});
+            ++layoutContainerItemIndex;
         } else if (auto* form = qobject_cast<QFormLayout*>(layout)) {
             const auto formRules = mapping["form"].toObject();
             const auto rowKey = formRules["rowField"].toString("formRow");
@@ -419,7 +553,7 @@ QLayout* LayoutConverter::convert(const QJsonObject& node, QWidget* owner,
     if (linear)
         layout->setAlignment(axis(primary, horizontal) |
                              (hasCrossFill ? Qt::Alignment{} : axis(counter, !horizontal)));
-    records.append(QJsonObject{
+    QJsonObject record{
         {"nodeId", node["guid"]},
         {"qtLayout", target},
         {"spacing", gap},
@@ -430,7 +564,13 @@ QLayout* LayoutConverter::convert(const QJsonObject& node, QWidget* owner,
         {"counter", counter},
         {"defaultedMetricFields", defaultedFields},
         {"childOrder", order},
-        {"items", items}});
+        {"items", items}};
+    if (!containerDefinition.isEmpty())
+        record["layoutHelper"] = QJsonObject{
+            {"canonicalId", containerContract[helperRules["canonicalIdField"].toString()]},
+            {"columns", layoutContainerColumns},
+            {"density", layoutContainerDensity}};
+    records.append(record);
     return layout;
 }
 }

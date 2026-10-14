@@ -1,4 +1,6 @@
 #pragma once
+#include "IconAssetCatalog.h"
+#include "VisualAssetCatalog.h"
 #include <QCryptographicHash>
 #include <QDir>
 #include <QFile>
@@ -15,15 +17,19 @@
 class FormalResources {
 public:
     explicit FormalResources(const QJsonObject& mapping) {
-        for (const auto& value : mapping["rules"].toArray()) {
-            const auto entries = value.toObject()["resourceMappings"].toObject()["entries"].toObject();
+        const auto collect = [this](const QJsonObject& entries) {
             for (auto it = entries.begin(); it != entries.end(); ++it) {
                 const auto entry = it.value().toObject();
-                const auto source = entry["source"].toString();
-                if (definitions.contains(source) && definitions[source] != entry)
-                    fail("RESOURCE_DECLARATION_CONFLICT", source);
-                definitions[source] = entry;
+                const auto key = entry.contains("assetId")
+                    ? entry["assetId"].toString() : entry["source"].toString();
+                if (definitions.contains(key) && definitions[key] != entry)
+                    fail("RESOURCE_DECLARATION_CONFLICT", key);
+                definitions[key] = entry;
             }
+        };
+        collect(mapping["publicAssetMappings"].toObject()["entries"].toObject());
+        for (const auto& value : mapping["rules"].toArray()) {
+            collect(value.toObject()["resourceMappings"].toObject()["entries"].toObject());
         }
     }
 
@@ -33,9 +39,10 @@ public:
         const auto ownership = entry["ownership"].toString();
         if (ownership != "shared" && ownership != "page") fail("RESOURCE_OWNERSHIP_REQUIRED", source);
         if (ownership == "shared") {
-            if (!source.startsWith(":/") || !QFile::exists(source)) fail("SHARED_RESOURCE_MISSING", source);
+            const auto path = resolveShared(source);
             resolved[source] = source;
-            records.append(QJsonObject{{"ownership", ownership}, {"source", source}, {"copied", false}});
+            records.append(QJsonObject{{"ownership", ownership}, {"assetId", source},
+                                       {"source", path}, {"copied", false}});
             return source;
         }
         // 命名空间由资源声明提供，而不是从设计 URL 或节点编号拼接。
@@ -51,7 +58,7 @@ public:
         // 公共目录即使当前无同名文件也不能被页面占用。
         for (const auto& declaration : definitions) {
             if (declaration["ownership"] != "shared") continue;
-            const auto shared = declaration["source"].toString();
+            const auto shared = resolveShared(declaration["assetId"].toString());
             const auto sharedFolder = shared.left(shared.lastIndexOf('/'));
             if (target.startsWith(sharedFolder + "/")) fail("RESOURCE_SHARED_NAMESPACE_COLLISION", target);
         }
@@ -110,6 +117,15 @@ private:
     QMap<QString, QString> resolved;
     QMap<QString, Asset> targets;
     QJsonArray records;
+    static QString resolveShared(const QString& id) {
+        if (commonWidget::IconAssetCatalog::isSemanticId(id) &&
+            commonWidget::IconAssetCatalog::contains(id))
+            return commonWidget::IconAssetCatalog::resolve(id);
+        if (commonWidget::VisualAssetCatalog::isSemanticId(id) &&
+            commonWidget::VisualAssetCatalog::contains(id))
+            return commonWidget::VisualAssetCatalog::resolve(id);
+        fail("UNMAPPED_RESOURCE", id);
+    }
     [[noreturn]] static void fail(const QString& code, const QString& detail) {
         throw std::runtime_error((code + ": " + detail).toStdString());
     }

@@ -22,9 +22,24 @@ namespace design_mapping {
 void populateGuide(QWidget* page) {
     auto* layout = qobject_cast<QVBoxLayout*>(page->layout());
     auto* toolbar = new QHBoxLayout;
+    const auto descriptors = commonWidget::designComponentDescriptors();
+    const auto figmaPages = commonWidget::figmaComponentPages();
+    int componentSetCount = 0;
+    int variantCount = 0;
+    int instantiableCount = 0;
+    for (const auto& descriptor : descriptors)
+        instantiableCount += descriptor.instantiable ? 1 : 0;
+    for (const auto& figmaPage : figmaPages) {
+        componentSetCount += figmaPage.componentSets.size();
+        for (const auto& componentSet : figmaPage.componentSets)
+            variantCount += componentSet.variants.size();
+    }
     auto* status = new QLabel(QString::fromUtf8(
-        "Figma 73 页 / 123 组件集 / 1471 Variant | 开发映射 85 项 | "
-        "85 项可实例化 | 0 项合同待实现 | 设计审批 0 项"));
+        "Figma %1 页 / %2 组件集 / %3 Variant | 组件身份 %4 项 | "
+        "%5 项可实例化 | %6 项工程缺口 | 审批状态独立记录")
+        .arg(figmaPages.size()).arg(componentSetCount).arg(variantCount)
+        .arg(descriptors.size()).arg(instantiableCount)
+        .arg(descriptors.size() - instantiableCount));
     status->setObjectName("mappingDesignSourceStatus");
     status->setWordWrap(true);
     toolbar->addWidget(status, 1);
@@ -234,9 +249,15 @@ void populateCatalog(QWidget* page) {
         table->setItem(row, 2, new QTableWidgetItem(descriptor.qtClass));
         table->setItem(row, 3, new QTableWidgetItem(descriptor.mappingKind));
         table->setItem(row, 4, new QTableWidgetItem(categoryLabels.value(descriptor.category)));
-        table->setItem(row, 5, new QTableWidgetItem(
-            descriptor.pageId + (descriptor.componentSetId.isEmpty()
-                ? QString() : " / " + descriptor.componentSetId)));
+        QString figmaReference = descriptor.pageId;
+        const QString publicNode = descriptor.publicDesignNodeId.isEmpty()
+            ? descriptor.componentSetId : descriptor.publicDesignNodeId;
+        if (!publicNode.isEmpty())
+            figmaReference += " / " + publicNode;
+        if (!descriptor.variantSourceComponentSetId.isEmpty())
+            figmaReference += QStringLiteral(" [variants: %1]")
+                .arg(descriptor.variantSourceComponentSetId);
+        table->setItem(row, 5, new QTableWidgetItem(figmaReference));
         table->setItem(row, 6, new QTableWidgetItem(QString::number(descriptor.variantCount)));
         table->setItem(row, 7, new QTableWidgetItem(descriptor.runtimeStatus));
     }

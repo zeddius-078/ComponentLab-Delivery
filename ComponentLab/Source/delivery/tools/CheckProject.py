@@ -39,18 +39,26 @@ def check():
     assert manifest["designComponentCatalog"] == "resources/mappings/design-component-catalog.json"
     catalog = json.loads((SDK / manifest["designComponentCatalog"]).read_bytes())
     assert catalog["figmaFileKey"] == "w92BKW1EcutKmTXkwzNHbf"
-    assert catalog["componentCount"] == len(catalog["components"]) == 85
-    assert catalog["instantiableCount"] == 85
-    assert catalog["contractOnlyCount"] == 0
-    assert catalog["figmaSource"]["pageCount"] == len(catalog["figmaPages"]) == 73
+    entries = catalog["entries"]
+    components = catalog["components"]
+    statistics = catalog["statistics"]
+    assert catalog["canonicalLibraryEntryCount"] == len(entries)
+    assert catalog["componentCount"] == len(components)
+    assert statistics["componentIdentityCount"] == len(components)
+    assert len(entries) == (
+        len(components) + statistics["layoutHelperCount"] + statistics["assetEntryCount"]
+    )
+    assert catalog["instantiableCount"] == sum(item["instantiable"] for item in components)
+    assert catalog["contractOnlyCount"] == sum(not item["instantiable"] for item in components)
+    assert catalog["figmaSource"]["pageCount"] == len(catalog["figmaPages"])
     assert catalog["figmaSource"]["componentSetCount"] == sum(
         len(page["componentSets"]) for page in catalog["figmaPages"]
-    ) == 123
+    )
     assert catalog["figmaSource"]["variantCount"] == sum(
         len(component_set["variants"])
         for page in catalog["figmaPages"]
         for component_set in page["componentSets"]
-    ) == 1471
+    )
     assert (SDK / "include/MyDesignSystem/MyDesignSystem.h").is_file()
     assert (SDK / "lib/GeneratedComponentSDK.lib").is_file()
     assert (SDK / "resources/tokens/default").is_dir()

@@ -88,7 +88,7 @@ protected:
             drawLayout(p, outer, ink, accent);
         } else if (m_setName.contains("Collapse")) {
             drawCollapse(p, outer, ink, accent);
-        } else if (m_setName.contains("OverlayDrawer")) {
+        } else if (m_setName.contains("Drawer")) {
             drawDrawer(p, outer, ink, accent);
         } else if (m_setName.contains("Alert") || m_setName.contains("Message") ||
                    m_setName.contains("Notification")) {
@@ -355,6 +355,8 @@ QWidget* createEvidenceGallery(
     QMap<QString, commonWidget::DesignComponentDescriptor> descriptorBySet;
     for (const auto& descriptor : commonWidget::designComponentDescriptors()) {
         for (const auto& id : descriptor.componentSetId.split(',', Qt::SkipEmptyParts))
+            descriptorBySet.insert(id, descriptor);
+        for (const auto& id : descriptor.variantSourceComponentSetId.split(',', Qt::SkipEmptyParts))
             descriptorBySet.insert(id, descriptor);
     }
     int runtimeSpecimenCount = 0;

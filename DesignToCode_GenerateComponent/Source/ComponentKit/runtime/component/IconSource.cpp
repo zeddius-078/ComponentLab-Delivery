@@ -1,4 +1,5 @@
 #include "IconSource.h"
+#include "IconAssetCatalog.h"
 #include <QBuffer>
 #include <QCoreApplication>
 #include <QDir>
@@ -59,6 +60,8 @@ private:
 QString IconSource::resolve(const QString& source) {
     QString path = source.trimmed();
     if (path.isEmpty()) return {};
+    if (IconAssetCatalog::isSemanticId(path))
+        return IconAssetCatalog::resolve(path);
     if (path.startsWith("qrc:/")) {
         const QUrl url(path);
         require(url.isValid() && url.host().isEmpty() && !url.hasQuery() && !url.hasFragment(),

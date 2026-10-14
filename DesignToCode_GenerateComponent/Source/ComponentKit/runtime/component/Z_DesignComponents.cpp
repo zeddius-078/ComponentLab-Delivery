@@ -1,15 +1,21 @@
 #include "Z_DesignComponents.h"
 #include "FocusIndicator.h"
+#include "FieldChrome.h"
+#include "TokenResources.h"
+#include "Z_InputField.h"
 
 #include <QApplication>
 #include <QBrush>
 #include <QButtonGroup>
 #include <QFormLayout>
 #include <QFrame>
+#include <QFontDatabase>
 #include <QGridLayout>
 #include <QHeaderView>
 #include <QHBoxLayout>
 #include <QIcon>
+#include <QJsonDocument>
+#include <QJsonObject>
 #include <QLabel>
 #include <QLineEdit>
 #include <QMouseEvent>
@@ -24,6 +30,7 @@
 #include <QToolButton>
 #include <QVBoxLayout>
 #include <QtMath>
+#include <stdexcept>
 
 namespace commonWidget {
 namespace {
@@ -86,7 +93,7 @@ void configureRuntimeIdentity(QWidget* widget, const QString& name) {
 bool isInteractiveCanvasComponent(const QString& name) {
     return name == QStringLiteral("Navbar") || name == QStringLiteral("Sidebar") ||
            name == QStringLiteral("Empty") || name == QStringLiteral("IntegrationCard") ||
-           name == QStringLiteral("Collapse") || name == QStringLiteral("OverlayDrawer") ||
+           name == QStringLiteral("Collapse") || name == QStringLiteral("Drawer") ||
            name == QStringLiteral("Result");
 }
 
@@ -111,6 +118,94 @@ QIcon tintedCompositeIcon(const QString& source, const QColor& color) {
     svg.render(&painter, QRectF(0, 0, 16, 16));
     painter.setCompositionMode(QPainter::CompositionMode_SourceIn);
     painter.fillRect(pixels.rect(), color);
+    return QIcon(pixels);
+}
+
+struct CompositeTokens {
+    QJsonObject colors;
+    QJsonObject layout;
+
+    explicit CompositeTokens(const QString& profile) {
+        const auto document = QJsonDocument::fromJson(
+            token_resources::read(QStringLiteral(":/tokens/tokens_qt.json")));
+        const auto selected =
+            document.object()[QStringLiteral("profiles")].toObject()[profile].toObject();
+        if (selected.isEmpty())
+            throw std::invalid_argument("Unknown composite component profile");
+        colors = selected[QStringLiteral("color")].toObject();
+        layout = selected[QStringLiteral("layout")].toObject();
+    }
+
+    QColor color(const char* name) const {
+        const QString value = colors[QString::fromLatin1(name)].toString();
+        if (value.isEmpty())
+            throw std::runtime_error("Missing composite component color token");
+        if (value.startsWith(QStringLiteral("rgba("))) {
+            const auto parts = value.mid(value.indexOf('(') + 1,
+                                         value.lastIndexOf(')') - value.indexOf('(') - 1)
+                                   .split(',');
+            if (parts.size() == 4) {
+                QColor result(parts[0].trimmed().toInt(), parts[1].trimmed().toInt(),
+                              parts[2].trimmed().toInt());
+                result.setAlphaF(parts[3].trimmed().toDouble());
+                return result;
+            }
+        }
+        const QColor result(value);
+        if (!result.isValid())
+            throw std::runtime_error("Invalid composite component color token");
+        return result;
+    }
+
+    int metric(const char* name) const {
+        const auto value = layout[QString::fromLatin1(name)];
+        if (!value.isDouble())
+            throw std::runtime_error("Missing composite component layout token");
+        return value.toInt();
+    }
+};
+
+QString qssColor(const QColor& value) {
+    return value.alpha() == 255
+               ? value.name(QColor::HexRgb)
+               : QStringLiteral("rgba(%1,%2,%3,%4)")
+                     .arg(value.red()).arg(value.green()).arg(value.blue()).arg(value.alpha());
+}
+
+QString profileForDensity(const QString& profile, const QString& density) {
+    const QString appearance = profile.startsWith(QStringLiteral("dark-"))
+                                   ? QStringLiteral("dark")
+                                   : QStringLiteral("light");
+    return appearance + (density == QStringLiteral("Compact")
+                             ? QStringLiteral("-compact")
+                             : QStringLiteral("-comfortable"));
+}
+
+QString compositeCjkFontFamily() {
+    static const QString family = [] {
+        const int id = QFontDatabase::addApplicationFont(
+            QStringLiteral(":/figma/fonts/NotoSansSC-Regular.otf"));
+        return QFontDatabase::applicationFontFamilies(id).value(
+            0, QStringLiteral("Noto Sans SC"));
+    }();
+    return family;
+}
+
+QIcon initialsIcon(const QString& initials, const QColor& background,
+                   const QColor& foreground) {
+    QPixmap pixels(32, 32);
+    pixels.fill(Qt::transparent);
+    QPainter painter(&pixels);
+    painter.setRenderHint(QPainter::Antialiasing);
+    painter.setPen(Qt::NoPen);
+    painter.setBrush(background);
+    painter.drawEllipse(pixels.rect());
+    QFont font = painter.font();
+    font.setPixelSize(11);
+    font.setWeight(QFont::DemiBold);
+    painter.setFont(font);
+    painter.setPen(foreground);
+    painter.drawText(pixels.rect(), Qt::AlignCenter, initials);
     return QIcon(pixels);
 }
 
@@ -532,7 +627,7 @@ void Z_DesignComponent::paintEvent(QPaintEvent*) {
         return;
     }
 
-    if (m_componentName == QStringLiteral("OverlayDrawer")) {
+    if (m_componentName == QStringLiteral("Drawer")) {
         const bool overlay = axisIs(m_variantProperties, "Mode", "Overlay");
         painter.fillRect(rect(), overlay ? mix(ink, Qt::transparent, .72) : panel);
         if (!m_open) return;
@@ -657,8 +752,6 @@ ClassName::ClassName(QWidget* parent) : Z_DesignComponent(QStringLiteral(Name), 
     setVariantTuple(QStringLiteral(DefaultTuple)); \
 }
 
-Z_IMPLEMENT_CANVAS_COMPONENT(Z_Navbar, "Navbar", "Density=Comfortable")
-Z_IMPLEMENT_CANVAS_COMPONENT(Z_Sidebar, "Sidebar", "Density=Comfortable, Collapsed=False")
 Z_IMPLEMENT_CANVAS_COMPONENT(Z_MetricCard, "MetricCard", "State=Default")
 Z_IMPLEMENT_CANVAS_COMPONENT(Z_Chart, "Chart", "Kind=Bar, State=Data")
 Z_IMPLEMENT_CANVAS_COMPONENT(Z_ImagePanel, "ImagePanel", "Asset=Placeholder")
@@ -668,7 +761,7 @@ Z_IMPLEMENT_CANVAS_COMPONENT(Z_Card, "Card", "Surface=Card, Density=Comfortable"
 Z_IMPLEMENT_CANVAS_COMPONENT(Z_IntegrationCard, "IntegrationCard", "Connection=False")
 Z_IMPLEMENT_CANVAS_COMPONENT(Z_Divider, "Divider", "Orientation=Horizontal, Placement=None, Tone=Default")
 Z_IMPLEMENT_CANVAS_COMPONENT(Z_Collapse, "Collapse", "Mode=Multi, Border=Bordered, State=Default")
-Z_IMPLEMENT_CANVAS_COMPONENT(Z_OverlayDrawer, "OverlayDrawer", "Placement=Right, Mode=Overlay, State=Default")
+Z_IMPLEMENT_CANVAS_COMPONENT(Z_OverlayDrawer, "Drawer", "Placement=Right, Mode=Overlay, State=Default")
 Z_IMPLEMENT_CANVAS_COMPONENT(Z_Alert, "Alert", "Type=Info, Appearance=Subtle")
 Z_IMPLEMENT_CANVAS_COMPONENT(Z_Message, "Message", "Type=Info")
 Z_IMPLEMENT_CANVAS_COMPONENT(Z_Notification, "Notification", "Type=Info, Placement=TopRight")
@@ -678,7 +771,491 @@ Z_IMPLEMENT_CANVAS_COMPONENT(Z_Skeleton, "Skeleton", "Layout=Text, Motion=Still"
 
 #undef Z_IMPLEMENT_CANVAS_COMPONENT
 
-Z_DesktopBottomNavigation::Z_DesktopBottomNavigation(QWidget* parent) : QWidget(parent) {
+Z_Navbar::Z_Navbar(QWidget* parent)
+    : Z_Navbar(QStringLiteral("light-comfortable"), parent) {}
+
+Z_Navbar::Z_Navbar(const QString& profile, QWidget* parent)
+    : QWidget(parent), m_profile(profile) {
+    configureRuntimeIdentity(this, QStringLiteral("Navbar"));
+    setObjectName(QStringLiteral("navbar"));
+    setFocusPolicy(Qt::NoFocus);
+    setProperty("focusIndicatorEnabled", true);
+    setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
+
+    m_layout = new QHBoxLayout(this);
+    m_brandLogo = new QLabel(QStringLiteral("CL"), this);
+    m_brandLogo->setObjectName(QStringLiteral("navbarBrandLogo"));
+    m_brandLogo->setAlignment(Qt::AlignCenter);
+    m_brandLogo->setAccessibleName(tr("ComponentLab brand"));
+    m_brandTitle = new QLabel(QStringLiteral("ComponentLab"), this);
+    m_brandTitle->setObjectName(QStringLiteral("navbarBrandTitle"));
+    m_brandTitle->setTextFormat(Qt::PlainText);
+
+    m_search = new Z_InputField(std::make_shared<field::Tokens>(profile), this);
+    m_search->setObjectName(QStringLiteral("navbarSearch"));
+    m_search->setKind(Z_InputField::Kind::Text);
+    m_search->setLabel(QString());
+    m_search->setHint(QString());
+    m_search->setPlaceholder(tr("Search workspace"));
+    m_search->setPrefixIconSource(QStringLiteral(":/figma/composite/search.svg"));
+    m_search->setAccessibleName(tr("Search workspace"));
+    m_search->setFixedWidth(320);
+
+    m_notification = new QToolButton(this);
+    m_notification->setObjectName(QStringLiteral("navbarNotification"));
+    m_notification->setAccessibleName(tr("Notifications"));
+    m_notification->setToolTip(tr("Notifications"));
+    m_notification->setFocusPolicy(Qt::StrongFocus);
+    FocusIndicator::instance().watch(m_notification);
+
+    m_profileAction = new QToolButton(this);
+    m_profileAction->setObjectName(QStringLiteral("navbarProfile"));
+    m_profileAction->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+    m_profileAction->setAccessibleName(tr("Open profile menu"));
+    m_profileAction->setFocusPolicy(Qt::StrongFocus);
+    FocusIndicator::instance().watch(m_profileAction);
+
+    m_layout->addWidget(m_brandLogo);
+    m_layout->addWidget(m_brandTitle);
+    m_layout->addWidget(m_search);
+    m_layout->addStretch(1);
+    m_layout->addWidget(m_notification);
+    m_layout->addWidget(m_profileAction);
+
+    connect(m_search, &Z_InputField::valueChanged, this, &Z_Navbar::searchTextChanged);
+    connect(m_notification, &QToolButton::clicked, this, &Z_Navbar::notificationRequested);
+    connect(m_profileAction, &QToolButton::clicked, this, &Z_Navbar::profileRequested);
+    setVariantTuple(QStringLiteral("Density=Comfortable"));
+    setProfileName(m_profileName);
+    refreshGeometryAndStyle();
+}
+
+QString Z_Navbar::variantTuple() const { return m_variantTuple; }
+QVariantMap Z_Navbar::variantProperties() const { return m_variantProperties; }
+QString Z_Navbar::density() const { return m_density; }
+QString Z_Navbar::profileName() const { return m_profileName; }
+QString Z_Navbar::searchText() const { return m_search->value(); }
+bool Z_Navbar::focusIndicatorEnabled() const {
+    return property("focusIndicatorEnabled").toBool();
+}
+Z_InputField* Z_Navbar::searchInput() const { return m_search; }
+QToolButton* Z_Navbar::notificationButton() const { return m_notification; }
+QToolButton* Z_Navbar::profileButton() const { return m_profileAction; }
+QSize Z_Navbar::sizeHint() const {
+    return QSize(1200, m_density == QStringLiteral("Compact") ? 56 : 63);
+}
+QSize Z_Navbar::minimumSizeHint() const {
+    return QSize(720, m_density == QStringLiteral("Compact") ? 56 : 63);
+}
+
+void Z_Navbar::setVariantTuple(const QString& tuple) {
+    const auto properties = parseVariantTuple(tuple);
+    setDensity(axis(properties, "Density", "Comfortable"));
+}
+
+void Z_Navbar::setVariantProperty(const QString& name, const QString& value) {
+    if (name.compare(QStringLiteral("Density"), Qt::CaseInsensitive) != 0)
+        throw std::invalid_argument("Navbar supports only the Density variant axis");
+    setDensity(value);
+}
+
+void Z_Navbar::setDensity(const QString& value) {
+    if (value != QStringLiteral("Comfortable") && value != QStringLiteral("Compact"))
+        throw std::invalid_argument("Navbar density must be Comfortable or Compact");
+    const QString tuple = QStringLiteral("Density=") + value;
+    if (m_density == value && m_variantTuple == tuple)
+        return;
+    const bool changed = m_density != value;
+    m_density = value;
+    m_variantTuple = tuple;
+    m_variantProperties = {{QStringLiteral("Density"), value}};
+    setProperty("figmaVariant", m_variantTuple);
+    setProperty("figmaVariantProperties", m_variantProperties);
+    refreshGeometryAndStyle();
+    if (changed)
+        emit densityChanged(value);
+    emit variantChanged(m_variantTuple);
+}
+
+void Z_Navbar::setProfileName(const QString& value) {
+    if (m_profileName == value && m_profileAction && !m_profileAction->text().isEmpty())
+        return;
+    m_profileName = value;
+    const QStringList words = value.split(' ', Qt::SkipEmptyParts);
+    QString initials;
+    for (const auto& word : words)
+        initials += word.left(1).toUpper();
+    if (initials.isEmpty()) initials = QStringLiteral("U");
+    if (initials.size() > 2) initials = initials.left(2);
+    const CompositeTokens tokens(profileForDensity(m_profile, m_density));
+    m_profileAction->setText(value + QStringLiteral("  \u2304"));
+    m_profileAction->setIcon(initialsIcon(
+        initials, tokens.color("base.stoken.color.interactive.brand.default"),
+        tokens.color("base.stoken.color.text.invert")));
+    m_profileAction->setIconSize(QSize(32, 32));
+    m_profileAction->setAccessibleDescription(value);
+    emit profileNameChanged(value);
+}
+
+void Z_Navbar::setSearchText(const QString& value) {
+    m_search->setValue(value);
+}
+
+void Z_Navbar::setFocusIndicatorEnabled(bool enabled) {
+    if (focusIndicatorEnabled() == enabled)
+        return;
+    FocusIndicator::instance().setEnabledFor(this, enabled);
+    emit focusIndicatorEnabledChanged(enabled);
+}
+
+void Z_Navbar::refreshGeometryAndStyle() {
+    if (!m_layout)
+        return;
+    const CompositeTokens tokens(profileForDensity(m_profile, m_density));
+    const bool compact = m_density == QStringLiteral("Compact");
+    const int height = tokens.metric("component.composite.navbar.height");
+    const int padding = tokens.metric("component.composite.navbar.paddingInline");
+    const int gap = tokens.metric("component.composite.navbar.gap");
+    const QColor background = tokens.color("component.composite.navbar.background");
+    const QColor border = tokens.color("component.composite.navbar.border");
+    const QColor title = tokens.color("component.composite.navbar.title");
+    const QColor meta = tokens.color("component.composite.navbar.meta");
+    const QColor accent = tokens.color("base.stoken.color.interactive.brand.default");
+    const QColor onBrand = tokens.color("base.stoken.color.text.invert");
+    m_layout->setContentsMargins(padding, 0, padding, 0);
+    m_layout->setSpacing(gap);
+    setFixedHeight(height);
+    m_search->setControlSize(compact ? QStringLiteral("md") : QStringLiteral("lg"));
+    m_brandLogo->setFixedSize(32, 32);
+    m_brandTitle->setMinimumWidth(112);
+    m_notification->setFixedSize(compact ? QSize(32, 32) : QSize(42, 42));
+    m_notification->setIconSize(compact ? QSize(32, 32) : QSize(42, 42));
+    m_notification->setIcon(QIcon(compositeAssetPath(
+        compact ? QStringLiteral("notifications-compact.svg")
+                : QStringLiteral("notifications.svg"))));
+    m_profileAction->setFixedHeight(compact ? 32 : 42);
+    auto rootPalette = palette();
+    rootPalette.setColor(QPalette::Window, background);
+    setPalette(rootPalette);
+    setAutoFillBackground(true);
+    setProperty("navbarBorderColor", border);
+    m_brandLogo->setStyleSheet(QStringLiteral(
+        "QLabel{background:%1;color:%2;border-radius:10px;font-size:12px;font-weight:600;}")
+                                   .arg(qssColor(accent), qssColor(onBrand)));
+    auto titlePalette = m_brandTitle->palette();
+    titlePalette.setColor(QPalette::WindowText, title);
+    m_brandTitle->setPalette(titlePalette);
+    QFont titleFont = m_brandTitle->font();
+    titleFont.setPixelSize(14);
+    titleFont.setWeight(QFont::Medium);
+    m_brandTitle->setFont(titleFont);
+    const QString actionStyle = QStringLiteral(
+        "QToolButton{background:transparent;color:%1;border:1px solid transparent;border-radius:4px;padding:0;}"
+        "QToolButton:hover{background:%2;}"
+        "QToolButton[focusIndicatorVisible=\"true\"]{border:2px solid %3;}")
+                                    .arg(qssColor(meta),
+                                         qssColor(tokens.color("base.stoken.color.background.hover")),
+                                         qssColor(accent));
+    m_notification->setStyleSheet(actionStyle);
+    m_profileAction->setStyleSheet(actionStyle + QStringLiteral(
+        "QToolButton{font-size:14px;text-align:left;padding-right:4px;}"));
+    updateGeometry();
+}
+
+Z_Sidebar::Z_Sidebar(QWidget* parent)
+    : Z_Sidebar(QStringLiteral("light-comfortable"), parent) {}
+
+Z_Sidebar::Z_Sidebar(const QString& profile, QWidget* parent)
+    : QWidget(parent), m_profile(profile) {
+    configureRuntimeIdentity(this, QStringLiteral("Sidebar"));
+    setObjectName(QStringLiteral("sidebar"));
+    setFocusPolicy(Qt::NoFocus);
+    setProperty("focusIndicatorEnabled", true);
+    setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Preferred);
+
+    auto* outer = new QVBoxLayout(this);
+    outer->setContentsMargins(16, 16, 16, 16);
+    outer->setSpacing(10);
+    auto* header = new QWidget(this);
+    header->setObjectName(QStringLiteral("sidebarHeader"));
+    auto* headerLayout = new QHBoxLayout(header);
+    headerLayout->setContentsMargins(0, 0, 0, 0);
+    headerLayout->setSpacing(10);
+    m_brandLogo = new QLabel(QStringLiteral("CL"), header);
+    m_brandLogo->setObjectName(QStringLiteral("sidebarBrandLogo"));
+    m_brandLogo->setAlignment(Qt::AlignCenter);
+    m_brandLogo->setFixedSize(32, 32);
+    m_brandTitle = new QLabel(QStringLiteral("ComponentLab"), header);
+    m_brandTitle->setObjectName(QStringLiteral("sidebarBrandTitle"));
+    m_brandTitle->setTextFormat(Qt::PlainText);
+    m_collapseAction = new QToolButton(header);
+    m_collapseAction->setObjectName(QStringLiteral("sidebarCollapse"));
+    m_collapseAction->setAccessibleName(tr("Collapse sidebar"));
+    m_collapseAction->setFocusPolicy(Qt::StrongFocus);
+    m_collapseAction->setFixedSize(24, 32);
+    m_collapseAction->setIconSize(QSize(16, 16));
+    FocusIndicator::instance().watch(m_collapseAction);
+    headerLayout->addWidget(m_brandLogo);
+    headerLayout->addWidget(m_brandTitle, 1);
+    headerLayout->addWidget(m_collapseAction);
+    outer->addWidget(header);
+
+    auto* divider = new QFrame(this);
+    divider->setObjectName(QStringLiteral("sidebarDivider"));
+    divider->setFrameShape(QFrame::HLine);
+    divider->setFixedHeight(1);
+    outer->addWidget(divider);
+
+    m_routeHost = new QWidget(this);
+    m_routeHost->setObjectName(QStringLiteral("sidebarRoutes"));
+    m_routeLayout = new QVBoxLayout(m_routeHost);
+    m_routeLayout->setContentsMargins(0, 0, 0, 0);
+    m_routeLayout->setSpacing(4);
+    outer->addWidget(m_routeHost, 1);
+
+    m_routeIds = QStringList{QStringLiteral("dashboard"), QStringLiteral("orders"),
+                             QStringLiteral("products"), QStringLiteral("integrations"),
+                             QStringLiteral("chats"), QStringLiteral("settings")};
+    m_routeLabels = QStringList{tr("Dashboard"), tr("Orders"), tr("Products"),
+                                tr("Integrations"), tr("Chats"), tr("Settings")};
+    connect(m_collapseAction, &QToolButton::clicked, this,
+            [this] { emit collapsedChangeRequested(!m_collapsed); });
+    setVariantTuple(QStringLiteral("Density=Comfortable, Collapsed=False"));
+    rebuildRoutes();
+    refreshGeometryAndStyle();
+}
+
+QString Z_Sidebar::variantTuple() const { return m_variantTuple; }
+QVariantMap Z_Sidebar::variantProperties() const { return m_variantProperties; }
+QString Z_Sidebar::density() const { return m_density; }
+bool Z_Sidebar::isCollapsed() const { return m_collapsed; }
+QString Z_Sidebar::activeRoute() const { return m_activeRoute; }
+QStringList Z_Sidebar::routeIds() const { return m_routeIds; }
+QStringList Z_Sidebar::routeLabels() const { return m_routeLabels; }
+bool Z_Sidebar::focusIndicatorEnabled() const {
+    return property("focusIndicatorEnabled").toBool();
+}
+QToolButton* Z_Sidebar::collapseButton() const { return m_collapseAction; }
+QSize Z_Sidebar::sizeHint() const {
+    return QSize(m_collapsed ? 80 : 280,
+                 m_density == QStringLiteral("Compact") ? 466 : 520);
+}
+QSize Z_Sidebar::minimumSizeHint() const { return sizeHint(); }
+
+void Z_Sidebar::setVariantTuple(const QString& tuple) {
+    const auto properties = parseVariantTuple(tuple);
+    const QString densityValue = axis(properties, "Density", "Comfortable");
+    const QString collapsedValue = axis(properties, "Collapsed", "False");
+    if (densityValue != QStringLiteral("Comfortable") && densityValue != QStringLiteral("Compact"))
+        throw std::invalid_argument("Sidebar density must be Comfortable or Compact");
+    if (collapsedValue != QStringLiteral("False") && collapsedValue != QStringLiteral("True"))
+        throw std::invalid_argument("Sidebar Collapsed must be False or True");
+    const bool collapsed = collapsedValue == QStringLiteral("True");
+    const QString normalized = QStringLiteral("Density=%1, Collapsed=%2")
+                                   .arg(densityValue, collapsed ? QStringLiteral("True")
+                                                                : QStringLiteral("False"));
+    if (m_variantTuple == normalized)
+        return;
+    const bool densityWasChanged = m_density != densityValue;
+    const bool collapsedWasChanged = m_collapsed != collapsed;
+    m_density = densityValue;
+    m_collapsed = collapsed;
+    m_variantTuple = normalized;
+    m_variantProperties = {{QStringLiteral("Density"), m_density},
+                           {QStringLiteral("Collapsed"), m_collapsed ? QStringLiteral("True")
+                                                                      : QStringLiteral("False")}};
+    setProperty("figmaVariant", m_variantTuple);
+    setProperty("figmaVariantProperties", m_variantProperties);
+    rebuildRoutes();
+    refreshGeometryAndStyle();
+    if (densityWasChanged) emit densityChanged(m_density);
+    if (collapsedWasChanged) emit collapsedChanged(m_collapsed);
+    emit variantChanged(m_variantTuple);
+}
+
+void Z_Sidebar::setVariantProperty(const QString& name, const QString& value) {
+    if (name.compare(QStringLiteral("Density"), Qt::CaseInsensitive) == 0) {
+        setDensity(value);
+        return;
+    }
+    if (name.compare(QStringLiteral("Collapsed"), Qt::CaseInsensitive) == 0) {
+        if (value != QStringLiteral("True") && value != QStringLiteral("False"))
+            throw std::invalid_argument("Sidebar Collapsed must be False or True");
+        setCollapsed(value == QStringLiteral("True"));
+        return;
+    }
+    throw std::invalid_argument("Sidebar supports only Density and Collapsed variant axes");
+}
+
+void Z_Sidebar::setDensity(const QString& value) {
+    setVariantTuple(QStringLiteral("Density=%1, Collapsed=%2")
+                        .arg(value, m_collapsed ? QStringLiteral("True")
+                                               : QStringLiteral("False")));
+}
+
+void Z_Sidebar::setCollapsed(bool value) {
+    setVariantTuple(QStringLiteral("Density=%1, Collapsed=%2")
+                        .arg(m_density, value ? QStringLiteral("True")
+                                             : QStringLiteral("False")));
+}
+
+void Z_Sidebar::setActiveRoute(const QString& value) {
+    if (!m_routeIds.contains(value))
+        throw std::invalid_argument("Sidebar activeRoute must match a routeIds entry");
+    if (m_activeRoute == value)
+        return;
+    m_activeRoute = value;
+    updateSelection();
+    emit activeRouteChanged(value);
+}
+
+void Z_Sidebar::setRouteIds(const QStringList& values) {
+    if (values.isEmpty() || QSet<QString>(values.begin(), values.end()).size() != values.size())
+        throw std::invalid_argument("Sidebar routeIds must be non-empty and unique");
+    if (m_routeIds == values)
+        return;
+    m_routeIds = values;
+    if (m_routeLabels.size() != values.size())
+        m_routeLabels = values;
+    if (!m_routeIds.contains(m_activeRoute))
+        m_activeRoute = m_routeIds.first();
+    rebuildRoutes();
+    emit routesChanged();
+    emit activeRouteChanged(m_activeRoute);
+}
+
+void Z_Sidebar::setRouteLabels(const QStringList& values) {
+    if (values.size() != m_routeIds.size())
+        throw std::invalid_argument("Sidebar routeLabels must match routeIds length");
+    if (m_routeLabels == values)
+        return;
+    m_routeLabels = values;
+    rebuildRoutes();
+    emit routesChanged();
+}
+
+void Z_Sidebar::setFocusIndicatorEnabled(bool enabled) {
+    if (focusIndicatorEnabled() == enabled)
+        return;
+    FocusIndicator::instance().setEnabledFor(this, enabled);
+    emit focusIndicatorEnabledChanged(enabled);
+}
+
+void Z_Sidebar::rebuildRoutes() {
+    if (!m_routeLayout)
+        return;
+    delete m_routeGroup;
+    m_routeGroup = new QButtonGroup(this);
+    m_routeGroup->setExclusive(true);
+    clearLayout(m_routeLayout);
+    m_routeButtons.clear();
+    for (int index = 0; index < m_routeIds.size(); ++index) {
+        if (index == m_routeIds.size() - 1)
+            m_routeLayout->addStretch(1);
+        auto* button = new QToolButton(m_routeHost);
+        button->setObjectName(QStringLiteral("sidebarRoute%1").arg(index));
+        button->setProperty("sidebarRoute", true);
+        button->setText(m_routeLabels.value(index, m_routeIds[index]));
+        button->setAccessibleName(button->text());
+        button->setToolTip(m_collapsed ? button->text() : QString());
+        button->setCheckable(true);
+        button->setFocusPolicy(Qt::StrongFocus);
+        button->setToolButtonStyle(m_collapsed ? Qt::ToolButtonIconOnly
+                                               : Qt::ToolButtonTextBesideIcon);
+        FocusIndicator::instance().watch(button);
+        m_routeGroup->addButton(button, index);
+        m_routeButtons.append(button);
+        m_routeLayout->addWidget(button);
+        connect(button, &QToolButton::clicked, this, [this, index] {
+            updateSelection();
+            emit routeRequested(m_routeIds[index]);
+        });
+    }
+    updateSelection();
+}
+
+void Z_Sidebar::refreshGeometryAndStyle() {
+    if (!m_collapseAction)
+        return;
+    const CompositeTokens tokens(profileForDensity(m_profile, m_density));
+    const bool compact = m_density == QStringLiteral("Compact");
+    const int itemHeight = tokens.metric("component.composite.sidebar.navItemHeight");
+    const int width = m_collapsed ? 80 : tokens.metric("component.composite.sidebar.width");
+    const int radius = tokens.metric("component.composite.sidebar.radius");
+    const int itemRadius = tokens.metric("component.composite.sidebar.navItemRadius");
+    const QColor background = tokens.color("component.composite.sidebar.background");
+    const QColor text = tokens.color("component.composite.sidebar.navItemText");
+    const QColor selectedText = tokens.color("component.composite.sidebar.navItemActiveText");
+    const QColor selectedBackground = tokens.color("component.composite.sidebar.navItemActiveBg");
+    const QColor border = tokens.color("base.stoken.color.border.secondary");
+    const QColor accent = tokens.color("base.stoken.color.interactive.brand.default");
+    const QColor onBrand = tokens.color("base.stoken.color.text.invert");
+    setFixedWidth(width);
+    setMinimumHeight(compact ? 466 : 520);
+    if (auto* outer = qobject_cast<QVBoxLayout*>(layout()))
+        outer->setContentsMargins(16, 16, m_collapsed ? 8 : 16, 16);
+    if (auto* headerLayout = qobject_cast<QHBoxLayout*>(m_brandLogo->parentWidget()->layout()))
+        headerLayout->setSpacing(m_collapsed ? 8 : 10);
+    m_brandTitle->setVisible(!m_collapsed);
+    m_collapseAction->setFixedWidth(m_collapsed ? 16 : 24);
+    m_collapseAction->setAccessibleName(m_collapsed ? tr("Expand sidebar")
+                                                     : tr("Collapse sidebar"));
+    m_collapseAction->setIcon(tintedCompositeIcon(
+        m_collapsed ? QStringLiteral("chevron-right.svg")
+                    : QStringLiteral("chevron-left.svg"), text));
+    for (auto* button : m_routeButtons) {
+        button->setFixedSize(m_collapsed ? QSize(48, itemHeight) : QSize(248, itemHeight));
+        button->setToolButtonStyle(m_collapsed ? Qt::ToolButtonIconOnly
+                                               : Qt::ToolButtonTextBesideIcon);
+        button->setToolTip(m_collapsed ? button->text() : QString());
+    }
+    setStyleSheet(QStringLiteral(
+        "QWidget#sidebar{background:%1;border:0;border-radius:%2px;}"
+        "QLabel#sidebarBrandLogo{background:%3;color:%4;border-radius:10px;font-size:12px;font-weight:600;}"
+        "QLabel#sidebarBrandTitle{color:%5;font-size:14px;font-weight:500;}"
+        "QFrame#sidebarDivider{background:%6;border:0;}"
+        "QToolButton#sidebarCollapse{background:transparent;color:%5;border:1px solid transparent;border-radius:4px;}"
+        "QToolButton#sidebarCollapse:hover{background:%7;}"
+        "QToolButton[sidebarRoute=\"true\"]{background:transparent;color:%5;border:1px solid transparent;border-radius:%8px;text-align:left;padding:0 12px;font-size:14px;}"
+        "QToolButton[sidebarRoute=\"true\"]:hover,QToolButton[sidebarRoute=\"true\"]:checked{background:%7;color:%9;}"
+        "QToolButton#sidebarCollapse[focusIndicatorVisible=\"true\"],QToolButton[sidebarRoute=\"true\"][focusIndicatorVisible=\"true\"]{border:2px solid %3;}"
+        "QToolButton[sidebarRoute=\"true\"]:disabled{color:%10;}")
+        .arg(qssColor(background)).arg(radius).arg(qssColor(accent)).arg(qssColor(onBrand))
+        .arg(qssColor(text)).arg(qssColor(border)).arg(qssColor(selectedBackground))
+        .arg(itemRadius).arg(qssColor(selectedText))
+        .arg(qssColor(tokens.color("base.stoken.color.text.disabled"))));
+    updateSelection();
+    updateGeometry();
+}
+
+void Z_Sidebar::updateSelection() {
+    if (!m_routeGroup)
+        return;
+    const CompositeTokens tokens(profileForDensity(m_profile, m_density));
+    const QColor normal = tokens.color("component.composite.sidebar.navItemText");
+    const QColor selected = tokens.color("component.composite.sidebar.navItemActiveText");
+    const QStringList icons{QStringLiteral("home.svg"), QStringLiteral("document.svg"),
+                            QStringLiteral("document.svg"), QStringLiteral("document.svg"),
+                            QStringLiteral("document.svg"), QStringLiteral("settings.svg")};
+    for (int index = 0; index < m_routeButtons.size(); ++index) {
+        const bool active = m_routeIds.value(index) == m_activeRoute;
+        auto* button = m_routeButtons[index];
+        const QSignalBlocker blocker(button);
+        button->setChecked(active);
+        button->setIcon(tintedCompositeIcon(icons.value(index, QStringLiteral("document.svg")),
+                                            active ? selected : normal));
+        button->setIconSize(QSize(16, 16));
+    }
+}
+
+Z_DesktopBottomNavigation::Z_DesktopBottomNavigation(QWidget* parent)
+    : Z_DesktopBottomNavigation(QStringLiteral("light-comfortable"), parent) {}
+
+Z_DesktopBottomNavigation::Z_DesktopBottomNavigation(const QString& profile, QWidget* parent)
+    : QWidget(parent), m_profile(profile) {
+    static const int interFont =
+        QFontDatabase::addApplicationFont(QStringLiteral(":/figma/fonts/Inter-Regular.otf"));
+    Q_UNUSED(interFont)
     configureRuntimeIdentity(this, QStringLiteral("DesktopBottomNavigation"));
     setObjectName(QStringLiteral("desktopBottomNavigation"));
     setFocusPolicy(Qt::NoFocus);
@@ -702,33 +1279,13 @@ Z_DesktopBottomNavigation::Z_DesktopBottomNavigation(QWidget* parent) : QWidget(
     root->addWidget(m_secondaryHost);
     root->addWidget(m_primaryHost);
 
-    setStyleSheet(QStringLiteral(
-        "QWidget#desktopBottomNavigation{background:#ffffff;border:1px solid #d0d0d0;}"
-        "QWidget#desktopBottomNavigationSecondaryTier{background:#f3f3f3;border:0;}"
-        "QWidget#desktopBottomNavigationPrimaryTier{background:#ffffff;border:0;}"
-        "QPushButton#desktopBottomNavigationSubItem{background:#ffffff;color:#191919;"
-        "border:1px solid #d0d0d0;padding:0 4px;font-size:14px;font-weight:600;}"
-        "QPushButton#desktopBottomNavigationSubItem:hover,"
-        "QPushButton#desktopBottomNavigationSubItem:pressed,"
-        "QPushButton#desktopBottomNavigationSubItem:checked{background:#f3f3f3;color:#6235f7;}"
-        "QPushButton#desktopBottomNavigationSubItem[focusIndicatorVisible=\"true\"]{"
-        "border:2px solid #6235f7;color:#6235f7;}"
-        "QPushButton#desktopBottomNavigationSubItem:disabled{color:#8a8a8a;}"
-        "QToolButton#desktopBottomNavigationMainItem{background:#ffffff;color:#191919;"
-        "border:1px solid #d0d0d0;font-size:14px;font-weight:600;}"
-        "QToolButton#desktopBottomNavigationMainItem:hover,"
-        "QToolButton#desktopBottomNavigationMainItem:pressed,"
-        "QToolButton#desktopBottomNavigationMainItem:checked{background:#f3f3f3;color:#6235f7;}"
-        "QToolButton#desktopBottomNavigationMainItem[focusIndicatorVisible=\"true\"]{"
-        "border:2px solid #6235f7;color:#6235f7;}"
-        "QToolButton#desktopBottomNavigationMainItem:disabled{color:#8a8a8a;}"));
-
     m_primaryItems = QStringList{tr("首页"), tr("内容"), tr("设置")};
     m_primaryIconSources = QStringList{QStringLiteral("home.svg"),
                                        QStringLiteral("document.svg"),
                                        QStringLiteral("settings.svg")};
     m_secondaryItems = QStringList{tr("概览"), tr("最近"), tr("收藏")};
     setVariantTuple(QStringLiteral("IconPlacement=Top"));
+    refreshStyle();
     rebuildSecondaryTier();
     rebuildPrimaryTier();
 }
@@ -740,6 +1297,9 @@ QStringList Z_DesktopBottomNavigation::primaryIconSources() const { return m_pri
 QStringList Z_DesktopBottomNavigation::secondaryItems() const { return m_secondaryItems; }
 int Z_DesktopBottomNavigation::currentIndex() const { return m_currentIndex; }
 int Z_DesktopBottomNavigation::secondaryIndex() const { return m_secondaryIndex; }
+QString Z_DesktopBottomNavigation::iconPlacement() const {
+    return axis(m_variantProperties, "IconPlacement", "Top");
+}
 bool Z_DesktopBottomNavigation::focusIndicatorEnabled() const {
     return property("focusIndicatorEnabled").toBool();
 }
@@ -815,6 +1375,11 @@ void Z_DesktopBottomNavigation::setSecondaryIndex(int index) {
     updateSelection();
     emit secondaryIndexChanged(bounded);
 }
+void Z_DesktopBottomNavigation::setIconPlacement(const QString& value) {
+    if (value != QStringLiteral("Top") && value != QStringLiteral("Start"))
+        throw std::invalid_argument("DesktopBottomNavigation IconPlacement must be Top or Start");
+    setVariantTuple(QStringLiteral("IconPlacement=") + value);
+}
 void Z_DesktopBottomNavigation::setFocusIndicatorEnabled(bool enabled) {
     if (focusIndicatorEnabled() == enabled)
         return;
@@ -835,6 +1400,10 @@ void Z_DesktopBottomNavigation::rebuildSecondaryTier() {
         button->setAccessibleName(m_secondaryItems[i]);
         button->setCheckable(true);
         button->setFocusPolicy(Qt::StrongFocus);
+        QFont buttonFont(compositeCjkFontFamily());
+        buttonFont.setPixelSize(14);
+        buttonFont.setWeight(QFont::DemiBold);
+        button->setFont(buttonFont);
         button->setFixedSize(55, 32);
         FocusIndicator::instance().watch(button);
         m_secondaryGroup->addButton(button, i);
@@ -852,7 +1421,6 @@ void Z_DesktopBottomNavigation::rebuildSecondaryTier() {
             separator->setLineWidth(1);
             separator->setFixedSize(1, 24);
             separator->setFocusPolicy(Qt::NoFocus);
-            separator->setStyleSheet(QStringLiteral("color:#d0d0d0;background:#d0d0d0;border:0;"));
             m_secondaryLayout->addWidget(separator);
         }
     }
@@ -874,6 +1442,10 @@ void Z_DesktopBottomNavigation::rebuildPrimaryTier() {
         button->setIconSize(QSize(16, 16));
         button->setCheckable(true);
         button->setFocusPolicy(Qt::StrongFocus);
+        QFont buttonFont(compositeCjkFontFamily());
+        buttonFont.setPixelSize(14);
+        buttonFont.setWeight(QFont::DemiBold);
+        button->setFont(buttonFont);
         FocusIndicator::instance().watch(button);
         m_primaryGroup->addButton(button, i);
         m_primaryButtons.append(button);
@@ -903,8 +1475,9 @@ void Z_DesktopBottomNavigation::updatePlacement() {
 }
 
 void Z_DesktopBottomNavigation::updateSelection() {
-    const QColor normal(QStringLiteral("#191919"));
-    const QColor selected(QStringLiteral("#6235f7"));
+    const CompositeTokens tokens(m_profile);
+    const QColor normal = tokens.color("base.stoken.color.text.primary");
+    const QColor selected = tokens.color("base.stoken.color.interactive.brand.default");
     for (int i = 0; i < m_secondaryButtons.size(); ++i)
         m_secondaryButtons[i]->setChecked(i == m_secondaryIndex);
     for (int i = 0; i < m_primaryButtons.size(); ++i) {
@@ -914,6 +1487,39 @@ void Z_DesktopBottomNavigation::updateSelection() {
         const QString source = m_primaryIconSources.value(i, QStringLiteral("home.svg"));
         button->setIcon(tintedCompositeIcon(source, active ? selected : normal));
     }
+}
+
+void Z_DesktopBottomNavigation::refreshStyle() {
+    const CompositeTokens tokens(m_profile);
+    const QColor background = tokens.color("base.stoken.color.background.control-default");
+    const QColor hover = tokens.color("base.stoken.color.background.hover");
+    const QColor border = tokens.color("base.stoken.color.border.secondary");
+    const QColor text = tokens.color("base.stoken.color.text.primary");
+    const QColor disabled = tokens.color("base.stoken.color.text.disabled");
+    const QColor accent = tokens.color("base.stoken.color.interactive.brand.default");
+    setStyleSheet(QStringLiteral(
+        "QWidget#desktopBottomNavigation{background:%1;border:1px solid %2;}"
+        "QWidget#desktopBottomNavigationSecondaryTier{background:%3;border:0;}"
+        "QWidget#desktopBottomNavigationPrimaryTier{background:%1;border:0;}"
+        "QPushButton#desktopBottomNavigationSubItem{background:%1;color:%4;"
+        "border:1px solid %2;padding:0 4px;font-size:14px;font-weight:600;}"
+        "QPushButton#desktopBottomNavigationSubItem:hover,"
+        "QPushButton#desktopBottomNavigationSubItem:pressed,"
+        "QPushButton#desktopBottomNavigationSubItem:checked{background:%3;color:%5;}"
+        "QPushButton#desktopBottomNavigationSubItem[focusIndicatorVisible=\"true\"]{"
+        "border:2px solid %5;color:%5;}"
+        "QPushButton#desktopBottomNavigationSubItem:disabled{color:%6;}"
+        "QFrame#desktopBottomNavigationSeparator{color:%2;background:%2;border:0;}"
+        "QToolButton#desktopBottomNavigationMainItem{background:%1;color:%4;"
+        "border:1px solid %2;font-size:14px;font-weight:600;}"
+        "QToolButton#desktopBottomNavigationMainItem:hover,"
+        "QToolButton#desktopBottomNavigationMainItem:pressed,"
+        "QToolButton#desktopBottomNavigationMainItem:checked{background:%3;color:%5;}"
+        "QToolButton#desktopBottomNavigationMainItem[focusIndicatorVisible=\"true\"]{"
+        "border:2px solid %5;color:%5;}"
+        "QToolButton#desktopBottomNavigationMainItem:disabled{color:%6;}")
+                      .arg(qssColor(background), qssColor(border), qssColor(hover),
+                           qssColor(text), qssColor(accent), qssColor(disabled)));
 }
 
 Z_Switch::Z_Switch(QWidget* parent) : QAbstractButton(parent) {

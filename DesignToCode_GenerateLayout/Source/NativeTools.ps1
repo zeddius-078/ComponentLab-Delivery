@@ -13,7 +13,7 @@ function Initialize-NativeTools {
         throw 'Set QT_ROOT to the Qt5 MSVC x64 SDK.'
     }
     if ($env:VS_ROOT -and -not $env:VCToolsInstallDir) {
-        & "$env:VS_ROOT/Common7/Tools/Launch-VsDevShell.ps1" -VsInstallationPath $env:VS_ROOT -Arch amd64 -HostArch amd64 -SkipAutomaticLocation -NoLogo
+        & "$env:VS_ROOT/Common7/Tools/Launch-VsDevShell.ps1" -VsInstallationPath $env:VS_ROOT -Arch amd64 -HostArch amd64 -SkipAutomaticLocation
     }
     $env:PATH = "$env:QT_ROOT/bin;$env:NINJA_ROOT;" + $env:PATH
     $env:PYTHONDONTWRITEBYTECODE = '1'

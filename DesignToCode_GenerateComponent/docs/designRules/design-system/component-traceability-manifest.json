@@ -1,0 +1,1778 @@
+{
+  "schemaVersion": "1.0",
+  "updatedAt": "2026-10-15",
+  "fileKey": "w92BKW1EcutKmTXkwzNHbf",
+  "scope": "48-item-fusion-input-and-full-figma-component-set-governance-with-owner-specific-consumer-status",
+  "mappingPolicy": {
+    "cardinality": "1:1",
+    "leftKey": "designComponentId",
+    "rightKey": "developmentComponentId",
+    "rule": "One public Design ID maps to at most one verified development public identity. Internal Figma anatomy, variant sets and slots are not additional mapping identities.",
+    "missingDevelopmentBehavior": "Widget and Composite entries without a verified public runtime identity use ENGINEERING_GAP with developmentComponentId=null. LayoutHelper and Asset entries keep developmentComponentId=null and record their owner-specific consumerEngineeringStatus instead of requiring a QWidget class."
+  },
+  "kindPolicy": {
+    "existingEntries": "Derive Widget versus Composite from the verified legacy engineering mapping, then reconcile the canonical identity with current Figma.",
+    "newWidgets": [
+      "ComponentLab/Link",
+      "ComponentLab/Badge",
+      "ComponentLab/StatusIndicator",
+      "ComponentLab/Tooltip",
+      "ComponentLab/Tag",
+      "ComponentLab/OverflowMenuButton"
+    ],
+    "newComposites": [
+      "ComponentLab/TitleBar",
+      "ComponentLab/Timeline",
+      "ComponentLab/Stepper",
+      "ComponentLab/PageHeader",
+      "ComponentLab/Filter",
+      "ComponentLab/Pagination",
+      "ComponentLab/Transfer",
+      "ComponentLab/Upload",
+      "ComponentLab/SearchInput",
+      "ComponentLab/NumberInput",
+      "ComponentLab/NumericKeypad",
+      "ComponentLab/ColorPicker",
+      "ComponentLab/SegmentedControl",
+      "ComponentLab/AnchorNavigation"
+    ],
+    "layoutHelpers": [
+      "ComponentLab/Spacer",
+      "ComponentLab/LayoutContainer"
+    ],
+    "assets": [
+      "ComponentLab/IconAsset",
+      "ComponentLab/ImageAsset",
+      "ComponentLab/ModelAsset"
+    ]
+  },
+  "componentSetPolicy": {
+    "source": "DesignToCode_GenerateComponent/Source/ComponentKit/component-definitions/figma-component-inventory.json",
+    "auditDate": "2026-10-15",
+    "rule": "Every Figma Component Set must be referenced by exactly one Canonical Library entry or explicitly classified here. INTERNAL, PROPOSAL and RESIDUE sets never create a second public component identity.",
+    "allowedRoles": [
+      "INTERNAL",
+      "PROPOSAL",
+      "RESIDUE"
+    ],
+    "publicIdentityNodes": {
+      "ComponentLab/Menu": "482:491",
+      "ComponentLab/MenuBar": "487:23",
+      "ComponentLab/TabWidget": "500:849",
+      "ComponentLab/ToolBox": "505:555"
+    },
+    "unreferencedSets": [
+      {
+        "componentSetId": "392:85",
+        "name": "DSM/Sidebar/NavItem",
+        "role": "INTERNAL",
+        "subtype": "ANATOMY",
+        "ownerCanonicalId": "ComponentLab/Sidebar",
+        "resolution": "Keep as private Sidebar anatomy; do not publish a second SDK identity."
+      },
+      {
+        "componentSetId": "1308:62",
+        "name": "DSM/DesktopBottomNavigation/MainItem",
+        "role": "INTERNAL",
+        "subtype": "ANATOMY",
+        "ownerCanonicalId": "ComponentLab/DesktopBottomNavigation",
+        "resolution": "Keep as private main-item anatomy owned by DesktopBottomNavigation."
+      },
+      {
+        "componentSetId": "1307:15",
+        "name": "DSM/DesktopBottomNavigation/SubItem",
+        "role": "INTERNAL",
+        "subtype": "ANATOMY",
+        "ownerCanonicalId": "ComponentLab/DesktopBottomNavigation",
+        "resolution": "Keep as private sub-item anatomy owned by DesktopBottomNavigation."
+      },
+      {
+        "componentSetId": "1161:16084",
+        "name": ".DSM/Input/Password",
+        "role": "INTERNAL",
+        "subtype": "ANATOMY",
+        "ownerCanonicalId": "ComponentLab/Input",
+        "resolution": "Keep as private Input anatomy."
+      },
+      {
+        "componentSetId": "1164:643",
+        "name": ".DSM/Input/Search",
+        "role": "INTERNAL",
+        "subtype": "ANATOMY",
+        "ownerCanonicalId": "ComponentLab/Input",
+        "resolution": "Keep as private Input anatomy; it does not replace the public SearchInput identity."
+      },
+      {
+        "componentSetId": "1164:746",
+        "name": ".DSM/Input/SearchLoading",
+        "role": "INTERNAL",
+        "subtype": "ANATOMY",
+        "ownerCanonicalId": "ComponentLab/Input",
+        "resolution": "Keep as private Input loading anatomy."
+      },
+      {
+        "componentSetId": "1171:16329",
+        "name": ".DSM/Input/TextArea",
+        "role": "INTERNAL",
+        "subtype": "ANATOMY",
+        "ownerCanonicalId": "ComponentLab/Input",
+        "resolution": "Keep as private Input anatomy."
+      },
+      {
+        "componentSetId": "1175:1520",
+        "name": ".DSM/Input/PasswordOtherStates",
+        "role": "INTERNAL",
+        "subtype": "ANATOMY",
+        "ownerCanonicalId": "ComponentLab/Input",
+        "resolution": "Keep as private Input state anatomy."
+      },
+      {
+        "componentSetId": "1179:666",
+        "name": ".DSM/Input/ActionSlot",
+        "role": "INTERNAL",
+        "subtype": "ANATOMY",
+        "ownerCanonicalId": "ComponentLab/Input",
+        "resolution": "Keep as private Input slot anatomy."
+      },
+      {
+        "componentSetId": "235:2783",
+        "name": "DSM/Checkbox/Group",
+        "role": "INTERNAL",
+        "subtype": "GROUP_CONTRACT",
+        "ownerCanonicalId": "ComponentLab/Checkbox",
+        "resolution": "Keep as grouped usage contract; do not expose as a second Checkbox component."
+      },
+      {
+        "componentSetId": "341:118",
+        "name": "DSM/Radio/Group",
+        "role": "INTERNAL",
+        "subtype": "GROUP_CONTRACT",
+        "ownerCanonicalId": "ComponentLab/RadioButton",
+        "resolution": "Keep as grouped usage contract; do not expose as a second RadioButton component."
+      },
+      {
+        "componentSetId": "612:9658",
+        "name": "DSM/Chip/Group",
+        "role": "INTERNAL",
+        "subtype": "GROUP_CONTRACT",
+        "ownerCanonicalId": "ComponentLab/Chip",
+        "resolution": "Keep as grouped usage contract; do not expose as a second Chip component."
+      },
+      {
+        "componentSetId": "542:187",
+        "name": "Contract/LayoutPrimitive",
+        "role": "INTERNAL",
+        "subtype": "ENGINEERING_CONTRACT",
+        "ownerCanonicalId": null,
+        "resolution": "Keep as page-local engineering evidence; it is not a public picker entry or a QWidget identity."
+      },
+      {
+        "componentSetId": "482:490",
+        "name": "ComponentLab/MenuItem",
+        "role": "INTERNAL",
+        "subtype": "ANATOMY",
+        "ownerCanonicalId": "ComponentLab/Menu",
+        "resolution": "Keep as private QMenu item anatomy; the public Figma identity is ComponentLab/Menu node 482:491."
+      },
+      {
+        "componentSetId": "487:22",
+        "name": "ComponentLab/MenuBarItem",
+        "role": "INTERNAL",
+        "subtype": "ANATOMY",
+        "ownerCanonicalId": "ComponentLab/MenuBar",
+        "resolution": "Keep as private QMenuBar item anatomy; the public Figma identity is ComponentLab/MenuBar node 487:23."
+      },
+      {
+        "componentSetId": "500:847",
+        "name": "ComponentLab/TabItem",
+        "role": "INTERNAL",
+        "subtype": "ANATOMY",
+        "ownerCanonicalId": "ComponentLab/TabWidget",
+        "resolution": "Keep as private QTabWidget item anatomy; the public Figma identity is ComponentLab/TabWidget node 500:849."
+      },
+      {
+        "componentSetId": "505:553",
+        "name": "ComponentLab/ToolBoxItem",
+        "role": "INTERNAL",
+        "subtype": "ANATOMY",
+        "ownerCanonicalId": "ComponentLab/ToolBox",
+        "resolution": "Keep as private QToolBox item anatomy; the public Figma identity is ComponentLab/ToolBox node 505:555."
+      },
+      {
+        "componentSetId": "1260:738",
+        "name": "DSM/Button/IconOnly",
+        "role": "PROPOSAL",
+        "subtype": "VARIANT_ADMISSION",
+        "ownerCanonicalId": "ComponentLab/Button",
+        "resolution": "Require design approval before adding this set to ComponentLab/Button; never create a second Button canonical identity."
+      },
+      {
+        "componentSetId": "2016:18715",
+        "name": "ComponentLab/MenuItem",
+        "role": "RESIDUE",
+        "subtype": "DUPLICATE_PUBLIC_NAME",
+        "ownerCanonicalId": null,
+        "duplicateOfComponentSetId": "482:490",
+        "resolution": "Remove, rename or internalize the MetricCard-page copy in Figma; it duplicates internal MenuItem anatomy 482:490, while public Menu identity remains node 482:491."
+      }
+    ]
+  },
+  "tokenAuthority": {
+    "source": "DesignToCode_GenerateComponent/Source/ComponentKit/design-assets/DesignSystem/imports/stoken.json",
+    "chain": "01.primitive -> 02.profile -> 03.semantic -> 04.component -> Figma bound properties",
+    "liveFigmaAudit": {
+      "publicIdentities": 48,
+      "nodeIdentityMissing": 0,
+      "tokenBound": 48,
+      "tokenZero": 0
+    },
+    "limitation": "A positive binding count proves traceability to a Figma variable, not complete role coverage or runtime token consumption."
+  },
+  "engineeringEvidence": {
+    "catalog": "DesignToCode_GenerateComponent/Source/ComponentKit/component-definitions/generated-design-component-catalog.json",
+    "factory": "DesignToCode_GenerateComponent/Source/ComponentKit/runtime/component/ComponentFactory.cpp",
+    "nativeRegistry": "DesignToCode_GenerateComponent/Source/ComponentKit/runtime/component/native/NativeComponentRegistry.cpp",
+    "verified": 43,
+    "nameSyncRequired": 0,
+    "gaps": 5,
+    "layoutHelpersImplemented": 2,
+    "assetsUnmapped": 0,
+    "boundary": "The 5 remaining ENGINEERING_GAP records are intentionally non-QWidget entries: 2 LayoutHelpers and 3 Assets. Their completion is recorded by owner-specific consumerEngineeringStatus=IMPLEMENTED; they must not be added to ComponentFactory or assigned fake QWidget identities."
+  },
+  "downstreamEvidenceOverrides": {
+    "ComponentLab/Button": {
+      "consumerEngineeringStatus": "IMPLEMENTED",
+      "runtimeScope": "SDK_FACTORY_COMPONENTLAB_GENERATELAYOUT",
+      "consumerEvidence": [
+        "DesignToCode_GenerateLayout/Source/HtmlDsl/pipeline/mapping/component-mapping.json",
+        "DesignToCode_GenerateLayout/Source/Validation/component/ComponentTests.cpp",
+        "ComponentLab/Source/delivery/tests/CompositionTests.cpp"
+      ]
+    },
+    "ComponentLab/Checkbox": {
+      "consumerEngineeringStatus": "IMPLEMENTED",
+      "runtimeScope": "SDK_FACTORY_COMPONENTLAB_GENERATELAYOUT",
+      "consumerEvidence": [
+        "DesignToCode_GenerateLayout/Source/HtmlDsl/pipeline/mapping/component-mapping.json",
+        "DesignToCode_GenerateLayout/Source/Validation/component/ComponentTests.cpp",
+        "ComponentLab/Source/delivery/tests/CompositionTests.cpp"
+      ]
+    },
+    "ComponentLab/Input": {
+      "consumerEngineeringStatus": "IMPLEMENTED",
+      "runtimeScope": "SDK_FACTORY_COMPONENTLAB_GENERATELAYOUT",
+      "consumerEvidence": [
+        "DesignToCode_GenerateLayout/Source/HtmlDsl/pipeline/mapping/component-mapping.json",
+        "DesignToCode_GenerateLayout/Source/Validation/component/ComponentTests.cpp",
+        "ComponentLab/Source/delivery/tests/CompositionTests.cpp"
+      ]
+    },
+    "ComponentLab/Menu": {
+      "consumerEngineeringStatus": "IMPLEMENTED",
+      "runtimeScope": "SDK_FACTORY_COMPONENTLAB_GENERATELAYOUT",
+      "focusPolicy": "NATIVE_ACTION_NAVIGATION_OPTIONAL_INDICATOR",
+      "runtimeContract": {
+        "qtBaseClass": "QMenu/QAction composition",
+        "publicDesignNodeId": "482:491",
+        "internalVariantSourceComponentSetId": "482:490",
+        "internalVariantAxes": ["Type", "State"],
+        "controlledProperties": ["QAction text", "shortcut", "checkable", "checked", "enabled", "menu"],
+        "controllerBoundary": "QAction remains command identity and data authority; hover, active and keyboard highlight are transient native states, while MenuItem remains internal anatomy."
+      },
+      "runtimeEvidence": [
+        "Source/ComponentKit/runtime/component/NavigationAppearance.h",
+        "Source/ComponentKit/runtime/component/NavigationAppearance.cpp",
+        "Source/SDKConsumerTest/main.cpp"
+      ],
+      "consumerEvidence": [
+        "ComponentLab/Source/delivery/demo/NavigationGallery.cpp",
+        "ComponentLab/Source/delivery/tests/CompositionTests.cpp",
+        "DesignToCode_GenerateLayout/Source/HtmlDsl/pipeline/mapping/component-mapping.json",
+        "DesignToCode_GenerateLayout/Source/Validation/component/ComponentTests.cpp"
+      ]
+    },
+    "ComponentLab/MenuBar": {
+      "consumerEngineeringStatus": "IMPLEMENTED",
+      "runtimeScope": "SDK_FACTORY_COMPONENTLAB_GENERATELAYOUT",
+      "focusPolicy": "NATIVE_ACTION_NAVIGATION_OPTIONAL_INDICATOR",
+      "runtimeContract": {
+        "qtBaseClass": "QMenuBar/QAction/QMenu composition",
+        "publicDesignNodeId": "487:23",
+        "internalVariantSourceComponentSetId": "487:22",
+        "internalVariantAxes": ["State"],
+        "controlledProperties": ["Show corner"],
+        "controllerBoundary": "QAction and ComponentLab/Menu remain shared runtime authorities; open, hover, keyboard and disabled are native action states, while the corner widget content remains consumer-owned."
+      },
+      "runtimeEvidence": [
+        "Source/ComponentKit/runtime/component/NavigationAppearance.h",
+        "Source/ComponentKit/runtime/component/NavigationAppearance.cpp",
+        "Source/SDKConsumerTest/main.cpp"
+      ],
+      "consumerEvidence": [
+        "ComponentLab/Source/delivery/demo/NavigationGallery.cpp",
+        "ComponentLab/Source/delivery/tests/CompositionTests.cpp",
+        "DesignToCode_GenerateLayout/Source/HtmlDsl/pipeline/mapping/component-mapping.json",
+        "DesignToCode_GenerateLayout/Source/Validation/component/ComponentTests.cpp"
+      ]
+    },
+    "ComponentLab/ToolBar": {
+      "consumerEngineeringStatus": "IMPLEMENTED",
+      "runtimeScope": "SDK_FACTORY_COMPONENTLAB_GENERATELAYOUT",
+      "focusPolicy": "CHILD_ACTION_NAVIGATION_OPTIONAL_INDICATOR",
+      "runtimeContract": {
+        "qtBaseClass": "QToolBar/QAction/QToolButton composition",
+        "variantAxes": ["Orientation", "Placement", "Capacity", "Presentation"],
+        "controlledProperties": ["Show handle"],
+        "controllerBoundary": "QAction remains shared command authority; QMainWindow owns real docking and floating lifecycle, while the Figma Placement axis is a deterministic appearance specimen."
+      },
+      "runtimeEvidence": [
+        "Source/ComponentKit/runtime/component/NavigationAppearance.h",
+        "Source/ComponentKit/runtime/component/NavigationAppearance.cpp",
+        "Source/SDKConsumerTest/main.cpp"
+      ],
+      "consumerEvidence": [
+        "ComponentLab/Source/delivery/demo/NavigationGallery.cpp",
+        "ComponentLab/Source/delivery/tests/CompositionTests.cpp",
+        "DesignToCode_GenerateLayout/Source/HtmlDsl/pipeline/mapping/component-mapping.json",
+        "DesignToCode_GenerateLayout/Source/Validation/component/ComponentTests.cpp"
+      ]
+    },
+    "ComponentLab/TabWidget": {
+      "consumerEngineeringStatus": "IMPLEMENTED",
+      "runtimeScope": "SDK_FACTORY_COMPONENTLAB_GENERATELAYOUT",
+      "focusPolicy": "CHILD_TAB_NAVIGATION_OPTIONAL_INDICATOR",
+      "runtimeContract": {
+        "qtBaseClass": "QTabWidget/QTabBar/QWidget page composition",
+        "publicDesignNodeId": "500:849",
+        "internalVariantSourceComponentSetId": "500:847",
+        "internalVariantAxes": ["Position", "State"],
+        "controlledProperties": ["tab text", "tab icon", "per-item enabled", "per-item closable", "currentIndex"],
+        "controllerBoundary": "QTabWidget owns page visibility, keyboard selection, close-request signaling and page attachment; generated pages own close confirmation, deletion and persistence. TabItem remains internal anatomy."
+      },
+      "runtimeEvidence": [
+        "Source/ComponentKit/runtime/component/TabAppearance.h",
+        "Source/ComponentKit/runtime/component/TabAppearance.cpp",
+        "Source/SDKConsumerTest/main.cpp"
+      ],
+      "consumerEvidence": [
+        "ComponentLab/Source/delivery/demo/TabsGallery.cpp",
+        "ComponentLab/Source/delivery/tests/CompositionTests.cpp",
+        "DesignToCode_GenerateLayout/Source/HtmlDsl/pipeline/mapping/component-mapping.json",
+        "DesignToCode_GenerateLayout/Source/Validation/component/ComponentTests.cpp"
+      ]
+    },
+    "ComponentLab/ToolBox": {
+      "consumerEngineeringStatus": "IMPLEMENTED",
+      "runtimeScope": "SDK_FACTORY_COMPONENTLAB_GENERATELAYOUT",
+      "focusPolicy": "CHILD_ITEM_NAVIGATION_OPTIONAL_INDICATOR",
+      "runtimeContract": {
+        "qtBaseClass": "QToolBox/QAbstractButton/QWidget page composition",
+        "publicDesignNodeId": "505:555",
+        "internalVariantSourceComponentSetId": "505:553",
+        "internalVariantAxes": ["State"],
+        "controlledProperties": ["item text", "item icon", "mnemonic", "per-item enabled", "currentIndex"],
+        "controllerBoundary": "QToolBox owns single-current-page selection and attached item pages. All-collapsed and multi-open behavior belongs to Collapse, not ToolBox; ToolBoxItem remains internal anatomy."
+      },
+      "runtimeEvidence": [
+        "Source/ComponentKit/runtime/component/ToolBoxAppearance.h",
+        "Source/ComponentKit/runtime/component/ToolBoxAppearance.cpp",
+        "Source/SDKConsumerTest/main.cpp"
+      ],
+      "consumerEvidence": [
+        "ComponentLab/Source/delivery/demo/ToolBoxGallery.cpp",
+        "ComponentLab/Source/delivery/tests/CompositionTests.cpp",
+        "DesignToCode_GenerateLayout/Source/HtmlDsl/pipeline/mapping/component-mapping.json",
+        "DesignToCode_GenerateLayout/Source/Validation/component/ComponentTests.cpp"
+      ]
+    },
+    "ComponentLab/DesktopBottomNavigation": {
+      "consumerEngineeringStatus": "IMPLEMENTED",
+      "runtimeScope": "SDK_FACTORY_COMPONENTLAB_GENERATELAYOUT",
+      "focusPolicy": "CHILD_ACTION_OPTIONAL",
+      "tokenStatus": "BOUND_VERIFIED",
+      "runtimeContract": {
+        "qtBaseClass": "QWidget composition",
+        "variantAxes": ["IconPlacement"],
+        "controlledProperties": ["primaryItems", "primaryIconSources", "secondaryItems", "currentIndex", "secondaryIndex"],
+        "signals": ["primaryActivated(int)", "secondaryActivated(int)"],
+        "controllerBoundary": "Stable destinations, selection synchronization and page switching remain generated-page responsibilities; internal item sets remain SDK anatomy."
+      },
+      "runtimeEvidence": [
+        "Source/ComponentKit/runtime/component/Z_DesignComponents.h",
+        "Source/ComponentKit/runtime/component/Z_DesignComponents.cpp",
+        "Source/SDKConsumerTest/main.cpp"
+      ],
+      "consumerEvidence": [
+        "DesignToCode_GenerateLayout/Source/HtmlDsl/pipeline/mapping/component-mapping.json",
+        "DesignToCode_GenerateLayout/Source/Validation/component/ComponentTests.cpp",
+        "ComponentLab/Source/delivery/demo/CompositeGallery.cpp",
+        "ComponentLab/Source/delivery/tests/CompositionTests.cpp"
+      ]
+    }
+  },
+  "counts": {
+    "total": 48,
+    "merge": 23,
+    "built": 25,
+    "tokenBound": 48,
+    "engineeringVerified": 43,
+    "engineeringNameSyncRequired": 0,
+    "engineeringGap": 5
+  },
+  "components": [
+    {
+      "index": 1,
+      "sourceName": "Navigation",
+      "canonicalName": "Navbar",
+      "designComponentId": "ComponentLab/Navbar",
+      "figmaNodeIds": [
+        "380:113"
+      ],
+      "governanceDecision": "MERGE",
+      "developmentComponentId": "commonWidget::Z_Navbar",
+      "engineeringStatus": "VERIFIED",
+      "consumerEngineeringStatus": "IMPLEMENTED",
+      "runtimeScope": "SDK_FACTORY_COMPONENTLAB_GENERATELAYOUT",
+      "focusPolicy": "CHILD_ACTION_OPTIONAL",
+      "runtimeContract": {
+        "qtBaseClass": "QWidget composition",
+        "variantAxes": ["Density"],
+        "controlledProperties": ["profileName", "searchText"],
+        "signals": ["searchTextChanged(QString)", "notificationRequested()", "profileRequested()"],
+        "controllerBoundary": "Search execution, notification data and profile-menu routing remain generated-page responsibilities."
+      },
+      "runtimeEvidence": [
+        "Source/ComponentKit/runtime/component/Z_DesignComponents.h",
+        "Source/ComponentKit/runtime/component/Z_DesignComponents.cpp",
+        "Source/SDKConsumerTest/main.cpp"
+      ],
+      "consumerEvidence": [
+        "ComponentLab/Source/delivery/demo/CompositeGallery.cpp",
+        "ComponentLab/Source/delivery/tests/CompositionTests.cpp",
+        "DesignToCode_GenerateLayout/Source/HtmlDsl/pipeline/mapping/component-mapping.json",
+        "DesignToCode_GenerateLayout/Source/Validation/component/ComponentTests.cpp"
+      ],
+      "tokenStatus": "BOUND_VERIFIED",
+      "tokenBindingRefs": 132
+    },
+    {
+      "index": 2,
+      "sourceName": "SideNavigatior",
+      "canonicalName": "Sidebar",
+      "designComponentId": "ComponentLab/Sidebar",
+      "figmaNodeIds": [
+        "392:216"
+      ],
+      "governanceDecision": "MERGE",
+      "developmentComponentId": "commonWidget::Z_Sidebar",
+      "engineeringStatus": "VERIFIED",
+      "consumerEngineeringStatus": "IMPLEMENTED",
+      "runtimeScope": "SDK_FACTORY_COMPONENTLAB_GENERATELAYOUT",
+      "focusPolicy": "CHILD_ACTION_OPTIONAL",
+      "runtimeContract": {
+        "qtBaseClass": "QWidget composition",
+        "variantAxes": ["Density", "Collapsed"],
+        "controlledProperties": ["activeRoute", "routeIds", "routeLabels"],
+        "signals": ["routeRequested(QString)", "collapsedChangeRequested(bool)"],
+        "controllerBoundary": "Route resolution, permissions, active-route synchronization and page switching remain generated-page responsibilities."
+      },
+      "runtimeEvidence": [
+        "Source/ComponentKit/runtime/component/Z_DesignComponents.h",
+        "Source/ComponentKit/runtime/component/Z_DesignComponents.cpp",
+        "Source/SDKConsumerTest/main.cpp"
+      ],
+      "consumerEvidence": [
+        "ComponentLab/Source/delivery/demo/CompositeGallery.cpp",
+        "ComponentLab/Source/delivery/tests/CompositionTests.cpp",
+        "DesignToCode_GenerateLayout/Source/HtmlDsl/pipeline/mapping/component-mapping.json",
+        "DesignToCode_GenerateLayout/Source/Validation/component/ComponentTests.cpp"
+      ],
+      "tokenStatus": "BOUND_VERIFIED",
+      "tokenBindingRefs": 360
+    },
+    {
+      "index": 3,
+      "sourceName": "TabWidge",
+      "canonicalName": "TabWidget",
+      "designComponentId": "ComponentLab/TabWidget",
+      "figmaNodeIds": [
+        "500:849"
+      ],
+      "governanceDecision": "MERGE",
+      "developmentComponentId": "commonWidget::Z_TabWidget",
+      "engineeringStatus": "VERIFIED",
+      "tokenStatus": "BOUND_VERIFIED",
+      "tokenBindingRefs": 240
+    },
+    {
+      "index": 4,
+      "sourceName": "TitleBan",
+      "canonicalName": "TitleBar",
+      "designComponentId": "ComponentLab/TitleBar",
+      "figmaNodeIds": [
+        "2150:436"
+      ],
+      "governanceDecision": "BUILT",
+      "developmentComponentId": "commonWidget::Z_TitleBar",
+      "engineeringStatus": "VERIFIED",
+      "tokenStatus": "BOUND_VERIFIED",
+      "tokenBindingRefs": 52,
+      "focusPolicy": "CHILD_WINDOW_CONTROLS",
+      "runtimeContract": {
+        "qtBaseClass": "QWidget/QToolButton composition",
+        "properties": [
+          "title",
+          "snapshotState"
+        ],
+        "signals": [
+          "minimizeRequested",
+          "maximizeRestoreRequested",
+          "closeRequested",
+          "dragStarted",
+          "dragMoved",
+          "dragEnded"
+        ],
+        "states": [
+          "Default",
+          "Maximized"
+        ],
+        "accessibility": "the presentation root is not focusable; each host window action is a named keyboard-focusable child"
+      },
+      "runtimeEvidence": [
+        "Source/ComponentKit/runtime/component/Z_FoundationComponents.h",
+        "Source/ComponentKit/runtime/component/Z_FoundationComponents.cpp",
+        "Source/ComponentKit/runtime/component/ComponentFactory.cpp",
+        "DesignToCode_GenerateLayout/Source/HtmlDsl/pipeline/mapping/component-mapping.json"
+      ],
+      "runtimeScope": "SDK_FACTORY_COMPONENTLAB_GENERATELAYOUT",
+      "consumerEngineeringStatus": "IMPLEMENTED",
+      "consumerEvidence": [
+        "ComponentLab/Source/delivery/tests/CompositionTests.cpp",
+        "DesignToCode_GenerateLayout/Source/Validation/component/ComponentTests.cpp"
+      ]
+    },
+    {
+      "index": 5,
+      "sourceName": "Link",
+      "canonicalName": "Link",
+      "designComponentId": "ComponentLab/Link",
+      "figmaNodeIds": [
+        "2132:102"
+      ],
+      "governanceDecision": "BUILT",
+      "developmentComponentId": "commonWidget::Z_Link",
+      "engineeringStatus": "VERIFIED",
+      "tokenStatus": "BOUND_VERIFIED",
+      "tokenBindingRefs": 32,
+      "focusPolicy": "STRONG_FOCUS_OPTIONAL_INDICATOR",
+      "runtimeContract": {
+        "qtBaseClass": "QAbstractButton",
+        "properties": ["text", "target", "snapshotState"],
+        "signals": ["clicked", "activated", "snapshotStateChanged"],
+        "states": ["Default", "Hover", "Pressed", "Focus-visible", "Disabled"],
+        "accessibility": "visible text supplies the accessible name; keyboard activation supports Space, Enter and Return",
+        "ownership": "snapshotState is a deterministic evidence and generated-static-state input; an empty value restores native interactive state resolution"
+      },
+      "runtimeEvidence": [
+        "Source/ComponentKit/runtime/component/Z_FoundationComponents.h",
+        "Source/ComponentKit/runtime/component/Z_FoundationComponents.cpp",
+        "Source/ComponentKit/runtime/component/ComponentFactory.cpp",
+        "DesignToCode_GenerateLayout/Source/HtmlDsl/pipeline/mapping/component-mapping.json"
+      ],
+      "runtimeScope": "SDK_FACTORY_COMPONENTLAB_GENERATELAYOUT",
+      "consumerEngineeringStatus": "IMPLEMENTED",
+      "consumerEvidence": [
+        "ComponentLab/Source/delivery/tests/CompositionTests.cpp",
+        "DesignToCode_GenerateLayout/Source/Validation/component/ComponentTests.cpp"
+      ]
+    },
+    {
+      "index": 6,
+      "sourceName": "Timeline",
+      "canonicalName": "Timeline",
+      "designComponentId": "ComponentLab/Timeline",
+      "figmaNodeIds": [
+        "2147:35"
+      ],
+      "governanceDecision": "BUILT",
+      "developmentComponentId": "commonWidget::Z_Timeline",
+      "engineeringStatus": "VERIFIED",
+      "tokenStatus": "BOUND_VERIFIED",
+      "tokenBindingRefs": 70,
+      "focusPolicy": "NO_FOCUS_PRESENTATION",
+      "runtimeContract": {
+        "qtBaseClass": "QWidget",
+        "properties": ["density"],
+        "methods": ["setEvents"],
+        "signals": ["densityChanged", "eventsChanged"],
+        "states": ["Brand", "Process", "Success"],
+        "accessibility": "non-interactive event history; event count and latest event are exposed through the accessible description"
+      },
+      "runtimeEvidence": [
+        "Source/ComponentKit/runtime/component/Z_FoundationComponents.h",
+        "Source/ComponentKit/runtime/component/Z_FoundationComponents.cpp",
+        "Source/ComponentKit/runtime/component/ComponentFactory.cpp",
+        "Source/ComponentKit/runtime/assets/timeline/created.svg",
+        "Source/ComponentKit/runtime/assets/timeline/processing.svg",
+        "Source/ComponentKit/runtime/assets/timeline/completed.svg",
+        "DesignToCode_GenerateLayout/Source/HtmlDsl/pipeline/mapping/component-mapping.json"
+      ],
+      "runtimeScope": "SDK_FACTORY_COMPONENTLAB_GENERATELAYOUT",
+      "consumerEngineeringStatus": "IMPLEMENTED",
+      "consumerEvidence": [
+        "ComponentLab/Source/delivery/tests/CompositionTests.cpp",
+        "DesignToCode_GenerateLayout/Source/Validation/component/ComponentTests.cpp"
+      ]
+    },
+    {
+      "index": 7,
+      "sourceName": "Text",
+      "canonicalName": "Label",
+      "designComponentId": "ComponentLab/Label",
+      "figmaNodeIds": [
+        "414:39"
+      ],
+      "governanceDecision": "MERGE",
+      "developmentComponentId": "commonWidget::Z_Label",
+      "engineeringStatus": "VERIFIED",
+      "tokenStatus": "BOUND_VERIFIED",
+      "tokenBindingRefs": 96
+    },
+    {
+      "index": 8,
+      "sourceName": "Dividel",
+      "canonicalName": "Divider",
+      "designComponentId": "ComponentLab/Divider",
+      "figmaNodeIds": [
+        "544:80"
+      ],
+      "governanceDecision": "MERGE",
+      "developmentComponentId": "commonWidget::Z_Divider",
+      "engineeringStatus": "VERIFIED",
+      "tokenStatus": "BOUND_VERIFIED",
+      "tokenBindingRefs": 228
+    },
+    {
+      "index": 9,
+      "sourceName": "Progressbar",
+      "canonicalName": "ProgressBar",
+      "designComponentId": "ComponentLab/ProgressBar",
+      "figmaNodeIds": [
+        "410:57"
+      ],
+      "governanceDecision": "MERGE",
+      "developmentComponentId": "commonWidget::Z_ProgressBar",
+      "engineeringStatus": "VERIFIED",
+      "tokenStatus": "BOUND_VERIFIED",
+      "tokenBindingRefs": 458
+    },
+    {
+      "index": 10,
+      "sourceName": "Scroll",
+      "canonicalName": "ScrollBar",
+      "designComponentId": "ComponentLab/ScrollBar",
+      "figmaNodeIds": [
+        "471:477"
+      ],
+      "governanceDecision": "MERGE",
+      "developmentComponentId": "commonWidget::Z_ScrollBar",
+      "engineeringStatus": "VERIFIED",
+      "tokenStatus": "BOUND_VERIFIED",
+      "tokenBindingRefs": 224
+    },
+    {
+      "index": 11,
+      "sourceName": "Badge",
+      "canonicalName": "Badge",
+      "designComponentId": "ComponentLab/Badge",
+      "figmaNodeIds": [
+        "2132:21"
+      ],
+      "governanceDecision": "BUILT",
+      "developmentComponentId": "commonWidget::Z_Badge",
+      "engineeringStatus": "VERIFIED",
+      "tokenStatus": "BOUND_VERIFIED",
+      "tokenBindingRefs": 70,
+      "focusPolicy": "NOT_APPLICABLE",
+      "runtimeContract": {
+        "qtBaseClass": "QWidget",
+        "properties": ["label", "kind", "tone"],
+        "signals": ["labelChanged", "kindChanged", "toneChanged"],
+        "states": ["Text", "Dot"],
+        "accessibility": "non-interactive status text is exposed through accessibleName"
+      },
+      "runtimeEvidence": [
+        "Source/ComponentKit/runtime/component/Z_FoundationComponents.h",
+        "Source/ComponentKit/runtime/component/Z_FoundationComponents.cpp",
+        "Source/ComponentKit/runtime/component/ComponentFactory.cpp",
+        "DesignToCode_GenerateLayout/Source/HtmlDsl/pipeline/mapping/component-mapping.json"
+      ],
+      "runtimeScope": "SDK_FACTORY_COMPONENTLAB_GENERATELAYOUT",
+      "consumerEngineeringStatus": "IMPLEMENTED",
+      "consumerEvidence": [
+        "ComponentLab/Source/delivery/tests/CompositionTests.cpp",
+        "DesignToCode_GenerateLayout/Source/Validation/component/ComponentTests.cpp"
+      ]
+    },
+    {
+      "index": 12,
+      "sourceName": "Message",
+      "canonicalName": "Message",
+      "designComponentId": "ComponentLab/Message",
+      "figmaNodeIds": [
+        "581:97"
+      ],
+      "governanceDecision": "MERGE",
+      "developmentComponentId": "commonWidget::Z_Message",
+      "engineeringStatus": "VERIFIED",
+      "tokenStatus": "BOUND_VERIFIED",
+      "tokenBindingRefs": 183
+    },
+    {
+      "index": 13,
+      "sourceName": "Lamp",
+      "canonicalName": "StatusIndicator",
+      "designComponentId": "ComponentLab/StatusIndicator",
+      "figmaNodeIds": [
+        "2132:69"
+      ],
+      "governanceDecision": "BUILT",
+      "developmentComponentId": "commonWidget::Z_StatusIndicator",
+      "engineeringStatus": "VERIFIED",
+      "tokenStatus": "BOUND_VERIFIED",
+      "tokenBindingRefs": 40,
+      "focusPolicy": "NOT_APPLICABLE",
+      "runtimeContract": {
+        "qtBaseClass": "QWidget",
+        "properties": ["label", "showLabel", "size", "tone"],
+        "signals": ["labelChanged", "showLabelChanged", "sizeChanged", "toneChanged"],
+        "states": ["Small", "Medium", "Neutral", "Process", "Success", "Warning", "Danger"],
+        "accessibility": "non-interactive continuous state is exposed through accessibleName"
+      },
+      "runtimeEvidence": [
+        "Source/ComponentKit/runtime/component/Z_FoundationComponents.h",
+        "Source/ComponentKit/runtime/component/Z_FoundationComponents.cpp",
+        "Source/ComponentKit/runtime/component/ComponentFactory.cpp",
+        "DesignToCode_GenerateLayout/Source/HtmlDsl/pipeline/mapping/component-mapping.json"
+      ],
+      "runtimeScope": "SDK_FACTORY_COMPONENTLAB_GENERATELAYOUT",
+      "consumerEngineeringStatus": "IMPLEMENTED",
+      "consumerEvidence": [
+        "ComponentLab/Source/delivery/tests/CompositionTests.cpp",
+        "DesignToCode_GenerateLayout/Source/Validation/component/ComponentTests.cpp"
+      ]
+    },
+    {
+      "index": 14,
+      "sourceName": "ToolTip",
+      "canonicalName": "Tooltip",
+      "designComponentId": "ComponentLab/Tooltip",
+      "figmaNodeIds": [
+        "2132:189"
+      ],
+      "governanceDecision": "BUILT",
+      "developmentComponentId": "commonWidget::Z_Tooltip",
+      "engineeringStatus": "VERIFIED",
+      "tokenStatus": "BOUND_VERIFIED",
+      "tokenBindingRefs": 56,
+      "focusPolicy": "TARGET_OWNED",
+      "runtimeContract": {
+        "qtBaseClass": "QWidget",
+        "properties": ["content", "placement", "showArrow"],
+        "signals": ["contentChanged", "placementChanged", "showArrowChanged"],
+        "states": ["Top", "Bottom", "Left", "Right"],
+        "accessibility": "tooltip never accepts focus; attachTo observes target hover, keyboard focus and Escape",
+        "ownership": "the generated page resolves the target and calls attachTo; the SDK owns hover, target-focus and Escape visibility behavior"
+      },
+      "runtimeEvidence": [
+        "Source/ComponentKit/runtime/component/Z_FoundationComponents.h",
+        "Source/ComponentKit/runtime/component/Z_FoundationComponents.cpp",
+        "Source/ComponentKit/runtime/component/ComponentFactory.cpp",
+        "DesignToCode_GenerateLayout/Source/HtmlDsl/pipeline/mapping/component-mapping.json"
+      ],
+      "runtimeScope": "SDK_FACTORY_COMPONENTLAB_GENERATELAYOUT",
+      "consumerEngineeringStatus": "IMPLEMENTED",
+      "consumerEvidence": [
+        "ComponentLab/Source/delivery/tests/CompositionTests.cpp",
+        "DesignToCode_GenerateLayout/Source/Validation/component/ComponentTests.cpp"
+      ]
+    },
+    {
+      "index": 15,
+      "sourceName": "Tag",
+      "canonicalName": "Tag",
+      "designComponentId": "ComponentLab/Tag",
+      "figmaNodeIds": [
+        "2132:150"
+      ],
+      "governanceDecision": "BUILT",
+      "developmentComponentId": "commonWidget::Z_Tag",
+      "engineeringStatus": "VERIFIED",
+      "tokenStatus": "BOUND_VERIFIED",
+      "tokenBindingRefs": 340,
+      "focusPolicy": "CHILD_ACTION_ONLY",
+      "runtimeContract": {
+        "qtBaseClass": "QWidget composition",
+        "properties": ["label", "size", "tone", "dismissible"],
+        "signals": ["dismissed", "labelChanged", "sizeChanged", "toneChanged", "dismissibleChanged"],
+        "states": ["Small", "Medium", "Neutral", "Info", "Success", "Warning", "Danger", "Dismissible"],
+        "accessibility": "read-only tag root is not focusable; the optional dismiss child has a distinct accessible name and keyboard focus",
+        "ownership": "the SDK emits dismissed intent; removal, persistence and undo remain generated-page controller responsibilities"
+      },
+      "runtimeEvidence": [
+        "Source/ComponentKit/runtime/component/Z_FoundationComponents.h",
+        "Source/ComponentKit/runtime/component/Z_FoundationComponents.cpp",
+        "Source/ComponentKit/runtime/component/ComponentFactory.cpp",
+        "DesignToCode_GenerateLayout/Source/HtmlDsl/pipeline/mapping/component-mapping.json"
+      ],
+      "runtimeScope": "SDK_FACTORY_COMPONENTLAB_GENERATELAYOUT",
+      "consumerEngineeringStatus": "IMPLEMENTED",
+      "consumerEvidence": [
+        "ComponentLab/Source/delivery/tests/CompositionTests.cpp",
+        "DesignToCode_GenerateLayout/Source/Validation/component/ComponentTests.cpp"
+      ]
+    },
+    {
+      "index": 16,
+      "sourceName": "Spacing",
+      "canonicalName": "Spacer",
+      "designComponentId": "ComponentLab/Spacer",
+      "figmaNodeIds": [
+        "2147:264"
+      ],
+      "governanceDecision": "BUILT",
+      "developmentComponentId": null,
+      "engineeringStatus": "ENGINEERING_GAP",
+      "entryKind": "LayoutHelper",
+      "runtimeOwner": "GenerateLayout",
+      "consumerEngineeringStatus": "IMPLEMENTED",
+      "consumerEvidence": [
+        "DesignToCode_GenerateLayout/Source/HtmlDsl/pipeline/engines/layout_converter/LayoutConverter.cpp",
+        "DesignToCode_GenerateLayout/Source/Validation/layout/LayoutTests.cpp"
+      ],
+      "tokenStatus": "BOUND_VERIFIED",
+      "tokenBindingRefs": 136
+    },
+    {
+      "index": 17,
+      "sourceName": "Stepper",
+      "canonicalName": "Stepper",
+      "designComponentId": "ComponentLab/Stepper",
+      "figmaNodeIds": [
+        "2147:515"
+      ],
+      "governanceDecision": "BUILT",
+      "developmentComponentId": "commonWidget::Z_Stepper",
+      "engineeringStatus": "VERIFIED",
+      "tokenStatus": "BOUND_VERIFIED",
+      "tokenBindingRefs": 260,
+      "focusPolicy": "NO_FOCUS_PRESENTATION",
+      "runtimeContract": {
+        "qtBaseClass": "QWidget",
+        "properties": [
+          "items",
+          "currentIndex",
+          "snapshotState"
+        ],
+        "signals": [
+          "itemsChanged",
+          "currentIndexChanged",
+          "snapshotStateChanged"
+        ],
+        "states": [
+          "Default",
+          "Active",
+          "Completed",
+          "Error"
+        ],
+        "accessibility": "non-interactive workflow progress; current step is exposed through the accessible description"
+      },
+      "runtimeEvidence": [
+        "Source/ComponentKit/runtime/component/Z_FoundationComponents.h",
+        "Source/ComponentKit/runtime/component/Z_FoundationComponents.cpp",
+        "Source/ComponentKit/runtime/component/ComponentFactory.cpp",
+        "DesignToCode_GenerateLayout/Source/HtmlDsl/pipeline/mapping/component-mapping.json"
+      ],
+      "runtimeScope": "SDK_FACTORY_COMPONENTLAB_GENERATELAYOUT",
+      "consumerEngineeringStatus": "IMPLEMENTED",
+      "consumerEvidence": [
+        "ComponentLab/Source/delivery/tests/CompositionTests.cpp",
+        "DesignToCode_GenerateLayout/Source/Validation/component/ComponentTests.cpp"
+      ]
+    },
+    {
+      "index": 18,
+      "sourceName": "DataDisplay",
+      "canonicalName": "Statistic",
+      "designComponentId": "ComponentLab/Statistic",
+      "figmaNodeIds": [
+        "436:79"
+      ],
+      "governanceDecision": "MERGE",
+      "developmentComponentId": "commonWidget::Z_Statistic",
+      "engineeringStatus": "VERIFIED",
+      "tokenStatus": "BOUND_VERIFIED",
+      "tokenBindingRefs": 216
+    },
+    {
+      "index": 19,
+      "sourceName": "PushButton",
+      "canonicalName": "Button",
+      "designComponentId": "ComponentLab/Button",
+      "figmaNodeIds": [
+        "173:2710",
+        "173:2804",
+        "173:2898",
+        "173:2992",
+        "173:3086",
+        "1135:20"
+      ],
+      "governanceDecision": "MERGE",
+      "developmentComponentId": "commonWidget::Z_PushButton",
+      "engineeringStatus": "VERIFIED",
+      "tokenStatus": "BOUND_VERIFIED",
+      "tokenBindingRefs": 1842
+    },
+    {
+      "index": 20,
+      "sourceName": "DropDownButton",
+      "canonicalName": "ToolButton",
+      "designComponentId": "ComponentLab/ToolButton",
+      "figmaNodeIds": [
+        "443:222"
+      ],
+      "governanceDecision": "MERGE",
+      "developmentComponentId": "commonWidget::Z_ToolButton",
+      "engineeringStatus": "VERIFIED",
+      "tokenStatus": "BOUND_VERIFIED",
+      "tokenBindingRefs": 840
+    },
+    {
+      "index": 21,
+      "sourceName": "DropDownField",
+      "canonicalName": "Select",
+      "designComponentId": "ComponentLab/Select",
+      "figmaNodeIds": [
+        "242:2924",
+        "242:2952",
+        "242:2979",
+        "242:3031",
+        "242:3068",
+        "242:3087",
+        "244:2769",
+        "244:2866",
+        "244:2963",
+        "244:3060",
+        "244:3157",
+        "244:3254",
+        "244:3351",
+        "244:3448",
+        "244:3545",
+        "244:3642",
+        "244:3739",
+        "244:3836",
+        "246:3060"
+      ],
+      "governanceDecision": "MERGE",
+      "developmentComponentId": "commonWidget::Z_Select",
+      "engineeringStatus": "VERIFIED",
+      "tokenStatus": "BOUND_VERIFIED",
+      "tokenBindingRefs": 4014
+    },
+    {
+      "index": 22,
+      "sourceName": "PageHeadel",
+      "canonicalName": "PageHeader",
+      "designComponentId": "ComponentLab/PageHeader",
+      "figmaNodeIds": [
+        "2148:74"
+      ],
+      "governanceDecision": "BUILT",
+      "developmentComponentId": "commonWidget::Z_PageHeader",
+      "engineeringStatus": "VERIFIED",
+      "tokenStatus": "BOUND_VERIFIED",
+      "tokenBindingRefs": 44,
+      "focusPolicy": "CHILD_ACTION_OPTIONAL",
+      "runtimeContract": {
+        "qtBaseClass": "QWidget/QToolButton composition",
+        "properties": [
+          "title",
+          "contextText",
+          "actionText",
+          "density",
+          "actionsVisible"
+        ],
+        "signals": [
+          "actionTriggered",
+          "actionsVisibleChanged"
+        ],
+        "states": [
+          "Comfortable",
+          "Compact",
+          "Actions On",
+          "Actions Off"
+        ],
+        "accessibility": "the header itself is presentation-only; the optional named action owns keyboard focus"
+      },
+      "runtimeEvidence": [
+        "Source/ComponentKit/runtime/component/Z_FoundationComponents.h",
+        "Source/ComponentKit/runtime/component/Z_FoundationComponents.cpp",
+        "Source/ComponentKit/runtime/component/ComponentFactory.cpp",
+        "DesignToCode_GenerateLayout/Source/HtmlDsl/pipeline/mapping/component-mapping.json"
+      ],
+      "runtimeScope": "SDK_FACTORY_COMPONENTLAB_GENERATELAYOUT",
+      "consumerEngineeringStatus": "IMPLEMENTED",
+      "consumerEvidence": [
+        "ComponentLab/Source/delivery/tests/CompositionTests.cpp",
+        "DesignToCode_GenerateLayout/Source/Validation/component/ComponentTests.cpp"
+      ]
+    },
+    {
+      "index": 23,
+      "sourceName": "Fitel",
+      "canonicalName": "Filter",
+      "designComponentId": "ComponentLab/Filter",
+      "figmaNodeIds": [
+        "2148:244"
+      ],
+      "governanceDecision": "BUILT",
+      "developmentComponentId": "commonWidget::Z_Filter",
+      "engineeringStatus": "VERIFIED",
+      "tokenStatus": "BOUND_VERIFIED",
+      "tokenBindingRefs": 88,
+      "focusPolicy": "CHILD_ACTION_GROUP",
+      "runtimeContract": {
+        "qtBaseClass": "QWidget/QToolButton composition",
+        "properties": [
+          "layoutMode",
+          "snapshotState",
+          "criteria",
+          "applyLabel"
+        ],
+        "signals": [
+          "layoutModeChanged",
+          "snapshotStateChanged",
+          "criteriaChanged",
+          "applyLabelChanged",
+          "criterionActivated",
+          "applyRequested"
+        ],
+        "states": [
+          "Default",
+          "Applied"
+        ],
+        "accessibility": "the root is not focusable; both criteria and the apply action are named keyboard-focusable child actions with an optional FocusIndicator",
+        "ownership": "the SDK owns presentation and controlled activation requests; condition model, validation, clear, persistence and state transitions belong to the external filter controller"
+      },
+      "runtimeEvidence": [
+        "Source/ComponentKit/runtime/component/Z_FoundationComponents.h",
+        "Source/ComponentKit/runtime/component/Z_FoundationComponents.cpp",
+        "Source/ComponentKit/runtime/component/ComponentFactory.cpp",
+        "DesignToCode_GenerateLayout/Source/HtmlDsl/pipeline/mapping/component-mapping.json"
+      ],
+      "runtimeScope": "SDK_FACTORY_COMPONENTLAB_GENERATELAYOUT",
+      "consumerEngineeringStatus": "IMPLEMENTED",
+      "consumerEvidence": [
+        "ComponentLab/Source/delivery/tests/CompositionTests.cpp",
+        "DesignToCode_GenerateLayout/Source/Validation/component/ComponentTests.cpp"
+      ]
+    },
+    {
+      "index": 24,
+      "sourceName": "Pagination",
+      "canonicalName": "Pagination",
+      "designComponentId": "ComponentLab/Pagination",
+      "figmaNodeIds": [
+        "2148:438"
+      ],
+      "governanceDecision": "BUILT",
+      "developmentComponentId": "commonWidget::Z_Pagination",
+      "engineeringStatus": "VERIFIED",
+      "tokenStatus": "BOUND_VERIFIED",
+      "tokenBindingRefs": 136,
+      "focusPolicy": "CHILD_ACTION_GROUP",
+      "runtimeContract": {
+        "qtBaseClass": "QWidget/QToolButton composition",
+        "properties": [
+          "density",
+          "snapshotState",
+          "currentPage",
+          "pageCount"
+        ],
+        "signals": [
+          "densityChanged",
+          "snapshotStateChanged",
+          "currentPageChanged",
+          "pageCountChanged"
+        ],
+        "states": [
+          "Default",
+          "Compact",
+          "Disabled"
+        ],
+        "accessibility": "each visible page and previous/next action is a named keyboard-focusable child"
+      },
+      "runtimeEvidence": [
+        "Source/ComponentKit/runtime/component/Z_FoundationComponents.h",
+        "Source/ComponentKit/runtime/component/Z_FoundationComponents.cpp",
+        "Source/ComponentKit/runtime/component/ComponentFactory.cpp",
+        "DesignToCode_GenerateLayout/Source/HtmlDsl/pipeline/mapping/component-mapping.json"
+      ],
+      "runtimeScope": "SDK_FACTORY_COMPONENTLAB_GENERATELAYOUT",
+      "consumerEngineeringStatus": "IMPLEMENTED",
+      "consumerEvidence": [
+        "ComponentLab/Source/delivery/tests/CompositionTests.cpp",
+        "DesignToCode_GenerateLayout/Source/Validation/component/ComponentTests.cpp"
+      ]
+    },
+    {
+      "index": 25,
+      "sourceName": "Transter",
+      "canonicalName": "Transfer",
+      "designComponentId": "ComponentLab/Transfer",
+      "figmaNodeIds": [
+        "2148:640"
+      ],
+      "governanceDecision": "BUILT",
+      "developmentComponentId": "commonWidget::Z_Transfer",
+      "engineeringStatus": "VERIFIED",
+      "tokenStatus": "BOUND_VERIFIED",
+      "tokenBindingRefs": 96,
+      "focusPolicy": "PRESENTATION_ROOT_CHILD_ACTIONS",
+      "runtimeContract": {
+        "qtBaseClass": "QWidget + QListView + QAbstractItemModel + QToolButton",
+        "properties": ["snapshotState", "availableTitle", "selectedTitle", "moveToSelectedAllowed", "moveToAvailableAllowed"],
+        "signals": ["selectionChanged", "moveToSelectedRequested", "moveToAvailableRequested", "snapshotStateChanged", "availableModelChanged", "selectedModelChanged"],
+        "states": ["Default", "Disabled", "Loading"],
+        "accessibility": "NoFocus presentation root with named StrongFocus list views and direction actions; optional FocusIndicator inherits from the component root",
+        "ownership": "SDK composes the two list views and command affordances around caller-owned models; page selection controller owns queries, mutations, ordering, permissions and error recovery"
+      },
+      "runtimeEvidence": [
+        "Source/ComponentKit/runtime/component/Z_FoundationComponents.h",
+        "Source/ComponentKit/runtime/component/Z_FoundationComponents.cpp",
+        "Source/ComponentKit/runtime/component/ComponentFactory.cpp",
+        "DesignToCode_GenerateLayout/Source/HtmlDsl/pipeline/mapping/component-mapping.json"
+      ],
+      "runtimeScope": "SDK_FACTORY_COMPONENTLAB_GENERATELAYOUT",
+      "consumerEngineeringStatus": "IMPLEMENTED",
+      "consumerEvidence": [
+        "ComponentLab/Source/delivery/tests/CompositionTests.cpp",
+        "DesignToCode_GenerateLayout/Source/Validation/component/ComponentTests.cpp",
+        "Source/SDKConsumerTest/main.cpp"
+      ]
+    },
+    {
+      "index": 26,
+      "sourceName": "Upload",
+      "canonicalName": "Upload",
+      "designComponentId": "ComponentLab/Upload",
+      "figmaNodeIds": [
+        "2148:818"
+      ],
+      "governanceDecision": "BUILT",
+      "developmentComponentId": "commonWidget::Z_Upload",
+      "engineeringStatus": "VERIFIED",
+      "tokenStatus": "BOUND_VERIFIED",
+      "tokenBindingRefs": 50,
+      "focusPolicy": "ROOT_ACTION",
+      "runtimeContract": {
+        "qtBaseClass": "QAbstractButton",
+        "properties": ["snapshotState", "progress", "fileName", "helperText"],
+        "signals": ["browseRequested", "filesDropped", "snapshotStateChanged", "progressChanged", "fileNameChanged", "helperTextChanged"],
+        "states": ["Default", "Hover", "Uploading", "Success", "Error"],
+        "accessibility": "StrongFocus acquisition surface with optional FocusIndicator, keyboard activation, accessible lifecycle text and local-file drop support",
+        "ownership": "SDK renders controlled acquisition and lifecycle state; page/upload service owns file dialog choice, constraints, validation, network transport, authentication, cancellation and retry"
+      },
+      "runtimeEvidence": [
+        "Source/ComponentKit/runtime/component/Z_FoundationComponents.h",
+        "Source/ComponentKit/runtime/component/Z_FoundationComponents.cpp",
+        "Source/ComponentKit/runtime/component/ComponentFactory.cpp",
+        "DesignToCode_GenerateLayout/Source/HtmlDsl/pipeline/mapping/component-mapping.json"
+      ],
+      "runtimeScope": "SDK_FACTORY_COMPONENTLAB_GENERATELAYOUT",
+      "consumerEngineeringStatus": "IMPLEMENTED",
+      "consumerEvidence": [
+        "ComponentLab/Source/delivery/tests/CompositionTests.cpp",
+        "DesignToCode_GenerateLayout/Source/Validation/component/ComponentTests.cpp",
+        "Source/SDKConsumerTest/main.cpp"
+      ]
+    },
+    {
+      "index": 27,
+      "sourceName": "MoreButton",
+      "canonicalName": "OverflowMenuButton",
+      "designComponentId": "ComponentLab/OverflowMenuButton",
+      "figmaNodeIds": [
+        "2147:1192"
+      ],
+      "governanceDecision": "BUILT",
+      "developmentComponentId": "commonWidget::Z_OverflowMenuButton",
+      "engineeringStatus": "VERIFIED",
+      "tokenStatus": "BOUND_VERIFIED",
+      "tokenBindingRefs": 75,
+      "focusPolicy": "STRONG_FOCUS_OPTIONAL_INDICATOR",
+      "runtimeContract": {
+        "qtBaseClass": "QToolButton",
+        "properties": ["snapshotState", "menu"],
+        "signals": ["clicked", "snapshotStateChanged"],
+        "states": ["Default", "Hover", "Pressed", "Focus", "Disabled"],
+        "accessibility": "keyboard-focusable secondary action with an accessible More actions name"
+      },
+      "runtimeEvidence": [
+        "Source/ComponentKit/runtime/component/Z_FoundationComponents.h",
+        "Source/ComponentKit/runtime/component/Z_FoundationComponents.cpp",
+        "Source/ComponentKit/runtime/component/ComponentFactory.cpp",
+        "DesignToCode_GenerateLayout/Source/HtmlDsl/pipeline/mapping/component-mapping.json"
+      ],
+      "runtimeScope": "SDK_FACTORY_COMPONENTLAB_GENERATELAYOUT",
+      "consumerEngineeringStatus": "IMPLEMENTED",
+      "consumerEvidence": [
+        "ComponentLab/Source/delivery/tests/CompositionTests.cpp",
+        "DesignToCode_GenerateLayout/Source/Validation/component/ComponentTests.cpp"
+      ]
+    },
+    {
+      "index": 28,
+      "sourceName": "LineEdit",
+      "canonicalName": "LineEdit",
+      "designComponentId": "ComponentLab/LineEdit",
+      "figmaNodeIds": [
+        "1116:18"
+      ],
+      "governanceDecision": "MERGE",
+      "developmentComponentId": "commonWidget::Z_LineEdit",
+      "engineeringStatus": "VERIFIED",
+      "tokenStatus": "BOUND_VERIFIED",
+      "tokenBindingRefs": 420
+    },
+    {
+      "index": 29,
+      "sourceName": "Search",
+      "canonicalName": "SearchInput",
+      "designComponentId": "ComponentLab/SearchInput",
+      "figmaNodeIds": [
+        "2147:768"
+      ],
+      "governanceDecision": "BUILT",
+      "developmentComponentId": "commonWidget::Z_SearchInput",
+      "engineeringStatus": "VERIFIED",
+      "tokenStatus": "BOUND_VERIFIED",
+      "tokenBindingRefs": 105,
+      "focusPolicy": "CHILD_EDITOR_ONLY",
+      "runtimeContract": {
+        "qtBaseClass": "Z_InputField composition",
+        "properties": ["value", "shortcutText", "snapshotState"],
+        "signals": ["valueChanged", "submitted", "searchRequested", "cleared"],
+        "states": ["Default", "Focus", "Filled", "Disabled", "Error"],
+        "accessibility": "the internal editor owns keyboard focus and exposes the search purpose"
+      },
+      "runtimeEvidence": [
+        "Source/ComponentKit/runtime/component/Z_FoundationComponents.h",
+        "Source/ComponentKit/runtime/component/Z_FoundationComponents.cpp",
+        "Source/ComponentKit/runtime/component/ComponentFactory.cpp",
+        "DesignToCode_GenerateLayout/Source/HtmlDsl/pipeline/mapping/component-mapping.json"
+      ],
+      "runtimeScope": "SDK_FACTORY_COMPONENTLAB_GENERATELAYOUT",
+      "consumerEngineeringStatus": "IMPLEMENTED",
+      "consumerEvidence": [
+        "ComponentLab/Source/delivery/tests/CompositionTests.cpp",
+        "DesignToCode_GenerateLayout/Source/Validation/component/ComponentTests.cpp"
+      ]
+    },
+    {
+      "index": 30,
+      "sourceName": "Numberlnput",
+      "canonicalName": "NumberInput",
+      "designComponentId": "ComponentLab/NumberInput",
+      "figmaNodeIds": [
+        "2147:985"
+      ],
+      "governanceDecision": "BUILT",
+      "developmentComponentId": "commonWidget::Z_NumberInput",
+      "engineeringStatus": "VERIFIED",
+      "tokenStatus": "BOUND_VERIFIED",
+      "tokenBindingRefs": 126,
+      "focusPolicy": "CHILD_EDITOR_ONLY",
+      "runtimeContract": {
+        "qtBaseClass": "QSpinBox/QDoubleSpinBox composition",
+        "properties": ["type", "value", "minimum", "maximum", "singleStep", "snapshotState"],
+        "signals": ["typeChanged", "valueChanged", "snapshotStateChanged"],
+        "states": ["Integer", "Decimal", "Default", "Focus", "Disabled"],
+        "accessibility": "the active native spin editor owns keyboard focus and numeric semantics"
+      },
+      "runtimeEvidence": [
+        "Source/ComponentKit/runtime/component/Z_FoundationComponents.h",
+        "Source/ComponentKit/runtime/component/Z_FoundationComponents.cpp",
+        "Source/ComponentKit/runtime/component/ComponentFactory.cpp",
+        "DesignToCode_GenerateLayout/Source/HtmlDsl/pipeline/mapping/component-mapping.json"
+      ],
+      "runtimeScope": "SDK_FACTORY_COMPONENTLAB_GENERATELAYOUT",
+      "consumerEngineeringStatus": "IMPLEMENTED",
+      "consumerEvidence": [
+        "ComponentLab/Source/delivery/tests/CompositionTests.cpp",
+        "DesignToCode_GenerateLayout/Source/Validation/component/ComponentTests.cpp"
+      ]
+    },
+    {
+      "index": 31,
+      "sourceName": "Keyboard",
+      "canonicalName": "NumericKeypad",
+      "designComponentId": "ComponentLab/NumericKeypad",
+      "figmaNodeIds": [
+        "2148:1018"
+      ],
+      "governanceDecision": "BUILT",
+      "developmentComponentId": "commonWidget::Z_NumericKeypad",
+      "engineeringStatus": "VERIFIED",
+      "tokenStatus": "BOUND_VERIFIED",
+      "tokenBindingRefs": 152,
+      "focusPolicy": "CHILD_ACTION_GRID",
+      "runtimeContract": {
+        "qtBaseClass": "QWidget/QGridLayout/QToolButton composition",
+        "properties": [
+          "density",
+          "keyLayout",
+          "allowedKeys",
+          "decimalSeparator"
+        ],
+        "signals": [
+          "densityChanged",
+          "keyLayoutChanged",
+          "allowedKeysChanged",
+          "decimalSeparatorChanged",
+          "keyPressed",
+          "commitRequested"
+        ],
+        "states": [
+          "Comfortable",
+          "Compact"
+        ],
+        "keySemantics": "keyPressed emits stable semantic keys; decimal display is localized separately, backspace is emitted as backspace, and commitRequested is emitted only when the external key layout contains commit",
+        "accessibility": "the root is not focusable; twelve named child actions use StrongFocus, two-dimensional arrow navigation and the optional FocusIndicator",
+        "ownership": "the SDK owns keypad presentation and input intentions; target field, value constraints, locale parsing, focus routing and commit policy belong to the external input controller"
+      },
+      "runtimeEvidence": [
+        "Source/ComponentKit/runtime/component/Z_FoundationComponents.h",
+        "Source/ComponentKit/runtime/component/Z_FoundationComponents.cpp",
+        "Source/ComponentKit/runtime/component/ComponentFactory.cpp",
+        "DesignToCode_GenerateLayout/Source/HtmlDsl/pipeline/mapping/component-mapping.json"
+      ],
+      "runtimeScope": "SDK_FACTORY_COMPONENTLAB_GENERATELAYOUT",
+      "consumerEngineeringStatus": "IMPLEMENTED",
+      "consumerEvidence": [
+        "ComponentLab/Source/delivery/tests/CompositionTests.cpp",
+        "DesignToCode_GenerateLayout/Source/Validation/component/ComponentTests.cpp"
+      ]
+    },
+    {
+      "index": 32,
+      "sourceName": "Switch",
+      "canonicalName": "Switch",
+      "designComponentId": "ComponentLab/Switch",
+      "figmaNodeIds": [
+        "346:19"
+      ],
+      "governanceDecision": "MERGE",
+      "developmentComponentId": "commonWidget::Z_Switch",
+      "engineeringStatus": "VERIFIED",
+      "tokenStatus": "BOUND_VERIFIED",
+      "tokenBindingRefs": 596
+    },
+    {
+      "index": 33,
+      "sourceName": "RadioButton",
+      "canonicalName": "RadioButton",
+      "designComponentId": "ComponentLab/RadioButton",
+      "figmaNodeIds": [
+        "341:53"
+      ],
+      "governanceDecision": "MERGE",
+      "developmentComponentId": "commonWidget::Z_RadioButton",
+      "engineeringStatus": "VERIFIED",
+      "tokenStatus": "BOUND_VERIFIED",
+      "tokenBindingRefs": 242
+    },
+    {
+      "index": 34,
+      "sourceName": "CheckBox",
+      "canonicalName": "Checkbox",
+      "designComponentId": "ComponentLab/Checkbox",
+      "figmaNodeIds": [
+        "235:2710"
+      ],
+      "governanceDecision": "MERGE",
+      "developmentComponentId": "commonWidget::Z_CheckBox",
+      "engineeringStatus": "VERIFIED",
+      "tokenStatus": "BOUND_VERIFIED",
+      "tokenBindingRefs": 890
+    },
+    {
+      "index": 35,
+      "sourceName": "Slidel",
+      "canonicalName": "Slider",
+      "designComponentId": "ComponentLab/Slider",
+      "figmaNodeIds": [
+        "467:195"
+      ],
+      "governanceDecision": "MERGE",
+      "developmentComponentId": "commonWidget::Z_Slider",
+      "engineeringStatus": "VERIFIED",
+      "tokenStatus": "BOUND_VERIFIED",
+      "tokenBindingRefs": 356
+    },
+    {
+      "index": 36,
+      "sourceName": "TimePicker",
+      "canonicalName": "TimePicker",
+      "designComponentId": "ComponentLab/TimePicker",
+      "figmaNodeIds": [
+        "465:189"
+      ],
+      "governanceDecision": "MERGE",
+      "developmentComponentId": "commonWidget::Z_TimeEdit",
+      "engineeringStatus": "VERIFIED",
+      "tokenStatus": "BOUND_VERIFIED",
+      "tokenBindingRefs": 412
+    },
+    {
+      "index": 37,
+      "sourceName": "ColorPicker",
+      "canonicalName": "ColorPicker",
+      "designComponentId": "ComponentLab/ColorPicker",
+      "figmaNodeIds": [
+        "2147:1390"
+      ],
+      "governanceDecision": "BUILT",
+      "developmentComponentId": "commonWidget::Z_ColorPicker",
+      "engineeringStatus": "VERIFIED",
+      "tokenStatus": "BOUND_VERIFIED",
+      "tokenBindingRefs": 69,
+      "focusPolicy": "ROOT_ACTION",
+      "runtimeContract": {
+        "qtBaseClass": "QAbstractButton field adapter",
+        "properties": ["color", "colorFormat", "snapshotState"],
+        "signals": ["colorChanged", "colorFormatChanged", "snapshotStateChanged", "pickerRequested"],
+        "states": ["Default", "Focus", "Disabled"],
+        "colorSemantics": "HexRgb displays #RRGGBB; HexArgb displays Qt #AARRGGBB; invalid QColor values are rejected",
+        "accessibility": "the field adapter has StrongFocus, exposes the current color as text and supports Space, Return and Enter activation with the optional FocusIndicator",
+        "ownership": "the SDK owns the visible swatch field and picker request; dialog choice, color space, alpha policy, recent colors, preview, commit and cancel belong to the external color-selection controller"
+      },
+      "runtimeEvidence": [
+        "Source/ComponentKit/runtime/component/Z_FoundationComponents.h",
+        "Source/ComponentKit/runtime/component/Z_FoundationComponents.cpp",
+        "Source/ComponentKit/runtime/component/ComponentFactory.cpp",
+        "DesignToCode_GenerateLayout/Source/HtmlDsl/pipeline/mapping/component-mapping.json"
+      ],
+      "runtimeScope": "SDK_FACTORY_COMPONENTLAB_GENERATELAYOUT",
+      "consumerEngineeringStatus": "IMPLEMENTED",
+      "consumerEvidence": [
+        "ComponentLab/Source/delivery/tests/CompositionTests.cpp",
+        "DesignToCode_GenerateLayout/Source/Validation/component/ComponentTests.cpp"
+      ]
+    },
+    {
+      "index": 38,
+      "sourceName": "SegmentationButton",
+      "canonicalName": "SegmentedControl",
+      "designComponentId": "ComponentLab/SegmentedControl",
+      "figmaNodeIds": [
+        "2148:1240"
+      ],
+      "governanceDecision": "BUILT",
+      "developmentComponentId": "commonWidget::Z_SegmentedControl",
+      "engineeringStatus": "VERIFIED",
+      "tokenStatus": "BOUND_VERIFIED",
+      "tokenBindingRefs": 132,
+      "focusPolicy": "CHILD_ACTION_GROUP",
+      "runtimeContract": {
+        "qtBaseClass": "QButtonGroup/QToolButton composition",
+        "properties": ["items", "segmentCount", "currentIndex"],
+        "signals": ["itemsChanged", "segmentCountChanged", "currentIndexChanged", "currentTextChanged"],
+        "states": ["2", "3", "4", "Default", "Disabled"],
+        "accessibility": "each mutually-exclusive segment is keyboard focusable; arrows, Home and End move selection"
+      },
+      "runtimeEvidence": [
+        "Source/ComponentKit/runtime/component/Z_FoundationComponents.h",
+        "Source/ComponentKit/runtime/component/Z_FoundationComponents.cpp",
+        "Source/ComponentKit/runtime/component/ComponentFactory.cpp",
+        "DesignToCode_GenerateLayout/Source/HtmlDsl/pipeline/mapping/component-mapping.json"
+      ],
+      "runtimeScope": "SDK_FACTORY_COMPONENTLAB_GENERATELAYOUT",
+      "consumerEngineeringStatus": "IMPLEMENTED",
+      "consumerEvidence": [
+        "ComponentLab/Source/delivery/tests/CompositionTests.cpp",
+        "DesignToCode_GenerateLayout/Source/Validation/component/ComponentTests.cpp"
+      ]
+    },
+    {
+      "index": 39,
+      "sourceName": "TableView",
+      "canonicalName": "TableView",
+      "designComponentId": "ComponentLab/TableView",
+      "figmaNodeIds": [
+        "717:21"
+      ],
+      "governanceDecision": "MERGE",
+      "developmentComponentId": "commonWidget::Z_TableView",
+      "engineeringStatus": "VERIFIED",
+      "tokenStatus": "BOUND_VERIFIED",
+      "tokenBindingRefs": 2580
+    },
+    {
+      "index": 40,
+      "sourceName": "Anchor",
+      "canonicalName": "AnchorNavigation",
+      "designComponentId": "ComponentLab/AnchorNavigation",
+      "figmaNodeIds": [
+        "2150:82"
+      ],
+      "governanceDecision": "BUILT",
+      "developmentComponentId": "commonWidget::Z_AnchorNavigation",
+      "engineeringStatus": "VERIFIED",
+      "tokenStatus": "BOUND_VERIFIED",
+      "tokenBindingRefs": 88,
+      "focusPolicy": "CHILD_ACTION_GROUP",
+      "runtimeContract": {
+        "qtBaseClass": "QWidget/QToolButton composition",
+        "properties": [
+          "orientation",
+          "snapshotState",
+          "items",
+          "currentIndex"
+        ],
+        "signals": [
+          "orientationChanged",
+          "snapshotStateChanged",
+          "itemsChanged",
+          "currentIndexChanged",
+          "currentTextChanged",
+          "anchorActivated"
+        ],
+        "states": [
+          "Default",
+          "Scrolled"
+        ],
+        "accessibility": "the root is not focusable; each anchor is a named keyboard-focusable action and the current section is exposed through accessible descriptions",
+        "ownership": "the component emits controlled activation requests; the page owns scrolling and feeds the observed section back through currentIndex"
+      },
+      "runtimeEvidence": [
+        "Source/ComponentKit/runtime/component/Z_FoundationComponents.h",
+        "Source/ComponentKit/runtime/component/Z_FoundationComponents.cpp",
+        "Source/ComponentKit/runtime/component/ComponentFactory.cpp",
+        "DesignToCode_GenerateLayout/Source/HtmlDsl/pipeline/mapping/component-mapping.json"
+      ],
+      "runtimeScope": "SDK_FACTORY_COMPONENTLAB_GENERATELAYOUT",
+      "consumerEngineeringStatus": "IMPLEMENTED",
+      "consumerEvidence": [
+        "ComponentLab/Source/delivery/tests/CompositionTests.cpp",
+        "DesignToCode_GenerateLayout/Source/Validation/component/ComponentTests.cpp"
+      ]
+    },
+    {
+      "index": 41,
+      "sourceName": "Collapse",
+      "canonicalName": "Collapse",
+      "designComponentId": "ComponentLab/Collapse",
+      "figmaNodeIds": [
+        "568:326"
+      ],
+      "governanceDecision": "MERGE",
+      "developmentComponentId": "commonWidget::Z_Collapse",
+      "engineeringStatus": "VERIFIED",
+      "tokenStatus": "BOUND_VERIFIED",
+      "tokenBindingRefs": 1000
+    },
+    {
+      "index": 42,
+      "sourceName": "TreeWidget",
+      "canonicalName": "TreeWidget",
+      "designComponentId": "ComponentLab/TreeWidget",
+      "figmaNodeIds": [
+        "713:21"
+      ],
+      "governanceDecision": "MERGE",
+      "developmentComponentId": "commonWidget::Z_TreeWidget",
+      "engineeringStatus": "VERIFIED",
+      "tokenStatus": "BOUND_VERIFIED",
+      "tokenBindingRefs": 1716
+    },
+    {
+      "index": 43,
+      "sourceName": "Window",
+      "canonicalName": "Dialog",
+      "designComponentId": "ComponentLab/Dialog",
+      "figmaNodeIds": [
+        "574:454"
+      ],
+      "governanceDecision": "MERGE",
+      "developmentComponentId": "commonWidget::Z_Dialog",
+      "engineeringStatus": "VERIFIED",
+      "tokenStatus": "BOUND_VERIFIED",
+      "tokenBindingRefs": 1312
+    },
+    {
+      "index": 44,
+      "sourceName": "Drawel",
+      "canonicalName": "Drawer",
+      "designComponentId": "ComponentLab/Drawer",
+      "figmaNodeIds": [
+        "569:632"
+      ],
+      "governanceDecision": "MERGE",
+      "developmentComponentId": "commonWidget::Z_Drawer",
+      "compatibilityDevelopmentComponentIds": [
+        "commonWidget::Z_OverlayDrawer"
+      ],
+      "engineeringStatus": "VERIFIED",
+      "tokenStatus": "BOUND_VERIFIED",
+      "tokenBindingRefs": 1600
+    },
+    {
+      "index": 45,
+      "sourceName": "LayoutFrame",
+      "canonicalName": "LayoutContainer",
+      "designComponentId": "ComponentLab/LayoutContainer",
+      "figmaNodeIds": [
+        "2150:262"
+      ],
+      "governanceDecision": "BUILT",
+      "developmentComponentId": null,
+      "engineeringStatus": "ENGINEERING_GAP",
+      "entryKind": "LayoutHelper",
+      "runtimeOwner": "GenerateLayout",
+      "consumerEngineeringStatus": "IMPLEMENTED",
+      "consumerEvidence": [
+        "DesignToCode_GenerateLayout/Source/HtmlDsl/pipeline/engines/layout_converter/LayoutConverter.cpp",
+        "DesignToCode_GenerateLayout/Source/Validation/layout/LayoutTests.cpp"
+      ],
+      "tokenStatus": "BOUND_VERIFIED",
+      "tokenBindingRefs": 96
+    },
+    {
+      "index": 46,
+      "sourceName": "ICONResource",
+      "canonicalName": "IconAsset",
+      "designComponentId": "ComponentLab/IconAsset",
+      "figmaNodeIds": [
+        "2150:597"
+      ],
+      "governanceDecision": "BUILT",
+      "developmentComponentId": null,
+      "engineeringStatus": "ENGINEERING_GAP",
+      "entryKind": "Asset",
+      "runtimeOwner": "GenerateComponent asset resolver",
+      "consumerEngineeringStatus": "IMPLEMENTED",
+      "runtimeScope": "SDK_ASSETCATALOG_COMPONENTLAB_GENERATELAYOUT",
+      "runtimeContract": {
+        "catalogClass": "commonWidget::IconAssetCatalog",
+        "stableIdPrefix": "icon.",
+        "formats": ["SVG"],
+        "sizes": [16, 20, 24],
+        "tones": ["Primary", "Secondary"],
+        "unknownResource": "UNMAPPED_RESOURCE",
+        "factoryRegistration": "NOT_APPLICABLE"
+      },
+      "runtimeEvidence": [
+        "Source/ComponentKit/runtime/component/IconAssetCatalog.h",
+        "Source/ComponentKit/runtime/component/IconAssetCatalog.cpp",
+        "Source/SDKConsumerTest/main.cpp"
+      ],
+      "consumerEvidence": [
+        "ComponentLab/Source/delivery/demo/NativeGalleryPages.cpp",
+        "ComponentLab/Source/delivery/tests/CompositionTests.cpp",
+        "DesignToCode_GenerateLayout/Source/HtmlDsl/pipeline/engines/component_converter/ComponentConverter.cpp",
+        "DesignToCode_GenerateLayout/Source/HtmlDsl/pipeline/mapping/component-mapping.json",
+        "DesignToCode_GenerateLayout/Source/Validation/component/ComponentTests.cpp"
+      ],
+      "tokenStatus": "BOUND_VERIFIED",
+      "tokenBindingRefs": 48
+    },
+    {
+      "index": 47,
+      "sourceName": "Image",
+      "canonicalName": "ImageAsset",
+      "designComponentId": "ComponentLab/ImageAsset",
+      "figmaNodeIds": [
+        "2150:760"
+      ],
+      "governanceDecision": "BUILT",
+      "developmentComponentId": null,
+      "engineeringStatus": "ENGINEERING_GAP",
+      "entryKind": "Asset",
+      "runtimeOwner": "GenerateComponent asset resolver",
+      "consumerEngineeringStatus": "IMPLEMENTED",
+      "runtimeScope": "SDK_VISUALASSETCATALOG_COMPONENTLAB_GENERATELAYOUT",
+      "runtimeContract": {
+        "catalogClass": "commonWidget::VisualAssetCatalog",
+        "stableIdPrefix": "image.",
+        "formats": ["SVG"],
+        "fits": ["Contain", "Cover"],
+        "states": ["Loaded", "Empty", "Error"],
+        "highDpi": "device-pixel-ratio-aware vector rendering",
+        "unknownResource": "UNMAPPED_RESOURCE",
+        "knownNoPayloadState": "NO_ASSET_PAYLOAD",
+        "factoryRegistration": "NOT_APPLICABLE"
+      },
+      "runtimeEvidence": [
+        "Source/ComponentKit/runtime/component/VisualAssetCatalog.h",
+        "Source/ComponentKit/runtime/component/VisualAssetCatalog.cpp",
+        "Source/ComponentKit/runtime/assets/images/geometric-preview.svg",
+        "Source/SDKConsumerTest/main.cpp"
+      ],
+      "consumerEvidence": [
+        "ComponentLab/Source/delivery/demo/NativeGalleryPages.cpp",
+        "ComponentLab/Source/delivery/tests/CompositionTests.cpp",
+        "DesignToCode_GenerateLayout/Source/HtmlDsl/pipeline/compiler/FormalResources.h",
+        "DesignToCode_GenerateLayout/Source/HtmlDsl/pipeline/mapping/component-mapping.json",
+        "DesignToCode_GenerateLayout/Source/Validation/component/ComponentTests.cpp"
+      ],
+      "tokenStatus": "BOUND_VERIFIED",
+      "tokenBindingRefs": 72
+    },
+    {
+      "index": 48,
+      "sourceName": "Model",
+      "canonicalName": "ModelAsset",
+      "designComponentId": "ComponentLab/ModelAsset",
+      "figmaNodeIds": [
+        "2150:929"
+      ],
+      "governanceDecision": "BUILT",
+      "developmentComponentId": null,
+      "engineeringStatus": "ENGINEERING_GAP",
+      "entryKind": "Asset",
+      "runtimeOwner": "GenerateComponent asset resolver",
+      "consumerEngineeringStatus": "IMPLEMENTED",
+      "runtimeScope": "SDK_VISUALASSETCATALOG_COMPONENTLAB_GENERATELAYOUT",
+      "runtimeContract": {
+        "catalogClass": "commonWidget::VisualAssetCatalog",
+        "stableIdPrefix": "model.",
+        "semantic": "2D schematic foundation asset; not 3D and not QAbstractItemModel",
+        "formats": ["SVG"],
+        "fits": ["Contain"],
+        "states": ["Ready", "Loading", "Error"],
+        "highDpi": "device-pixel-ratio-aware vector rendering",
+        "unknownResource": "UNMAPPED_RESOURCE",
+        "factoryRegistration": "NOT_APPLICABLE"
+      },
+      "runtimeEvidence": [
+        "Source/ComponentKit/runtime/component/VisualAssetCatalog.h",
+        "Source/ComponentKit/runtime/component/VisualAssetCatalog.cpp",
+        "Source/ComponentKit/runtime/assets/models/foundation-schematic-ready.svg",
+        "Source/ComponentKit/runtime/assets/models/foundation-schematic-loading.svg",
+        "Source/ComponentKit/runtime/assets/models/foundation-schematic-error.svg",
+        "Source/SDKConsumerTest/main.cpp"
+      ],
+      "consumerEvidence": [
+        "ComponentLab/Source/delivery/demo/NativeGalleryPages.cpp",
+        "ComponentLab/Source/delivery/tests/CompositionTests.cpp",
+        "DesignToCode_GenerateLayout/Source/HtmlDsl/pipeline/compiler/FormalResources.h",
+        "DesignToCode_GenerateLayout/Source/HtmlDsl/pipeline/mapping/component-mapping.json",
+        "DesignToCode_GenerateLayout/Source/Validation/component/ComponentTests.cpp"
+      ],
+      "tokenStatus": "BOUND_VERIFIED",
+      "tokenBindingRefs": 120
+    }
+  ]
+}
+

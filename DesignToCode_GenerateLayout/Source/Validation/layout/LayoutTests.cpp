@@ -427,6 +427,144 @@ private slots:
         QCOMPARE(converter.trace().first().toObject()["items"].toArray().size(), 2);
     }
 
+    // Canonical LayoutHelper identities are consumed as layout structures, never QWidget shells.
+    void canonicalLayoutHelpers() {
+        const auto rules = read("HtmlDsl/pipeline/mapping/layout-mapping.json");
+        const QJsonObject spacerNode{
+            {"guid", "helper:spacer"},
+            {"layoutHelper", QJsonObject{{"canonicalId", "ComponentLab/Spacer"},
+                                          {"direction", "Horizontal"},
+                                          {"size", 16},
+                                          {"behavior", "Fixed"}}}};
+        const QJsonObject first{{"guid", "helper:A"}, {"width", 20}, {"height", 10}};
+        const QJsonObject second{{"guid", "helper:B"}, {"width", 30}, {"height", 10}};
+        QWidget spacerOwner;
+        int factoryCalls = 0;
+        d2c::LayoutConverter spacerConverter(rules);
+        auto* box = spacerConverter.convert(
+            {{"guid", "helper:row"},
+             {"autoLayout", QJsonObject{{"stackMode", "HORIZONTAL"}}},
+             {"childNode", QJsonArray{second, spacerNode, first}}},
+            &spacerOwner, [&](const QJsonObject& child, QWidget* parent) {
+                ++factoryCalls;
+                auto* widget = new QWidget(parent);
+                widget->setObjectName(child["guid"].toString());
+                return widget;
+            });
+        QCOMPARE(factoryCalls, 2);
+        QCOMPARE(box->count(), 3);
+        QCOMPARE(box->itemAt(0)->widget()->objectName(), QString("helper:A"));
+        QVERIFY(box->itemAt(1)->spacerItem());
+        QCOMPARE(box->itemAt(1)->spacerItem()->sizeHint().width(), 16);
+        QCOMPARE(box->itemAt(1)->spacerItem()->sizePolicy().horizontalPolicy(),
+                 QSizePolicy::Fixed);
+        QCOMPARE(box->itemAt(2)->widget()->objectName(), QString("helper:B"));
+        const auto spacerTrace = spacerConverter.trace().first().toObject();
+        const auto spacerItemTrace = spacerTrace["items"].toArray().first().toObject();
+        QCOMPARE(spacerItemTrace["canonicalId"].toString(),
+                 QString("ComponentLab/Spacer"));
+        QCOMPARE(spacerItemTrace["kind"].toString(), QString("LayoutHelper"));
+
+        for (const auto& behavior : {QString("Minimum"), QString("Stretch")}) {
+            auto helper = spacerNode;
+            auto contract = helper["layoutHelper"].toObject();
+            contract["behavior"] = behavior;
+            helper["layoutHelper"] = contract;
+            QWidget owner;
+            d2c::LayoutConverter converter(rules);
+            bool factoryCalled = false;
+            auto* layout = converter.convert(
+                {{"autoLayout", QJsonObject{{"stackMode", "HORIZONTAL"}}},
+                 {"childNode", QJsonArray{helper}}},
+                &owner, [&](const QJsonObject&, QWidget* parent) -> QWidget* {
+                    factoryCalled = true;
+                    return new QWidget(parent);
+                });
+            QVERIFY(!factoryCalled);
+            QCOMPARE(layout->itemAt(0)->spacerItem()->sizePolicy().horizontalPolicy(),
+                     behavior == "Stretch" ? QSizePolicy::Expanding : QSizePolicy::Minimum);
+        }
+
+        const QJsonObject containerContract{{"canonicalId", "ComponentLab/LayoutContainer"},
+                                             {"columns", 2},
+                                             {"density", "Compact"}};
+        QWidget containerOwner;
+        d2c::LayoutConverter containerConverter(rules);
+        auto* layout = containerConverter.convert(
+            {{"guid", "helper:grid"},
+             {"layoutHelper", containerContract},
+             {"autoLayout", QJsonObject{{"stackMode", "GRID"},
+                                          {"autoLayoutItemSpacing", 8},
+                                          {"autoLayoutPaddingLeft", 4},
+                                          {"autoLayoutPaddingTop", 4},
+                                          {"autoLayoutPaddingRight", 4},
+                                          {"autoLayoutPaddingBottom", 4}}},
+             {"childNode", QJsonArray{
+                 QJsonObject{{"guid", "helper:C"}, {"width", 30}, {"height", 10}},
+                 QJsonObject{{"guid", "helper:B"}, {"width", 30}, {"height", 10}},
+                 QJsonObject{{"guid", "helper:A"}, {"width", 30}, {"height", 10}}}}},
+            &containerOwner, [](const QJsonObject& child, QWidget* parent) {
+                auto* widget = new QWidget(parent);
+                widget->setObjectName(child["guid"].toString());
+                return widget;
+            });
+        auto* grid = qobject_cast<QGridLayout*>(layout);
+        QVERIFY(grid);
+        QCOMPARE(grid->itemAtPosition(0, 0)->widget()->objectName(), QString("helper:A"));
+        QCOMPARE(grid->itemAtPosition(0, 1)->widget()->objectName(), QString("helper:B"));
+        QCOMPARE(grid->itemAtPosition(1, 0)->widget()->objectName(), QString("helper:C"));
+        const auto containerTrace = containerConverter.trace().first().toObject()["layoutHelper"].toObject();
+        QCOMPARE(containerTrace["canonicalId"].toString(),
+                 QString("ComponentLab/LayoutContainer"));
+        QCOMPARE(containerTrace["columns"].toInt(), 2);
+        QCOMPARE(containerTrace["density"].toString(), QString("Compact"));
+    }
+
+    void invalidLayoutHelperContractsAreRejected() {
+        const auto rules = read("HtmlDsl/pipeline/mapping/layout-mapping.json");
+        const auto reject = [&](const QJsonObject& root, const char* expected) {
+            QWidget owner;
+            d2c::LayoutConverter converter(rules);
+            try {
+                converter.convert(root, &owner, [](const QJsonObject&, QWidget* parent) {
+                    return new QWidget(parent);
+                });
+            } catch (const std::runtime_error& error) {
+                QCOMPARE(QString::fromUtf8(error.what()), QString::fromLatin1(expected));
+                return;
+            }
+            QFAIL(expected);
+        };
+        const auto container = [](const QJsonObject& helper, const QString& mode = "GRID") {
+            return QJsonObject{{"layoutHelper", helper},
+                               {"autoLayout", QJsonObject{{"stackMode", mode}}}};
+        };
+        reject(container({{"canonicalId", "ComponentLab/Unknown"},
+                          {"columns", 2}, {"density", "Compact"}}),
+               "UNKNOWN_LAYOUT_HELPER");
+        reject(container({{"canonicalId", "ComponentLab/IconAsset"},
+                          {"columns", 2}, {"density", "Compact"}}),
+               "CANONICAL_ENTRY_IS_NOT_LAYOUT_HELPER");
+        reject(container({{"canonicalId", "ComponentLab/LayoutContainer"},
+                          {"columns", 4}, {"density", "Compact"}}),
+               "UNMAPPED_LAYOUT_CONTAINER_COLUMNS");
+        reject(container({{"canonicalId", "ComponentLab/LayoutContainer"},
+                          {"columns", 2}, {"density", "Dense"}}),
+               "UNMAPPED_LAYOUT_CONTAINER_DENSITY");
+        reject(container({{"canonicalId", "ComponentLab/LayoutContainer"},
+                          {"columns", 2}, {"density", "Compact"}}, "HORIZONTAL"),
+               "LAYOUT_CONTAINER_MODE_MISMATCH");
+        const QJsonObject verticalSpacer{
+            {"guid", "helper:mismatch"},
+            {"layoutHelper", QJsonObject{{"canonicalId", "ComponentLab/Spacer"},
+                                          {"direction", "Vertical"},
+                                          {"size", 16},
+                                          {"behavior", "Fixed"}}}};
+        reject({{"autoLayout", QJsonObject{{"stackMode", "HORIZONTAL"}}},
+                {"childNode", QJsonArray{verticalSpacer}}},
+               "SPACER_DIRECTION_MISMATCH");
+    }
+
     // 负数、字符串尺寸、缺失固定尺寸、绝对定位和未知模式均应明确失败。
     void invalidFieldsAreRejected() {
         const auto rules = read("HtmlDsl/pipeline/mapping/layout-mapping.json");

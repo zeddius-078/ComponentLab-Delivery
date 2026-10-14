@@ -1,16 +1,18 @@
 # ComponentLab
 
-ComponentLab 是已发布组件与 Figma 设计合同的展示、差距识别和验收程序。`Z-DesignSystem` 的组件树采用当前 Figma 的 9 个章节与 73 个 `20.*` 组件规范页，清单包含 123 个组件集、1471 个 Variant。“外观”用于交互式调参和身份、属性检查；“分组与状态”用于按源稿展示变体全集。开发映射另有 85 个公共组件身份：59 个 Native、6 个 Design System、20 个 Composite；当前 85 个全部可实例化。目录完整和可实例化不代表视觉、交互或设计审批已经全量对齐。
+ComponentLab 是已发布组件与 Figma 设计合同的展示、差距识别和验收程序。`Z-DesignSystem` 读取当前融合目录：10 个章节、98 个 `20.*` 规范页、148 个组件集、1608 个 Variant。权威目录共 110 个库条目，其中 105 个 Widget/Composite 组件身份、2 个 LayoutHelper、3 个 Asset；105 个组件身份现均可实例化，当前组件工程缺口为 0。图库导航由 SDK 的全量库条目接口动态分为“组件／布局辅助／资产”，三类分别统计；LayoutHelper 和 Asset 不进入组件 Factory。“外观”用于交互式调参和身份、属性检查；“分组与状态”用于按源稿展示变体。目录完整、可实例化、资产可消费和设计审批是独立状态。
 
 | 目录 | 职责 |
 | --- | --- |
 | [Source](Source/README.md) | 演示页面、展示控制器、构建和验证入口 |
 | [docs](docs/README.md) | 打开方式、Profile 切换和验收范围 |
 | `../DesignToCode_GenerateComponent/build/sdk` | 工作区唯一权威组件 SDK；本项目直接读取，不保存副本 |
-| `build/demo/component_gallery` | 73 个 Figma 规范页、123 个组件集与 85 项开发映射的离线演示程序 |
+| `build/demo/component_gallery` | 98 个 Figma 规范页、148 个组件集，以及 105 组件／2 布局辅助／3 资产分区的离线演示程序 |
 | `build/cache` / `build/reports` | 可重建缓存 / 验证结果 |
 
-当前 73 个 Figma 组件页面均已取消通用过渡矩阵，并按源文件的 Component Set、Variant 名称、数量、层级与画布几何展示“分组与状态”。其中 56 页使用专用原生或源稿画廊，另 17 页使用 `/figma/gallery-layouts.json` 驱动的运行时证据画廊；Chart 明确覆盖 Bar／Line／Status × Data／Empty 六个 Variant，DataTable 明确覆盖 Size × State 十五个 Variant。证据画廊优先实例化对应 `Z_*` 类并应用完整 Variant tuple；仅内部 Anatomy 或非公开身份保留被动源稿表达，不会自动变成新的公开 `Z_*` 类型。
+既有 73 个 Figma 页面已按源文件的 Component Set、Variant 名称、数量、层级与画布几何展示“分组与状态”：56 页使用专用原生或源稿画廊，17 页使用 `/figma/gallery-layouts.json` 驱动的运行时证据画廊。新增 25 页已进入统一目录和合同展示，所有 Widget/Composite 都使用真实 SDK 实例。Transfer 页面由 SDK `Z_Transfer` 展示 Default／Disabled／Loading 三个受控状态；SDK 组合两个列表和方向命令但不修改外部模型，集合移动、排序、权限与错误恢复由页面选择 controller 负责。Upload 页面由 SDK `Z_Upload` 展示 Default／Hover／Uploading／Success／Error 五个受控状态；浏览与拖放只产生请求，文件校验、网络传输、鉴权、取消和重试继续由外部上传服务负责。Timeline 页面由 SDK `Z_Timeline` 展示 Comfortable／Compact 两个密度变体，并保持只读事件历史职责。AnchorNavigation 页面由 SDK `Z_AnchorNavigation` 展示 Vertical／Horizontal × Default／Scrolled 四个变体，并验证受控激活、方向键移动焦点和组件级焦点环开关。Filter 页面由 SDK `Z_Filter` 展示 Inline／Panel × Default／Applied 四个变体；条件按钮与应用按钮保持受控请求，外部 filter controller 继续持有条件模型、校验、清除和持久化。ColorPicker 页面由 SDK `Z_ColorPicker` 展示 Default／Focus／Disabled 三个变体；色样和值使用同一受控 QColor，点击或键盘激活只发出选择流程请求，不直接创建系统对话框。NumericKeypad 页面由 SDK `Z_NumericKeypad` 展示 Comfortable／Compact 两个变体；组件只输出语义键和可选提交请求，外部 input controller 持有目标字段、locale 解析、约束、焦点路由和提交策略。三个资产页均消费已发布 SDK 且不进入组件 Factory：`IconAsset` 通过 `IconAssetCatalog` 展示 16／20／24 与 Primary／Secondary 六个 Figma 变体；`ImageAsset` 通过 `VisualAssetCatalog` 展示 Contain／Cover × Loaded／Empty／Error 六个变体；`ModelAsset` 展示 Ready／Loading／Error 三个二维原理图状态。Chart 明确覆盖 Bar／Line／Status × Data／Empty 六个 Variant，DataTable 明确覆盖 Size × State 十五个 Variant。证据画廊只在已有实现时实例化对应 `Z_*` 类；内部 Anatomy、LayoutHelper 和 Asset 不会被伪造成新的公开控件。
+
+Badge、StatusIndicator、Link、Tag、Tooltip 的变体轴和文本槽同时由 GenerateLayout 消费。ComponentLab 仍只负责用同一发布 SDK 展示与验收，不持有第二套组件实现。
 
 MDI Workspace 展示 6 个子窗口状态和 4 个工作区组合，使用原生 Z_MdiSubWindow／Z_MdiArea。固定 State 不执行最大化、最小化、激活或禁用命令；可切回跟随真实状态。工作区选变体后点击“应用所选布局”才执行 Qt 排列／viewMode 命令，不新增四值枚举。原生标题栏命中、拖动／缩放、关闭拒绝、页签关闭、removeSubWindow 对象保留及 WA_DeleteOnClose 已回归；演示关闭默认只隐藏。画廊专用冻结布局保留源稿 Tile 的 24px 重叠、Tabbed 换行和低对比徽标，交互页不安装冻结逻辑。Shade／Help 标题栏按钮组合无源稿规格，保留 Qt 样式回退；不宣称完整平台人工验收。
 

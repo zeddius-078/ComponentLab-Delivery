@@ -2,12 +2,12 @@
   "schemaVersion": 1,
   "source": {
     "figmaFileKey": "w92BKW1EcutKmTXkwzNHbf",
-    "capturedAt": "2026-10-12",
-    "authority": "Figma desktop MCP get_metadata",
+    "capturedAt": "2026-10-14",
+    "authority": "Figma MCP get_metadata + read-only Plugin API audit",
     "scope": "20.* component guideline pages",
-    "pageCount": 73,
-    "componentSetCount": 123,
-    "variantCount": 1471
+    "pageCount": 98,
+    "componentSetCount": 148,
+    "variantCount": 1608
   },
   "categories": [
     {
@@ -45,6 +45,10 @@
     {
       "id": "20.9",
       "name": "20.9 · Window & System / 窗口与系统"
+    },
+    {
+      "id": "20.10",
+      "name": "20.10 · Assets / 资产"
     }
   ],
   "pages": [
@@ -3518,7 +3522,7 @@
     },
     {
       "id": "567:2",
-      "name": "20.6.09 · Collapse & OverlayDrawer Compositions / 折叠与浮层抽屉组合",
+      "name": "20.6.09 · Collapse & Drawer / 折叠与抽屉",
       "categoryId": "20.6",
       "componentSets": [
         {
@@ -3556,7 +3560,7 @@
         },
         {
           "id": "569:632",
-          "name": "ComponentLab/OverlayDrawer",
+          "name": "ComponentLab/Drawer",
           "variantAxes": {
             "Placement": [
               "Left",
@@ -4392,6 +4396,106 @@
           ]
         }
       ]
+    },
+    {
+      "id": "2150:362", "name": "20.9.05 · TitleBar / 标题栏", "categoryId": "20.9",
+      "componentSets": [{"id":"2150:436","name":"ComponentLab/TitleBar","variantAxes":{"State":["Default","Maximized"]},"variants":["State=Default","State=Maximized"]}]
+    },
+    {
+      "id": "2131:5", "name": "20.3.05 · Link / 文字链接", "categoryId": "20.3",
+      "componentSets": [{"id":"2132:102","name":"ComponentLab/Link","variantAxes":{"State":["Default","Hover","Pressed","Focus-visible","Disabled"]},"variants":["State=Default","State=Hover","State=Pressed","State=Focus-visible","State=Disabled"]}]
+    },
+    {
+      "id": "2147:2", "name": "20.2.18 · Timeline / 时间轴", "categoryId": "20.2",
+      "componentSets": [{"id":"2147:35","name":"ComponentLab/Timeline","variantAxes":{"Density":["Comfortable","Compact"]},"variants":["Density=Comfortable","Density=Compact"]}]
+    },
+    {
+      "id": "2131:2", "name": "20.2.15 · Badge / 徽标", "categoryId": "20.2",
+      "componentSets": [{"id":"2132:21","name":"ComponentLab/Badge","variantAxes":{"Kind":["Text","Dot"],"Tone":["Neutral","Info","Success","Warning","Danger"]},"variants":["Kind=Text, Tone=Neutral","Kind=Text, Tone=Info","Kind=Text, Tone=Success","Kind=Text, Tone=Warning","Kind=Text, Tone=Danger","Kind=Dot, Tone=Neutral","Kind=Dot, Tone=Info","Kind=Dot, Tone=Success","Kind=Dot, Tone=Warning","Kind=Dot, Tone=Danger"]}]
+    },
+    {
+      "id": "2131:3", "name": "20.2.16 · StatusIndicator / 状态指示器", "categoryId": "20.2",
+      "componentSets": [{"id":"2132:69","name":"ComponentLab/StatusIndicator","variantAxes":{"Size":["Small","Medium"],"Tone":["Neutral","Process","Success","Warning","Danger"]},"variants":["Size=Small, Tone=Neutral","Size=Small, Tone=Process","Size=Small, Tone=Success","Size=Small, Tone=Warning","Size=Small, Tone=Danger","Size=Medium, Tone=Neutral","Size=Medium, Tone=Process","Size=Medium, Tone=Success","Size=Medium, Tone=Warning","Size=Medium, Tone=Danger"]}]
+    },
+    {
+      "id": "2131:6", "name": "20.8.05 · Tooltip / 气泡提示", "categoryId": "20.8",
+      "componentSets": [{"id":"2132:189","name":"ComponentLab/Tooltip","variantAxes":{"Placement":["Top","Bottom","Left","Right"]},"variants":["Placement=Top","Placement=Bottom","Placement=Left","Placement=Right"]}]
+    },
+    {
+      "id": "2131:4", "name": "20.2.17 · Tag / 标签", "categoryId": "20.2",
+      "componentSets": [{"id":"2132:150","name":"ComponentLab/Tag","variantAxes":{"Size":["Small","Medium"],"Tone":["Neutral","Info","Success","Warning","Danger"],"Dismissible":["True","False"]},"variants":["Size=Small, Tone=Neutral, Dismissible=True","Size=Small, Tone=Info, Dismissible=True","Size=Small, Tone=Success, Dismissible=True","Size=Small, Tone=Warning, Dismissible=True","Size=Small, Tone=Danger, Dismissible=True","Size=Medium, Tone=Neutral, Dismissible=True","Size=Medium, Tone=Info, Dismissible=True","Size=Medium, Tone=Success, Dismissible=True","Size=Medium, Tone=Warning, Dismissible=True","Size=Medium, Tone=Danger, Dismissible=True","Size=Small, Tone=Neutral, Dismissible=False","Size=Small, Tone=Info, Dismissible=False","Size=Small, Tone=Success, Dismissible=False","Size=Small, Tone=Warning, Dismissible=False","Size=Small, Tone=Danger, Dismissible=False","Size=Medium, Tone=Neutral, Dismissible=False","Size=Medium, Tone=Info, Dismissible=False","Size=Medium, Tone=Success, Dismissible=False","Size=Medium, Tone=Warning, Dismissible=False","Size=Medium, Tone=Danger, Dismissible=False"]}]
+    },
+    {
+      "id": "2147:239", "name": "20.6.10 · Spacer / 间距占位", "categoryId": "20.6",
+      "componentSets": [{"id":"2147:264","name":"ComponentLab/Spacer","variantAxes":{"Direction":["Horizontal","Vertical"],"Size":["8","16","24","32"]},"variants":["Direction=Horizontal, Size=8","Direction=Horizontal, Size=16","Direction=Horizontal, Size=24","Direction=Horizontal, Size=32","Direction=Vertical, Size=8","Direction=Vertical, Size=16","Direction=Vertical, Size=24","Direction=Vertical, Size=32"]}]
+    },
+    {
+      "id": "2147:454", "name": "20.1.12 · Stepper / 步骤条", "categoryId": "20.1",
+      "componentSets": [{"id":"2147:515","name":"ComponentLab/Stepper","variantAxes":{"State":["Default","Active","Completed","Error"]},"variants":["State=Default","State=Active","State=Completed","State=Error"]}]
+    },
+    {
+      "id": "2148:2", "name": "20.6.11 · PageHeader / 页头", "categoryId": "20.6",
+      "componentSets": [{"id":"2148:74","name":"ComponentLab/PageHeader","variantAxes":{"Density":["Comfortable","Compact"],"Actions":["On","Off"]},"variants":["Density=Comfortable, Actions=On","Density=Comfortable, Actions=Off","Density=Compact, Actions=On","Density=Compact, Actions=Off"]}]
+    },
+    {
+      "id": "2148:164", "name": "20.3.06 · Filter / 过滤器", "categoryId": "20.3",
+      "componentSets": [{"id":"2148:244","name":"ComponentLab/Filter","variantAxes":{"Layout":["Inline","Panel"],"State":["Default","Applied"]},"variants":["Layout=Inline, State=Default","Layout=Inline, State=Applied","Layout=Panel, State=Default","Layout=Panel, State=Applied"]}]
+    },
+    {
+      "id": "2148:342", "name": "20.1.13 · Pagination / 翻页器", "categoryId": "20.1",
+      "componentSets": [{"id":"2148:438","name":"ComponentLab/Pagination","variantAxes":{"Density":["Default","Compact"],"State":["Default","Disabled"]},"variants":["Density=Default, State=Default","Density=Compact, State=Default","Density=Default, State=Disabled","Density=Compact, State=Disabled"]}]
+    },
+    {
+      "id": "2148:552", "name": "20.5.08 · Transfer / 穿梭框", "categoryId": "20.5",
+      "componentSets": [{"id":"2148:640","name":"ComponentLab/Transfer","variantAxes":{"State":["Default","Disabled","Loading"]},"variants":["State=Default","State=Disabled","State=Loading"]}]
+    },
+    {
+      "id": "2148:746", "name": "20.4.15 · Upload / 上传", "categoryId": "20.4",
+      "componentSets": [{"id":"2148:818","name":"ComponentLab/Upload","variantAxes":{"State":["Default","Hover","Uploading","Success","Error"]},"variants":["State=Default","State=Hover","State=Uploading","State=Success","State=Error"]}]
+    },
+    {
+      "id": "2147:1181", "name": "20.3.07 · OverflowMenuButton / 溢出菜单按钮", "categoryId": "20.3",
+      "componentSets": [{"id":"2147:1192","name":"ComponentLab/OverflowMenuButton","variantAxes":{"State":["Default","Hover","Pressed","Focus","Disabled"]},"variants":["State=Default","State=Hover","State=Pressed","State=Focus","State=Disabled"]}]
+    },
+    {
+      "id": "2147:747", "name": "20.4.12 · SearchInput / 搜索输入框", "categoryId": "20.4",
+      "componentSets": [{"id":"2147:768","name":"ComponentLab/SearchInput","variantAxes":{"State":["Default","Focus","Filled","Disabled","Error"]},"variants":["State=Default","State=Focus","State=Filled","State=Disabled","State=Error"]}]
+    },
+    {
+      "id": "2147:960", "name": "20.4.13 · NumberInput / 数字输入框", "categoryId": "20.4",
+      "componentSets": [{"id":"2147:985","name":"ComponentLab/NumberInput","variantAxes":{"Type":["Integer","Decimal"],"State":["Default","Focus","Disabled"]},"variants":["Type=Integer, State=Default","Type=Integer, State=Focus","Type=Integer, State=Disabled","Type=Decimal, State=Default","Type=Decimal, State=Focus","Type=Decimal, State=Disabled"]}]
+    },
+    {
+      "id": "2148:908", "name": "20.4.14 · NumericKeypad / 数字软键盘", "categoryId": "20.4",
+      "componentSets": [{"id":"2148:1018","name":"ComponentLab/NumericKeypad","variantAxes":{"Density":["Comfortable","Compact"]},"variants":["Density=Comfortable","Density=Compact"]}]
+    },
+    {
+      "id": "2147:1374", "name": "20.5.09 · ColorPicker / 颜色选择器", "categoryId": "20.5",
+      "componentSets": [{"id":"2147:1390","name":"ComponentLab/ColorPicker","variantAxes":{"State":["Default","Focus","Disabled"]},"variants":["State=Default","State=Focus","State=Disabled"]}]
+    },
+    {
+      "id": "2148:1146", "name": "20.5.10 · SegmentedControl / 分段控制", "categoryId": "20.5",
+      "componentSets": [{"id":"2148:1240","name":"ComponentLab/SegmentedControl","variantAxes":{"Segments":["2","3","4"],"State":["Default","Disabled"]},"variants":["Segments=2, State=Default","Segments=3, State=Default","Segments=4, State=Default","Segments=2, State=Disabled","Segments=3, State=Disabled","Segments=4, State=Disabled"]}]
+    },
+    {
+      "id": "2150:2", "name": "20.1.14 · AnchorNavigation / 锚点导航", "categoryId": "20.1",
+      "componentSets": [{"id":"2150:82","name":"ComponentLab/AnchorNavigation","variantAxes":{"Orientation":["Vertical","Horizontal"],"State":["Default","Scrolled"]},"variants":["Orientation=Vertical, State=Default","Orientation=Vertical, State=Scrolled","Orientation=Horizontal, State=Default","Orientation=Horizontal, State=Scrolled"]}]
+    },
+    {
+      "id": "2150:180", "name": "20.6.12 · LayoutContainer / 布局容器", "categoryId": "20.6",
+      "componentSets": [{"id":"2150:262","name":"ComponentLab/LayoutContainer","variantAxes":{"Columns":["1","2","3"],"Density":["Comfortable","Compact"]},"variants":["Columns=1, Density=Comfortable","Columns=2, Density=Comfortable","Columns=3, Density=Comfortable","Columns=1, Density=Compact","Columns=2, Density=Compact","Columns=3, Density=Compact"]}]
+    },
+    {
+      "id": "2127:3", "name": "20.10.01 · IconAsset / 图标资产", "categoryId": "20.10",
+      "componentSets": [{"id":"2150:597","name":"ComponentLab/IconAsset","variantAxes":{"Size":["16","20","24"],"Tone":["Primary","Secondary"]},"variants":["Size=16, Tone=Primary","Size=20, Tone=Primary","Size=24, Tone=Primary","Size=16, Tone=Secondary","Size=20, Tone=Secondary","Size=24, Tone=Secondary"]}]
+    },
+    {
+      "id": "2127:4", "name": "20.10.02 · ImageAsset / 图片资产", "categoryId": "20.10",
+      "componentSets": [{"id":"2150:760","name":"ComponentLab/ImageAsset","variantAxes":{"Fit":["Contain","Cover"],"State":["Loaded","Empty","Error"]},"variants":["Fit=Contain, State=Loaded","Fit=Contain, State=Empty","Fit=Contain, State=Error","Fit=Cover, State=Loaded","Fit=Cover, State=Empty","Fit=Cover, State=Error"]}]
+    },
+    {
+      "id": "2127:5", "name": "20.10.03 · ModelAsset / 模型资产", "categoryId": "20.10",
+      "componentSets": [{"id":"2150:929","name":"ComponentLab/ModelAsset","variantAxes":{"State":["Ready","Loading","Error"]},"variants":["State=Ready","State=Loading","State=Error"]}]
     }
   ]
 }

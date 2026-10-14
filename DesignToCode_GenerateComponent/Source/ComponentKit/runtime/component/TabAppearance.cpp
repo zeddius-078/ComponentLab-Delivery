@@ -3,8 +3,10 @@
 #include <QCoreApplication>
 #include <QEvent>
 #include <QFontDatabase>
+#include <QLabel>
 #include <QPainter>
 #include <QProxyStyle>
+#include <QSizePolicy>
 #include <QStyleFactory>
 #include <QStyleOptionTab>
 #include <QStyleOptionTabWidgetFrame>
@@ -14,15 +16,98 @@
 #include <QToolButton>
 #include <QTimer>
 #include <QVariant>
+#include <QVBoxLayout>
 #include <stdexcept>
 
 namespace commonWidget {
 namespace {
+QLabel* compositionLabel(QWidget* parent, const QString& text, const QRect& rect, int size,
+                         int weight, const QString& color) {
+    auto* result = new QLabel(text, parent);
+    result->setTextFormat(Qt::PlainText);
+    result->setGeometry(rect);
+    result->setWordWrap(true);
+    result->setAlignment(Qt::AlignLeft | Qt::AlignTop);
+    QFont labelFont("Inter");
+    labelFont.setPixelSize(size);
+    labelFont.setWeight(weight);
+    result->setFont(labelFont);
+    result->setStyleSheet(
+        QString("background:transparent;border:0;color:%1;font-family:'Inter';font-size:%2px;")
+            .arg(color)
+            .arg(size));
+    return result;
+}
+
 QFont font() {
     QFont f("Inter");
     f.setPixelSize(14);
     f.setWeight(QFont::DemiBold);
     return f;
+}
+
+void setFigmaTabClosePolicyImpl(QTabWidget* tabs, bool closable, bool behaviorOnly) {
+    if (!tabs)
+        throw std::invalid_argument("TabWidget is null");
+    tabs->setTabsClosable(false);
+    tabs->setTabsClosable(closable);
+    if (!closable || !behaviorOnly)
+        return;
+    for (int i = 0; i < tabs->count(); ++i) {
+        if (tabs->widget(i)->objectName() == QStringLiteral("tabDemoBehavior"))
+            continue;
+        for (auto side : {QTabBar::LeftSide, QTabBar::RightSide})
+            if (auto* button = tabs->tabBar()->tabButton(i, side)) {
+                tabs->tabBar()->setTabButton(i, side, nullptr);
+                button->deleteLater();
+            }
+    }
+}
+
+void populateFigmaTabWidgetImpl(QTabWidget* tabs, bool sourceSnapshot) {
+    if (!tabs)
+        throw std::invalid_argument("TabWidget is null");
+    while (tabs->count()) {
+        auto* page = tabs->widget(0);
+        tabs->removeTab(0);
+        delete page;
+    }
+    for (const auto& name :
+         {QStringLiteral("Overview"), QStringLiteral("Appearance"),
+          QStringLiteral("Behavior"), QStringLiteral("Advanced")}) {
+        auto* page = new QWidget;
+        page->setObjectName(QStringLiteral("tabDemo") + name);
+        auto* title = compositionLabel(page, name + QStringLiteral(" page"),
+                                       QRect(23, 27, 700, 26), 18, QFont::DemiBold,
+                                       QStringLiteral("#191919"));
+        auto* description = compositionLabel(
+            page,
+            QStringLiteral("Only the current page is visible. Selection, focus, close requests "
+                           "and page ownership remain distinct contracts."),
+            QRect(23, 63, 700, 19), 13, QFont::Normal, QStringLiteral("#191919"));
+        auto* note = compositionLabel(
+            page, QStringLiteral("removeTab() detaches the page; it does not delete it."),
+            QRect(23, 127, 700, 18), 12, QFont::Normal, QStringLiteral("#8a8a8a"));
+        if (!sourceSnapshot) {
+            auto* layout = new QVBoxLayout(page);
+            layout->setContentsMargins(23, 27, 23, 20);
+            layout->setSpacing(10);
+            for (auto* text : {title, description, note}) {
+                text->setMinimumWidth(0);
+                text->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Preferred);
+                layout->addWidget(text);
+            }
+            layout->addStretch();
+        }
+        tabs->addTab(page, name);
+    }
+    tabs->setTabIcon(0, figmaTabDocumentIcon(true));
+    tabs->setTabIcon(1, figmaTabDocumentIcon(true));
+    tabs->setIconSize(QSize(16, 16));
+    tabs->setTabEnabled(3, false);
+    setFigmaTabClosePolicyImpl(tabs, true, true);
+    tabs->setCurrentIndex(0);
+    applyFigmaTabWidgetAppearance(tabs, {}, -1, sourceSnapshot);
 }
 
 bool vertical(QTabBar::Shape shape) {
@@ -316,6 +401,14 @@ private:
     QTabBar* bar_;
 };
 } // namespace
+
+void setFigmaTabClosePolicy(QTabWidget* tabs, bool closable, bool behaviorOnly) {
+    setFigmaTabClosePolicyImpl(tabs, closable, behaviorOnly);
+}
+
+void populateFigmaTabWidget(QTabWidget* tabs, bool sourceSnapshot) {
+    populateFigmaTabWidgetImpl(tabs, sourceSnapshot);
+}
 
 QIcon figmaTabDocumentIcon(bool composition) {
     QIcon icon;

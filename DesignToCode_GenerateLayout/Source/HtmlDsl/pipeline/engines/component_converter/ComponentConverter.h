@@ -8,11 +8,14 @@
 #include <QWidget>
 #include <memory>
 
+namespace commonWidget { class ComponentFactory; }
+
 namespace d2c {
 class ComponentConverter {
 public:
     // raw 含实例引用的母版定义；mapping 对应 HtmlDsl/pipeline/mapping/component-mapping.json。
     ComponentConverter(QJsonObject raw, QJsonObject mapping);
+    ~ComponentConverter();
     // 仅接受 INSTANCE；成功后由 parent 管理控件，parent 为空时由调用方释放。
     // 无映射、非法枚举或不支持的组合会抛出带节点上下文的异常。
     QWidget* convert(const QJsonObject& instance, QWidget* parent);
@@ -26,6 +29,6 @@ private:
     QJsonObject raw, mapping;
     QJsonArray records;
     std::shared_ptr<const surface::Catalog> catalog;
-    std::shared_ptr<const field::Tokens> fields;
+    std::unique_ptr<commonWidget::ComponentFactory> componentFactory;
 };
 }

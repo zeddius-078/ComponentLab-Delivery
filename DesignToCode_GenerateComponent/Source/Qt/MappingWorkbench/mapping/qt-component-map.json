@@ -373,10 +373,10 @@
     }
   },
   "assets": {
-    "arrow-left": ":/icons/arrow-left.svg",
-    "arrow-right": ":/icons/arrow-right.svg",
-    "search": ":/icons/search.svg",
-    "clear": ":/icons/x.svg"
+    "arrow-left": "icon.action.previous",
+    "arrow-right": "icon.action.next",
+    "search": "icon.action.search",
+    "clear": "icon.action.close"
   },
   "layoutMetrics": {
     "spacing": "labelGap",

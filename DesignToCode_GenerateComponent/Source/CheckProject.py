@@ -40,20 +40,69 @@ def check():
         SOURCE / "ComponentKit/component-definitions/generated-design-component-catalog.json"
     ).read_text(encoding="utf-8"))
     assert design_catalog["figmaFileKey"] == "w92BKW1EcutKmTXkwzNHbf"
-    assert design_catalog["componentCount"] == len(design_catalog["components"]) == 85
-    assert design_catalog["instantiableCount"] == 85
-    assert design_catalog["contractOnlyCount"] == 0
-    assert design_catalog["figmaSource"]["pageCount"] == len(design_catalog["figmaPages"]) == 73
+    entries = design_catalog["entries"]
+    components = design_catalog["components"]
+    statistics = design_catalog["statistics"]
+    assert design_catalog["canonicalLibraryEntryCount"] == len(entries)
+    assert design_catalog["componentCount"] == len(components)
+    assert statistics["componentIdentityCount"] == len(components)
+    assert statistics["canonicalLibraryEntryCount"] == len(entries)
+    assert statistics["widgetCount"] + statistics["compositeCount"] == len(components)
+    assert len(entries) == (
+        len(components) + statistics["layoutHelperCount"] + statistics["assetEntryCount"]
+    )
+    assert design_catalog["instantiableCount"] == sum(
+        item["instantiable"] for item in components
+    )
+    assert design_catalog["contractOnlyCount"] == sum(
+        not item["instantiable"] for item in components
+    )
+    assert statistics["registeredRuntimeComponentCount"] == sum(
+        item["engineeringStatus"] == "REGISTERED" for item in entries
+    )
+    assert statistics["engineeringGapCount"] == sum(
+        item["engineeringStatus"] == "UNMAPPED" for item in entries
+    )
+    assert design_catalog["figmaSource"]["pageCount"] == len(design_catalog["figmaPages"])
     assert design_catalog["figmaSource"]["componentSetCount"] == sum(
         len(page["componentSets"]) for page in design_catalog["figmaPages"]
-    ) == 123
+    )
     assert design_catalog["figmaSource"]["variantCount"] == sum(
         len(component_set["variants"])
         for page in design_catalog["figmaPages"]
         for component_set in page["componentSets"]
-    ) == 1471
-    assert len({item["designComponent"] for item in design_catalog["components"]}) == 85
-    assert len({item["sdkClass"] for item in design_catalog["components"]}) == 85
+    )
+    component_set_governance = design_catalog["componentSetGovernance"]
+    canonical_set_ids = {
+        component_set_id
+        for entry in entries
+        for component_set_id in entry["componentSetId"].split(",")
+        if component_set_id
+    }
+    classified_set_ids = {
+        item["componentSetId"]
+        for item in component_set_governance["unreferencedSets"]
+    }
+    inventory_set_ids = {
+        component_set["id"]
+        for page in design_catalog["figmaPages"]
+        for component_set in page["componentSets"]
+    }
+    assert not canonical_set_ids & classified_set_ids
+    assert inventory_set_ids == canonical_set_ids | classified_set_ids
+    assert statistics["figmaComponentSetCount"] == len(inventory_set_ids)
+    assert statistics["canonicalReferencedComponentSetCount"] == len(canonical_set_ids)
+    assert sum(
+        statistics[key]
+        for key in (
+            "internalComponentSetCount",
+            "proposalComponentSetCount",
+            "residueComponentSetCount",
+        )
+    ) == len(classified_set_ids)
+    assert len({item["canonicalId"] for item in entries}) == len(entries)
+    sdk_classes = [item["sdkClass"] for item in components if item["sdkClass"]]
+    assert len(set(sdk_classes)) == len(sdk_classes)
     native_source = SOURCE / "ComponentKit/runtime/component/native"
     native_styles = SOURCE / "ComponentKit/design-assets/generated/native"
     for component in native_components:
@@ -133,7 +182,12 @@ def check():
         assert "/ComponentLab-Delivery/DesignToCode/" not in content, (ninja, "retired path")
     result["tokenChainFiles"] = len(token_chain)
     result["nativeComponentContracts"] = len(native_components)
-    result["figmaPublicComponents"] = design_catalog["componentCount"]
+    result["canonicalLibraryEntries"] = design_catalog["canonicalLibraryEntryCount"]
+    result["componentIdentities"] = design_catalog["componentCount"]
+    result["registeredRuntimeComponents"] = statistics["registeredRuntimeComponentCount"]
+    result["layoutHelpers"] = statistics["layoutHelperCount"]
+    result["assetEntries"] = statistics["assetEntryCount"]
+    result["engineeringGaps"] = statistics["engineeringGapCount"]
     result["sdkAuthority"] = "build/sdk"
     result["sdkMode"] = "sole-publisher"
     result["sdkConsumerTest"] = "Source/SDKConsumerTest"

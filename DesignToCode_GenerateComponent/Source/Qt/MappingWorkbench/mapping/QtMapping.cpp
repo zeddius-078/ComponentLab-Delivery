@@ -2,6 +2,7 @@
 #include "ButtonAppearanceAdapter.h"
 #include "ComponentTheme.h"
 #include "FieldChrome.h"
+#include "IconAssetCatalog.h"
 #include "Z_CheckBox.h"
 #include "Z_InputField.h"
 #include "Z_Select.h"
@@ -340,8 +341,9 @@ QStringList validate(const QJsonObject& contract, const QString& profile) {
                         require(spec["values"].toArray().contains(value),
                                 where + ": unsupported value " + value.toString());
                     if (type == "asset" && !value.toString().isEmpty()) {
-                        const auto path = asset(value.toString(), map);
-                        require(path.startsWith(":/icons/") && QFile::exists(path),
+                        const auto assetId = asset(value.toString(), map);
+                        require(commonWidget::IconAssetCatalog::isSemanticId(assetId) &&
+                                    commonWidget::IconAssetCatalog::contains(assetId),
                                 where + ": register asset in qt-component-map.json first");
                     }
                     if (type == "material")

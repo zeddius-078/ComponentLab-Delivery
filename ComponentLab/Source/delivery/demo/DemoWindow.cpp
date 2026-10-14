@@ -37,6 +37,7 @@
 #include <QTableWidget>
 #include <QStackedWidget>
 #include <QTreeWidget>
+#include <QTreeWidgetItemIterator>
 #include <stdexcept>
 using commonWidget::Z_CheckBox;
 using commonWidget::Z_PushButton;
@@ -87,6 +88,11 @@ DemoWindow::DemoWindow(const QString& current)
     : ui(new Ui::ComponentLab), catalog(std::make_shared<surface::Catalog>(current)),
       profile(current) {
     ui->setupUi(this);
+    // This gallery now contains component, layout-helper and asset sections.
+    // Keep the runtime label explicit so stale generated UI headers cannot retain
+    // the former component-only wording in incremental builds.
+    ui->nativeSections->setTabText(ui->nativeSections->indexOf(ui->nativeGalleryTab),
+                                   QString::fromUtf8("设计系统图库"));
     using commonWidget::FocusIndicator;
     auto& focus = FocusIndicator::instance();
     ui->focusIndicatorCombo->addItem(QString::fromUtf8("关闭"), "off");
@@ -418,15 +424,10 @@ void DemoWindow::capture(const QString& path, const QString& pageId) {
     ui->nativeSections->setCurrentIndex(0);
     for (int i = 0; i < sampledPages.size(); ++i) {
         QTreeWidgetItem* selected = nullptr;
-        for (int group = 0; group < componentTree->topLevelItemCount() && !selected;
-             ++group) {
-            auto* branch = componentTree->topLevelItem(group);
-            for (int row = 0; row < branch->childCount(); ++row) {
-                auto* item = branch->child(row);
-                if (item->data(0, Qt::UserRole).toString() == sampledPages[i]) {
-                    selected = item;
-                    break;
-                }
+        for (QTreeWidgetItemIterator it(componentTree); *it; ++it) {
+            if ((*it)->data(0, Qt::UserRole).toString() == sampledPages[i]) {
+                selected = *it;
+                break;
             }
         }
         if (!selected)

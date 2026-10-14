@@ -19,5 +19,6 @@ void setPreviewState(QAction* action, const QString& state);
 void populateMenu(QMenu* menu);
 void configureMenuItem(QMenu* menu, const QString& type, const QString& state);
 void populateMenuBar(QMenuBar* bar, const QStringList& labels = {});
+void setMenuBarCornerVisible(QMenuBar* bar, bool visible);
 void configureToolBar(QToolBar* bar, const QMap<QString, QString>& properties);
 } // namespace commonWidget::navigation

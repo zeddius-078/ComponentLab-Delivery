@@ -1,11 +1,19 @@
 // 把组件身份、变体属性、文字槽和资源槽转换为受控的 Qt API 调用。
 #include "ComponentConverter.h"
+#include "ComponentFactory.h"
+#include "IconAssetCatalog.h"
+#include "NavigationAppearance.h"
+#include "TabAppearance.h"
+#include "ToolBoxAppearance.h"
 #include "Z_PushButton.h"
-#include "Z_CheckBox.h"
-#include "Z_InputField.h"
 #include "ButtonAppearanceAdapter.h"
 #include <QJsonDocument>
 #include <QMap>
+#include <QMenu>
+#include <QMenuBar>
+#include <QToolBar>
+#include <QTabWidget>
+#include <QToolBox>
 #include <QSet>
 #include <stdexcept>
 #include <functional>
@@ -70,12 +78,19 @@ void collectGlyphs(const QJsonObject& node, const QString& prefix, QJsonArray& g
 ComponentConverter::ComponentConverter(QJsonObject input, QJsonObject rules)
     : raw(std::move(input)), mapping(std::move(rules)),
       catalog(std::make_shared<surface::Catalog>(mapping["profile"].toString())),
-      fields(std::make_shared<field::Tokens>(mapping["profile"].toString())) {}
+      componentFactory(std::make_unique<commonWidget::ComponentFactory>(
+          mapping["profile"].toString())) {}
+
+ComponentConverter::~ComponentConverter() = default;
 
 QWidget* ComponentConverter::convert(const QJsonObject& n, QWidget* parent) {
-    // 用组件集 key 和名称双重匹配规则，再确认实例指向的母版 key。
-    const auto family =
-        find(raw["pixComponentTreeDslNodes"].toArray(), n["mainStateGroup"].toString());
+    // 用公共设计身份（组件集或独立组件节点）和名称双重匹配规则，再确认实例指向的母版 key。
+    const auto definitions = raw["pixComponentTreeDslNodes"].toArray();
+    auto family = find(definitions, n["mainStateGroup"].toString());
+    const bool standalonePublicComponent = family.isEmpty() &&
+        !n["mainComponent"].toString().isEmpty();
+    if (standalonePublicComponent)
+        family = find(definitions, n["mainComponent"].toString());
     const auto fail = [&](const QString& code, const QJsonObject& node, const QString& detail) {
         d2c::fail(code, node, family["name"].toString(), detail);
     };
@@ -86,9 +101,13 @@ QWidget* ComponentConverter::convert(const QJsonObject& n, QWidget* parent) {
     // 遍历声明的映射规则，以名称和 key 双重确认身份；多次命中会造成歧义。
     for (const auto& r : mapping["rules"].toArray()) {
         const auto candidate = r.toObject();
-        // 两个身份字段同时匹配才接受，防止同名但来自另一组件集的实例被套用规则。
-        if (candidate["designComponentKey"] == family["componentKey"] &&
-            candidate["designComponentName"] == family["name"]) {
+        // 公共独立组件使用 designIdentityId；组件集和旧 key 路径继续兼容。
+        const bool identityMatches = candidate.contains("designIdentityId")
+            ? candidate["designIdentityId"] == family["guid"]
+            : candidate.contains("designComponentSetId")
+            ? candidate["designComponentSetId"] == family["guid"]
+            : candidate["designComponentKey"] == family["componentKey"];
+        if (identityMatches && candidate["designComponentName"] == family["name"]) {
             // 已有命中规则时再次匹配表示配置有歧义，拒绝按遍历顺序任意选取。
             if (!rule.isEmpty())
                 fail("AMBIGUOUS_COMPONENT_MAPPING", n, family["name"].toString());
@@ -98,7 +117,9 @@ QWidget* ComponentConverter::convert(const QJsonObject& n, QWidget* parent) {
     // 没有契约时立即报告未映射，避免使用默认按钮掩盖设计侧缺项。
     if (rule.isEmpty())
         fail("UNMAPPED_COMPONENT", n, family["name"].toString());
-    const auto master = find(family["childNode"].toArray(), n["mainComponent"].toString());
+    const auto master = standalonePublicComponent
+        ? family
+        : find(family["childNode"].toArray(), n["mainComponent"].toString());
     // 核对母版引用及 key，防止实例属性被解释为另一母版的接口参数。
     if (master.isEmpty() || master["componentKey"] != n["componentKey"])
         fail("INVALID_COMPONENT_REFERENCE", n, family["name"].toString());
@@ -116,8 +137,11 @@ QWidget* ComponentConverter::convert(const QJsonObject& n, QWidget* parent) {
         props[name] = o["value"].toString();
     }
     // 限定设计 Profile 与当前 catalog 一致，避免混用主题的尺寸和材质。
-    if (props.value("Profile") != mapping["profile"].toString())
+    if (props.contains("Profile") && props.value("Profile") != mapping["profile"].toString())
         fail("PROFILE_MISMATCH", n, props.value("Profile"));
+    const QString stateProperty = rule["stateProperty"].toString(
+        QStringLiteral("state"));
+    const QString compositionApi = rule["compositionApi"].toString();
     const auto propertyRules = rule["propertyMappings"].toObject();
     // 逐项核对契约必填属性，缺少数据时在创建 QWidget 前终止。
     for (const auto& required : propertyRules.keys())
@@ -125,43 +149,84 @@ QWidget* ComponentConverter::convert(const QJsonObject& n, QWidget* parent) {
         if (!props.contains(required))
             fail("MISSING_PROPERTY", n, required);
     QJsonObject values;
+    QMap<QString, QString> compositionProperties;
     // 将一般变体翻译成 API 参数；Profile 和 state 分别由主题检查及状态规则处理。
     for (auto it = props.cbegin(); it != props.cend(); ++it) {
         // 跳过已分配给专门流程的字段，避免将状态或主题误当通用 setter。
-        if (it.key() == "Profile" || it.key() == "state")
+        if (it.key() == "Profile" || it.key() == stateProperty)
             continue;
         const auto spec = propertyRules[it.key()].toObject();
         const auto domain = spec["values"].toObject();
         // 只接受契约列出的值，防止拼写错误被转换为空参数。
         if (!domain.contains(it.value()))
             fail("UNMAPPED_PROPERTY", n, it.key() + "=" + it.value());
-        values[spec["api"].toString()] = domain[it.value()];
+        const auto api = spec["api"].toString();
+        const auto mapped = domain[it.value()];
+        if (!compositionApi.isEmpty() && api == compositionApi) {
+            if (!mapped.isString())
+                fail("INVALID_API_VALUE_TYPE", n, api + ":" + it.key());
+            compositionProperties[it.key()] = mapped.toString();
+        } else {
+            values[api] = mapped;
+        }
     }
     const auto states = rule["stateMappings"].toObject();
     // 只有明确映射的初始状态可以生成，未知状态不降级为 default。
-    if (!states.contains(props.value("state")))
-        fail("UNMAPPED_STATE", n, props.value("state"));
+    if (!states.isEmpty() && !states.contains(props.value(stateProperty)))
+        fail("UNMAPPED_STATE", n, props.value(stateProperty));
     const auto cls = rule["qtClass"].toString();
     // 转换期间由 unique_ptr 托管，后续任何 setter 失败都会释放本次控件。
     std::unique_ptr<QWidget> owned;
     using namespace commonWidget;
     Z_PushButton* button = nullptr;
-    Z_CheckBox* check = nullptr;
-    Z_InputField* input = nullptr;
-    // 按类白名单创建已有组件，分别注入其所需 Token 服务；未知类终止生成。
-    if (cls == "commonWidget::Z_PushButton")
-        owned.reset(button = new Z_PushButton(parent));
-    else if (cls == "commonWidget::Z_CheckBox")
-        owned.reset(check = new Z_CheckBox(catalog, {}, parent));
-    else if (cls == "commonWidget::Z_InputField")
-        owned.reset(input = new Z_InputField(fields, parent));
-    else
+    // 组件创建只通过 GenerateComponent 发布的 SDK Factory；GenerateLayout 不再维护平行类白名单。
+    if (!commonWidget::ComponentFactory::isRegistered(cls))
         fail("UNREGISTERED_QT_CLASS", n, cls);
+    owned.reset(componentFactory->create(cls, parent));
+    button = qobject_cast<Z_PushButton*>(owned.get());
     auto* w = owned.get();
     w->setObjectName("node_" + n["guid"].toString().replace(':', '_'));
     w->setProperty("designNodeId", n["guid"].toString());
     w->setProperty("designComponent", family["name"].toString());
     QJsonArray calls;
+    if (!compositionApi.isEmpty()) {
+        if (compositionApi == QStringLiteral("navigation.populateMenu")) {
+            auto* menu = qobject_cast<QMenu*>(w);
+            if (!menu)
+                fail("INVALID_COMPOSITION_TARGET", n, compositionApi);
+            commonWidget::navigation::populateMenu(menu);
+        } else if (compositionApi == QStringLiteral("navigation.populateMenuBar")) {
+            auto* menuBar = qobject_cast<QMenuBar*>(w);
+            if (!menuBar)
+                fail("INVALID_COMPOSITION_TARGET", n, compositionApi);
+            commonWidget::navigation::populateMenuBar(menuBar);
+        } else if (compositionApi == QStringLiteral("navigation.configureToolBar")) {
+            auto* toolBar = qobject_cast<QToolBar*>(w);
+            if (!toolBar)
+                fail("INVALID_COMPOSITION_TARGET", n, compositionApi);
+            commonWidget::navigation::configureToolBar(toolBar, compositionProperties);
+        } else if (compositionApi == QStringLiteral("tabs.populateTabWidget")) {
+            auto* tabs = qobject_cast<QTabWidget*>(w);
+            if (!tabs)
+                fail("INVALID_COMPOSITION_TARGET", n, compositionApi);
+            commonWidget::populateFigmaTabWidget(tabs);
+        } else if (compositionApi == QStringLiteral("toolbox.populateToolBox")) {
+            auto* toolBox = qobject_cast<QToolBox*>(w);
+            if (!toolBox)
+                fail("INVALID_COMPOSITION_TARGET", n, compositionApi);
+            commonWidget::populateFigmaToolBox(toolBox);
+        } else {
+            fail("UNREGISTERED_COMPOSITION_API", n, compositionApi);
+        }
+        QJsonObject compositionCall{{"api", compositionApi}};
+        if (!compositionProperties.isEmpty()) {
+            QJsonObject propertyTrace;
+            for (auto it = compositionProperties.cbegin(); it != compositionProperties.cend(); ++it)
+                propertyTrace[it.key()] = it.value();
+            compositionCall["properties"] = propertyTrace;
+        }
+        calls.append(compositionCall);
+    }
     // 图标槽和图标资源只适用于按钮；其他控件沿用各自的参数路径。
     if (button) {
         // 图标来自母版 GLYPH 槽及实例名称覆盖，再通过资源表找到 QRC/本地路径。
@@ -191,7 +256,22 @@ QWidget* ComponentConverter::convert(const QJsonObject& n, QWidget* parent) {
             // 未登记的图标没有可信 QRC 路径，停止转换并报告具体槽名。
             if (resource.isEmpty())
                 fail("UNMAPPED_RESOURCE", n, glyph["name"].toString());
-            const auto source = resource["source"].toString();
+            QString source;
+            if (resource.contains("assetId")) {
+                source = resource["assetId"].toString();
+                try {
+                    // Validate against the GenerateComponent SDK catalog. The stable ID is
+                    // passed to the component; GenerateLayout never owns the concrete path.
+                    commonWidget::IconAssetCatalog::resolve(source);
+                } catch (const std::exception&) {
+                    fail("UNMAPPED_RESOURCE", n, source);
+                }
+            } else {
+                // Page-owned assets continue to use their generated QRC/local source.
+                source = resource["source"].toString();
+            }
+            if (source.isEmpty())
+                fail("UNMAPPED_RESOURCE", n, glyph["name"].toString());
             const auto target = targets[i].toString();
             // 依据契约选择前或后图标接口；未知槽直接拒绝，防止落到错误位置。
             if (target == "leading")
@@ -210,114 +290,32 @@ QWidget* ComponentConverter::convert(const QJsonObject& n, QWidget* parent) {
                 {"designGlyphId", glyph["guid"]}});
         }
     }
-    // API 白名单：映射表只能调用此处已实现的接口，未知调用立即终止。
+    // API 调用同样由 SDK Factory 校验和分派；映射层只负责设计值域到公开 API 的翻译。
     const auto invoke = [&](const QString& api, const QJsonValue& value) {
-        // 禁止 QJsonValue 的默认转换掩盖错误：字符串 true 不是布尔值，数字也不是文字。
         static const QSet<QString> booleanApis{"setEnabled", "setDanger", "setGhost",
-                                               "setLoading", "setAllowClear", "setReadOnly"};
-        if (booleanApis.contains(api) ? !value.isBool() : !value.isString())
+                                               "setLoading", "setAllowClear", "setReadOnly",
+                                               "setActionsVisible", "setDismissible",
+                                               "setCollapsed",
+                                               "navigation.setMenuBarCornerVisible"};
+        static const QSet<QString> numericApis{"setSegmentCount", "setCurrentIndex",
+                                               "setMinimum", "setMaximum",
+                                               "setSingleStep"};
+        const bool flexibleValueApi = api == QStringLiteral("setValue");
+        if ((flexibleValueApi && !value.isString() && !value.isDouble()) ||
+            (booleanApis.contains(api) && !value.isBool()) ||
+            (numericApis.contains(api) && !value.isDouble()) ||
+            (!flexibleValueApi && !booleanApis.contains(api) &&
+             !numericApis.contains(api) && !value.isString()))
             fail("INVALID_API_VALUE_TYPE", n, api);
-        const auto text = value.toString();
-        // 按钮通过自己的 setEnabled 保存请求状态，保证材质刷新后仍保留禁用态。
-        // 按 API 名和控件类型联合分派；同名 setter 仅在对应控件上执行，末尾拒绝未注册组合。
-        if (api == "setEnabled" && button)
-            button->setEnabled(value.toBool());
-        else if (api == "setEnabled")
-            w->setEnabled(value.toBool());
-        else if (api == "setText" && button)
-            button->setText(text);
-        else if (api == "setText" && check)
-            check->setText(text);
-        else if (api == "setType" && button) {
-            const QMap<QString, ButtonType> types{{"Primary", ButtonType::Primary},
-                                                  {"Default", ButtonType::Default},
-                                                  {"Dashed", ButtonType::Dashed},
-                                                  {"Text", ButtonType::Text},
-                                                  {"Link", ButtonType::Link}};
-            // 映射字符串须命中 ButtonType 枚举，避免 QMap 缺省值伪装为合法类型。
-            if (!types.contains(text))
-                fail("INVALID_ENUM", n, text);
-            button->setType(types[text]);
-        } else if (api == "setSize" && button) {
-            const QMap<QString, ButtonSize> sizes{{"XS", ButtonSize::XS},
-                                                  {"S", ButtonSize::S},
-                                                  {"M", ButtonSize::M},
-                                                  {"L", ButtonSize::L}};
-            // 仅接受已声明尺寸枚举，避免未知尺寸静默落入默认项。
-            if (!sizes.contains(text))
-                fail("INVALID_ENUM", n, text);
-            button->setSize(sizes[text]);
-        } else if (api == "setDanger" && button)
-            button->setDanger(value.toBool());
-        else if (api == "setGhost" && button)
-            button->setGhost(value.toBool());
-        else if (api == "setLoading" && button)
-            button->setLoading(value.toBool());
-        else if (api == "setLoading" && input)
-            input->setLoading(value.toBool());
-        else if (api == "setControlSize" && check)
-            check->setControlSize(text);
-        else if (api == "setControlSize" && input)
-            input->setControlSize(text);
-        else if (api == "setAppearance" && check)
-            check->setAppearance(text);
-        else if (api == "setAppearance" && input)
-            input->setAppearance(text);
-        else if (api == "setCheckValue" && check) {
-            if (text != "unchecked" && text != "checked" && text != "mixed")
-                fail("INVALID_ENUM", n, api + "=" + text);
-            check->setChecked(text == "checked");
-            check->setIndeterminate(text == "mixed");
-        } else if (api == "setKind" && input) {
-            const QMap<QString, Z_InputField::Kind> kinds{
-                {"Text", Z_InputField::Kind::Text},
-                {"Password", Z_InputField::Kind::Password},
-                {"Search", Z_InputField::Kind::Search},
-                {"TextArea", Z_InputField::Kind::TextArea}};
-            // 输入框种类须对应已实现的编辑行为，未知值拒绝生成。
-            if (!kinds.contains(text))
-                fail("INVALID_ENUM", n, text);
-            input->setKind(kinds[text]);
-        } else if (api == "setVariant" && input)
-            input->setVariant(text);
-        else if (api == "setAllowClear" && input)
-            input->setAllowClear(value.toBool());
-        else if (api == "setReadOnly" && input)
-            input->setReadOnly(value.toBool());
-        else if (api == "setStatus" && input)
-            input->setStatus(text);
-        else if (api == "setLabel" && input)
-            input->setLabel(text);
-        else if (api == "setHint" && input)
-            input->setHint(text);
-        else if (api == "setPlaceholder" && input)
-            input->setPlaceholder(text);
-        else if (api == "setValue" && input)
-            input->setValue(text);
-        else if (api == "setIconStyles" && button) {
-            const QMap<QString, IconContainerStyle> styles{
-                {"Bare", IconContainerStyle::Bare},
-                {"Filled", IconContainerStyle::Filled},
-                {"Outlined", IconContainerStyle::Outlined}};
-            // 图标容器样式限定为契约枚举，保证前后图标使用同一合法样式。
-            if (!styles.contains(text))
-                fail("INVALID_ENUM", n, text);
-            button->setLeadingIconStyle(styles[text]);
-            button->setTrailingIconStyle(styles[text]);
-        } else if (api == "setContentMode" && button) {
-            if (!QSet<QString>{"Text", "Leading", "Trailing", "Dual", "IconOnly"}.contains(text))
-                fail("INVALID_ENUM", n, api + "=" + text);
-            button->setIconOnly(false);
-            button->setLeadingIconVisible(text == "Leading" || text == "Dual" ||
-                                          text == "IconOnly");
-            button->setTrailingIconVisible(text == "Trailing" || text == "Dual");
-            button->setIconOnly(text == "IconOnly");
-        } else if (api == "prefixPolicy" && input && text == "none") {
-        } else if (api == "editorTextMode" && input) {
-            if (text != "setPlaceholder" && text != "setValue")
-                fail("INVALID_ENUM", n, api + "=" + text);
-        } else
-            fail("UNREGISTERED_API", n, api);
+        QString error;
+        if (api == QStringLiteral("navigation.setMenuBarCornerVisible")) {
+            auto* menuBar = qobject_cast<QMenuBar*>(w);
+            if (!menuBar)
+                fail("INVALID_COMPOSITION_TARGET", n, api);
+            commonWidget::navigation::setMenuBarCornerVisible(menuBar, value.toBool());
+        } else if (!componentFactory->apply(w, api, value, &error)) {
+            fail("UNREGISTERED_API", n, api + ": " + error);
+        }
         calls.append(QJsonObject{{"api", api}, {"value", value}});
     };
     // 先应用普通属性；材质适配推迟到文字和状态设置之后，保持刷新顺序确定。
@@ -361,7 +359,7 @@ QWidget* ComponentConverter::convert(const QJsonObject& n, QWidget* parent) {
     }
     // 普通属性和文字就绪后应用状态；材质适配最后执行并核对组合支持范围。
     // 按规则顺序应用初始状态，使禁用和 loading 覆盖普通属性初始化。
-    for (const auto& s : states[props.value("state")].toArray())
+    for (const auto& s : states[props.value(stateProperty)].toArray())
         invoke(s.toObject()["api"].toString(), s.toObject()["value"]);
     // 按钮材质在所有属性就绪后应用，先核对 type、ghost 与材质组合是否受支持。
     if (button) {
