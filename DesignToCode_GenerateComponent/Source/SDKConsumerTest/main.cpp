@@ -8,6 +8,7 @@
 #include <QJsonArray>
 #include <QJsonObject>
 #include <QLabel>
+#include <QLineEdit>
 #include <QItemSelectionModel>
 #include <QListView>
 #include <QMenu>
@@ -84,6 +85,39 @@ int main(int argc, char *argv[]) {
         designSwitch->variantProperties().value(QStringLiteral("Size")).toString() !=
             QStringLiteral("Small"))
         return 11;
+
+    auto* focusButton = qobject_cast<commonWidget::Z_PushButton*>(
+        factory.create(QStringLiteral("commonWidget::Z_PushButton"), &owner));
+    auto* focusCheck = qobject_cast<commonWidget::Z_CheckBox*>(
+        factory.create(QStringLiteral("commonWidget::Z_CheckBox"), &owner));
+    auto* focusInput = qobject_cast<commonWidget::Z_InputField*>(
+        factory.create(QStringLiteral("commonWidget::Z_InputField"), &owner));
+    if (!focusButton || !focusCheck || !focusInput || !focusInput->lineEdit() ||
+        focusButton->focusPolicy() != Qt::StrongFocus ||
+        focusCheck->focusPolicy() != Qt::StrongFocus ||
+        focusInput->focusPolicy() != Qt::NoFocus ||
+        focusInput->lineEdit()->focusPolicy() == Qt::NoFocus)
+        return 131;
+    QString coreFocusError;
+    for (auto* component : {static_cast<QWidget*>(focusButton),
+                            static_cast<QWidget*>(focusCheck),
+                            static_cast<QWidget*>(focusInput)})
+        if (!factory.apply(component, QStringLiteral("setFocusRingEnabled"), false,
+                           &coreFocusError) ||
+            commonWidget::FocusIndicator::instance().enabledFor(component))
+            return 132;
+    if (commonWidget::FocusIndicator::instance().enabledFor(focusInput->lineEdit()) ||
+        focusButton->focusPolicy() != Qt::StrongFocus ||
+        focusCheck->focusPolicy() != Qt::StrongFocus ||
+        focusInput->lineEdit()->focusPolicy() == Qt::NoFocus)
+        return 133;
+    for (auto* component : {static_cast<QWidget*>(focusButton),
+                            static_cast<QWidget*>(focusCheck),
+                            static_cast<QWidget*>(focusInput)})
+        if (!factory.apply(component, QStringLiteral("setFocusRingEnabled"), true,
+                           &coreFocusError) ||
+            !commonWidget::FocusIndicator::instance().enabledFor(component))
+            return 134;
 
     auto* bottomNavigation = qobject_cast<commonWidget::Z_DesktopBottomNavigation*>(
         factory.create(QStringLiteral("commonWidget::Z_DesktopBottomNavigation"), &owner));

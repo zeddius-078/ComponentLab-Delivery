@@ -258,6 +258,25 @@ class FigmaCatalogContractTests(unittest.TestCase):
         ):
             self.assertIn(canonical_id, source)
 
+    def test_core_interactive_components_have_explicit_optional_focus_contracts(self):
+        by_id = {entry["canonicalId"]: entry for entry in self.catalog["entries"]}
+        expected = {
+            "ComponentLab/Button": "STRONG_FOCUS_OPTIONAL_INDICATOR",
+            "ComponentLab/Checkbox": "STRONG_FOCUS_OPTIONAL_INDICATOR",
+            "ComponentLab/Input": "CHILD_EDITOR_ONLY_OPTIONAL_INDICATOR",
+        }
+        for canonical_id, policy in expected.items():
+            entry = by_id[canonical_id]
+            self.assertEqual(policy, entry["focusPolicy"])
+            self.assertIn(
+                "focusIndicatorEnabled",
+                entry["runtimeContract"]["controlledProperties"],
+            )
+            self.assertIn(
+                "Source/ComponentKit/runtime/component/FocusIndicator.cpp",
+                entry["evidenceRefs"],
+            )
+
     def test_traceability_actions_and_engineering_statuses_do_not_collapse(self):
         trace = self.traceability
         self.assertEqual(trace["counts"]["merge"], sum(

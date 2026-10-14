@@ -243,6 +243,20 @@
     "ComponentLab/Button": {
       "consumerEngineeringStatus": "IMPLEMENTED",
       "runtimeScope": "SDK_FACTORY_COMPONENTLAB_GENERATELAYOUT",
+      "focusPolicy": "STRONG_FOCUS_OPTIONAL_INDICATOR",
+      "runtimeContract": {
+        "qtBaseClass": "QPushButton",
+        "variantAxes": ["ButtonType", "Size", "State"],
+        "controlledProperties": ["enabled", "loading", "focusIndicatorEnabled"],
+        "signals": ["clicked(bool)"],
+        "controllerBoundary": "The button retains Qt::StrongFocus and keyboard activation. Figma focus-visible is an input-modality preview; the shared FocusIndicator may suppress only the painted ring per component without changing focusPolicy or activation."
+      },
+      "runtimeEvidence": [
+        "Source/ComponentKit/runtime/component/FocusIndicator.h",
+        "Source/ComponentKit/runtime/component/FocusIndicator.cpp",
+        "Source/ComponentKit/runtime/component/Z_PushButton.cpp",
+        "Source/SDKConsumerTest/main.cpp"
+      ],
       "consumerEvidence": [
         "DesignToCode_GenerateLayout/Source/HtmlDsl/pipeline/mapping/component-mapping.json",
         "DesignToCode_GenerateLayout/Source/Validation/component/ComponentTests.cpp",
@@ -252,6 +266,20 @@
     "ComponentLab/Checkbox": {
       "consumerEngineeringStatus": "IMPLEMENTED",
       "runtimeScope": "SDK_FACTORY_COMPONENTLAB_GENERATELAYOUT",
+      "focusPolicy": "STRONG_FOCUS_OPTIONAL_INDICATOR",
+      "runtimeContract": {
+        "qtBaseClass": "QCheckBox",
+        "variantAxes": ["Size", "Value", "State"],
+        "controlledProperties": ["checked", "indeterminate", "focusIndicatorEnabled"],
+        "signals": ["toggled(bool)", "checkedChangeRequested(bool)", "indeterminateChanged(bool)"],
+        "controllerBoundary": "The checkbox retains Qt::StrongFocus, Space activation and accessibility behavior. Figma Focus-visible is a visual preview; ring suppression never changes check state, focusPolicy or keyboard input."
+      },
+      "runtimeEvidence": [
+        "Source/ComponentKit/runtime/component/FocusIndicator.h",
+        "Source/ComponentKit/runtime/component/FocusIndicator.cpp",
+        "Source/ComponentKit/runtime/component/Z_CheckBox.cpp",
+        "Source/SDKConsumerTest/main.cpp"
+      ],
       "consumerEvidence": [
         "DesignToCode_GenerateLayout/Source/HtmlDsl/pipeline/mapping/component-mapping.json",
         "DesignToCode_GenerateLayout/Source/Validation/component/ComponentTests.cpp",
@@ -261,6 +289,21 @@
     "ComponentLab/Input": {
       "consumerEngineeringStatus": "IMPLEMENTED",
       "runtimeScope": "SDK_FACTORY_COMPONENTLAB_GENERATELAYOUT",
+      "focusPolicy": "CHILD_EDITOR_ONLY_OPTIONAL_INDICATOR",
+      "runtimeContract": {
+        "qtBaseClass": "QWidget/QLineEdit or QPlainTextEdit composition",
+        "variantAxes": ["Size", "State"],
+        "controlledProperties": ["value", "status", "readOnly", "focusIndicatorEnabled"],
+        "signals": ["valueChanged(QString)", "valueChangeRequested(QString)", "submitted(QString)"],
+        "controllerBoundary": "The root composition remains Qt::NoFocus while its editor keeps native keyboard focus, IME and clipboard behavior. A root focusIndicatorEnabled override is inherited by the field chrome and child actions; it hides only the visual ring."
+      },
+      "runtimeEvidence": [
+        "Source/ComponentKit/runtime/component/FocusIndicator.h",
+        "Source/ComponentKit/runtime/component/FocusIndicator.cpp",
+        "Source/ComponentKit/runtime/component/Z_InputField.cpp",
+        "Source/ComponentKit/runtime/surface/FieldChrome.cpp",
+        "Source/SDKConsumerTest/main.cpp"
+      ],
       "consumerEvidence": [
         "DesignToCode_GenerateLayout/Source/HtmlDsl/pipeline/mapping/component-mapping.json",
         "DesignToCode_GenerateLayout/Source/Validation/component/ComponentTests.cpp",

@@ -12,6 +12,7 @@
 #include "NavigationGallery.h"
 #include "FigmaLayoutEvidence.h"
 #include "DesignComponentCatalog.h"
+#include "ComponentFactory.h"
 #include <QGraphicsView>
 #include <QGraphicsProxyWidget>
 #include <QMenu>
@@ -1200,6 +1201,38 @@ auto* secondEditor=editors->widget(1);auto* area=secondEditor->findChild<QMdiAre
         QSignalSpy clicks(button, &QPushButton::clicked);
         QTest::keyClick(button, Qt::Key_Space);
         QCOMPARE(clicks.count(), 1);
+
+        ComponentFactory factory(profile);
+        auto* checkbox = qobject_cast<Z_CheckBox*>(
+            factory.create(QStringLiteral("commonWidget::Z_CheckBox"), &host));
+        auto* input = qobject_cast<Z_InputField*>(
+            factory.create(QStringLiteral("commonWidget::Z_InputField"), &host));
+        QVERIFY(checkbox && input && input->lineEdit() && input->control());
+        checkbox->setText(QStringLiteral("Keyboard choice"));
+        input->setPlaceholder(QStringLiteral("Semantic input"));
+        layout->addWidget(checkbox);
+        layout->addWidget(input);
+        QCoreApplication::processEvents();
+
+        checkbox->setFocus(Qt::TabFocusReason);
+        QTRY_VERIFY(checkbox->hasFocus());
+        QVERIFY(FocusIndicator::instance().visibleFor(checkbox));
+        FocusIndicator::instance().setEnabledFor(checkbox, false);
+        QVERIFY(checkbox->hasFocus());
+        QVERIFY(!FocusIndicator::instance().visibleFor(checkbox));
+        const bool checkedBefore = checkbox->isChecked();
+        QTest::keyClick(checkbox, Qt::Key_Space);
+        QCOMPARE(checkbox->isChecked(), !checkedBefore);
+
+        input->lineEdit()->setFocus(Qt::TabFocusReason);
+        QTRY_VERIFY(input->lineEdit()->hasFocus());
+        QTRY_VERIFY(input->control()->property("focusIndicatorVisible").toBool());
+        FocusIndicator::instance().setEnabledFor(input, false);
+        QVERIFY(input->lineEdit()->hasFocus());
+        QVERIFY(!FocusIndicator::instance().enabledFor(input->lineEdit()));
+        QTRY_VERIFY(!input->control()->property("focusIndicatorVisible").toBool());
+        QTest::keyClicks(input->lineEdit(), QStringLiteral("abc"));
+        QCOMPARE(input->value(), QStringLiteral("abc"));
 
         auto* nativeInput = new Z_LineEdit;
         nativeInput->setPlaceholderText(QStringLiteral("Native input"));
