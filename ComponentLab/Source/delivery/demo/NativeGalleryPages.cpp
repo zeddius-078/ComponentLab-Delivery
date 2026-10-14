@@ -1228,7 +1228,13 @@ QWidget* createNativeAppearance(const DesignComponentDescriptor& descriptor,
         controls->addRow(QString::fromUtf8("当前值"),value);
         auto* showText=new QCheckBox(QString::fromUtf8("显示文本"),settings);
         showText->setObjectName("progressTextVisibleControl");showText->setChecked(true);controls->addRow(showText);
-        QObject::connect(showText,&QCheckBox::toggled,progress,&QProgressBar::setTextVisible);
+        progress->setProperty("progressShowLabelPreference",true);
+        QObject::connect(showText,&QCheckBox::toggled,progress,[progress](bool on){
+            progress->setProperty("progressShowLabelPreference",on);
+            const auto state=progress->property("figmaProgressState").toString();
+            const bool semantic=QStringList{"Paused","Error","In-progress","Completed"}.contains(state);
+            progress->setTextVisible(state!="Indeterminate" && (semantic || on));
+        });
         auto* reduce=new QCheckBox(QString::fromUtf8("减少动态效果"),settings);
         reduce->setObjectName("progressReducedMotionControl");controls->addRow(reduce);
         QObject::connect(reduce,&QCheckBox::toggled,progress,[progress](bool on){progress->setProperty("reducedMotion",on);progress->update();});
@@ -1446,7 +1452,7 @@ void applyVariant(QWidget* widget, const DesignComponentSet& componentSet,
         }
     if(componentSet.id=="414:39") {
         if(auto* label=qobject_cast<QLabel*>(widget))
-            commonWidget::applyFigmaLabelAppearance(label,properties.value("Alignment"),properties.value("Wrap")=="True");
+            commonWidget::configureFigmaLabel(label,properties);
     }
     if (auto* button = qobject_cast<QAbstractButton*>(widget))
         if (!qobject_cast<QRadioButton*>(button) && componentSet.id!="450:102" && componentSet.id!="443:222") button->setDown(state == "pressed" || state == "active");
@@ -1700,21 +1706,11 @@ void applyVariant(QWidget* widget, const DesignComponentSet& componentSet,
             toolbar->setOrientation(Qt::Horizontal);
     }
     if (auto* progress = qobject_cast<QProgressBar*>(widget)) {
-        const QString progressState = properties.value("State").toLower();
-        progress->setOrientation(orientation=="vertical" ? Qt::Vertical : Qt::Horizontal);
-        progress->setAlignment(orientation=="vertical" ? Qt::AlignHCenter : Qt::AlignLeft);
-        progress->setInvertedAppearance(properties.value("Inverted")=="True");
-        if (progressState == "indeterminate") {
-            if(progress->minimum()!=0 || progress->maximum()!=0)
-                progress->setProperty("figmaDeterminateSnapshot",QVariantList{progress->minimum(),progress->maximum(),progress->value()});
-            progress->setRange(0, 0);
-        } else if (progress->minimum() == 0 && progress->maximum() == 0) {
-            const auto saved=progress->property("figmaDeterminateSnapshot").toList();
-            progress->setRange(saved.size()==3?saved[0].toInt():0,saved.size()==3?saved[1].toInt():100);
-            if(saved.size()==3)progress->setValue(saved[2].toInt());
-        }
         if (componentSet.id=="410:57") {
-            commonWidget::applyFigmaProgressAppearance(progress,properties.value("State"));
+            auto progressProperties=properties;
+            progressProperties.insert("Show label",
+                progress->property("progressShowLabelPreference").toBool()?"True":"False");
+            commonWidget::configureFigmaProgressBar(progress,progressProperties);
             progress->setMinimumSize(progress->orientation()==Qt::Vertical ? QSize(32,200) : QSize(270,24));
             progress->setMaximumSize(progress->orientation()==Qt::Vertical ? QSize(32,200) : QSize(QWIDGETSIZE_MAX,24));
             if(!progress->property("progressFormatEdited").toBool()) {

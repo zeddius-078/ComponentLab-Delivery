@@ -36,6 +36,7 @@
 #include <QDockWidget>
 #include <QMdiArea>
 #include <QMdiSubWindow>
+#include <QProgressBar>
 #include <QStackedWidget>
 #include <QWizard>
 #include <QWizardPage>
@@ -398,6 +399,14 @@ private slots:
                             {"name", "ProfileName"},
                             {"nodeText", "Mapped profile"},
                             {"childNode", QJsonArray{}}},
+                QJsonObject{{"guid", masterId + ":label-content"},
+                            {"name", "Content / text"},
+                            {"nodeText", "Mapped label text"},
+                            {"childNode", QJsonArray{}}},
+                QJsonObject{{"guid", masterId + ":progress-label"},
+                            {"name", "Indicator / label"},
+                            {"nodeText", "68%"},
+                            {"childNode", QJsonArray{}}},
             };
             QJsonObject master{{"guid", masterId},
                                {"name", name + " master"},
@@ -646,6 +655,40 @@ private slots:
             QCOMPARE(wizard->property("figmaFlowPhasePreview").toString(),QString("Commit"));
         }
 
+        {
+            const auto sample = fixture("414:39", "ComponentLab/Label",
+                                        {{"Alignment", "End"}, {"Wrap", "True"},
+                                         {"State", "Disabled"}});
+            d2c::ComponentConverter converter(sample.first, mapping);
+            std::unique_ptr<QWidget> widget(converter.convert(sample.second, nullptr));
+            auto* label = qobject_cast<QLabel*>(widget.get());
+            QVERIFY(label);QCOMPARE(label->text(),QString("Mapped label text"));
+            QVERIFY(label->wordWrap());QVERIFY(!label->isEnabled());
+            QCOMPARE(label->property("figmaLogicalAlignment").toString(),QString("End"));
+            QCOMPARE(label->focusPolicy(),Qt::NoFocus);
+            QCOMPARE(converter.trace().first().toObject()["calls"].toArray().first().toObject()["api"].toString(),
+                     QString("display.configureLabel"));
+        }
+        {
+            const auto sample = fixture("410:57", "ComponentLab/ProgressBar",
+                                        {{"Orientation", "Vertical"}, {"State", "Determinate"},
+                                         {"Inverted", "True"}, {"Show label", "False"}});
+            d2c::ComponentConverter converter(sample.first, mapping);
+            std::unique_ptr<QWidget> widget(converter.convert(sample.second, nullptr));
+            auto* progress = qobject_cast<QProgressBar*>(widget.get());
+            QVERIFY(progress);QCOMPARE(progress->orientation(),Qt::Vertical);
+            QVERIFY(progress->invertedAppearance());QVERIFY(!progress->isTextVisible());
+            QCOMPARE(progress->format(),QString("68%"));QCOMPARE(progress->focusPolicy(),Qt::NoFocus);
+            QCOMPARE(converter.trace().first().toObject()["calls"].toArray().first().toObject()["api"].toString(),
+                     QString("display.configureProgressBar"));
+        }
+        {
+            const auto sample = fixture("410:57", "ComponentLab/ProgressBar",
+                                        {{"Orientation", "Vertical"}, {"State", "Completed"},
+                                         {"Inverted", "False"}, {"Show label", "True"}});
+            d2c::ComponentConverter converter(sample.first, mapping);
+            QVERIFY_EXCEPTION_THROWN(converter.convert(sample.second, nullptr),std::invalid_argument);
+        }
         {
             const auto sample = fixture("2132:21", "ComponentLab/Badge",
                                         {{"Kind", "Dot"}, {"Tone", "Danger"}});

@@ -62,4 +62,20 @@ void applyFigmaLabelAppearance(QLabel* label, const QString& alignment, bool wra
                          "font-family:'Inter','Noto Sans SC';font-size:14px;font-weight:400;}"
                          "QLabel:disabled {color:#8a8a8a;}");
 }
+
+void configureFigmaLabel(QLabel* label, const QMap<QString, QString>& properties) {
+    if (!label)
+        throw std::invalid_argument("Label target is null");
+    const QString alignment = properties.value(QStringLiteral("Alignment"));
+    const QString wrap = properties.value(QStringLiteral("Wrap"));
+    const QString state = properties.value(QStringLiteral("State"));
+    if (!QStringList{QStringLiteral("True"), QStringLiteral("False")}.contains(wrap))
+        throw std::invalid_argument("Label Wrap requires True or False");
+    if (!QStringList{QStringLiteral("Default"), QStringLiteral("Disabled")}.contains(state))
+        throw std::invalid_argument("Label State requires Default or Disabled");
+    applyFigmaLabelAppearance(label, alignment, wrap == QStringLiteral("True"));
+    label->setEnabled(state != QStringLiteral("Disabled"));
+    label->setFocusPolicy(Qt::NoFocus);
+    label->setProperty("figmaLabelState", state);
+}
 }

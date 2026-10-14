@@ -218,6 +218,7 @@ class FigmaCatalogContractTests(unittest.TestCase):
              "ComponentLab/DockWidget", "ComponentLab/MdiSubWindow",
              "ComponentLab/MdiArea", "ComponentLab/StackedWidget",
              "ComponentLab/WizardPage", "ComponentLab/Wizard",
+             "ComponentLab/Label", "ComponentLab/ProgressBar",
              "ComponentLab/Navbar", "ComponentLab/Sidebar",
              "ComponentLab/DesktopBottomNavigation"},
             {entry["canonicalId"] for entry in entries
@@ -276,6 +277,24 @@ class FigmaCatalogContractTests(unittest.TestCase):
                 "Source/ComponentKit/runtime/component/FocusIndicator.cpp",
                 entry["evidenceRefs"],
             )
+
+    def test_native_display_components_are_presentation_only_full_chain_contracts(self):
+        by_id = {entry["canonicalId"]: entry for entry in self.catalog["entries"]}
+        expected = {
+            "ComponentLab/Label": "Source/ComponentKit/runtime/component/LabelAppearance.cpp",
+            "ComponentLab/ProgressBar": "Source/ComponentKit/runtime/component/ProgressAppearance.cpp",
+        }
+        for canonical_id, evidence in expected.items():
+            entry = by_id[canonical_id]
+            self.assertEqual("NO_FOCUS_PRESENTATION", entry["focusPolicy"])
+            self.assertEqual(
+                "SDK_FACTORY_COMPONENTLAB_GENERATELAYOUT",
+                entry["verificationStatus"]["runtimeScope"],
+            )
+            self.assertEqual(
+                "VERIFIED", entry["verificationStatus"]["downstreamConsumption"]
+            )
+            self.assertIn(evidence, entry["evidenceRefs"])
 
     def test_traceability_actions_and_engineering_statuses_do_not_collapse(self):
         trace = self.traceability

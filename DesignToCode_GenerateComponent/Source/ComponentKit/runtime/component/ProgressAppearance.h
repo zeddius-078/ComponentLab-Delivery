@@ -1,4 +1,5 @@
 #pragma once
+#include <QMap>
 #include <QString>
 class QProgressBar;
 
@@ -10,4 +11,10 @@ namespace commonWidget {
 // fallback, not a designer-approved timing. reducedMotion=true freezes it.
 void applyFigmaProgressAppearance(QProgressBar* progress, const QString& status = "Determinate",
                                   bool snapshot = false);
+// Translates the governed Orientation/State/Inverted tuple and Show label
+// property into orthogonal native Qt state. Runtime value/range data is
+// preserved when switching through the 0/0 indeterminate mode.
+void configureFigmaProgressBar(QProgressBar* progress,
+                               const QMap<QString, QString>& properties,
+                               bool snapshot = false);
 }

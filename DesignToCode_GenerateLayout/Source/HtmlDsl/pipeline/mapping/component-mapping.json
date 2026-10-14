@@ -91,6 +91,41 @@
       "status":"V1: explicit properties; prefix=true awaits resource mapping"
     },
     {
+      "designComponentName":"ComponentLab/Label",
+      "designComponentSetId":"414:39",
+      "designComponentSet":"ComponentLab/Label",
+      "qtClass":"commonWidget::Z_Label",
+      "compositionApi":"display.configureLabel",
+      "propertyMappings":{
+        "Alignment":{"api":"display.configureLabel","values":{"Start":"Start","Center":"Center","End":"End"}},
+        "Wrap":{"api":"display.configureLabel","values":{"False":"False","True":"True"}},
+        "State":{"api":"display.configureLabel","values":{"Default":"Default","Disabled":"Disabled"}}
+      },
+      "stateMappings":{},
+      "slotMappings":[{"name":"Content / text","api":"setText","field":"nodeText"}],
+      "resourceMappings":{"policy":"QLabel owns text, wrapping, interaction and accessibility; logical Start/End is resolved by the GenerateComponent SDK against layout direction"},
+      "fallback":"error",
+      "status":"Figma 414:39; 12 Alignment x Wrap x State variants; presentation-only and Qt::NoFocus"
+    },
+    {
+      "designComponentName":"ComponentLab/ProgressBar",
+      "designComponentSetId":"410:57",
+      "designComponentSet":"ComponentLab/ProgressBar",
+      "qtClass":"commonWidget::Z_ProgressBar",
+      "compositionApi":"display.configureProgressBar",
+      "propertyMappings":{
+        "Orientation":{"api":"display.configureProgressBar","values":{"Horizontal":"Horizontal","Vertical":"Vertical"}},
+        "State":{"api":"display.configureProgressBar","values":{"Determinate":"Determinate","Indeterminate":"Indeterminate","Disabled":"Disabled","Paused":"Paused","Error":"Error","In-progress":"In-progress","Completed":"Completed"}},
+        "Inverted":{"api":"display.configureProgressBar","values":{"False":"False","True":"True"}},
+        "Show label":{"api":"display.configureProgressBar","values":{"False":"False","True":"True"}}
+      },
+      "stateMappings":{},
+      "slotMappings":[{"name":"Indicator / label","api":"setFormat","field":"nodeText"}],
+      "resourceMappings":{"policy":"QProgressBar owns range, value and busy runtime behavior; the SDK adapter separates mode, enabled state and horizontal-only semantic status visuals"},
+      "fallback":"error",
+      "status":"Figma 410:57; 20 valid variants; vertical semantic-status combinations reject instead of inventing unsupported design states"
+    },
+    {
       "designComponentName":"ComponentLab/Menu",
       "designIdentityId":"482:491",
       "designComponentSet":"ComponentLab/Menu",

@@ -125,24 +125,33 @@ QWidget* createDisplayGallery(const QString& pageId,
             if (!widget)
                 throw std::runtime_error("Display component unavailable");
             if (auto* label = qobject_cast<QLabel*>(widget)) {
-                commonWidget::applyFigmaLabelAppearance(
-                    label, name.section(',', 0, 0).section('=', 1), name.contains("Wrap=True"));
+                commonWidget::configureFigmaLabel(
+                    label,
+                    {{QStringLiteral("Alignment"), name.section(',', 0, 0).section('=', 1)},
+                     {QStringLiteral("Wrap"), name.contains("Wrap=True") ? QStringLiteral("True")
+                                                                         : QStringLiteral("False")},
+                     {QStringLiteral("State"), name.section(", ", 2, 2).section('=', 1)}});
                 label->setText(QString::fromUtf8("设备状态：运行中"));
                 label->setTextFormat(Qt::PlainText);
             } else if (auto* progress = qobject_cast<QProgressBar*>(widget)) {
                 const auto state = name.section(", ", 1, 1).section('=', 1);
-                progress->setOrientation(name.contains("Orientation=Vertical") ? Qt::Vertical
-                                                                               : Qt::Horizontal);
-                progress->setInvertedAppearance(name.contains("Inverted=True"));
-                progress->setAlignment(progress->orientation() == Qt::Vertical ? Qt::AlignHCenter
-                                                                               : Qt::AlignLeft);
-                progress->setRange(0, state == "Indeterminate" ? 0 : 100);
+                progress->setRange(0, 100);
                 progress->setValue(68);
                 progress->setFormat(state == "In-progress" ? "In progress"
                                     : QStringList{"Paused", "Error", "Completed"}.contains(state)
                                         ? state
                                         : "%p%");
-                commonWidget::applyFigmaProgressAppearance(progress, state, true);
+                commonWidget::configureFigmaProgressBar(
+                    progress,
+                    {{QStringLiteral("Orientation"),
+                      name.contains("Orientation=Vertical") ? QStringLiteral("Vertical")
+                                                              : QStringLiteral("Horizontal")},
+                     {QStringLiteral("State"), state},
+                     {QStringLiteral("Inverted"),
+                      name.contains("Inverted=True") ? QStringLiteral("True")
+                                                       : QStringLiteral("False")},
+                     {QStringLiteral("Show label"), QStringLiteral("True")}},
+                    true);
             } else if (auto* combo = qobject_cast<QComboBox*>(widget)) {
                 if (auto* fonts = qobject_cast<QFontComboBox*>(combo)) {
                     fonts->setCurrentFont(QFont("Arial"));

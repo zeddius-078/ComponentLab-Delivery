@@ -1881,7 +1881,17 @@
       "evidenceRefs": [
         "Source/ComponentKit/component-definitions/figma-component-inventory.json",
         "Source/ComponentKit/runtime/component/ComponentFactory.cpp",
-        "docs/designRules/design-system/component-traceability-manifest.json"
+        "docs/designRules/design-system/component-traceability-manifest.json",
+        "docs/designRules/design-system/component-traceability-manifest.json",
+        "Source/ComponentKit/runtime/component/ProgressAppearance.h",
+        "Source/ComponentKit/runtime/component/ProgressAppearance.cpp",
+        "Source/ComponentKit/runtime/component/native/Z_ProgressBar.h",
+        "Source/SDKConsumerTest/main.cpp",
+        "ComponentLab/Source/delivery/demo/DisplayGallery.cpp",
+        "ComponentLab/Source/delivery/tests/CompositionTests.cpp",
+        "ComponentLab/Source/delivery/tests/ContractTests.cpp",
+        "DesignToCode_GenerateLayout/Source/HtmlDsl/pipeline/mapping/component-mapping.json",
+        "DesignToCode_GenerateLayout/Source/Validation/component/ComponentTests.cpp"
       ],
       "designOriginAction": "REUSE",
       "identityMigration": "MERGE",
@@ -1891,14 +1901,36 @@
         "schema": "VERIFIED",
         "build": "VERIFIED",
         "runtime": "VERIFIED",
-        "runtimeScope": "FACTORY_INSTANTIATION_ONLY",
+        "runtimeScope": "SDK_FACTORY_COMPONENTLAB_GENERATELAYOUT",
         "factoryRegistration": "VERIFIED",
         "visual": "NOT_VERIFIED",
-        "downstreamConsumption": "NOT_VERIFIED",
+        "downstreamConsumption": "VERIFIED",
         "tokenBinding": "BOUND_VERIFIED"
       },
       "governanceApprovalStatus": "NOT_REVIEWED",
-      "focusPolicy": "UNRESOLVED"
+      "focusPolicy": "NO_FOCUS_PRESENTATION",
+      "runtimeContract": {
+        "qtBaseClass": "QProgressBar",
+        "variantAxes": [
+          "Orientation",
+          "State",
+          "Inverted"
+        ],
+        "controlledProperties": [
+          "range",
+          "value",
+          "orientation",
+          "invertedAppearance",
+          "format",
+          "textVisible",
+          "enabled",
+          "reducedMotion"
+        ],
+        "signals": [
+          "valueChanged(int)"
+        ],
+        "controllerBoundary": "Determinate and Indeterminate map to native range mode, Disabled maps to QWidget enabled state, and Paused/Error/In-progress/Completed are horizontal visual semantics only. Runtime owns numeric value, range and update cadence; Figma busy frames are static review slices and do not define motion timing."
+      }
     },
     {
       "designComponent": "ComponentLab/Label",
@@ -1927,7 +1959,17 @@
       "evidenceRefs": [
         "Source/ComponentKit/component-definitions/figma-component-inventory.json",
         "Source/ComponentKit/runtime/component/ComponentFactory.cpp",
-        "docs/designRules/design-system/component-traceability-manifest.json"
+        "docs/designRules/design-system/component-traceability-manifest.json",
+        "docs/designRules/design-system/component-traceability-manifest.json",
+        "Source/ComponentKit/runtime/component/LabelAppearance.h",
+        "Source/ComponentKit/runtime/component/LabelAppearance.cpp",
+        "Source/ComponentKit/runtime/component/native/Z_Label.h",
+        "Source/SDKConsumerTest/main.cpp",
+        "ComponentLab/Source/delivery/demo/DisplayGallery.cpp",
+        "ComponentLab/Source/delivery/tests/CompositionTests.cpp",
+        "ComponentLab/Source/delivery/tests/ContractTests.cpp",
+        "DesignToCode_GenerateLayout/Source/HtmlDsl/pipeline/mapping/component-mapping.json",
+        "DesignToCode_GenerateLayout/Source/Validation/component/ComponentTests.cpp"
       ],
       "designOriginAction": "REUSE",
       "identityMigration": "MERGE",
@@ -1937,14 +1979,29 @@
         "schema": "VERIFIED",
         "build": "VERIFIED",
         "runtime": "VERIFIED",
-        "runtimeScope": "FACTORY_INSTANTIATION_ONLY",
+        "runtimeScope": "SDK_FACTORY_COMPONENTLAB_GENERATELAYOUT",
         "factoryRegistration": "VERIFIED",
         "visual": "NOT_VERIFIED",
-        "downstreamConsumption": "NOT_VERIFIED",
+        "downstreamConsumption": "VERIFIED",
         "tokenBinding": "BOUND_VERIFIED"
       },
       "governanceApprovalStatus": "NOT_REVIEWED",
-      "focusPolicy": "UNRESOLVED"
+      "focusPolicy": "NO_FOCUS_PRESENTATION",
+      "runtimeContract": {
+        "qtBaseClass": "QLabel",
+        "variantAxes": [
+          "Alignment",
+          "Wrap",
+          "State"
+        ],
+        "controlledProperties": [
+          "text",
+          "logicalAlignment",
+          "wordWrap",
+          "enabled"
+        ],
+        "controllerBoundary": "Start and End are logical design values resolved against QWidget layoutDirection. QLabel retains native text, pixmap, links, buddy and selection behavior; Label remains presentation-only and Qt::NoFocus."
+      }
     },
     {
       "designComponent": "ComponentLab/LCDNumber",
@@ -7962,7 +8019,17 @@
       "evidenceRefs": [
         "Source/ComponentKit/component-definitions/figma-component-inventory.json",
         "Source/ComponentKit/runtime/component/ComponentFactory.cpp",
-        "docs/designRules/design-system/component-traceability-manifest.json"
+        "docs/designRules/design-system/component-traceability-manifest.json",
+        "docs/designRules/design-system/component-traceability-manifest.json",
+        "Source/ComponentKit/runtime/component/ProgressAppearance.h",
+        "Source/ComponentKit/runtime/component/ProgressAppearance.cpp",
+        "Source/ComponentKit/runtime/component/native/Z_ProgressBar.h",
+        "Source/SDKConsumerTest/main.cpp",
+        "ComponentLab/Source/delivery/demo/DisplayGallery.cpp",
+        "ComponentLab/Source/delivery/tests/CompositionTests.cpp",
+        "ComponentLab/Source/delivery/tests/ContractTests.cpp",
+        "DesignToCode_GenerateLayout/Source/HtmlDsl/pipeline/mapping/component-mapping.json",
+        "DesignToCode_GenerateLayout/Source/Validation/component/ComponentTests.cpp"
       ],
       "designOriginAction": "REUSE",
       "identityMigration": "MERGE",
@@ -7972,14 +8039,36 @@
         "schema": "VERIFIED",
         "build": "VERIFIED",
         "runtime": "VERIFIED",
-        "runtimeScope": "FACTORY_INSTANTIATION_ONLY",
+        "runtimeScope": "SDK_FACTORY_COMPONENTLAB_GENERATELAYOUT",
         "factoryRegistration": "VERIFIED",
         "visual": "NOT_VERIFIED",
-        "downstreamConsumption": "NOT_VERIFIED",
+        "downstreamConsumption": "VERIFIED",
         "tokenBinding": "BOUND_VERIFIED"
       },
       "governanceApprovalStatus": "NOT_REVIEWED",
-      "focusPolicy": "UNRESOLVED"
+      "focusPolicy": "NO_FOCUS_PRESENTATION",
+      "runtimeContract": {
+        "qtBaseClass": "QProgressBar",
+        "variantAxes": [
+          "Orientation",
+          "State",
+          "Inverted"
+        ],
+        "controlledProperties": [
+          "range",
+          "value",
+          "orientation",
+          "invertedAppearance",
+          "format",
+          "textVisible",
+          "enabled",
+          "reducedMotion"
+        ],
+        "signals": [
+          "valueChanged(int)"
+        ],
+        "controllerBoundary": "Determinate and Indeterminate map to native range mode, Disabled maps to QWidget enabled state, and Paused/Error/In-progress/Completed are horizontal visual semantics only. Runtime owns numeric value, range and update cadence; Figma busy frames are static review slices and do not define motion timing."
+      }
     },
     {
       "designComponent": "ComponentLab/Label",
@@ -8008,7 +8097,17 @@
       "evidenceRefs": [
         "Source/ComponentKit/component-definitions/figma-component-inventory.json",
         "Source/ComponentKit/runtime/component/ComponentFactory.cpp",
-        "docs/designRules/design-system/component-traceability-manifest.json"
+        "docs/designRules/design-system/component-traceability-manifest.json",
+        "docs/designRules/design-system/component-traceability-manifest.json",
+        "Source/ComponentKit/runtime/component/LabelAppearance.h",
+        "Source/ComponentKit/runtime/component/LabelAppearance.cpp",
+        "Source/ComponentKit/runtime/component/native/Z_Label.h",
+        "Source/SDKConsumerTest/main.cpp",
+        "ComponentLab/Source/delivery/demo/DisplayGallery.cpp",
+        "ComponentLab/Source/delivery/tests/CompositionTests.cpp",
+        "ComponentLab/Source/delivery/tests/ContractTests.cpp",
+        "DesignToCode_GenerateLayout/Source/HtmlDsl/pipeline/mapping/component-mapping.json",
+        "DesignToCode_GenerateLayout/Source/Validation/component/ComponentTests.cpp"
       ],
       "designOriginAction": "REUSE",
       "identityMigration": "MERGE",
@@ -8018,14 +8117,29 @@
         "schema": "VERIFIED",
         "build": "VERIFIED",
         "runtime": "VERIFIED",
-        "runtimeScope": "FACTORY_INSTANTIATION_ONLY",
+        "runtimeScope": "SDK_FACTORY_COMPONENTLAB_GENERATELAYOUT",
         "factoryRegistration": "VERIFIED",
         "visual": "NOT_VERIFIED",
-        "downstreamConsumption": "NOT_VERIFIED",
+        "downstreamConsumption": "VERIFIED",
         "tokenBinding": "BOUND_VERIFIED"
       },
       "governanceApprovalStatus": "NOT_REVIEWED",
-      "focusPolicy": "UNRESOLVED"
+      "focusPolicy": "NO_FOCUS_PRESENTATION",
+      "runtimeContract": {
+        "qtBaseClass": "QLabel",
+        "variantAxes": [
+          "Alignment",
+          "Wrap",
+          "State"
+        ],
+        "controlledProperties": [
+          "text",
+          "logicalAlignment",
+          "wordWrap",
+          "enabled"
+        ],
+        "controllerBoundary": "Start and End are logical design values resolved against QWidget layoutDirection. QLabel retains native text, pixmap, links, buddy and selection behavior; Label remains presentation-only and Qt::NoFocus."
+      }
     },
     {
       "designComponent": "ComponentLab/LCDNumber",

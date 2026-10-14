@@ -194,4 +194,64 @@ void applyFigmaProgressAppearance(QProgressBar* progress, const QString& status,
         new ProgressRenderer(progress);
     progress->update();
 }
+
+void configureFigmaProgressBar(QProgressBar* progress,
+                               const QMap<QString, QString>& properties,
+                               bool snapshot) {
+    if (!progress)
+        throw std::invalid_argument("ProgressBar target is null");
+    const QString orientation = properties.value(QStringLiteral("Orientation"));
+    const QString status = properties.value(QStringLiteral("State"));
+    const QString inverted = properties.value(QStringLiteral("Inverted"));
+    const QString showLabel = properties.value(QStringLiteral("Show label"),
+                                               QStringLiteral("True"));
+    const QStringList statuses{QStringLiteral("Determinate"), QStringLiteral("Indeterminate"),
+                               QStringLiteral("Disabled"), QStringLiteral("Paused"),
+                               QStringLiteral("Error"), QStringLiteral("In-progress"),
+                               QStringLiteral("Completed")};
+    if (!QStringList{QStringLiteral("Horizontal"), QStringLiteral("Vertical")}.contains(orientation))
+        throw std::invalid_argument("ProgressBar Orientation requires Horizontal or Vertical");
+    if (!statuses.contains(status))
+        throw std::invalid_argument("Unknown Figma Progress status");
+    if (!QStringList{QStringLiteral("True"), QStringLiteral("False")}.contains(inverted) ||
+        !QStringList{QStringLiteral("True"), QStringLiteral("False")}.contains(showLabel))
+        throw std::invalid_argument("ProgressBar boolean properties require True or False");
+    if (orientation == QStringLiteral("Vertical") &&
+        QStringList{QStringLiteral("Paused"), QStringLiteral("Error"),
+                    QStringLiteral("In-progress"), QStringLiteral("Completed")}.contains(status))
+        throw std::invalid_argument("ProgressBar semantic status variants are horizontal only");
+
+    progress->setOrientation(orientation == QStringLiteral("Vertical") ? Qt::Vertical
+                                                                         : Qt::Horizontal);
+    progress->setAlignment(progress->orientation() == Qt::Vertical ? Qt::AlignHCenter
+                                                                    : Qt::AlignLeft);
+    progress->setInvertedAppearance(inverted == QStringLiteral("True"));
+    if (status == QStringLiteral("Indeterminate")) {
+        if (progress->minimum() != 0 || progress->maximum() != 0) {
+            progress->setProperty("figmaDeterminateSnapshot",
+                                  QVariantList{progress->minimum(), progress->maximum(),
+                                               progress->value()});
+        }
+        progress->setRange(0, 0);
+    } else if (progress->minimum() == 0 && progress->maximum() == 0) {
+        const auto saved = progress->property("figmaDeterminateSnapshot").toList();
+        progress->setRange(saved.size() == 3 ? saved[0].toInt() : 0,
+                           saved.size() == 3 ? saved[1].toInt() : 100);
+        if (saved.size() == 3)
+            progress->setValue(saved[2].toInt());
+    }
+    progress->setEnabled(status != QStringLiteral("Disabled"));
+    const bool semanticLabel = QStringList{QStringLiteral("Paused"), QStringLiteral("Error"),
+                                           QStringLiteral("In-progress"),
+                                           QStringLiteral("Completed")}.contains(status);
+    progress->setTextVisible(status != QStringLiteral("Indeterminate") &&
+                             (semanticLabel || showLabel == QStringLiteral("True")));
+    if (semanticLabel)
+        progress->setFormat(status == QStringLiteral("In-progress")
+                                ? QStringLiteral("In progress")
+                                : status);
+    progress->setFocusPolicy(Qt::NoFocus);
+    progress->setProperty("figmaProgressState", status);
+    applyFigmaProgressAppearance(progress, status, snapshot);
+}
 }

@@ -15,6 +15,7 @@
 #include <QMenuBar>
 #include <QMdiArea>
 #include <QMdiSubWindow>
+#include <QProgressBar>
 #include <QStackedWidget>
 #include <QWizard>
 #include <QWizardPage>
@@ -118,6 +119,46 @@ int main(int argc, char *argv[]) {
                            &coreFocusError) ||
             !commonWidget::FocusIndicator::instance().enabledFor(component))
             return 134;
+
+    auto* displayLabel = qobject_cast<QLabel*>(
+        factory.create(QStringLiteral("commonWidget::Z_Label"), &owner));
+    auto* displayProgress = qobject_cast<QProgressBar*>(
+        factory.create(QStringLiteral("commonWidget::Z_ProgressBar"), &owner));
+    if (!displayLabel || !displayProgress)
+        return 135;
+    displayLabel->setText(QStringLiteral("Equipment running"));
+    commonWidget::configureFigmaLabel(
+        displayLabel, {{QStringLiteral("Alignment"), QStringLiteral("End")},
+                       {QStringLiteral("Wrap"), QStringLiteral("True")},
+                       {QStringLiteral("State"), QStringLiteral("Disabled")}});
+    if (displayLabel->isEnabled() || !displayLabel->wordWrap() ||
+        displayLabel->focusPolicy() != Qt::NoFocus ||
+        displayLabel->property("figmaLogicalAlignment").toString() != QStringLiteral("End"))
+        return 136;
+    displayProgress->setRange(0, 100);
+    displayProgress->setValue(68);
+    commonWidget::configureFigmaProgressBar(
+        displayProgress,
+        {{QStringLiteral("Orientation"), QStringLiteral("Horizontal")},
+         {QStringLiteral("State"), QStringLiteral("Completed")},
+         {QStringLiteral("Inverted"), QStringLiteral("True")},
+         {QStringLiteral("Show label"), QStringLiteral("False")}},
+        true);
+    if (displayProgress->value() != 68 || !displayProgress->isEnabled() ||
+        !displayProgress->invertedAppearance() || !displayProgress->isTextVisible() ||
+        displayProgress->format() != QStringLiteral("Completed") ||
+        displayProgress->focusPolicy() != Qt::NoFocus)
+        return 137;
+    commonWidget::configureFigmaProgressBar(
+        displayProgress,
+        {{QStringLiteral("Orientation"), QStringLiteral("Horizontal")},
+         {QStringLiteral("State"), QStringLiteral("Indeterminate")},
+         {QStringLiteral("Inverted"), QStringLiteral("False")},
+         {QStringLiteral("Show label"), QStringLiteral("True")}},
+        true);
+    if (displayProgress->minimum() != 0 || displayProgress->maximum() != 0 ||
+        displayProgress->isTextVisible())
+        return 138;
 
     auto* bottomNavigation = qobject_cast<commonWidget::Z_DesktopBottomNavigation*>(
         factory.create(QStringLiteral("commonWidget::Z_DesktopBottomNavigation"), &owner));

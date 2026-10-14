@@ -4,16 +4,20 @@
 #include "IconAssetCatalog.h"
 #include "NavigationAppearance.h"
 #include "DockWidgetAppearance.h"
+#include "LabelAppearance.h"
 #include "MdiAppearance.h"
 #include "PageFlowAppearance.h"
+#include "ProgressAppearance.h"
 #include "TabAppearance.h"
 #include "ToolBoxAppearance.h"
 #include "Z_PushButton.h"
 #include "ButtonAppearanceAdapter.h"
 #include <QJsonDocument>
+#include <QLabel>
 #include <QMap>
 #include <QMenu>
 #include <QMenuBar>
+#include <QProgressBar>
 #include <QDockWidget>
 #include <QMdiArea>
 #include <QMdiSubWindow>
@@ -255,6 +259,16 @@ QWidget* ComponentConverter::convert(const QJsonObject& n, QWidget* parent) {
             if (!wizard)
                 fail("INVALID_COMPOSITION_TARGET", n, compositionApi);
             commonWidget::configureFigmaWizard(wizard, compositionProperties);
+        } else if (compositionApi == QStringLiteral("display.configureLabel")) {
+            auto* label = qobject_cast<QLabel*>(w);
+            if (!label)
+                fail("INVALID_COMPOSITION_TARGET", n, compositionApi);
+            commonWidget::configureFigmaLabel(label, compositionProperties);
+        } else if (compositionApi == QStringLiteral("display.configureProgressBar")) {
+            auto* progress = qobject_cast<QProgressBar*>(w);
+            if (!progress)
+                fail("INVALID_COMPOSITION_TARGET", n, compositionApi);
+            commonWidget::configureFigmaProgressBar(progress, compositionProperties);
         } else {
             fail("UNREGISTERED_COMPOSITION_API", n, compositionApi);
         }

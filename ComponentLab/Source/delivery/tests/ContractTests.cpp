@@ -296,6 +296,15 @@ class ContractTests : public QObject {
         QVERIFY(inkStart(label.grab().toImage())>300);
         QCOMPARE(label.text(),QString("Alignment"));
         QVERIFY_EXCEPTION_THROWN(commonWidget::applyFigmaLabelAppearance(&label,"Left",false),std::invalid_argument);
+        commonWidget::configureFigmaLabel(
+            &label, {{"Alignment","Center"},{"Wrap","False"},{"State","Disabled"}});
+        QVERIFY(!label.isEnabled());QVERIFY(!label.wordWrap());
+        QCOMPARE(label.focusPolicy(),Qt::NoFocus);
+        QCOMPARE(label.property("figmaLabelState").toString(),QString("Disabled"));
+        QVERIFY_EXCEPTION_THROWN(
+            commonWidget::configureFigmaLabel(
+                &label, {{"Alignment","Center"},{"Wrap","Sometimes"},{"State","Default"}}),
+            std::invalid_argument);
     }
     void capturedProgressKeepsNativeRangeValueAndBusyContract() {
         QWidget host;host.setStyleSheet("QWidget {background:white;}");host.resize(300,240);
@@ -333,6 +342,22 @@ class ContractTests : public QObject {
         bar.reset();events();QCOMPARE(bar.text(),QString());
         QCOMPARE(bar.findChildren<QObject*>("figmaProgressRenderer").size(),1);
         QVERIFY_EXCEPTION_THROWN(commonWidget::applyFigmaProgressAppearance(&bar,"Unknown"),std::invalid_argument);
+        bar.setRange(-50,50);bar.setValue(0);
+        commonWidget::configureFigmaProgressBar(
+            &bar, {{"Orientation","Horizontal"},{"State","Indeterminate"},
+                   {"Inverted","False"},{"Show label","True"}}, true);
+        QCOMPARE(bar.minimum(),0);QCOMPARE(bar.maximum(),0);QVERIFY(!bar.isTextVisible());
+        commonWidget::configureFigmaProgressBar(
+            &bar, {{"Orientation","Horizontal"},{"State","Paused"},
+                   {"Inverted","True"},{"Show label","False"}}, true);
+        QCOMPARE(bar.minimum(),-50);QCOMPARE(bar.maximum(),50);QCOMPARE(bar.value(),0);
+        QCOMPARE(bar.format(),QString("Paused"));QVERIFY(bar.isTextVisible());
+        QCOMPARE(bar.focusPolicy(),Qt::NoFocus);
+        QVERIFY_EXCEPTION_THROWN(
+            commonWidget::configureFigmaProgressBar(
+                &bar, {{"Orientation","Vertical"},{"State","Completed"},
+                       {"Inverted","False"},{"Show label","True"}}),
+            std::invalid_argument);
     }
     void geometryAndTypeface() {
         Z_CheckBox c(catalog, "Quality check");
