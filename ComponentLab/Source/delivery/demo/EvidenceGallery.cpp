@@ -371,6 +371,29 @@ QWidget* createEvidenceGallery(
                 if (!factory->apply(candidate, QStringLiteral("setVariantTuple"), item.variant,
                                     &error))
                     throw std::runtime_error(error.toStdString());
+                if (auto* card = qobject_cast<commonWidget::Z_MetricCard*>(candidate)) {
+                    commonWidget::configureFigmaMetricCard(
+                        card, {{QStringLiteral("State"),
+                                figmaAxisValue(item.variant, QStringLiteral("State"))}});
+                    card->setTitleText(QStringLiteral("Total revenue"));
+                    card->setValueText(QString::fromUtf8("¥128,430"));
+                    card->setDetailText(QStringLiteral("+12.8% vs last month"));
+                } else if (auto* statistic =
+                               qobject_cast<commonWidget::Z_Statistic*>(candidate)) {
+                    commonWidget::configureFigmaStatistic(
+                        statistic,
+                        {{QStringLiteral("Size"),
+                          figmaAxisValue(item.variant, QStringLiteral("Size"))},
+                         {QStringLiteral("State"),
+                          figmaAxisValue(item.variant, QStringLiteral("State"))},
+                         {QStringLiteral("Show title"), QStringLiteral("True")},
+                         {QStringLiteral("Show prefix"), QStringLiteral("False")},
+                         {QStringLiteral("Show suffix"), QStringLiteral("True")}});
+                    statistic->setTitleText(QStringLiteral("Active users"));
+                    statistic->setValueText(QStringLiteral("93,241"));
+                    statistic->setPrefix(QStringLiteral("$"));
+                    statistic->setSuffix(QStringLiteral("users"));
+                }
                 specimen = candidate;
                 specimen->setObjectName(QStringLiteral("figmaRuntimeSpecimen"));
                 specimen->setProperty("contractOnly", false);

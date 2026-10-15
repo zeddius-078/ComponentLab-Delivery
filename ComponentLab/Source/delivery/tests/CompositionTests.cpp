@@ -2009,6 +2009,30 @@ auto* secondEditor=editors->widget(1);auto* area=secondEditor->findChild<QMdiAre
         auto* chart = variantCanvas(QStringLiteral("400:2"));
         QVERIFY(chart);
         QCOMPARE(chart->findChildren<QWidget*>("figmaRuntimeSpecimen").size(), 6);
+        auto* metric = variantCanvas(QStringLiteral("397:2"));
+        QVERIFY(metric);
+        const auto metricCards =
+            metric->findChildren<commonWidget::Z_MetricCard*>("figmaRuntimeSpecimen");
+        QCOMPARE(metricCards.size(), 4);
+        const QStringList metricStates{QStringLiteral("Default"), QStringLiteral("Loading"),
+                                       QStringLiteral("Empty"), QStringLiteral("Error")};
+        for (auto* card : metricCards) {
+            QCOMPARE(card->titleText(), QStringLiteral("Total revenue"));
+            QCOMPARE(card->focusPolicy(), Qt::NoFocus);
+            QVERIFY(metricStates.contains(card->state()));
+        }
+        auto* statisticCanvas = variantCanvas(QStringLiteral("436:8"));
+        QVERIFY(statisticCanvas);
+        const auto statistics =
+            statisticCanvas->findChildren<commonWidget::Z_Statistic*>("figmaRuntimeSpecimen");
+        QCOMPARE(statistics.size(), 8);
+        for (auto* statistic : statistics) {
+            QCOMPARE(statistic->titleText(), QStringLiteral("Active users"));
+            QVERIFY(statistic->showTitle());
+            QVERIFY(!statistic->showPrefix());
+            QVERIFY(statistic->showSuffix());
+            QCOMPARE(statistic->focusPolicy(), Qt::NoFocus);
+        }
         auto* dataTable = variantCanvas(QStringLiteral("363:2"));
         QVERIFY(dataTable);
         QCOMPARE(dataTable->findChildren<commonWidget::Z_DataTable*>("figmaRuntimeSpecimen").size(), 15);

@@ -10,6 +10,7 @@
 #include "ProgressAppearance.h"
 #include "TabAppearance.h"
 #include "ToolBoxAppearance.h"
+#include "Z_DesignComponents.h"
 #include "Z_PushButton.h"
 #include "ButtonAppearanceAdapter.h"
 #include <QJsonDocument>
@@ -269,6 +270,16 @@ QWidget* ComponentConverter::convert(const QJsonObject& n, QWidget* parent) {
             if (!progress)
                 fail("INVALID_COMPOSITION_TARGET", n, compositionApi);
             commonWidget::configureFigmaProgressBar(progress, compositionProperties);
+        } else if (compositionApi == QStringLiteral("display.configureMetricCard")) {
+            auto* card = qobject_cast<commonWidget::Z_MetricCard*>(w);
+            if (!card)
+                fail("INVALID_COMPOSITION_TARGET", n, compositionApi);
+            commonWidget::configureFigmaMetricCard(card, compositionProperties);
+        } else if (compositionApi == QStringLiteral("display.configureStatistic")) {
+            auto* statistic = qobject_cast<commonWidget::Z_Statistic*>(w);
+            if (!statistic)
+                fail("INVALID_COMPOSITION_TARGET", n, compositionApi);
+            commonWidget::configureFigmaStatistic(statistic, compositionProperties);
         } else {
             fail("UNREGISTERED_COMPOSITION_API", n, compositionApi);
         }

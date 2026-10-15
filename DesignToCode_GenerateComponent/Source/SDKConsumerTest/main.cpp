@@ -160,6 +160,44 @@ int main(int argc, char *argv[]) {
         displayProgress->isTextVisible())
         return 138;
 
+    auto* metricCard = qobject_cast<commonWidget::Z_MetricCard*>(
+        factory.create(QStringLiteral("commonWidget::Z_MetricCard"), &owner));
+    auto* statistic = qobject_cast<commonWidget::Z_Statistic*>(
+        factory.create(QStringLiteral("commonWidget::Z_Statistic"), &owner));
+    if (!metricCard || !statistic)
+        return 139;
+    commonWidget::configureFigmaMetricCard(
+        metricCard, {{QStringLiteral("State"), QStringLiteral("Empty")}});
+    metricCard->setTitleText(QStringLiteral("Yield"));
+    metricCard->setValueText(QStringLiteral("99.8%"));
+    metricCard->setDetailText(QStringLiteral("Last lot"));
+    if (metricCard->state() != QStringLiteral("Empty") ||
+        metricCard->titleText() != QStringLiteral("Yield") ||
+        metricCard->detailText() != QStringLiteral("Last lot") ||
+        metricCard->focusPolicy() != Qt::NoFocus || metricCard->sizeHint() != QSize(360, 176))
+        return 140;
+    commonWidget::configureFigmaStatistic(
+        statistic,
+        {{QStringLiteral("Size"), QStringLiteral("Compact")},
+         {QStringLiteral("State"), QStringLiteral("Default")},
+         {QStringLiteral("Show title"), QStringLiteral("True")},
+         {QStringLiteral("Show prefix"), QStringLiteral("True")},
+         {QStringLiteral("Show suffix"), QStringLiteral("True")}});
+    statistic->setTitleText(QStringLiteral("Active users"));
+    statistic->setPrefix(QStringLiteral("$"));
+    statistic->setSuffix(QStringLiteral("users"));
+    statistic->setLocaleName(QStringLiteral("en_US"));
+    statistic->setPrecision(1);
+    statistic->setNumericValue(93241.5);
+    if (statistic->size() != QStringLiteral("Compact") || !statistic->hasNumericValue() ||
+        statistic->numericValue() != 93241.5 || statistic->valueText() != QStringLiteral("93,241.5") ||
+        statistic->accessibleDescription() != QStringLiteral("$, 93,241.5, users") ||
+        statistic->focusPolicy() != Qt::NoFocus || statistic->sizeHint() != QSize(300, 150))
+        return 141;
+    statistic->setUseGrouping(false);
+    if (statistic->numericValue() != 93241.5 || statistic->valueText() != QStringLiteral("93241.5"))
+        return 142;
+
     auto* bottomNavigation = qobject_cast<commonWidget::Z_DesktopBottomNavigation*>(
         factory.create(QStringLiteral("commonWidget::Z_DesktopBottomNavigation"), &owner));
     if (!bottomNavigation || bottomNavigation->primaryItems().size() != 3 ||

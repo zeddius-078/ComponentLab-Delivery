@@ -109,11 +109,124 @@ class ClassName final : public Z_DesignComponent { \
     explicit ClassName(QWidget* parent = nullptr); \
 };
 
-Z_DECLARE_CANVAS_COMPONENT(Z_MetricCard)
+// Figma ComponentLab/MetricCard 397:39. The card owns its surface and
+// presentation strings, but not numeric parsing or locale formatting.
+class Z_MetricCard final : public Z_DesignComponent {
+    Q_OBJECT
+    Q_PROPERTY(QString state READ state WRITE setState NOTIFY stateChanged)
+    Q_PROPERTY(QString titleText READ titleText WRITE setTitleText NOTIFY contentChanged)
+    Q_PROPERTY(QString detailText READ detailText WRITE setDetailText NOTIFY contentChanged)
+
+  public:
+    explicit Z_MetricCard(QWidget* parent = nullptr);
+    QString state() const;
+    QString titleText() const;
+    QString detailText() const;
+    QSize sizeHint() const override;
+    QSize minimumSizeHint() const override;
+
+  public slots:
+    void setState(const QString& value);
+    void setTitleText(const QString& value);
+    void setValueText(const QString& value);
+    void setDetailText(const QString& value);
+
+  signals:
+    void stateChanged(const QString& value);
+
+  protected:
+    void paintEvent(QPaintEvent* event) override;
+
+  private:
+    void refreshAccessibility();
+};
+
 Z_DECLARE_CANVAS_COMPONENT(Z_Chart)
 Z_DECLARE_CANVAS_COMPONENT(Z_ImagePanel)
 Z_DECLARE_CANVAS_COMPONENT(Z_Empty)
-Z_DECLARE_CANVAS_COMPONENT(Z_Statistic)
+
+// Figma ComponentLab/Statistic 436:79. The raw numeric value is retained
+// separately from its locale-formatted display string. Empty/Error are states,
+// never aliases for numeric zero.
+class Z_Statistic final : public Z_DesignComponent {
+    Q_OBJECT
+    Q_PROPERTY(QString size READ size WRITE setSize NOTIFY sizeChanged)
+    Q_PROPERTY(QString state READ state WRITE setState NOTIFY stateChanged)
+    Q_PROPERTY(QString titleText READ titleText WRITE setTitleText NOTIFY contentChanged)
+    Q_PROPERTY(bool showTitle READ showTitle WRITE setShowTitle NOTIFY showTitleChanged)
+    Q_PROPERTY(QString prefix READ prefix WRITE setPrefix NOTIFY prefixChanged)
+    Q_PROPERTY(QString suffix READ suffix WRITE setSuffix NOTIFY suffixChanged)
+    Q_PROPERTY(bool showPrefix READ showPrefix WRITE setShowPrefix NOTIFY showPrefixChanged)
+    Q_PROPERTY(bool showSuffix READ showSuffix WRITE setShowSuffix NOTIFY showSuffixChanged)
+    Q_PROPERTY(double numericValue READ numericValue WRITE setNumericValue NOTIFY numericValueChanged)
+    Q_PROPERTY(bool hasNumericValue READ hasNumericValue NOTIFY numericValueChanged)
+    Q_PROPERTY(QString localeName READ localeName WRITE setLocaleName NOTIFY formattingChanged)
+    Q_PROPERTY(int precision READ precision WRITE setPrecision NOTIFY formattingChanged)
+    Q_PROPERTY(bool useGrouping READ useGrouping WRITE setUseGrouping NOTIFY formattingChanged)
+
+  public:
+    explicit Z_Statistic(QWidget* parent = nullptr);
+    QString size() const;
+    QString state() const;
+    QString titleText() const;
+    bool showTitle() const;
+    QString prefix() const;
+    QString suffix() const;
+    bool showPrefix() const;
+    bool showSuffix() const;
+    double numericValue() const;
+    bool hasNumericValue() const;
+    QString localeName() const;
+    int precision() const;
+    bool useGrouping() const;
+    QSize sizeHint() const override;
+    QSize minimumSizeHint() const override;
+
+  public slots:
+    void setSize(const QString& value);
+    void setState(const QString& value);
+    void setTitleText(const QString& value);
+    void setValueText(const QString& value);
+    void setPrefix(const QString& value);
+    void setSuffix(const QString& value);
+    void setShowTitle(bool value);
+    void setShowPrefix(bool value);
+    void setShowSuffix(bool value);
+    void setNumericValue(double value);
+    void clearNumericValue();
+    void setLocaleName(const QString& value);
+    void setPrecision(int value);
+    void setUseGrouping(bool value);
+
+  signals:
+    void sizeChanged(const QString& value);
+    void stateChanged(const QString& value);
+    void showTitleChanged(bool value);
+    void prefixChanged(const QString& value);
+    void suffixChanged(const QString& value);
+    void showPrefixChanged(bool value);
+    void showSuffixChanged(bool value);
+    void numericValueChanged();
+    void formattingChanged();
+
+  protected:
+    void paintEvent(QPaintEvent* event) override;
+
+  private:
+    void refreshFormattedValue();
+    void refreshAccessibility();
+    QString m_prefix;
+    QString m_suffix;
+    QString m_localeName;
+    double m_numericValue = 0.0;
+    int m_precision = 0;
+    bool m_showTitle = true;
+    bool m_showPrefix = false;
+    bool m_showSuffix = true;
+    bool m_hasNumericValue = false;
+    bool m_useGrouping = true;
+};
+
 Z_DECLARE_CANVAS_COMPONENT(Z_Card)
 Z_DECLARE_CANVAS_COMPONENT(Z_IntegrationCard)
 Z_DECLARE_CANVAS_COMPONENT(Z_Divider)
@@ -130,6 +243,11 @@ Z_DECLARE_CANVAS_COMPONENT(Z_Result)
 Z_DECLARE_CANVAS_COMPONENT(Z_Skeleton)
 
 #undef Z_DECLARE_CANVAS_COMPONENT
+
+void configureFigmaMetricCard(Z_MetricCard* card,
+                              const QMap<QString, QString>& properties);
+void configureFigmaStatistic(Z_Statistic* statistic,
+                             const QMap<QString, QString>& properties);
 
 class Z_InputField;
 

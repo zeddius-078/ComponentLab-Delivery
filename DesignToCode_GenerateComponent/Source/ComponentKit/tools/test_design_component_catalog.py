@@ -219,6 +219,7 @@ class FigmaCatalogContractTests(unittest.TestCase):
              "ComponentLab/MdiArea", "ComponentLab/StackedWidget",
              "ComponentLab/WizardPage", "ComponentLab/Wizard",
              "ComponentLab/Label", "ComponentLab/ProgressBar",
+             "ComponentLab/MetricCard", "ComponentLab/Statistic",
              "ComponentLab/Navbar", "ComponentLab/Sidebar",
              "ComponentLab/DesktopBottomNavigation"},
             {entry["canonicalId"] for entry in entries
@@ -295,6 +296,24 @@ class FigmaCatalogContractTests(unittest.TestCase):
                 "VERIFIED", entry["verificationStatus"]["downstreamConsumption"]
             )
             self.assertIn(evidence, entry["evidenceRefs"])
+
+    def test_composite_display_components_keep_state_and_formatter_boundaries(self):
+        by_id = {entry["canonicalId"]: entry for entry in self.catalog["entries"]}
+        metric = by_id["ComponentLab/MetricCard"]
+        statistic = by_id["ComponentLab/Statistic"]
+        for entry in (metric, statistic):
+            self.assertEqual("NO_FOCUS_PRESENTATION", entry["focusPolicy"])
+            self.assertEqual(
+                "SDK_FACTORY_COMPONENTLAB_GENERATELAYOUT",
+                entry["verificationStatus"]["runtimeScope"],
+            )
+            self.assertEqual(
+                "VERIFIED", entry["verificationStatus"]["downstreamConsumption"]
+            )
+        self.assertIn("valueText", metric["runtimeContract"]["controlledProperties"])
+        self.assertNotIn("numericValue", metric["runtimeContract"]["controlledProperties"])
+        self.assertIn("numericValue", statistic["runtimeContract"]["controlledProperties"])
+        self.assertIn("localeName", statistic["runtimeContract"]["controlledProperties"])
 
     def test_traceability_actions_and_engineering_statuses_do_not_collapse(self):
         trace = self.traceability

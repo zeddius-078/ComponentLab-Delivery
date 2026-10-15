@@ -1232,8 +1232,7 @@ QWidget* createNativeAppearance(const DesignComponentDescriptor& descriptor,
         QObject::connect(showText,&QCheckBox::toggled,progress,[progress](bool on){
             progress->setProperty("progressShowLabelPreference",on);
             const auto state=progress->property("figmaProgressState").toString();
-            const bool semantic=QStringList{"Paused","Error","In-progress","Completed"}.contains(state);
-            progress->setTextVisible(state!="Indeterminate" && (semantic || on));
+            progress->setTextVisible(state!="Indeterminate" && on);
         });
         auto* reduce=new QCheckBox(QString::fromUtf8("减少动态效果"),settings);
         reduce->setObjectName("progressReducedMotionControl");controls->addRow(reduce);

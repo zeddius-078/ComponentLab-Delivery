@@ -18,6 +18,7 @@
 #include <QJsonObject>
 #include <QLabel>
 #include <QLineEdit>
+#include <QLocale>
 #include <QMouseEvent>
 #include <QPainter>
 #include <QPainterPath>
@@ -533,32 +534,6 @@ void Z_DesignComponent::paintEvent(QPaintEvent*) {
         return;
     }
 
-    if (m_componentName == QStringLiteral("MetricCard") ||
-        m_componentName == QStringLiteral("Statistic")) {
-        const bool compact = axisIs(m_variantProperties, "Size", "Compact");
-        const qreal inset = compact ? 12.0 : 18.0;
-        const int titleSize = compact ? 12 : 14;
-        const int valueSize = compact ? 24 : 30;
-        drawCaption(painter, QRectF(inset, compact ? 10 : 14, width() - inset * 2, 24),
-                    m_title, ink, titleSize, true);
-        if (state == QStringLiteral("Loading")) {
-            drawSkeletonLine(painter, QRectF(inset, compact ? 45 : 58, width() * .56,
-                                             compact ? 17 : 22), panel);
-        } else if (state == QStringLiteral("Empty")) {
-            drawCaption(painter, QRectF(inset, compact ? 40 : 54, width() - inset * 2, 36),
-                        QStringLiteral("—"), ink, compact ? 22 : 26, true);
-        } else if (state == QStringLiteral("Error")) {
-            drawCaption(painter, QRectF(inset, compact ? 40 : 54, width() - inset * 2, 36),
-                        tr("Data unavailable"), QColor("#D14343"), compact ? 12 : 14, true);
-        } else {
-            drawCaption(painter, QRectF(inset, compact ? 38 : 50, width() - inset * 2, 44),
-                        m_valueText, ink, valueSize, true);
-            drawCaption(painter, QRectF(inset, compact ? 74 : 94, width() - inset * 2, 20), m_description,
-                        colors.color(QPalette::Highlight), 12);
-        }
-        return;
-    }
-
     if (m_componentName == QStringLiteral("ImagePanel")) {
         const QRect target = rect().adjusted(14, 14, -14, -46);
         if (!m_image.isNull() && !axisIs(m_variantProperties, "Asset", "Missing")) {
@@ -747,16 +722,384 @@ void Z_DesignComponent::paintEvent(QPaintEvent*) {
                 mix(ink, surface, .32), 12);
 }
 
+namespace {
+QFont metricFont(int pixelSize, QFont::Weight weight) {
+    static const bool loaded = [] {
+        QFontDatabase::addApplicationFont(QStringLiteral(":/figma/fonts/Inter-Regular.otf"));
+        QFontDatabase::addApplicationFont(QStringLiteral(":/figma/fonts/Inter-Medium.otf"));
+        QFontDatabase::addApplicationFont(QStringLiteral(":/figma/fonts/Inter-SemiBold.otf"));
+        QFontDatabase::addApplicationFont(QStringLiteral(":/figma/fonts/NotoSansSC-Bold.otf"));
+        QFontDatabase::addApplicationFont(QStringLiteral(":/figma/fonts/NotoSansSC-Regular.otf"));
+        return true;
+    }();
+    Q_UNUSED(loaded)
+    QFont font;
+    font.setFamilies({QStringLiteral("Inter"), QStringLiteral("Noto Sans SC")});
+    font.setPixelSize(pixelSize);
+    font.setWeight(weight);
+    return font;
+}
+
+void drawMetricText(QPainter& painter, const QRectF& rect, const QString& text,
+                    const QColor& color, int pixelSize, QFont::Weight weight,
+                    Qt::Alignment alignment = Qt::AlignLeft | Qt::AlignVCenter) {
+    painter.setFont(metricFont(pixelSize, weight));
+    painter.setPen(color);
+    painter.drawText(rect, alignment, text);
+}
+
+QString joinedAccessibleText(const QStringList& parts) {
+    QStringList visible;
+    for (const auto& part : parts) {
+        if (!part.trimmed().isEmpty())
+            visible.append(part.trimmed());
+    }
+    return visible.join(QStringLiteral(", "));
+}
+} // namespace
+
+Z_MetricCard::Z_MetricCard(QWidget* parent)
+    : Z_DesignComponent(QStringLiteral("MetricCard"), parent) {
+    setFocusPolicy(Qt::NoFocus);
+    setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
+    Z_DesignComponent::setTitle(QStringLiteral("Total revenue"));
+    Z_DesignComponent::setValueText(QString::fromUtf8("¥128,430"));
+    Z_DesignComponent::setDescription(QStringLiteral("+12.8% vs last month"));
+    connect(this, &Z_DesignComponent::variantChanged, this,
+            [this] { refreshAccessibility(); });
+    setVariantTuple(QStringLiteral("State=Default"));
+    refreshAccessibility();
+}
+
+QString Z_MetricCard::state() const { return variantValue(QStringLiteral("State")); }
+QString Z_MetricCard::titleText() const { return title(); }
+QString Z_MetricCard::detailText() const { return description(); }
+QSize Z_MetricCard::sizeHint() const { return QSize(360, 176); }
+QSize Z_MetricCard::minimumSizeHint() const { return QSize(240, 176); }
+
+void Z_MetricCard::setState(const QString& value) {
+    if (!QStringList{QStringLiteral("Default"), QStringLiteral("Loading"),
+                     QStringLiteral("Empty"), QStringLiteral("Error")}.contains(value))
+        throw std::invalid_argument("MetricCard State requires Default, Loading, Empty or Error");
+    if (state() == value)
+        return;
+    setVariantProperty(QStringLiteral("State"), value);
+    emit stateChanged(value);
+}
+
+void Z_MetricCard::setTitleText(const QString& value) {
+    Z_DesignComponent::setTitle(value);
+    refreshAccessibility();
+}
+
+void Z_MetricCard::setValueText(const QString& value) {
+    Z_DesignComponent::setValueText(value);
+    refreshAccessibility();
+}
+
+void Z_MetricCard::setDetailText(const QString& value) {
+    Z_DesignComponent::setDescription(value);
+    refreshAccessibility();
+}
+
+void Z_MetricCard::refreshAccessibility() {
+    setAccessibleName(title());
+    const QString current = state();
+    if (current == QStringLiteral("Loading"))
+        setAccessibleDescription(tr("Loading"));
+    else if (current == QStringLiteral("Empty"))
+        setAccessibleDescription(tr("No data"));
+    else if (current == QStringLiteral("Error"))
+        setAccessibleDescription(tr("Data loading failed. Retry from the owning view."));
+    else
+        setAccessibleDescription(joinedAccessibleText({valueText(), description()}));
+}
+
+void Z_MetricCard::paintEvent(QPaintEvent*) {
+    QPainter painter(this);
+    painter.setRenderHint(QPainter::Antialiasing);
+    const auto colors = palette();
+    const QColor surface = colors.color(QPalette::Window);
+    const QColor ink = colors.color(QPalette::Text);
+    const QColor meta = colors.color(QPalette::Disabled, QPalette::Text);
+    const QColor skeleton = colors.color(QPalette::AlternateBase);
+    painter.setPen(Qt::NoPen);
+    painter.setBrush(surface);
+    painter.drawRoundedRect(rect(), 32, 32);
+    drawMetricText(painter, QRectF(24, 24, width() - 48, 22), title(), ink, 14,
+                   QFont::Medium);
+    const QString current = state();
+    if (current == QStringLiteral("Loading")) {
+        drawSkeletonLine(painter, QRectF(24, 54, 152, 32), skeleton);
+        drawSkeletonLine(painter, QRectF(24, 94, 196, 14), skeleton);
+    } else if (current == QStringLiteral("Empty") || current == QStringLiteral("Error")) {
+        drawMetricText(painter, QRectF(24, 54, width() - 48, 40),
+                       current == QStringLiteral("Empty") ? QStringLiteral("—")
+                                                            : QStringLiteral("--"),
+                       ink, 40, QFont::Bold);
+        drawMetricText(painter, QRectF(24, 102, width() - 48, 20),
+                       current == QStringLiteral("Empty") ? QString::fromUtf8("暂无数据")
+                                                            : QString::fromUtf8("数据加载失败，请重试"),
+                       meta, 12, QFont::Normal);
+    } else {
+        drawMetricText(painter, QRectF(24, 54, width() - 48, 40), valueText(), ink, 40,
+                       QFont::Bold);
+        drawMetricText(painter, QRectF(24, 102, width() - 48, 20), description(), meta, 12,
+                       QFont::Normal);
+    }
+}
+
+Z_Statistic::Z_Statistic(QWidget* parent)
+    : Z_DesignComponent(QStringLiteral("Statistic"), parent),
+      m_prefix(QStringLiteral("$")), m_suffix(QStringLiteral("users")),
+      m_localeName(QStringLiteral("en_US")) {
+    setFocusPolicy(Qt::NoFocus);
+    setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
+    Z_DesignComponent::setTitle(QStringLiteral("Active users"));
+    Z_DesignComponent::setValueText(QStringLiteral("93,241"));
+    connect(this, &Z_DesignComponent::variantChanged, this,
+            [this] { refreshAccessibility(); });
+    setVariantTuple(QStringLiteral("Size=Default, State=Default"));
+    refreshAccessibility();
+}
+
+QString Z_Statistic::size() const { return variantValue(QStringLiteral("Size")); }
+QString Z_Statistic::state() const { return variantValue(QStringLiteral("State")); }
+QString Z_Statistic::titleText() const { return title(); }
+bool Z_Statistic::showTitle() const { return m_showTitle; }
+QString Z_Statistic::prefix() const { return m_prefix; }
+QString Z_Statistic::suffix() const { return m_suffix; }
+bool Z_Statistic::showPrefix() const { return m_showPrefix; }
+bool Z_Statistic::showSuffix() const { return m_showSuffix; }
+double Z_Statistic::numericValue() const { return m_numericValue; }
+bool Z_Statistic::hasNumericValue() const { return m_hasNumericValue; }
+QString Z_Statistic::localeName() const { return m_localeName; }
+int Z_Statistic::precision() const { return m_precision; }
+bool Z_Statistic::useGrouping() const { return m_useGrouping; }
+QSize Z_Statistic::sizeHint() const { return QSize(300, 150); }
+QSize Z_Statistic::minimumSizeHint() const { return QSize(180, 96); }
+
+void Z_Statistic::setSize(const QString& value) {
+    if (!QStringList{QStringLiteral("Compact"), QStringLiteral("Default")}.contains(value))
+        throw std::invalid_argument("Statistic Size requires Compact or Default");
+    if (size() == value)
+        return;
+    setVariantProperty(QStringLiteral("Size"), value);
+    emit sizeChanged(value);
+}
+
+void Z_Statistic::setState(const QString& value) {
+    if (!QStringList{QStringLiteral("Default"), QStringLiteral("Loading"),
+                     QStringLiteral("Empty"), QStringLiteral("Error")}.contains(value))
+        throw std::invalid_argument("Statistic State requires Default, Loading, Empty or Error");
+    if (state() == value)
+        return;
+    setVariantProperty(QStringLiteral("State"), value);
+    emit stateChanged(value);
+}
+
+void Z_Statistic::setTitleText(const QString& value) {
+    Z_DesignComponent::setTitle(value);
+    refreshAccessibility();
+}
+
+void Z_Statistic::setValueText(const QString& value) {
+    const bool hadNumericValue = m_hasNumericValue;
+    m_hasNumericValue = false;
+    Z_DesignComponent::setValueText(value);
+    if (hadNumericValue)
+        emit numericValueChanged();
+    refreshAccessibility();
+}
+
+void Z_Statistic::setPrefix(const QString& value) {
+    if (m_prefix == value) return;
+    m_prefix = value; emit prefixChanged(value); emit contentChanged(); update();
+    refreshAccessibility();
+}
+
+void Z_Statistic::setSuffix(const QString& value) {
+    if (m_suffix == value) return;
+    m_suffix = value; emit suffixChanged(value); emit contentChanged(); update();
+    refreshAccessibility();
+}
+
+void Z_Statistic::setShowTitle(bool value) {
+    if (m_showTitle == value) return;
+    m_showTitle = value; emit showTitleChanged(value); update(); refreshAccessibility();
+}
+
+void Z_Statistic::setShowPrefix(bool value) {
+    if (m_showPrefix == value) return;
+    m_showPrefix = value; emit showPrefixChanged(value); update(); refreshAccessibility();
+}
+
+void Z_Statistic::setShowSuffix(bool value) {
+    if (m_showSuffix == value) return;
+    m_showSuffix = value; emit showSuffixChanged(value); update(); refreshAccessibility();
+}
+
+void Z_Statistic::setNumericValue(double value) {
+    if (!qIsFinite(value))
+        throw std::invalid_argument("Statistic numericValue must be finite");
+    if (m_hasNumericValue && qFuzzyCompare(m_numericValue + 1.0, value + 1.0))
+        return;
+    m_numericValue = value;
+    m_hasNumericValue = true;
+    refreshFormattedValue();
+    emit numericValueChanged();
+}
+
+void Z_Statistic::clearNumericValue() {
+    if (!m_hasNumericValue)
+        return;
+    m_hasNumericValue = false;
+    emit numericValueChanged();
+    refreshAccessibility();
+}
+
+void Z_Statistic::setLocaleName(const QString& value) {
+    const QString normalized = value.trimmed();
+    if (normalized.isEmpty())
+        throw std::invalid_argument("Statistic localeName must not be empty");
+    if (m_localeName == normalized)
+        return;
+    m_localeName = normalized;
+    if (m_hasNumericValue) refreshFormattedValue();
+    emit formattingChanged();
+}
+
+void Z_Statistic::setPrecision(int value) {
+    if (value < 0 || value > 12)
+        throw std::invalid_argument("Statistic precision must be between 0 and 12");
+    if (m_precision == value)
+        return;
+    m_precision = value;
+    if (m_hasNumericValue) refreshFormattedValue();
+    emit formattingChanged();
+}
+
+void Z_Statistic::setUseGrouping(bool value) {
+    if (m_useGrouping == value)
+        return;
+    m_useGrouping = value;
+    if (m_hasNumericValue) refreshFormattedValue();
+    emit formattingChanged();
+}
+
+void Z_Statistic::refreshFormattedValue() {
+    if (!m_hasNumericValue)
+        return;
+    QLocale locale(m_localeName);
+    auto options = locale.numberOptions();
+    if (m_useGrouping)
+        options &= ~QLocale::OmitGroupSeparator;
+    else
+        options |= QLocale::OmitGroupSeparator;
+    locale.setNumberOptions(options);
+    Z_DesignComponent::setValueText(locale.toString(m_numericValue, 'f', m_precision));
+    refreshAccessibility();
+}
+
+void Z_Statistic::refreshAccessibility() {
+    setAccessibleName(m_showTitle ? title() : tr("Statistic"));
+    const QString current = state();
+    if (current == QStringLiteral("Loading"))
+        setAccessibleDescription(tr("Loading"));
+    else if (current == QStringLiteral("Empty"))
+        setAccessibleDescription(tr("No data"));
+    else if (current == QStringLiteral("Error"))
+        setAccessibleDescription(tr("Unavailable"));
+    else
+        setAccessibleDescription(joinedAccessibleText(
+            {m_showPrefix ? m_prefix : QString(), valueText(),
+             m_showSuffix ? m_suffix : QString()}));
+}
+
+void Z_Statistic::paintEvent(QPaintEvent*) {
+    QPainter painter(this);
+    painter.setRenderHint(QPainter::Antialiasing);
+    const auto colors = palette();
+    const QColor ink = colors.color(QPalette::Text);
+    const QColor affix = colors.color(QPalette::Disabled, QPalette::Text);
+    const QColor skeleton = colors.color(QPalette::Midlight);
+    const bool compact = size() == QStringLiteral("Compact");
+    const qreal titleTop = compact ? 12.0 : 14.0;
+    if (m_showTitle)
+        drawMetricText(painter, QRectF(14, titleTop, width() - 28, 22), title(), ink, 14,
+                       QFont::Medium);
+    const QString current = state();
+    if (current == QStringLiteral("Loading")) {
+        drawSkeletonLine(painter, QRectF(14, compact ? 48 : 54, compact ? 110 : 150,
+                                         compact ? 24 : 32), skeleton);
+        drawSkeletonLine(painter, QRectF(14, compact ? 84 : 96, 48, 12), skeleton);
+        return;
+    }
+    if (current == QStringLiteral("Empty")) {
+        drawMetricText(painter, QRectF(14, compact ? 44 : 50, width() - 28,
+                                       compact ? 32 : 40), QStringLiteral("—"), affix,
+                       compact ? 24 : 40, QFont::Bold);
+        return;
+    }
+    if (current == QStringLiteral("Error")) {
+        drawMetricText(painter, QRectF(14, compact ? 48 : 54, width() - 28, 26),
+                       QStringLiteral("Unavailable"), QColor(QStringLiteral("#E02128")), 18,
+                       QFont::DemiBold);
+        return;
+    }
+
+    const qreal rowTop = compact ? 42.0 : 48.0;
+    qreal x = 14.0;
+    if (m_showPrefix) {
+        painter.setFont(metricFont(14, QFont::Normal));
+        const qreal width = painter.fontMetrics().horizontalAdvance(m_prefix);
+        drawMetricText(painter, QRectF(x, rowTop + 13, width, 22), m_prefix, affix, 14,
+                       QFont::Normal);
+        x += width + 4;
+    }
+    painter.setFont(metricFont(40, QFont::Bold));
+    const qreal valueWidth = painter.fontMetrics().horizontalAdvance(valueText());
+    drawMetricText(painter, QRectF(x, rowTop, valueWidth, 48), valueText(), ink, 40,
+                   QFont::Bold);
+    x += valueWidth + 4;
+    if (m_showSuffix)
+        drawMetricText(painter, QRectF(x, rowTop + (compact ? 16 : 13), width() - x - 14,
+                                       compact ? 20 : 22), m_suffix, affix,
+                       compact ? 12 : 14, QFont::Normal);
+}
+
+void configureFigmaMetricCard(Z_MetricCard* card,
+                              const QMap<QString, QString>& properties) {
+    if (!card)
+        throw std::invalid_argument("MetricCard target is null");
+    card->setState(properties.value(QStringLiteral("State")));
+}
+
+void configureFigmaStatistic(Z_Statistic* statistic,
+                             const QMap<QString, QString>& properties) {
+    if (!statistic)
+        throw std::invalid_argument("Statistic target is null");
+    const auto parseBoolean = [&](const char* name) {
+        const QString value = properties.value(QString::fromLatin1(name));
+        if (value != QStringLiteral("True") && value != QStringLiteral("False"))
+            throw std::invalid_argument("Statistic boolean properties require True or False");
+        return value == QStringLiteral("True");
+    };
+    statistic->setSize(properties.value(QStringLiteral("Size")));
+    statistic->setState(properties.value(QStringLiteral("State")));
+    statistic->setShowTitle(parseBoolean("Show title"));
+    statistic->setShowPrefix(parseBoolean("Show prefix"));
+    statistic->setShowSuffix(parseBoolean("Show suffix"));
+}
+
 #define Z_IMPLEMENT_CANVAS_COMPONENT(ClassName, Name, DefaultTuple) \
 ClassName::ClassName(QWidget* parent) : Z_DesignComponent(QStringLiteral(Name), parent) { \
     setVariantTuple(QStringLiteral(DefaultTuple)); \
 }
 
-Z_IMPLEMENT_CANVAS_COMPONENT(Z_MetricCard, "MetricCard", "State=Default")
 Z_IMPLEMENT_CANVAS_COMPONENT(Z_Chart, "Chart", "Kind=Bar, State=Data")
 Z_IMPLEMENT_CANVAS_COMPONENT(Z_ImagePanel, "ImagePanel", "Asset=Placeholder")
 Z_IMPLEMENT_CANVAS_COMPONENT(Z_Empty, "Empty", "Size=Default, Illustration=Default, Action=None")
-Z_IMPLEMENT_CANVAS_COMPONENT(Z_Statistic, "Statistic", "Size=Default, State=Default")
 Z_IMPLEMENT_CANVAS_COMPONENT(Z_Card, "Card", "Surface=Card, Density=Comfortable")
 Z_IMPLEMENT_CANVAS_COMPONENT(Z_IntegrationCard, "IntegrationCard", "Connection=False")
 Z_IMPLEMENT_CANVAS_COMPONENT(Z_Divider, "Divider", "Orientation=Horizontal, Placement=None, Tone=Default")

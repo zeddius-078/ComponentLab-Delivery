@@ -1745,7 +1745,15 @@
       "version": "UNRESOLVED",
       "evidenceRefs": [
         "Source/ComponentKit/component-definitions/figma-component-inventory.json",
-        "Source/ComponentKit/runtime/component/ComponentFactory.cpp"
+        "Source/ComponentKit/runtime/component/ComponentFactory.cpp",
+        "docs/designRules/design-system/component-traceability-manifest.json",
+        "Source/ComponentKit/runtime/component/Z_DesignComponents.h",
+        "Source/ComponentKit/runtime/component/Z_DesignComponents.cpp",
+        "Source/SDKConsumerTest/main.cpp",
+        "ComponentLab/Source/delivery/demo/EvidenceGallery.cpp",
+        "ComponentLab/Source/delivery/tests/CompositionTests.cpp",
+        "DesignToCode_GenerateLayout/Source/HtmlDsl/pipeline/mapping/component-mapping.json",
+        "DesignToCode_GenerateLayout/Source/Validation/component/ComponentTests.cpp"
       ],
       "designOriginAction": "REUSE",
       "identityMigration": "NONE",
@@ -1755,14 +1763,27 @@
         "schema": "VERIFIED",
         "build": "VERIFIED",
         "runtime": "VERIFIED",
-        "runtimeScope": "FACTORY_INSTANTIATION_ONLY",
+        "runtimeScope": "SDK_FACTORY_COMPONENTLAB_GENERATELAYOUT",
         "factoryRegistration": "VERIFIED",
         "visual": "NOT_VERIFIED",
-        "downstreamConsumption": "NOT_VERIFIED",
+        "downstreamConsumption": "VERIFIED",
         "tokenBinding": "UNRESOLVED"
       },
       "governanceApprovalStatus": "NOT_REVIEWED",
-      "focusPolicy": "UNRESOLVED"
+      "focusPolicy": "NO_FOCUS_PRESENTATION",
+      "runtimeContract": {
+        "qtBaseClass": "QWidget",
+        "variantAxes": [
+          "State"
+        ],
+        "controlledProperties": [
+          "titleText",
+          "valueText",
+          "detailText",
+          "state"
+        ],
+        "controllerBoundary": "MetricCard owns the card surface, state fallback copy and comparison or meta text. It does not parse or localize numeric values; consumers that need numeric formatting use ComponentLab/Statistic. Loading never exposes stale value content, while Empty and Error are explicit semantic states rather than numeric zero."
+      }
     },
     {
       "designComponent": "ComponentLab/Chart",
@@ -2390,7 +2411,15 @@
       "evidenceRefs": [
         "Source/ComponentKit/component-definitions/figma-component-inventory.json",
         "Source/ComponentKit/runtime/component/ComponentFactory.cpp",
-        "docs/designRules/design-system/component-traceability-manifest.json"
+        "docs/designRules/design-system/component-traceability-manifest.json",
+        "docs/designRules/design-system/component-traceability-manifest.json",
+        "Source/ComponentKit/runtime/component/Z_DesignComponents.h",
+        "Source/ComponentKit/runtime/component/Z_DesignComponents.cpp",
+        "Source/SDKConsumerTest/main.cpp",
+        "ComponentLab/Source/delivery/demo/EvidenceGallery.cpp",
+        "ComponentLab/Source/delivery/tests/CompositionTests.cpp",
+        "DesignToCode_GenerateLayout/Source/HtmlDsl/pipeline/mapping/component-mapping.json",
+        "DesignToCode_GenerateLayout/Source/Validation/component/ComponentTests.cpp"
       ],
       "designOriginAction": "REUSE",
       "identityMigration": "MERGE",
@@ -2400,14 +2429,35 @@
         "schema": "VERIFIED",
         "build": "VERIFIED",
         "runtime": "VERIFIED",
-        "runtimeScope": "FACTORY_INSTANTIATION_ONLY",
+        "runtimeScope": "SDK_FACTORY_COMPONENTLAB_GENERATELAYOUT",
         "factoryRegistration": "VERIFIED",
         "visual": "NOT_VERIFIED",
-        "downstreamConsumption": "NOT_VERIFIED",
+        "downstreamConsumption": "VERIFIED",
         "tokenBinding": "BOUND_VERIFIED"
       },
       "governanceApprovalStatus": "NOT_REVIEWED",
-      "focusPolicy": "UNRESOLVED"
+      "focusPolicy": "NO_FOCUS_PRESENTATION",
+      "runtimeContract": {
+        "qtBaseClass": "QWidget",
+        "variantAxes": [
+          "Size",
+          "State"
+        ],
+        "controlledProperties": [
+          "titleText",
+          "showTitle",
+          "prefix",
+          "showPrefix",
+          "numericValue",
+          "valueText",
+          "suffix",
+          "showSuffix",
+          "localeName",
+          "precision",
+          "useGrouping"
+        ],
+        "controllerBoundary": "The SDK retains the raw numeric value separately from locale-formatted display text and affixes. Loading suppresses stale values; Empty and Error remain semantic fallbacks and never collapse to numeric zero. Update cadence and dynamic accessibility-announcement throttling remain host responsibilities."
+      }
     },
     {
       "designComponent": "ComponentLab/Descriptions",
@@ -7883,7 +7933,15 @@
       "version": "UNRESOLVED",
       "evidenceRefs": [
         "Source/ComponentKit/component-definitions/figma-component-inventory.json",
-        "Source/ComponentKit/runtime/component/ComponentFactory.cpp"
+        "Source/ComponentKit/runtime/component/ComponentFactory.cpp",
+        "docs/designRules/design-system/component-traceability-manifest.json",
+        "Source/ComponentKit/runtime/component/Z_DesignComponents.h",
+        "Source/ComponentKit/runtime/component/Z_DesignComponents.cpp",
+        "Source/SDKConsumerTest/main.cpp",
+        "ComponentLab/Source/delivery/demo/EvidenceGallery.cpp",
+        "ComponentLab/Source/delivery/tests/CompositionTests.cpp",
+        "DesignToCode_GenerateLayout/Source/HtmlDsl/pipeline/mapping/component-mapping.json",
+        "DesignToCode_GenerateLayout/Source/Validation/component/ComponentTests.cpp"
       ],
       "designOriginAction": "REUSE",
       "identityMigration": "NONE",
@@ -7893,14 +7951,27 @@
         "schema": "VERIFIED",
         "build": "VERIFIED",
         "runtime": "VERIFIED",
-        "runtimeScope": "FACTORY_INSTANTIATION_ONLY",
+        "runtimeScope": "SDK_FACTORY_COMPONENTLAB_GENERATELAYOUT",
         "factoryRegistration": "VERIFIED",
         "visual": "NOT_VERIFIED",
-        "downstreamConsumption": "NOT_VERIFIED",
+        "downstreamConsumption": "VERIFIED",
         "tokenBinding": "UNRESOLVED"
       },
       "governanceApprovalStatus": "NOT_REVIEWED",
-      "focusPolicy": "UNRESOLVED"
+      "focusPolicy": "NO_FOCUS_PRESENTATION",
+      "runtimeContract": {
+        "qtBaseClass": "QWidget",
+        "variantAxes": [
+          "State"
+        ],
+        "controlledProperties": [
+          "titleText",
+          "valueText",
+          "detailText",
+          "state"
+        ],
+        "controllerBoundary": "MetricCard owns the card surface, state fallback copy and comparison or meta text. It does not parse or localize numeric values; consumers that need numeric formatting use ComponentLab/Statistic. Loading never exposes stale value content, while Empty and Error are explicit semantic states rather than numeric zero."
+      }
     },
     {
       "designComponent": "ComponentLab/Chart",
@@ -8528,7 +8599,15 @@
       "evidenceRefs": [
         "Source/ComponentKit/component-definitions/figma-component-inventory.json",
         "Source/ComponentKit/runtime/component/ComponentFactory.cpp",
-        "docs/designRules/design-system/component-traceability-manifest.json"
+        "docs/designRules/design-system/component-traceability-manifest.json",
+        "docs/designRules/design-system/component-traceability-manifest.json",
+        "Source/ComponentKit/runtime/component/Z_DesignComponents.h",
+        "Source/ComponentKit/runtime/component/Z_DesignComponents.cpp",
+        "Source/SDKConsumerTest/main.cpp",
+        "ComponentLab/Source/delivery/demo/EvidenceGallery.cpp",
+        "ComponentLab/Source/delivery/tests/CompositionTests.cpp",
+        "DesignToCode_GenerateLayout/Source/HtmlDsl/pipeline/mapping/component-mapping.json",
+        "DesignToCode_GenerateLayout/Source/Validation/component/ComponentTests.cpp"
       ],
       "designOriginAction": "REUSE",
       "identityMigration": "MERGE",
@@ -8538,14 +8617,35 @@
         "schema": "VERIFIED",
         "build": "VERIFIED",
         "runtime": "VERIFIED",
-        "runtimeScope": "FACTORY_INSTANTIATION_ONLY",
+        "runtimeScope": "SDK_FACTORY_COMPONENTLAB_GENERATELAYOUT",
         "factoryRegistration": "VERIFIED",
         "visual": "NOT_VERIFIED",
-        "downstreamConsumption": "NOT_VERIFIED",
+        "downstreamConsumption": "VERIFIED",
         "tokenBinding": "BOUND_VERIFIED"
       },
       "governanceApprovalStatus": "NOT_REVIEWED",
-      "focusPolicy": "UNRESOLVED"
+      "focusPolicy": "NO_FOCUS_PRESENTATION",
+      "runtimeContract": {
+        "qtBaseClass": "QWidget",
+        "variantAxes": [
+          "Size",
+          "State"
+        ],
+        "controlledProperties": [
+          "titleText",
+          "showTitle",
+          "prefix",
+          "showPrefix",
+          "numericValue",
+          "valueText",
+          "suffix",
+          "showSuffix",
+          "localeName",
+          "precision",
+          "useGrouping"
+        ],
+        "controllerBoundary": "The SDK retains the raw numeric value separately from locale-formatted display text and affixes. Loading suppresses stale values; Empty and Error remain semantic fallbacks and never collapse to numeric zero. Update cadence and dynamic accessibility-announcement throttling remain host responsibilities."
+      }
     },
     {
       "designComponent": "ComponentLab/Descriptions",

@@ -191,6 +191,8 @@ bool ComponentFactory::apply(QWidget* widget, const QString& api, const QJsonVal
     auto* button = qobject_cast<Z_PushButton*>(widget);
     auto* check = qobject_cast<Z_CheckBox*>(widget);
     auto* input = qobject_cast<Z_InputField*>(widget);
+    auto* metricCard = qobject_cast<Z_MetricCard*>(widget);
+    auto* statistic = qobject_cast<Z_Statistic*>(widget);
     if (api == "setFocusIndicatorEnabled" || api == "setFocusRingEnabled") {
         FocusIndicator::instance().setEnabledFor(widget, value.toBool());
         return true;
@@ -236,6 +238,12 @@ bool ComponentFactory::apply(QWidget* widget, const QString& api, const QJsonVal
     } else if (api == "setAllowClear" && input) { input->setAllowClear(value.toBool()); return true;
     } else if (api == "setReadOnly" && input) { input->setReadOnly(value.toBool()); return true;
     } else if (api == "setLoading" && input) { input->setLoading(value.toBool()); return true;
+    } else if (api == "setValueText" && metricCard) {
+        metricCard->setValueText(text);
+        return true;
+    } else if (api == "setValueText" && statistic) {
+        statistic->setValueText(text);
+        return true;
     } else if ((api == "editorTextMode" && input && (text == "setPlaceholder" || text == "setValue")) ||
                (api == "prefixPolicy" && input && text == "none")) {
         return true;

@@ -407,6 +407,30 @@ private slots:
                             {"name", "Indicator / label"},
                             {"nodeText", "68%"},
                             {"childNode", QJsonArray{}}},
+                QJsonObject{{"guid", masterId + ":title"},
+                            {"name", "Title"},
+                            {"nodeText", "Mapped metric title"},
+                            {"childNode", QJsonArray{}}},
+                QJsonObject{{"guid", masterId + ":metric-value"},
+                            {"name", "Content/Value"},
+                            {"nodeText", "98.6%"},
+                            {"childNode", QJsonArray{}}},
+                QJsonObject{{"guid", masterId + ":metric-detail"},
+                            {"name", "Content/Detail"},
+                            {"nodeText", "+2.4% mapped"},
+                            {"childNode", QJsonArray{}}},
+                QJsonObject{{"guid", masterId + ":prefix"},
+                            {"name", "Prefix"},
+                            {"nodeText", "$"},
+                            {"childNode", QJsonArray{}}},
+                QJsonObject{{"guid", masterId + ":value"},
+                            {"name", "Value"},
+                            {"nodeText", "93,241.5"},
+                            {"childNode", QJsonArray{}}},
+                QJsonObject{{"guid", masterId + ":suffix"},
+                            {"name", "Suffix"},
+                            {"nodeText", "USD"},
+                            {"childNode", QJsonArray{}}},
             };
             QJsonObject master{{"guid", masterId},
                                {"name", name + " master"},
@@ -688,6 +712,53 @@ private slots:
                                          {"Inverted", "False"}, {"Show label", "True"}});
             d2c::ComponentConverter converter(sample.first, mapping);
             QVERIFY_EXCEPTION_THROWN(converter.convert(sample.second, nullptr),std::invalid_argument);
+        }
+        {
+            const auto sample = fixture("397:39", "ComponentLab/MetricCard",
+                                        {{"State", "Default"}});
+            d2c::ComponentConverter converter(sample.first, mapping);
+            std::unique_ptr<QWidget> widget(converter.convert(sample.second, nullptr));
+            auto* metric = qobject_cast<commonWidget::Z_MetricCard*>(widget.get());
+            QVERIFY(metric);
+            QCOMPARE(metric->state(), QString("Default"));
+            QCOMPARE(metric->titleText(), QString("Mapped metric title"));
+            QCOMPARE(metric->valueText(), QString("98.6%"));
+            QCOMPARE(metric->detailText(), QString("+2.4% mapped"));
+            QCOMPARE(metric->focusPolicy(), Qt::NoFocus);
+            QCOMPARE(metric->sizeHint(), QSize(360, 176));
+            QCOMPARE(converter.trace().first().toObject()["calls"].toArray().first().toObject()["api"].toString(),
+                     QString("display.configureMetricCard"));
+        }
+        {
+            const auto sample = fixture("436:79", "ComponentLab/Statistic",
+                                        {{"Size", "Compact"}, {"State", "Default"},
+                                         {"Show title", "True"}, {"Show prefix", "True"},
+                                         {"Show suffix", "True"}});
+            d2c::ComponentConverter converter(sample.first, mapping);
+            std::unique_ptr<QWidget> widget(converter.convert(sample.second, nullptr));
+            auto* statistic = qobject_cast<commonWidget::Z_Statistic*>(widget.get());
+            QVERIFY(statistic);
+            QCOMPARE(statistic->size(), QString("Compact"));
+            QCOMPARE(statistic->state(), QString("Default"));
+            QCOMPARE(statistic->titleText(), QString("Mapped metric title"));
+            QCOMPARE(statistic->prefix(), QString("$"));
+            QCOMPARE(statistic->valueText(), QString("93,241.5"));
+            QCOMPARE(statistic->suffix(), QString("USD"));
+            QVERIFY(statistic->showTitle());
+            QVERIFY(statistic->showPrefix());
+            QVERIFY(statistic->showSuffix());
+            QCOMPARE(statistic->focusPolicy(), Qt::NoFocus);
+            QCOMPARE(statistic->sizeHint(), QSize(300, 150));
+            QCOMPARE(converter.trace().first().toObject()["calls"].toArray().first().toObject()["api"].toString(),
+                     QString("display.configureStatistic"));
+        }
+        {
+            const auto sample = fixture("436:79", "ComponentLab/Statistic",
+                                        {{"Size", "Default"}, {"State", "Default"},
+                                         {"Show title", "Maybe"}, {"Show prefix", "False"},
+                                         {"Show suffix", "False"}});
+            d2c::ComponentConverter converter(sample.first, mapping);
+            QVERIFY_EXCEPTION_THROWN(converter.convert(sample.second, nullptr), std::runtime_error);
         }
         {
             const auto sample = fixture("2132:21", "ComponentLab/Badge",

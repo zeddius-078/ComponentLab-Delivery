@@ -108,6 +108,49 @@
       "status":"Figma 414:39; 12 Alignment x Wrap x State variants; presentation-only and Qt::NoFocus"
     },
     {
+      "designComponentName":"ComponentLab/MetricCard",
+      "designComponentSetId":"397:39",
+      "designComponentSet":"ComponentLab/MetricCard",
+      "qtClass":"commonWidget::Z_MetricCard",
+      "compositionApi":"display.configureMetricCard",
+      "propertyMappings":{
+        "State":{"api":"display.configureMetricCard","values":{"Default":"Default","Loading":"Loading","Empty":"Empty","Error":"Error"}}
+      },
+      "stateMappings":{},
+      "slotMappings":[
+        {"name":"Title","api":"setTitleText","field":"nodeText"},
+        {"name":"Content/Value","api":"setValueText","field":"nodeText","when":{"State":["Default"]}},
+        {"name":"Content/Detail","api":"setDetailText","field":"nodeText","when":{"State":["Default"]}}
+      ],
+      "resourceMappings":{"policy":"MetricCard owns the card surface and comparison or meta copy; numeric parsing and locale formatting remain outside this presentation shell"},
+      "fallback":"error",
+      "status":"Figma 397:39; four State variants and exact TitleText, ValueText and DetailText slots"
+    },
+    {
+      "designComponentName":"ComponentLab/Statistic",
+      "designComponentSetId":"436:79",
+      "designComponentSet":"ComponentLab/Statistic",
+      "qtClass":"commonWidget::Z_Statistic",
+      "compositionApi":"display.configureStatistic",
+      "propertyMappings":{
+        "Size":{"api":"display.configureStatistic","values":{"Compact":"Compact","Default":"Default"}},
+        "State":{"api":"display.configureStatistic","values":{"Default":"Default","Loading":"Loading","Empty":"Empty","Error":"Error"}},
+        "Show title":{"api":"display.configureStatistic","values":{"False":"False","True":"True"}},
+        "Show prefix":{"api":"display.configureStatistic","values":{"False":"False","True":"True"}},
+        "Show suffix":{"api":"display.configureStatistic","values":{"False":"False","True":"True"}}
+      },
+      "stateMappings":{},
+      "slotMappings":[
+        {"name":"Title","api":"setTitleText","field":"nodeText"},
+        {"name":"Prefix","api":"setPrefix","field":"nodeText","when":{"State":["Default"]}},
+        {"name":"Value","api":"setValueText","field":"nodeText","when":{"State":["Default"]}},
+        {"name":"Suffix","api":"setSuffix","field":"nodeText","when":{"State":["Default"]}}
+      ],
+      "resourceMappings":{"policy":"The generated design literal initializes display text; runtime hosts may instead provide numericValue plus localeName, precision and useGrouping through the SDK without collapsing Empty or Error into zero"},
+      "fallback":"error",
+      "status":"Figma 436:79; eight Size x State variants with explicit visibility and formatter ownership boundaries"
+    },
+    {
       "designComponentName":"ComponentLab/ProgressBar",
       "designComponentSetId":"410:57",
       "designComponentSet":"ComponentLab/ProgressBar",
