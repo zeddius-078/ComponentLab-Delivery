@@ -1,13 +1,18 @@
 param(
     [string]$SdkRoot,
     [string]$QtRoot = $env:QT_ROOT,
-    [string]$Cmake = $(if ($env:CMAKE_EXE) { $env:CMAKE_EXE } else { 'cmake' })
+    [string]$Cmake = $(if ($env:CMAKE_EXE) { $env:CMAKE_EXE } else { 'cmake' }),
+    [string]$BuildDirectory
 )
 $ErrorActionPreference = 'Stop'
 $projectRoot = [IO.Path]::GetFullPath((Join-Path $PSScriptRoot '../..'))
 if (-not $SdkRoot) { $SdkRoot = Join-Path $projectRoot 'build/sdk' }
 $SdkRoot = [IO.Path]::GetFullPath($SdkRoot)
-$build = Join-Path $projectRoot 'build/cache/SDKConsumerTest'
+$build = if ($BuildDirectory) {
+    [IO.Path]::GetFullPath($BuildDirectory)
+} else {
+    Join-Path $projectRoot 'build/cache/SDKConsumerTest'
+}
 $report = Join-Path $projectRoot 'build/reports/sdk-consumer'
 
 if (-not (Test-Path -LiteralPath "$SdkRoot/cmake/GeneratedComponentSDKConfig.cmake")) {

@@ -461,27 +461,34 @@ class FigmaCatalogContractTests(unittest.TestCase):
         self.assertEqual(30, len(checkbox[7]))
         self.assertEqual(4, len(gallery[7][2][7]))
 
-    def test_live_token_binding_audit_updates_only_evidenced_nodes(self):
+    def test_live_token_binding_audit_closes_all_catalog_entries(self):
         entries = {item["canonicalId"]: item for item in self.catalog["entries"]}
-        verified = {
-            "ComponentLab/Menu": 25,
-            "ComponentLab/ToolBar": 19,
-            "ComponentLab/DockWidget": 17,
-            "ComponentLab/MdiSubWindow": 15,
-            "ComponentLab/StackedWidget": 19,
-            "ComponentLab/Wizard": 29,
-            "ComponentLab/MetricCard": 19,
-            "ComponentLab/ImagePanel": 26,
-            "ComponentLab/GraphicsView": 21,
-            "ComponentLab/Calendar": 27,
-        }
-        overrides = self.traceability["downstreamEvidenceOverrides"]
-        for canonical_id, reference_count in verified.items():
-            self.assertEqual("BOUND_VERIFIED", entries[canonical_id]["verificationStatus"]["tokenBinding"])
-            self.assertEqual(reference_count, overrides[canonical_id]["tokenBindingRefs"])
+        evidence = self.traceability["tokenBindingEvidence"]
+        self.assertEqual(62, len(evidence))
+        self.assertEqual("2026-10-16", self.traceability["tokenBindingEvidencePolicy"]["capturedAt"])
+        self.assertNotIn(
+            "tokenStatus",
+            json.dumps(self.traceability["downstreamEvidenceOverrides"]),
+        )
+        for canonical_id, audit in evidence.items():
+            self.assertIn(canonical_id, entries)
+            self.assertEqual("BOUND_VERIFIED", audit["status"])
+            self.assertGreater(audit["bindingRefs"], 0)
+            self.assertIn(audit["nodeId"], entries[canonical_id]["figmaNodeIds"])
+            self.assertEqual(
+                "BOUND_VERIFIED",
+                entries[canonical_id]["verificationStatus"]["tokenBinding"],
+            )
+        self.assertEqual(25, evidence["ComponentLab/Menu"]["bindingRefs"])
+        self.assertEqual(19, evidence["ComponentLab/DesktopBottomNavigation"]["bindingRefs"])
+        self.assertEqual(29, evidence["ComponentLab/Input"]["bindingRefs"])
+        self.assertEqual(11, evidence["ComponentLab/Splitter"]["bindingRefs"])
+        self.assertEqual(20, evidence["ComponentLab/ScrollArea"]["bindingRefs"])
+        self.assertEqual(27, evidence["ComponentLab/Calendar"]["bindingRefs"])
+        self.assertEqual(70, evidence["ComponentLab/InputDialog"]["bindingRefs"])
         statuses = [item["verificationStatus"]["tokenBinding"] for item in self.catalog["entries"]]
-        self.assertEqual(59, statuses.count("BOUND_VERIFIED"))
-        self.assertEqual(51, statuses.count("UNRESOLVED"))
+        self.assertEqual(110, statuses.count("BOUND_VERIFIED"))
+        self.assertEqual(0, statuses.count("UNRESOLVED"))
 
     def test_parserless_code_connect_templates_cover_b24_components(self):
         component_dir = ROOT / "runtime/component"

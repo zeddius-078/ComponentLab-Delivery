@@ -387,8 +387,6 @@
       "consumerEngineeringStatus": "IMPLEMENTED",
       "runtimeScope": "SDK_FACTORY_COMPONENTLAB_GENERATELAYOUT",
       "focusPolicy": "NATIVE_ACTION_NAVIGATION_OPTIONAL_INDICATOR",
-      "tokenStatus": "BOUND_VERIFIED",
-      "tokenBindingRefs": 25,
       "runtimeContract": {
         "qtBaseClass": "QMenu/QAction composition",
         "publicDesignNodeId": "482:491",
@@ -437,8 +435,6 @@
       "consumerEngineeringStatus": "IMPLEMENTED",
       "runtimeScope": "SDK_FACTORY_COMPONENTLAB_GENERATELAYOUT",
       "focusPolicy": "CHILD_ACTION_NAVIGATION_OPTIONAL_INDICATOR",
-      "tokenStatus": "BOUND_VERIFIED",
-      "tokenBindingRefs": 19,
       "runtimeContract": {
         "qtBaseClass": "QToolBar/QAction/QToolButton composition",
         "variantAxes": ["Orientation", "Placement", "Capacity", "Presentation"],
@@ -509,8 +505,6 @@
       "consumerEngineeringStatus": "IMPLEMENTED",
       "runtimeScope": "SDK_FACTORY_COMPONENTLAB_GENERATELAYOUT",
       "focusPolicy": "CHILD_CONTENT_AND_TITLE_ACTIONS_OPTIONAL_INDICATOR",
-      "tokenStatus": "BOUND_VERIFIED",
-      "tokenBindingRefs": 17,
       "runtimeContract": {
         "qtBaseClass": "QDockWidget/QMainWindow/QWidget child composition",
         "variantAxes": ["Area", "Placement"],
@@ -534,8 +528,6 @@
       "consumerEngineeringStatus": "IMPLEMENTED",
       "runtimeScope": "SDK_FACTORY_COMPONENTLAB_GENERATELAYOUT",
       "focusPolicy": "CHILD_CONTENT_AND_TITLE_ACTIONS_OPTIONAL_INDICATOR",
-      "tokenStatus": "BOUND_VERIFIED",
-      "tokenBindingRefs": 15,
       "runtimeContract": {
         "qtBaseClass": "QMdiSubWindow/QWidget child composition",
         "variantAxes": ["State"],
@@ -580,8 +572,6 @@
       "consumerEngineeringStatus": "IMPLEMENTED",
       "runtimeScope": "SDK_FACTORY_COMPONENTLAB_GENERATELAYOUT",
       "focusPolicy": "CHILD_PAGE_CONTENT_OPTIONAL_INDICATOR",
-      "tokenStatus": "BOUND_VERIFIED",
-      "tokenBindingRefs": 19,
       "runtimeContract": {
         "qtBaseClass": "QStackedWidget/QWidget page composition",
         "variantAxes": ["State"],
@@ -606,8 +596,6 @@
       "consumerEngineeringStatus": "IMPLEMENTED",
       "runtimeScope": "SDK_FACTORY_COMPONENTLAB_GENERATELAYOUT",
       "focusPolicy": "CHILD_BUTTON_AND_FIELD_NAVIGATION_OPTIONAL_INDICATOR",
-      "tokenStatus": "BOUND_VERIFIED",
-      "tokenBindingRefs": 29,
       "runtimeContract": {
         "qtBaseClass": "QWizard/QWizardPage/QAbstractButton composition",
         "variantAxes": ["Style", "Phase"],
@@ -620,7 +608,6 @@
       "consumerEngineeringStatus": "IMPLEMENTED",
       "runtimeScope": "SDK_FACTORY_COMPONENTLAB_GENERATELAYOUT",
       "focusPolicy": "CHILD_ACTION_OPTIONAL",
-      "tokenStatus": "BOUND_VERIFIED",
       "runtimeContract": {
         "qtBaseClass": "QWidget composition",
         "variantAxes": ["IconPlacement"],
@@ -644,8 +631,6 @@
       "consumerEngineeringStatus": "IMPLEMENTED",
       "runtimeScope": "SDK_FACTORY_COMPONENTLAB_GENERATELAYOUT",
       "focusPolicy": "NO_FOCUS_PRESENTATION",
-      "tokenStatus": "BOUND_VERIFIED",
-      "tokenBindingRefs": 19,
       "runtimeContract": {
         "qtBaseClass": "QWidget",
         "variantAxes": ["State"],
@@ -735,14 +720,6 @@
         "DesignToCode_GenerateLayout/Source/Validation/component/ComponentTests.cpp"
       ]
     },
-    "ComponentLab/ImagePanel": {
-      "tokenStatus": "BOUND_VERIFIED",
-      "tokenBindingRefs": 26
-    },
-    "ComponentLab/GraphicsView": {
-      "tokenStatus": "BOUND_VERIFIED",
-      "tokenBindingRefs": 21
-    },
     "ComponentLab/Splitter": {
       "consumerEngineeringStatus": "IMPLEMENTED",
       "runtimeScope": "SDK_FACTORY_COMPONENTLAB_GENERATELAYOUT",
@@ -813,10 +790,77 @@
         "ComponentLab/Source/delivery/tests/CompositionTests.cpp",
         "DesignToCode_GenerateLayout/Source/HtmlDsl/pipeline/mapping/component-mapping.json",
         "DesignToCode_GenerateLayout/Source/Validation/component/ComponentTests.cpp"
-      ],
-      "tokenStatus": "BOUND_VERIFIED",
-      "tokenBindingRefs": 27
+      ]
     }
+  },
+  "tokenBindingEvidencePolicy": {
+    "capturedAt": "2026-10-16",
+    "method": "Live Figma get_variable_defs query against the canonical public component node or component-set node.",
+    "meaning": "BOUND_VERIFIED proves that the queried canonical Figma node returned at least one variable definition. It does not prove complete semantic-role coverage, runtime token consumption, pixel parity, visual approval or governance approval."
+  },
+  "tokenBindingEvidence": {
+    "ComponentLab/Menu": {"status": "BOUND_VERIFIED", "bindingRefs": 25, "nodeId": "482:491"},
+    "ComponentLab/MenuBar": {"status": "BOUND_VERIFIED", "bindingRefs": 13, "nodeId": "487:23"},
+    "ComponentLab/ToolBar": {"status": "BOUND_VERIFIED", "bindingRefs": 19, "nodeId": "494:370"},
+    "ComponentLab/ToolBox": {"status": "BOUND_VERIFIED", "bindingRefs": 25, "nodeId": "505:555"},
+    "ComponentLab/DockWidget": {"status": "BOUND_VERIFIED", "bindingRefs": 17, "nodeId": "507:443"},
+    "ComponentLab/MdiSubWindow": {"status": "BOUND_VERIFIED", "bindingRefs": 15, "nodeId": "511:124"},
+    "ComponentLab/MdiArea": {"status": "BOUND_VERIFIED", "bindingRefs": 20, "nodeId": "511:280"},
+    "ComponentLab/StackedWidget": {"status": "BOUND_VERIFIED", "bindingRefs": 19, "nodeId": "516:62"},
+    "ComponentLab/WizardPage": {"status": "BOUND_VERIFIED", "bindingRefs": 19, "nodeId": "516:113"},
+    "ComponentLab/Wizard": {"status": "BOUND_VERIFIED", "bindingRefs": 29, "nodeId": "516:669"},
+    "ComponentLab/DesktopBottomNavigation": {"status": "BOUND_VERIFIED", "bindingRefs": 19, "nodeId": "1312:96"},
+    "ComponentLab/Chart": {"status": "BOUND_VERIFIED", "bindingRefs": 23, "nodeId": "400:106"},
+    "ComponentLab/MetricCard": {"status": "BOUND_VERIFIED", "bindingRefs": 19, "nodeId": "397:39"},
+    "ComponentLab/ImagePanel": {"status": "BOUND_VERIFIED", "bindingRefs": 26, "nodeId": "402:52"},
+    "ComponentLab/LCDNumber": {"status": "BOUND_VERIFIED", "bindingRefs": 8, "nodeId": "418:493"},
+    "ComponentLab/TextBrowser": {"status": "BOUND_VERIFIED", "bindingRefs": 26, "nodeId": "420:50"},
+    "ComponentLab/GraphicsView": {"status": "BOUND_VERIFIED", "bindingRefs": 21, "nodeId": "422:181"},
+    "ComponentLab/Calendar": {"status": "BOUND_VERIFIED", "bindingRefs": 27, "nodeId": "423:859"},
+    "ComponentLab/RichTextEdit": {"status": "BOUND_VERIFIED", "bindingRefs": 24, "nodeId": "426:76"},
+    "ComponentLab/PlainTextEdit": {"status": "BOUND_VERIFIED", "bindingRefs": 15, "nodeId": "430:73"},
+    "ComponentLab/OpenGLViewport": {"status": "BOUND_VERIFIED", "bindingRefs": 26, "nodeId": "431:224"},
+    "ComponentLab/Empty": {"status": "BOUND_VERIFIED", "bindingRefs": 31, "nodeId": "433:119"},
+    "ComponentLab/Descriptions": {"status": "BOUND_VERIFIED", "bindingRefs": 24, "nodeId": "556:530"},
+    "ComponentLab/DialogButtonGroup": {"status": "BOUND_VERIFIED", "bindingRefs": 18, "nodeId": "447:593"},
+    "ComponentLab/CommandLinkButton": {"status": "BOUND_VERIFIED", "bindingRefs": 30, "nodeId": "450:102"},
+    "ComponentLab/Input": {"status": "BOUND_VERIFIED", "bindingRefs": 29, "nodeId": "339:111"},
+    "ComponentLab/SpinBox": {"status": "BOUND_VERIFIED", "bindingRefs": 24, "nodeId": "458:155"},
+    "ComponentLab/DoubleSpinBox": {"status": "BOUND_VERIFIED", "bindingRefs": 24, "nodeId": "460:175"},
+    "ComponentLab/DateTimePicker": {"status": "BOUND_VERIFIED", "bindingRefs": 28, "nodeId": "463:136"},
+    "ComponentLab/DatePicker": {"status": "BOUND_VERIFIED", "bindingRefs": 21, "nodeId": "464:111"},
+    "ComponentLab/Dial": {"status": "BOUND_VERIFIED", "bindingRefs": 20, "nodeId": "475:551"},
+    "ComponentLab/ShortcutInput": {"status": "BOUND_VERIFIED", "bindingRefs": 28, "nodeId": "478:439"},
+    "ComponentLab/Form": {"status": "BOUND_VERIFIED", "bindingRefs": 52, "nodeId": "555:754"},
+    "ComponentLab/ComboBox": {"status": "BOUND_VERIFIED", "bindingRefs": 19, "nodeId": "1120:18"},
+    "ComponentLab/FontComboBox": {"status": "BOUND_VERIFIED", "bindingRefs": 19, "nodeId": "1121:18"},
+    "ComponentLab/Chip": {"status": "BOUND_VERIFIED", "bindingRefs": 22, "nodeId": "351:27"},
+    "ComponentLab/Card": {"status": "BOUND_VERIFIED", "bindingRefs": 25, "nodeId": "359:75"},
+    "ComponentLab/IntegrationCard": {"status": "BOUND_VERIFIED", "bindingRefs": 28, "nodeId": "405:57"},
+    "ComponentLab/Splitter": {"status": "BOUND_VERIFIED", "bindingRefs": 11, "nodeId": "520:120"},
+    "ComponentLab/GroupBox": {"status": "BOUND_VERIFIED", "bindingRefs": 18, "nodeId": "526:447"},
+    "ComponentLab/ScrollArea": {"status": "BOUND_VERIFIED", "bindingRefs": 20, "nodeId": "531:912"},
+    "ComponentLab/Frame": {"status": "BOUND_VERIFIED", "bindingRefs": 13, "nodeId": "537:165"},
+    "ComponentLab/Widget": {"status": "BOUND_VERIFIED", "bindingRefs": 17, "nodeId": "537:75"},
+    "ComponentLab/TableWidget": {"status": "BOUND_VERIFIED", "bindingRefs": 32, "nodeId": "1111:21"},
+    "ComponentLab/DataTable": {"status": "BOUND_VERIFIED", "bindingRefs": 32, "nodeId": "363:366"},
+    "ComponentLab/ListView": {"status": "BOUND_VERIFIED", "bindingRefs": 41, "nodeId": "707:270"},
+    "ComponentLab/ListWidget": {"status": "BOUND_VERIFIED", "bindingRefs": 41, "nodeId": "709:21"},
+    "ComponentLab/TreeView": {"status": "BOUND_VERIFIED", "bindingRefs": 47, "nodeId": "712:27"},
+    "ComponentLab/ColumnView": {"status": "BOUND_VERIFIED", "bindingRefs": 33, "nodeId": "720:25"},
+    "ComponentLab/UndoView": {"status": "BOUND_VERIFIED", "bindingRefs": 43, "nodeId": "721:24"},
+    "ComponentLab/MessageDialog": {"status": "BOUND_VERIFIED", "bindingRefs": 32, "nodeId": "575:418"},
+    "ComponentLab/Alert": {"status": "BOUND_VERIFIED", "bindingRefs": 34, "nodeId": "580:382"},
+    "ComponentLab/Notification": {"status": "BOUND_VERIFIED", "bindingRefs": 31, "nodeId": "582:489"},
+    "ComponentLab/Spin": {"status": "BOUND_VERIFIED", "bindingRefs": 15, "nodeId": "727:93"},
+    "ComponentLab/Result": {"status": "BOUND_VERIFIED", "bindingRefs": 30, "nodeId": "735:106"},
+    "ComponentLab/Skeleton": {"status": "BOUND_VERIFIED", "bindingRefs": 10, "nodeId": "737:192"},
+    "ComponentLab/StatusBar": {"status": "BOUND_VERIFIED", "bindingRefs": 18, "nodeId": "588:127"},
+    "ComponentLab/ColorDialog": {"status": "BOUND_VERIFIED", "bindingRefs": 34, "nodeId": "593:368"},
+    "ComponentLab/FileDialog": {"status": "BOUND_VERIFIED", "bindingRefs": 34, "nodeId": "592:370"},
+    "ComponentLab/FontDialog": {"status": "BOUND_VERIFIED", "bindingRefs": 32, "nodeId": "593:778"},
+    "ComponentLab/InputDialog": {"status": "BOUND_VERIFIED", "bindingRefs": 70, "nodeId": "600:264"},
+    "ComponentLab/ProgressDialog": {"status": "BOUND_VERIFIED", "bindingRefs": 40, "nodeId": "601:196"}
   },
   "counts": {
     "total": 48,

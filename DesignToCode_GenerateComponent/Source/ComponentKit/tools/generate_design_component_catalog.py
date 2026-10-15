@@ -393,6 +393,7 @@ def governance_fields(
     kind: str,
     inventory: dict,
     downstream_evidence: dict | None = None,
+    token_binding_evidence: dict | None = None,
 ) -> dict:
     design_id = item["designComponent"]
     engineering_status = "REGISTERED" if item["instantiable"] else "UNMAPPED"
@@ -427,7 +428,13 @@ def governance_fields(
         evidence.append(
             "docs/designRules/design-system/component-traceability-manifest.json"
         )
-        token_status = downstream_evidence.get("tokenStatus", token_status)
+    if token_binding_evidence:
+        token_evidence_ref = (
+            "docs/designRules/design-system/component-traceability-manifest.json"
+        )
+        if token_evidence_ref not in evidence:
+            evidence.append(token_evidence_ref)
+        token_status = token_binding_evidence["status"]
     consumer_implemented = (
         (trace and trace.get("consumerEngineeringStatus") == "IMPLEMENTED")
         or (
@@ -541,6 +548,7 @@ def merge_current_library(legacy: list[dict], inventory: dict) -> list[dict]:
         item["designComponentId"]: item for item in manifest["components"]
     }
     downstream_by_design = manifest.get("downstreamEvidenceOverrides", {})
+    token_binding_by_design = manifest.get("tokenBindingEvidence", {})
 
     # Figma renamed the public identity in place. The factory publishes the
     # canonical Z_Drawer key while the original implementation type remains a
@@ -597,16 +605,39 @@ def merge_current_library(legacy: list[dict], inventory: dict) -> list[dict]:
     assert set(downstream_by_design) <= set(by_design), {
         "unknownDownstreamEvidence": sorted(set(downstream_by_design) - set(by_design))
     }
+    assert set(token_binding_by_design) <= set(by_design), {
+        "unknownTokenBindingEvidence": sorted(
+            set(token_binding_by_design) - set(by_design)
+        )
+    }
     for item in entries:
         design_id = item["designComponent"]
         trace = trace_by_design.get(design_id)
         kind = current_kind(design_id, item, kind_policy)
+        token_binding_evidence = token_binding_by_design.get(design_id)
+        if token_binding_evidence:
+            assert token_binding_evidence["status"] == "BOUND_VERIFIED", (
+                design_id,
+                token_binding_evidence,
+            )
+            assert isinstance(token_binding_evidence["bindingRefs"], int), (
+                design_id,
+                token_binding_evidence,
+            )
+            assert token_binding_evidence["bindingRefs"] > 0, (
+                design_id,
+                token_binding_evidence,
+            )
+            assert token_binding_evidence["nodeId"] in item.get(
+                "publicDesignNodeId", item.get("componentSetId", "")
+            ).split(","), (design_id, token_binding_evidence, item)
         item.update(governance_fields(
             item,
             trace,
             kind,
             inventory,
             downstream_by_design.get(design_id),
+            token_binding_evidence,
         ))
     return entries
 
