@@ -753,17 +753,19 @@
         "variantAxes": ["Bars", "Resize", "State"],
         "controlledProperties": ["bars", "resizeMode", "snapshotState", "focusIndicatorEnabled"],
         "signals": ["barsChanged(QString)", "resizeModeChanged(QString)", "snapshotStateChanged(QString)"],
-        "controllerBoundary": "The SDK owns the token-backed viewport and scrollbar identities. Content ownership, content size, scroll position and application data remain generated-page responsibilities. Qt::StrongFocus preserves keyboard scrolling; focusIndicatorEnabled may suppress only the painted ring."
+        "controllerBoundary": "The SDK owns the token-backed viewport and scrollbar identities. Bars records the authored visible-outcome specimen and never mutates QAbstractScrollArea horizontalScrollBarPolicy or verticalScrollBarPolicy; native policy, content ownership, content size, scroll position and application data remain host responsibilities. Qt::StrongFocus preserves keyboard scrolling; focusIndicatorEnabled may suppress only the painted ring."
       },
       "runtimeEvidence": [
         "Source/ComponentKit/runtime/component/native/Z_ScrollArea.h",
         "Source/ComponentKit/runtime/component/native/Z_ScrollArea.cpp",
+        "Source/ComponentKit/design-assets/styles/native/Z_ScrollArea.qss.in",
         "Source/ComponentKit/runtime/component/FocusIndicator.cpp",
         "Source/SDKConsumerTest/main.cpp"
       ],
       "consumerEvidence": [
         "ComponentLab/Source/delivery/demo/ContainersGallery.cpp",
         "ComponentLab/Source/delivery/tests/CompositionTests.cpp",
+        "ComponentLab/Source/presentation/DemoRuntime.cpp",
         "DesignToCode_GenerateLayout/Source/HtmlDsl/pipeline/mapping/component-mapping.json",
         "DesignToCode_GenerateLayout/Source/Validation/component/ComponentTests.cpp"
       ]
@@ -879,6 +881,28 @@
         "Source/ComponentKit/runtime/component/native/Z_Splitter.cpp",
         "Source/ComponentKit/design-assets/styles/native/Z_Splitter.qss.in",
         "ComponentLab/Source/delivery/demo/ContainersGallery.cpp",
+        "ComponentLab/Source/delivery/tests/CompositionTests.cpp"
+      ]
+    },
+    "ComponentLab/ScrollArea": {
+      "status": "VERIFIED",
+      "figmaNodeId": "531:912",
+      "figmaScreenshotSha256": "DF36B47A7FDBE57485B6961C1BABDDFE029B396A70A61B5C195CFC0F1AB16E9D",
+      "profiles": ["light-comfortable", "light-compact", "dark-comfortable", "dark-compact"],
+      "runtimeGallerySha256": {
+        "light-comfortable": "6819351D9664D25BBFCFB1E06CB2037EA7F31A3CFA9E254C427BB28CCC950029",
+        "light-compact": "6819351D9664D25BBFCFB1E06CB2037EA7F31A3CFA9E254C427BB28CCC950029",
+        "dark-comfortable": "F812A09AFDFFDF78584F04F82300DF3AF2D1465BA2FB0A635368BA9EB0D6B888",
+        "dark-compact": "F812A09AFDFFDF78584F04F82300DF3AF2D1465BA2FB0A635368BA9EB0D6B888"
+      },
+      "scope": "Twenty-four Bars=None|Vertical|Horizontal|Both by Resize=Fixed|Resizable by State=Default|Focus|Disabled variants; token-backed viewport, sample content, skeleton rows, focus target, native scrollbars and fixed versus resizable content behavior.",
+      "limitations": "Bars is visible-outcome metadata rather than a scroll-policy enum. The host retains QAbstractScrollArea policy, content geometry, ownership, scroll position and ensureVisible behavior; the ComponentLab evidence uses ScrollBarAsNeeded plus deterministic content minimums. Formal designer and governance approval remain open.",
+      "runtimeEvidence": [
+        "Source/ComponentKit/runtime/component/native/Z_ScrollArea.h",
+        "Source/ComponentKit/runtime/component/native/Z_ScrollArea.cpp",
+        "Source/ComponentKit/design-assets/styles/native/Z_ScrollArea.qss.in",
+        "ComponentLab/Source/delivery/demo/ContainersGallery.cpp",
+        "ComponentLab/Source/presentation/DemoRuntime.cpp",
         "ComponentLab/Source/delivery/tests/CompositionTests.cpp"
       ]
     },

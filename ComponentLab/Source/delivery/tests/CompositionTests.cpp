@@ -2030,6 +2030,8 @@ auto* secondEditor=editors->widget(1);auto* area=secondEditor->findChild<QMdiAre
 
         auto* scrollCanvas = variantCanvas(QStringLiteral("531:11"));
         QVERIFY(scrollCanvas);
+        QVERIFY(qApp->styleSheet().contains(QStringLiteral("commonWidget::Z_ScrollArea")));
+        QVERIFY(qApp->styleSheet().contains(QStringLiteral("Z_ScrollAreaContentSkeleton")));
         QCOMPARE(scrollCanvas->findChildren<QScrollArea*>().size(), 24);
         for (auto* area : scrollCanvas->findChildren<QScrollArea*>()) {
             const QString variant = area->property("figmaVariant").toString();
@@ -2037,10 +2039,8 @@ auto* secondEditor=editors->widget(1);auto* area=secondEditor->findChild<QMdiAre
                                   variant.contains(QStringLiteral("Bars=Both"));
             const bool horizontal = variant.contains(QStringLiteral("Bars=Horizontal")) ||
                                     variant.contains(QStringLiteral("Bars=Both"));
-            QCOMPARE(area->verticalScrollBarPolicy(), vertical ? Qt::ScrollBarAlwaysOn
-                                                               : Qt::ScrollBarAlwaysOff);
-            QCOMPARE(area->horizontalScrollBarPolicy(), horizontal ? Qt::ScrollBarAlwaysOn
-                                                                   : Qt::ScrollBarAlwaysOff);
+            QCOMPARE(area->verticalScrollBarPolicy(), Qt::ScrollBarAsNeeded);
+            QCOMPARE(area->horizontalScrollBarPolicy(), Qt::ScrollBarAsNeeded);
             auto* designArea = qobject_cast<commonWidget::Z_ScrollArea*>(area);
             QVERIFY(designArea);
             QCOMPARE(designArea->bars(), variant.contains("Bars=Both") ? QString("Both") :
@@ -2056,7 +2056,23 @@ auto* secondEditor=editors->widget(1);auto* area=secondEditor->findChild<QMdiAre
                      QString("commonWidget::Z_ScrollBar"));
             QCOMPARE(area->horizontalScrollBar()->property("designSystemStyleOwner").toString(),
                      QString("tokens"));
+            QCOMPARE(area->findChildren<QLabel*>(QStringLiteral("scrollAreaContentTitle")).size(), 1);
+            QCOMPARE(area->findChildren<QFrame*>(QStringLiteral("scrollAreaContentRow")).size(), 5);
+            QCOMPARE(area->findChildren<QPushButton*>(QStringLiteral("scrollAreaFocusTarget")).size(), 1);
+            for (auto* row : area->findChildren<QFrame*>(QStringLiteral("scrollAreaContentRow"))) {
+                QCOMPARE(row->property("designSystemStyleOwner").toString(), QString("tokens"));
+                QVERIFY(row->width() >= 238);
+            }
+            QCoreApplication::processEvents();
+            QCOMPARE(area->verticalScrollBar()->isVisibleTo(area), vertical);
+            QCOMPARE(area->horizontalScrollBar()->isVisibleTo(area), horizontal);
         }
+        commonWidget::Z_ScrollArea policyOwner;
+        policyOwner.setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+        policyOwner.setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+        policyOwner.setBars(QStringLiteral("Vertical"));
+        QCOMPARE(policyOwner.verticalScrollBarPolicy(), Qt::ScrollBarAlwaysOff);
+        QCOMPARE(policyOwner.horizontalScrollBarPolicy(), Qt::ScrollBarAlwaysOn);
     }
     void nativeDisplayGalleriesUseRealWidgets() {
         window->resize(1600,920);auto* tree=part<QTreeWidget>("componentTree");

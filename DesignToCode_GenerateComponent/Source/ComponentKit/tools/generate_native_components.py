@@ -625,6 +625,8 @@ namespace commonWidget {
 Z_ScrollArea::Z_ScrollArea(QWidget* parent) : QScrollArea(parent) {
     setProperty("designSystemNative", true);
     setProperty("designSystemClass", "commonWidget::Z_ScrollArea");
+    setProperty("designSystemStyleOwner", "tokens");
+    setAttribute(Qt::WA_StyledBackground, true);
     setProperty("nativeQtClass", "QScrollArea");
     setAccessibleName(QStringLiteral("Scrollable content"));
     setFocusPolicy(Qt::StrongFocus);
@@ -662,12 +664,9 @@ void Z_ScrollArea::setSnapshotState(const QString& value) {
 QSize Z_ScrollArea::sizeHint() const { return {372, 210}; }
 
 void Z_ScrollArea::refreshContract() {
-    const bool vertical = barsValue == QStringLiteral("Vertical") ||
-                          barsValue == QStringLiteral("Both");
-    const bool horizontal = barsValue == QStringLiteral("Horizontal") ||
-                            barsValue == QStringLiteral("Both");
-    setVerticalScrollBarPolicy(vertical ? Qt::ScrollBarAlwaysOn : Qt::ScrollBarAlwaysOff);
-    setHorizontalScrollBarPolicy(horizontal ? Qt::ScrollBarAlwaysOn : Qt::ScrollBarAlwaysOff);
+    // Bars is a Figma snapshot of the visible overflow outcome. It is not a
+    // QAbstractScrollArea policy enum: the host retains native AsNeeded /
+    // AlwaysOff / AlwaysOn authority together with content geometry.
     setWidgetResizable(resizeModeValue == QStringLiteral("Resizable"));
     setEnabled(snapshotStateValue != QStringLiteral("Disabled"));
     setProperty("figmaSnapshotState", snapshotStateValue);
@@ -888,6 +887,21 @@ def qss_template(item):
 {selector}[figmaSnapshotState="Focus"],
 {selector}:focus[focusIndicatorVisible="true"] {{ border: 2px solid @FOCUS@; }}
 {selector} QWidget#qt_scrollarea_viewport {{ background-color: @SURFACE@; }}
+{selector}:disabled QWidget#qt_scrollarea_viewport {{ background-color: @DISABLED@; }}
+*[designSystemClass="commonWidget::Z_ScrollAreaContent"] {{
+    background-color: @SURFACE@;
+}}
+*[designSystemClass="commonWidget::Z_ScrollAreaContent"]:disabled {{
+    background-color: @DISABLED@;
+}}
+*[designSystemClass="commonWidget::Z_ScrollAreaContentSkeleton"] {{
+    background-color: @DISABLED@;
+    border: 0;
+    border-radius: 4px;
+}}
+*[designSystemClass="commonWidget::Z_ScrollAreaContentSkeleton"]:disabled {{
+    background-color: @DISABLED_BORDER@;
+}}
 '''
     elif item["category"] in {"data", "display", "container"}:
         common += f'''{selector} {{

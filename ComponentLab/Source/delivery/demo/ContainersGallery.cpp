@@ -3,9 +3,11 @@
 #include "FigmaLayoutEvidence.h"
 #include "ComponentFactory.h"
 #include "MyDesignSystem.h"
+#include "Z_PushButton.h"
 #include <QFrame>
 #include <QGroupBox>
 #include <QLabel>
+#include <QHBoxLayout>
 #include <QScrollArea>
 #include <QSplitter>
 #include <QSplitterHandle>
@@ -113,30 +115,69 @@ void scrollSpecimen(const std::shared_ptr<commonWidget::ComponentFactory>& facto
     if (!area)
         throw std::runtime_error("Z_ScrollArea unavailable");
     area->setGeometry(rect);
+    area->setHorizontalScrollBarPolicy(Qt::ScrollBarAsNeeded);
+    area->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
     area->setBars(bars);
     area->setResizeMode(resize);
-    area->setSnapshotState(state);
     auto* content = new QWidget(area);
     content->setObjectName(QStringLiteral("scrollAreaContent"));
+    content->setProperty("designSystemClass",
+                         QStringLiteral("commonWidget::Z_ScrollAreaContent"));
+    content->setProperty("designSystemStyleOwner", QStringLiteral("tokens"));
+    content->setAttribute(Qt::WA_StyledBackground, true);
     auto* contentLayout = new QVBoxLayout(content);
-    contentLayout->setContentsMargins(16, 14, 16, 14);
-    contentLayout->setSpacing(8);
-    for (int index = 1; index <= 8; ++index) {
-        auto* row = new QLabel(QStringLiteral("参数 %1").arg(index), content);
+    contentLayout->setContentsMargins(16, 16, 16, 16);
+    contentLayout->setSpacing(6);
+    auto* title = new QLabel(QStringLiteral("Scrollable content"), content);
+    title->setObjectName(QStringLiteral("scrollAreaContentTitle"));
+    title->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
+    contentLayout->addWidget(title);
+    for (int index = 0; index < 5; ++index) {
+        auto* row = new QFrame(content);
         row->setObjectName(QStringLiteral("scrollAreaContentRow"));
+        row->setAccessibleName(QStringLiteral("Content placeholder %1").arg(index + 1));
+        row->setFixedHeight(index == 0 ? 16 : 12);
+        row->setMaximumWidth(index % 2 == 0 ? 292 : 238);
+        row->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
+        row->setProperty("designSystemClass",
+                         QStringLiteral("commonWidget::Z_ScrollAreaContentSkeleton"));
+        row->setProperty("designSystemStyleOwner", QStringLiteral("tokens"));
+        row->setAttribute(Qt::WA_StyledBackground, true);
+        row->style()->unpolish(row);
+        row->style()->polish(row);
         contentLayout->addWidget(row);
     }
+    auto* focusTarget = qobject_cast<commonWidget::Z_PushButton*>(
+        factory->create("commonWidget::Z_PushButton", content));
+    if (!focusTarget)
+        throw std::runtime_error("Z_PushButton unavailable for ScrollArea fixture");
+    focusTarget->setObjectName(QStringLiteral("scrollAreaFocusTarget"));
+    focusTarget->setText(QStringLiteral("Focus target"));
+    focusTarget->setType(commonWidget::ButtonType::Default);
+    focusTarget->setSize(commonWidget::ButtonSize::S);
+    focusTarget->setFixedSize(112, 28);
+    focusTarget->setFocusPolicy(Qt::StrongFocus);
+    auto* focusTargetRow = new QWidget(content);
+    focusTargetRow->setObjectName(QStringLiteral("scrollAreaFocusTargetRow"));
+    focusTargetRow->setFixedHeight(28);
+    auto* focusTargetLayout = new QHBoxLayout(focusTargetRow);
+    focusTargetLayout->setContentsMargins(152, 0, 0, 0);
+    focusTargetLayout->setSpacing(0);
+    focusTargetLayout->addWidget(focusTarget, 0, Qt::AlignLeft);
+    focusTargetLayout->addStretch(1);
+    contentLayout->addWidget(focusTargetRow);
     contentLayout->addStretch(1);
-    content->setMinimumWidth(bars == QStringLiteral("Horizontal") || bars == QStringLiteral("Both")
-                                 ? rect.width() + 180
-                                 : rect.width() - 36);
-    content->setMinimumHeight(bars == QStringLiteral("Vertical") || bars == QStringLiteral("Both")
-                                  ? rect.height() + 180
-                                  : rect.height() - 36);
+    const bool horizontal = bars == QStringLiteral("Horizontal") || bars == QStringLiteral("Both");
+    const bool vertical = bars == QStringLiteral("Vertical") || bars == QStringLiteral("Both");
+    const QSize contentSize(horizontal ? rect.width() + 96 : rect.width() - 36,
+                            vertical ? rect.height() + 96 : rect.height() - 36);
+    content->setMinimumSize(contentSize);
+    content->resize(contentSize);
     area->setWidget(content);
     area->setObjectName(QStringLiteral("figmaScrollSpecimen"));
     passive(area, QStringLiteral("Bars=%1, Resize=%2, State=%3").arg(bars, resize, state),
             state == "Focus" ? state : QString());
+    area->setSnapshotState(state);
 }
 
 void widgetSpecimen(const std::shared_ptr<commonWidget::ComponentFactory>& factory,

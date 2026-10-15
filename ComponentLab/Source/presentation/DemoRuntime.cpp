@@ -30,7 +30,10 @@ QIcon icon(const QString& assetId) {
 
 void install(QApplication& app, const QString& profile) {
     component_theme::install(app, profile);
-    app.setStyleSheet(readResource(":/button/" + profile + "-demo.qss"));
+    // ComponentTheme installs the SDK-wide native Token sheet first. The
+    // ComponentLab-only button/demo rules must extend it, never replace it.
+    app.setStyleSheet(app.styleSheet() + QLatin1Char('\n') +
+                      readResource(":/button/" + profile + "-demo.qss"));
 }
 
 QString validate(const commonWidget::Z_PushButton& button) {

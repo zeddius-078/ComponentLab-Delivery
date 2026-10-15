@@ -16,3 +16,18 @@
 *[designSystemClass="commonWidget::Z_ScrollArea"][figmaSnapshotState="Focus"],
 *[designSystemClass="commonWidget::Z_ScrollArea"]:focus[focusIndicatorVisible="true"] { border: 2px solid @FOCUS@; }
 *[designSystemClass="commonWidget::Z_ScrollArea"] QWidget#qt_scrollarea_viewport { background-color: @SURFACE@; }
+*[designSystemClass="commonWidget::Z_ScrollArea"]:disabled QWidget#qt_scrollarea_viewport { background-color: @DISABLED@; }
+*[designSystemClass="commonWidget::Z_ScrollAreaContent"] {
+    background-color: @SURFACE@;
+}
+*[designSystemClass="commonWidget::Z_ScrollAreaContent"]:disabled {
+    background-color: @DISABLED@;
+}
+*[designSystemClass="commonWidget::Z_ScrollAreaContentSkeleton"] {
+    background-color: @DISABLED@;
+    border: 0;
+    border-radius: 4px;
+}
+*[designSystemClass="commonWidget::Z_ScrollAreaContentSkeleton"]:disabled {
+    background-color: @DISABLED_BORDER@;
+}

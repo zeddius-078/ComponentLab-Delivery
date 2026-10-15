@@ -715,6 +715,8 @@ int main(int argc, char *argv[]) {
     if (splitter->orientation() != Qt::Vertical || splitter->focusPolicy() != Qt::NoFocus ||
         splitter->handleWidth() != 12 || splitter->showGrip())
         return 132;
+    scrollArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    scrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
     scrollArea->setBars(QStringLiteral("Both"));
     scrollArea->setResizeMode(QStringLiteral("Resizable"));
     scrollArea->setSnapshotState(QStringLiteral("Focus"));
@@ -723,7 +725,7 @@ int main(int argc, char *argv[]) {
         scrollArea->snapshotState() != QStringLiteral("Focus") ||
         scrollArea->focusPolicy() != Qt::StrongFocus || !scrollArea->widgetResizable() ||
         scrollArea->verticalScrollBarPolicy() != Qt::ScrollBarAlwaysOn ||
-        scrollArea->horizontalScrollBarPolicy() != Qt::ScrollBarAlwaysOn)
+        scrollArea->horizontalScrollBarPolicy() != Qt::ScrollBarAlwaysOff)
         return 133;
     calendar->setWeekStart(QStringLiteral("Sunday"));
     calendar->setGrid(false);

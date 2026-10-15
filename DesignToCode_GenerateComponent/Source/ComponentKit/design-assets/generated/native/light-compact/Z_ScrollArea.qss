@@ -16,3 +16,18 @@
 *[designSystemClass="commonWidget::Z_ScrollArea"][figmaSnapshotState="Focus"],
 *[designSystemClass="commonWidget::Z_ScrollArea"]:focus[focusIndicatorVisible="true"] { border: 2px solid #6235f7; }
 *[designSystemClass="commonWidget::Z_ScrollArea"] QWidget#qt_scrollarea_viewport { background-color: #ffffff; }
+*[designSystemClass="commonWidget::Z_ScrollArea"]:disabled QWidget#qt_scrollarea_viewport { background-color: #f3f3f3; }
+*[designSystemClass="commonWidget::Z_ScrollAreaContent"] {
+    background-color: #ffffff;
+}
+*[designSystemClass="commonWidget::Z_ScrollAreaContent"]:disabled {
+    background-color: #f3f3f3;
+}
+*[designSystemClass="commonWidget::Z_ScrollAreaContentSkeleton"] {
+    background-color: #f3f3f3;
+    border: 0;
+    border-radius: 4px;
+}
+*[designSystemClass="commonWidget::Z_ScrollAreaContentSkeleton"]:disabled {
+    background-color: #d0d0d0;
+}
