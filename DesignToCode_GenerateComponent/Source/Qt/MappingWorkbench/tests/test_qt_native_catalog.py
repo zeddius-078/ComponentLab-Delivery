@@ -23,13 +23,23 @@ class QtNativeCatalogTests(unittest.TestCase):
 
     def test_every_reference_type_is_registered_once(self):
         names = [item["qtClass"] for item in self.components]
-        self.assertEqual(86, len(names))
         self.assertEqual(len(names), len(set(names)))
         self.assertEqual("5.15.2", self.catalog["source"]["qtVersion"])
+        builder = runpy.run_path(str(ROOT / "mapping/tools/build_qt_catalog.py"))
+        reference = QT_REFERENCE.read_text(encoding="utf-8")
+        rebuilt_names = {
+            item["qtClass"]
+            for item in builder["enrich"](builder["parse_reference"](reference))
+        }
+        self.assertEqual(rebuilt_names, set(names))
 
     def test_visual_components_have_complete_design_and_sdk_identity(self):
         visual = [item for item in self.components if item["mappingKind"] == "visual-component"]
-        self.assertEqual(59, len(visual))
+        registry = json.loads(REGISTRY.read_text(encoding="utf-8"))["components"]
+        self.assertEqual(
+            {item["qtClass"] for item in registry},
+            {item["qtClass"] for item in visual},
+        )
         for item in visual:
             with self.subTest(qtClass=item["qtClass"]):
                 self.assertTrue(item["sdkClass"].startswith("commonWidget::Z_"))
@@ -91,8 +101,8 @@ class QtNativeCatalogTests(unittest.TestCase):
         source_map = json.loads(SOURCE_MAP.read_text(encoding="utf-8"))["components"]
         visual = [item for item in self.components if item["mappingKind"] == "visual-component"]
         for records in (registry, source_map, visual):
-            self.assertEqual(59, len(records))
-            self.assertEqual(59, len({item["qtClass"] for item in records}))
+            self.assertEqual(len(registry), len(records))
+            self.assertEqual(len(records), len({item["qtClass"] for item in records}))
 
         registry_by_class = {item["qtClass"]: item for item in registry}
         source_by_class = {item["qtClass"]: item for item in source_map}

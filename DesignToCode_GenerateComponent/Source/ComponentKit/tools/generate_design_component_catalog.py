@@ -740,7 +740,14 @@ def build_catalog() -> list[dict]:
     assert len({item["canonicalId"] for item in result}) == len(result)
     sdk_classes = [item["sdkClass"] for item in result if item["sdkClass"]]
     assert len(set(sdk_classes)) == len(sdk_classes)
-    assert sum(item["mappingKind"] == "native" for item in result) == 59
+    native_catalog_ids = {
+        item["canonicalId"] for item in result if item["mappingKind"] == "native"
+    }
+    assert native_catalog_ids == set(native_by_design), (
+        "native catalog and registry identities diverged",
+        sorted(native_catalog_ids - set(native_by_design)),
+        sorted(set(native_by_design) - native_catalog_ids),
+    )
     assert sum(item["instantiable"] for item in result) == sum(
         item["engineeringStatus"] == "REGISTERED" for item in result
     )

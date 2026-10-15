@@ -24,7 +24,7 @@ def load_inputs():
     components = contract["components"]
     qt_classes = {item["qtClass"] for item in components}
     sdk_classes = {item["sdkClass"] for item in components}
-    assert len(components) == 59, len(components)
+    assert components, "native component registry must not be empty"
     assert len(qt_classes) == len(components)
     assert len(sdk_classes) == len(components)
     for item in components:

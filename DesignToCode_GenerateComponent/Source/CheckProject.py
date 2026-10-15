@@ -31,7 +31,9 @@ def check():
         SOURCE / "ComponentKit/component-definitions/native-components.json"
     ).read_text(encoding="utf-8"))
     native_components = native_contract["components"]
-    assert len(native_components) == 59
+    assert native_components, "native component registry must not be empty"
+    assert len({item["qtClass"] for item in native_components}) == len(native_components)
+    assert len({item["sdkClass"] for item in native_components}) == len(native_components)
     source_map = json.loads((
         SOURCE / "ComponentKit/component-definitions/generated-component-source-map.json"
     ).read_text(encoding="utf-8"))

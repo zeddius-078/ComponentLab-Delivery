@@ -63,9 +63,13 @@ class FigmaCatalogContractTests(unittest.TestCase):
         self.assertEqual(len(all_set_ids), governance["figmaComponentSetCount"])
         self.assertEqual(len(canonical_set_ids), governance["canonicalReferencedComponentSetCount"])
         self.assertEqual(len(classified_set_ids), governance["classifiedUnreferencedComponentSetCount"])
-        self.assertEqual(17, statistics["internalComponentSetCount"])
-        self.assertEqual(1, statistics["proposalComponentSetCount"])
-        self.assertEqual(1, statistics["residueComponentSetCount"])
+        role_counts = {
+            role: sum(item["role"] == role for item in governance["unreferencedSets"])
+            for role in ("INTERNAL", "PROPOSAL", "RESIDUE")
+        }
+        self.assertEqual(role_counts["INTERNAL"], statistics["internalComponentSetCount"])
+        self.assertEqual(role_counts["PROPOSAL"], statistics["proposalComponentSetCount"])
+        self.assertEqual(role_counts["RESIDUE"], statistics["residueComponentSetCount"])
 
     def test_public_composites_do_not_claim_internal_anatomy_sets(self):
         entries = {entry["canonicalId"]: entry for entry in self.catalog["entries"]}
@@ -151,8 +155,22 @@ class FigmaCatalogContractTests(unittest.TestCase):
             self.catalog["contractOnlyCount"],
             sum(not component["instantiable"] for component in components),
         )
-        self.assertEqual(2, statistics["implementedLayoutHelperCount"])
-        self.assertEqual(0, statistics["unmappedAssetCount"])
+        self.assertEqual(
+            sum(
+                entry["kind"] == "LayoutHelper"
+                and entry["engineeringStatus"] == "IMPLEMENTED"
+                for entry in entries
+            ),
+            statistics["implementedLayoutHelperCount"],
+        )
+        self.assertEqual(
+            sum(
+                entry["kind"] == "Asset"
+                and entry["engineeringStatus"] == "UNMAPPED"
+                for entry in entries
+            ),
+            statistics["unmappedAssetCount"],
+        )
         self.assertEqual(
             sum(component["engineeringStatus"] == "UNMAPPED" for component in components),
             statistics["componentEngineeringGapCount"],
@@ -464,7 +482,6 @@ class FigmaCatalogContractTests(unittest.TestCase):
     def test_live_token_binding_audit_closes_all_catalog_entries(self):
         entries = {item["canonicalId"]: item for item in self.catalog["entries"]}
         evidence = self.traceability["tokenBindingEvidence"]
-        self.assertEqual(62, len(evidence))
         self.assertEqual("2026-10-16", self.traceability["tokenBindingEvidencePolicy"]["capturedAt"])
         self.assertNotIn(
             "tokenStatus",
@@ -486,8 +503,15 @@ class FigmaCatalogContractTests(unittest.TestCase):
         self.assertEqual(20, evidence["ComponentLab/ScrollArea"]["bindingRefs"])
         self.assertEqual(27, evidence["ComponentLab/Calendar"]["bindingRefs"])
         self.assertEqual(70, evidence["ComponentLab/InputDialog"]["bindingRefs"])
+        traced = {
+            item["designComponentId"]
+            for item in self.traceability["components"]
+            if item["tokenStatus"] == "BOUND_VERIFIED"
+        }
+        self.assertFalse(traced & set(evidence))
+        self.assertEqual(set(entries), traced | set(evidence))
         statuses = [item["verificationStatus"]["tokenBinding"] for item in self.catalog["entries"]]
-        self.assertEqual(110, statuses.count("BOUND_VERIFIED"))
+        self.assertEqual(len(entries), statuses.count("BOUND_VERIFIED"))
         self.assertEqual(0, statuses.count("UNRESOLVED"))
 
     def test_parserless_code_connect_templates_cover_b24_components(self):
