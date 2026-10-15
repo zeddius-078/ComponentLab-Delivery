@@ -2,6 +2,7 @@
 #include "FocusIndicator.h"
 #include "Z_PushButton.h"
 #include <QDialogButtonBox>
+#include <QCoreApplication>
 #include <QEvent>
 #include <QFile>
 #include <QFontDatabase>
@@ -136,6 +137,7 @@ public:
             auto* button = qobject_cast<QPushButton*>(item);
             if (!button)
                 continue;
+            FocusIndicator::instance().watch(button);
             if (auto* binding = button->findChild<QObject*>("figmaDialogNativeButtonPaint",
                                                             Qt::FindDirectChildrenOnly)) {
                 static_cast<NativeButtonPaint*>(binding)->setBox(box_);
@@ -184,5 +186,51 @@ void applyFigmaDialogButtonBoxAppearance(QDialogButtonBox* box) {
     if (!binding)
         binding = new BoxBinding(box);
     binding->refresh();
+}
+
+void configureFigmaDialogButtonGroup(QDialogButtonBox* box,
+                                     const QMap<QString, QString>& properties) {
+    if (!box)
+        throw std::invalid_argument("DialogButtonGroup is required");
+    const auto orientation = properties.value("Orientation");
+    const auto centered = properties.value("Centered");
+    const auto configuration = properties.value("Configuration");
+    const auto state = properties.value("State");
+    if (!QStringList{"Horizontal", "Vertical"}.contains(orientation) ||
+        !QStringList{"False", "True"}.contains(centered) ||
+        !QStringList{"Confirm", "Apply", "Help", "Destructive"}.contains(configuration) ||
+        !QStringList{"Default", "Disabled"}.contains(state))
+        throw std::invalid_argument("Invalid Figma DialogButtonGroup variant");
+
+    if (box->property("figmaDialogConfiguration").toString() != configuration) {
+        box->clear();
+        if (configuration == "Apply") {
+            box->setStandardButtons(QDialogButtonBox::Reset | QDialogButtonBox::Cancel |
+                                    QDialogButtonBox::Apply);
+        } else if (configuration == "Help") {
+            box->setStandardButtons(QDialogButtonBox::Help | QDialogButtonBox::Cancel |
+                                    QDialogButtonBox::Ok);
+        } else if (configuration == "Destructive") {
+            box->setStandardButtons(QDialogButtonBox::Cancel);
+            auto* action = box->addButton(QCoreApplication::translate("DialogButtonGroup", "Delete"),
+                                          QDialogButtonBox::DestructiveRole);
+            action->setObjectName("dialogDeleteAction");
+            // Safety/runtime policy: destructive action must not become the Enter default.
+            action->setAutoDefault(false);
+            action->setDefault(false);
+            if (auto* cancel = box->button(QDialogButtonBox::Cancel))
+                cancel->setDefault(true);
+        } else {
+            box->setStandardButtons(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
+        }
+        box->setProperty("figmaDialogConfiguration", configuration);
+        // Backward-compatible diagnostic key used by the existing gallery.
+        box->setProperty("dialogConfiguration", configuration);
+    }
+    box->setOrientation(orientation == "Vertical" ? Qt::Vertical : Qt::Horizontal);
+    box->setCenterButtons(centered == "True");
+    box->setEnabled(state != "Disabled");
+    box->setProperty("figmaDialogState", state);
+    applyFigmaDialogButtonBoxAppearance(box);
 }
 } // namespace commonWidget

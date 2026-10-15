@@ -34,9 +34,12 @@
 #include <QMenu>
 #include <QMenuBar>
 #include <QDockWidget>
+#include <QDialogButtonBox>
+#include <QCommandLinkButton>
 #include <QMdiArea>
 #include <QMdiSubWindow>
 #include <QProgressBar>
+#include <QPushButton>
 #include <QStackedWidget>
 #include <QWizard>
 #include <QWizardPage>
@@ -411,6 +414,10 @@ private slots:
                             {"name", "Title"},
                             {"nodeText", "Mapped metric title"},
                             {"childNode", QJsonArray{}}},
+                QJsonObject{{"guid", masterId + ":description"},
+                            {"name", "Description"},
+                            {"nodeText", "Mapped consequence"},
+                            {"childNode", QJsonArray{}}},
                 QJsonObject{{"guid", masterId + ":metric-value"},
                             {"name", "Content/Value"},
                             {"nodeText", "98.6%"},
@@ -692,6 +699,61 @@ private slots:
             QCOMPARE(label->focusPolicy(),Qt::NoFocus);
             QCOMPARE(converter.trace().first().toObject()["calls"].toArray().first().toObject()["api"].toString(),
                      QString("display.configureLabel"));
+        }
+        {
+            const auto sample = fixture("443:222", "ComponentLab/ToolButton",
+                                        {{"Surface", "AutoRaise"}, {"Menu", "Split"},
+                                         {"State", "CheckedFocus"},
+                                         {"Show label", "False"}});
+            d2c::ComponentConverter converter(sample.first, mapping);
+            std::unique_ptr<QWidget> widget(converter.convert(sample.second, nullptr));
+            auto* tool = qobject_cast<QToolButton*>(widget.get());
+            QVERIFY(tool);QVERIFY(tool->autoRaise());QVERIFY(tool->isCheckable());
+            QVERIFY(tool->isChecked());QCOMPARE(tool->popupMode(),QToolButton::MenuButtonPopup);
+            QCOMPARE(tool->toolButtonStyle(),Qt::ToolButtonIconOnly);
+            QCOMPARE(tool->text(),QString("Mapped label"));
+            QCOMPARE(tool->property("figmaToolSnapshotState").toString(),QString("CheckedFocus"));
+            QCOMPARE(converter.trace().first().toObject()["calls"].toArray().first().toObject()["api"].toString(),
+                     QString("actions.configureToolButton"));
+        }
+        {
+            const auto sample = fixture("443:222", "ComponentLab/ToolButton",
+                                        {{"Surface", "Framed"}, {"Menu", "None"},
+                                         {"State", "Open"}, {"Show label", "True"}});
+            d2c::ComponentConverter converter(sample.first, mapping);
+            QVERIFY_EXCEPTION_THROWN(converter.convert(sample.second, nullptr),std::invalid_argument);
+        }
+        {
+            const auto sample = fixture("447:593", "ComponentLab/DialogButtonGroup",
+                                        {{"Orientation", "Vertical"}, {"Centered", "True"},
+                                         {"Configuration", "Destructive"},
+                                         {"State", "Default"}});
+            d2c::ComponentConverter converter(sample.first, mapping);
+            std::unique_ptr<QWidget> widget(converter.convert(sample.second, nullptr));
+            auto* box = qobject_cast<QDialogButtonBox*>(widget.get());
+            QVERIFY(box);QCOMPARE(box->orientation(),Qt::Vertical);QVERIFY(box->centerButtons());
+            QCOMPARE(box->buttons().size(),2);
+            auto* action=box->findChild<QPushButton*>("dialogDeleteAction");
+            QVERIFY(action);QCOMPARE(box->buttonRole(action),QDialogButtonBox::DestructiveRole);
+            QVERIFY(!action->isDefault());QVERIFY(box->button(QDialogButtonBox::Cancel)->isDefault());
+            QCOMPARE(converter.trace().first().toObject()["calls"].toArray().first().toObject()["api"].toString(),
+                     QString("actions.configureDialogButtonGroup"));
+        }
+        {
+            const auto sample = fixture("450:102", "ComponentLab/CommandLinkButton",
+                                        {{"Surface", "Flat"}, {"State", "CheckedFocus"},
+                                         {"Show description", "False"},
+                                         {"Show icon", "False"}});
+            d2c::ComponentConverter converter(sample.first, mapping);
+            std::unique_ptr<QWidget> widget(converter.convert(sample.second, nullptr));
+            auto* command = qobject_cast<QCommandLinkButton*>(widget.get());
+            QVERIFY(command);QVERIFY(command->isFlat());QVERIFY(command->isCheckable());
+            QVERIFY(command->isChecked());QCOMPARE(command->text(),QString("Mapped metric title"));
+            QCOMPARE(command->description(),QString("Mapped consequence"));
+            QVERIFY(!command->property("figmaCommandShowDescription").toBool());
+            QVERIFY(!command->property("figmaCommandShowIcon").toBool());
+            QCOMPARE(converter.trace().first().toObject()["calls"].toArray().first().toObject()["api"].toString(),
+                     QString("actions.configureCommandLinkButton"));
         }
         {
             const auto sample = fixture("410:57", "ComponentLab/ProgressBar",

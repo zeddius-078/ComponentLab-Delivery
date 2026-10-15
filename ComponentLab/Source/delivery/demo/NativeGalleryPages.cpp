@@ -397,21 +397,13 @@ void watchObjectTree(QWidget* page, QTreeWidget* objectTree, QWidget* preview) {
 
 void applyVariant(QWidget* widget, const DesignComponentSet& componentSet, const QString& variant);
 
-void configureDialogActions(QDialogButtonBox* box,const QString& configuration) {
-    if(box->property("dialogConfiguration")==configuration)return;
-    box->clear();
-    if(configuration=="Apply")box->setStandardButtons(QDialogButtonBox::Reset|QDialogButtonBox::Cancel|QDialogButtonBox::Apply);
-    else if(configuration=="Help")box->setStandardButtons(QDialogButtonBox::Help|QDialogButtonBox::Cancel|QDialogButtonBox::Ok);
-    else if(configuration=="Destructive") {
-        box->setStandardButtons(QDialogButtonBox::Cancel);
-        auto* action=box->addButton(QString::fromUtf8("Delete"),QDialogButtonBox::DestructiveRole);
-        action->setObjectName("dialogDeleteAction");
-        // Demo safety policy, not a Figma fact: Delete is never the default action.
-        action->setAutoDefault(false);action->setDefault(false);
-        box->button(QDialogButtonBox::Cancel)->setDefault(true);
-    } else box->setStandardButtons(QDialogButtonBox::Ok|QDialogButtonBox::Cancel);
-    box->setProperty("dialogConfiguration",configuration);
-    commonWidget::applyFigmaDialogButtonBoxAppearance(box);
+void configureDialogPreview(QDialogButtonBox* box,const QString& configuration) {
+    commonWidget::configureFigmaDialogButtonGroup(box,{
+        {"Orientation",box->orientation()==Qt::Vertical?"Vertical":"Horizontal"},
+        {"Centered",box->centerButtons()?"True":"False"},
+        {"Configuration",configuration},
+        {"State",box->isEnabled()?"Default":"Disabled"}
+    });
 }
 
 QWidget* createNativeAppearance(const DesignComponentDescriptor& descriptor,
@@ -617,15 +609,15 @@ QWidget* createNativeAppearance(const DesignComponentDescriptor& descriptor,
         auto* open=new QPushButton(QString::fromUtf8("打开键盘测试对话框"),settings);open->setObjectName("dialogOpenControl");controls->addRow(open);
         auto* note=new QLabel(QString::fromUtf8("32 个 Figma 变体；画廊顺序仅为设计示意。外观保留 QStyle 平台排序、原生 standardButtons、角色与信号、本地化、方向和居中。420×160 不是运行时固定尺寸。Apply、Reset、Delete 只记录 clicked + role，不触发 accepted；Delete 不执行文件操作，也不设为默认按钮。Enter/Escape 在测试对话框中验证，QDialogButtonBox 自身不会关闭窗口。"),settings);note->setWordWrap(true);controls->addRow(note);
         const auto sync=[=]{const QSignalBlocker a(configuration),b(orientation),c(centered);configuration->setCurrentText(box->property("dialogConfiguration").toString());orientation->setCurrentIndex(box->orientation()==Qt::Vertical?1:0);centered->setChecked(box->centerButtons());readout->setText(QString("standardButtons=0x%1\nclicked=%2 / accepted=%3\nrejected=%4 / help=%5\nlast role=%6\nQStyle layout=%7").arg(uint(box->standardButtons()),0,16).arg(box->property("dialogClicks").toInt()).arg(box->property("dialogAccepted").toInt()).arg(box->property("dialogRejected").toInt()).arg(box->property("dialogHelp").toInt()).arg(box->property("dialogLastRole").toInt()).arg(box->style()->styleHint(QStyle::SH_DialogButtonLayout,nullptr,box)));};
-        QObject::connect(configuration,&QComboBox::currentTextChanged,box,[=](const QString& value){configureDialogActions(box,value);sync();});
+        QObject::connect(configuration,&QComboBox::currentTextChanged,box,[=](const QString& value){configureDialogPreview(box,value);sync();});
         QObject::connect(orientation,qOverload<int>(&QComboBox::currentIndexChanged),box,[=](int n){box->setOrientation(n?Qt::Vertical:Qt::Horizontal);commonWidget::applyFigmaDialogButtonBoxAppearance(box);sync();});
         QObject::connect(centered,&QCheckBox::toggled,box,[=](bool on){box->setCenterButtons(on);sync();});
         QObject::connect(rtl,&QCheckBox::toggled,box,[=](bool on){box->setLayoutDirection(on?Qt::RightToLeft:Qt::LeftToRight);});
         QObject::connect(box,&QDialogButtonBox::clicked,box,[=](QAbstractButton* action){box->setProperty("dialogClicks",box->property("dialogClicks").toInt()+1);box->setProperty("dialogLastRole",int(box->buttonRole(action)));sync();});
         const auto count=[=](const char* key){box->setProperty(key,box->property(key).toInt()+1);sync();};
         QObject::connect(box,&QDialogButtonBox::accepted,box,[=]{count("dialogAccepted");});QObject::connect(box,&QDialogButtonBox::rejected,box,[=]{count("dialogRejected");});QObject::connect(box,&QDialogButtonBox::helpRequested,box,[=]{count("dialogHelp");});
-        QObject::connect(open,&QPushButton::clicked,box,[=]{auto* dialog=new QDialog(page);dialog->setObjectName("dialogKeyboardTest");dialog->setAttribute(Qt::WA_DeleteOnClose);dialog->setWindowTitle(QString::fromUtf8("原生对话框键盘测试（无实际操作）"));auto* layout=new QVBoxLayout(dialog);layout->addWidget(new QLabel(QString::fromUtf8("Enter 使用原生默认按钮；Escape 取消。Apply / Reset / Delete 仅作演示。"),dialog));auto* actions=new commonWidget::Z_DialogButtonBox(dialog);configureDialogActions(actions,configuration->currentText());actions->setOrientation(box->orientation());actions->setCenterButtons(box->centerButtons());actions->setLayoutDirection(box->layoutDirection());actions->setEnabled(box->isEnabled());commonWidget::applyFigmaDialogButtonBoxAppearance(actions);layout->addWidget(actions);QObject::connect(actions,&QDialogButtonBox::accepted,dialog,&QDialog::accept);QObject::connect(actions,&QDialogButtonBox::rejected,dialog,&QDialog::reject);dialog->show();});
-        QObject::connect(variant,&QComboBox::currentTextChanged,box,[=]{QTimer::singleShot(0,box,sync);});configureDialogActions(box,"Confirm");sync();
+        QObject::connect(open,&QPushButton::clicked,box,[=]{auto* dialog=new QDialog(page);dialog->setObjectName("dialogKeyboardTest");dialog->setAttribute(Qt::WA_DeleteOnClose);dialog->setWindowTitle(QString::fromUtf8("原生对话框键盘测试（无实际操作）"));auto* layout=new QVBoxLayout(dialog);layout->addWidget(new QLabel(QString::fromUtf8("Enter 使用原生默认按钮；Escape 取消。Apply / Reset / Delete 仅作演示。"),dialog));auto* actions=new commonWidget::Z_DialogButtonBox(dialog);actions->setOrientation(box->orientation());actions->setCenterButtons(box->centerButtons());actions->setLayoutDirection(box->layoutDirection());actions->setEnabled(box->isEnabled());configureDialogPreview(actions,configuration->currentText());layout->addWidget(actions);QObject::connect(actions,&QDialogButtonBox::accepted,dialog,&QDialog::accept);QObject::connect(actions,&QDialogButtonBox::rejected,dialog,&QDialog::reject);dialog->show();});
+        QObject::connect(variant,&QComboBox::currentTextChanged,box,[=]{QTimer::singleShot(0,box,sync);});configureDialogPreview(box,"Confirm");sync();
     }
     if(auto* tool=qobject_cast<QToolButton*>(preview);tool&&componentSet.id=="443:222") {
         controls->setRowWrapPolicy(QFormLayout::WrapAllRows);controls->setContentsMargins(12,12,12,12);variant->setMinimumContentsLength(1);variant->setSizePolicy(QSizePolicy::Ignored,QSizePolicy::Fixed);
@@ -1738,18 +1730,19 @@ void applyVariant(QWidget* widget, const DesignComponentSet& componentSet,
         commonWidget::applyFigmaTabWidgetAppearance(tabs,properties.value("State"),target);
     }
     if(componentSet.id=="447:593")if(auto* box=qobject_cast<QDialogButtonBox*>(widget)) {
-        configureDialogActions(box,properties.value("Configuration"));box->setOrientation(properties.value("Orientation")=="Vertical"?Qt::Vertical:Qt::Horizontal);box->setCenterButtons(properties.value("Centered")=="True");commonWidget::applyFigmaDialogButtonBoxAppearance(box);
+        commonWidget::configureFigmaDialogButtonGroup(box,properties);
     }
     if(componentSet.id=="443:222")if(auto* tool=qobject_cast<QToolButton*>(widget)) {
-        tool->setAutoRaise(properties.value("Surface")=="AutoRaise");tool->setPopupMode(properties.value("Menu")=="Split"?QToolButton::MenuButtonPopup:QToolButton::DelayedPopup);
-        if(auto* action=tool->defaultAction()){action->setEnabled(state!="disabled");action->setCheckable(state.startsWith("checked"));action->setChecked(state.startsWith("checked"));}
-        else{tool->setCheckable(state.startsWith("checked"));tool->setChecked(state.startsWith("checked"));}
-        commonWidget::applyFigmaToolButtonAppearance(tool,state=="disabled"?QString():properties.value("State"));
+        auto contract=properties;
+        if(!contract.contains("Show label"))contract.insert("Show label","True");
+        commonWidget::configureFigmaToolButton(tool,contract);
         tool->setMinimumSize(0,0);
     }
     if(componentSet.id=="450:102")if(auto* command=qobject_cast<QCommandLinkButton*>(widget)) {
-        command->setFlat(properties.value("Surface")=="Flat");command->setCheckable(state.startsWith("checked"));command->setChecked(state.startsWith("checked"));
-        commonWidget::applyFigmaCommandLinkAppearance(command,state=="disabled"?QString():properties.value("State"),command->property("figmaCommandShowDescription").toBool(),command->property("figmaCommandShowIcon").toBool());
+        auto contract=properties;
+        if(!contract.contains("Show description"))contract.insert("Show description","True");
+        if(!contract.contains("Show icon"))contract.insert("Show icon","True");
+        commonWidget::configureFigmaCommandLinkButton(command,contract);
     }
     // Restore captured dimensions after shell QSS polishing (native Windows timing differs).
     if(componentSet.id=="1120:18" || componentSet.id=="1121:18")if(auto* combo=qobject_cast<QComboBox*>(widget))

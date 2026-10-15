@@ -220,6 +220,8 @@ class FigmaCatalogContractTests(unittest.TestCase):
              "ComponentLab/WizardPage", "ComponentLab/Wizard",
              "ComponentLab/Label", "ComponentLab/ProgressBar",
              "ComponentLab/MetricCard", "ComponentLab/Statistic",
+             "ComponentLab/ToolButton", "ComponentLab/DialogButtonGroup",
+             "ComponentLab/CommandLinkButton",
              "ComponentLab/Navbar", "ComponentLab/Sidebar",
              "ComponentLab/DesktopBottomNavigation"},
             {entry["canonicalId"] for entry in entries
@@ -296,6 +298,32 @@ class FigmaCatalogContractTests(unittest.TestCase):
                 "VERIFIED", entry["verificationStatus"]["downstreamConsumption"]
             )
             self.assertIn(evidence, entry["evidenceRefs"])
+
+    def test_action_components_use_shared_sdk_variant_contracts(self):
+        by_id = {entry["canonicalId"]: entry for entry in self.catalog["entries"]}
+        expected = {
+            "ComponentLab/ToolButton": "STRONG_FOCUS_OPTIONAL_INDICATOR",
+            "ComponentLab/DialogButtonGroup": "CHILD_ACTION_NAVIGATION_OPTIONAL_INDICATOR",
+            "ComponentLab/CommandLinkButton": "STRONG_FOCUS_OPTIONAL_INDICATOR",
+        }
+        for canonical_id, focus_policy in expected.items():
+            entry = by_id[canonical_id]
+            self.assertEqual(focus_policy, entry["focusPolicy"])
+            self.assertEqual(
+                "SDK_FACTORY_COMPONENTLAB_GENERATELAYOUT",
+                entry["verificationStatus"]["runtimeScope"],
+            )
+            self.assertEqual(
+                "VERIFIED", entry["verificationStatus"]["downstreamConsumption"]
+            )
+            self.assertIn(
+                "focusIndicatorEnabled",
+                entry["runtimeContract"]["controlledProperties"],
+            )
+            self.assertIn(
+                "DesignToCode_GenerateLayout/Source/Validation/component/ComponentTests.cpp",
+                entry["evidenceRefs"],
+            )
 
     def test_composite_display_components_keep_state_and_formatter_boundaries(self):
         by_id = {entry["canonicalId"]: entry for entry in self.catalog["entries"]}

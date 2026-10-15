@@ -142,15 +142,10 @@ QWidget* createActionGallery(const QString& pageId,
                 button->setText("Format");
                 button->setIcon(commonWidget::figmaToolButtonIcon());
                 button->setIconSize(QSize(16, 16));
-                button->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
-                button->setAutoRaise(name.contains("Surface=AutoRaise"));
-                button->setPopupMode(name.contains("Menu=Split") ? QToolButton::MenuButtonPopup
-                                                                 : QToolButton::DelayedPopup);
-                button->setCheckable(sourceState.startsWith("Checked"));
-                button->setChecked(sourceState.startsWith("Checked"));
-                button->setEnabled(sourceState != "Disabled");
-                commonWidget::applyFigmaToolButtonAppearance(
-                    button, sourceState == "Disabled" ? "Default" : sourceState, true);
+                commonWidget::configureFigmaToolButton(
+                    button, {{"Surface", name.contains("Surface=AutoRaise") ? "AutoRaise" : "Framed"},
+                             {"Menu", name.contains("Menu=Split") ? "Split" : "None"},
+                             {"State", sourceState}, {"Show label", "True"}}, true);
                 button->setProperty("figmaNodeId", node[0].toString());
                 button->setProperty("figmaVariant", name);
                 button->setProperty("figmaDesignBounds", bounds(node));
@@ -170,13 +165,11 @@ QWidget* createActionGallery(const QString& pageId,
             button->setDescription("Start with an empty workspace and configure it later.");
             button->setIcon(commonWidget::figmaCommandLinkIcon());
             button->setIconSize(QSize(16, 16));
-            button->setFlat(name.contains("Surface=Flat"));
-            button->setCheckable(sourceState.startsWith("Checked"));
-            button->setChecked(sourceState.startsWith("Checked"));
-            button->setEnabled(sourceState != "Disabled");
             button->setAutoDefault(false);
-            commonWidget::applyFigmaCommandLinkAppearance(
-                button, sourceState == "Disabled" ? "Default" : sourceState, true, true, true);
+            commonWidget::configureFigmaCommandLinkButton(
+                button, {{"Surface", name.contains("Surface=Flat") ? "Flat" : "Raised"},
+                         {"State", sourceState}, {"Show description", "True"},
+                         {"Show icon", "True"}}, true);
             button->setProperty("figmaNodeId", node[0].toString());
             button->setProperty("figmaVariant", name);
             button->setProperty("figmaDesignBounds", bounds(node));

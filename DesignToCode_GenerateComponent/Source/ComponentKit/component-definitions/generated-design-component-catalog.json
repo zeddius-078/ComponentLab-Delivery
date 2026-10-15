@@ -2827,7 +2827,16 @@
       "evidenceRefs": [
         "Source/ComponentKit/component-definitions/figma-component-inventory.json",
         "Source/ComponentKit/runtime/component/ComponentFactory.cpp",
-        "docs/designRules/design-system/component-traceability-manifest.json"
+        "docs/designRules/design-system/component-traceability-manifest.json",
+        "docs/designRules/design-system/component-traceability-manifest.json",
+        "Source/ComponentKit/runtime/component/ToolButtonAppearance.h",
+        "Source/ComponentKit/runtime/component/ToolButtonAppearance.cpp",
+        "Source/ComponentKit/runtime/component/FocusIndicator.cpp",
+        "Source/SDKConsumerTest/main.cpp",
+        "ComponentLab/Source/delivery/demo/NativeGalleryPages.cpp",
+        "ComponentLab/Source/delivery/tests/CompositionTests.cpp",
+        "DesignToCode_GenerateLayout/Source/HtmlDsl/pipeline/mapping/component-mapping.json",
+        "DesignToCode_GenerateLayout/Source/Validation/component/ComponentTests.cpp"
       ],
       "designOriginAction": "REUSE",
       "identityMigration": "MERGE",
@@ -2837,14 +2846,35 @@
         "schema": "VERIFIED",
         "build": "VERIFIED",
         "runtime": "VERIFIED",
-        "runtimeScope": "FACTORY_INSTANTIATION_ONLY",
+        "runtimeScope": "SDK_FACTORY_COMPONENTLAB_GENERATELAYOUT",
         "factoryRegistration": "VERIFIED",
         "visual": "NOT_VERIFIED",
-        "downstreamConsumption": "NOT_VERIFIED",
+        "downstreamConsumption": "VERIFIED",
         "tokenBinding": "BOUND_VERIFIED"
       },
       "governanceApprovalStatus": "NOT_REVIEWED",
-      "focusPolicy": "UNRESOLVED"
+      "focusPolicy": "STRONG_FOCUS_OPTIONAL_INDICATOR",
+      "runtimeContract": {
+        "qtBaseClass": "QToolButton/QAction/QMenu",
+        "variantAxes": [
+          "Surface",
+          "Menu",
+          "State"
+        ],
+        "controlledProperties": [
+          "autoRaise",
+          "popupMode",
+          "checked",
+          "enabled",
+          "Show label",
+          "focusIndicatorEnabled"
+        ],
+        "signals": [
+          "clicked(bool)",
+          "triggered(QAction*)"
+        ],
+        "controllerBoundary": "The SDK maps the 34 valid Figma variants. QAction remains optional command authority; QMenu ownership, popup timing, activation and focus return remain native Qt runtime behavior. Menu=None preserves an existing non-split popup mode."
+      }
     },
     {
       "designComponent": "ComponentLab/DialogButtonGroup",
@@ -2872,7 +2902,16 @@
       "version": "UNRESOLVED",
       "evidenceRefs": [
         "Source/ComponentKit/component-definitions/figma-component-inventory.json",
-        "Source/ComponentKit/runtime/component/ComponentFactory.cpp"
+        "Source/ComponentKit/runtime/component/ComponentFactory.cpp",
+        "docs/designRules/design-system/component-traceability-manifest.json",
+        "Source/ComponentKit/runtime/component/DialogButtonBoxAppearance.h",
+        "Source/ComponentKit/runtime/component/DialogButtonBoxAppearance.cpp",
+        "Source/ComponentKit/runtime/component/FocusIndicator.cpp",
+        "Source/SDKConsumerTest/main.cpp",
+        "ComponentLab/Source/delivery/demo/NativeGalleryPages.cpp",
+        "ComponentLab/Source/delivery/tests/CompositionTests.cpp",
+        "DesignToCode_GenerateLayout/Source/HtmlDsl/pipeline/mapping/component-mapping.json",
+        "DesignToCode_GenerateLayout/Source/Validation/component/ComponentTests.cpp"
       ],
       "designOriginAction": "REUSE",
       "identityMigration": "NONE",
@@ -2882,14 +2921,37 @@
         "schema": "VERIFIED",
         "build": "VERIFIED",
         "runtime": "VERIFIED",
-        "runtimeScope": "FACTORY_INSTANTIATION_ONLY",
+        "runtimeScope": "SDK_FACTORY_COMPONENTLAB_GENERATELAYOUT",
         "factoryRegistration": "VERIFIED",
         "visual": "NOT_VERIFIED",
-        "downstreamConsumption": "NOT_VERIFIED",
+        "downstreamConsumption": "VERIFIED",
         "tokenBinding": "UNRESOLVED"
       },
       "governanceApprovalStatus": "NOT_REVIEWED",
-      "focusPolicy": "UNRESOLVED"
+      "focusPolicy": "CHILD_ACTION_NAVIGATION_OPTIONAL_INDICATOR",
+      "runtimeContract": {
+        "qtBaseClass": "QDialogButtonBox/QPushButton composition",
+        "variantAxes": [
+          "Orientation",
+          "Centered",
+          "Configuration",
+          "State"
+        ],
+        "controlledProperties": [
+          "standardButtons",
+          "orientation",
+          "centerButtons",
+          "enabled",
+          "focusIndicatorEnabled"
+        ],
+        "signals": [
+          "accepted()",
+          "rejected()",
+          "helpRequested()",
+          "clicked(QAbstractButton*)"
+        ],
+        "controllerBoundary": "The root is a presentation/layout host. Native child buttons retain ButtonRole and platform QStyle ordering. DestructiveRole is not converted into accepted(), and Delete is never the Enter default. A root ring opt-out is inherited by all watched child buttons."
+      }
     },
     {
       "designComponent": "ComponentLab/CommandLinkButton",
@@ -2917,7 +2979,16 @@
       "version": "UNRESOLVED",
       "evidenceRefs": [
         "Source/ComponentKit/component-definitions/figma-component-inventory.json",
-        "Source/ComponentKit/runtime/component/ComponentFactory.cpp"
+        "Source/ComponentKit/runtime/component/ComponentFactory.cpp",
+        "docs/designRules/design-system/component-traceability-manifest.json",
+        "Source/ComponentKit/runtime/component/CommandLinkAppearance.h",
+        "Source/ComponentKit/runtime/component/CommandLinkAppearance.cpp",
+        "Source/ComponentKit/runtime/component/FocusIndicator.cpp",
+        "Source/SDKConsumerTest/main.cpp",
+        "ComponentLab/Source/delivery/demo/NativeGalleryPages.cpp",
+        "ComponentLab/Source/delivery/tests/CompositionTests.cpp",
+        "DesignToCode_GenerateLayout/Source/HtmlDsl/pipeline/mapping/component-mapping.json",
+        "DesignToCode_GenerateLayout/Source/Validation/component/ComponentTests.cpp"
       ],
       "designOriginAction": "REUSE",
       "identityMigration": "NONE",
@@ -2927,14 +2998,36 @@
         "schema": "VERIFIED",
         "build": "VERIFIED",
         "runtime": "VERIFIED",
-        "runtimeScope": "FACTORY_INSTANTIATION_ONLY",
+        "runtimeScope": "SDK_FACTORY_COMPONENTLAB_GENERATELAYOUT",
         "factoryRegistration": "VERIFIED",
         "visual": "NOT_VERIFIED",
-        "downstreamConsumption": "NOT_VERIFIED",
+        "downstreamConsumption": "VERIFIED",
         "tokenBinding": "UNRESOLVED"
       },
       "governanceApprovalStatus": "NOT_REVIEWED",
-      "focusPolicy": "UNRESOLVED"
+      "focusPolicy": "STRONG_FOCUS_OPTIONAL_INDICATOR",
+      "runtimeContract": {
+        "qtBaseClass": "QCommandLinkButton",
+        "variantAxes": [
+          "Surface",
+          "State"
+        ],
+        "controlledProperties": [
+          "text",
+          "description",
+          "flat",
+          "checked",
+          "enabled",
+          "Show description",
+          "Show icon",
+          "focusIndicatorEnabled"
+        ],
+        "signals": [
+          "clicked(bool)",
+          "toggled(bool)"
+        ],
+        "controllerBoundary": "The SDK maps presentation and persistent checked state. Choice-group exclusivity, current selection and wizard or dialog navigation remain host-controller responsibilities."
+      }
     },
     {
       "designComponent": "ComponentLab/LineEdit",
@@ -9015,7 +9108,16 @@
       "evidenceRefs": [
         "Source/ComponentKit/component-definitions/figma-component-inventory.json",
         "Source/ComponentKit/runtime/component/ComponentFactory.cpp",
-        "docs/designRules/design-system/component-traceability-manifest.json"
+        "docs/designRules/design-system/component-traceability-manifest.json",
+        "docs/designRules/design-system/component-traceability-manifest.json",
+        "Source/ComponentKit/runtime/component/ToolButtonAppearance.h",
+        "Source/ComponentKit/runtime/component/ToolButtonAppearance.cpp",
+        "Source/ComponentKit/runtime/component/FocusIndicator.cpp",
+        "Source/SDKConsumerTest/main.cpp",
+        "ComponentLab/Source/delivery/demo/NativeGalleryPages.cpp",
+        "ComponentLab/Source/delivery/tests/CompositionTests.cpp",
+        "DesignToCode_GenerateLayout/Source/HtmlDsl/pipeline/mapping/component-mapping.json",
+        "DesignToCode_GenerateLayout/Source/Validation/component/ComponentTests.cpp"
       ],
       "designOriginAction": "REUSE",
       "identityMigration": "MERGE",
@@ -9025,14 +9127,35 @@
         "schema": "VERIFIED",
         "build": "VERIFIED",
         "runtime": "VERIFIED",
-        "runtimeScope": "FACTORY_INSTANTIATION_ONLY",
+        "runtimeScope": "SDK_FACTORY_COMPONENTLAB_GENERATELAYOUT",
         "factoryRegistration": "VERIFIED",
         "visual": "NOT_VERIFIED",
-        "downstreamConsumption": "NOT_VERIFIED",
+        "downstreamConsumption": "VERIFIED",
         "tokenBinding": "BOUND_VERIFIED"
       },
       "governanceApprovalStatus": "NOT_REVIEWED",
-      "focusPolicy": "UNRESOLVED"
+      "focusPolicy": "STRONG_FOCUS_OPTIONAL_INDICATOR",
+      "runtimeContract": {
+        "qtBaseClass": "QToolButton/QAction/QMenu",
+        "variantAxes": [
+          "Surface",
+          "Menu",
+          "State"
+        ],
+        "controlledProperties": [
+          "autoRaise",
+          "popupMode",
+          "checked",
+          "enabled",
+          "Show label",
+          "focusIndicatorEnabled"
+        ],
+        "signals": [
+          "clicked(bool)",
+          "triggered(QAction*)"
+        ],
+        "controllerBoundary": "The SDK maps the 34 valid Figma variants. QAction remains optional command authority; QMenu ownership, popup timing, activation and focus return remain native Qt runtime behavior. Menu=None preserves an existing non-split popup mode."
+      }
     },
     {
       "designComponent": "ComponentLab/DialogButtonGroup",
@@ -9060,7 +9183,16 @@
       "version": "UNRESOLVED",
       "evidenceRefs": [
         "Source/ComponentKit/component-definitions/figma-component-inventory.json",
-        "Source/ComponentKit/runtime/component/ComponentFactory.cpp"
+        "Source/ComponentKit/runtime/component/ComponentFactory.cpp",
+        "docs/designRules/design-system/component-traceability-manifest.json",
+        "Source/ComponentKit/runtime/component/DialogButtonBoxAppearance.h",
+        "Source/ComponentKit/runtime/component/DialogButtonBoxAppearance.cpp",
+        "Source/ComponentKit/runtime/component/FocusIndicator.cpp",
+        "Source/SDKConsumerTest/main.cpp",
+        "ComponentLab/Source/delivery/demo/NativeGalleryPages.cpp",
+        "ComponentLab/Source/delivery/tests/CompositionTests.cpp",
+        "DesignToCode_GenerateLayout/Source/HtmlDsl/pipeline/mapping/component-mapping.json",
+        "DesignToCode_GenerateLayout/Source/Validation/component/ComponentTests.cpp"
       ],
       "designOriginAction": "REUSE",
       "identityMigration": "NONE",
@@ -9070,14 +9202,37 @@
         "schema": "VERIFIED",
         "build": "VERIFIED",
         "runtime": "VERIFIED",
-        "runtimeScope": "FACTORY_INSTANTIATION_ONLY",
+        "runtimeScope": "SDK_FACTORY_COMPONENTLAB_GENERATELAYOUT",
         "factoryRegistration": "VERIFIED",
         "visual": "NOT_VERIFIED",
-        "downstreamConsumption": "NOT_VERIFIED",
+        "downstreamConsumption": "VERIFIED",
         "tokenBinding": "UNRESOLVED"
       },
       "governanceApprovalStatus": "NOT_REVIEWED",
-      "focusPolicy": "UNRESOLVED"
+      "focusPolicy": "CHILD_ACTION_NAVIGATION_OPTIONAL_INDICATOR",
+      "runtimeContract": {
+        "qtBaseClass": "QDialogButtonBox/QPushButton composition",
+        "variantAxes": [
+          "Orientation",
+          "Centered",
+          "Configuration",
+          "State"
+        ],
+        "controlledProperties": [
+          "standardButtons",
+          "orientation",
+          "centerButtons",
+          "enabled",
+          "focusIndicatorEnabled"
+        ],
+        "signals": [
+          "accepted()",
+          "rejected()",
+          "helpRequested()",
+          "clicked(QAbstractButton*)"
+        ],
+        "controllerBoundary": "The root is a presentation/layout host. Native child buttons retain ButtonRole and platform QStyle ordering. DestructiveRole is not converted into accepted(), and Delete is never the Enter default. A root ring opt-out is inherited by all watched child buttons."
+      }
     },
     {
       "designComponent": "ComponentLab/CommandLinkButton",
@@ -9105,7 +9260,16 @@
       "version": "UNRESOLVED",
       "evidenceRefs": [
         "Source/ComponentKit/component-definitions/figma-component-inventory.json",
-        "Source/ComponentKit/runtime/component/ComponentFactory.cpp"
+        "Source/ComponentKit/runtime/component/ComponentFactory.cpp",
+        "docs/designRules/design-system/component-traceability-manifest.json",
+        "Source/ComponentKit/runtime/component/CommandLinkAppearance.h",
+        "Source/ComponentKit/runtime/component/CommandLinkAppearance.cpp",
+        "Source/ComponentKit/runtime/component/FocusIndicator.cpp",
+        "Source/SDKConsumerTest/main.cpp",
+        "ComponentLab/Source/delivery/demo/NativeGalleryPages.cpp",
+        "ComponentLab/Source/delivery/tests/CompositionTests.cpp",
+        "DesignToCode_GenerateLayout/Source/HtmlDsl/pipeline/mapping/component-mapping.json",
+        "DesignToCode_GenerateLayout/Source/Validation/component/ComponentTests.cpp"
       ],
       "designOriginAction": "REUSE",
       "identityMigration": "NONE",
@@ -9115,14 +9279,36 @@
         "schema": "VERIFIED",
         "build": "VERIFIED",
         "runtime": "VERIFIED",
-        "runtimeScope": "FACTORY_INSTANTIATION_ONLY",
+        "runtimeScope": "SDK_FACTORY_COMPONENTLAB_GENERATELAYOUT",
         "factoryRegistration": "VERIFIED",
         "visual": "NOT_VERIFIED",
-        "downstreamConsumption": "NOT_VERIFIED",
+        "downstreamConsumption": "VERIFIED",
         "tokenBinding": "UNRESOLVED"
       },
       "governanceApprovalStatus": "NOT_REVIEWED",
-      "focusPolicy": "UNRESOLVED"
+      "focusPolicy": "STRONG_FOCUS_OPTIONAL_INDICATOR",
+      "runtimeContract": {
+        "qtBaseClass": "QCommandLinkButton",
+        "variantAxes": [
+          "Surface",
+          "State"
+        ],
+        "controlledProperties": [
+          "text",
+          "description",
+          "flat",
+          "checked",
+          "enabled",
+          "Show description",
+          "Show icon",
+          "focusIndicatorEnabled"
+        ],
+        "signals": [
+          "clicked(bool)",
+          "toggled(bool)"
+        ],
+        "controllerBoundary": "The SDK maps presentation and persistent checked state. Choice-group exclusivity, current selection and wizard or dialog navigation remain host-controller responsibilities."
+      }
     },
     {
       "designComponent": "ComponentLab/LineEdit",

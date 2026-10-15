@@ -108,6 +108,63 @@
       "status":"Figma 414:39; 12 Alignment x Wrap x State variants; presentation-only and Qt::NoFocus"
     },
     {
+      "designComponentName":"ComponentLab/ToolButton",
+      "designComponentSetId":"443:222",
+      "designComponentSet":"ComponentLab/ToolButton",
+      "qtClass":"commonWidget::Z_ToolButton",
+      "compositionApi":"actions.configureToolButton",
+      "propertyMappings":{
+        "Surface":{"api":"actions.configureToolButton","values":{"Framed":"Framed","AutoRaise":"AutoRaise"}},
+        "Menu":{"api":"actions.configureToolButton","values":{"None":"None","Split":"Split"}},
+        "State":{"api":"actions.configureToolButton","values":{"Default":"Default","Hover":"Hover","Pressed":"Pressed","Focus":"Focus","Disabled":"Disabled","Checked":"Checked","CheckedHover":"CheckedHover","CheckedFocus":"CheckedFocus","Open":"Open"}},
+        "Show label":{"api":"actions.configureToolButton","values":{"False":"False","True":"True"}}
+      },
+      "stateMappings":{},
+      "slotMappings":[{"name":"Label","api":"setText","field":"nodeText"}],
+      "resourceMappings":{"policy":"The Figma Icon instance-swap remains a stable semantic asset input; QAction, QMenu, popup timing, activation and focus return remain native runtime authority"},
+      "fallback":"error",
+      "status":"Figma 443:222; 34 valid variants; Open is rejected unless Menu=Split"
+    },
+    {
+      "designComponentName":"ComponentLab/DialogButtonGroup",
+      "designComponentSetId":"447:593",
+      "designComponentSet":"ComponentLab/DialogButtonGroup",
+      "qtClass":"commonWidget::Z_DialogButtonBox",
+      "compositionApi":"actions.configureDialogButtonGroup",
+      "propertyMappings":{
+        "Orientation":{"api":"actions.configureDialogButtonGroup","values":{"Horizontal":"Horizontal","Vertical":"Vertical"}},
+        "Centered":{"api":"actions.configureDialogButtonGroup","values":{"False":"False","True":"True"}},
+        "Configuration":{"api":"actions.configureDialogButtonGroup","values":{"Confirm":"Confirm","Apply":"Apply","Help":"Help","Destructive":"Destructive"}},
+        "State":{"api":"actions.configureDialogButtonGroup","values":{"Default":"Default","Disabled":"Disabled"}}
+      },
+      "stateMappings":{},
+      "slotMappings":[],
+      "resourceMappings":{"policy":"The SDK creates native StandardButtons and ButtonRole assignments; platform QStyle retains ordering and accepted, rejected, helpRequested and clicked semantics"},
+      "fallback":"error",
+      "status":"Figma 447:593; 32 Orientation x Centered x Configuration x State variants"
+    },
+    {
+      "designComponentName":"ComponentLab/CommandLinkButton",
+      "designComponentSetId":"450:102",
+      "designComponentSet":"ComponentLab/CommandLinkButton",
+      "qtClass":"commonWidget::Z_CommandLinkButton",
+      "compositionApi":"actions.configureCommandLinkButton",
+      "propertyMappings":{
+        "Surface":{"api":"actions.configureCommandLinkButton","values":{"Raised":"Raised","Flat":"Flat"}},
+        "State":{"api":"actions.configureCommandLinkButton","values":{"Default":"Default","Hover":"Hover","Pressed":"Pressed","Focus":"Focus","Disabled":"Disabled","Checked":"Checked","CheckedHover":"CheckedHover","CheckedFocus":"CheckedFocus"}},
+        "Show description":{"api":"actions.configureCommandLinkButton","values":{"False":"False","True":"True"}},
+        "Show icon":{"api":"actions.configureCommandLinkButton","values":{"False":"False","True":"True"}}
+      },
+      "stateMappings":{},
+      "slotMappings":[
+        {"name":"Title","api":"setText","field":"nodeText"},
+        {"name":"Description","api":"setDescription","field":"nodeText"}
+      ],
+      "resourceMappings":{"policy":"The Icon instance-swap remains a stable semantic asset input; choice-group exclusivity and flow navigation belong to the host controller"},
+      "fallback":"error",
+      "status":"Figma 450:102; 16 Surface x State variants with explicit content visibility"
+    },
+    {
       "designComponentName":"ComponentLab/MetricCard",
       "designComponentSetId":"397:39",
       "designComponentSet":"ComponentLab/MetricCard",

@@ -218,6 +218,35 @@ QIcon figmaCommandLinkIcon() {
     return icon;
 }
 
+void configureFigmaCommandLinkButton(QCommandLinkButton* button,
+                                     const QMap<QString, QString>& properties,
+                                     bool sourceSnapshot) {
+    if (!button)
+        throw std::invalid_argument("CommandLinkButton is required");
+    const auto surface = properties.value("Surface");
+    const auto visual = properties.value("State");
+    const auto showDescription = properties.value("Show description");
+    const auto showIcon = properties.value("Show icon");
+    if (!QStringList{"Raised", "Flat"}.contains(surface) ||
+        !QStringList{"Default", "Hover", "Pressed", "Focus", "Disabled", "Checked",
+                     "CheckedHover", "CheckedFocus"}
+             .contains(visual) ||
+        !QStringList{"False", "True"}.contains(showDescription) ||
+        !QStringList{"False", "True"}.contains(showIcon))
+        throw std::invalid_argument("Invalid Figma CommandLinkButton variant");
+
+    button->setFlat(surface == "Flat");
+    button->setEnabled(visual != "Disabled");
+    const bool checked = visual.startsWith("Checked");
+    if (checked)
+        button->setCheckable(true);
+    button->setChecked(checked);
+    button->setProperty("figmaCommandSurface", surface);
+    applyFigmaCommandLinkAppearance(button, visual == "Disabled" ? QString() : visual,
+                                    showDescription == "True", showIcon == "True",
+                                    sourceSnapshot);
+}
+
 void applyFigmaCommandLinkAppearance(QCommandLinkButton* button, const QString& snapshotState,
                                      bool showDescription, bool showIcon, bool sourceSnapshot) {
     if (!button || !QStringList{"", "Default", "Hover", "Pressed", "Focus", "Checked",

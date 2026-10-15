@@ -5,6 +5,8 @@
 #include <QAbstractSpinBox>
 #include <QColor>
 #include <QDockWidget>
+#include <QDialogButtonBox>
+#include <QCommandLinkButton>
 #include <QJsonArray>
 #include <QJsonObject>
 #include <QLabel>
@@ -16,6 +18,7 @@
 #include <QMdiArea>
 #include <QMdiSubWindow>
 #include <QProgressBar>
+#include <QPushButton>
 #include <QStackedWidget>
 #include <QWizard>
 #include <QWizardPage>
@@ -112,6 +115,57 @@ int main(int argc, char *argv[]) {
         focusCheck->focusPolicy() != Qt::StrongFocus ||
         focusInput->lineEdit()->focusPolicy() == Qt::NoFocus)
         return 133;
+
+    auto* mappedTool = qobject_cast<QToolButton*>(
+        factory.create(QStringLiteral("commonWidget::Z_ToolButton"), &owner));
+    commonWidget::configureFigmaToolButton(
+        mappedTool, {{"Surface", "AutoRaise"}, {"Menu", "Split"},
+                     {"State", "CheckedFocus"}, {"Show label", "False"}});
+    if (!mappedTool || !mappedTool->autoRaise() ||
+        mappedTool->popupMode() != QToolButton::MenuButtonPopup ||
+        mappedTool->toolButtonStyle() != Qt::ToolButtonIconOnly ||
+        !mappedTool->isCheckable() || !mappedTool->isChecked() ||
+        mappedTool->property("figmaToolSnapshotState").toString() != "CheckedFocus")
+        return 143;
+    try {
+        commonWidget::configureFigmaToolButton(
+            mappedTool, {{"Surface", "Framed"}, {"Menu", "None"},
+                         {"State", "Open"}, {"Show label", "True"}});
+        return 144;
+    } catch (const std::invalid_argument&) {
+    }
+
+    auto* mappedDialog = qobject_cast<QDialogButtonBox*>(
+        factory.create(QStringLiteral("commonWidget::Z_DialogButtonBox"), &owner));
+    commonWidget::configureFigmaDialogButtonGroup(
+        mappedDialog, {{"Orientation", "Vertical"}, {"Centered", "True"},
+                       {"Configuration", "Destructive"}, {"State", "Default"}});
+    application.processEvents();
+    auto* deleteAction = mappedDialog->findChild<QPushButton*>("dialogDeleteAction");
+    auto* cancelAction = mappedDialog->button(QDialogButtonBox::Cancel);
+    if (!mappedDialog || mappedDialog->orientation() != Qt::Vertical ||
+        !mappedDialog->centerButtons() || mappedDialog->buttons().size() != 2 ||
+        !deleteAction || mappedDialog->buttonRole(deleteAction) != QDialogButtonBox::DestructiveRole ||
+        deleteAction->isDefault() || !cancelAction || !cancelAction->isDefault() ||
+        !commonWidget::FocusIndicator::instance().enabledFor(deleteAction))
+        return 145;
+    commonWidget::FocusIndicator::instance().setEnabledFor(mappedDialog, false);
+    if (commonWidget::FocusIndicator::instance().enabledFor(deleteAction))
+        return 146;
+
+    auto* mappedCommand = qobject_cast<QCommandLinkButton*>(
+        factory.create(QStringLiteral("commonWidget::Z_CommandLinkButton"), &owner));
+    mappedCommand->setDescription(QStringLiteral("Mapped consequence"));
+    mappedCommand->setIcon(commonWidget::figmaCommandLinkIcon());
+    commonWidget::configureFigmaCommandLinkButton(
+        mappedCommand, {{"Surface", "Flat"}, {"State", "CheckedFocus"},
+                        {"Show description", "False"}, {"Show icon", "False"}});
+    if (!mappedCommand || !mappedCommand->isFlat() || !mappedCommand->isCheckable() ||
+        !mappedCommand->isChecked() ||
+        mappedCommand->property("figmaCommandShowDescription").toBool() ||
+        mappedCommand->property("figmaCommandShowIcon").toBool() ||
+        mappedCommand->property("figmaCommandSnapshotState").toString() != "CheckedFocus")
+        return 147;
     for (auto* component : {static_cast<QWidget*>(focusButton),
                             static_cast<QWidget*>(focusCheck),
                             static_cast<QWidget*>(focusInput)})

@@ -13,6 +13,9 @@
 #include "Z_DesignComponents.h"
 #include "Z_PushButton.h"
 #include "ButtonAppearanceAdapter.h"
+#include "CommandLinkAppearance.h"
+#include "DialogButtonBoxAppearance.h"
+#include "ToolButtonAppearance.h"
 #include <QJsonDocument>
 #include <QLabel>
 #include <QMap>
@@ -26,6 +29,9 @@
 #include <QWizard>
 #include <QWizardPage>
 #include <QToolBar>
+#include <QToolButton>
+#include <QDialogButtonBox>
+#include <QCommandLinkButton>
 #include <QTabWidget>
 #include <QToolBox>
 #include <QSet>
@@ -280,6 +286,21 @@ QWidget* ComponentConverter::convert(const QJsonObject& n, QWidget* parent) {
             if (!statistic)
                 fail("INVALID_COMPOSITION_TARGET", n, compositionApi);
             commonWidget::configureFigmaStatistic(statistic, compositionProperties);
+        } else if (compositionApi == QStringLiteral("actions.configureToolButton")) {
+            auto* tool = qobject_cast<QToolButton*>(w);
+            if (!tool)
+                fail("INVALID_COMPOSITION_TARGET", n, compositionApi);
+            commonWidget::configureFigmaToolButton(tool, compositionProperties);
+        } else if (compositionApi == QStringLiteral("actions.configureDialogButtonGroup")) {
+            auto* box = qobject_cast<QDialogButtonBox*>(w);
+            if (!box)
+                fail("INVALID_COMPOSITION_TARGET", n, compositionApi);
+            commonWidget::configureFigmaDialogButtonGroup(box, compositionProperties);
+        } else if (compositionApi == QStringLiteral("actions.configureCommandLinkButton")) {
+            auto* command = qobject_cast<QCommandLinkButton*>(w);
+            if (!command)
+                fail("INVALID_COMPOSITION_TARGET", n, compositionApi);
+            commonWidget::configureFigmaCommandLinkButton(command, compositionProperties);
         } else {
             fail("UNREGISTERED_COMPOSITION_API", n, compositionApi);
         }

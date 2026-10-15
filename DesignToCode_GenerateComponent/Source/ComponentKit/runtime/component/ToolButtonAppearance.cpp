@@ -262,6 +262,52 @@ QIcon figmaToolButtonIcon() {
     return icon;
 }
 
+void configureFigmaToolButton(QToolButton* button,
+                              const QMap<QString, QString>& properties,
+                              bool sourceSnapshot) {
+    if (!button)
+        throw std::invalid_argument("ToolButton is required");
+    const auto surface = properties.value("Surface");
+    const auto menu = properties.value("Menu");
+    const auto visual = properties.value("State");
+    const auto showLabel = properties.value("Show label");
+    if (!QStringList{"Framed", "AutoRaise"}.contains(surface) ||
+        !QStringList{"None", "Split"}.contains(menu) ||
+        !QStringList{"Default", "Hover", "Pressed", "Focus", "Disabled", "Checked",
+                     "CheckedHover", "CheckedFocus", "Open"}
+             .contains(visual) ||
+        !QStringList{"False", "True"}.contains(showLabel) ||
+        (visual == "Open" && menu != "Split"))
+        throw std::invalid_argument("Invalid Figma ToolButton variant");
+
+    button->setAutoRaise(surface == "AutoRaise");
+    if (menu == "Split")
+        button->setPopupMode(QToolButton::MenuButtonPopup);
+    else if (button->popupMode() == QToolButton::MenuButtonPopup)
+        button->setPopupMode(QToolButton::DelayedPopup);
+    button->setToolButtonStyle(showLabel == "True" ? Qt::ToolButtonTextBesideIcon
+                                                    : Qt::ToolButtonIconOnly);
+
+    const bool enabled = visual != "Disabled";
+    const bool checked = visual.startsWith("Checked");
+    if (auto* action = button->defaultAction()) {
+        action->setEnabled(enabled);
+        if (checked)
+            action->setCheckable(true);
+        action->setChecked(checked);
+    } else {
+        button->setEnabled(enabled);
+        if (checked)
+            button->setCheckable(true);
+        button->setChecked(checked);
+    }
+    button->setProperty("figmaToolSurface", surface);
+    button->setProperty("figmaToolMenu", menu);
+    button->setProperty("figmaToolShowLabel", showLabel == "True");
+    applyFigmaToolButtonAppearance(button, visual == "Disabled" ? QString() : visual,
+                                   sourceSnapshot);
+}
+
 void applyFigmaToolButtonAppearance(QToolButton* button, const QString& snapshotState,
                                     bool sourceSnapshot) {
     if (!button ||
