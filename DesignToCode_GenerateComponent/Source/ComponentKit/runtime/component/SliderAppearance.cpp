@@ -14,6 +14,18 @@
 
 namespace commonWidget {
 namespace {
+bool booleanProperty(const QMap<QString, QString>& properties, const QString& name,
+                     bool defaultValue) {
+    if (!properties.contains(name))
+        return defaultValue;
+    const auto value = properties.value(name);
+    if (value == "True")
+        return true;
+    if (value == "False")
+        return false;
+    throw std::invalid_argument(("Invalid Slider boolean property: " + name).toStdString());
+}
+
 QString visualState(const QSlider* slider) {
     if (!slider->isEnabled())
         return "Disabled";
@@ -223,6 +235,28 @@ protected:
 private:
     QSlider* slider_;
 };
+}
+
+void configureFigmaSlider(QSlider* slider, const QMap<QString, QString>& properties,
+                          bool sourceSnapshot) {
+    if (!slider)
+        throw std::invalid_argument("Slider is required");
+    const auto orientation = properties.value("Orientation");
+    const auto visual = properties.value("State");
+    if (!QStringList{"Horizontal", "Vertical"}.contains(orientation) ||
+        !QStringList{"Default", "Focus", "Dragging", "Disabled"}.contains(visual))
+        throw std::invalid_argument("Invalid Figma Slider variant");
+
+    slider->setOrientation(orientation == "Vertical" ? Qt::Vertical : Qt::Horizontal);
+    slider->setEnabled(visual != "Disabled");
+    const bool ticks = booleanProperty(properties, "Show ticks", false);
+    slider->setTickPosition(!ticks ? QSlider::NoTicks
+                                  : slider->orientation() == Qt::Vertical ? QSlider::TicksRight
+                                                                          : QSlider::TicksBelow);
+    applyFigmaSliderAppearance(slider, visual == "Disabled" ? QString() : visual,
+                               sourceSnapshot,
+                               booleanProperty(properties, "Show value", true),
+                               properties.value("Value label"));
 }
 
 void applyFigmaSliderAppearance(QSlider* slider, const QString& snapshotState,

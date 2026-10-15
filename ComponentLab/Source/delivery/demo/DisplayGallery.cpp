@@ -23,6 +23,7 @@
 #include <QSpinBox>
 #include <QDoubleSpinBox>
 #include <QDateTimeEdit>
+#include <QTimeEdit>
 #include <QSlider>
 #include <QScrollBar>
 #include <QDial>
@@ -181,9 +182,12 @@ QWidget* createDisplayGallery(const QString& pageId,
                 const auto sourceState = name.section(", ", 1, 1).section('=', 1);
                 line->setPlaceholderText("Input text");
                 line->setText(sourceState == "Filled" ? "Entered value" : "");
-                commonWidget::applyFigmaLineEditAppearance(
-                    line, name.section(',', 0, 0).section('=', 1),
-                    sourceState == "Disabled" ? "Default" : sourceState);
+                commonWidget::configureFigmaLineEdit(
+                    line, {{"Size", name.section(',', 0, 0).section('=', 1)},
+                           {"State", sourceState},
+                           {"Allow clear", "False"},
+                           {"Show prefix", "False"},
+                           {"Show suffix", "False"}});
                 line->setFocusPolicy(Qt::NoFocus);
                 line->setAttribute(Qt::WA_TransparentForMouseEvents);
             } else if (auto* dial = qobject_cast<QDial*>(widget)) {
@@ -204,35 +208,32 @@ QWidget* createDisplayGallery(const QString& pageId,
                 dial->setAttribute(Qt::WA_TransparentForMouseEvents);
                 dial->setToolTip(QString::fromUtf8("源稿角度快照；外观页保留 Qt 原生角度与交互。"));
             } else if (auto* bar = qobject_cast<QScrollBar*>(widget)) {
-                bar->setOrientation(name.contains("Orientation=Vertical") ? Qt::Vertical
-                                                                          : Qt::Horizontal);
                 bar->setRange(0, 100);
                 bar->setValue(40);
                 bar->setPageStep(20);
-                commonWidget::applyFigmaScrollBarAppearance(bar,
-                                                            name.contains("State=Hover") ? "Hover"
-                                                            : name.contains("State=Dragging")
-                                                                ? "Dragging"
-                                                                : "Default",
-                                                            true);
+                commonWidget::configureFigmaScrollBar(
+                    bar, {{"Orientation", name.contains("Orientation=Vertical") ? "Vertical"
+                                                                                  : "Horizontal"},
+                          {"State", name.section(", ", 1, 1).section('=', 1)},
+                          {"Show line buttons", "True"}},
+                    true);
                 bar->setProperty("figmaNativeValueAuthority",
                                  "explicit demo fixture; not inferred from source thumb geometry");
                 bar->setFocusPolicy(Qt::NoFocus);
                 bar->setAttribute(Qt::WA_TransparentForMouseEvents);
                 bar->setToolTip(QString::fromUtf8("源稿几何快照；请在外观页交互调参。"));
             } else if (auto* slider = qobject_cast<QSlider*>(widget)) {
-                slider->setOrientation(name.contains("Orientation=Vertical") ? Qt::Vertical
-                                                                             : Qt::Horizontal);
                 slider->setRange(0, 100);
                 slider->setValue(40);
                 slider->setTickInterval(10);
-                slider->setTickPosition(QSlider::TicksBelow);
-                commonWidget::applyFigmaSliderAppearance(slider,
-                                                         name.contains("State=Focus") ? "Focus"
-                                                         : name.contains("State=Dragging")
-                                                             ? "Dragging"
-                                                             : "Default",
-                                                         true, true, "40");
+                commonWidget::configureFigmaSlider(
+                    slider, {{"Orientation", name.contains("Orientation=Vertical") ? "Vertical"
+                                                                                     : "Horizontal"},
+                             {"State", name.section(", ", 1, 1).section('=', 1)},
+                             {"Show ticks", "True"},
+                             {"Show value", "True"},
+                             {"Value label", "40"}},
+                    true);
                 slider->setProperty(
                     "figmaNativeValueAuthority",
                     "explicit demo fixture; not inferred from Figma label or pixels");
@@ -243,8 +244,7 @@ QWidget* createDisplayGallery(const QString& pageId,
                 edit->setLocale(QLocale::c());
                 const bool timeOnly = pageId == "465:2";
                 const bool twelveHour = name.contains("Format=12h");
-                edit->setDisplayFormat(timeOnly ? (twelveHour ? "hh:mm:ss AP" : "HH:mm:ss")
-                                       : pageId == "464:2"
+                if(!timeOnly) edit->setDisplayFormat(pageId == "464:2"
                                            ? "yyyy-MM-dd"
                                            : QString::fromUtf8("yyyy-MM-dd '·' HH:mm"));
                 if (timeOnly)
@@ -252,10 +252,18 @@ QWidget* createDisplayGallery(const QString& pageId,
                 else
                     edit->setDateTime(QDateTime(QDate(2026, 10, 7), QTime(14, 30)));
                 edit->setCalendarPopup(name.contains("Calendar=Available"));
-                edit->setReadOnly(name.contains("State=ReadOnly"));
-                commonWidget::applyFigmaDateTimeAppearance(
-                    edit, name.contains("State=Focus") ? "Focus" : "Default",
-                    pageId == "463:2" ? " CST" : "");
+                if(timeOnly)
+                    commonWidget::configureFigmaTimePicker(
+                        qobject_cast<QTimeEdit*>(edit),
+                        {{"Format", twelveHour ? "12h" : "24h"},
+                         {"State", name.section(", ", 1, 1).section('=', 1)},
+                         {"Show seconds", "True"}});
+                else {
+                    edit->setReadOnly(name.contains("State=ReadOnly"));
+                    commonWidget::applyFigmaDateTimeAppearance(
+                        edit, name.contains("State=Focus") ? "Focus" : "Default",
+                        pageId == "463:2" ? " CST" : "");
+                }
             } else if (auto* spin = qobject_cast<QAbstractSpinBox*>(widget)) {
                 spin->setLocale(QLocale::c());
                 if (auto* integer = qobject_cast<QSpinBox*>(spin)) {

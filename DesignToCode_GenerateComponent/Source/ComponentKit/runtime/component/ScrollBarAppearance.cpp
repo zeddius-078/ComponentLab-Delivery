@@ -13,6 +13,18 @@
 
 namespace commonWidget {
 namespace {
+bool booleanProperty(const QMap<QString, QString>& properties, const QString& name,
+                     bool defaultValue) {
+    if (!properties.contains(name))
+        return defaultValue;
+    const auto value = properties.value(name);
+    if (value == "True")
+        return true;
+    if (value == "False")
+        return false;
+    throw std::invalid_argument(("Invalid ScrollBar boolean property: " + name).toStdString());
+}
+
 struct Geometry {
     QRect rail, groove, handle, subLine, addLine, subPage, addPage;
     bool vertical = false, reversed = false;
@@ -198,6 +210,23 @@ public:
         painter->restore();
     }
 };
+}
+
+void configureFigmaScrollBar(QScrollBar* bar, const QMap<QString, QString>& properties,
+                             bool sourceSnapshot) {
+    if (!bar)
+        throw std::invalid_argument("ScrollBar is required");
+    const auto orientation = properties.value("Orientation");
+    const auto visual = properties.value("State");
+    if (!QStringList{"Horizontal", "Vertical"}.contains(orientation) ||
+        !QStringList{"Default", "Hover", "Dragging", "Disabled"}.contains(visual))
+        throw std::invalid_argument("Invalid Figma ScrollBar variant");
+
+    bar->setOrientation(orientation == "Vertical" ? Qt::Vertical : Qt::Horizontal);
+    bar->setEnabled(visual != "Disabled");
+    applyFigmaScrollBarAppearance(bar, visual == "Disabled" ? QString() : visual,
+                                  sourceSnapshot,
+                                  booleanProperty(properties, "Show line buttons", true));
 }
 
 void applyFigmaScrollBarAppearance(QScrollBar* bar, const QString& snapshotState,

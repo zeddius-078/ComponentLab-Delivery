@@ -1421,19 +1421,30 @@ void applyVariant(QWidget* widget, const DesignComponentSet& componentSet,
 
     const QString state = properties.value("State").toLower();
     if(componentSet.id!="500:847"&&componentSet.id!="505:553"&&componentSet.id!="511:124"&&componentSet.id!="511:280")widget->setEnabled(state != "disabled");
-    if(componentSet.id=="1116:18")if(auto* line=qobject_cast<QLineEdit*>(widget))
-        commonWidget::applyFigmaLineEditAppearance(line,properties.value("Size"),line->property("figmaLineEditSnapshotState").toString());
+    if(componentSet.id=="1116:18")if(auto* line=qobject_cast<QLineEdit*>(widget)) {
+        auto contract=properties;
+        contract.insert("Allow clear",line->isClearButtonEnabled()?"True":"False");
+        contract.insert("Show prefix",line->findChild<QAction*>("figmaLineEditPrefixAction")&&
+            line->findChild<QAction*>("figmaLineEditPrefixAction")->isVisible()?"True":"False");
+        contract.insert("Show suffix",line->findChild<QAction*>("figmaLineEditSuffixAction")&&
+            line->findChild<QAction*>("figmaLineEditSuffixAction")->isVisible()?"True":"False");
+        commonWidget::configureFigmaLineEdit(line,contract);
+    }
     if(componentSet.id=="463:136" || componentSet.id=="464:111" || componentSet.id=="465:189")
         if(auto* date=qobject_cast<QDateTimeEdit*>(widget)) {
-            date->setReadOnly(state=="readonly");
             if(componentSet.id=="465:189") {
-                const bool seconds=date->property("figmaDateShowSeconds").toBool();
-                commonWidget::setDateTimeDisplayFormatPreservingValue(date,properties.value("Format")=="12h"?
-                    (seconds?"hh:mm:ss AP":"hh:mm AP"):(seconds?"HH:mm:ss":"HH:mm"));
-            } else date->setCalendarPopup(properties.value("Calendar")=="Available");
-            commonWidget::applyFigmaDateTimeAppearance(date,date->property("figmaDateFixedFocus").toBool()?"Focus":"",
-                componentSet.id=="463:136"&&date->property("figmaDateShowTime").toBool()&&date->property("figmaDateShowSpec").toBool()?
-                    date->property("figmaDateSpecText").toString():QString());
+                auto contract=properties;
+                contract.insert("Show seconds",date->property("figmaDateShowSeconds").toBool()?"True":"False");
+                commonWidget::configureFigmaTimePicker(qobject_cast<QTimeEdit*>(date),contract);
+                if(date->property("figmaDateFixedFocus").toBool())
+                    commonWidget::applyFigmaDateTimeAppearance(date,"Focus");
+            } else {
+                date->setReadOnly(state=="readonly");
+                date->setCalendarPopup(properties.value("Calendar")=="Available");
+                commonWidget::applyFigmaDateTimeAppearance(date,date->property("figmaDateFixedFocus").toBool()?"Focus":"",
+                    componentSet.id=="463:136"&&date->property("figmaDateShowTime").toBool()&&date->property("figmaDateShowSpec").toBool()?
+                        date->property("figmaDateSpecText").toString():QString());
+            }
         }
     if((componentSet.id=="458:155" || componentSet.id=="460:175"))
         if(auto* spin=qobject_cast<QAbstractSpinBox*>(widget)) {
@@ -1675,11 +1686,17 @@ void applyVariant(QWidget* widget, const DesignComponentSet& componentSet,
         else if (orientation == "horizontal")
             slider->setOrientation(Qt::Horizontal);
         if(componentSet.id=="467:195")
-            if(auto* native=qobject_cast<QSlider*>(slider))commonWidget::applyFigmaSliderAppearance(native,
-                native->property("figmaSliderSnapshotState").toString(),false,native->property("figmaSliderShowValue").toBool(),
-                native->property("figmaSliderAutomaticLabel").toBool()?QString():native->property("figmaSliderValueLabel").toString());
+            if(auto* native=qobject_cast<QSlider*>(slider)) {
+                auto contract=properties;
+                contract.insert("Show ticks",native->tickPosition()!=QSlider::NoTicks?"True":"False");
+                contract.insert("Show value",native->property("figmaSliderShowValue").toBool()?"True":"False");
+                contract.insert("Value label",native->property("figmaSliderAutomaticLabel").toBool()?QString():native->property("figmaSliderValueLabel").toString());
+                commonWidget::configureFigmaSlider(native,contract);
+            }
         if(componentSet.id=="471:477")if(auto* bar=qobject_cast<QScrollBar*>(slider)) {
-            commonWidget::applyFigmaScrollBarAppearance(bar,bar->property("figmaScrollBarSnapshotState").toString(),false,bar->property("figmaScrollBarShowLineButtons").toBool());
+            auto contract=properties;
+            contract.insert("Show line buttons",bar->property("figmaScrollBarShowLineButtons").toBool()?"True":"False");
+            commonWidget::configureFigmaScrollBar(bar,contract);
             if(bar->orientation()==Qt::Horizontal){bar->setMinimumSize(280,56);bar->setMaximumSize(QWIDGETSIZE_MAX,56);bar->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Fixed);}
             else{bar->setMinimumSize(100,260);bar->setMaximumSize(100,QWIDGETSIZE_MAX);bar->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Expanding);}
         }

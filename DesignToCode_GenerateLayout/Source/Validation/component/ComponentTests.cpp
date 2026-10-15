@@ -40,7 +40,10 @@
 #include <QMdiSubWindow>
 #include <QProgressBar>
 #include <QPushButton>
+#include <QSlider>
+#include <QScrollBar>
 #include <QStackedWidget>
+#include <QTimeEdit>
 #include <QWizard>
 #include <QWizardPage>
 #include <QSignalSpy>
@@ -699,6 +702,51 @@ private slots:
             QCOMPARE(label->focusPolicy(),Qt::NoFocus);
             QCOMPARE(converter.trace().first().toObject()["calls"].toArray().first().toObject()["api"].toString(),
                      QString("display.configureLabel"));
+        }
+        {
+            const auto sample = fixture("1116:18", "ComponentLab/LineEdit",
+                                        {{"Size", "Large"}, {"State", "Error"}});
+            d2c::ComponentConverter converter(sample.first, mapping);
+            std::unique_ptr<QWidget> widget(converter.convert(sample.second, nullptr));
+            auto* edit = qobject_cast<QLineEdit*>(widget.get());
+            QVERIFY(edit);QCOMPARE(edit->height(),40);QVERIFY(edit->isEnabled());
+            QCOMPARE(edit->property("figmaLineEditSnapshotState").toString(),QString("Error"));
+            QCOMPARE(converter.trace().first().toObject()["calls"].toArray().first().toObject()["api"].toString(),
+                     QString("input.configureLineEdit"));
+        }
+        {
+            const auto sample = fixture("467:195", "ComponentLab/Slider",
+                                        {{"Orientation", "Vertical"}, {"State", "Dragging"}});
+            d2c::ComponentConverter converter(sample.first, mapping);
+            std::unique_ptr<QWidget> widget(converter.convert(sample.second, nullptr));
+            auto* slider = qobject_cast<QSlider*>(widget.get());
+            QVERIFY(slider);QCOMPARE(slider->orientation(),Qt::Vertical);QVERIFY(slider->isEnabled());
+            QVERIFY(!slider->isSliderDown());
+            QCOMPARE(slider->property("figmaSliderSnapshotState").toString(),QString("Dragging"));
+            QCOMPARE(converter.trace().first().toObject()["calls"].toArray().first().toObject()["api"].toString(),
+                     QString("input.configureSlider"));
+        }
+        {
+            const auto sample = fixture("471:477", "ComponentLab/ScrollBar",
+                                        {{"Orientation", "Horizontal"}, {"State", "Disabled"}});
+            d2c::ComponentConverter converter(sample.first, mapping);
+            std::unique_ptr<QWidget> widget(converter.convert(sample.second, nullptr));
+            auto* bar = qobject_cast<QScrollBar*>(widget.get());
+            QVERIFY(bar);QCOMPARE(bar->orientation(),Qt::Horizontal);QVERIFY(!bar->isEnabled());
+            QCOMPARE(bar->focusPolicy(),Qt::NoFocus);
+            QCOMPARE(converter.trace().first().toObject()["calls"].toArray().first().toObject()["api"].toString(),
+                     QString("input.configureScrollBar"));
+        }
+        {
+            const auto sample = fixture("465:189", "ComponentLab/TimePicker",
+                                        {{"Format", "12h"}, {"State", "ReadOnly"}});
+            d2c::ComponentConverter converter(sample.first, mapping);
+            std::unique_ptr<QWidget> widget(converter.convert(sample.second, nullptr));
+            auto* edit = qobject_cast<QTimeEdit*>(widget.get());
+            QVERIFY(edit);QVERIFY(edit->isReadOnly());QVERIFY(edit->isEnabled());
+            QCOMPARE(edit->displayFormat(),QString("hh:mm:ss AP"));
+            QCOMPARE(converter.trace().first().toObject()["calls"].toArray().first().toObject()["api"].toString(),
+                     QString("input.configureTimePicker"));
         }
         {
             const auto sample = fixture("443:222", "ComponentLab/ToolButton",

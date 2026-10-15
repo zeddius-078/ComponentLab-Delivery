@@ -1,6 +1,7 @@
 #include <MyDesignSystem/MyDesignSystem.h>
 
 #include <QApplication>
+#include <QAction>
 #include <QAbstractButton>
 #include <QAbstractSpinBox>
 #include <QColor>
@@ -19,7 +20,11 @@
 #include <QMdiSubWindow>
 #include <QProgressBar>
 #include <QPushButton>
+#include <QSlider>
+#include <QScrollBar>
 #include <QStackedWidget>
+#include <QTimeEdit>
+#include <QTime>
 #include <QWizard>
 #include <QWizardPage>
 #include <QSet>
@@ -166,6 +171,47 @@ int main(int argc, char *argv[]) {
         mappedCommand->property("figmaCommandShowIcon").toBool() ||
         mappedCommand->property("figmaCommandSnapshotState").toString() != "CheckedFocus")
         return 147;
+
+    auto* mappedLine = qobject_cast<QLineEdit*>(
+        factory.create(QStringLiteral("commonWidget::Z_LineEdit"), &owner));
+    commonWidget::configureFigmaLineEdit(
+        mappedLine, {{"Size", "Large"}, {"State", "Error"}, {"Allow clear", "True"},
+                     {"Show prefix", "True"}, {"Show suffix", "False"}});
+    if (!mappedLine || mappedLine->height() != 40 || !mappedLine->isClearButtonEnabled() ||
+        !mappedLine->findChild<QAction*>("figmaLineEditPrefixAction") ||
+        mappedLine->property("figmaLineEditSnapshotState").toString() != "Error")
+        return 148;
+
+    auto* mappedSlider = qobject_cast<QSlider*>(
+        factory.create(QStringLiteral("commonWidget::Z_Slider"), &owner));
+    commonWidget::configureFigmaSlider(
+        mappedSlider, {{"Orientation", "Vertical"}, {"State", "Dragging"},
+                       {"Show ticks", "True"}, {"Show value", "False"}});
+    if (!mappedSlider || mappedSlider->orientation() != Qt::Vertical ||
+        mappedSlider->tickPosition() != QSlider::TicksRight || mappedSlider->isSliderDown() ||
+        mappedSlider->property("figmaSliderSnapshotState").toString() != "Dragging")
+        return 149;
+
+    auto* mappedScroll = qobject_cast<QScrollBar*>(
+        factory.create(QStringLiteral("commonWidget::Z_ScrollBar"), &owner));
+    const auto scrollFocus = mappedScroll->focusPolicy();
+    commonWidget::configureFigmaScrollBar(
+        mappedScroll, {{"Orientation", "Vertical"}, {"State", "Disabled"},
+                       {"Show line buttons", "False"}});
+    if (!mappedScroll || mappedScroll->orientation() != Qt::Vertical || mappedScroll->isEnabled() ||
+        mappedScroll->property("figmaScrollBarShowLineButtons").toBool() ||
+        mappedScroll->focusPolicy() != scrollFocus)
+        return 150;
+
+    auto* mappedTime = qobject_cast<QTimeEdit*>(
+        factory.create(QStringLiteral("commonWidget::Z_TimeEdit"), &owner));
+    mappedTime->setTime(QTime(14, 30, 45));
+    commonWidget::configureFigmaTimePicker(
+        mappedTime, {{"Format", "12h"}, {"State", "ReadOnly"},
+                     {"Show seconds", "False"}});
+    if (!mappedTime || mappedTime->time() != QTime(14, 30, 45) || !mappedTime->isReadOnly() ||
+        mappedTime->displayFormat() != "hh:mm AP")
+        return 151;
     for (auto* component : {static_cast<QWidget*>(focusButton),
                             static_cast<QWidget*>(focusCheck),
                             static_cast<QWidget*>(focusInput)})

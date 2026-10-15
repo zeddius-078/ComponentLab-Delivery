@@ -14,6 +14,18 @@
 
 namespace commonWidget {
 namespace {
+bool booleanProperty(const QMap<QString, QString>& properties, const QString& name,
+                     bool defaultValue) {
+    if (!properties.contains(name))
+        return defaultValue;
+    const auto value = properties.value(name);
+    if (value == "True")
+        return true;
+    if (value == "False")
+        return false;
+    throw std::invalid_argument(("Invalid LineEdit boolean property: " + name).toStdString());
+}
+
 QString state(const QLineEdit* edit) {
     if (!edit->isEnabled())
         return "Disabled";
@@ -173,6 +185,23 @@ private:
     surface::OuterShadowEffect* shadow_;
     bool refreshing_ = false;
 };
+}
+
+void configureFigmaLineEdit(QLineEdit* edit, const QMap<QString, QString>& properties) {
+    if (!edit)
+        throw std::invalid_argument("LineEdit is required");
+    const auto size = properties.value("Size");
+    const auto visual = properties.value("State");
+    if (!QStringList{"Small", "Medium", "Large"}.contains(size) ||
+        !QStringList{"Default", "Hover", "Focus", "Filled", "Error", "Disabled"}
+             .contains(visual))
+        throw std::invalid_argument("Invalid Figma LineEdit variant");
+
+    edit->setEnabled(visual != "Disabled");
+    edit->setClearButtonEnabled(booleanProperty(properties, "Allow clear", false));
+    applyFigmaLineEditActions(edit, booleanProperty(properties, "Show prefix", false),
+                               booleanProperty(properties, "Show suffix", false));
+    applyFigmaLineEditAppearance(edit, size, visual == "Disabled" ? QString() : visual);
 }
 
 void applyFigmaLineEditAppearance(QLineEdit* edit, const QString& size,

@@ -16,6 +16,10 @@
 #include "CommandLinkAppearance.h"
 #include "DialogButtonBoxAppearance.h"
 #include "ToolButtonAppearance.h"
+#include "LineEditAppearance.h"
+#include "SliderAppearance.h"
+#include "ScrollBarAppearance.h"
+#include "DateTimeAppearance.h"
 #include <QJsonDocument>
 #include <QLabel>
 #include <QMap>
@@ -32,6 +36,10 @@
 #include <QToolButton>
 #include <QDialogButtonBox>
 #include <QCommandLinkButton>
+#include <QLineEdit>
+#include <QSlider>
+#include <QScrollBar>
+#include <QTimeEdit>
 #include <QTabWidget>
 #include <QToolBox>
 #include <QSet>
@@ -301,6 +309,26 @@ QWidget* ComponentConverter::convert(const QJsonObject& n, QWidget* parent) {
             if (!command)
                 fail("INVALID_COMPOSITION_TARGET", n, compositionApi);
             commonWidget::configureFigmaCommandLinkButton(command, compositionProperties);
+        } else if (compositionApi == QStringLiteral("input.configureLineEdit")) {
+            auto* edit = qobject_cast<QLineEdit*>(w);
+            if (!edit)
+                fail("INVALID_COMPOSITION_TARGET", n, compositionApi);
+            commonWidget::configureFigmaLineEdit(edit, compositionProperties);
+        } else if (compositionApi == QStringLiteral("input.configureSlider")) {
+            auto* slider = qobject_cast<QSlider*>(w);
+            if (!slider)
+                fail("INVALID_COMPOSITION_TARGET", n, compositionApi);
+            commonWidget::configureFigmaSlider(slider, compositionProperties);
+        } else if (compositionApi == QStringLiteral("input.configureScrollBar")) {
+            auto* bar = qobject_cast<QScrollBar*>(w);
+            if (!bar)
+                fail("INVALID_COMPOSITION_TARGET", n, compositionApi);
+            commonWidget::configureFigmaScrollBar(bar, compositionProperties);
+        } else if (compositionApi == QStringLiteral("input.configureTimePicker")) {
+            auto* edit = qobject_cast<QTimeEdit*>(w);
+            if (!edit)
+                fail("INVALID_COMPOSITION_TARGET", n, compositionApi);
+            commonWidget::configureFigmaTimePicker(edit, compositionProperties);
         } else {
             fail("UNREGISTERED_COMPOSITION_API", n, compositionApi);
         }

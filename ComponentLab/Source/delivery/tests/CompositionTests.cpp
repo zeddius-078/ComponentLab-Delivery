@@ -2119,6 +2119,8 @@ auto* secondEditor=editors->widget(1);auto* area=secondEditor->findChild<QMdiAre
         window->hide();
         QApplication::processEvents();
 
+        QWidget probeHost;
+        probeHost.resize(760, 520);
         commonWidget::ComponentFactory factory(profile);
         std::unique_ptr<QWidget> searchWidget(factory.create("commonWidget::Z_SearchInput"));
         std::unique_ptr<QWidget> numberWidget(factory.create("commonWidget::Z_NumberInput"));
@@ -2155,6 +2157,16 @@ auto* secondEditor=editors->widget(1);auto* area=secondEditor->findChild<QMdiAre
         auto* titleBar = qobject_cast<commonWidget::Z_TitleBar*>(titleBarWidget.get());
         QVERIFY(search && number && colorPicker && numericKeypad && overflow && segmented && stepper && timeline && anchor && filter &&
                 pagination && pageHeader && titleBar);
+
+        // Exercise keyboard focus inside one stable top-level host. Creating a
+        // succession of standalone probe windows makes the Qt offscreen
+        // platform's active-window choice timing-dependent.
+        const QList<QWidget*> keyboardProbes{colorPicker, numericKeypad, anchor, filter};
+        for (auto* probe : keyboardProbes)
+            probe->setParent(&probeHost);
+        probeHost.show();
+        QApplication::setActiveWindow(&probeHost);
+        QApplication::processEvents();
 
         QCOMPARE(search->focusPolicy(), Qt::NoFocus);
         QVERIFY(search->lineEdit());
@@ -2193,7 +2205,7 @@ auto* secondEditor=editors->widget(1);auto* area=secondEditor->findChild<QMdiAre
         colorPicker->setSnapshotState("Default");
         colorPicker->resize(colorPicker->sizeHint());
         colorPicker->show();
-        colorPicker->activateWindow();
+        QApplication::setActiveWindow(&probeHost);
         QApplication::processEvents();
         colorPicker->setFocus(Qt::TabFocusReason);
         QTest::keyClick(colorPicker, Qt::Key_Return);
@@ -2210,6 +2222,8 @@ auto* secondEditor=editors->widget(1);auto* area=secondEditor->findChild<QMdiAre
         }
         colorPicker->setSnapshotState("Default");
         commonWidget::FocusIndicator::instance().setEnabledFor(colorPicker, true);
+        colorPicker->hide();
+        QApplication::processEvents();
 
         QCOMPARE(numericKeypad->focusPolicy(), Qt::NoFocus);
         QCOMPARE(numericKeypad->density(), QString("Comfortable"));
@@ -2244,9 +2258,11 @@ auto* secondEditor=editors->widget(1);auto* area=secondEditor->findChild<QMdiAre
         QCOMPARE(commitRequests.count(), 1);
         QCOMPARE(keyRequests.takeFirst().at(0).toString(), QString("commit"));
         numericKeypad->show();
-        numericKeypad->activateWindow();
+        QApplication::setActiveWindow(&probeHost);
         QApplication::processEvents();
+        QTRY_VERIFY(probeHost.isActiveWindow());
         sevenKey->setFocus(Qt::TabFocusReason);
+        QTRY_COMPARE(QApplication::focusWidget(), sevenKey);
         QTest::keyClick(sevenKey, Qt::Key_Right);
         QTRY_COMPARE(QApplication::focusWidget(), eightKey);
         QTest::keyClick(eightKey, Qt::Key_Down);
@@ -2276,6 +2292,8 @@ auto* secondEditor=editors->widget(1);auto* area=secondEditor->findChild<QMdiAre
         QCOMPARE(sevenKey->size(), QSize(68, 42));
         if (!evidence.isEmpty())
             QVERIFY(numericKeypad->grab().save(evidence + "/numeric-keypad-compact.png"));
+        numericKeypad->hide();
+        QApplication::processEvents();
 
         QCOMPARE(overflow->focusPolicy(), Qt::StrongFocus);
         commonWidget::FocusIndicator::instance().setEnabledFor(overflow, false);
@@ -2327,10 +2345,11 @@ auto* secondEditor=editors->widget(1);auto* area=secondEditor->findChild<QMdiAre
         QCOMPARE(anchorRequests.takeFirst().at(0).toInt(), 2);
         QCOMPARE(anchor->currentIndex(), 1);
         anchor->show();
-        anchor->activateWindow();
+        QApplication::setActiveWindow(&probeHost);
         QApplication::processEvents();
+        QTRY_VERIFY(probeHost.isActiveWindow());
         anchorButtons[0]->setFocus(Qt::TabFocusReason);
-        QApplication::processEvents();
+        QTRY_COMPARE(QApplication::focusWidget(), anchorButtons[0]);
         QTest::keyClick(anchorButtons[0], Qt::Key_Right);
         QTRY_COMPARE(QApplication::focusWidget(), anchorButtons[1]);
         commonWidget::FocusIndicator::instance().setEnabledFor(anchor, false);
@@ -2345,6 +2364,8 @@ auto* secondEditor=editors->widget(1);auto* area=secondEditor->findChild<QMdiAre
         anchor->resize(anchor->sizeHint());
         if (!evidence.isEmpty())
             QVERIFY(anchor->grab().save(evidence + "/anchor-navigation-vertical.png"));
+        anchor->hide();
+        QApplication::processEvents();
 
         QCOMPARE(filter->focusPolicy(), Qt::NoFocus);
         filter->setLayoutMode("Inline");
@@ -2370,9 +2391,11 @@ auto* secondEditor=editors->widget(1);auto* area=secondEditor->findChild<QMdiAre
         QCOMPARE(applyRequests.count(), 1);
         QCOMPARE(filter->snapshotState(), QString("Applied"));
         filter->show();
-        filter->activateWindow();
+        QApplication::setActiveWindow(&probeHost);
         QApplication::processEvents();
+        QTRY_VERIFY(probeHost.isActiveWindow());
         material->setFocus(Qt::TabFocusReason);
+        QTRY_COMPARE(QApplication::focusWidget(), material);
         QTest::keyClick(material, Qt::Key_Right);
         QTRY_COMPARE(QApplication::focusWidget(), status);
         commonWidget::FocusIndicator::instance().setEnabledFor(filter, false);

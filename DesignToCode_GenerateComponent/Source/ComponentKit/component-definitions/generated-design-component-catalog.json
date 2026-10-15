@@ -3056,7 +3056,15 @@
       "evidenceRefs": [
         "Source/ComponentKit/component-definitions/figma-component-inventory.json",
         "Source/ComponentKit/runtime/component/ComponentFactory.cpp",
-        "docs/designRules/design-system/component-traceability-manifest.json"
+        "docs/designRules/design-system/component-traceability-manifest.json",
+        "Source/ComponentKit/runtime/component/LineEditAppearance.h",
+        "Source/ComponentKit/runtime/component/LineEditAppearance.cpp",
+        "Source/SDKConsumerTest/main.cpp",
+        "ComponentLab/Source/delivery/demo/DisplayGallery.cpp",
+        "ComponentLab/Source/delivery/demo/NativeGalleryPages.cpp",
+        "ComponentLab/Source/delivery/tests/CompositionTests.cpp",
+        "DesignToCode_GenerateLayout/Source/HtmlDsl/pipeline/mapping/component-mapping.json",
+        "DesignToCode_GenerateLayout/Source/Validation/component/ComponentTests.cpp"
       ],
       "designOriginAction": "REUSE",
       "identityMigration": "NONE",
@@ -3066,14 +3074,34 @@
         "schema": "VERIFIED",
         "build": "VERIFIED",
         "runtime": "VERIFIED",
-        "runtimeScope": "FACTORY_INSTANTIATION_ONLY",
+        "runtimeScope": "SDK_FACTORY_COMPONENTLAB_GENERATELAYOUT",
         "factoryRegistration": "VERIFIED",
         "visual": "NOT_VERIFIED",
-        "downstreamConsumption": "NOT_VERIFIED",
+        "downstreamConsumption": "VERIFIED",
         "tokenBinding": "BOUND_VERIFIED"
       },
       "governanceApprovalStatus": "NOT_REVIEWED",
-      "focusPolicy": "UNRESOLVED"
+      "focusPolicy": "INTERACTIVE_OPTIONAL",
+      "runtimeContract": {
+        "qtBaseClass": "QLineEdit",
+        "variantAxes": [
+          "Size",
+          "State"
+        ],
+        "controlledProperties": [
+          "enabled",
+          "clearButtonEnabled",
+          "prefixAction",
+          "suffixAction"
+        ],
+        "signals": [
+          "textChanged(QString)",
+          "textEdited(QString)",
+          "editingFinished()",
+          "selectionChanged()"
+        ],
+        "controllerBoundary": "Filled is derived from content occupancy and Error is an explicit visual state; validators, input masks, IME, selection, undo and context menus remain native."
+      }
     },
     {
       "designComponent": "ComponentLab/SearchInput",
@@ -3660,7 +3688,15 @@
       "evidenceRefs": [
         "Source/ComponentKit/component-definitions/figma-component-inventory.json",
         "Source/ComponentKit/runtime/component/ComponentFactory.cpp",
-        "docs/designRules/design-system/component-traceability-manifest.json"
+        "docs/designRules/design-system/component-traceability-manifest.json",
+        "Source/ComponentKit/runtime/component/DateTimeAppearance.h",
+        "Source/ComponentKit/runtime/component/DateTimeAppearance.cpp",
+        "Source/SDKConsumerTest/main.cpp",
+        "ComponentLab/Source/delivery/demo/DisplayGallery.cpp",
+        "ComponentLab/Source/delivery/demo/NativeGalleryPages.cpp",
+        "ComponentLab/Source/delivery/tests/CompositionTests.cpp",
+        "DesignToCode_GenerateLayout/Source/HtmlDsl/pipeline/mapping/component-mapping.json",
+        "DesignToCode_GenerateLayout/Source/Validation/component/ComponentTests.cpp"
       ],
       "designOriginAction": "REUSE",
       "identityMigration": "NONE",
@@ -3670,14 +3706,33 @@
         "schema": "VERIFIED",
         "build": "VERIFIED",
         "runtime": "VERIFIED",
-        "runtimeScope": "FACTORY_INSTANTIATION_ONLY",
+        "runtimeScope": "SDK_FACTORY_COMPONENTLAB_GENERATELAYOUT",
         "factoryRegistration": "VERIFIED",
         "visual": "NOT_VERIFIED",
-        "downstreamConsumption": "NOT_VERIFIED",
+        "downstreamConsumption": "VERIFIED",
         "tokenBinding": "BOUND_VERIFIED"
       },
       "governanceApprovalStatus": "NOT_REVIEWED",
-      "focusPolicy": "UNRESOLVED"
+      "focusPolicy": "INTERACTIVE_OPTIONAL",
+      "runtimeContract": {
+        "qtBaseClass": "QTimeEdit",
+        "variantAxes": [
+          "Format",
+          "State"
+        ],
+        "controlledProperties": [
+          "displayFormat",
+          "enabled",
+          "readOnly",
+          "showSeconds"
+        ],
+        "signals": [
+          "timeChanged(QTime)",
+          "dateTimeChanged(QDateTime)",
+          "editingFinished()"
+        ],
+        "controllerBoundary": "QTime, ordered range, parsing, locale, current section, wrapping and keyboard stepping remain native; wall-clock time does not imply a date, time zone or instant."
+      }
     },
     {
       "designComponent": "ComponentLab/Slider",
@@ -3706,7 +3761,15 @@
       "evidenceRefs": [
         "Source/ComponentKit/component-definitions/figma-component-inventory.json",
         "Source/ComponentKit/runtime/component/ComponentFactory.cpp",
-        "docs/designRules/design-system/component-traceability-manifest.json"
+        "docs/designRules/design-system/component-traceability-manifest.json",
+        "Source/ComponentKit/runtime/component/SliderAppearance.h",
+        "Source/ComponentKit/runtime/component/SliderAppearance.cpp",
+        "Source/SDKConsumerTest/main.cpp",
+        "ComponentLab/Source/delivery/demo/DisplayGallery.cpp",
+        "ComponentLab/Source/delivery/demo/NativeGalleryPages.cpp",
+        "ComponentLab/Source/delivery/tests/CompositionTests.cpp",
+        "DesignToCode_GenerateLayout/Source/HtmlDsl/pipeline/mapping/component-mapping.json",
+        "DesignToCode_GenerateLayout/Source/Validation/component/ComponentTests.cpp"
       ],
       "designOriginAction": "REUSE",
       "identityMigration": "MERGE",
@@ -3716,14 +3779,36 @@
         "schema": "VERIFIED",
         "build": "VERIFIED",
         "runtime": "VERIFIED",
-        "runtimeScope": "FACTORY_INSTANTIATION_ONLY",
+        "runtimeScope": "SDK_FACTORY_COMPONENTLAB_GENERATELAYOUT",
         "factoryRegistration": "VERIFIED",
         "visual": "NOT_VERIFIED",
-        "downstreamConsumption": "NOT_VERIFIED",
+        "downstreamConsumption": "VERIFIED",
         "tokenBinding": "BOUND_VERIFIED"
       },
       "governanceApprovalStatus": "NOT_REVIEWED",
-      "focusPolicy": "UNRESOLVED"
+      "focusPolicy": "INTERACTIVE_OPTIONAL",
+      "runtimeContract": {
+        "qtBaseClass": "QSlider",
+        "variantAxes": [
+          "Orientation",
+          "State"
+        ],
+        "controlledProperties": [
+          "orientation",
+          "enabled",
+          "tickPosition",
+          "showValue",
+          "valueLabel"
+        ],
+        "signals": [
+          "valueChanged(int)",
+          "sliderMoved(int)",
+          "sliderPressed()",
+          "sliderReleased()",
+          "rangeChanged(int,int)"
+        ],
+        "controllerBoundary": "QAbstractSlider owns value, position, range, steps, tracking and inversion; the Figma value label never determines the native value and Dragging never persists sliderDown."
+      }
     },
     {
       "designComponent": "ComponentLab/ScrollBar",
@@ -3752,7 +3837,15 @@
       "evidenceRefs": [
         "Source/ComponentKit/component-definitions/figma-component-inventory.json",
         "Source/ComponentKit/runtime/component/ComponentFactory.cpp",
-        "docs/designRules/design-system/component-traceability-manifest.json"
+        "docs/designRules/design-system/component-traceability-manifest.json",
+        "Source/ComponentKit/runtime/component/ScrollBarAppearance.h",
+        "Source/ComponentKit/runtime/component/ScrollBarAppearance.cpp",
+        "Source/SDKConsumerTest/main.cpp",
+        "ComponentLab/Source/delivery/demo/DisplayGallery.cpp",
+        "ComponentLab/Source/delivery/demo/NativeGalleryPages.cpp",
+        "ComponentLab/Source/delivery/tests/CompositionTests.cpp",
+        "DesignToCode_GenerateLayout/Source/HtmlDsl/pipeline/mapping/component-mapping.json",
+        "DesignToCode_GenerateLayout/Source/Validation/component/ComponentTests.cpp"
       ],
       "designOriginAction": "REUSE",
       "identityMigration": "MERGE",
@@ -3762,14 +3855,34 @@
         "schema": "VERIFIED",
         "build": "VERIFIED",
         "runtime": "VERIFIED",
-        "runtimeScope": "FACTORY_INSTANTIATION_ONLY",
+        "runtimeScope": "SDK_FACTORY_COMPONENTLAB_GENERATELAYOUT",
         "factoryRegistration": "VERIFIED",
         "visual": "NOT_VERIFIED",
-        "downstreamConsumption": "NOT_VERIFIED",
+        "downstreamConsumption": "VERIFIED",
         "tokenBinding": "BOUND_VERIFIED"
       },
       "governanceApprovalStatus": "NOT_REVIEWED",
-      "focusPolicy": "UNRESOLVED"
+      "focusPolicy": "NATIVE_NO_FOCUS",
+      "runtimeContract": {
+        "qtBaseClass": "QScrollBar",
+        "variantAxes": [
+          "Orientation",
+          "State"
+        ],
+        "controlledProperties": [
+          "orientation",
+          "enabled",
+          "showLineButtons"
+        ],
+        "signals": [
+          "valueChanged(int)",
+          "sliderMoved(int)",
+          "sliderPressed()",
+          "sliderReleased()",
+          "rangeChanged(int,int)"
+        ],
+        "controllerBoundary": "The host viewport and QStyle own range, pageStep, thumb proportion, hit testing and line-button behavior; Hover and Dragging do not persist sliderDown."
+      }
     },
     {
       "designComponent": "ComponentLab/Dial",
@@ -9337,7 +9450,15 @@
       "evidenceRefs": [
         "Source/ComponentKit/component-definitions/figma-component-inventory.json",
         "Source/ComponentKit/runtime/component/ComponentFactory.cpp",
-        "docs/designRules/design-system/component-traceability-manifest.json"
+        "docs/designRules/design-system/component-traceability-manifest.json",
+        "Source/ComponentKit/runtime/component/LineEditAppearance.h",
+        "Source/ComponentKit/runtime/component/LineEditAppearance.cpp",
+        "Source/SDKConsumerTest/main.cpp",
+        "ComponentLab/Source/delivery/demo/DisplayGallery.cpp",
+        "ComponentLab/Source/delivery/demo/NativeGalleryPages.cpp",
+        "ComponentLab/Source/delivery/tests/CompositionTests.cpp",
+        "DesignToCode_GenerateLayout/Source/HtmlDsl/pipeline/mapping/component-mapping.json",
+        "DesignToCode_GenerateLayout/Source/Validation/component/ComponentTests.cpp"
       ],
       "designOriginAction": "REUSE",
       "identityMigration": "NONE",
@@ -9347,14 +9468,34 @@
         "schema": "VERIFIED",
         "build": "VERIFIED",
         "runtime": "VERIFIED",
-        "runtimeScope": "FACTORY_INSTANTIATION_ONLY",
+        "runtimeScope": "SDK_FACTORY_COMPONENTLAB_GENERATELAYOUT",
         "factoryRegistration": "VERIFIED",
         "visual": "NOT_VERIFIED",
-        "downstreamConsumption": "NOT_VERIFIED",
+        "downstreamConsumption": "VERIFIED",
         "tokenBinding": "BOUND_VERIFIED"
       },
       "governanceApprovalStatus": "NOT_REVIEWED",
-      "focusPolicy": "UNRESOLVED"
+      "focusPolicy": "INTERACTIVE_OPTIONAL",
+      "runtimeContract": {
+        "qtBaseClass": "QLineEdit",
+        "variantAxes": [
+          "Size",
+          "State"
+        ],
+        "controlledProperties": [
+          "enabled",
+          "clearButtonEnabled",
+          "prefixAction",
+          "suffixAction"
+        ],
+        "signals": [
+          "textChanged(QString)",
+          "textEdited(QString)",
+          "editingFinished()",
+          "selectionChanged()"
+        ],
+        "controllerBoundary": "Filled is derived from content occupancy and Error is an explicit visual state; validators, input masks, IME, selection, undo and context menus remain native."
+      }
     },
     {
       "designComponent": "ComponentLab/SearchInput",
@@ -9941,7 +10082,15 @@
       "evidenceRefs": [
         "Source/ComponentKit/component-definitions/figma-component-inventory.json",
         "Source/ComponentKit/runtime/component/ComponentFactory.cpp",
-        "docs/designRules/design-system/component-traceability-manifest.json"
+        "docs/designRules/design-system/component-traceability-manifest.json",
+        "Source/ComponentKit/runtime/component/DateTimeAppearance.h",
+        "Source/ComponentKit/runtime/component/DateTimeAppearance.cpp",
+        "Source/SDKConsumerTest/main.cpp",
+        "ComponentLab/Source/delivery/demo/DisplayGallery.cpp",
+        "ComponentLab/Source/delivery/demo/NativeGalleryPages.cpp",
+        "ComponentLab/Source/delivery/tests/CompositionTests.cpp",
+        "DesignToCode_GenerateLayout/Source/HtmlDsl/pipeline/mapping/component-mapping.json",
+        "DesignToCode_GenerateLayout/Source/Validation/component/ComponentTests.cpp"
       ],
       "designOriginAction": "REUSE",
       "identityMigration": "NONE",
@@ -9951,14 +10100,33 @@
         "schema": "VERIFIED",
         "build": "VERIFIED",
         "runtime": "VERIFIED",
-        "runtimeScope": "FACTORY_INSTANTIATION_ONLY",
+        "runtimeScope": "SDK_FACTORY_COMPONENTLAB_GENERATELAYOUT",
         "factoryRegistration": "VERIFIED",
         "visual": "NOT_VERIFIED",
-        "downstreamConsumption": "NOT_VERIFIED",
+        "downstreamConsumption": "VERIFIED",
         "tokenBinding": "BOUND_VERIFIED"
       },
       "governanceApprovalStatus": "NOT_REVIEWED",
-      "focusPolicy": "UNRESOLVED"
+      "focusPolicy": "INTERACTIVE_OPTIONAL",
+      "runtimeContract": {
+        "qtBaseClass": "QTimeEdit",
+        "variantAxes": [
+          "Format",
+          "State"
+        ],
+        "controlledProperties": [
+          "displayFormat",
+          "enabled",
+          "readOnly",
+          "showSeconds"
+        ],
+        "signals": [
+          "timeChanged(QTime)",
+          "dateTimeChanged(QDateTime)",
+          "editingFinished()"
+        ],
+        "controllerBoundary": "QTime, ordered range, parsing, locale, current section, wrapping and keyboard stepping remain native; wall-clock time does not imply a date, time zone or instant."
+      }
     },
     {
       "designComponent": "ComponentLab/Slider",
@@ -9987,7 +10155,15 @@
       "evidenceRefs": [
         "Source/ComponentKit/component-definitions/figma-component-inventory.json",
         "Source/ComponentKit/runtime/component/ComponentFactory.cpp",
-        "docs/designRules/design-system/component-traceability-manifest.json"
+        "docs/designRules/design-system/component-traceability-manifest.json",
+        "Source/ComponentKit/runtime/component/SliderAppearance.h",
+        "Source/ComponentKit/runtime/component/SliderAppearance.cpp",
+        "Source/SDKConsumerTest/main.cpp",
+        "ComponentLab/Source/delivery/demo/DisplayGallery.cpp",
+        "ComponentLab/Source/delivery/demo/NativeGalleryPages.cpp",
+        "ComponentLab/Source/delivery/tests/CompositionTests.cpp",
+        "DesignToCode_GenerateLayout/Source/HtmlDsl/pipeline/mapping/component-mapping.json",
+        "DesignToCode_GenerateLayout/Source/Validation/component/ComponentTests.cpp"
       ],
       "designOriginAction": "REUSE",
       "identityMigration": "MERGE",
@@ -9997,14 +10173,36 @@
         "schema": "VERIFIED",
         "build": "VERIFIED",
         "runtime": "VERIFIED",
-        "runtimeScope": "FACTORY_INSTANTIATION_ONLY",
+        "runtimeScope": "SDK_FACTORY_COMPONENTLAB_GENERATELAYOUT",
         "factoryRegistration": "VERIFIED",
         "visual": "NOT_VERIFIED",
-        "downstreamConsumption": "NOT_VERIFIED",
+        "downstreamConsumption": "VERIFIED",
         "tokenBinding": "BOUND_VERIFIED"
       },
       "governanceApprovalStatus": "NOT_REVIEWED",
-      "focusPolicy": "UNRESOLVED"
+      "focusPolicy": "INTERACTIVE_OPTIONAL",
+      "runtimeContract": {
+        "qtBaseClass": "QSlider",
+        "variantAxes": [
+          "Orientation",
+          "State"
+        ],
+        "controlledProperties": [
+          "orientation",
+          "enabled",
+          "tickPosition",
+          "showValue",
+          "valueLabel"
+        ],
+        "signals": [
+          "valueChanged(int)",
+          "sliderMoved(int)",
+          "sliderPressed()",
+          "sliderReleased()",
+          "rangeChanged(int,int)"
+        ],
+        "controllerBoundary": "QAbstractSlider owns value, position, range, steps, tracking and inversion; the Figma value label never determines the native value and Dragging never persists sliderDown."
+      }
     },
     {
       "designComponent": "ComponentLab/ScrollBar",
@@ -10033,7 +10231,15 @@
       "evidenceRefs": [
         "Source/ComponentKit/component-definitions/figma-component-inventory.json",
         "Source/ComponentKit/runtime/component/ComponentFactory.cpp",
-        "docs/designRules/design-system/component-traceability-manifest.json"
+        "docs/designRules/design-system/component-traceability-manifest.json",
+        "Source/ComponentKit/runtime/component/ScrollBarAppearance.h",
+        "Source/ComponentKit/runtime/component/ScrollBarAppearance.cpp",
+        "Source/SDKConsumerTest/main.cpp",
+        "ComponentLab/Source/delivery/demo/DisplayGallery.cpp",
+        "ComponentLab/Source/delivery/demo/NativeGalleryPages.cpp",
+        "ComponentLab/Source/delivery/tests/CompositionTests.cpp",
+        "DesignToCode_GenerateLayout/Source/HtmlDsl/pipeline/mapping/component-mapping.json",
+        "DesignToCode_GenerateLayout/Source/Validation/component/ComponentTests.cpp"
       ],
       "designOriginAction": "REUSE",
       "identityMigration": "MERGE",
@@ -10043,14 +10249,34 @@
         "schema": "VERIFIED",
         "build": "VERIFIED",
         "runtime": "VERIFIED",
-        "runtimeScope": "FACTORY_INSTANTIATION_ONLY",
+        "runtimeScope": "SDK_FACTORY_COMPONENTLAB_GENERATELAYOUT",
         "factoryRegistration": "VERIFIED",
         "visual": "NOT_VERIFIED",
-        "downstreamConsumption": "NOT_VERIFIED",
+        "downstreamConsumption": "VERIFIED",
         "tokenBinding": "BOUND_VERIFIED"
       },
       "governanceApprovalStatus": "NOT_REVIEWED",
-      "focusPolicy": "UNRESOLVED"
+      "focusPolicy": "NATIVE_NO_FOCUS",
+      "runtimeContract": {
+        "qtBaseClass": "QScrollBar",
+        "variantAxes": [
+          "Orientation",
+          "State"
+        ],
+        "controlledProperties": [
+          "orientation",
+          "enabled",
+          "showLineButtons"
+        ],
+        "signals": [
+          "valueChanged(int)",
+          "sliderMoved(int)",
+          "sliderPressed()",
+          "sliderReleased()",
+          "rangeChanged(int,int)"
+        ],
+        "controllerBoundary": "The host viewport and QStyle own range, pageStep, thumb proportion, hit testing and line-button behavior; Hover and Dragging do not persist sliderDown."
+      }
     },
     {
       "designComponent": "ComponentLab/Dial",

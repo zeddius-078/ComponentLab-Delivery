@@ -108,6 +108,70 @@
       "status":"Figma 414:39; 12 Alignment x Wrap x State variants; presentation-only and Qt::NoFocus"
     },
     {
+      "designComponentName":"ComponentLab/LineEdit",
+      "designComponentSetId":"1116:18",
+      "designComponentSet":"ComponentLab/LineEdit",
+      "qtClass":"commonWidget::Z_LineEdit",
+      "compositionApi":"input.configureLineEdit",
+      "propertyMappings":{
+        "Size":{"api":"input.configureLineEdit","values":{"Small":"Small","Medium":"Medium","Large":"Large"}},
+        "State":{"api":"input.configureLineEdit","values":{"Default":"Default","Hover":"Hover","Focus":"Focus","Filled":"Filled","Error":"Error","Disabled":"Disabled"}}
+      },
+      "stateMappings":{},
+      "slotMappings":[],
+      "resourceMappings":{"policy":"Text, placeholder, validator, inputMask, IME, selection, clear control and QAction slots remain native QLineEdit or host-owned inputs; Filled does not synthesize content and Error is an explicit visual contract"},
+      "fallback":"error",
+      "status":"Figma 1116:18; 18 Size x State variants; optional prefix, suffix and clear controls remain native SDK composition preferences"
+    },
+    {
+      "designComponentName":"ComponentLab/Slider",
+      "designComponentSetId":"467:195",
+      "designComponentSet":"ComponentLab/Slider",
+      "qtClass":"commonWidget::Z_Slider",
+      "compositionApi":"input.configureSlider",
+      "propertyMappings":{
+        "Orientation":{"api":"input.configureSlider","values":{"Horizontal":"Horizontal","Vertical":"Vertical"}},
+        "State":{"api":"input.configureSlider","values":{"Default":"Default","Focus":"Focus","Dragging":"Dragging","Disabled":"Disabled"}}
+      },
+      "stateMappings":{},
+      "slotMappings":[],
+      "resourceMappings":{"policy":"QAbstractSlider owns value, position, range, steps, tracking, inversion and signals; Figma value text is a presentation layer and never determines the native value"},
+      "fallback":"error",
+      "status":"Figma 467:195; eight Orientation x State variants; Focus and Dragging are visual snapshots rather than persisted sliderDown"
+    },
+    {
+      "designComponentName":"ComponentLab/ScrollBar",
+      "designComponentSetId":"471:477",
+      "designComponentSet":"ComponentLab/ScrollBar",
+      "qtClass":"commonWidget::Z_ScrollBar",
+      "compositionApi":"input.configureScrollBar",
+      "propertyMappings":{
+        "Orientation":{"api":"input.configureScrollBar","values":{"Horizontal":"Horizontal","Vertical":"Vertical"}},
+        "State":{"api":"input.configureScrollBar","values":{"Default":"Default","Hover":"Hover","Dragging":"Dragging","Disabled":"Disabled"}}
+      },
+      "stateMappings":{},
+      "slotMappings":[],
+      "resourceMappings":{"policy":"The host viewport and QStyle own range, pageStep, thumb proportion, hit testing and line-button behavior; Hover and Dragging remain transient visual evidence"},
+      "fallback":"error",
+      "status":"Figma 471:477; eight Orientation x State variants; native NoFocus remains unchanged unless a host explicitly opts into keyboard focus"
+    },
+    {
+      "designComponentName":"ComponentLab/TimePicker",
+      "designComponentSetId":"465:189",
+      "designComponentSet":"ComponentLab/TimePicker",
+      "qtClass":"commonWidget::Z_TimeEdit",
+      "compositionApi":"input.configureTimePicker",
+      "propertyMappings":{
+        "Format":{"api":"input.configureTimePicker","values":{"24h":"24h","12h":"12h"}},
+        "State":{"api":"input.configureTimePicker","values":{"Default":"Default","Focus":"Focus","ReadOnly":"ReadOnly","Disabled":"Disabled"}}
+      },
+      "stateMappings":{},
+      "slotMappings":[],
+      "resourceMappings":{"policy":"QTime, ordered range, parsing, locale, current section, wrapping and keyboard stepping remain native; 12h and 24h map only to displayFormat while preserving the value"},
+      "fallback":"error",
+      "status":"Figma 465:189; eight Format x State variants; wall-clock time never implies a date, time zone or instant"
+    },
+    {
       "designComponentName":"ComponentLab/ToolButton",
       "designComponentSetId":"443:222",
       "designComponentSet":"ComponentLab/ToolButton",

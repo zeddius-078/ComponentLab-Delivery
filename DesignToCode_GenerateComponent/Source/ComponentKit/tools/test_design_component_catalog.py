@@ -204,6 +204,8 @@ class FigmaCatalogContractTests(unittest.TestCase):
         )
         self.assertEqual(
             {"ComponentLab/Button", "ComponentLab/Checkbox", "ComponentLab/Input",
+             "ComponentLab/LineEdit", "ComponentLab/Slider",
+             "ComponentLab/ScrollBar", "ComponentLab/TimePicker",
              "ComponentLab/Badge", "ComponentLab/StatusIndicator",
              "ComponentLab/Link", "ComponentLab/Tag", "ComponentLab/Tooltip",
              "ComponentLab/SearchInput", "ComponentLab/NumberInput",

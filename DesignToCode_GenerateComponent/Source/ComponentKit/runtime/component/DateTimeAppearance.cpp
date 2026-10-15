@@ -12,11 +12,24 @@
 #include <QStyleOptionSpinBox>
 #include <QSvgRenderer>
 #include <QTimer>
+#include <QTimeEdit>
 #include <QVariant>
 #include <stdexcept>
 
 namespace commonWidget {
 namespace {
+bool booleanProperty(const QMap<QString, QString>& properties, const QString& name,
+                     bool defaultValue) {
+    if (!properties.contains(name))
+        return defaultValue;
+    const auto value = properties.value(name);
+    if (value == "True")
+        return true;
+    if (value == "False")
+        return false;
+    throw std::invalid_argument(("Invalid TimePicker boolean property: " + name).toStdString());
+}
+
 bool sourceFocus(const QDateTimeEdit* edit) {
     if (!edit->isEnabled() || edit->isReadOnly())
         return false;
@@ -284,6 +297,24 @@ private:
     QDateTimeEdit* edit_;
     QLineEdit* line_;
 };
+}
+
+void configureFigmaTimePicker(QTimeEdit* edit, const QMap<QString, QString>& properties) {
+    if (!edit)
+        throw std::invalid_argument("TimePicker is required");
+    const auto format = properties.value("Format");
+    const auto visual = properties.value("State");
+    if (!QStringList{"24h", "12h"}.contains(format) ||
+        !QStringList{"Default", "Focus", "ReadOnly", "Disabled"}.contains(visual))
+        throw std::invalid_argument("Invalid Figma TimePicker variant");
+
+    const bool seconds = booleanProperty(properties, "Show seconds", true);
+    const auto display = format == "12h" ? (seconds ? "hh:mm:ss AP" : "hh:mm AP")
+                                          : (seconds ? "HH:mm:ss" : "HH:mm");
+    setDateTimeDisplayFormatPreservingValue(edit, display);
+    edit->setEnabled(visual != "Disabled");
+    edit->setReadOnly(visual == "ReadOnly");
+    applyFigmaDateTimeAppearance(edit, visual == "Focus" ? "Focus" : "Default");
 }
 
 void applyFigmaDateTimeAppearance(QDateTimeEdit* edit, const QString& snapshotState,
