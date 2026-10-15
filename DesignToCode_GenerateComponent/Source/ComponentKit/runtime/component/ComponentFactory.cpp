@@ -162,7 +162,7 @@ QWidget* ComponentFactory::create(const QString& name, QWidget* parent) const {
     if (name == "commonWidget::Z_Statistic") return new Z_Statistic(parent);
     if (name == "commonWidget::Z_Descriptions") return new Z_Descriptions(parent);
     if (name == "commonWidget::Z_Form") return new Z_Form(parent);
-    if (name == "commonWidget::Z_Switch") return new Z_Switch(parent);
+    if (name == "commonWidget::Z_Switch") return new Z_Switch(profile, parent);
     if (name == "commonWidget::Z_Chip") return new Z_Chip(parent);
     if (name == "commonWidget::Z_Card") return new Z_Card(parent);
     if (name == "commonWidget::Z_IntegrationCard") return new Z_IntegrationCard(parent);

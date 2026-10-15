@@ -881,6 +881,69 @@
         "ComponentLab/Source/delivery/demo/ContainersGallery.cpp",
         "ComponentLab/Source/delivery/tests/CompositionTests.cpp"
       ]
+    },
+    "ComponentLab/Select": {
+      "status": "VERIFIED",
+      "figmaNodeId": "244:2769",
+      "figmaScreenshotSha256": "2D2E0E8CC8C4BDD8CCDE2470B67241A395071D28EA948818E9E0311F8852D031",
+      "profiles": ["light-comfortable", "light-compact", "dark-comfortable", "dark-compact"],
+      "runtimeGallerySha256": {
+        "light-comfortable": "287795D900A053D9CBCBCCF6D5683A0E1456450973ACA2C243AE5BA2B7140977",
+        "light-compact": "287795D900A053D9CBCBCCF6D5683A0E1456450973ACA2C243AE5BA2B7140977",
+        "dark-comfortable": "76A6408D804771A4B04AE8A0272C640CD88B366A3DE5A36DEF204A55670D8825",
+        "dark-compact": "76A6408D804771A4B04AE8A0272C640CD88B366A3DE5A36DEF204A55670D8825"
+      },
+      "scope": "Public outlined Select variants across Small, Middle and Large sizes and Default, Hover, Focus and Disabled states; fixed 240 px field width, captured heights, text, chevron, outline and profile presentation.",
+      "limitations": "The larger page also contains internal anatomy and other governed Select families. Only the canonical public outlined set is the direct live-Figma comparison target; popup data, filtering, keyboard selection and validation controllers remain host-owned. Formal designer and governance approval remain open.",
+      "runtimeEvidence": [
+        "Source/ComponentKit/runtime/component/Z_Select.h",
+        "Source/ComponentKit/runtime/component/Z_Select.cpp",
+        "Source/ComponentKit/design-assets/styles/select.qss.in",
+        "ComponentLab/Source/delivery/demo/EvidenceGallery.cpp",
+        "ComponentLab/Source/delivery/tests/CompositionTests.cpp"
+      ]
+    },
+    "ComponentLab/RadioButton": {
+      "status": "VERIFIED",
+      "figmaNodeId": "341:53",
+      "figmaScreenshotSha256": "7B4AF5F10065C3D5C29430F5DF10D40E4A48C73310878B86E3784A1579B2AA58",
+      "profiles": ["light-comfortable", "light-compact", "dark-comfortable", "dark-compact"],
+      "runtimeGallerySha256": {
+        "light-comfortable": "B0B7395180333846ECAC39FF79B754317854BE23274FB3A6C30D93B65A47F113",
+        "light-compact": "B0B7395180333846ECAC39FF79B754317854BE23274FB3A6C30D93B65A47F113",
+        "dark-comfortable": "B0B7395180333846ECAC39FF79B754317854BE23274FB3A6C30D93B65A47F113",
+        "dark-compact": "B0B7395180333846ECAC39FF79B754317854BE23274FB3A6C30D93B65A47F113"
+      },
+      "scope": "Ten Value=Off|On by State=Default|Hover|Focus|Pressed|Disabled variants; 18 px indicator, centered selected dot, label baseline, grouped horizontal and vertical examples and disabled evidence.",
+      "limitations": "Mutual exclusion, data binding and group validation remain native QButtonGroup or host-controller concerns. Formal designer and governance approval remain open.",
+      "runtimeEvidence": [
+        "Source/ComponentKit/runtime/component/native/Z_RadioButton.h",
+        "Source/ComponentKit/runtime/component/native/Z_RadioButton.cpp",
+        "Source/ComponentKit/design-assets/styles/native/Z_RadioButton.qss.in",
+        "ComponentLab/Source/delivery/demo/EvidenceGallery.cpp",
+        "ComponentLab/Source/delivery/tests/CompositionTests.cpp"
+      ]
+    },
+    "ComponentLab/Switch": {
+      "status": "VERIFIED",
+      "figmaNodeId": "346:19",
+      "figmaScreenshotSha256": "7BD678AACC3E4BC206DE753CB1CC783BBAD0ECC282C4599942AA264F1CB3EED9",
+      "profiles": ["light-comfortable", "light-compact", "dark-comfortable", "dark-compact"],
+      "runtimeGallerySha256": {
+        "light-comfortable": "199DB0F862FFF5ACDEC0FDFA4DA331B556F77189BA3B3A337ACEC3AD5E0CE770",
+        "light-compact": "199DB0F862FFF5ACDEC0FDFA4DA331B556F77189BA3B3A337ACEC3AD5E0CE770",
+        "dark-comfortable": "94096AAD00961BD737101161AA63BE8B511970685415F62EFD3918E2871BDE12",
+        "dark-compact": "94096AAD00961BD737101161AA63BE8B511970685415F62EFD3918E2871BDE12"
+      },
+      "scope": "Twenty-four Size=Medium|Small by Value=Off|On by State=Default|Hover|Pressed|Focus-visible|Loading|Disabled variants; 180 by 32 root, optional label, non-stretching 36 by 20 or 28 by 16 track, 2 px inset, knob and loading indicator.",
+      "limitations": "Loading blocks duplicate input while preserving the binary Value. Async lifecycle, persistence and business confirmation remain host-owned. Formal designer and governance approval remain open.",
+      "runtimeEvidence": [
+        "Source/ComponentKit/runtime/component/Z_DesignComponents.h",
+        "Source/ComponentKit/runtime/component/Z_DesignComponents.cpp",
+        "Source/ComponentKit/runtime/component/ComponentFactory.cpp",
+        "ComponentLab/Source/delivery/demo/NativeGalleryPages.cpp",
+        "ComponentLab/Source/delivery/tests/CompositionTests.cpp"
+      ]
     }
   },
   "tokenBindingEvidencePolicy": {

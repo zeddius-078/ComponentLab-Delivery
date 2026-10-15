@@ -499,26 +499,41 @@ class Z_Switch final : public QAbstractButton {
     Q_OBJECT
     Q_PROPERTY(QString variantTuple READ variantTuple WRITE setVariantTuple NOTIFY variantChanged)
     Q_PROPERTY(QVariantMap variantProperties READ variantProperties NOTIFY variantChanged)
+    Q_PROPERTY(QString label READ label WRITE setLabel NOTIFY labelChanged)
+    Q_PROPERTY(bool showLabel READ showLabel WRITE setShowLabel NOTIFY showLabelChanged)
+    Q_PROPERTY(QRect trackGeometry READ trackGeometry)
 
   public:
     explicit Z_Switch(QWidget* parent = nullptr);
+    explicit Z_Switch(const QString& profile, QWidget* parent = nullptr);
     QString variantTuple() const;
     QVariantMap variantProperties() const;
+    QString label() const;
+    bool showLabel() const;
+    QRect trackGeometry() const;
     QSize sizeHint() const override;
 
   public slots:
     void setVariantTuple(const QString& tuple);
     void setVariantProperty(const QString& axis, const QString& value);
+    void setLabel(const QString& label);
+    void setShowLabel(bool show);
 
   signals:
     void variantChanged(const QString& tuple);
+    void labelChanged(const QString& label);
+    void showLabelChanged(bool show);
 
   protected:
     void paintEvent(QPaintEvent* event) override;
+    void nextCheckState() override;
 
   private:
+    QString m_profile;
     QString m_variantTuple;
     QVariantMap m_variantProperties;
+    QString m_label;
+    bool m_showLabel = true;
 };
 
 class Z_Chip final : public QAbstractButton {

@@ -1185,15 +1185,28 @@ auto* secondEditor=editors->widget(1);auto* area=secondEditor->findChild<QMdiAre
         host.resize(900, 180);
         auto* layout = new QHBoxLayout(&host);
         auto* toggle = new Z_Switch(&host);
-        QCOMPARE(toggle->size(), QSize(44, 24));
+        QCOMPARE(toggle->size(), QSize(180, 32));
+        QCOMPARE(toggle->label(), QStringLiteral("Switch label"));
+        QVERIFY(toggle->showLabel());
+        QCOMPARE(toggle->trackGeometry(), QRect(2, 6, 36, 20));
         QCOMPARE(toggle->sizePolicy().horizontalPolicy(), QSizePolicy::Fixed);
         QCOMPARE(toggle->sizePolicy().verticalPolicy(), QSizePolicy::Fixed);
         layout->addWidget(toggle);
         host.show();
         QCoreApplication::processEvents();
-        QCOMPARE(toggle->size(), QSize(44, 24));
+        QCOMPARE(toggle->size(), QSize(180, 32));
+        toggle->resize(640, 96);
+        QCOMPARE(toggle->size(), QSize(180, 32));
         toggle->setVariantTuple("Size=Small, Value=On, State=Default");
-        QCOMPARE(toggle->size(), QSize(36, 20));
+        QCOMPARE(toggle->size(), QSize(180, 32));
+        QCOMPARE(toggle->trackGeometry(), QRect(2, 8, 28, 16));
+        toggle->setShowLabel(false);
+        QCOMPARE(toggle->size(), QSize(32, 32));
+        QCOMPARE(toggle->trackGeometry(), QRect(2, 8, 28, 16));
+        toggle->setLabel(QStringLiteral("Immediate setting"));
+        QCOMPARE(toggle->label(), QStringLiteral("Immediate setting"));
+        toggle->setShowLabel(true);
+        QCOMPARE(toggle->size(), QSize(180, 32));
 
         auto* tree = part<QTreeWidget>("componentTree");
         tree->setCurrentItem(pageItem(tree, QStringLiteral("346:2")));
@@ -1201,8 +1214,15 @@ auto* secondEditor=editors->widget(1);auto* area=secondEditor->findChild<QMdiAre
         auto* switchPage = part<QStackedWidget>("componentPages")->currentWidget();
         switchPage->findChild<QTabWidget*>("componentSections")->setCurrentIndex(1);
         QCoreApplication::processEvents();
-        for (auto* specimen : switchPage->findChildren<Z_Switch*>())
+        for (auto* specimen : switchPage->findChildren<Z_Switch*>()) {
             QCOMPARE(specimen->size(), specimen->sizeHint());
+            QCOMPARE(specimen->size(), QSize(180, 32));
+            QCOMPARE(specimen->label(), QStringLiteral("Switch label"));
+            QVERIFY(specimen->showLabel());
+            QCOMPARE(specimen->trackGeometry().size(),
+                     specimen->variantProperties().value("Size") == "Small"
+                         ? QSize(28, 16) : QSize(36, 20));
+        }
 
         tree->setCurrentItem(pageItem(tree, QStringLiteral("2148:1146")));
         QCoreApplication::processEvents();

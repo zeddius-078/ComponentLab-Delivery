@@ -2030,13 +2030,15 @@ void Z_DesktopBottomNavigation::refreshStyle() {
                            qssColor(text), qssColor(accent), qssColor(disabled)));
 }
 
-Z_Switch::Z_Switch(QWidget* parent) : QAbstractButton(parent) {
+Z_Switch::Z_Switch(QWidget* parent)
+    : Z_Switch(QStringLiteral("light-comfortable"), parent) {}
+
+Z_Switch::Z_Switch(const QString& profile, QWidget* parent)
+    : QAbstractButton(parent), m_profile(profile), m_label(QStringLiteral("Switch label")) {
     configureRuntimeIdentity(this, QStringLiteral("Switch"));
     setCheckable(true);
     setFocusPolicy(Qt::StrongFocus);
     FocusIndicator::instance().watch(this);
-    // A switch is an intrinsic-size control. Layouts may position it but must
-    // never stretch its track in either axis.
     setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     setVariantTuple(QStringLiteral("Size=Medium, Value=Off, State=Default"));
     connect(this, &QAbstractButton::toggled, this, [this](bool checked) {
@@ -2047,8 +2049,35 @@ Z_Switch::Z_Switch(QWidget* parent) : QAbstractButton(parent) {
 
 QString Z_Switch::variantTuple() const { return m_variantTuple; }
 QVariantMap Z_Switch::variantProperties() const { return m_variantProperties; }
+QString Z_Switch::label() const { return m_label; }
+bool Z_Switch::showLabel() const { return m_showLabel; }
+QRect Z_Switch::trackGeometry() const {
+    const CompositeTokens tokens(m_profile);
+    const bool small = axisIs(m_variantProperties, "Size", "Small");
+    const QSize trackSize(
+        tokens.metric(small ? "base.stoken.switch.size.small.track.visual-width"
+                            : "base.stoken.switch.size.medium.track.visual-width"),
+        tokens.metric(small ? "base.stoken.switch.size.small.track.visual-height"
+                            : "base.stoken.switch.size.medium.track.visual-height"));
+    const int inset = tokens.metric("base.stoken.switch.base.default.knob.inset");
+    const int leading = layoutDirection() == Qt::RightToLeft
+                            ? width() - inset - trackSize.width()
+                            : inset;
+    return QRect(leading, (height() - trackSize.height()) / 2,
+                 trackSize.width(), trackSize.height());
+}
 QSize Z_Switch::sizeHint() const {
-    return axisIs(m_variantProperties, "Size", "Small") ? QSize(36, 20) : QSize(44, 24);
+    const CompositeTokens tokens(m_profile);
+    const int interactiveSize =
+        tokens.metric("semantic.dimension.control.interactive-size");
+    if (m_showLabel)
+        return QSize(180, interactiveSize);
+    const int trackWidth = tokens.metric(
+        axisIs(m_variantProperties, "Size", "Small")
+            ? "base.stoken.switch.size.small.track.visual-width"
+            : "base.stoken.switch.size.medium.track.visual-width");
+    const int inset = tokens.metric("base.stoken.switch.base.default.knob.inset");
+    return QSize(trackWidth + inset * 2, interactiveSize);
 }
 void Z_Switch::setVariantTuple(const QString& tuple) {
     applyButtonTuple(this, m_variantProperties, m_variantTuple, tuple);
@@ -2057,8 +2086,7 @@ void Z_Switch::setVariantTuple(const QString& tuple) {
         const QSignalBlocker blocker(this);
         setChecked(on);
     }
-    setEnabled(!axisIs(m_variantProperties, "State", "Disabled") &&
-               !axisIs(m_variantProperties, "State", "Loading"));
+    setEnabled(!axisIs(m_variantProperties, "State", "Disabled"));
     setFixedSize(sizeHint());
     emit variantChanged(m_variantTuple); updateGeometry(); update();
 }
@@ -2066,33 +2094,89 @@ void Z_Switch::setVariantProperty(const QString& name, const QString& value) {
     m_variantProperties.insert(name, value);
     setVariantTuple(tupleFromMap(m_variantProperties));
 }
+void Z_Switch::setLabel(const QString& label) {
+    if (m_label == label)
+        return;
+    m_label = label;
+    emit labelChanged(m_label);
+    update();
+}
+void Z_Switch::setShowLabel(bool show) {
+    if (m_showLabel == show)
+        return;
+    m_showLabel = show;
+    setFixedSize(sizeHint());
+    emit showLabelChanged(m_showLabel);
+    updateGeometry();
+    update();
+}
+void Z_Switch::nextCheckState() {
+    if (axisIs(m_variantProperties, "State", "Loading"))
+        return;
+    QAbstractButton::nextCheckState();
+}
 void Z_Switch::paintEvent(QPaintEvent*) {
     QPainter painter(this); painter.setRenderHint(QPainter::Antialiasing);
-    const QColor surface = palette().color(QPalette::Base);
-    const QColor accent = palette().color(QPalette::Highlight);
-    const QColor disabled = palette().color(QPalette::Disabled, QPalette::Mid);
+    const CompositeTokens tokens(m_profile);
+    const QColor knob = tokens.color("component.basic.switch.knob");
+    const QColor text = tokens.color("component.basic.switch.text");
+    const QColor disabledText = tokens.color("component.basic.switch.disabledText");
+    const QColor disabledTrack = tokens.color("component.basic.switch.trackDisabled");
+    const QColor offTrack = tokens.color("component.basic.switch.trackOff");
+    const QColor onTrack = tokens.color("component.basic.switch.trackOn");
     const QString state = axis(m_variantProperties, "State");
     const bool previewFocus = axisIs(m_variantProperties, "State", "Focus-visible");
-    const QRectF track = rect().adjusted(1.5, 1.5, -1.5, -1.5);
+    const QRectF track = trackGeometry();
     const auto& focusIndicator = FocusIndicator::instance();
     const bool focus = focusIndicator.enabledFor(this) &&
                        (focusIndicator.visibleFor(this) || previewFocus);
-    painter.setPen(QPen(focus ? accent : Qt::transparent, focus ? 2 : 0));
-    QColor trackColor = isChecked() ? accent : palette().color(QPalette::Mid);
-    if (state == QStringLiteral("Hover"))
-        trackColor = mix(trackColor, surface, .12);
-    else if (state == QStringLiteral("Pressed"))
-        trackColor = mix(trackColor, palette().color(QPalette::Text), .18);
-    painter.setBrush(!isEnabled() ? disabled : trackColor);
+    const QColor focusColor =
+        tokens.color("base.stoken.color.interactive.brand.focus-ring");
+    const QColor onHover = tokens.color("base.stoken.color.interactive.brand.hover");
+    const QColor onPressed = tokens.color("base.stoken.color.interactive.brand.pressed");
+    QColor trackColor = isChecked() ? onTrack : offTrack;
+    if (isEnabled() && state == QStringLiteral("Hover"))
+        trackColor = isChecked() ? onHover
+                                 : QColor(QStringLiteral("#A3A3A3"));
+    else if (isEnabled() && state == QStringLiteral("Pressed"))
+        trackColor = isChecked() ? onPressed
+                                 : QColor(QStringLiteral("#8A8A8A"));
+    painter.setPen(QPen(focus ? focusColor : Qt::transparent, focus ? 2 : 0));
+    painter.setBrush(isEnabled() ? trackColor : disabledTrack);
     painter.drawRoundedRect(track, track.height() / 2.0, track.height() / 2.0);
-    const qreal radius = track.height() / 2.0 - 3;
-    const qreal x = isChecked() ? track.right() - radius - 3 : track.left() + radius + 3;
-    painter.setPen(Qt::NoPen); painter.setBrush(surface);
-    painter.drawEllipse(QPointF(x, track.center().y()), radius, radius);
+    const qreal inset = tokens.metric("base.stoken.switch.base.default.knob.inset");
+    const qreal knobSize = tokens.metric(
+        axisIs(m_variantProperties, "Size", "Small")
+            ? "base.stoken.switch.size.small.knob.visual-size"
+            : "base.stoken.switch.size.medium.knob.visual-size");
+    const bool checkedAtVisualEnd = isChecked() != (layoutDirection() == Qt::RightToLeft);
+    const qreal knobLeft = checkedAtVisualEnd ? track.right() - inset - knobSize + 1.0
+                                               : track.left() + inset;
+    const QRectF knobRect(knobLeft, track.top() + inset, knobSize, knobSize);
+    painter.setPen(Qt::NoPen); painter.setBrush(knob);
+    painter.drawEllipse(knobRect);
     if (axisIs(m_variantProperties, "State", "Loading")) {
-        painter.setPen(QPen(accent, 2)); painter.setBrush(Qt::NoBrush);
-        painter.drawArc(QRectF(x - radius + 3, track.center().y() - radius + 3,
-                               (radius - 3) * 2, (radius - 3) * 2), 30 * 16, 250 * 16);
+        painter.setPen(QPen(focusColor, 2)); painter.setBrush(Qt::NoBrush);
+        painter.drawArc(QRectF(knobRect.center().x() - 4, knobRect.center().y() - 4, 8, 8),
+                        30 * 16, 250 * 16);
+    }
+    if (m_showLabel) {
+        QFont labelFont = painter.font();
+        labelFont.setPixelSize(14);
+        labelFont.setWeight(QFont::Medium);
+        painter.setFont(labelFont);
+        painter.setPen(isEnabled() ? text : disabledText);
+        QRect labelRect;
+        if (layoutDirection() == Qt::RightToLeft)
+            labelRect = QRect(0, 0, track.left() - 8, height());
+        else
+            labelRect = QRect(track.right() + 1 + 8, 0,
+                              width() - track.right() - 1 - 8, height());
+        painter.drawText(labelRect,
+                         Qt::AlignVCenter |
+                             (layoutDirection() == Qt::RightToLeft ? Qt::AlignRight
+                                                                   : Qt::AlignLeft),
+                         m_label);
     }
 }
 

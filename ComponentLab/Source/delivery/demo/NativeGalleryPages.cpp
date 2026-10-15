@@ -175,6 +175,9 @@ void configurePreview(QWidget* widget, const QString& qtClass, const QString& sd
         command->setDescription(QString::fromUtf8("检查当前工单参数与设备状态"));
     } else if (auto* buttonBox = qobject_cast<QDialogButtonBox*>(widget)) {
         buttonBox->setStandardButtons(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
+    } else if (auto* toggle = qobject_cast<commonWidget::Z_Switch*>(widget)) {
+        toggle->setLabel(QStringLiteral("Switch label"));
+        toggle->setShowLabel(true);
     } else if (auto* button = qobject_cast<QAbstractButton*>(widget)) {
         button->setText(widget->property("designSystemClass").toString().section("::", -1));
         if (qobject_cast<QRadioButton*>(button) || qobject_cast<QCheckBox*>(button))
