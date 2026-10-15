@@ -253,6 +253,17 @@ def load_traceability_manifest() -> dict:
     assert counts["engineeringGap"] == sum(
         item["engineeringStatus"] == "ENGINEERING_GAP" for item in components
     )
+    assert counts["engineeringNotApplicable"] == sum(
+        item["engineeringStatus"] == "NOT_APPLICABLE" for item in components
+    )
+    assert counts["total"] == sum(
+        counts[key] for key in (
+            "engineeringVerified",
+            "engineeringNameSyncRequired",
+            "engineeringGap",
+            "engineeringNotApplicable",
+        )
+    )
     assert len({item["designComponentId"] for item in components}) == len(components)
     assert len({item["canonicalName"] for item in components}) == len(components)
     return manifest
@@ -399,6 +410,9 @@ def governance_fields(
             identity_migration = "RENAME"
         elif trace["engineeringStatus"] == "ENGINEERING_GAP":
             engineering_status = trace.get("consumerEngineeringStatus", "UNMAPPED")
+        elif trace["engineeringStatus"] == "NOT_APPLICABLE":
+            assert kind in {"LayoutHelper", "Asset"}, (design_id, kind)
+            engineering_status = trace.get("consumerEngineeringStatus", "NOT_APPLICABLE")
         else:
             engineering_status = "REGISTERED"
             if design_id == "ComponentLab/Drawer":
@@ -542,7 +556,9 @@ def merge_current_library(legacy: list[dict], inventory: dict) -> list[dict]:
         if design_id == "ComponentLab/Drawer":
             by_design[design_id] = drawer
             continue
-        assert trace["engineeringStatus"] in {"ENGINEERING_GAP", "VERIFIED"}, trace
+        assert trace["engineeringStatus"] in {
+            "ENGINEERING_GAP", "NOT_APPLICABLE", "VERIFIED"
+        }, trace
         node_ids = trace["figmaNodeIds"]
         assert len(node_ids) == 1 and node_ids[0] in sets, trace
         component_set = sets[node_ids[0]]

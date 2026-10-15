@@ -353,6 +353,35 @@ class FigmaCatalogContractTests(unittest.TestCase):
         self.assertEqual(trace["counts"]["built"], sum(
             item["governanceDecision"] == "BUILT" for item in trace["components"]
         ))
+        self.assertEqual(0, trace["counts"]["engineeringGap"])
+        self.assertEqual(set(), {
+            item["designComponentId"] for item in trace["components"]
+            if item["engineeringStatus"] == "ENGINEERING_GAP"
+        })
+        non_widget_ids = set(trace["kindPolicy"]["layoutHelpers"]) | set(
+            trace["kindPolicy"]["assets"]
+        )
+        self.assertEqual(
+            len(non_widget_ids), trace["counts"]["engineeringNotApplicable"]
+        )
+        self.assertEqual(
+            trace["counts"]["total"],
+            sum(trace["counts"][key] for key in (
+                "engineeringVerified", "engineeringNameSyncRequired",
+                "engineeringGap", "engineeringNotApplicable",
+            )),
+        )
+        self.assertEqual(
+            non_widget_ids,
+            {item["designComponentId"] for item in trace["components"]
+             if item["engineeringStatus"] == "NOT_APPLICABLE"},
+        )
+        self.assertTrue(all(
+            item["developmentComponentId"] is None and
+            item["consumerEngineeringStatus"] == "IMPLEMENTED"
+            for item in trace["components"]
+            if item["designComponentId"] in non_widget_ids
+        ))
         by_id = {item["canonicalId"]: item for item in self.catalog["entries"]}
         drawer = by_id["ComponentLab/Drawer"]
         self.assertEqual("RENAME", drawer["identityMigration"])

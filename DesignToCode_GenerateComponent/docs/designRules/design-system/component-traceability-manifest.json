@@ -8,7 +8,7 @@
     "leftKey": "designComponentId",
     "rightKey": "developmentComponentId",
     "rule": "One public Design ID maps to at most one verified development public identity. Internal Figma anatomy, variant sets and slots are not additional mapping identities.",
-    "missingDevelopmentBehavior": "Widget and Composite entries without a verified public runtime identity use ENGINEERING_GAP with developmentComponentId=null. LayoutHelper and Asset entries keep developmentComponentId=null and record their owner-specific consumerEngineeringStatus instead of requiring a QWidget class."
+    "missingDevelopmentBehavior": "Widget and Composite entries without a verified public runtime identity use ENGINEERING_GAP with developmentComponentId=null. LayoutHelper and Asset entries use NOT_APPLICABLE for QWidget implementation, keep developmentComponentId=null and record their owner-specific consumerEngineeringStatus."
   },
   "kindPolicy": {
     "existingEntries": "Derive Widget versus Composite from the verified legacy engineering mapping, then reconcile the canonical identity with current Figma.",
@@ -234,10 +234,11 @@
     "nativeRegistry": "DesignToCode_GenerateComponent/Source/ComponentKit/runtime/component/native/NativeComponentRegistry.cpp",
     "verified": 43,
     "nameSyncRequired": 0,
-    "gaps": 5,
+    "gaps": 0,
+    "notApplicable": 5,
     "layoutHelpersImplemented": 2,
     "assetsUnmapped": 0,
-    "boundary": "The 5 remaining ENGINEERING_GAP records are intentionally non-QWidget entries: 2 LayoutHelpers and 3 Assets. Their completion is recorded by owner-specific consumerEngineeringStatus=IMPLEMENTED; they must not be added to ComponentFactory or assigned fake QWidget identities."
+    "boundary": "No Widget or Composite engineering gaps remain. The 2 LayoutHelpers and 3 Assets use engineeringStatus=NOT_APPLICABLE for QWidget implementation and consumerEngineeringStatus=IMPLEMENTED for their owner-specific runtime chains; they must not enter ComponentFactory or receive fake QWidget identities."
   },
   "downstreamEvidenceOverrides": {
     "ComponentLab/Button": {
@@ -754,7 +755,8 @@
     "tokenBound": 48,
     "engineeringVerified": 43,
     "engineeringNameSyncRequired": 0,
-    "engineeringGap": 5
+    "engineeringGap": 0,
+    "engineeringNotApplicable": 5
   },
   "components": [
     {
@@ -1201,7 +1203,7 @@
       ],
       "governanceDecision": "BUILT",
       "developmentComponentId": null,
-      "engineeringStatus": "ENGINEERING_GAP",
+      "engineeringStatus": "NOT_APPLICABLE",
       "entryKind": "LayoutHelper",
       "runtimeOwner": "GenerateLayout",
       "consumerEngineeringStatus": "IMPLEMENTED",
@@ -2062,7 +2064,7 @@
       ],
       "governanceDecision": "BUILT",
       "developmentComponentId": null,
-      "engineeringStatus": "ENGINEERING_GAP",
+      "engineeringStatus": "NOT_APPLICABLE",
       "entryKind": "LayoutHelper",
       "runtimeOwner": "GenerateLayout",
       "consumerEngineeringStatus": "IMPLEMENTED",
@@ -2083,7 +2085,7 @@
       ],
       "governanceDecision": "BUILT",
       "developmentComponentId": null,
-      "engineeringStatus": "ENGINEERING_GAP",
+      "engineeringStatus": "NOT_APPLICABLE",
       "entryKind": "Asset",
       "runtimeOwner": "GenerateComponent asset resolver",
       "consumerEngineeringStatus": "IMPLEMENTED",
@@ -2122,7 +2124,7 @@
       ],
       "governanceDecision": "BUILT",
       "developmentComponentId": null,
-      "engineeringStatus": "ENGINEERING_GAP",
+      "engineeringStatus": "NOT_APPLICABLE",
       "entryKind": "Asset",
       "runtimeOwner": "GenerateComponent asset resolver",
       "consumerEngineeringStatus": "IMPLEMENTED",
@@ -2164,7 +2166,7 @@
       ],
       "governanceDecision": "BUILT",
       "developmentComponentId": null,
-      "engineeringStatus": "ENGINEERING_GAP",
+      "engineeringStatus": "NOT_APPLICABLE",
       "entryKind": "Asset",
       "runtimeOwner": "GenerateComponent asset resolver",
       "consumerEngineeringStatus": "IMPLEMENTED",

@@ -151,7 +151,8 @@
     "figmaIdentityPresent": 48,
     "engineeringVerified": 43,
     "engineeringNameSyncRequired": 0,
-    "engineeringGap": 5,
+    "engineeringGap": 0,
+    "engineeringNotApplicable": 5,
     "developmentScope": "canonical-catalog-reconciled-foundation-semantic-input-selection-navigation-structure-timeline-anchor-navigation-filter-numeric-keypad-color-picker-upload-and-transfer-runtime-batches-verified"
   },
   "canonicalCatalog": {
@@ -1408,6 +1409,38 @@
         "Calendar private child object names are stable in Qt 5.15.2 but must be revalidated during any Qt major-version migration",
         "Tooltip screen-edge collision handling and platform window placement require a visible application-level acceptance pass beyond the static twelve-placement gallery",
         "the 51 token-binding entries left UNRESOLVED in B25 remain outside this visual-repair batch"
+      ]
+    },
+    {
+      "id": "B27-non-widget-engineering-status-boundary",
+      "date": "2026-10-16",
+      "status": "VERIFIED",
+      "inputs": [
+        "repository-synchronized Figma inventory captured on 2026-10-15",
+        "traceability manifest with 43 VERIFIED records and five non-QWidget records incorrectly labeled ENGINEERING_GAP",
+        "canonical kind policy identifying Spacer and LayoutContainer as LayoutHelper and IconAsset, ImageAsset and ModelAsset as Asset",
+        "existing GenerateLayout and asset-catalog consumer evidence for all five non-QWidget records"
+      ],
+      "outputs": [
+        "the traceability model now uses NOT_APPLICABLE for QWidget implementation on the two LayoutHelpers and three Assets",
+        "owner-specific consumerEngineeringStatus remains IMPLEMENTED, preserving the distinction between no QWidget class and a completed layout or asset runtime chain",
+        "traceability engineeringGap changed from five pseudo-gaps to zero real Widget or Composite gaps, with engineeringNotApplicable derived as five",
+        "the catalog generator accepts NOT_APPLICABLE only for LayoutHelper or Asset and rejects category misuse",
+        "count validation now proves VERIFIED, NAME_SYNC_REQUIRED, ENGINEERING_GAP and NOT_APPLICABLE form an exhaustive 48-record partition",
+        "canonical Catalog output remains 110 entries with 105 registered components, two implemented LayoutHelpers, three implemented Assets and zero engineering gaps"
+      ],
+      "verification": [
+        "catalog generation drift check passed with 110 entries, 105 components, 98 Figma pages and three generated outputs",
+        "catalog Python tests passed 19 of 19 including non-widget status and exhaustive-count assertions",
+        "GenerateComponent SDK build passed and re-ran catalog, Token and 59 native-component generation checks",
+        "GenerateComponent, ComponentLab and GenerateLayout CheckProject.py checks all passed",
+        "JSON syntax and git diff whitespace checks passed"
+      ],
+      "open": [
+        "live Figma was not re-read because the current Professional Full-seat MCP quota remains exhausted; the captured inventory date and boundary remain explicit",
+        "NOT_APPLICABLE applies only to QWidget implementation and Factory registration; it must not be interpreted as absence of LayoutHelper or Asset runtime obligations",
+        "all 110 entries remain NOT_REVIEWED for governance approval and their visual approval remains independent from this status-model correction",
+        "51 token-binding statuses and 57 component focus policies remain unresolved in the canonical Catalog"
       ]
     }
   ],
