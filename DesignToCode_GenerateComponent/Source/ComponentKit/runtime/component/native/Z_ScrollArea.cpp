@@ -12,6 +12,7 @@ Z_ScrollArea::Z_ScrollArea(QWidget* parent) : QScrollArea(parent) {
     setProperty("designSystemClass", "commonWidget::Z_ScrollArea");
     setProperty("nativeQtClass", "QScrollArea");
     setAccessibleName(QStringLiteral("Scrollable content"));
+    setFocusPolicy(Qt::StrongFocus);
     FocusIndicator::instance().watch(this);
     refreshContract();
 }

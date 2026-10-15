@@ -124,6 +124,7 @@ commonWidget::Z_CalendarWidget* calendarSpecimen(
     if (!calendar)
         throw std::runtime_error("Z_CalendarWidget unavailable");
     calendar->setGeometry(rect);
+    calendar->setProperty("figmaReferenceDate", QDate(2026, 9, 15));
     calendar->setWeekStart(monday ? QStringLiteral("Monday") : QStringLiteral("Sunday"));
     calendar->setGrid(grid);
     calendar->setSnapshotState(disabled ? QStringLiteral("Disabled")

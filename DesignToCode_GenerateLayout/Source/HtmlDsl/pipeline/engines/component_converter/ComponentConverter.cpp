@@ -409,7 +409,7 @@ QWidget* ComponentConverter::convert(const QJsonObject& n, QWidget* parent) {
         static const QSet<QString> booleanApis{"setEnabled", "setDanger", "setGhost",
                                                "setLoading", "setAllowClear", "setReadOnly",
                                                "setActionsVisible", "setDismissible",
-                                               "setCollapsed",
+                                               "setCollapsed", "setGrid", "setShowGrip",
                                                "navigation.setMenuBarCornerVisible"};
         static const QSet<QString> numericApis{"setSegmentCount", "setCurrentIndex",
                                                "setMinimum", "setMaximum",

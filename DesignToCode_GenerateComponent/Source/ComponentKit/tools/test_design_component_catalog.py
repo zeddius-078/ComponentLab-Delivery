@@ -225,7 +225,9 @@ class FigmaCatalogContractTests(unittest.TestCase):
              "ComponentLab/ToolButton", "ComponentLab/DialogButtonGroup",
              "ComponentLab/CommandLinkButton",
              "ComponentLab/Navbar", "ComponentLab/Sidebar",
-             "ComponentLab/DesktopBottomNavigation"},
+             "ComponentLab/DesktopBottomNavigation",
+             "ComponentLab/Splitter", "ComponentLab/ScrollArea",
+             "ComponentLab/Calendar"},
             {entry["canonicalId"] for entry in entries
              if entry["verificationStatus"]["runtimeScope"] ==
              "SDK_FACTORY_COMPONENTLAB_GENERATELAYOUT"},

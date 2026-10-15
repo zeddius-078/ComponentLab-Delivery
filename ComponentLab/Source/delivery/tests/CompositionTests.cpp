@@ -7,6 +7,7 @@
 #include "Z_DesignComponents.h"
 #include "Z_FoundationComponents.h"
 #include "native/Z_ScrollArea.h"
+#include "native/Z_Splitter.h"
 #include "SolidInnerShadow.h"
 #include "FocusIndicator.h"
 #include "Z_OtpInput.h"
@@ -1963,17 +1964,26 @@ auto* secondEditor=editors->widget(1);auto* area=secondEditor->findChild<QMdiAre
         }
         auto* splitterCanvas = variantCanvas(QStringLiteral("520:11"));
         QVERIFY(splitterCanvas);
-        QSplitter* hover = nullptr;
-        QSplitter* dragging = nullptr;
+        commonWidget::Z_Splitter* hover = nullptr;
+        commonWidget::Z_Splitter* dragging = nullptr;
         for (auto* splitter : splitterCanvas->findChildren<QSplitter*>()) {
             const auto variant = splitter->property("figmaVariant").toString();
-            if (variant.contains(QStringLiteral("State=Hover"))) hover = splitter;
-            if (variant.contains(QStringLiteral("State=Dragging"))) dragging = splitter;
+            if (variant.contains(QStringLiteral("State=Hover")))
+                hover = qobject_cast<commonWidget::Z_Splitter*>(splitter);
+            if (variant.contains(QStringLiteral("State=Dragging")))
+                dragging = qobject_cast<commonWidget::Z_Splitter*>(splitter);
         }
         QVERIFY(hover);
         QVERIFY(dragging);
-        QVERIFY(hover->styleSheet() != dragging->styleSheet());
-        QVERIFY(hover->handleWidth() != dragging->handleWidth());
+        QCOMPARE(hover->focusPolicy(), Qt::NoFocus);
+        QCOMPARE(hover->handleWidth(), 12);
+        QCOMPARE(dragging->handleWidth(), 12);
+        QVERIFY(hover->showGrip());
+        QCOMPARE(hover->handle(1)->property("figmaSnapshotState").toString(), QString("Hover"));
+        QCOMPARE(dragging->handle(1)->property("figmaSnapshotState").toString(),
+                 QString("Dragging"));
+        QVERIFY(hover->styleSheet().isEmpty());
+        QVERIFY(dragging->styleSheet().isEmpty());
 
         tree->setCurrentItem(pageItem(tree, QStringLiteral("520:11")));
         QCoreApplication::processEvents();
@@ -2054,12 +2064,30 @@ auto* secondEditor=editors->widget(1);auto* area=secondEditor->findChild<QMdiAre
             QCOMPARE(calendar->isGridVisible(),calendar->grid());
             QCOMPARE(calendar->isEnabled(),calendar->snapshotState()!=QString("Disabled"));
             QCOMPARE(calendar->property("designSystemStyleOwner").toString(),QString("tokens"));
+            // Variant-gallery specimens are intentionally passive; the public SDK
+            // calendar remains keyboard-focusable in the interactive preview.
+            QCOMPARE(calendar->focusPolicy(),Qt::NoFocus);
+            QVERIFY(calendar->showNavigation());
+            QCOMPARE(calendar->horizontalHeaderFormat(),QCalendarWidget::SingleLetterDayNames);
+            QCOMPARE(calendar->layout()->contentsMargins(),QMargins(16,16,16,15));
             auto* navigation=calendar->findChild<QWidget*>(QStringLiteral("qt_calendar_navigationbar"));
             QVERIFY(navigation);
+            QCOMPARE(navigation->height(),44);
+            auto* previous=calendar->findChild<QToolButton*>(QStringLiteral("qt_calendar_prevmonth"));
+            auto* next=calendar->findChild<QToolButton*>(QStringLiteral("qt_calendar_nextmonth"));
+            QVERIFY(previous);QVERIFY(next);QCOMPARE(previous->size(),QSize(16,16));QCOMPARE(next->size(),QSize(16,16));
+            auto* month=calendar->findChild<QToolButton*>(QStringLiteral("qt_calendar_monthbutton"));
+            QVERIFY(month);QVERIFY(month->menu()==nullptr);QVERIFY(month->testAttribute(Qt::WA_TransparentForMouseEvents));
             QCOMPARE(navigation->palette().color(QPalette::Window),
                      calendar->palette().color(QPalette::Active,QPalette::AlternateBase));
             auto* calendarView=calendar->findChild<QAbstractItemView*>(QStringLiteral("qt_calendar_calendarview"));
             QVERIFY(calendarView);
+            QStringList headerValues;
+            for(int column=0;column<calendarView->model()->columnCount();++column)
+                headerValues<<calendarView->model()->index(0,column).data().toString();
+            QCOMPARE(headerValues,calendar->weekStart()==QStringLiteral("Monday")
+                                      ? QStringList({"一","二","三","四","五","六","日"})
+                                      : QStringList({"日","一","二","三","四","五","六"}));
             if(calendar->snapshotState()==QStringLiteral("Disabled")){
                 QCOMPARE(calendarView->palette().color(QPalette::Disabled,QPalette::Base),
                          calendar->palette().color(QPalette::Active,QPalette::AlternateBase));
@@ -2075,10 +2103,13 @@ auto* secondEditor=editors->widget(1);auto* area=secondEditor->findChild<QMdiAre
         calendarPage->findChild<QTabWidget*>("componentSections")->setCurrentIndex(0);QCoreApplication::processEvents();
         auto* interactiveCalendar=calendarPage->findChild<commonWidget::Z_CalendarWidget*>("componentInteractivePreview");
         QVERIFY(interactiveCalendar);QCOMPARE(interactiveCalendar->size(),QSize(440,360));
+        QCOMPARE(interactiveCalendar->focusPolicy(),Qt::StrongFocus);
         auto* weekStart=calendarPage->findChild<QComboBox*>("calendarWeekStartControl");QVERIFY(weekStart);
         weekStart->setCurrentText("Sunday");QCOMPARE(interactiveCalendar->weekStart(),QString("Sunday"));
         auto* grid=calendarPage->findChild<QCheckBox*>("calendarGridControl");QVERIFY(grid);grid->setChecked(false);
         QCOMPARE(interactiveCalendar->grid(),false);
+        interactiveCalendar->setShowNavigation(false);QVERIFY(!interactiveCalendar->showNavigation());
+        interactiveCalendar->setShowNavigation(true);QVERIFY(interactiveCalendar->showNavigation());
         for (const auto& pageId : {QStringLiteral("426:15"), QStringLiteral("430:20")}) {
             auto* canvas = variantCanvas(pageId);
             QVERIFY(canvas);

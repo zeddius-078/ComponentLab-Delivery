@@ -10,6 +10,21 @@
     border-color: #d0d0d0;
 }
 *[designSystemClass="commonWidget::Z_Splitter"] {
-    border: 1px solid #a7a7a7;
-    border-radius: 4px;
+    border: 1px solid #d0d0d0;
+    border-radius: 9px;
+}
+*[designSystemClass="commonWidget::Z_SplitterHandle"] {
+    background-color: #d0d0d0;
+    border: 0;
+}
+*[designSystemClass="commonWidget::Z_SplitterHandle"]:hover,
+*[designSystemClass="commonWidget::Z_SplitterHandle"][figmaSnapshotState="Hover"] {
+    background-color: #f3f3f3;
+}
+*[designSystemClass="commonWidget::Z_SplitterHandle"]:pressed,
+*[designSystemClass="commonWidget::Z_SplitterHandle"][figmaSnapshotState="Dragging"] {
+    background-color: #6235f7;
+}
+*[designSystemClass="commonWidget::Z_SplitterHandle"]:disabled {
+    background-color: #d0d0d0;
 }

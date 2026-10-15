@@ -1,6 +1,7 @@
 #include <MyDesignSystem/MyDesignSystem.h>
 
 #include <QApplication>
+#include <QCalendarWidget>
 #include <QAction>
 #include <QAbstractButton>
 #include <QAbstractSpinBox>
@@ -21,6 +22,7 @@
 #include <QProgressBar>
 #include <QPushButton>
 #include <QSlider>
+#include <QSplitter>
 #include <QScrollBar>
 #include <QStackedWidget>
 #include <QTimeEdit>
@@ -699,6 +701,40 @@ int main(int argc, char *argv[]) {
     }
     if (!noPayloadRejected || !unknownVisualRejected)
         return 50;
+
+    auto* splitter = qobject_cast<commonWidget::Z_Splitter*>(
+        factory.create(QStringLiteral("commonWidget::Z_Splitter"), &owner));
+    auto* scrollArea = qobject_cast<commonWidget::Z_ScrollArea*>(
+        factory.create(QStringLiteral("commonWidget::Z_ScrollArea"), &owner));
+    auto* calendar = qobject_cast<commonWidget::Z_CalendarWidget*>(
+        factory.create(QStringLiteral("commonWidget::Z_CalendarWidget"), &owner));
+    if (!splitter || !scrollArea || !calendar)
+        return 131;
+    splitter->setOrientation(Qt::Vertical);
+    splitter->setShowGrip(false);
+    if (splitter->orientation() != Qt::Vertical || splitter->focusPolicy() != Qt::NoFocus ||
+        splitter->handleWidth() != 12 || splitter->showGrip())
+        return 132;
+    scrollArea->setBars(QStringLiteral("Both"));
+    scrollArea->setResizeMode(QStringLiteral("Resizable"));
+    scrollArea->setSnapshotState(QStringLiteral("Focus"));
+    if (scrollArea->bars() != QStringLiteral("Both") ||
+        scrollArea->resizeMode() != QStringLiteral("Resizable") ||
+        scrollArea->snapshotState() != QStringLiteral("Focus") ||
+        scrollArea->focusPolicy() != Qt::StrongFocus || !scrollArea->widgetResizable() ||
+        scrollArea->verticalScrollBarPolicy() != Qt::ScrollBarAlwaysOn ||
+        scrollArea->horizontalScrollBarPolicy() != Qt::ScrollBarAlwaysOn)
+        return 133;
+    calendar->setWeekStart(QStringLiteral("Sunday"));
+    calendar->setGrid(false);
+    calendar->setSnapshotState(QStringLiteral("Disabled"));
+    calendar->setShowNavigation(false);
+    if (calendar->weekStart() != QStringLiteral("Sunday") || calendar->grid() ||
+        calendar->snapshotState() != QStringLiteral("Disabled") || calendar->isEnabled() ||
+        calendar->showNavigation() ||
+        calendar->horizontalHeaderFormat() != QCalendarWidget::SingleLetterDayNames ||
+        calendar->focusPolicy() != Qt::StrongFocus)
+        return 134;
 
     for (const auto& descriptor : catalogComponents) {
         if (descriptor.instantiable &&

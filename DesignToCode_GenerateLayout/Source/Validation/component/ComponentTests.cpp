@@ -23,6 +23,9 @@
 #include "native/Z_MdiArea.h"
 #include "native/Z_MdiSubWindow.h"
 #include "native/Z_StackedWidget.h"
+#include "native/Z_Splitter.h"
+#include "native/Z_ScrollArea.h"
+#include "native/Z_CalendarWidget.h"
 #include "native/Z_Wizard.h"
 #include "native/Z_WizardPage.h"
 #include <QApplication>
@@ -42,6 +45,8 @@
 #include <QPushButton>
 #include <QSlider>
 #include <QScrollBar>
+#include <QSplitter>
+#include <QCalendarWidget>
 #include <QStackedWidget>
 #include <QTimeEdit>
 #include <QWizard>
@@ -1136,6 +1141,45 @@ private slots:
             QCOMPARE(sidebar->sizeHint(), QSize(80, 466));
             QCOMPARE(sidebar->focusPolicy(), Qt::NoFocus);
             QCOMPARE(sidebar->findChildren<QToolButton*>().size(), 7);
+        }
+        {
+            const auto sample = fixture("520:120", "ComponentLab/Splitter",
+                                        {{"Orientation", "Vertical"}, {"State", "Default"}});
+            d2c::ComponentConverter converter(sample.first, mapping);
+            std::unique_ptr<QWidget> widget(converter.convert(sample.second, nullptr));
+            auto* splitter = qobject_cast<commonWidget::Z_Splitter*>(widget.get());
+            QVERIFY(splitter);
+            QCOMPARE(splitter->orientation(), Qt::Vertical);
+            QCOMPARE(splitter->handleWidth(), 12);
+            QCOMPARE(splitter->focusPolicy(), Qt::NoFocus);
+            QVERIFY(splitter->showGrip());
+        }
+        {
+            const auto sample = fixture("531:912", "ComponentLab/ScrollArea",
+                                        {{"Bars", "Both"}, {"Resize", "Resizable"},
+                                         {"State", "Focus"}});
+            d2c::ComponentConverter converter(sample.first, mapping);
+            std::unique_ptr<QWidget> widget(converter.convert(sample.second, nullptr));
+            auto* area = qobject_cast<commonWidget::Z_ScrollArea*>(widget.get());
+            QVERIFY(area);
+            QCOMPARE(area->bars(), QString("Both"));
+            QCOMPARE(area->resizeMode(), QString("Resizable"));
+            QCOMPARE(area->snapshotState(), QString("Focus"));
+            QCOMPARE(area->focusPolicy(), Qt::StrongFocus);
+        }
+        {
+            const auto sample = fixture("423:859", "ComponentLab/Calendar",
+                                        {{"WeekStart", "Sunday"}, {"Grid", "False"},
+                                         {"State", "Disabled"}});
+            d2c::ComponentConverter converter(sample.first, mapping);
+            std::unique_ptr<QWidget> widget(converter.convert(sample.second, nullptr));
+            auto* calendar = qobject_cast<commonWidget::Z_CalendarWidget*>(widget.get());
+            QVERIFY(calendar);
+            QCOMPARE(calendar->weekStart(), QString("Sunday"));
+            QVERIFY(!calendar->grid());
+            QCOMPARE(calendar->snapshotState(), QString("Disabled"));
+            QVERIFY(!calendar->isEnabled());
+            QCOMPARE(calendar->horizontalHeaderFormat(), QCalendarWidget::SingleLetterDayNames);
         }
         {
             const auto sample = fixture("1312:96", "ComponentLab/DesktopBottomNavigation",

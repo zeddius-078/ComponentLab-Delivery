@@ -743,7 +743,77 @@
       "tokenStatus": "BOUND_VERIFIED",
       "tokenBindingRefs": 21
     },
+    "ComponentLab/Splitter": {
+      "consumerEngineeringStatus": "IMPLEMENTED",
+      "runtimeScope": "SDK_FACTORY_COMPONENTLAB_GENERATELAYOUT",
+      "focusPolicy": "CHILD_PANES_ONLY",
+      "runtimeContract": {
+        "qtBaseClass": "QSplitter",
+        "variantAxes": ["Orientation", "State"],
+        "controlledProperties": ["orientation", "showGrip"],
+        "signals": ["splitterMoved(int,int)", "showGripChanged(bool)"],
+        "controllerBoundary": "The splitter root is Qt::NoFocus and does not paint a universal focus ring. Pane widgets own keyboard focus. Legal ranges, collapsibility, persisted sizes and application-specific pane content remain generated-page responsibilities; Show grip changes only the visual grip and never the handle hit target."
+      },
+      "runtimeEvidence": [
+        "Source/ComponentKit/runtime/component/native/Z_Splitter.h",
+        "Source/ComponentKit/runtime/component/native/Z_Splitter.cpp",
+        "Source/ComponentKit/design-assets/styles/native/Z_Splitter.qss.in",
+        "Source/SDKConsumerTest/main.cpp"
+      ],
+      "consumerEvidence": [
+        "ComponentLab/Source/delivery/demo/ContainersGallery.cpp",
+        "ComponentLab/Source/delivery/tests/CompositionTests.cpp",
+        "DesignToCode_GenerateLayout/Source/HtmlDsl/pipeline/mapping/component-mapping.json",
+        "DesignToCode_GenerateLayout/Source/Validation/component/ComponentTests.cpp"
+      ]
+    },
+    "ComponentLab/ScrollArea": {
+      "consumerEngineeringStatus": "IMPLEMENTED",
+      "runtimeScope": "SDK_FACTORY_COMPONENTLAB_GENERATELAYOUT",
+      "focusPolicy": "STRONG_FOCUS_OPTIONAL_INDICATOR",
+      "runtimeContract": {
+        "qtBaseClass": "QScrollArea",
+        "variantAxes": ["Bars", "Resize", "State"],
+        "controlledProperties": ["bars", "resizeMode", "snapshotState", "focusIndicatorEnabled"],
+        "signals": ["barsChanged(QString)", "resizeModeChanged(QString)", "snapshotStateChanged(QString)"],
+        "controllerBoundary": "The SDK owns the token-backed viewport and scrollbar identities. Content ownership, content size, scroll position and application data remain generated-page responsibilities. Qt::StrongFocus preserves keyboard scrolling; focusIndicatorEnabled may suppress only the painted ring."
+      },
+      "runtimeEvidence": [
+        "Source/ComponentKit/runtime/component/native/Z_ScrollArea.h",
+        "Source/ComponentKit/runtime/component/native/Z_ScrollArea.cpp",
+        "Source/ComponentKit/runtime/component/FocusIndicator.cpp",
+        "Source/SDKConsumerTest/main.cpp"
+      ],
+      "consumerEvidence": [
+        "ComponentLab/Source/delivery/demo/ContainersGallery.cpp",
+        "ComponentLab/Source/delivery/tests/CompositionTests.cpp",
+        "DesignToCode_GenerateLayout/Source/HtmlDsl/pipeline/mapping/component-mapping.json",
+        "DesignToCode_GenerateLayout/Source/Validation/component/ComponentTests.cpp"
+      ]
+    },
     "ComponentLab/Calendar": {
+      "consumerEngineeringStatus": "IMPLEMENTED",
+      "runtimeScope": "SDK_FACTORY_COMPONENTLAB_GENERATELAYOUT",
+      "focusPolicy": "STRONG_FOCUS_OPTIONAL_INDICATOR",
+      "runtimeContract": {
+        "qtBaseClass": "QCalendarWidget",
+        "variantAxes": ["WeekStart", "Grid", "State"],
+        "controlledProperties": ["weekStart", "grid", "snapshotState", "showNavigation", "selectedDate", "currentPage", "focusIndicatorEnabled"],
+        "signals": ["selectionChanged()", "clicked(QDate)", "activated(QDate)", "currentPageChanged(int,int)"],
+        "controllerBoundary": "The SDK owns Figma header geometry, single-letter weekday labels, grid presentation and semantic date-cell painting. Date range, locale, business-day rules, initial page and selected date remain runtime or generated-page data."
+      },
+      "runtimeEvidence": [
+        "Source/ComponentKit/runtime/component/native/Z_CalendarWidget.h",
+        "Source/ComponentKit/runtime/component/native/Z_CalendarWidget.cpp",
+        "Source/ComponentKit/design-assets/styles/native/Z_CalendarWidget.qss.in",
+        "Source/SDKConsumerTest/main.cpp"
+      ],
+      "consumerEvidence": [
+        "ComponentLab/Source/delivery/demo/NativeDisplayGallery.cpp",
+        "ComponentLab/Source/delivery/tests/CompositionTests.cpp",
+        "DesignToCode_GenerateLayout/Source/HtmlDsl/pipeline/mapping/component-mapping.json",
+        "DesignToCode_GenerateLayout/Source/Validation/component/ComponentTests.cpp"
+      ],
       "tokenStatus": "BOUND_VERIFIED",
       "tokenBindingRefs": 27
     }

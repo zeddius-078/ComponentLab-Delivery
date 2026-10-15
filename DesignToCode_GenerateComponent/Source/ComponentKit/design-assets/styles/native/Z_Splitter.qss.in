@@ -10,6 +10,21 @@
     border-color: @DISABLED_BORDER@;
 }
 *[designSystemClass="commonWidget::Z_Splitter"] {
-    border: 1px solid @BORDER@;
-    border-radius: @RADIUS@px;
+    border: 1px solid @DISABLED_BORDER@;
+    border-radius: 9px;
+}
+*[designSystemClass="commonWidget::Z_SplitterHandle"] {
+    background-color: @DISABLED_BORDER@;
+    border: 0;
+}
+*[designSystemClass="commonWidget::Z_SplitterHandle"]:hover,
+*[designSystemClass="commonWidget::Z_SplitterHandle"][figmaSnapshotState="Hover"] {
+    background-color: @NEUTRAL_HOVER@;
+}
+*[designSystemClass="commonWidget::Z_SplitterHandle"]:pressed,
+*[designSystemClass="commonWidget::Z_SplitterHandle"][figmaSnapshotState="Dragging"] {
+    background-color: @PRIMARY@;
+}
+*[designSystemClass="commonWidget::Z_SplitterHandle"]:disabled {
+    background-color: @DISABLED_BORDER@;
 }

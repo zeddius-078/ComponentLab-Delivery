@@ -2,10 +2,17 @@
 #include "FocusIndicator.h"
 #include <QAbstractItemView>
 #include <QDate>
+#include <QFontDatabase>
+#include <QHeaderView>
+#include <QHBoxLayout>
 #include <QIcon>
+#include <QLocale>
+#include <QPainter>
 #include <QStyle>
+#include <QTableView>
 #include <QTextCharFormat>
 #include <QToolButton>
+#include <QVBoxLayout>
 #include <QVariant>
 #include <stdexcept>
 
@@ -19,7 +26,8 @@ Z_CalendarWidget::Z_CalendarWidget(QWidget* parent) : QCalendarWidget(parent) {
     setAccessibleName(QStringLiteral("Calendar"));
     setNavigationBarVisible(true);
     setVerticalHeaderFormat(QCalendarWidget::NoVerticalHeader);
-    setHorizontalHeaderFormat(QCalendarWidget::ShortDayNames);
+    setLocale(QLocale(QLocale::Chinese, QLocale::China));
+    setHorizontalHeaderFormat(QCalendarWidget::SingleLetterDayNames);
     setDateEditEnabled(false);
     setSelectedDate(QDate(2026, 9, 23));
     setCurrentPage(2026, 9);
@@ -34,12 +42,17 @@ Z_CalendarWidget::Z_CalendarWidget(QWidget* parent) : QCalendarWidget(parent) {
             year->hide();
     };
     connect(this, &QCalendarWidget::currentPageChanged, this,
-            [updateNavigationText](int, int) { updateNavigationText(); });
+            [this, updateNavigationText](int, int) {
+                updateNavigationText();
+                refreshLayout();
+            });
     if (auto* navigation = findChild<QWidget*>(QStringLiteral("qt_calendar_navigationbar")))
         navigation->setAttribute(Qt::WA_StyledBackground, true);
     updateNavigationText();
+    setFocusPolicy(Qt::StrongFocus);
     FocusIndicator::instance().watch(this);
     refreshContract();
+    refreshLayout();
 }
 
 void Z_CalendarWidget::setWeekStart(const QString& value) {
@@ -67,7 +80,111 @@ void Z_CalendarWidget::setSnapshotState(const QString& value) {
     emit snapshotStateChanged(value);
 }
 
+void Z_CalendarWidget::setShowNavigation(bool value) {
+    if (isNavigationBarVisible() == value) return;
+    setNavigationBarVisible(value);
+    refreshLayout();
+    emit showNavigationChanged(value);
+}
+
 QSize Z_CalendarWidget::sizeHint() const { return {440, 360}; }
+
+void Z_CalendarWidget::paintCell(QPainter* painter, const QRect& rect, const QDate& date) const {
+    painter->save();
+    const bool disabled = !isEnabled();
+    const QPalette::ColorGroup group = disabled ? QPalette::Disabled : QPalette::Active;
+    const QColor surface = disabled ? palette().color(QPalette::Active, QPalette::AlternateBase)
+                                    : palette().color(QPalette::Active, QPalette::Base);
+    painter->fillRect(rect, surface);
+
+    const bool selected = date == selectedDate();
+    const QDate reference = property("figmaReferenceDate").toDate().isValid()
+                                ? property("figmaReferenceDate").toDate()
+                                : QDate::currentDate();
+    const QRect item = rect.adjusted(1, 1, -1, -1);
+    if (selected) {
+        painter->setPen(Qt::NoPen);
+        painter->setBrush(disabled ? palette().color(QPalette::Active, QPalette::Base)
+                                   : palette().color(QPalette::Active, QPalette::Highlight));
+        painter->drawRoundedRect(item, 4, 4);
+    } else if (date == reference) {
+        painter->setBrush(Qt::NoBrush);
+        painter->setPen(QPen(disabled ? palette().color(QPalette::Active, QPalette::Text)
+                                     : palette().color(QPalette::Active, QPalette::Highlight), 1));
+        painter->drawRect(item);
+    }
+
+    QColor foreground = date.month() == monthShown()
+                            ? palette().color(group, QPalette::Text)
+                            : palette().color(QPalette::Disabled, QPalette::Text);
+    if (selected && !disabled)
+        foreground = palette().color(QPalette::Active, QPalette::HighlightedText);
+    QFont cellFont = font();
+    cellFont.setPixelSize(14);
+    cellFont.setWeight(QFont::Medium);
+    painter->setFont(cellFont);
+    painter->setPen(foreground);
+    painter->drawText(rect, Qt::AlignCenter, QString::number(date.day()));
+    painter->restore();
+}
+
+void Z_CalendarWidget::resizeEvent(QResizeEvent* event) {
+    QCalendarWidget::resizeEvent(event);
+    refreshLayout();
+}
+
+void Z_CalendarWidget::refreshLayout() {
+    if (auto* outer = qobject_cast<QVBoxLayout*>(layout())) {
+        outer->setContentsMargins(16, 16, 16, 15);
+        outer->setSpacing(12);
+    }
+    auto* navigation = findChild<QWidget*>(QStringLiteral("qt_calendar_navigationbar"));
+    auto* month = findChild<QToolButton*>(QStringLiteral("qt_calendar_monthbutton"));
+    auto* year = findChild<QToolButton*>(QStringLiteral("qt_calendar_yearbutton"));
+    auto* previous = findChild<QToolButton*>(QStringLiteral("qt_calendar_prevmonth"));
+    auto* next = findChild<QToolButton*>(QStringLiteral("qt_calendar_nextmonth"));
+    if (navigation) navigation->setFixedHeight(44);
+    if (year) year->hide();
+    if (auto* row = navigation ? qobject_cast<QHBoxLayout*>(navigation->layout()) : nullptr;
+        row && !navigation->property("figmaCalendarHeaderLayout").toBool()) {
+        while (auto* item = row->takeAt(0)) delete item;
+        row->setContentsMargins(12, 10, 12, 10);
+        row->setSpacing(8);
+        if (month) row->addWidget(month, 1);
+        if (previous) row->addWidget(previous);
+        if (next) row->addWidget(next);
+        navigation->setProperty("figmaCalendarHeaderLayout", true);
+    }
+    if (month) {
+        month->setMenu(nullptr);
+        month->setPopupMode(QToolButton::DelayedPopup);
+        month->setAttribute(Qt::WA_TransparentForMouseEvents, true);
+        month->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
+        month->setFixedHeight(22);
+    }
+    for (auto* button : {previous, next})
+        if (button) button->setFixedSize(16, 16);
+    if (auto* view = findChild<QAbstractItemView*>(QStringLiteral("qt_calendar_calendarview"))) {
+        static const QString cjkFamily = [] {
+            const int id = QFontDatabase::addApplicationFont(
+                QStringLiteral(":/figma/fonts/NotoSansSC-Regular.otf"));
+            const QStringList families = QFontDatabase::applicationFontFamilies(id);
+            return families.isEmpty() ? QStringLiteral("Noto Sans SC") : families.first();
+        }();
+        QFont viewFont = view->font();
+        // QCalendarWidget's private weekday row does not reliably traverse a
+        // fallback family list on the Windows Qt 5 raster path. Use the
+        // bundled CJK family directly so 一..日 never degrade to tofu glyphs.
+        viewFont.setFamily(cjkFamily);
+        view->setFont(viewFont);
+        if (auto* table = qobject_cast<QTableView*>(view)) {
+            table->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+            table->verticalHeader()->setSectionResizeMode(QHeaderView::Fixed);
+            for (int row = 0; row < table->model()->rowCount(); ++row)
+                table->setRowHeight(row, row == 0 ? 32 : 40);
+        }
+    }
+}
 
 void Z_CalendarWidget::refreshContract() {
     setFirstDayOfWeek(weekStartValue == QStringLiteral("Monday") ? Qt::Monday : Qt::Sunday);
@@ -82,6 +199,13 @@ void Z_CalendarWidget::refreshContract() {
     for (const auto day : {Qt::Monday, Qt::Tuesday, Qt::Wednesday, Qt::Thursday,
                            Qt::Friday, Qt::Saturday, Qt::Sunday})
         setWeekdayTextFormat(day, weekday);
+    QTextCharFormat header;
+    header.setFontFamily(QStringLiteral("Noto Sans SC"));
+    header.setFontPointSize(9.0);
+    header.setFontWeight(QFont::Medium);
+    header.setForeground(isEnabled() ? palette().color(QPalette::Text)
+                                     : palette().color(QPalette::Disabled, QPalette::Text));
+    setHeaderTextFormat(header);
 
     // QCalendarWidget owns private child widgets whose native palette can win
     // over an ancestor dynamic-property selector. Keep the generated QSS as

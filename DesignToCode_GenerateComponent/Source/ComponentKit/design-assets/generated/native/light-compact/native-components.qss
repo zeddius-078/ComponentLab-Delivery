@@ -445,17 +445,17 @@
     background-color: #f3f3f3;
     border: 0;
     border-radius: 4px;
-    min-height: 42px;
+    min-height: 44px;
+    max-height: 44px;
 }
 *[designSystemClass="commonWidget::Z_CalendarWidget"][designSystemStyleOwner="tokens"] QToolButton {
     color: #191919;
     background: transparent;
     border: 0;
     border-radius: 4px;
-    min-width: 28px;
-    min-height: 28px;
     font-weight: 600;
 }
+*[designSystemClass="commonWidget::Z_CalendarWidget"][designSystemStyleOwner="tokens"] QToolButton::menu-indicator { image: none; width: 0; }
 *[designSystemClass="commonWidget::Z_CalendarWidget"][designSystemStyleOwner="tokens"] QToolButton:hover { background-color: #ffffff; }
 *[designSystemClass="commonWidget::Z_CalendarWidget"][designSystemStyleOwner="tokens"] QSpinBox {
     color: #191919;
@@ -745,8 +745,23 @@
     border-color: #d0d0d0;
 }
 *[designSystemClass="commonWidget::Z_Splitter"] {
-    border: 1px solid #a7a7a7;
-    border-radius: 4px;
+    border: 1px solid #d0d0d0;
+    border-radius: 9px;
+}
+*[designSystemClass="commonWidget::Z_SplitterHandle"] {
+    background-color: #d0d0d0;
+    border: 0;
+}
+*[designSystemClass="commonWidget::Z_SplitterHandle"]:hover,
+*[designSystemClass="commonWidget::Z_SplitterHandle"][figmaSnapshotState="Hover"] {
+    background-color: #f3f3f3;
+}
+*[designSystemClass="commonWidget::Z_SplitterHandle"]:pressed,
+*[designSystemClass="commonWidget::Z_SplitterHandle"][figmaSnapshotState="Dragging"] {
+    background-color: #6235f7;
+}
+*[designSystemClass="commonWidget::Z_SplitterHandle"]:disabled {
+    background-color: #d0d0d0;
 }
 
 /* Z_DockWidget <- QDockWidget; compiled from the active Token profile. */

@@ -8,6 +8,8 @@
 #include <QLabel>
 #include <QScrollArea>
 #include <QSplitter>
+#include <QSplitterHandle>
+#include <QStyle>
 #include <QVBoxLayout>
 #include <stdexcept>
 
@@ -50,27 +52,34 @@ QLabel* panelContent(QWidget* parent, const QString& text) {
 
 void splitterSpecimen(const std::shared_ptr<commonWidget::ComponentFactory>& factory,
                       QWidget* canvas, const QRect& rect, const QString& orientation,
-                      const QString& state) {
+                      const QString& state, bool showGrip) {
     auto* splitter = qobject_cast<commonWidget::Z_Splitter*>(
         factory->create("commonWidget::Z_Splitter", canvas));
     if (!splitter)
         throw std::runtime_error("Z_Splitter unavailable");
     splitter->setGeometry(rect);
     splitter->setOrientation(orientation == "Vertical" ? Qt::Vertical : Qt::Horizontal);
-    splitter->setHandleWidth(state == QStringLiteral("Dragging") ? 10 : 6);
-    const QString handleColor = state == QStringLiteral("Dragging")
-                                    ? QStringLiteral("#4c26c8")
-                                    : state == QStringLiteral("Hover")
-                                          ? QStringLiteral("#7b5cff")
-                                          : QStringLiteral("#c7ccd5");
-    splitter->setStyleSheet(QStringLiteral(
-        "QSplitter {background:#f8f9fb;border:1px solid #d7dbe3;border-radius:6px;}"
-        "QSplitter::handle {background:%1;border-radius:2px;}")
-                                .arg(handleColor));
-    splitter->addWidget(panelContent(splitter, QStringLiteral("导航")));
-    splitter->addWidget(panelContent(splitter, QStringLiteral("内容")));
-    if (state == "Collapsed")
-        splitter->setSizes(QList<int>{0, 1});
+    splitter->setShowGrip(showGrip);
+    auto* first = panelContent(splitter, QStringLiteral("Navigation"));
+    auto* second = panelContent(splitter, QStringLiteral("Workspace"));
+    for (auto* pane : {first, second}) {
+        pane->setAlignment(Qt::AlignLeft | Qt::AlignTop);
+        pane->setContentsMargins(14, 16, 0, 0);
+        pane->setMinimumSize(0, 0);
+    }
+    splitter->addWidget(first);
+    splitter->addWidget(second);
+    const bool vertical = orientation == QStringLiteral("Vertical");
+    if (state == QStringLiteral("Collapsed"))
+        splitter->setSizes(vertical ? QList<int>{24, 160} : QList<int>{24, 336});
+    else
+        splitter->setSizes(vertical ? QList<int>{72, 112} : QList<int>{142, 218});
+    splitter->setProperty("figmaSnapshotState", state);
+    if (auto* handle = splitter->handle(1)) {
+        handle->setProperty("figmaSnapshotState", state);
+        handle->style()->unpolish(handle);
+        handle->style()->polish(handle);
+    }
     if (state == "Disabled")
         splitter->setEnabled(false);
     passive(splitter, QStringLiteral("Orientation=%1, State=%2").arg(orientation, state),
@@ -211,7 +220,9 @@ QWidget* createContainersGallery(const QString& pageId,
         if (item.componentSetName.endsWith(QStringLiteral("Splitter"))) {
             splitterSpecimen(factory, canvas, item.rect,
                              figmaAxisValue(item.variant, QStringLiteral("Orientation")),
-                             figmaAxisValue(item.variant, QStringLiteral("State")));
+                             figmaAxisValue(item.variant, QStringLiteral("State")),
+                             figmaAxisValue(item.variant, QStringLiteral("Show grip")) !=
+                                 QStringLiteral("False"));
         } else if (item.componentSetName.endsWith(QStringLiteral("GroupBox"))) {
             groupSpecimen(factory, canvas, item.rect,
                           figmaAxisValue(item.variant, QStringLiteral("Frame")),

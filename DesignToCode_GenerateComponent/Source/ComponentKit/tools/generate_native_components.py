@@ -62,24 +62,59 @@ class Z_CalendarWidget : public QCalendarWidget {
     Q_PROPERTY(QString weekStart READ weekStart WRITE setWeekStart NOTIFY weekStartChanged)
     Q_PROPERTY(bool grid READ grid WRITE setGrid NOTIFY gridChanged)
     Q_PROPERTY(QString snapshotState READ snapshotState WRITE setSnapshotState NOTIFY snapshotStateChanged)
+    Q_PROPERTY(bool showNavigation READ showNavigation WRITE setShowNavigation NOTIFY showNavigationChanged)
   public:
     explicit Z_CalendarWidget(QWidget* parent = nullptr);
     QString weekStart() const { return weekStartValue; }
     bool grid() const { return gridValue; }
     QString snapshotState() const { return snapshotStateValue; }
+    bool showNavigation() const { return isNavigationBarVisible(); }
     void setWeekStart(const QString& value);
     void setGrid(bool value);
     void setSnapshotState(const QString& value);
+    void setShowNavigation(bool value);
     QSize sizeHint() const override;
   signals:
     void weekStartChanged(const QString& value);
     void gridChanged(bool value);
     void snapshotStateChanged(const QString& value);
+    void showNavigationChanged(bool value);
+  protected:
+    void paintCell(QPainter* painter, const QRect& rect, const QDate& date) const override;
+    void resizeEvent(QResizeEvent* event) override;
   private:
     void refreshContract();
+    void refreshLayout();
     QString weekStartValue = QStringLiteral("Monday");
     bool gridValue = true;
     QString snapshotStateValue = QStringLiteral("Default");
+};
+
+} // namespace commonWidget
+'''
+    if item["qtClass"] == "QSplitter":
+        return '''#pragma once
+
+#include <QSplitter>
+
+namespace commonWidget {
+
+// Token-backed splitter. The root is deliberately not focusable: keyboard
+// focus belongs to interactive children hosted in its panes.
+class Z_Splitter : public QSplitter {
+    Q_OBJECT
+    Q_PROPERTY(bool showGrip READ showGrip WRITE setShowGrip NOTIFY showGripChanged)
+  public:
+    explicit Z_Splitter(QWidget* parent = nullptr);
+    bool showGrip() const { return showGripValue; }
+    void setShowGrip(bool value);
+    QSize sizeHint() const override;
+  signals:
+    void showGripChanged(bool value);
+  protected:
+    QSplitterHandle* createHandle() override;
+  private:
+    bool showGripValue = true;
 };
 
 } // namespace commonWidget
@@ -145,10 +180,17 @@ def source_text(item):
 #include "FocusIndicator.h"
 #include <QAbstractItemView>
 #include <QDate>
+#include <QFontDatabase>
+#include <QHeaderView>
+#include <QHBoxLayout>
 #include <QIcon>
+#include <QLocale>
+#include <QPainter>
 #include <QStyle>
+#include <QTableView>
 #include <QTextCharFormat>
 #include <QToolButton>
+#include <QVBoxLayout>
 #include <QVariant>
 #include <stdexcept>
 
@@ -162,7 +204,8 @@ Z_CalendarWidget::Z_CalendarWidget(QWidget* parent) : QCalendarWidget(parent) {
     setAccessibleName(QStringLiteral("Calendar"));
     setNavigationBarVisible(true);
     setVerticalHeaderFormat(QCalendarWidget::NoVerticalHeader);
-    setHorizontalHeaderFormat(QCalendarWidget::ShortDayNames);
+    setLocale(QLocale(QLocale::Chinese, QLocale::China));
+    setHorizontalHeaderFormat(QCalendarWidget::SingleLetterDayNames);
     setDateEditEnabled(false);
     setSelectedDate(QDate(2026, 9, 23));
     setCurrentPage(2026, 9);
@@ -177,12 +220,17 @@ Z_CalendarWidget::Z_CalendarWidget(QWidget* parent) : QCalendarWidget(parent) {
             year->hide();
     };
     connect(this, &QCalendarWidget::currentPageChanged, this,
-            [updateNavigationText](int, int) { updateNavigationText(); });
+            [this, updateNavigationText](int, int) {
+                updateNavigationText();
+                refreshLayout();
+            });
     if (auto* navigation = findChild<QWidget*>(QStringLiteral("qt_calendar_navigationbar")))
         navigation->setAttribute(Qt::WA_StyledBackground, true);
     updateNavigationText();
+    setFocusPolicy(Qt::StrongFocus);
     FocusIndicator::instance().watch(this);
     refreshContract();
+    refreshLayout();
 }
 
 void Z_CalendarWidget::setWeekStart(const QString& value) {
@@ -210,7 +258,111 @@ void Z_CalendarWidget::setSnapshotState(const QString& value) {
     emit snapshotStateChanged(value);
 }
 
+void Z_CalendarWidget::setShowNavigation(bool value) {
+    if (isNavigationBarVisible() == value) return;
+    setNavigationBarVisible(value);
+    refreshLayout();
+    emit showNavigationChanged(value);
+}
+
 QSize Z_CalendarWidget::sizeHint() const { return {440, 360}; }
+
+void Z_CalendarWidget::paintCell(QPainter* painter, const QRect& rect, const QDate& date) const {
+    painter->save();
+    const bool disabled = !isEnabled();
+    const QPalette::ColorGroup group = disabled ? QPalette::Disabled : QPalette::Active;
+    const QColor surface = disabled ? palette().color(QPalette::Active, QPalette::AlternateBase)
+                                    : palette().color(QPalette::Active, QPalette::Base);
+    painter->fillRect(rect, surface);
+
+    const bool selected = date == selectedDate();
+    const QDate reference = property("figmaReferenceDate").toDate().isValid()
+                                ? property("figmaReferenceDate").toDate()
+                                : QDate::currentDate();
+    const QRect item = rect.adjusted(1, 1, -1, -1);
+    if (selected) {
+        painter->setPen(Qt::NoPen);
+        painter->setBrush(disabled ? palette().color(QPalette::Active, QPalette::Base)
+                                   : palette().color(QPalette::Active, QPalette::Highlight));
+        painter->drawRoundedRect(item, 4, 4);
+    } else if (date == reference) {
+        painter->setBrush(Qt::NoBrush);
+        painter->setPen(QPen(disabled ? palette().color(QPalette::Active, QPalette::Text)
+                                     : palette().color(QPalette::Active, QPalette::Highlight), 1));
+        painter->drawRect(item);
+    }
+
+    QColor foreground = date.month() == monthShown()
+                            ? palette().color(group, QPalette::Text)
+                            : palette().color(QPalette::Disabled, QPalette::Text);
+    if (selected && !disabled)
+        foreground = palette().color(QPalette::Active, QPalette::HighlightedText);
+    QFont cellFont = font();
+    cellFont.setPixelSize(14);
+    cellFont.setWeight(QFont::Medium);
+    painter->setFont(cellFont);
+    painter->setPen(foreground);
+    painter->drawText(rect, Qt::AlignCenter, QString::number(date.day()));
+    painter->restore();
+}
+
+void Z_CalendarWidget::resizeEvent(QResizeEvent* event) {
+    QCalendarWidget::resizeEvent(event);
+    refreshLayout();
+}
+
+void Z_CalendarWidget::refreshLayout() {
+    if (auto* outer = qobject_cast<QVBoxLayout*>(layout())) {
+        outer->setContentsMargins(16, 16, 16, 15);
+        outer->setSpacing(12);
+    }
+    auto* navigation = findChild<QWidget*>(QStringLiteral("qt_calendar_navigationbar"));
+    auto* month = findChild<QToolButton*>(QStringLiteral("qt_calendar_monthbutton"));
+    auto* year = findChild<QToolButton*>(QStringLiteral("qt_calendar_yearbutton"));
+    auto* previous = findChild<QToolButton*>(QStringLiteral("qt_calendar_prevmonth"));
+    auto* next = findChild<QToolButton*>(QStringLiteral("qt_calendar_nextmonth"));
+    if (navigation) navigation->setFixedHeight(44);
+    if (year) year->hide();
+    if (auto* row = navigation ? qobject_cast<QHBoxLayout*>(navigation->layout()) : nullptr;
+        row && !navigation->property("figmaCalendarHeaderLayout").toBool()) {
+        while (auto* item = row->takeAt(0)) delete item;
+        row->setContentsMargins(12, 10, 12, 10);
+        row->setSpacing(8);
+        if (month) row->addWidget(month, 1);
+        if (previous) row->addWidget(previous);
+        if (next) row->addWidget(next);
+        navigation->setProperty("figmaCalendarHeaderLayout", true);
+    }
+    if (month) {
+        month->setMenu(nullptr);
+        month->setPopupMode(QToolButton::DelayedPopup);
+        month->setAttribute(Qt::WA_TransparentForMouseEvents, true);
+        month->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
+        month->setFixedHeight(22);
+    }
+    for (auto* button : {previous, next})
+        if (button) button->setFixedSize(16, 16);
+    if (auto* view = findChild<QAbstractItemView*>(QStringLiteral("qt_calendar_calendarview"))) {
+        static const QString cjkFamily = [] {
+            const int id = QFontDatabase::addApplicationFont(
+                QStringLiteral(":/figma/fonts/NotoSansSC-Regular.otf"));
+            const QStringList families = QFontDatabase::applicationFontFamilies(id);
+            return families.isEmpty() ? QStringLiteral("Noto Sans SC") : families.first();
+        }();
+        QFont viewFont = view->font();
+        // QCalendarWidget's private weekday row does not reliably traverse a
+        // fallback family list on the Windows Qt 5 raster path. Use the
+        // bundled CJK family directly so 一..日 never degrade to tofu glyphs.
+        viewFont.setFamily(cjkFamily);
+        view->setFont(viewFont);
+        if (auto* table = qobject_cast<QTableView*>(view)) {
+            table->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+            table->verticalHeader()->setSectionResizeMode(QHeaderView::Fixed);
+            for (int row = 0; row < table->model()->rowCount(); ++row)
+                table->setRowHeight(row, row == 0 ? 32 : 40);
+        }
+    }
+}
 
 void Z_CalendarWidget::refreshContract() {
     setFirstDayOfWeek(weekStartValue == QStringLiteral("Monday") ? Qt::Monday : Qt::Sunday);
@@ -225,6 +377,13 @@ void Z_CalendarWidget::refreshContract() {
     for (const auto day : {Qt::Monday, Qt::Tuesday, Qt::Wednesday, Qt::Thursday,
                            Qt::Friday, Qt::Saturday, Qt::Sunday})
         setWeekdayTextFormat(day, weekday);
+    QTextCharFormat header;
+    header.setFontFamily(QStringLiteral("Noto Sans SC"));
+    header.setFontPointSize(9.0);
+    header.setFontWeight(QFont::Medium);
+    header.setForeground(isEnabled() ? palette().color(QPalette::Text)
+                                     : palette().color(QPalette::Disabled, QPalette::Text));
+    setHeaderTextFormat(header);
 
     // QCalendarWidget owns private child widgets whose native palette can win
     // over an ancestor dynamic-property selector. Keep the generated QSS as
@@ -288,6 +447,68 @@ void Z_CalendarWidget::refreshContract() {
 
 } // namespace commonWidget
 '''
+    if item["qtClass"] == "QSplitter":
+        return '''#include "Z_Splitter.h"
+#include <QPainter>
+#include <QSplitterHandle>
+#include <QVariant>
+
+namespace commonWidget {
+namespace {
+
+class DesignSplitterHandle final : public QSplitterHandle {
+  public:
+    DesignSplitterHandle(Qt::Orientation orientation, Z_Splitter* parent)
+        : QSplitterHandle(orientation, parent) {
+        setProperty("designSystemNative", true);
+        setProperty("designSystemClass", "commonWidget::Z_SplitterHandle");
+        setAccessibleName(QStringLiteral("Splitter handle"));
+    }
+  protected:
+    void paintEvent(QPaintEvent* event) override {
+        QSplitterHandle::paintEvent(event);
+        const auto* owner = qobject_cast<const Z_Splitter*>(splitter());
+        if (!owner || !owner->showGrip()) return;
+        QPainter painter(this);
+        painter.setRenderHint(QPainter::Antialiasing, true);
+        painter.setPen(Qt::NoPen);
+        painter.setBrush(palette().color(QPalette::Base));
+        const QRect grip = orientation() == Qt::Horizontal
+                              ? QRect((width() - 4) / 2, (height() - 32) / 2, 4, 32)
+                              : QRect((width() - 32) / 2, (height() - 4) / 2, 32, 4);
+        painter.drawRoundedRect(grip, 2, 2);
+    }
+};
+
+} // namespace
+
+Z_Splitter::Z_Splitter(QWidget* parent) : QSplitter(parent) {
+    setProperty("designSystemNative", true);
+    setProperty("designSystemClass", "commonWidget::Z_Splitter");
+    setProperty("nativeQtClass", "QSplitter");
+    setAccessibleName(QStringLiteral("Resizable splitter"));
+    setFocusPolicy(Qt::NoFocus);
+    setHandleWidth(12);
+    setChildrenCollapsible(true);
+    setOpaqueResize(true);
+}
+
+void Z_Splitter::setShowGrip(bool value) {
+    if (showGripValue == value) return;
+    showGripValue = value;
+    for (int index = 1; index < count(); ++index)
+        if (auto* item = handle(index)) item->update();
+    emit showGripChanged(value);
+}
+
+QSize Z_Splitter::sizeHint() const { return {372, 196}; }
+
+QSplitterHandle* Z_Splitter::createHandle() {
+    return new DesignSplitterHandle(orientation(), this);
+}
+
+} // namespace commonWidget
+'''
     if item["qtClass"] == "QScrollArea":
         return '''#include "Z_ScrollArea.h"
 #include "FocusIndicator.h"
@@ -303,6 +524,7 @@ Z_ScrollArea::Z_ScrollArea(QWidget* parent) : QScrollArea(parent) {
     setProperty("designSystemClass", "commonWidget::Z_ScrollArea");
     setProperty("nativeQtClass", "QScrollArea");
     setAccessibleName(QStringLiteral("Scrollable content"));
+    setFocusPolicy(Qt::StrongFocus);
     FocusIndicator::instance().watch(this);
     refreshContract();
 }
@@ -480,6 +702,27 @@ def qss_template(item):
 '''
     elif item["qtClass"] == "QLabel":
         common += f'{selector} {{ background: transparent; border: none; }}\n'
+    elif item["qtClass"] == "QSplitter":
+        common += f'''{selector} {{
+    border: 1px solid @DISABLED_BORDER@;
+    border-radius: 9px;
+}}
+*[designSystemClass="commonWidget::Z_SplitterHandle"] {{
+    background-color: @DISABLED_BORDER@;
+    border: 0;
+}}
+*[designSystemClass="commonWidget::Z_SplitterHandle"]:hover,
+*[designSystemClass="commonWidget::Z_SplitterHandle"][figmaSnapshotState="Hover"] {{
+    background-color: @NEUTRAL_HOVER@;
+}}
+*[designSystemClass="commonWidget::Z_SplitterHandle"]:pressed,
+*[designSystemClass="commonWidget::Z_SplitterHandle"][figmaSnapshotState="Dragging"] {{
+    background-color: @PRIMARY@;
+}}
+*[designSystemClass="commonWidget::Z_SplitterHandle"]:disabled {{
+    background-color: @DISABLED_BORDER@;
+}}
+'''
     elif item["qtClass"] == "QCalendarWidget":
         common += f'''{selector} {{
     border: 1px solid @BORDER@;
@@ -489,17 +732,17 @@ def qss_template(item):
     background-color: @NEUTRAL_HOVER@;
     border: 0;
     border-radius: @RADIUS@px;
-    min-height: 42px;
+    min-height: 44px;
+    max-height: 44px;
 }}
 {selector} QToolButton {{
     color: @FOREGROUND@;
     background: transparent;
     border: 0;
     border-radius: @RADIUS@px;
-    min-width: 28px;
-    min-height: 28px;
     font-weight: 600;
 }}
+{selector} QToolButton::menu-indicator {{ image: none; width: 0; }}
 {selector} QToolButton:hover {{ background-color: @SURFACE@; }}
 {selector} QSpinBox {{
     color: @FOREGROUND@;

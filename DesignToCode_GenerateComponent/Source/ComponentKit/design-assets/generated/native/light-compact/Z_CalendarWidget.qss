@@ -17,17 +17,17 @@
     background-color: #f3f3f3;
     border: 0;
     border-radius: 4px;
-    min-height: 42px;
+    min-height: 44px;
+    max-height: 44px;
 }
 *[designSystemClass="commonWidget::Z_CalendarWidget"][designSystemStyleOwner="tokens"] QToolButton {
     color: #191919;
     background: transparent;
     border: 0;
     border-radius: 4px;
-    min-width: 28px;
-    min-height: 28px;
     font-weight: 600;
 }
+*[designSystemClass="commonWidget::Z_CalendarWidget"][designSystemStyleOwner="tokens"] QToolButton::menu-indicator { image: none; width: 0; }
 *[designSystemClass="commonWidget::Z_CalendarWidget"][designSystemStyleOwner="tokens"] QToolButton:hover { background-color: #ffffff; }
 *[designSystemClass="commonWidget::Z_CalendarWidget"][designSystemStyleOwner="tokens"] QSpinBox {
     color: #191919;

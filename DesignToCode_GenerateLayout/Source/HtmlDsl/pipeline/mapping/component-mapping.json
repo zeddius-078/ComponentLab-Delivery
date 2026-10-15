@@ -825,6 +825,59 @@
       "status":"Figma 392:216; controlled public Sidebar emits route and collapse requests without owning application routing"
     },
     {
+      "designComponentName":"ComponentLab/Splitter",
+      "designComponentSetId":"520:120",
+      "designComponentSet":"ComponentLab/Splitter",
+      "qtClass":"commonWidget::Z_Splitter",
+      "stateProperty":"State",
+      "propertyMappings":{
+        "Orientation":{"api":"setOrientation","values":{"Horizontal":"Horizontal","Vertical":"Vertical"}}
+      },
+      "stateMappings":{
+        "Default":[],
+        "Hover":[],
+        "Dragging":[],
+        "Collapsed":[],
+        "Disabled":[{"api":"setEnabled","value":false}]
+      },
+      "slotMappings":[],
+      "resourceMappings":{"policy":"pane widgets, legal ranges, collapsibility, persistence and splitterMoved handling remain generated-page responsibilities; Show grip is an SDK visual preference"},
+      "fallback":"error",
+      "status":"Figma 520:120; fixed 12 px handle with optional grip, transient preview states do not become persisted application state"
+    },
+    {
+      "designComponentName":"ComponentLab/ScrollArea",
+      "designComponentSetId":"531:912",
+      "designComponentSet":"ComponentLab/ScrollArea",
+      "qtClass":"commonWidget::Z_ScrollArea",
+      "propertyMappings":{
+        "Bars":{"api":"setBars","values":{"None":"None","Vertical":"Vertical","Horizontal":"Horizontal","Both":"Both"}},
+        "Resize":{"api":"setResizeMode","values":{"Fixed":"Fixed","Resizable":"Resizable"}},
+        "State":{"api":"setSnapshotState","values":{"Default":"Default","Focus":"Focus","Disabled":"Disabled"}}
+      },
+      "stateMappings":{},
+      "slotMappings":[],
+      "resourceMappings":{"policy":"content widget ownership, size hints and scroll position remain generated-page responsibilities; SDK owns bars, resize mode and Token styling"},
+      "fallback":"error",
+      "status":"Figma 531:912; 24 Bars x Resize x State variants map to the published Z_ScrollArea contract"
+    },
+    {
+      "designComponentName":"ComponentLab/Calendar",
+      "designComponentSetId":"423:859",
+      "designComponentSet":"ComponentLab/Calendar",
+      "qtClass":"commonWidget::Z_CalendarWidget",
+      "propertyMappings":{
+        "WeekStart":{"api":"setWeekStart","values":{"Monday":"Monday","Sunday":"Sunday"}},
+        "Grid":{"api":"setGrid","values":{"True":true,"False":false}},
+        "State":{"api":"setSnapshotState","values":{"Default":"Default","Disabled":"Disabled"}}
+      },
+      "stateMappings":{},
+      "slotMappings":[],
+      "resourceMappings":{"policy":"selected date, page month, date range, locale and date activation remain generated-page data and controller responsibilities"},
+      "fallback":"error",
+      "status":"Figma 423:859; eight WeekStart x Grid x State variants map to the Token-backed native calendar"
+    },
+    {
       "designComponentName":"ComponentLab/DesktopBottomNavigation",
       "designComponentSetId":"1312:96",
       "designComponentSet":"ComponentLab/DesktopBottomNavigation",
