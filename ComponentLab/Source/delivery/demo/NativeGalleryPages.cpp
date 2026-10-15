@@ -2037,9 +2037,16 @@ QWidget* createVariantCell(const DesignComponentSet& componentSet, const QString
     auto* preview = factory->create(descriptor.sdkClass, host);
     configurePreview(preview, descriptor.qtClass, descriptor.sdkClass);
     preview->setObjectName("variantPreview_" + QString(componentSet.id).replace(':', '_'));
+    if (componentSet.name == QStringLiteral("ComponentLab/Tooltip")) {
+        auto* placementLabel = new QLabel(variantProperties(variant).value("Placement"), host);
+        placementLabel->setAlignment(Qt::AlignCenter);
+        placementLabel->setObjectName("tooltipPlacementLabel");
+        layout->addWidget(placementLabel);
+    }
     const bool selectField = isSelectFieldSet(componentSet);
     const bool intrinsicControl = qobject_cast<commonWidget::Z_Switch*>(preview) ||
-                                  qobject_cast<commonWidget::Z_SegmentedControl*>(preview);
+                                  qobject_cast<commonWidget::Z_SegmentedControl*>(preview) ||
+                                  qobject_cast<commonWidget::Z_Tooltip*>(preview);
     if (!intrinsicControl) {
         preview->setMinimumWidth(selectField ? 240 : 100);
         preview->setMaximumWidth(240);
@@ -2072,6 +2079,22 @@ QTableWidget* createVariantMatrix(
     table->setProperty("figmaVariantCount", componentSet.variants.size());
     table->setEditTriggers(QAbstractItemView::NoEditTriggers);
     table->setSelectionMode(QAbstractItemView::NoSelection);
+
+    if (componentSet.name == QStringLiteral("ComponentLab/Tooltip")) {
+        constexpr int columns = 4;
+        table->setRowCount((componentSet.variants.size() + columns - 1) / columns);
+        table->setColumnCount(columns);
+        table->horizontalHeader()->hide();
+        table->verticalHeader()->hide();
+        table->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+        table->verticalHeader()->setSectionResizeMode(QHeaderView::Fixed);
+        table->verticalHeader()->setDefaultSectionSize(88);
+        for (int index = 0; index < componentSet.variants.size(); ++index)
+            table->setCellWidget(index / columns, index % columns,
+                                 createVariantCell(componentSet, componentSet.variants[index],
+                                                   descriptors, factory, table));
+        return table;
+    }
 
     QString columnAxis = componentSet.variantAxes.isEmpty()
         ? QString()

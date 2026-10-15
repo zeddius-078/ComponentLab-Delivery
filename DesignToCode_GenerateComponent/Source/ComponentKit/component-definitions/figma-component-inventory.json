@@ -2,12 +2,12 @@
   "schemaVersion": 1,
   "source": {
     "figmaFileKey": "w92BKW1EcutKmTXkwzNHbf",
-    "capturedAt": "2026-10-14",
-    "authority": "Figma MCP get_metadata + read-only Plugin API audit",
+    "capturedAt": "2026-10-16",
+    "authority": "Figma MCP get_metadata + Plugin API audit and Tooltip reconciliation",
     "scope": "20.* component guideline pages",
     "pageCount": 98,
     "componentSetCount": 148,
-    "variantCount": 1608
+    "variantCount": 1616
   },
   "categories": [
     {
@@ -4419,7 +4419,7 @@
     },
     {
       "id": "2131:6", "name": "20.8.05 · Tooltip / 气泡提示", "categoryId": "20.8",
-      "componentSets": [{"id":"2132:189","name":"ComponentLab/Tooltip","variantAxes":{"Placement":["Top","Bottom","Left","Right"]},"variants":["Placement=Top","Placement=Bottom","Placement=Left","Placement=Right"]}]
+      "componentSets": [{"id":"2132:189","name":"ComponentLab/Tooltip","variantAxes":{"Placement":["TopLeft","Top","TopRight","RightTop","Right","RightBottom","BottomRight","Bottom","BottomLeft","LeftBottom","Left","LeftTop"]},"variants":["Placement=TopLeft","Placement=Top","Placement=TopRight","Placement=RightTop","Placement=Right","Placement=RightBottom","Placement=BottomRight","Placement=Bottom","Placement=BottomLeft","Placement=LeftBottom","Placement=Left","Placement=LeftTop"]}]
     },
     {
       "id": "2131:4", "name": "20.2.17 · Tag / 标签", "categoryId": "20.2",

@@ -183,7 +183,7 @@ class Z_Tooltip final : public QWidget {
   private:
     void showForTarget();
     QString profileValue;
-    QString contentValue = QStringLiteral("Tooltip content");
+    QString contentValue = QStringLiteral("Helpful context");
     QString placementValue = QStringLiteral("Top");
     bool showArrowValue = true;
     QPointer<QWidget> targetValue;

@@ -944,6 +944,26 @@
         "ComponentLab/Source/delivery/demo/NativeGalleryPages.cpp",
         "ComponentLab/Source/delivery/tests/CompositionTests.cpp"
       ]
+    },
+    "ComponentLab/Tooltip": {
+      "status": "VERIFIED",
+      "figmaNodeId": "2132:189",
+      "figmaScreenshotSha256": "0CA0091BC599FB0B64D7899A2A856F781896C5C19074E508CF1D1396F3B6BE35",
+      "profiles": ["light-comfortable", "light-compact", "dark-comfortable", "dark-compact"],
+      "runtimeGallerySha256": {
+        "light-comfortable": "30F82357C4234AAD5CB1D80EA7DE46613FD695A6E27B6B952A4BBC563FFAACF6",
+        "light-compact": "01703104B550D04D915C57E5CCF1D31A019A70604C8A0F80BCFB2D42BDA68497",
+        "dark-comfortable": "1D9458FF36C141543B83819A3F49C181641149C701F188264C9937401FD5140C",
+        "dark-compact": "13FEED5D64626F87885973E3F4BC1A8A68A680ECF56A26476C923FCBBBCBA0CD"
+      },
+      "scope": "Twelve Placement=TopLeft|Top|TopRight|RightTop|Right|RightBottom|BottomRight|Bottom|BottomLeft|LeftBottom|Left|LeftTop variants; Helpful context default, token-driven surface and content, placement-specific arrows, four runtime profiles and explicit multiline sizing evidence.",
+      "limitations": "The component-set screenshot proves the twelve authored placements while the separate review frame and runtime test prove multiline content. Window-edge collision avoidance still requires a visible host-level interaction pass. Formal designer and governance approval remain open.",
+      "runtimeEvidence": [
+        "Source/ComponentKit/runtime/component/Z_FoundationComponents.h",
+        "Source/ComponentKit/runtime/component/Z_FoundationComponents.cpp",
+        "ComponentLab/Source/delivery/demo/NativeGalleryPages.cpp",
+        "ComponentLab/Source/delivery/tests/CompositionTests.cpp"
+      ]
     }
   },
   "tokenBindingEvidencePolicy": {
@@ -1402,13 +1422,13 @@
       "developmentComponentId": "commonWidget::Z_Tooltip",
       "engineeringStatus": "VERIFIED",
       "tokenStatus": "BOUND_VERIFIED",
-      "tokenBindingRefs": 56,
+      "tokenBindingRefs": 132,
       "focusPolicy": "TARGET_OWNED",
       "runtimeContract": {
         "qtBaseClass": "QWidget",
         "properties": ["content", "placement", "showArrow"],
         "signals": ["contentChanged", "placementChanged", "showArrowChanged"],
-        "states": ["Top", "Bottom", "Left", "Right"],
+        "states": ["Top", "Bottom", "Left", "Right", "TopLeft", "TopRight", "RightTop", "RightBottom", "BottomRight", "BottomLeft", "LeftBottom", "LeftTop"],
         "accessibility": "tooltip never accepts focus; attachTo observes target hover, keyboard focus and Escape",
         "ownership": "the generated page resolves the target and calls attachTo; the SDK owns hover, target-focus and Escape visibility behavior"
       },
