@@ -74,14 +74,7 @@ void splitterSpecimen(const std::shared_ptr<commonWidget::ComponentFactory>& fac
         splitter->setSizes(vertical ? QList<int>{24, 160} : QList<int>{24, 336});
     else
         splitter->setSizes(vertical ? QList<int>{72, 112} : QList<int>{142, 218});
-    splitter->setProperty("figmaSnapshotState", state);
-    if (auto* handle = splitter->handle(1)) {
-        handle->setProperty("figmaSnapshotState", state);
-        handle->style()->unpolish(handle);
-        handle->style()->polish(handle);
-    }
-    if (state == "Disabled")
-        splitter->setEnabled(false);
+    splitter->setSnapshotState(state);
     passive(splitter, QStringLiteral("Orientation=%1, State=%2").arg(orientation, state),
             state == "Hover" || state == "Dragging" ? state : QString());
 }

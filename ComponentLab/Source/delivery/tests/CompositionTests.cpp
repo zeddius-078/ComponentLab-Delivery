@@ -1799,7 +1799,7 @@ auto* secondEditor=editors->widget(1);auto* area=secondEditor->findChild<QMdiAre
                 QCOMPARE(view->property("variantSpecimenCount").toInt(),20);QCOMPARE(view->property("componentSetCount").toInt(),2);QCOMPARE(canvas->size(),QSize(1312,1059));
                 const auto sidebars=canvas->findChildren<Z_Sidebar*>();QCOMPARE(sidebars.size(),4);QCOMPARE(canvas->property("runtimeSpecimenCount").toInt(),4);
                 QSet<QString> tuples;
-                for(auto* sidebar:sidebars){tuples.insert(sidebar->variantTuple());QCOMPARE(sidebar->geometry(),sidebar->property("figmaDesignBounds").toRect());QCOMPARE(sidebar->focusPolicy(),Qt::NoFocus);QCOMPARE(sidebar->findChildren<QToolButton*>(QRegularExpression("sidebarRoute.*")).size(),6);QCOMPARE(sidebar->collapseButton()->focusPolicy(),Qt::StrongFocus);QVERIFY(sidebar->grab().save(evidence+"/sidebar-"+sidebar->density().toLower()+(sidebar->isCollapsed()?"-collapsed":"-expanded")+".png"));}
+                for(auto* sidebar:sidebars){tuples.insert(sidebar->variantTuple());QCOMPARE(sidebar->geometry(),sidebar->property("figmaDesignBounds").toRect());QCOMPARE(sidebar->focusPolicy(),Qt::NoFocus);QVERIFY(sidebar->testAttribute(Qt::WA_StyledBackground));QCOMPARE(sidebar->findChildren<QToolButton*>(QRegularExpression("sidebarRoute.*")).size(),6);QCOMPARE(sidebar->collapseButton()->focusPolicy(),Qt::StrongFocus);QVERIFY(sidebar->grab().save(evidence+"/sidebar-"+sidebar->density().toLower()+(sidebar->isCollapsed()?"-collapsed":"-expanded")+".png"));}
                 QCOMPARE(tuples,QSet<QString>({QStringLiteral("Density=Comfortable, Collapsed=False"),QStringLiteral("Density=Comfortable, Collapsed=True"),QStringLiteral("Density=Compact, Collapsed=False"),QStringLiteral("Density=Compact, Collapsed=True")}));
                 for(const QRect& area:{QRect(236,471,280,520),QRect(556,471,80,520),QRect(676,471,280,466),QRect(996,471,80,466)})QVERIFY(nonWhite(area)>300);
             }
@@ -1979,9 +1979,18 @@ auto* secondEditor=editors->widget(1);auto* area=secondEditor->findChild<QMdiAre
         QCOMPARE(hover->handleWidth(), 12);
         QCOMPARE(dragging->handleWidth(), 12);
         QVERIFY(hover->showGrip());
+        QCOMPARE(hover->snapshotState(), QString("Hover"));
+        QCOMPARE(dragging->snapshotState(), QString("Dragging"));
         QCOMPARE(hover->handle(1)->property("figmaSnapshotState").toString(), QString("Hover"));
         QCOMPARE(dragging->handle(1)->property("figmaSnapshotState").toString(),
                  QString("Dragging"));
+        QVERIFY(dragging->handle(1)->isVisibleTo(dragging));
+        QCOMPARE(qMin(dragging->handle(1)->width(), dragging->handle(1)->height()), 12);
+        auto* dragEvidence = dragging->findChild<QWidget*>(
+            QStringLiteral("splitterRubberBandEvidence"));
+        QVERIFY(dragEvidence);
+        QVERIFY(dragEvidence->isVisibleTo(dragging));
+        QCOMPARE(qMin(dragEvidence->width(), dragEvidence->height()), 2);
         QVERIFY(hover->styleSheet().isEmpty());
         QVERIFY(dragging->styleSheet().isEmpty());
 

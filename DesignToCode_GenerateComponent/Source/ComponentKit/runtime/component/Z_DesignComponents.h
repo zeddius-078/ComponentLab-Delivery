@@ -398,6 +398,9 @@ class Z_Sidebar final : public QWidget {
     void collapsedChangeRequested(bool collapsed);
     void focusIndicatorEnabledChanged(bool enabled);
 
+  protected:
+    void paintEvent(QPaintEvent* event) override;
+
   private:
     void rebuildRoutes();
     void refreshGeometryAndStyle();

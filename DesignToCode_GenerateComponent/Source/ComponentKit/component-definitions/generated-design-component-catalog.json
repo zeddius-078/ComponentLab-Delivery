@@ -646,7 +646,11 @@
         "ComponentLab/Source/delivery/demo/CompositeGallery.cpp",
         "ComponentLab/Source/delivery/tests/CompositionTests.cpp",
         "DesignToCode_GenerateLayout/Source/HtmlDsl/pipeline/mapping/component-mapping.json",
-        "DesignToCode_GenerateLayout/Source/Validation/component/ComponentTests.cpp"
+        "DesignToCode_GenerateLayout/Source/Validation/component/ComponentTests.cpp",
+        "Source/ComponentKit/runtime/component/Z_DesignComponents.h",
+        "Source/ComponentKit/runtime/component/Z_DesignComponents.cpp",
+        "ComponentLab/Source/delivery/demo/CompositeGallery.cpp",
+        "ComponentLab/Source/delivery/tests/CompositionTests.cpp"
       ],
       "designOriginAction": "REUSE",
       "identityMigration": "MERGE",
@@ -658,7 +662,7 @@
         "runtime": "VERIFIED",
         "runtimeScope": "SDK_FACTORY_COMPONENTLAB_GENERATELAYOUT",
         "factoryRegistration": "VERIFIED",
-        "visual": "NOT_VERIFIED",
+        "visual": "VERIFIED",
         "downstreamConsumption": "VERIFIED",
         "tokenBinding": "BOUND_VERIFIED"
       },
@@ -680,6 +684,31 @@
           "collapsedChangeRequested(bool)"
         ],
         "controllerBoundary": "Route resolution, permissions, active-route synchronization and page switching remain generated-page responsibilities."
+      },
+      "visualEvidence": {
+        "status": "VERIFIED",
+        "figmaNodeId": "392:216",
+        "figmaScreenshotSha256": "0D86348DF70723A7050CB6923A89701ABC2DE94C8DFF7DF9F6BA6005F8DA850D",
+        "profiles": [
+          "light-comfortable",
+          "light-compact",
+          "dark-comfortable",
+          "dark-compact"
+        ],
+        "runtimeGallerySha256": {
+          "light-comfortable": "61964E2CE70E67BD59CAA0E6BD2B050A2EB30C103A32B5202BEF28FCF215FD07",
+          "light-compact": "61964E2CE70E67BD59CAA0E6BD2B050A2EB30C103A32B5202BEF28FCF215FD07",
+          "dark-comfortable": "6ABC4651E7B82CABB35F93CD80AEDDB1AB4E650BE714FDF1078B56DD597A287D",
+          "dark-compact": "6ABC4651E7B82CABB35F93CD80AEDDB1AB4E650BE714FDF1078B56DD597A287D"
+        },
+        "scope": "Four Density=Comfortable|Compact by Collapsed=False|True public variants; header, logo, collapse action, route list, active route, settings action, spacing, radius and theme surface.",
+        "limitations": "The 16 DSM/Sidebar/NavItem states remain private anatomy rather than a second SDK identity. Route permissions, navigation resolution and page switching remain host-owned. Formal designer and governance approval remain open.",
+        "runtimeEvidence": [
+          "Source/ComponentKit/runtime/component/Z_DesignComponents.h",
+          "Source/ComponentKit/runtime/component/Z_DesignComponents.cpp",
+          "ComponentLab/Source/delivery/demo/CompositeGallery.cpp",
+          "ComponentLab/Source/delivery/tests/CompositionTests.cpp"
+        ]
       }
     },
     {
@@ -2230,7 +2259,12 @@
         "ComponentLab/Source/delivery/demo/NativeDisplayGallery.cpp",
         "ComponentLab/Source/delivery/tests/CompositionTests.cpp",
         "DesignToCode_GenerateLayout/Source/HtmlDsl/pipeline/mapping/component-mapping.json",
-        "DesignToCode_GenerateLayout/Source/Validation/component/ComponentTests.cpp"
+        "DesignToCode_GenerateLayout/Source/Validation/component/ComponentTests.cpp",
+        "Source/ComponentKit/runtime/component/native/Z_CalendarWidget.h",
+        "Source/ComponentKit/runtime/component/native/Z_CalendarWidget.cpp",
+        "Source/ComponentKit/design-assets/styles/native/Z_CalendarWidget.qss.in",
+        "ComponentLab/Source/delivery/demo/NativeDisplayGallery.cpp",
+        "ComponentLab/Source/delivery/tests/CompositionTests.cpp"
       ],
       "designOriginAction": "REUSE",
       "identityMigration": "NONE",
@@ -2242,7 +2276,7 @@
         "runtime": "VERIFIED",
         "runtimeScope": "SDK_FACTORY_COMPONENTLAB_GENERATELAYOUT",
         "factoryRegistration": "VERIFIED",
-        "visual": "NOT_VERIFIED",
+        "visual": "VERIFIED",
         "downstreamConsumption": "VERIFIED",
         "tokenBinding": "BOUND_VERIFIED"
       },
@@ -2271,6 +2305,32 @@
           "currentPageChanged(int,int)"
         ],
         "controllerBoundary": "The SDK owns Figma header geometry, single-letter weekday labels, grid presentation and semantic date-cell painting. Date range, locale, business-day rules, initial page and selected date remain runtime or generated-page data."
+      },
+      "visualEvidence": {
+        "status": "VERIFIED",
+        "figmaNodeId": "423:859",
+        "figmaScreenshotSha256": "3CFD1C2ACE1A073D352FCEC5C9F95F3B4F9C329E4531B1B5769203BA975BBE68",
+        "profiles": [
+          "light-comfortable",
+          "light-compact",
+          "dark-comfortable",
+          "dark-compact"
+        ],
+        "runtimeGallerySha256": {
+          "light-comfortable": "684A638E841A3E39785AC62B99D576150A6CADFD7CA46AC3D5435786B12444E4",
+          "light-compact": "684A638E841A3E39785AC62B99D576150A6CADFD7CA46AC3D5435786B12444E4",
+          "dark-comfortable": "BDC6CC773C235784B922E2A746598D657488CD50A5273569DD33A9471A88513A",
+          "dark-compact": "BDC6CC773C235784B922E2A746598D657488CD50A5273569DD33A9471A88513A"
+        },
+        "scope": "Eight WeekStart=Monday|Sunday by Grid=True|False by State=Default|Disabled variants; 440 by 360 frame, month header, navigation arrows, weekday order, zero-padded dates, reference date 15 and selected date 23.",
+        "limitations": "The evidence fixes the September 2026 design specimen. Date range, locale overrides, business-day rules, initial page and host-owned selected date remain runtime concerns. Formal designer and governance approval remain open.",
+        "runtimeEvidence": [
+          "Source/ComponentKit/runtime/component/native/Z_CalendarWidget.h",
+          "Source/ComponentKit/runtime/component/native/Z_CalendarWidget.cpp",
+          "Source/ComponentKit/design-assets/styles/native/Z_CalendarWidget.qss.in",
+          "ComponentLab/Source/delivery/demo/NativeDisplayGallery.cpp",
+          "ComponentLab/Source/delivery/tests/CompositionTests.cpp"
+        ]
       }
     },
     {
@@ -4989,7 +5049,12 @@
         "ComponentLab/Source/delivery/demo/ContainersGallery.cpp",
         "ComponentLab/Source/delivery/tests/CompositionTests.cpp",
         "DesignToCode_GenerateLayout/Source/HtmlDsl/pipeline/mapping/component-mapping.json",
-        "DesignToCode_GenerateLayout/Source/Validation/component/ComponentTests.cpp"
+        "DesignToCode_GenerateLayout/Source/Validation/component/ComponentTests.cpp",
+        "Source/ComponentKit/runtime/component/native/Z_Splitter.h",
+        "Source/ComponentKit/runtime/component/native/Z_Splitter.cpp",
+        "Source/ComponentKit/design-assets/styles/native/Z_Splitter.qss.in",
+        "ComponentLab/Source/delivery/demo/ContainersGallery.cpp",
+        "ComponentLab/Source/delivery/tests/CompositionTests.cpp"
       ],
       "designOriginAction": "REUSE",
       "identityMigration": "NONE",
@@ -5001,7 +5066,7 @@
         "runtime": "VERIFIED",
         "runtimeScope": "SDK_FACTORY_COMPONENTLAB_GENERATELAYOUT",
         "factoryRegistration": "VERIFIED",
-        "visual": "NOT_VERIFIED",
+        "visual": "VERIFIED",
         "downstreamConsumption": "VERIFIED",
         "tokenBinding": "BOUND_VERIFIED"
       },
@@ -5015,13 +5080,41 @@
         ],
         "controlledProperties": [
           "orientation",
-          "showGrip"
+          "showGrip",
+          "snapshotState"
         ],
         "signals": [
           "splitterMoved(int,int)",
-          "showGripChanged(bool)"
+          "showGripChanged(bool)",
+          "snapshotStateChanged(QString)"
         ],
         "controllerBoundary": "The splitter root is Qt::NoFocus and does not paint a universal focus ring. Pane widgets own keyboard focus. Legal ranges, collapsibility, persisted sizes and application-specific pane content remain generated-page responsibilities; Show grip changes only the visual grip and never the handle hit target."
+      },
+      "visualEvidence": {
+        "status": "VERIFIED",
+        "figmaNodeId": "520:120",
+        "figmaScreenshotSha256": "8853CBEABF7425AB934F78A6B6F74C960310DDA8FCC127E379DD26A0F667A4A8",
+        "profiles": [
+          "light-comfortable",
+          "light-compact",
+          "dark-comfortable",
+          "dark-compact"
+        ],
+        "runtimeGallerySha256": {
+          "light-comfortable": "EE65BC962EAC1F9FE8CD5D6EB337AD4D81161E4D62787D9D7A1BCB919C911EC8",
+          "light-compact": "EE65BC962EAC1F9FE8CD5D6EB337AD4D81161E4D62787D9D7A1BCB919C911EC8",
+          "dark-comfortable": "57EFA497B6D81064C1E822970102D321F1D27FFE2A082A423B997A7A445D9F4F",
+          "dark-compact": "57EFA497B6D81064C1E822970102D321F1D27FFE2A082A423B997A7A445D9F4F"
+        },
+        "scope": "Ten Orientation=Horizontal|Vertical by State=Default|Hover|Dragging|Collapsed|Disabled variants; 12 px handle, 4 by 32 or 32 by 4 grip, collapsed first pane and 2 px dragging-position evidence.",
+        "limitations": "Pane content, legal ranges, collapse policy and saved sizes remain host-owned; the Dragging state is a deterministic review specimen while live movement remains native QSplitter behavior. Formal designer and governance approval remain open.",
+        "runtimeEvidence": [
+          "Source/ComponentKit/runtime/component/native/Z_Splitter.h",
+          "Source/ComponentKit/runtime/component/native/Z_Splitter.cpp",
+          "Source/ComponentKit/design-assets/styles/native/Z_Splitter.qss.in",
+          "ComponentLab/Source/delivery/demo/ContainersGallery.cpp",
+          "ComponentLab/Source/delivery/tests/CompositionTests.cpp"
+        ]
       }
     },
     {
@@ -7202,7 +7295,11 @@
         "ComponentLab/Source/delivery/demo/CompositeGallery.cpp",
         "ComponentLab/Source/delivery/tests/CompositionTests.cpp",
         "DesignToCode_GenerateLayout/Source/HtmlDsl/pipeline/mapping/component-mapping.json",
-        "DesignToCode_GenerateLayout/Source/Validation/component/ComponentTests.cpp"
+        "DesignToCode_GenerateLayout/Source/Validation/component/ComponentTests.cpp",
+        "Source/ComponentKit/runtime/component/Z_DesignComponents.h",
+        "Source/ComponentKit/runtime/component/Z_DesignComponents.cpp",
+        "ComponentLab/Source/delivery/demo/CompositeGallery.cpp",
+        "ComponentLab/Source/delivery/tests/CompositionTests.cpp"
       ],
       "designOriginAction": "REUSE",
       "identityMigration": "MERGE",
@@ -7214,7 +7311,7 @@
         "runtime": "VERIFIED",
         "runtimeScope": "SDK_FACTORY_COMPONENTLAB_GENERATELAYOUT",
         "factoryRegistration": "VERIFIED",
-        "visual": "NOT_VERIFIED",
+        "visual": "VERIFIED",
         "downstreamConsumption": "VERIFIED",
         "tokenBinding": "BOUND_VERIFIED"
       },
@@ -7236,6 +7333,31 @@
           "collapsedChangeRequested(bool)"
         ],
         "controllerBoundary": "Route resolution, permissions, active-route synchronization and page switching remain generated-page responsibilities."
+      },
+      "visualEvidence": {
+        "status": "VERIFIED",
+        "figmaNodeId": "392:216",
+        "figmaScreenshotSha256": "0D86348DF70723A7050CB6923A89701ABC2DE94C8DFF7DF9F6BA6005F8DA850D",
+        "profiles": [
+          "light-comfortable",
+          "light-compact",
+          "dark-comfortable",
+          "dark-compact"
+        ],
+        "runtimeGallerySha256": {
+          "light-comfortable": "61964E2CE70E67BD59CAA0E6BD2B050A2EB30C103A32B5202BEF28FCF215FD07",
+          "light-compact": "61964E2CE70E67BD59CAA0E6BD2B050A2EB30C103A32B5202BEF28FCF215FD07",
+          "dark-comfortable": "6ABC4651E7B82CABB35F93CD80AEDDB1AB4E650BE714FDF1078B56DD597A287D",
+          "dark-compact": "6ABC4651E7B82CABB35F93CD80AEDDB1AB4E650BE714FDF1078B56DD597A287D"
+        },
+        "scope": "Four Density=Comfortable|Compact by Collapsed=False|True public variants; header, logo, collapse action, route list, active route, settings action, spacing, radius and theme surface.",
+        "limitations": "The 16 DSM/Sidebar/NavItem states remain private anatomy rather than a second SDK identity. Route permissions, navigation resolution and page switching remain host-owned. Formal designer and governance approval remain open.",
+        "runtimeEvidence": [
+          "Source/ComponentKit/runtime/component/Z_DesignComponents.h",
+          "Source/ComponentKit/runtime/component/Z_DesignComponents.cpp",
+          "ComponentLab/Source/delivery/demo/CompositeGallery.cpp",
+          "ComponentLab/Source/delivery/tests/CompositionTests.cpp"
+        ]
       }
     },
     {
@@ -8786,7 +8908,12 @@
         "ComponentLab/Source/delivery/demo/NativeDisplayGallery.cpp",
         "ComponentLab/Source/delivery/tests/CompositionTests.cpp",
         "DesignToCode_GenerateLayout/Source/HtmlDsl/pipeline/mapping/component-mapping.json",
-        "DesignToCode_GenerateLayout/Source/Validation/component/ComponentTests.cpp"
+        "DesignToCode_GenerateLayout/Source/Validation/component/ComponentTests.cpp",
+        "Source/ComponentKit/runtime/component/native/Z_CalendarWidget.h",
+        "Source/ComponentKit/runtime/component/native/Z_CalendarWidget.cpp",
+        "Source/ComponentKit/design-assets/styles/native/Z_CalendarWidget.qss.in",
+        "ComponentLab/Source/delivery/demo/NativeDisplayGallery.cpp",
+        "ComponentLab/Source/delivery/tests/CompositionTests.cpp"
       ],
       "designOriginAction": "REUSE",
       "identityMigration": "NONE",
@@ -8798,7 +8925,7 @@
         "runtime": "VERIFIED",
         "runtimeScope": "SDK_FACTORY_COMPONENTLAB_GENERATELAYOUT",
         "factoryRegistration": "VERIFIED",
-        "visual": "NOT_VERIFIED",
+        "visual": "VERIFIED",
         "downstreamConsumption": "VERIFIED",
         "tokenBinding": "BOUND_VERIFIED"
       },
@@ -8827,6 +8954,32 @@
           "currentPageChanged(int,int)"
         ],
         "controllerBoundary": "The SDK owns Figma header geometry, single-letter weekday labels, grid presentation and semantic date-cell painting. Date range, locale, business-day rules, initial page and selected date remain runtime or generated-page data."
+      },
+      "visualEvidence": {
+        "status": "VERIFIED",
+        "figmaNodeId": "423:859",
+        "figmaScreenshotSha256": "3CFD1C2ACE1A073D352FCEC5C9F95F3B4F9C329E4531B1B5769203BA975BBE68",
+        "profiles": [
+          "light-comfortable",
+          "light-compact",
+          "dark-comfortable",
+          "dark-compact"
+        ],
+        "runtimeGallerySha256": {
+          "light-comfortable": "684A638E841A3E39785AC62B99D576150A6CADFD7CA46AC3D5435786B12444E4",
+          "light-compact": "684A638E841A3E39785AC62B99D576150A6CADFD7CA46AC3D5435786B12444E4",
+          "dark-comfortable": "BDC6CC773C235784B922E2A746598D657488CD50A5273569DD33A9471A88513A",
+          "dark-compact": "BDC6CC773C235784B922E2A746598D657488CD50A5273569DD33A9471A88513A"
+        },
+        "scope": "Eight WeekStart=Monday|Sunday by Grid=True|False by State=Default|Disabled variants; 440 by 360 frame, month header, navigation arrows, weekday order, zero-padded dates, reference date 15 and selected date 23.",
+        "limitations": "The evidence fixes the September 2026 design specimen. Date range, locale overrides, business-day rules, initial page and host-owned selected date remain runtime concerns. Formal designer and governance approval remain open.",
+        "runtimeEvidence": [
+          "Source/ComponentKit/runtime/component/native/Z_CalendarWidget.h",
+          "Source/ComponentKit/runtime/component/native/Z_CalendarWidget.cpp",
+          "Source/ComponentKit/design-assets/styles/native/Z_CalendarWidget.qss.in",
+          "ComponentLab/Source/delivery/demo/NativeDisplayGallery.cpp",
+          "ComponentLab/Source/delivery/tests/CompositionTests.cpp"
+        ]
       }
     },
     {
@@ -11449,7 +11602,12 @@
         "ComponentLab/Source/delivery/demo/ContainersGallery.cpp",
         "ComponentLab/Source/delivery/tests/CompositionTests.cpp",
         "DesignToCode_GenerateLayout/Source/HtmlDsl/pipeline/mapping/component-mapping.json",
-        "DesignToCode_GenerateLayout/Source/Validation/component/ComponentTests.cpp"
+        "DesignToCode_GenerateLayout/Source/Validation/component/ComponentTests.cpp",
+        "Source/ComponentKit/runtime/component/native/Z_Splitter.h",
+        "Source/ComponentKit/runtime/component/native/Z_Splitter.cpp",
+        "Source/ComponentKit/design-assets/styles/native/Z_Splitter.qss.in",
+        "ComponentLab/Source/delivery/demo/ContainersGallery.cpp",
+        "ComponentLab/Source/delivery/tests/CompositionTests.cpp"
       ],
       "designOriginAction": "REUSE",
       "identityMigration": "NONE",
@@ -11461,7 +11619,7 @@
         "runtime": "VERIFIED",
         "runtimeScope": "SDK_FACTORY_COMPONENTLAB_GENERATELAYOUT",
         "factoryRegistration": "VERIFIED",
-        "visual": "NOT_VERIFIED",
+        "visual": "VERIFIED",
         "downstreamConsumption": "VERIFIED",
         "tokenBinding": "BOUND_VERIFIED"
       },
@@ -11475,13 +11633,41 @@
         ],
         "controlledProperties": [
           "orientation",
-          "showGrip"
+          "showGrip",
+          "snapshotState"
         ],
         "signals": [
           "splitterMoved(int,int)",
-          "showGripChanged(bool)"
+          "showGripChanged(bool)",
+          "snapshotStateChanged(QString)"
         ],
         "controllerBoundary": "The splitter root is Qt::NoFocus and does not paint a universal focus ring. Pane widgets own keyboard focus. Legal ranges, collapsibility, persisted sizes and application-specific pane content remain generated-page responsibilities; Show grip changes only the visual grip and never the handle hit target."
+      },
+      "visualEvidence": {
+        "status": "VERIFIED",
+        "figmaNodeId": "520:120",
+        "figmaScreenshotSha256": "8853CBEABF7425AB934F78A6B6F74C960310DDA8FCC127E379DD26A0F667A4A8",
+        "profiles": [
+          "light-comfortable",
+          "light-compact",
+          "dark-comfortable",
+          "dark-compact"
+        ],
+        "runtimeGallerySha256": {
+          "light-comfortable": "EE65BC962EAC1F9FE8CD5D6EB337AD4D81161E4D62787D9D7A1BCB919C911EC8",
+          "light-compact": "EE65BC962EAC1F9FE8CD5D6EB337AD4D81161E4D62787D9D7A1BCB919C911EC8",
+          "dark-comfortable": "57EFA497B6D81064C1E822970102D321F1D27FFE2A082A423B997A7A445D9F4F",
+          "dark-compact": "57EFA497B6D81064C1E822970102D321F1D27FFE2A082A423B997A7A445D9F4F"
+        },
+        "scope": "Ten Orientation=Horizontal|Vertical by State=Default|Hover|Dragging|Collapsed|Disabled variants; 12 px handle, 4 by 32 or 32 by 4 grip, collapsed first pane and 2 px dragging-position evidence.",
+        "limitations": "Pane content, legal ranges, collapse policy and saved sizes remain host-owned; the Dragging state is a deterministic review specimen while live movement remains native QSplitter behavior. Formal designer and governance approval remain open.",
+        "runtimeEvidence": [
+          "Source/ComponentKit/runtime/component/native/Z_Splitter.h",
+          "Source/ComponentKit/runtime/component/native/Z_Splitter.cpp",
+          "Source/ComponentKit/design-assets/styles/native/Z_Splitter.qss.in",
+          "ComponentLab/Source/delivery/demo/ContainersGallery.cpp",
+          "ComponentLab/Source/delivery/tests/CompositionTests.cpp"
+        ]
       }
     },
     {

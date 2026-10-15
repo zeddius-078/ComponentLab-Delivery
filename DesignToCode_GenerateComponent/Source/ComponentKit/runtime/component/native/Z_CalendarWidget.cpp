@@ -102,14 +102,14 @@ void Z_CalendarWidget::paintCell(QPainter* painter, const QRect& rect, const QDa
                                 ? property("figmaReferenceDate").toDate()
                                 : QDate::currentDate();
     const QRect item = rect.adjusted(1, 1, -1, -1);
-    if (selected) {
+    if (selected && !disabled) {
         painter->setPen(Qt::NoPen);
-        painter->setBrush(disabled ? palette().color(QPalette::Active, QPalette::Base)
-                                   : palette().color(QPalette::Active, QPalette::Highlight));
+        painter->setBrush(palette().color(QPalette::Active, QPalette::Highlight));
         painter->drawRoundedRect(item, 4, 4);
-    } else if (date == reference) {
+    }
+    if (date == reference) {
         painter->setBrush(Qt::NoBrush);
-        painter->setPen(QPen(disabled ? palette().color(QPalette::Active, QPalette::Text)
+        painter->setPen(QPen(disabled ? palette().color(QPalette::Disabled, QPalette::Mid)
                                      : palette().color(QPalette::Active, QPalette::Highlight), 1));
         painter->drawRect(item);
     }
@@ -124,7 +124,8 @@ void Z_CalendarWidget::paintCell(QPainter* painter, const QRect& rect, const QDa
     cellFont.setWeight(QFont::Medium);
     painter->setFont(cellFont);
     painter->setPen(foreground);
-    painter->drawText(rect, Qt::AlignCenter, QString::number(date.day()));
+    painter->drawText(rect, Qt::AlignCenter,
+                      QString::number(date.day()).rightJustified(2, QLatin1Char('0')));
     painter->restore();
 }
 

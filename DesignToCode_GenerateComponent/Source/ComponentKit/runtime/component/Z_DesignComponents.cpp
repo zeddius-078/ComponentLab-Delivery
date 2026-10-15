@@ -1465,6 +1465,7 @@ Z_Sidebar::Z_Sidebar(const QString& profile, QWidget* parent)
     : QWidget(parent), m_profile(profile) {
     configureRuntimeIdentity(this, QStringLiteral("Sidebar"));
     setObjectName(QStringLiteral("sidebar"));
+    setAttribute(Qt::WA_StyledBackground, true);
     setFocusPolicy(Qt::NoFocus);
     setProperty("focusIndicatorEnabled", true);
     setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Preferred);
@@ -1537,6 +1538,17 @@ QSize Z_Sidebar::sizeHint() const {
                  m_density == QStringLiteral("Compact") ? 466 : 520);
 }
 QSize Z_Sidebar::minimumSizeHint() const { return sizeHint(); }
+
+void Z_Sidebar::paintEvent(QPaintEvent* event) {
+    Q_UNUSED(event)
+    const CompositeTokens tokens(profileForDensity(m_profile, m_density));
+    QPainter painter(this);
+    painter.setRenderHint(QPainter::Antialiasing, true);
+    painter.setPen(Qt::NoPen);
+    painter.setBrush(tokens.color("component.composite.sidebar.background"));
+    const qreal radius = tokens.metric("component.composite.sidebar.radius");
+    painter.drawRoundedRect(QRectF(rect()), radius, radius);
+}
 
 void Z_Sidebar::setVariantTuple(const QString& tuple) {
     const auto properties = parseVariantTuple(tuple);
