@@ -2771,13 +2771,38 @@ auto* secondEditor=editors->widget(1);auto* area=secondEditor->findChild<QMdiAre
         auto* availableDemo = qobject_cast<QStandardItemModel*>(demo->availableModel());
         auto* selectedDemo = qobject_cast<QStandardItemModel*>(demo->selectedModel());
         QVERIFY(availableDemo && selectedDemo);
+        QVERIFY(availableDemo->item(0)->isCheckable());
+        QCOMPARE(availableDemo->item(0)->checkState(), Qt::Unchecked);
         const int availableBefore = availableDemo->rowCount();
         const int selectedBefore = selectedDemo->rowCount();
-        demo->availableView()->selectionModel()->select(
-            availableDemo->index(0, 0), QItemSelectionModel::Select | QItemSelectionModel::Rows);
+        const QRect firstItem = demo->availableView()->visualRect(availableDemo->index(0, 0));
+        QVERIFY(firstItem.isValid());
+        QTest::mouseClick(demo->availableView()->viewport(), Qt::LeftButton, Qt::NoModifier,
+                          QPoint(firstItem.left() + 7, firstItem.center().y()));
+        QCOMPARE(availableDemo->item(0)->checkState(), Qt::Checked);
+        const QRect secondItem = demo->availableView()->visualRect(availableDemo->index(1, 0));
+        QVERIFY(secondItem.isValid());
+        QTest::mouseClick(demo->availableView()->viewport(), Qt::LeftButton, Qt::NoModifier,
+                          QPoint(secondItem.left() + 7, secondItem.center().y()));
+        QCOMPARE(availableDemo->item(1)->checkState(), Qt::Checked);
         demo->moveToSelectedButton()->click();
-        QCOMPARE(availableDemo->rowCount(), availableBefore - 1);
-        QCOMPARE(selectedDemo->rowCount(), selectedBefore + 1);
+        QCOMPARE(availableDemo->rowCount(), availableBefore - 2);
+        QCOMPARE(selectedDemo->rowCount(), selectedBefore + 2);
+        QCOMPARE(selectedDemo->item(selectedDemo->rowCount() - 1)->checkState(), Qt::Unchecked);
+
+        auto* sections = page->findChild<QTabWidget*>("componentSections");
+        QVERIFY(sections);
+        sections->setCurrentIndex(1);
+        QCoreApplication::processEvents();
+        auto* matrix = page->findChild<QTableWidget*>("variantMatrix_2148_640");
+        QVERIFY(matrix);
+        QCOMPARE(matrix->rowCount(), 2);
+        QCOMPARE(matrix->columnCount(), 2);
+        const auto specimens = matrix->findChildren<commonWidget::Z_Transfer*>(
+            "variantPreview_2148_640");
+        QCOMPARE(specimens.size(), 3);
+        for (auto* specimen : specimens)
+            QCOMPARE(specimen->size(), QSize(520, 210));
     }
 
     void tooltipSupportsTwelvePlacementsAndMultilineContent() {

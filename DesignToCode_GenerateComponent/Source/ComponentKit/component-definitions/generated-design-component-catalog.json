@@ -4434,7 +4434,12 @@
         "DesignToCode_GenerateLayout/Source/HtmlDsl/pipeline/mapping/component-mapping.json",
         "ComponentLab/Source/delivery/tests/CompositionTests.cpp",
         "DesignToCode_GenerateLayout/Source/Validation/component/ComponentTests.cpp",
-        "Source/SDKConsumerTest/main.cpp"
+        "Source/SDKConsumerTest/main.cpp",
+        "Source/ComponentKit/runtime/component/Z_FoundationComponents.h",
+        "Source/ComponentKit/runtime/component/Z_FoundationComponents.cpp",
+        "ComponentLab/Source/delivery/demo/NativeGalleryPages.cpp",
+        "ComponentLab/Source/delivery/tests/CompositionTests.cpp",
+        "DesignToCode_GenerateLayout/Source/Validation/component/ComponentTests.cpp"
       ],
       "designOriginAction": "BUILD",
       "identityMigration": "MERGE",
@@ -4446,7 +4451,7 @@
         "runtime": "VERIFIED",
         "runtimeScope": "SDK_FACTORY_COMPONENTLAB_GENERATELAYOUT",
         "factoryRegistration": "VERIFIED",
-        "visual": "NOT_VERIFIED",
+        "visual": "VERIFIED",
         "downstreamConsumption": "VERIFIED",
         "tokenBinding": "BOUND_VERIFIED"
       },
@@ -4476,6 +4481,32 @@
         ],
         "accessibility": "NoFocus presentation root with named StrongFocus list views and direction actions; optional FocusIndicator inherits from the component root",
         "ownership": "SDK composes the two list views and command affordances around caller-owned models; page selection controller owns queries, mutations, ordering, permissions and error recovery"
+      },
+      "visualEvidence": {
+        "status": "VERIFIED",
+        "figmaNodeId": "2148:640",
+        "figmaScreenshotSha256": "638ACD27D609A430095DD20AF86E2885790858E9EAE74A5DE9C662EE2F17DBAF",
+        "profiles": [
+          "light-comfortable",
+          "light-compact",
+          "dark-comfortable",
+          "dark-compact"
+        ],
+        "runtimeGallerySha256": {
+          "light-comfortable": "2E874201A2D53A33BBF33FE9F1720854EFF352DC4613A5A398549BBAECAF82BE",
+          "light-compact": "DFAFA7F13CA819E161C7C1FCE3E9CDEB42F5B4D8AF2288CB2D4DEBA2B2D71445",
+          "dark-comfortable": "A769417562965A1E83DA10D5147E3E0333A94D86F0248A5B78807D2C9C7B81EC",
+          "dark-compact": "8898F80A76342A7EC82C0A705EB47C22056FEA6620002752580E51E4EE60CD3F"
+        },
+        "scope": "Three State=Default|Disabled|Loading variants; fixed 520 by 210 root, 205 by 180 panels, 44 by 36 direction buttons, token-backed checkbox markers, Available and Selected counts, loading copy and four-profile presentation.",
+        "limitations": "The SDK emits move requests and renders external QAbstractItemModel data; collection queries, ordering, permissions, persistence and error recovery remain controller-owned. ComponentLab supplies only a demonstration controller. Formal designer and governance approval remain open.",
+        "runtimeEvidence": [
+          "Source/ComponentKit/runtime/component/Z_FoundationComponents.h",
+          "Source/ComponentKit/runtime/component/Z_FoundationComponents.cpp",
+          "ComponentLab/Source/delivery/demo/NativeGalleryPages.cpp",
+          "ComponentLab/Source/delivery/tests/CompositionTests.cpp",
+          "DesignToCode_GenerateLayout/Source/Validation/component/ComponentTests.cpp"
+        ]
       }
     },
     {
@@ -11248,7 +11279,12 @@
         "DesignToCode_GenerateLayout/Source/HtmlDsl/pipeline/mapping/component-mapping.json",
         "ComponentLab/Source/delivery/tests/CompositionTests.cpp",
         "DesignToCode_GenerateLayout/Source/Validation/component/ComponentTests.cpp",
-        "Source/SDKConsumerTest/main.cpp"
+        "Source/SDKConsumerTest/main.cpp",
+        "Source/ComponentKit/runtime/component/Z_FoundationComponents.h",
+        "Source/ComponentKit/runtime/component/Z_FoundationComponents.cpp",
+        "ComponentLab/Source/delivery/demo/NativeGalleryPages.cpp",
+        "ComponentLab/Source/delivery/tests/CompositionTests.cpp",
+        "DesignToCode_GenerateLayout/Source/Validation/component/ComponentTests.cpp"
       ],
       "designOriginAction": "BUILD",
       "identityMigration": "MERGE",
@@ -11260,7 +11296,7 @@
         "runtime": "VERIFIED",
         "runtimeScope": "SDK_FACTORY_COMPONENTLAB_GENERATELAYOUT",
         "factoryRegistration": "VERIFIED",
-        "visual": "NOT_VERIFIED",
+        "visual": "VERIFIED",
         "downstreamConsumption": "VERIFIED",
         "tokenBinding": "BOUND_VERIFIED"
       },
@@ -11290,6 +11326,32 @@
         ],
         "accessibility": "NoFocus presentation root with named StrongFocus list views and direction actions; optional FocusIndicator inherits from the component root",
         "ownership": "SDK composes the two list views and command affordances around caller-owned models; page selection controller owns queries, mutations, ordering, permissions and error recovery"
+      },
+      "visualEvidence": {
+        "status": "VERIFIED",
+        "figmaNodeId": "2148:640",
+        "figmaScreenshotSha256": "638ACD27D609A430095DD20AF86E2885790858E9EAE74A5DE9C662EE2F17DBAF",
+        "profiles": [
+          "light-comfortable",
+          "light-compact",
+          "dark-comfortable",
+          "dark-compact"
+        ],
+        "runtimeGallerySha256": {
+          "light-comfortable": "2E874201A2D53A33BBF33FE9F1720854EFF352DC4613A5A398549BBAECAF82BE",
+          "light-compact": "DFAFA7F13CA819E161C7C1FCE3E9CDEB42F5B4D8AF2288CB2D4DEBA2B2D71445",
+          "dark-comfortable": "A769417562965A1E83DA10D5147E3E0333A94D86F0248A5B78807D2C9C7B81EC",
+          "dark-compact": "8898F80A76342A7EC82C0A705EB47C22056FEA6620002752580E51E4EE60CD3F"
+        },
+        "scope": "Three State=Default|Disabled|Loading variants; fixed 520 by 210 root, 205 by 180 panels, 44 by 36 direction buttons, token-backed checkbox markers, Available and Selected counts, loading copy and four-profile presentation.",
+        "limitations": "The SDK emits move requests and renders external QAbstractItemModel data; collection queries, ordering, permissions, persistence and error recovery remain controller-owned. ComponentLab supplies only a demonstration controller. Formal designer and governance approval remain open.",
+        "runtimeEvidence": [
+          "Source/ComponentKit/runtime/component/Z_FoundationComponents.h",
+          "Source/ComponentKit/runtime/component/Z_FoundationComponents.cpp",
+          "ComponentLab/Source/delivery/demo/NativeGalleryPages.cpp",
+          "ComponentLab/Source/delivery/tests/CompositionTests.cpp",
+          "DesignToCode_GenerateLayout/Source/Validation/component/ComponentTests.cpp"
+        ]
       }
     },
     {

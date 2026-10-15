@@ -19,6 +19,12 @@ if(MSVC)
         set(CMAKE_CL_SHOWINCLUDES_PREFIX "${BUTTON_MSVC_INCLUDE_PREFIX}")
     endif()
     add_compile_options(/W4 /permissive- /utf-8)
+    # Qt 5.15.2 still references STL helpers removed by MSVC 19.51. Reuse the
+    # SDK-owned, version-gated compatibility header so all three consumers are
+    # compiled against the same toolchain contract.
+    if(MSVC_VERSION GREATER_EQUAL 1951 AND Qt5Core_VERSION VERSION_EQUAL 5.15.2)
+        add_compile_options("/FI${GENERATED_COMPONENT_SDK_ROOT}/include/MyDesignSystem/qt5152_msvc_compat.h")
+    endif()
 endif()
 
 # Presentation code may arrange generated controls and report their state. The implementation

@@ -141,10 +141,17 @@ void moveTransferRows(commonWidget::Z_Transfer* transfer, bool toSelected,
             rows.append(index.row());
     std::sort(rows.begin(), rows.end(), std::greater<int>());
     QList<QList<QStandardItem*>> moved;
-    for (int row : rows)
-        moved.prepend(source->takeRow(row));
+    for (int row : rows) {
+        auto items = source->takeRow(row);
+        for (auto* item : items)
+            if (item && item->isCheckable())
+                item->setCheckState(Qt::Unchecked);
+        moved.prepend(items);
+    }
     for (const auto& items : moved)
         target->appendRow(items);
+    transfer->availableView()->clearSelection();
+    transfer->selectedView()->clearSelection();
 }
 
 void populateItemModel(QAbstractItemView* view) {
@@ -1843,15 +1850,23 @@ void applyVariant(QWidget* widget, const DesignComponentSet& componentSet,
     }
     if (auto* transfer = qobject_cast<commonWidget::Z_Transfer*>(widget)) {
         auto* available = new QStandardItemModel(transfer);
-        for (const auto& label : {QStringLiteral("□ Chamber A"),
-                                  QStringLiteral("□ Chamber B"),
-                                  QStringLiteral("□ Chamber C")})
-            available->appendRow(new QStandardItem(label));
+        const auto item = [](const QString& label, bool checkable = true) {
+            auto* result = new QStandardItem(label);
+            result->setEditable(false);
+            result->setCheckable(checkable);
+            if (checkable)
+                result->setCheckState(Qt::Unchecked);
+            return result;
+        };
+        for (const auto& label : {QStringLiteral("Chamber A"),
+                                  QStringLiteral("Chamber B"),
+                                  QStringLiteral("Chamber C")})
+            available->appendRow(item(label));
         auto* selected = new QStandardItemModel(transfer);
-        selected->appendRow(new QStandardItem(
-            properties.value("State") == QStringLiteral("Loading")
-                ? QStringLiteral("Synchronizing")
-                : QStringLiteral("□ Chamber D")));
+        const bool loading = properties.value("State") == QStringLiteral("Loading");
+        selected->appendRow(item(loading ? QStringLiteral("Synchronizing")
+                                         : QStringLiteral("Chamber D"),
+                                 !loading));
         transfer->setAvailableModel(available);
         transfer->setSelectedModel(selected);
         transfer->setSnapshotState(properties.value("State"));
@@ -2046,7 +2061,8 @@ QWidget* createVariantCell(const DesignComponentSet& componentSet, const QString
     const bool selectField = isSelectFieldSet(componentSet);
     const bool intrinsicControl = qobject_cast<commonWidget::Z_Switch*>(preview) ||
                                   qobject_cast<commonWidget::Z_SegmentedControl*>(preview) ||
-                                  qobject_cast<commonWidget::Z_Tooltip*>(preview);
+                                  qobject_cast<commonWidget::Z_Tooltip*>(preview) ||
+                                  qobject_cast<commonWidget::Z_Transfer*>(preview);
     if (!intrinsicControl) {
         preview->setMinimumWidth(selectField ? 240 : 100);
         preview->setMaximumWidth(240);
@@ -2089,6 +2105,22 @@ QTableWidget* createVariantMatrix(
         table->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
         table->verticalHeader()->setSectionResizeMode(QHeaderView::Fixed);
         table->verticalHeader()->setDefaultSectionSize(88);
+        for (int index = 0; index < componentSet.variants.size(); ++index)
+            table->setCellWidget(index / columns, index % columns,
+                                 createVariantCell(componentSet, componentSet.variants[index],
+                                                   descriptors, factory, table));
+        return table;
+    }
+
+    if (componentSet.name == QStringLiteral("ComponentLab/Transfer")) {
+        constexpr int columns = 2;
+        table->setRowCount((componentSet.variants.size() + columns - 1) / columns);
+        table->setColumnCount(columns);
+        table->horizontalHeader()->hide();
+        table->verticalHeader()->hide();
+        table->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+        table->verticalHeader()->setSectionResizeMode(QHeaderView::Fixed);
+        table->verticalHeader()->setDefaultSectionSize(236);
         for (int index = 0; index < componentSet.variants.size(); ++index)
             table->setCellWidget(index / columns, index % columns,
                                  createVariantCell(componentSet, componentSet.variants[index],

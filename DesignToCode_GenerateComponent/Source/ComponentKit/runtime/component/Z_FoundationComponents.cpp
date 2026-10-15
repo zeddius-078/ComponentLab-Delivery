@@ -31,6 +31,7 @@
 #include <QResizeEvent>
 #include <QRegularExpression>
 #include <QSignalBlocker>
+#include <QStyledItemDelegate>
 #include <QSvgRenderer>
 #include <QToolButton>
 #include <QVBoxLayout>
@@ -86,6 +87,101 @@ void requireOneOf(const QString& value, const QStringList& domain, const char* p
     if (!domain.contains(value))
         throw std::invalid_argument((QString::fromLatin1(property) + " has unsupported value: " + value).toStdString());
 }
+
+class TransferItemDelegate final : public QStyledItemDelegate {
+public:
+    explicit TransferItemDelegate(const QString& profile, QObject* parent)
+        : QStyledItemDelegate(parent) {
+        const Tokens tokens(profile);
+        const bool dark = profile.startsWith(QStringLiteral("dark-"));
+        text = tokens.c(dark ? "semantic.color.text.secondary"
+                             : "base.stoken.color.text.secondary");
+        disabled = tokens.c("base.stoken.color.text.disabled");
+        border = tokens.c(dark ? "semantic.color.border.default"
+                               : "base.stoken.color.border.secondary");
+        brand = tokens.c("base.stoken.color.interactive.brand.default");
+        inverse = tokens.c("base.stoken.color.text.invert");
+        selected = tokens.c("base.stoken.color.interactive.brand.subtle");
+    }
+
+    void paint(QPainter* painter, const QStyleOptionViewItem& option,
+               const QModelIndex& index) const override {
+        painter->save();
+        painter->setRenderHint(QPainter::Antialiasing);
+        if (option.state.testFlag(QStyle::State_Selected))
+            painter->fillRect(option.rect, selected);
+
+        const bool enabled = option.state.testFlag(QStyle::State_Enabled) &&
+                             index.flags().testFlag(Qt::ItemIsEnabled);
+        const QRect indicator(option.rect.left() + 2,
+                              option.rect.center().y() - 6, 12, 12);
+        const bool checkable = index.flags().testFlag(Qt::ItemIsUserCheckable);
+        if (checkable) {
+            const bool checked = index.data(Qt::CheckStateRole).toInt() == Qt::Checked;
+            painter->setPen(QPen(enabled ? (checked ? brand : border) : disabled, 1));
+            if (checked)
+                painter->setBrush(enabled ? brand : disabled);
+            else
+                painter->setBrush(QBrush(Qt::NoBrush));
+            painter->drawRoundedRect(QRectF(indicator).adjusted(.5, .5, -.5, -.5), 2, 2);
+            if (checked) {
+                QPen checkPen(inverse, 1.5, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
+                painter->setPen(checkPen);
+                QPainterPath check;
+                check.moveTo(indicator.left() + 3, indicator.center().y());
+                check.lineTo(indicator.left() + 5, indicator.bottom() - 3);
+                check.lineTo(indicator.right() - 2, indicator.top() + 3);
+                painter->drawPath(check);
+            }
+        }
+
+        painter->setPen(enabled ? text : disabled);
+        painter->setFont(option.font);
+        const int textLeft = checkable ? indicator.right() + 6 : option.rect.left() + 2;
+        painter->drawText(QRect(textLeft, option.rect.top(),
+                                qMax(0, option.rect.right() - textLeft), option.rect.height()),
+                          Qt::AlignLeft | Qt::AlignVCenter,
+                          index.data(Qt::DisplayRole).toString());
+        painter->restore();
+    }
+
+    bool editorEvent(QEvent* event, QAbstractItemModel* model,
+                     const QStyleOptionViewItem& option,
+                     const QModelIndex& index) override {
+        if (!model || !index.flags().testFlag(Qt::ItemIsEnabled) ||
+            !index.flags().testFlag(Qt::ItemIsUserCheckable))
+            return false;
+        const QRect indicator(option.rect.left() + 2,
+                              option.rect.center().y() - 6, 12, 12);
+        bool activate = false;
+        if (event->type() == QEvent::MouseButtonRelease) {
+            const auto* mouse = static_cast<QMouseEvent*>(event);
+            activate = mouse->button() == Qt::LeftButton && indicator.contains(mouse->pos());
+        } else if (event->type() == QEvent::KeyPress) {
+            const auto* key = static_cast<QKeyEvent*>(event);
+            activate = key->key() == Qt::Key_Space || key->key() == Qt::Key_Select;
+        }
+        if (!activate)
+            return false;
+        const Qt::CheckState next = index.data(Qt::CheckStateRole).toInt() == Qt::Checked
+            ? Qt::Unchecked : Qt::Checked;
+        return model->setData(index, next, Qt::CheckStateRole);
+    }
+
+    QSize sizeHint(const QStyleOptionViewItem& option,
+                   const QModelIndex& index) const override {
+        const QSize base = QStyledItemDelegate::sizeHint(option, index);
+        return {base.width(), qMax(20, base.height())};
+    }
+
+private:
+    QColor text;
+    QColor disabled;
+    QColor border;
+    QColor brand;
+    QColor inverse;
+    QColor selected;
+};
 
 QColor toneColor(const Tokens& tokens, const QString& tone, bool neutralBadge = false) {
     if (tone == "Neutral")
@@ -724,6 +820,7 @@ Z_Transfer::Z_Transfer(const QString& profile, QWidget* parent)
         (*view)->setFocusPolicy(Qt::StrongFocus);
         (*view)->setUniformItemSizes(true);
         (*view)->setFont(componentFont(13));
+        (*view)->setItemDelegate(new TransferItemDelegate(profileValue, *view));
         panelLayout->addWidget(*view, 1);
         FocusIndicator::instance().watch(*view);
         return panel;
@@ -881,15 +978,15 @@ void Z_Transfer::bindView(QListView* view) {
 
 QModelIndexList Z_Transfer::requestedRows(QListView* view) const {
     QModelIndexList rows;
-    if (view->selectionModel())
-        rows = view->selectionModel()->selectedRows();
-    if (!rows.isEmpty() || !view->model())
+    if (!view->model())
         return rows;
     for (int row = 0; row < view->model()->rowCount(); ++row) {
         const QModelIndex index = view->model()->index(row, 0);
         if (index.data(Qt::CheckStateRole).toInt() == Qt::Checked)
             rows.append(index);
     }
+    if (rows.isEmpty() && view->selectionModel())
+        rows = view->selectionModel()->selectedRows();
     return rows;
 }
 
