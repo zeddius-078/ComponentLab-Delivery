@@ -458,6 +458,15 @@ QWidget* createEvidenceGallery(
                     statistic->setValueText(QStringLiteral("93,241"));
                     statistic->setPrefix(QStringLiteral("$"));
                     statistic->setSuffix(QStringLiteral("users"));
+                } else if (auto* chart = qobject_cast<commonWidget::Z_Chart*>(candidate)) {
+                    chart->setTitle(QStringLiteral("Chart title"));
+                    chart->setMeta(QStringLiteral("Last 7 days"));
+                    chart->setEmptyTitle(QStringLiteral("No chart data"));
+                    chart->setEmptyHint(QStringLiteral("Check filters or data source"));
+                    const QString kind = figmaAxisValue(item.variant, QStringLiteral("Kind"));
+                    chart->setValues(kind == QStringLiteral("Status")
+                                         ? QVector<qreal>{55, 30, 15}
+                                         : QVector<qreal>{36, 59, 47, 82, 66, 92});
                 }
                 specimen = candidate;
                 specimen->setObjectName(QStringLiteral("figmaRuntimeSpecimen"));

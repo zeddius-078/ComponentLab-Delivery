@@ -793,6 +793,34 @@
       ]
     }
   },
+  "visualVerificationEvidencePolicy": {
+    "capturedAt": "2026-10-16",
+    "method": "Live Figma component-set screenshot compared with ComponentLab --capture-page output from the published GenerateComponent SDK across all four runtime profiles.",
+    "meaning": "VERIFIED proves the named component set's governed variants, anatomy, text defaults, geometry and token-driven light/dark presentation were visually inspected in the stated runtime build. It does not grant designer or governance approval and does not prove host-owned data pipelines or interaction behavior."
+  },
+  "visualVerificationEvidence": {
+    "ComponentLab/Chart": {
+      "status": "VERIFIED",
+      "figmaNodeId": "400:106",
+      "figmaScreenshotSha256": "A1522D9C5D44005C7CF26F826B408723DB32A4375C865B81B7DF75ADA1AA36CD",
+      "profiles": ["light-comfortable", "light-compact", "dark-comfortable", "dark-compact"],
+      "runtimeGallerySha256": {
+        "light-comfortable": "DBA08D8EAF8394B569C943359BEC7CDDD6360CDDBA0554CC16CB1D592BD5A9F5",
+        "light-compact": "DBA08D8EAF8394B569C943359BEC7CDDD6360CDDBA0554CC16CB1D592BD5A9F5",
+        "dark-comfortable": "583D993BE1F409C24A24AA3448A80799233208C79E013FE4DB3C99B0A7540FB7",
+        "dark-compact": "583D993BE1F409C24A24AA3448A80799233208C79E013FE4DB3C99B0A7540FB7"
+      },
+      "scope": "Six Kind=Bar|Line|Status by State=Data|Empty variants; root card, header, plot, grid, series, status segments, legend, empty region and default text properties.",
+      "limitations": "Line reference SVG is the governed visual specimen; arbitrary line-series serialization, domains, axes, labels, animation, keyboard exploration and accessible text equivalents remain host-owned engineering work. Formal designer and governance approval remain open.",
+      "runtimeEvidence": [
+        "Source/ComponentKit/runtime/component/Z_DesignComponents.h",
+        "Source/ComponentKit/runtime/component/Z_DesignComponents.cpp",
+        "Source/ComponentKit/runtime/assets/icons/figma-chart",
+        "ComponentLab/Source/delivery/demo/EvidenceGallery.cpp",
+        "ComponentLab/Source/delivery/tests/CompositionTests.cpp"
+      ]
+    }
+  },
   "tokenBindingEvidencePolicy": {
     "capturedAt": "2026-10-16",
     "method": "Live Figma get_variable_defs query against the canonical public component node or component-set node.",

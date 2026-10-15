@@ -216,6 +216,13 @@
         <file alias="branch-leaf.svg">assets/icons/figma-composite/branch-leaf.svg</file>
         <file alias="sort.svg">assets/icons/figma-composite/sort.svg</file>
     </qresource>
+    <qresource prefix="/figma/chart">
+        <file alias="empty.svg">assets/icons/figma-chart/empty.svg</file>
+        <file alias="line-plot.svg">assets/icons/figma-chart/line-plot.svg</file>
+        <file alias="legend-shipped.svg">assets/icons/figma-chart/legend-shipped.svg</file>
+        <file alias="legend-pending.svg">assets/icons/figma-chart/legend-pending.svg</file>
+        <file alias="legend-canceled.svg">assets/icons/figma-chart/legend-canceled.svg</file>
+    </qresource>
     <qresource prefix="/icons">
         <file alias="arrow-right.svg">assets/icons/arrow-right.svg</file>
         <file alias="x.svg">assets/icons/x.svg</file>

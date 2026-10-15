@@ -1812,7 +1812,12 @@
       "evidenceRefs": [
         "Source/ComponentKit/component-definitions/figma-component-inventory.json",
         "Source/ComponentKit/runtime/component/ComponentFactory.cpp",
-        "docs/designRules/design-system/component-traceability-manifest.json"
+        "docs/designRules/design-system/component-traceability-manifest.json",
+        "Source/ComponentKit/runtime/component/Z_DesignComponents.h",
+        "Source/ComponentKit/runtime/component/Z_DesignComponents.cpp",
+        "Source/ComponentKit/runtime/assets/icons/figma-chart",
+        "ComponentLab/Source/delivery/demo/EvidenceGallery.cpp",
+        "ComponentLab/Source/delivery/tests/CompositionTests.cpp"
       ],
       "designOriginAction": "REUSE",
       "identityMigration": "NONE",
@@ -1824,12 +1829,38 @@
         "runtime": "VERIFIED",
         "runtimeScope": "FACTORY_INSTANTIATION_ONLY",
         "factoryRegistration": "VERIFIED",
-        "visual": "NOT_VERIFIED",
+        "visual": "VERIFIED",
         "downstreamConsumption": "NOT_VERIFIED",
         "tokenBinding": "BOUND_VERIFIED"
       },
       "governanceApprovalStatus": "NOT_REVIEWED",
-      "focusPolicy": "UNRESOLVED"
+      "focusPolicy": "UNRESOLVED",
+      "visualEvidence": {
+        "status": "VERIFIED",
+        "figmaNodeId": "400:106",
+        "figmaScreenshotSha256": "A1522D9C5D44005C7CF26F826B408723DB32A4375C865B81B7DF75ADA1AA36CD",
+        "profiles": [
+          "light-comfortable",
+          "light-compact",
+          "dark-comfortable",
+          "dark-compact"
+        ],
+        "runtimeGallerySha256": {
+          "light-comfortable": "DBA08D8EAF8394B569C943359BEC7CDDD6360CDDBA0554CC16CB1D592BD5A9F5",
+          "light-compact": "DBA08D8EAF8394B569C943359BEC7CDDD6360CDDBA0554CC16CB1D592BD5A9F5",
+          "dark-comfortable": "583D993BE1F409C24A24AA3448A80799233208C79E013FE4DB3C99B0A7540FB7",
+          "dark-compact": "583D993BE1F409C24A24AA3448A80799233208C79E013FE4DB3C99B0A7540FB7"
+        },
+        "scope": "Six Kind=Bar|Line|Status by State=Data|Empty variants; root card, header, plot, grid, series, status segments, legend, empty region and default text properties.",
+        "limitations": "Line reference SVG is the governed visual specimen; arbitrary line-series serialization, domains, axes, labels, animation, keyboard exploration and accessible text equivalents remain host-owned engineering work. Formal designer and governance approval remain open.",
+        "runtimeEvidence": [
+          "Source/ComponentKit/runtime/component/Z_DesignComponents.h",
+          "Source/ComponentKit/runtime/component/Z_DesignComponents.cpp",
+          "Source/ComponentKit/runtime/assets/icons/figma-chart",
+          "ComponentLab/Source/delivery/demo/EvidenceGallery.cpp",
+          "ComponentLab/Source/delivery/tests/CompositionTests.cpp"
+        ]
+      }
     },
     {
       "designComponent": "ComponentLab/ImagePanel",
@@ -8337,7 +8368,12 @@
       "evidenceRefs": [
         "Source/ComponentKit/component-definitions/figma-component-inventory.json",
         "Source/ComponentKit/runtime/component/ComponentFactory.cpp",
-        "docs/designRules/design-system/component-traceability-manifest.json"
+        "docs/designRules/design-system/component-traceability-manifest.json",
+        "Source/ComponentKit/runtime/component/Z_DesignComponents.h",
+        "Source/ComponentKit/runtime/component/Z_DesignComponents.cpp",
+        "Source/ComponentKit/runtime/assets/icons/figma-chart",
+        "ComponentLab/Source/delivery/demo/EvidenceGallery.cpp",
+        "ComponentLab/Source/delivery/tests/CompositionTests.cpp"
       ],
       "designOriginAction": "REUSE",
       "identityMigration": "NONE",
@@ -8349,12 +8385,38 @@
         "runtime": "VERIFIED",
         "runtimeScope": "FACTORY_INSTANTIATION_ONLY",
         "factoryRegistration": "VERIFIED",
-        "visual": "NOT_VERIFIED",
+        "visual": "VERIFIED",
         "downstreamConsumption": "NOT_VERIFIED",
         "tokenBinding": "BOUND_VERIFIED"
       },
       "governanceApprovalStatus": "NOT_REVIEWED",
-      "focusPolicy": "UNRESOLVED"
+      "focusPolicy": "UNRESOLVED",
+      "visualEvidence": {
+        "status": "VERIFIED",
+        "figmaNodeId": "400:106",
+        "figmaScreenshotSha256": "A1522D9C5D44005C7CF26F826B408723DB32A4375C865B81B7DF75ADA1AA36CD",
+        "profiles": [
+          "light-comfortable",
+          "light-compact",
+          "dark-comfortable",
+          "dark-compact"
+        ],
+        "runtimeGallerySha256": {
+          "light-comfortable": "DBA08D8EAF8394B569C943359BEC7CDDD6360CDDBA0554CC16CB1D592BD5A9F5",
+          "light-compact": "DBA08D8EAF8394B569C943359BEC7CDDD6360CDDBA0554CC16CB1D592BD5A9F5",
+          "dark-comfortable": "583D993BE1F409C24A24AA3448A80799233208C79E013FE4DB3C99B0A7540FB7",
+          "dark-compact": "583D993BE1F409C24A24AA3448A80799233208C79E013FE4DB3C99B0A7540FB7"
+        },
+        "scope": "Six Kind=Bar|Line|Status by State=Data|Empty variants; root card, header, plot, grid, series, status segments, legend, empty region and default text properties.",
+        "limitations": "Line reference SVG is the governed visual specimen; arbitrary line-series serialization, domains, axes, labels, animation, keyboard exploration and accessible text equivalents remain host-owned engineering work. Formal designer and governance approval remain open.",
+        "runtimeEvidence": [
+          "Source/ComponentKit/runtime/component/Z_DesignComponents.h",
+          "Source/ComponentKit/runtime/component/Z_DesignComponents.cpp",
+          "Source/ComponentKit/runtime/assets/icons/figma-chart",
+          "ComponentLab/Source/delivery/demo/EvidenceGallery.cpp",
+          "ComponentLab/Source/delivery/tests/CompositionTests.cpp"
+        ]
+      }
     },
     {
       "designComponent": "ComponentLab/ImagePanel",

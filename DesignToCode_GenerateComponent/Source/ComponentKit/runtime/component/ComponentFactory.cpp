@@ -156,7 +156,7 @@ QWidget* ComponentFactory::create(const QString& name, QWidget* parent) const {
     if (name == "commonWidget::Z_Sidebar") return new Z_Sidebar(profile, parent);
     if (name == "commonWidget::Z_DesktopBottomNavigation") return new Z_DesktopBottomNavigation(profile, parent);
     if (name == "commonWidget::Z_MetricCard") return new Z_MetricCard(parent);
-    if (name == "commonWidget::Z_Chart") return new Z_Chart(parent);
+    if (name == "commonWidget::Z_Chart") return new Z_Chart(profile, parent);
     if (name == "commonWidget::Z_ImagePanel") return new Z_ImagePanel(parent);
     if (name == "commonWidget::Z_Empty") return new Z_Empty(parent);
     if (name == "commonWidget::Z_Statistic") return new Z_Statistic(parent);

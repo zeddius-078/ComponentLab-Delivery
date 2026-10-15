@@ -20,6 +20,26 @@ class FigmaCatalogContractTests(unittest.TestCase):
         self.assertEqual("20.1.01 · Navbar / 导航栏", pages[0]["name"])
         self.assertIn("20.10.03 · ModelAsset / 模型资产", {page["name"] for page in pages})
 
+    def test_visual_verification_is_evidence_scoped(self):
+        entries = {entry["canonicalId"]: entry for entry in self.catalog["entries"]}
+        evidence = self.traceability.get("visualVerificationEvidence", {})
+        self.assertEqual(
+            set(evidence),
+            {
+                canonical_id for canonical_id, entry in entries.items()
+                if entry["verificationStatus"]["visual"] == "VERIFIED"
+            },
+        )
+        for canonical_id, record in evidence.items():
+            entry = entries[canonical_id]
+            self.assertEqual(record, entry["visualEvidence"])
+            self.assertEqual(
+                {"light-comfortable", "light-compact", "dark-comfortable", "dark-compact"},
+                set(record["profiles"]),
+            )
+            self.assertEqual(set(record["profiles"]), set(record["runtimeGallerySha256"]))
+            self.assertIn(record["figmaNodeId"], entry["figmaNodeIds"])
+
     def test_checkbox_sets_and_variants_match_figma(self):
         page = next(page for page in self.catalog["figmaPages"] if page["id"] == "234:2717")
         self.assertEqual(["DSM/Checkbox", "DSM/Checkbox/Group"],

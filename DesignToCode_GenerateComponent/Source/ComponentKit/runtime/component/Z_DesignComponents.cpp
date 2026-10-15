@@ -1092,12 +1092,165 @@ void configureFigmaStatistic(Z_Statistic* statistic,
     statistic->setShowSuffix(parseBoolean("Show suffix"));
 }
 
+Z_Chart::Z_Chart(QWidget* parent)
+    : Z_Chart(QStringLiteral("light-comfortable"), parent) {}
+
+Z_Chart::Z_Chart(const QString& profile, QWidget* parent)
+    : Z_DesignComponent(QStringLiteral("Chart"), parent),
+      m_profile(profile),
+      m_meta(QStringLiteral("Last 7 days")),
+      m_emptyTitle(QStringLiteral("No chart data")),
+      m_emptyHint(QStringLiteral("Check filters or data source")),
+      m_legendShipped(QStringLiteral("Shipped")),
+      m_legendPending(QStringLiteral("Pending")),
+      m_legendCanceled(QStringLiteral("Canceled")) {
+    CompositeTokens tokens(profile);
+    Q_UNUSED(tokens)
+    setVariantTuple(QStringLiteral("Kind=Bar, State=Data"));
+    setTitle(QStringLiteral("Chart title"));
+    setValues({36, 59, 47, 82, 66, 92});
+    setAccessibleDescription(QStringLiteral("Bar chart, Last 7 days"));
+}
+
+QString Z_Chart::meta() const { return m_meta; }
+QString Z_Chart::emptyTitle() const { return m_emptyTitle; }
+QString Z_Chart::emptyHint() const { return m_emptyHint; }
+QString Z_Chart::legendShipped() const { return m_legendShipped; }
+QString Z_Chart::legendPending() const { return m_legendPending; }
+QString Z_Chart::legendCanceled() const { return m_legendCanceled; }
+QSize Z_Chart::sizeHint() const { return {520, 300}; }
+QSize Z_Chart::minimumSizeHint() const { return {260, 150}; }
+
+void Z_Chart::setText(QString& target, const QString& value) {
+    if (target == value)
+        return;
+    target = value;
+    emit contentChanged();
+    update();
+}
+
+void Z_Chart::setMeta(const QString& value) { setText(m_meta, value); }
+void Z_Chart::setEmptyTitle(const QString& value) { setText(m_emptyTitle, value); }
+void Z_Chart::setEmptyHint(const QString& value) { setText(m_emptyHint, value); }
+void Z_Chart::setLegendShipped(const QString& value) { setText(m_legendShipped, value); }
+void Z_Chart::setLegendPending(const QString& value) { setText(m_legendPending, value); }
+void Z_Chart::setLegendCanceled(const QString& value) { setText(m_legendCanceled, value); }
+
+void Z_Chart::paintEvent(QPaintEvent*) {
+    QPainter painter(this);
+    painter.setRenderHint(QPainter::Antialiasing);
+    painter.setRenderHint(QPainter::TextAntialiasing);
+    painter.scale(width() / 520.0, height() / 300.0);
+
+    const CompositeTokens tokens(m_profile);
+    const QColor surface = tokens.color("component.basic.card.background");
+    const QColor border = tokens.color("component.basic.card.border");
+    const QColor ink = tokens.color("semantic.color.text.primary");
+    const QColor muted = tokens.color("semantic.color.text.muted");
+    const QColor mutedSurface = tokens.color("semantic.color.background.surface-muted");
+    const QColor grid = tokens.color("component.composite.chart.grid");
+    const QColor series = tokens.color("component.composite.chart.seriesPrimary");
+    const QColor shipped = tokens.color("component.composite.chart.ordersShipped");
+    const QColor pending = tokens.color("component.composite.chart.ordersPending");
+    const QColor canceled = tokens.color("component.composite.chart.ordersCanceled");
+
+    painter.setPen(QPen(border, 1));
+    painter.setBrush(surface);
+    painter.drawRoundedRect(QRectF(.5, .5, 519, 299),
+                            tokens.metric("component.basic.card.radius"),
+                            tokens.metric("component.basic.card.radius"));
+    drawMetricText(painter, QRectF(20, 20, 360, 28), title(), ink, 16, QFont::DemiBold);
+    drawMetricText(painter, QRectF(380, 20, 120, 28), m_meta, muted, 12, QFont::Normal,
+                   Qt::AlignRight | Qt::AlignVCenter);
+
+    const QRectF plot(20, 62, 480, 218);
+    const QString state = variantValue(QStringLiteral("State"));
+    const QString kind = variantValue(QStringLiteral("Kind"));
+    if (state.compare(QStringLiteral("Empty"), Qt::CaseInsensitive) == 0 || values().isEmpty()) {
+        const QRectF empty(150, 118, 220, 100);
+        painter.setPen(Qt::NoPen);
+        painter.setBrush(mutedSurface);
+        painter.drawRoundedRect(empty, 14, 14);
+        QSvgRenderer(QStringLiteral(":/figma/chart/empty.svg")).render(
+            &painter, QRectF(246, 126, 28, 28));
+        drawMetricText(painter, QRectF(150, 162, 220, 22), m_emptyTitle, ink, 14,
+                       QFont::Medium, Qt::AlignCenter);
+        drawMetricText(painter, QRectF(150, 192, 220, 18), m_emptyHint, muted, 12,
+                       QFont::Normal, Qt::AlignCenter);
+        setAccessibleDescription(m_emptyTitle + QStringLiteral(". ") + m_emptyHint);
+        return;
+    }
+
+    if (kind == QStringLiteral("Line")) {
+        QSvgRenderer(QStringLiteral(":/figma/chart/line-plot.svg")).render(&painter, plot);
+        setAccessibleDescription(QStringLiteral("Line chart. ") + m_meta);
+        return;
+    }
+
+    if (kind == QStringLiteral("Status")) {
+        const auto chartValues = values();
+        qreal total = 0;
+        for (int index = 0; index < qMin(3, chartValues.size()); ++index)
+            total += qMax(0.0, chartValues[index]);
+        if (total <= 0)
+            total = 1;
+        const QRectF status(plot.left(), plot.top() + 20, plot.width(),
+                            tokens.metric("component.composite.chart.statusHeight"));
+        QPainterPath clip;
+        clip.addRoundedRect(status, 16, 16);
+        painter.save();
+        painter.setClipPath(clip);
+        qreal x = status.left();
+        const QColor colors[]{shipped, pending, canceled};
+        for (int index = 0; index < 3; ++index) {
+            const qreal segment = index == 2
+                                      ? status.right() - x
+                                      : status.width() * qMax(0.0, chartValues.value(index)) / total;
+            painter.fillRect(QRectF(x, status.top(), segment, status.height()), colors[index]);
+            x += segment;
+        }
+        painter.restore();
+        const QStringList labels{m_legendShipped, m_legendPending, m_legendCanceled};
+        const QStringList icons{QStringLiteral(":/figma/chart/legend-shipped.svg"),
+                                QStringLiteral(":/figma/chart/legend-pending.svg"),
+                                QStringLiteral(":/figma/chart/legend-canceled.svg")};
+        for (int index = 0; index < 3; ++index) {
+            const qreal itemX = plot.left() + index * 144;
+            QSvgRenderer(icons[index]).render(&painter, QRectF(itemX, plot.top() + 133, 10, 10));
+            drawMetricText(painter, QRectF(itemX + 18, plot.top() + 126, 102, 24),
+                           labels[index], muted, 12, QFont::Normal);
+        }
+        setAccessibleDescription(QStringLiteral("Status chart. ") + labels.join(", "));
+        return;
+    }
+
+    painter.setPen(QPen(grid, 1));
+    for (int index = 0; index < 5; ++index) {
+        const qreal y = plot.top() + 12 + index * 45;
+        painter.drawLine(QPointF(plot.left(), y), QPointF(plot.right(), y));
+    }
+    const auto chartValues = values();
+    qreal maximum = 1;
+    for (const qreal value : chartValues)
+        maximum = qMax(maximum, value);
+    const qreal slot = plot.width() / qMax(1, chartValues.size());
+    const qreal barWidth = qMin(44.0, slot * .55);
+    painter.setPen(Qt::NoPen);
+    painter.setBrush(series);
+    for (int index = 0; index < chartValues.size(); ++index) {
+        const qreal barHeight = qMax(0.0, chartValues[index]) / maximum * 184.0;
+        const qreal x = plot.left() + index * slot + (slot - barWidth) / 2.0;
+        painter.drawRoundedRect(QRectF(x, plot.top() + 206 - barHeight, barWidth, barHeight),
+                                8, 8);
+    }
+    setAccessibleDescription(QStringLiteral("Bar chart. ") + m_meta);
+}
+
 #define Z_IMPLEMENT_CANVAS_COMPONENT(ClassName, Name, DefaultTuple) \
 ClassName::ClassName(QWidget* parent) : Z_DesignComponent(QStringLiteral(Name), parent) { \
     setVariantTuple(QStringLiteral(DefaultTuple)); \
 }
 
-Z_IMPLEMENT_CANVAS_COMPONENT(Z_Chart, "Chart", "Kind=Bar, State=Data")
 Z_IMPLEMENT_CANVAS_COMPONENT(Z_ImagePanel, "ImagePanel", "Asset=Placeholder")
 Z_IMPLEMENT_CANVAS_COMPONENT(Z_Empty, "Empty", "Size=Default, Illustration=Default, Action=None")
 Z_IMPLEMENT_CANVAS_COMPONENT(Z_Card, "Card", "Surface=Card, Density=Comfortable")

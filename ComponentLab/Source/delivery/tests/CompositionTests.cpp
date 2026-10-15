@@ -2173,7 +2173,23 @@ auto* secondEditor=editors->widget(1);auto* area=secondEditor->findChild<QMdiAre
         }
         auto* chart = variantCanvas(QStringLiteral("400:2"));
         QVERIFY(chart);
-        QCOMPARE(chart->findChildren<QWidget*>("figmaRuntimeSpecimen").size(), 6);
+        const auto charts = chart->findChildren<commonWidget::Z_Chart*>("figmaRuntimeSpecimen");
+        QCOMPARE(charts.size(), 6);
+        int emptyCharts = 0;
+        int statusCharts = 0;
+        for (auto* specimen : charts) {
+            QCOMPARE(specimen->size(), QSize(520, 300));
+            QCOMPARE(specimen->title(), QStringLiteral("Chart title"));
+            QCOMPARE(specimen->meta(), QStringLiteral("Last 7 days"));
+            QCOMPARE(specimen->emptyTitle(), QStringLiteral("No chart data"));
+            QCOMPARE(specimen->emptyHint(), QStringLiteral("Check filters or data source"));
+            if (specimen->variantValue(QStringLiteral("State")) == QStringLiteral("Empty"))
+                ++emptyCharts;
+            if (specimen->variantValue(QStringLiteral("Kind")) == QStringLiteral("Status"))
+                ++statusCharts;
+        }
+        QCOMPARE(emptyCharts, 3);
+        QCOMPARE(statusCharts, 2);
         auto* metric = variantCanvas(QStringLiteral("397:2"));
         QVERIFY(metric);
         const auto metricCards =

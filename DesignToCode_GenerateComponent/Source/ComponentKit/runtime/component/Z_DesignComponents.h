@@ -141,7 +141,50 @@ class Z_MetricCard final : public Z_DesignComponent {
     void refreshAccessibility();
 };
 
-Z_DECLARE_CANVAS_COMPONENT(Z_Chart)
+// Figma ComponentLab/Chart 400:106. Figma owns the six Kind x State visual
+// variants; the host owns datasets and scale computation through setValues().
+class Z_Chart final : public Z_DesignComponent {
+    Q_OBJECT
+    Q_PROPERTY(QString meta READ meta WRITE setMeta NOTIFY contentChanged)
+    Q_PROPERTY(QString emptyTitle READ emptyTitle WRITE setEmptyTitle NOTIFY contentChanged)
+    Q_PROPERTY(QString emptyHint READ emptyHint WRITE setEmptyHint NOTIFY contentChanged)
+    Q_PROPERTY(QString legendShipped READ legendShipped WRITE setLegendShipped NOTIFY contentChanged)
+    Q_PROPERTY(QString legendPending READ legendPending WRITE setLegendPending NOTIFY contentChanged)
+    Q_PROPERTY(QString legendCanceled READ legendCanceled WRITE setLegendCanceled NOTIFY contentChanged)
+
+  public:
+    explicit Z_Chart(QWidget* parent = nullptr);
+    explicit Z_Chart(const QString& profile, QWidget* parent = nullptr);
+    QString meta() const;
+    QString emptyTitle() const;
+    QString emptyHint() const;
+    QString legendShipped() const;
+    QString legendPending() const;
+    QString legendCanceled() const;
+    QSize sizeHint() const override;
+    QSize minimumSizeHint() const override;
+
+  public slots:
+    void setMeta(const QString& value);
+    void setEmptyTitle(const QString& value);
+    void setEmptyHint(const QString& value);
+    void setLegendShipped(const QString& value);
+    void setLegendPending(const QString& value);
+    void setLegendCanceled(const QString& value);
+
+  protected:
+    void paintEvent(QPaintEvent* event) override;
+
+  private:
+    void setText(QString& target, const QString& value);
+    QString m_profile;
+    QString m_meta;
+    QString m_emptyTitle;
+    QString m_emptyHint;
+    QString m_legendShipped;
+    QString m_legendPending;
+    QString m_legendCanceled;
+};
 Z_DECLARE_CANVAS_COMPONENT(Z_ImagePanel)
 Z_DECLARE_CANVAS_COMPONENT(Z_Empty)
 

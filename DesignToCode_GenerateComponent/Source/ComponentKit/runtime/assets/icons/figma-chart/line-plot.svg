@@ -1,0 +1,22 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="480" height="218" viewBox="0 0 480 218" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Plot">
+<rect id="Grid/0" y="12" width="480" height="1" fill="#A7A7A7"/>
+<rect id="Grid/1" y="57" width="480" height="1" fill="#A7A7A7"/>
+<rect id="Grid/2" y="102" width="480" height="1" fill="#A7A7A7"/>
+<rect id="Grid/3" y="147" width="480" height="1" fill="#A7A7A7"/>
+<rect id="Grid/4" y="192" width="480" height="1" fill="#A7A7A7"/>
+<rect id="Series/Segment/0" x="26" y="166" width="82.4621" height="3" rx="1.5" transform="rotate(22.8337 26 166)" fill="#1D4840"/>
+<rect id="Series/Segment/1" x="102" y="134" width="77.2787" height="3" rx="1.5" transform="rotate(-10.4375 102 134)" fill="#1D4840"/>
+<rect id="Series/Segment/2" x="178" y="148" width="98.0816" height="3" rx="1.5" transform="rotate(39.2072 178 148)" fill="#1D4840"/>
+<rect id="Series/Segment/3" x="254" y="86" width="79.1202" height="3" rx="1.5" transform="rotate(-16.1443 254 86)" fill="#1D4840"/>
+<rect id="Series/Segment/4" x="330" y="108" width="100.658" height="3" rx="1.5" transform="rotate(40.9717 330 108)" fill="#1D4840"/>
+<rect id="Series/Segment/5" x="406" y="42" width="55.4617" height="3" rx="1.5" transform="rotate(-25.641 406 42)" fill="#1D4840"/>
+<circle id="Series/Point/0" cx="26" cy="166" r="5" fill="#1D4840"/>
+<circle id="Series/Point/1" cx="102" cy="134" r="5" fill="#1D4840"/>
+<circle id="Series/Point/2" cx="178" cy="148" r="5" fill="#1D4840"/>
+<circle id="Series/Point/3" cx="254" cy="86" r="5" fill="#1D4840"/>
+<circle id="Series/Point/4" cx="330" cy="108" r="5" fill="#1D4840"/>
+<circle id="Series/Point/5" cx="406" cy="42" r="5" fill="#1D4840"/>
+<circle id="Series/Point/6" cx="456" cy="66" r="5" fill="#1D4840"/>
+</g>
+</svg>

@@ -394,6 +394,7 @@ def governance_fields(
     inventory: dict,
     downstream_evidence: dict | None = None,
     token_binding_evidence: dict | None = None,
+    visual_verification_evidence: dict | None = None,
 ) -> dict:
     design_id = item["designComponent"]
     engineering_status = "REGISTERED" if item["instantiable"] else "UNMAPPED"
@@ -435,6 +436,12 @@ def governance_fields(
         if token_evidence_ref not in evidence:
             evidence.append(token_evidence_ref)
         token_status = token_binding_evidence["status"]
+    if visual_verification_evidence:
+        visual_evidence_ref = (
+            "docs/designRules/design-system/component-traceability-manifest.json"
+        )
+        if visual_evidence_ref not in evidence:
+            evidence.append(visual_evidence_ref)
     consumer_implemented = (
         (trace and trace.get("consumerEngineeringStatus") == "IMPLEMENTED")
         or (
@@ -489,7 +496,10 @@ def governance_fields(
                 else "NOT_APPLICABLE" if kind in {"LayoutHelper", "Asset"}
                 else "NOT_VERIFIED"
             ),
-            "visual": "NOT_VERIFIED",
+            "visual": (
+                visual_verification_evidence["status"]
+                if visual_verification_evidence else "NOT_VERIFIED"
+            ),
             "downstreamConsumption": (
                 "VERIFIED" if consumer_implemented
                 else "NOT_APPLICABLE" if kind in {"LayoutHelper", "Asset"}
@@ -520,6 +530,11 @@ def governance_fields(
         result["evidenceRefs"].extend(
             downstream_evidence.get("consumerEvidence", [])
         )
+    if visual_verification_evidence:
+        result["visualEvidence"] = visual_verification_evidence
+        result["evidenceRefs"].extend(
+            visual_verification_evidence.get("runtimeEvidence", [])
+        )
     if design_id == "ComponentLab/Drawer":
         result["compatibility"] = {
             "status": "LEGACY_COMPATIBILITY",
@@ -549,6 +564,7 @@ def merge_current_library(legacy: list[dict], inventory: dict) -> list[dict]:
     }
     downstream_by_design = manifest.get("downstreamEvidenceOverrides", {})
     token_binding_by_design = manifest.get("tokenBindingEvidence", {})
+    visual_verification_by_design = manifest.get("visualVerificationEvidence", {})
 
     # Figma renamed the public identity in place. The factory publishes the
     # canonical Z_Drawer key while the original implementation type remains a
@@ -610,11 +626,17 @@ def merge_current_library(legacy: list[dict], inventory: dict) -> list[dict]:
             set(token_binding_by_design) - set(by_design)
         )
     }
+    assert set(visual_verification_by_design) <= set(by_design), {
+        "unknownVisualVerificationEvidence": sorted(
+            set(visual_verification_by_design) - set(by_design)
+        )
+    }
     for item in entries:
         design_id = item["designComponent"]
         trace = trace_by_design.get(design_id)
         kind = current_kind(design_id, item, kind_policy)
         token_binding_evidence = token_binding_by_design.get(design_id)
+        visual_verification_evidence = visual_verification_by_design.get(design_id)
         if token_binding_evidence:
             assert token_binding_evidence["status"] == "BOUND_VERIFIED", (
                 design_id,
@@ -631,6 +653,21 @@ def merge_current_library(legacy: list[dict], inventory: dict) -> list[dict]:
             assert token_binding_evidence["nodeId"] in item.get(
                 "publicDesignNodeId", item.get("componentSetId", "")
             ).split(","), (design_id, token_binding_evidence, item)
+        if visual_verification_evidence:
+            assert visual_verification_evidence["status"] == "VERIFIED", (
+                design_id,
+                visual_verification_evidence,
+            )
+            assert set(visual_verification_evidence["profiles"]) == {
+                "light-comfortable", "light-compact",
+                "dark-comfortable", "dark-compact",
+            }, (design_id, visual_verification_evidence)
+            assert set(visual_verification_evidence["runtimeGallerySha256"]) == set(
+                visual_verification_evidence["profiles"]
+            ), (design_id, visual_verification_evidence)
+            assert visual_verification_evidence["figmaNodeId"] in item.get(
+                "publicDesignNodeId", item.get("componentSetId", "")
+            ).split(","), (design_id, visual_verification_evidence, item)
         item.update(governance_fields(
             item,
             trace,
@@ -638,6 +675,7 @@ def merge_current_library(legacy: list[dict], inventory: dict) -> list[dict]:
             inventory,
             downstream_by_design.get(design_id),
             token_binding_evidence,
+            visual_verification_evidence,
         ))
     return entries
 
