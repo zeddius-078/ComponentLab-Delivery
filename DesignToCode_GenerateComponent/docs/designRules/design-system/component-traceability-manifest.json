@@ -386,6 +386,8 @@
       "consumerEngineeringStatus": "IMPLEMENTED",
       "runtimeScope": "SDK_FACTORY_COMPONENTLAB_GENERATELAYOUT",
       "focusPolicy": "NATIVE_ACTION_NAVIGATION_OPTIONAL_INDICATOR",
+      "tokenStatus": "BOUND_VERIFIED",
+      "tokenBindingRefs": 25,
       "runtimeContract": {
         "qtBaseClass": "QMenu/QAction composition",
         "publicDesignNodeId": "482:491",
@@ -434,6 +436,8 @@
       "consumerEngineeringStatus": "IMPLEMENTED",
       "runtimeScope": "SDK_FACTORY_COMPONENTLAB_GENERATELAYOUT",
       "focusPolicy": "CHILD_ACTION_NAVIGATION_OPTIONAL_INDICATOR",
+      "tokenStatus": "BOUND_VERIFIED",
+      "tokenBindingRefs": 19,
       "runtimeContract": {
         "qtBaseClass": "QToolBar/QAction/QToolButton composition",
         "variantAxes": ["Orientation", "Placement", "Capacity", "Presentation"],
@@ -504,6 +508,8 @@
       "consumerEngineeringStatus": "IMPLEMENTED",
       "runtimeScope": "SDK_FACTORY_COMPONENTLAB_GENERATELAYOUT",
       "focusPolicy": "CHILD_CONTENT_AND_TITLE_ACTIONS_OPTIONAL_INDICATOR",
+      "tokenStatus": "BOUND_VERIFIED",
+      "tokenBindingRefs": 17,
       "runtimeContract": {
         "qtBaseClass": "QDockWidget/QMainWindow/QWidget child composition",
         "variantAxes": ["Area", "Placement"],
@@ -527,6 +533,8 @@
       "consumerEngineeringStatus": "IMPLEMENTED",
       "runtimeScope": "SDK_FACTORY_COMPONENTLAB_GENERATELAYOUT",
       "focusPolicy": "CHILD_CONTENT_AND_TITLE_ACTIONS_OPTIONAL_INDICATOR",
+      "tokenStatus": "BOUND_VERIFIED",
+      "tokenBindingRefs": 15,
       "runtimeContract": {
         "qtBaseClass": "QMdiSubWindow/QWidget child composition",
         "variantAxes": ["State"],
@@ -571,6 +579,8 @@
       "consumerEngineeringStatus": "IMPLEMENTED",
       "runtimeScope": "SDK_FACTORY_COMPONENTLAB_GENERATELAYOUT",
       "focusPolicy": "CHILD_PAGE_CONTENT_OPTIONAL_INDICATOR",
+      "tokenStatus": "BOUND_VERIFIED",
+      "tokenBindingRefs": 19,
       "runtimeContract": {
         "qtBaseClass": "QStackedWidget/QWidget page composition",
         "variantAxes": ["State"],
@@ -595,6 +605,8 @@
       "consumerEngineeringStatus": "IMPLEMENTED",
       "runtimeScope": "SDK_FACTORY_COMPONENTLAB_GENERATELAYOUT",
       "focusPolicy": "CHILD_BUTTON_AND_FIELD_NAVIGATION_OPTIONAL_INDICATOR",
+      "tokenStatus": "BOUND_VERIFIED",
+      "tokenBindingRefs": 29,
       "runtimeContract": {
         "qtBaseClass": "QWizard/QWizardPage/QAbstractButton composition",
         "variantAxes": ["Style", "Phase"],
@@ -631,6 +643,8 @@
       "consumerEngineeringStatus": "IMPLEMENTED",
       "runtimeScope": "SDK_FACTORY_COMPONENTLAB_GENERATELAYOUT",
       "focusPolicy": "NO_FOCUS_PRESENTATION",
+      "tokenStatus": "BOUND_VERIFIED",
+      "tokenBindingRefs": 19,
       "runtimeContract": {
         "qtBaseClass": "QWidget",
         "variantAxes": ["State"],
@@ -719,6 +733,18 @@
         "DesignToCode_GenerateLayout/Source/HtmlDsl/pipeline/mapping/component-mapping.json",
         "DesignToCode_GenerateLayout/Source/Validation/component/ComponentTests.cpp"
       ]
+    },
+    "ComponentLab/ImagePanel": {
+      "tokenStatus": "BOUND_VERIFIED",
+      "tokenBindingRefs": 26
+    },
+    "ComponentLab/GraphicsView": {
+      "tokenStatus": "BOUND_VERIFIED",
+      "tokenBindingRefs": 21
+    },
+    "ComponentLab/Calendar": {
+      "tokenStatus": "BOUND_VERIFIED",
+      "tokenBindingRefs": 27
     }
   },
   "counts": {

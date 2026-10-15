@@ -56,7 +56,7 @@ commonWidget::Z_CheckBox* specimen(const std::shared_ptr<commonWidget::Component
     checkbox->setProperty("figmaDesignBounds", designRect);
     checkbox->setProperty("figmaVisualException",
                           value == "Indeterminate" && state != "Disabled"
-                              ? "Pending designer confirmation: legible mixed mark retained"
+                              ? "Confirmed runtime policy: legible horizontal mixed mark retained"
                               : "");
     checkbox->setAttribute(Qt::WA_TransparentForMouseEvents);
     checkbox->setFocusPolicy(Qt::NoFocus);
@@ -80,7 +80,7 @@ QWidget* createCheckboxGallery(const std::shared_ptr<commonWidget::ComponentFact
     canvas->setProperty("galleryNodeId", gallery["id"].toString());
     canvas->setProperty("variantSpecimenCount", 34);
     canvas->setProperty("componentSetCount", 2);
-    canvas->setProperty("visualReviewStatus", "mixed-state-design-confirmation-pending");
+    canvas->setProperty("visualReviewStatus", "mixed-state-horizontal-dash-confirmed");
     for (const auto& entry : gallery["children"].toArray()) {
         const auto node = entry.toObject();
         if (node["type"] == "FRAME") {

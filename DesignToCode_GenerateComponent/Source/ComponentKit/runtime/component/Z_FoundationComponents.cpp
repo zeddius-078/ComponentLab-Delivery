@@ -347,7 +347,9 @@ void Z_Tooltip::setContent(const QString& value) {
     contentValue = value; setAccessibleName(value); updateGeometry(); update(); emit contentChanged(value);
 }
 void Z_Tooltip::setPlacement(const QString& value) {
-    requireOneOf(value, {"Top", "Bottom", "Left", "Right"}, "Tooltip.placement");
+    requireOneOf(value, {"TopLeft", "Top", "TopRight", "RightTop", "Right", "RightBottom",
+                         "BottomRight", "Bottom", "BottomLeft", "LeftBottom", "Left", "LeftTop"},
+                 "Tooltip.placement");
     if (placementValue == value) return;
     placementValue = value; updateGeometry(); update(); emit placementChanged(value);
 }
@@ -357,8 +359,14 @@ void Z_Tooltip::setShowArrow(bool value) {
 }
 QSize Z_Tooltip::sizeHint() const {
     const int arrow = showArrowValue ? 7 : 0;
-    const QSize text(QFontMetrics(componentFont(12)).horizontalAdvance(contentValue) + 16, 26);
-    return (placementValue == "Left" || placementValue == "Right") ? QSize(text.width() + arrow, text.height()) : QSize(text.width(), text.height() + arrow);
+    const QFontMetrics metrics(componentFont(12));
+    const QRect textBounds = metrics.boundingRect(QRect(0, 0, 280, 4096),
+        Qt::AlignLeft | Qt::AlignVCenter | Qt::TextWordWrap, contentValue);
+    const QSize text(qMax(32, textBounds.width() + 16), qMax(26, textBounds.height() + 12));
+    const bool horizontalArrow = placementValue.startsWith(QStringLiteral("Left")) ||
+                                 placementValue.startsWith(QStringLiteral("Right"));
+    return horizontalArrow ? QSize(text.width() + arrow, text.height())
+                           : QSize(text.width(), text.height() + arrow);
 }
 void Z_Tooltip::attachTo(QWidget* target) {
     if (targetValue == target) return;
@@ -395,34 +403,58 @@ void Z_Tooltip::showForTarget() {
     resize(sizeHint());
     const QRect targetRect(targetValue->mapToGlobal(QPoint(0, 0)), targetValue->size());
     QPoint point;
-    if (placementValue == "Bottom") point = {targetRect.center().x() - width() / 2, targetRect.bottom() + 4};
-    else if (placementValue == "Left") point = {targetRect.left() - width() - 4, targetRect.center().y() - height() / 2};
-    else if (placementValue == "Right") point = {targetRect.right() + 4, targetRect.center().y() - height() / 2};
-    else point = {targetRect.center().x() - width() / 2, targetRect.top() - height() - 4};
+    const auto horizontalOrigin = [&] {
+        if (placementValue.endsWith(QStringLiteral("Left"))) return targetRect.left();
+        if (placementValue.endsWith(QStringLiteral("Right"))) return targetRect.right() - width();
+        return targetRect.center().x() - width() / 2;
+    };
+    const auto verticalOrigin = [&] {
+        if (placementValue.endsWith(QStringLiteral("Top"))) return targetRect.top();
+        if (placementValue.endsWith(QStringLiteral("Bottom"))) return targetRect.bottom() - height();
+        return targetRect.center().y() - height() / 2;
+    };
+    if (placementValue.startsWith(QStringLiteral("Bottom")))
+        point = {horizontalOrigin(), targetRect.bottom() + 4};
+    else if (placementValue.startsWith(QStringLiteral("Left")))
+        point = {targetRect.left() - width() - 4, verticalOrigin()};
+    else if (placementValue.startsWith(QStringLiteral("Right")))
+        point = {targetRect.right() + 4, verticalOrigin()};
+    else
+        point = {horizontalOrigin(), targetRect.top() - height() - 4};
     move(point); show(); raise();
 }
 void Z_Tooltip::paintEvent(QPaintEvent*) {
     const Tokens tokens(profileValue);
     const int arrow = showArrowValue ? 7 : 0;
     QRectF bubble = rect();
-    if (placementValue == "Top") bubble.adjust(0, 0, 0, -arrow);
-    else if (placementValue == "Bottom") bubble.adjust(0, arrow, 0, 0);
-    else if (placementValue == "Left") bubble.adjust(0, 0, -arrow, 0);
-    else if (placementValue == "Right") bubble.adjust(arrow, 0, 0, 0);
+    const bool top = placementValue.startsWith(QStringLiteral("Top"));
+    const bool bottom = placementValue.startsWith(QStringLiteral("Bottom"));
+    const bool left = placementValue.startsWith(QStringLiteral("Left"));
+    if (top) bubble.adjust(0, 0, 0, -arrow);
+    else if (bottom) bubble.adjust(0, arrow, 0, 0);
+    else if (left) bubble.adjust(0, 0, -arrow, 0);
+    else bubble.adjust(arrow, 0, 0, 0);
     const QColor background = tokens.c("base.stoken.tooltip.base.default.container.background");
     QPainter painter(this); painter.setRenderHint(QPainter::Antialiasing);
     painter.setPen(Qt::NoPen); painter.setBrush(background);
     painter.drawRoundedRect(bubble.adjusted(0, 0, -1, -1), tokens.n("base.stoken.tooltip.base.default.container.radius"), tokens.n("base.stoken.tooltip.base.default.container.radius"));
     if (showArrowValue) {
         QPainterPath path;
-        if (placementValue == "Top") { path.moveTo(width()/2.0-5, bubble.bottom()); path.lineTo(width()/2.0, height()); path.lineTo(width()/2.0+5, bubble.bottom()); }
-        else if (placementValue == "Bottom") { path.moveTo(width()/2.0-5, bubble.top()); path.lineTo(width()/2.0, 0); path.lineTo(width()/2.0+5, bubble.top()); }
-        else if (placementValue == "Left") { path.moveTo(bubble.right(), height()/2.0-5); path.lineTo(width(), height()/2.0); path.lineTo(bubble.right(), height()/2.0+5); }
-        else { path.moveTo(bubble.left(), height()/2.0-5); path.lineTo(0, height()/2.0); path.lineTo(bubble.left(), height()/2.0+5); }
+        qreal anchorX = width() / 2.0;
+        if (placementValue.endsWith(QStringLiteral("Left"))) anchorX = 16;
+        else if (placementValue.endsWith(QStringLiteral("Right"))) anchorX = width() - 16;
+        qreal anchorY = height() / 2.0;
+        if (placementValue.endsWith(QStringLiteral("Top"))) anchorY = 14;
+        else if (placementValue.endsWith(QStringLiteral("Bottom"))) anchorY = height() - 14;
+        if (top) { path.moveTo(anchorX-5, bubble.bottom()); path.lineTo(anchorX, height()); path.lineTo(anchorX+5, bubble.bottom()); }
+        else if (bottom) { path.moveTo(anchorX-5, bubble.top()); path.lineTo(anchorX, 0); path.lineTo(anchorX+5, bubble.top()); }
+        else if (left) { path.moveTo(bubble.right(), anchorY-5); path.lineTo(width(), anchorY); path.lineTo(bubble.right(), anchorY+5); }
+        else { path.moveTo(bubble.left(), anchorY-5); path.lineTo(0, anchorY); path.lineTo(bubble.left(), anchorY+5); }
         path.closeSubpath(); painter.drawPath(path);
     }
     painter.setFont(componentFont(12)); painter.setPen(tokens.c("base.stoken.tooltip.base.default.content.color"));
-    painter.drawText(bubble.adjusted(8, 0, -8, 0), Qt::AlignCenter, contentValue);
+    painter.drawText(bubble.adjusted(8, 6, -8, -6),
+                     Qt::AlignLeft | Qt::AlignVCenter | Qt::TextWordWrap, contentValue);
 }
 
 Z_SearchInput::Z_SearchInput(const QString& profile, QWidget* parent)

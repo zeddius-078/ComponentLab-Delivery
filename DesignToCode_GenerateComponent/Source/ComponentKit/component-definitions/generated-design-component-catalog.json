@@ -732,7 +732,7 @@
         "factoryRegistration": "VERIFIED",
         "visual": "NOT_VERIFIED",
         "downstreamConsumption": "VERIFIED",
-        "tokenBinding": "UNRESOLVED"
+        "tokenBinding": "BOUND_VERIFIED"
       },
       "governanceApprovalStatus": "NOT_REVIEWED",
       "focusPolicy": "NATIVE_ACTION_NAVIGATION_OPTIONAL_INDICATOR",
@@ -870,7 +870,7 @@
         "factoryRegistration": "VERIFIED",
         "visual": "NOT_VERIFIED",
         "downstreamConsumption": "VERIFIED",
-        "tokenBinding": "UNRESOLVED"
+        "tokenBinding": "BOUND_VERIFIED"
       },
       "governanceApprovalStatus": "NOT_REVIEWED",
       "focusPolicy": "CHILD_ACTION_NAVIGATION_OPTIONAL_INDICATOR",
@@ -1080,7 +1080,7 @@
         "factoryRegistration": "VERIFIED",
         "visual": "NOT_VERIFIED",
         "downstreamConsumption": "VERIFIED",
-        "tokenBinding": "UNRESOLVED"
+        "tokenBinding": "BOUND_VERIFIED"
       },
       "governanceApprovalStatus": "NOT_REVIEWED",
       "focusPolicy": "CHILD_CONTENT_AND_TITLE_ACTIONS_OPTIONAL_INDICATOR",
@@ -1217,7 +1217,7 @@
         "factoryRegistration": "VERIFIED",
         "visual": "NOT_VERIFIED",
         "downstreamConsumption": "VERIFIED",
-        "tokenBinding": "UNRESOLVED"
+        "tokenBinding": "BOUND_VERIFIED"
       },
       "governanceApprovalStatus": "NOT_REVIEWED",
       "focusPolicy": "CHILD_CONTENT_AND_TITLE_ACTIONS_OPTIONAL_INDICATOR",
@@ -1284,7 +1284,7 @@
         "factoryRegistration": "VERIFIED",
         "visual": "NOT_VERIFIED",
         "downstreamConsumption": "VERIFIED",
-        "tokenBinding": "UNRESOLVED"
+        "tokenBinding": "BOUND_VERIFIED"
       },
       "governanceApprovalStatus": "NOT_REVIEWED",
       "focusPolicy": "CHILD_PAGE_CONTENT_OPTIONAL_INDICATOR",
@@ -1344,7 +1344,7 @@
         "factoryRegistration": "VERIFIED",
         "visual": "NOT_VERIFIED",
         "downstreamConsumption": "VERIFIED",
-        "tokenBinding": "UNRESOLVED"
+        "tokenBinding": "BOUND_VERIFIED"
       },
       "governanceApprovalStatus": "NOT_REVIEWED",
       "focusPolicy": "CHILD_BUTTON_AND_FIELD_NAVIGATION_OPTIONAL_INDICATOR",
@@ -1767,7 +1767,7 @@
         "factoryRegistration": "VERIFIED",
         "visual": "NOT_VERIFIED",
         "downstreamConsumption": "VERIFIED",
-        "tokenBinding": "UNRESOLVED"
+        "tokenBinding": "BOUND_VERIFIED"
       },
       "governanceApprovalStatus": "NOT_REVIEWED",
       "focusPolicy": "NO_FOCUS_PRESENTATION",
@@ -1856,7 +1856,8 @@
       "version": "UNRESOLVED",
       "evidenceRefs": [
         "Source/ComponentKit/component-definitions/figma-component-inventory.json",
-        "Source/ComponentKit/runtime/component/ComponentFactory.cpp"
+        "Source/ComponentKit/runtime/component/ComponentFactory.cpp",
+        "docs/designRules/design-system/component-traceability-manifest.json"
       ],
       "designOriginAction": "REUSE",
       "identityMigration": "NONE",
@@ -1870,7 +1871,7 @@
         "factoryRegistration": "VERIFIED",
         "visual": "NOT_VERIFIED",
         "downstreamConsumption": "NOT_VERIFIED",
-        "tokenBinding": "UNRESOLVED"
+        "tokenBinding": "BOUND_VERIFIED"
       },
       "governanceApprovalStatus": "NOT_REVIEWED",
       "focusPolicy": "UNRESOLVED"
@@ -2140,7 +2141,8 @@
       "version": "UNRESOLVED",
       "evidenceRefs": [
         "Source/ComponentKit/component-definitions/figma-component-inventory.json",
-        "Source/ComponentKit/runtime/component/ComponentFactory.cpp"
+        "Source/ComponentKit/runtime/component/ComponentFactory.cpp",
+        "docs/designRules/design-system/component-traceability-manifest.json"
       ],
       "designOriginAction": "REUSE",
       "identityMigration": "NONE",
@@ -2154,7 +2156,7 @@
         "factoryRegistration": "VERIFIED",
         "visual": "NOT_VERIFIED",
         "downstreamConsumption": "NOT_VERIFIED",
-        "tokenBinding": "UNRESOLVED"
+        "tokenBinding": "BOUND_VERIFIED"
       },
       "governanceApprovalStatus": "NOT_REVIEWED",
       "focusPolicy": "UNRESOLVED"
@@ -2185,7 +2187,8 @@
       "version": "UNRESOLVED",
       "evidenceRefs": [
         "Source/ComponentKit/component-definitions/figma-component-inventory.json",
-        "Source/ComponentKit/runtime/component/ComponentFactory.cpp"
+        "Source/ComponentKit/runtime/component/ComponentFactory.cpp",
+        "docs/designRules/design-system/component-traceability-manifest.json"
       ],
       "designOriginAction": "REUSE",
       "identityMigration": "NONE",
@@ -2199,7 +2202,7 @@
         "factoryRegistration": "VERIFIED",
         "visual": "NOT_VERIFIED",
         "downstreamConsumption": "NOT_VERIFIED",
-        "tokenBinding": "UNRESOLVED"
+        "tokenBinding": "BOUND_VERIFIED"
       },
       "governanceApprovalStatus": "NOT_REVIEWED",
       "focusPolicy": "UNRESOLVED"
@@ -7126,7 +7129,7 @@
         "factoryRegistration": "VERIFIED",
         "visual": "NOT_VERIFIED",
         "downstreamConsumption": "VERIFIED",
-        "tokenBinding": "UNRESOLVED"
+        "tokenBinding": "BOUND_VERIFIED"
       },
       "governanceApprovalStatus": "NOT_REVIEWED",
       "focusPolicy": "NATIVE_ACTION_NAVIGATION_OPTIONAL_INDICATOR",
@@ -7264,7 +7267,7 @@
         "factoryRegistration": "VERIFIED",
         "visual": "NOT_VERIFIED",
         "downstreamConsumption": "VERIFIED",
-        "tokenBinding": "UNRESOLVED"
+        "tokenBinding": "BOUND_VERIFIED"
       },
       "governanceApprovalStatus": "NOT_REVIEWED",
       "focusPolicy": "CHILD_ACTION_NAVIGATION_OPTIONAL_INDICATOR",
@@ -7474,7 +7477,7 @@
         "factoryRegistration": "VERIFIED",
         "visual": "NOT_VERIFIED",
         "downstreamConsumption": "VERIFIED",
-        "tokenBinding": "UNRESOLVED"
+        "tokenBinding": "BOUND_VERIFIED"
       },
       "governanceApprovalStatus": "NOT_REVIEWED",
       "focusPolicy": "CHILD_CONTENT_AND_TITLE_ACTIONS_OPTIONAL_INDICATOR",
@@ -7611,7 +7614,7 @@
         "factoryRegistration": "VERIFIED",
         "visual": "NOT_VERIFIED",
         "downstreamConsumption": "VERIFIED",
-        "tokenBinding": "UNRESOLVED"
+        "tokenBinding": "BOUND_VERIFIED"
       },
       "governanceApprovalStatus": "NOT_REVIEWED",
       "focusPolicy": "CHILD_CONTENT_AND_TITLE_ACTIONS_OPTIONAL_INDICATOR",
@@ -7678,7 +7681,7 @@
         "factoryRegistration": "VERIFIED",
         "visual": "NOT_VERIFIED",
         "downstreamConsumption": "VERIFIED",
-        "tokenBinding": "UNRESOLVED"
+        "tokenBinding": "BOUND_VERIFIED"
       },
       "governanceApprovalStatus": "NOT_REVIEWED",
       "focusPolicy": "CHILD_PAGE_CONTENT_OPTIONAL_INDICATOR",
@@ -7738,7 +7741,7 @@
         "factoryRegistration": "VERIFIED",
         "visual": "NOT_VERIFIED",
         "downstreamConsumption": "VERIFIED",
-        "tokenBinding": "UNRESOLVED"
+        "tokenBinding": "BOUND_VERIFIED"
       },
       "governanceApprovalStatus": "NOT_REVIEWED",
       "focusPolicy": "CHILD_BUTTON_AND_FIELD_NAVIGATION_OPTIONAL_INDICATOR",
@@ -8161,7 +8164,7 @@
         "factoryRegistration": "VERIFIED",
         "visual": "NOT_VERIFIED",
         "downstreamConsumption": "VERIFIED",
-        "tokenBinding": "UNRESOLVED"
+        "tokenBinding": "BOUND_VERIFIED"
       },
       "governanceApprovalStatus": "NOT_REVIEWED",
       "focusPolicy": "NO_FOCUS_PRESENTATION",
@@ -8250,7 +8253,8 @@
       "version": "UNRESOLVED",
       "evidenceRefs": [
         "Source/ComponentKit/component-definitions/figma-component-inventory.json",
-        "Source/ComponentKit/runtime/component/ComponentFactory.cpp"
+        "Source/ComponentKit/runtime/component/ComponentFactory.cpp",
+        "docs/designRules/design-system/component-traceability-manifest.json"
       ],
       "designOriginAction": "REUSE",
       "identityMigration": "NONE",
@@ -8264,7 +8268,7 @@
         "factoryRegistration": "VERIFIED",
         "visual": "NOT_VERIFIED",
         "downstreamConsumption": "NOT_VERIFIED",
-        "tokenBinding": "UNRESOLVED"
+        "tokenBinding": "BOUND_VERIFIED"
       },
       "governanceApprovalStatus": "NOT_REVIEWED",
       "focusPolicy": "UNRESOLVED"
@@ -8534,7 +8538,8 @@
       "version": "UNRESOLVED",
       "evidenceRefs": [
         "Source/ComponentKit/component-definitions/figma-component-inventory.json",
-        "Source/ComponentKit/runtime/component/ComponentFactory.cpp"
+        "Source/ComponentKit/runtime/component/ComponentFactory.cpp",
+        "docs/designRules/design-system/component-traceability-manifest.json"
       ],
       "designOriginAction": "REUSE",
       "identityMigration": "NONE",
@@ -8548,7 +8553,7 @@
         "factoryRegistration": "VERIFIED",
         "visual": "NOT_VERIFIED",
         "downstreamConsumption": "NOT_VERIFIED",
-        "tokenBinding": "UNRESOLVED"
+        "tokenBinding": "BOUND_VERIFIED"
       },
       "governanceApprovalStatus": "NOT_REVIEWED",
       "focusPolicy": "UNRESOLVED"
@@ -8579,7 +8584,8 @@
       "version": "UNRESOLVED",
       "evidenceRefs": [
         "Source/ComponentKit/component-definitions/figma-component-inventory.json",
-        "Source/ComponentKit/runtime/component/ComponentFactory.cpp"
+        "Source/ComponentKit/runtime/component/ComponentFactory.cpp",
+        "docs/designRules/design-system/component-traceability-manifest.json"
       ],
       "designOriginAction": "REUSE",
       "identityMigration": "NONE",
@@ -8593,7 +8599,7 @@
         "factoryRegistration": "VERIFIED",
         "visual": "NOT_VERIFIED",
         "downstreamConsumption": "NOT_VERIFIED",
-        "tokenBinding": "UNRESOLVED"
+        "tokenBinding": "BOUND_VERIFIED"
       },
       "governanceApprovalStatus": "NOT_REVIEWED",
       "focusPolicy": "UNRESOLVED"

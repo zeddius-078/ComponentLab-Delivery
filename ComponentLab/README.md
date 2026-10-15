@@ -44,7 +44,9 @@ Input 在同一画布展示 7 个组件集、108 个变体：96 个 `Z_InputFiel
 
 Radio 展示 10 个单选状态及 4 个横向／纵向组合，共 22 个原生 `Z_RadioButton`。外观页保留文本、选中、禁用、实时交互和固定状态比对；组合由 `QButtonGroup` 管理正整数选项 ID 与互斥，不将组合示例冒充已完成的公共 `Z_RadioGroup` 适配器。当前指示器按实际变量和图层的 18px 实现，旧说明中的 20px 未用于覆盖画布事实。
 
-ComponentLab 可以切换 Profile 或加载外部 Token 集；`figma-light` 则明确表示当前 Figma Light 画廊快照，不代表四套 Theme 均获设计验收。Checkbox 启用态半选按用户决定暂保留紫底白横线，仍待设计确认。Progress 的 Completed 示例保持源稿 68%，与实际值分离；busy 无百分比，画廊为静态切片，运行时动画节奏未获设计确认。组件源码、外观适配和 Token 编译由 GenerateComponent 提供。
+本轮视觉回归不再用通用占位矩阵替代设计资产：Select 的 12 个公开变体使用真实 `Z_Select`，Radio 修正 18px 指示器同心偏置，Switch 固定为 44×24／36×20 且不参与布局拉伸，SegmentedControl 保持内容尺寸；Transfer 的集合移动由 Demo controller 响应 SDK 请求，Tooltip 覆盖 12 个方向并支持多行。ScrollArea 使用 `Bars × Resize × State` 的 24 个 Token-backed `Z_ScrollArea`，Splitter 外观页提供真实拖动、折叠、恢复和方向切换。Sidebar 外观页使用公开 `Z_Sidebar`，不再默认展示内部 NavItem 空壳。Calendar 使用 `WeekStart × Grid × State` 的 8 个 440×360 `Z_CalendarWidget`，保留 Qt 原生翻月、日期选择和键盘能力，并通过主题语义调色板约束内部标题栏及禁用态。
+
+ComponentLab 可以切换 Profile 或加载外部 Token 集；`figma-light` 则明确表示当前 Figma Light 画廊快照，不代表四套 Theme 均获设计验收。Checkbox 启用态半选按已确认产品决策保留紫底白色横杠，避免源稿白底白标记在运行时不可辨识。Progress 的 Completed 示例保持源稿 68%，与实际值分离；busy 无百分比，画廊为静态切片，运行时动画节奏未获设计确认。组件源码、外观适配和 Token 编译由 GenerateComponent 提供。
 
 焦点环不是所有组件的强制外观。全局可选择 Off／Keyboard／Always；单个交互组件可调用 `FocusIndicator::instance().setEnabledFor(widget, false)` 关闭焦点环，同时保留键盘焦点与 Space／Enter 激活。纯展示组件使用 `widget->setFocusPolicy(Qt::NoFocus)`，从 Qt 原生焦点链移除。Qt 5 没有统一的 QWidget 属性可以在保留焦点的同时只隐藏所有样式焦点环，因此这两种关闭方式不得混用。
 

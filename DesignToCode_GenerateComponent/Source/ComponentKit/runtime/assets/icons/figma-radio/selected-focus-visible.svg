@@ -2,7 +2,7 @@
 <g id="Indicator" filter="url(#filter0_d_0_8)">
 <g clip-path="url(#clip0_0_8)">
 <circle id="Ring" cx="11" cy="11" r="8.5" fill="white" stroke="#6235F7"/>
-<circle id="Dot" cx="12" cy="12" r="4" fill="#6235F7"/>
+<circle id="Dot" cx="11" cy="11" r="4" fill="#6235F7"/>
 </g>
 </g>
 <defs>

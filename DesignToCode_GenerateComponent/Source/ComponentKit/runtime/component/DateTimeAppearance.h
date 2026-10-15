@@ -2,9 +2,18 @@
 #include <QMap>
 #include <QString>
 class QDateTimeEdit;
+class QDateEdit;
 class QTimeEdit;
 
 namespace commonWidget {
+// Applies the public Figma 464:111 Calendar x State contract without changing
+// QDate, range, displayFormat, current section, locale or popup ownership.
+void configureFigmaDatePicker(QDateEdit* edit, const QMap<QString, QString>& properties);
+// Applies the public Figma 463:136 Calendar x State contract. Optional Show
+// time / Show time spec properties control presentation only; the Time spec
+// string is an inert annotation and never writes Qt::TimeSpec.
+void configureFigmaDateTimePicker(QDateTimeEdit* edit,
+                                  const QMap<QString, QString>& properties);
 // Applies the public Figma 465:189 Format x State contract. Format changes
 // preserve QTime, range and current section; locale and wall-clock semantics
 // remain native Qt responsibilities.

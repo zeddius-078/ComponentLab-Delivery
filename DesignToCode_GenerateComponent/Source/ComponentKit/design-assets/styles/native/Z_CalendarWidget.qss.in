@@ -1,15 +1,63 @@
 /* Z_CalendarWidget <- QCalendarWidget; compiled from the active Token profile. */
-*[designSystemClass="commonWidget::Z_CalendarWidget"] {
+*[designSystemClass="commonWidget::Z_CalendarWidget"][designSystemStyleOwner="tokens"] {
     color: @FOREGROUND@;
     background-color: @SURFACE@;
     font-size: @FONT_SIZE@px;
 }
-*[designSystemClass="commonWidget::Z_CalendarWidget"]:disabled {
+*[designSystemClass="commonWidget::Z_CalendarWidget"][designSystemStyleOwner="tokens"]:disabled {
     color: @DISABLED_TEXT@;
     background-color: @DISABLED@;
     border-color: @DISABLED_BORDER@;
 }
-*[designSystemClass="commonWidget::Z_CalendarWidget"] {
+*[designSystemClass="commonWidget::Z_CalendarWidget"][designSystemStyleOwner="tokens"] {
     border: 1px solid @BORDER@;
     border-radius: @RADIUS@px;
+}
+*[designSystemClass="commonWidget::Z_CalendarWidget"][designSystemStyleOwner="tokens"] QWidget#qt_calendar_navigationbar {
+    background-color: @NEUTRAL_HOVER@;
+    border: 0;
+    border-radius: @RADIUS@px;
+    min-height: 42px;
+}
+*[designSystemClass="commonWidget::Z_CalendarWidget"][designSystemStyleOwner="tokens"] QToolButton {
+    color: @FOREGROUND@;
+    background: transparent;
+    border: 0;
+    border-radius: @RADIUS@px;
+    min-width: 28px;
+    min-height: 28px;
+    font-weight: 600;
+}
+*[designSystemClass="commonWidget::Z_CalendarWidget"][designSystemStyleOwner="tokens"] QToolButton:hover { background-color: @SURFACE@; }
+*[designSystemClass="commonWidget::Z_CalendarWidget"][designSystemStyleOwner="tokens"] QSpinBox {
+    color: @FOREGROUND@;
+    background: transparent;
+    border: 0;
+    selection-background-color: @PRIMARY@;
+}
+*[designSystemClass="commonWidget::Z_CalendarWidget"][designSystemStyleOwner="tokens"] QAbstractItemView {
+    color: @FOREGROUND@;
+    background-color: @SURFACE@;
+    border: 0;
+    outline: 0;
+    selection-background-color: @PRIMARY@;
+    selection-color: @ON_BRAND@;
+}
+*[designSystemClass="commonWidget::Z_CalendarWidget"][designSystemStyleOwner="tokens"] QAbstractItemView::item:selected {
+    background-color: @PRIMARY@;
+    color: @ON_BRAND@;
+    border-radius: @RADIUS@px;
+}
+*[designSystemClass="commonWidget::Z_CalendarWidget"][designSystemStyleOwner="tokens"] QAbstractItemView:disabled {
+    color: @DISABLED_TEXT@;
+    background-color: @DISABLED@;
+    selection-background-color: @DISABLED_BORDER@;
+    selection-color: @DISABLED_TEXT@;
+}
+*[designSystemClass="commonWidget::Z_CalendarWidget"][designSystemStyleOwner="tokens"] QAbstractItemView:disabled::item:selected {
+    background-color: @DISABLED_BORDER@;
+    color: @DISABLED_TEXT@;
+}
+*[designSystemClass="commonWidget::Z_CalendarWidget"][designSystemStyleOwner="tokens"][figmaSnapshotState="Disabled"] QWidget#qt_calendar_navigationbar {
+    background-color: @DISABLED@;
 }

@@ -6,6 +6,7 @@
 #include "Z_CheckBox.h"
 #include "Z_DesignComponents.h"
 #include "Z_FoundationComponents.h"
+#include "native/Z_ScrollArea.h"
 #include "SolidInnerShadow.h"
 #include "FocusIndicator.h"
 #include "Z_OtpInput.h"
@@ -36,6 +37,7 @@
 #include <QDial>
 #include <QLabel>
 #include <QFontInfo>
+#include <QHeaderView>
 #include <QItemSelectionModel>
 #include <QRawFont>
 #include <QLineEdit>
@@ -59,6 +61,7 @@
 #include <QSplitter>
 #include <QSignalSpy>
 #include <QStackedWidget>
+#include <QStandardItemModel>
 #include <QStringListModel>
 #include <QWizard>
 #include <QWizardPage>
@@ -1176,6 +1179,60 @@ auto* secondEditor=editors->widget(1);auto* area=secondEditor->findChild<QMdiAre
         QTest::mouseClick(second, Qt::LeftButton);
         QVERIFY(!second->property("focusIndicatorVisible").toBool());
     }
+    void switchAndSegmentedControlKeepIntrinsicGalleryGeometry() {
+        QWidget host;
+        host.resize(900, 180);
+        auto* layout = new QHBoxLayout(&host);
+        auto* toggle = new Z_Switch(&host);
+        QCOMPARE(toggle->size(), QSize(44, 24));
+        QCOMPARE(toggle->sizePolicy().horizontalPolicy(), QSizePolicy::Fixed);
+        QCOMPARE(toggle->sizePolicy().verticalPolicy(), QSizePolicy::Fixed);
+        layout->addWidget(toggle);
+        host.show();
+        QCoreApplication::processEvents();
+        QCOMPARE(toggle->size(), QSize(44, 24));
+        toggle->setVariantTuple("Size=Small, Value=On, State=Default");
+        QCOMPARE(toggle->size(), QSize(36, 20));
+
+        auto* tree = part<QTreeWidget>("componentTree");
+        tree->setCurrentItem(pageItem(tree, QStringLiteral("346:2")));
+        QCoreApplication::processEvents();
+        auto* switchPage = part<QStackedWidget>("componentPages")->currentWidget();
+        switchPage->findChild<QTabWidget*>("componentSections")->setCurrentIndex(1);
+        QCoreApplication::processEvents();
+        for (auto* specimen : switchPage->findChildren<Z_Switch*>())
+            QCOMPARE(specimen->size(), specimen->sizeHint());
+
+        tree->setCurrentItem(pageItem(tree, QStringLiteral("2148:1146")));
+        QCoreApplication::processEvents();
+        auto* segmentedPage = part<QStackedWidget>("componentPages")->currentWidget();
+        segmentedPage->findChild<QTabWidget*>("componentSections")->setCurrentIndex(1);
+        QCoreApplication::processEvents();
+        const auto segmentedSpecimens = segmentedPage->findChildren<Z_SegmentedControl*>();
+        QVERIFY(!segmentedSpecimens.isEmpty());
+        for (auto* specimen : segmentedSpecimens)
+            QCOMPARE(specimen->size(), specimen->sizeHint());
+    }
+    void selectMatricesPreserveCapturedFieldWidth() {
+        QWidget* canvas = nullptr;
+        try {
+            canvas = variantCanvas(QStringLiteral("242:2720"));
+        } catch (const std::exception& error) {
+            QFAIL(error.what());
+        }
+        QVERIFY(canvas);
+        const auto fields = canvas->findChildren<Z_Select*>();
+        QVERIFY(!fields.isEmpty());
+        for (auto* field : fields) {
+            QCOMPARE(field->width(), 240);
+            QVERIFY(field->height() >= 24);
+            QVERIFY(field->height() <= 40);
+            QCOMPARE(field->property("runtimeBacked").toBool(), true);
+        }
+        if (!evidence.isEmpty())
+            QVERIFY(fields.first()->grab().save(evidence + "/select-runtime-specimen.png"));
+        QCOMPARE(canvas->property("runtimeSpecimenCount").toInt(), fields.size());
+    }
     void focusIndicatorCanBeDisabledPerComponentWithoutRemovingFocus() {
         Z_Chart presentationOnly;
         Z_Switch interactiveControl;
@@ -1761,7 +1818,17 @@ auto* secondEditor=editors->widget(1);auto* area=secondEditor->findChild<QMdiAre
             sections->setCurrentIndex(0);QTest::qWait(40);
             auto* choices=page->findChild<QComboBox*>("appearanceComponentSetControl");
             if(entry.first=="380:2"){QVERIFY(choices);QCOMPARE(choices->count(),1);QCOMPARE(choices->itemText(0),QString("DSM/Navbar"));}
-            if(entry.first=="392:2"){QVERIFY(choices);QCOMPARE(choices->count(),2);QCOMPARE(choices->itemText(0),QString("DSM/Sidebar/NavItem"));QCOMPARE(choices->itemText(1),QString("DSM/Sidebar"));}
+            if(entry.first=="392:2"){
+                QVERIFY(!choices);
+                auto* sidebar=page->findChild<Z_Sidebar*>("navigationInteractivePreview");QVERIFY(sidebar);
+                QCOMPARE(sidebar->variantTuple(),QString("Density=Comfortable, Collapsed=False"));
+                auto* density=page->findChild<QComboBox*>("navigationDensity");QVERIFY(density);
+                density->setCurrentText("Compact");QCOMPARE(sidebar->density(),QString("Compact"));
+                auto* collapse=page->findChild<QCheckBox*>("sidebarCollapsedControl");QVERIFY(collapse);
+                collapse->setChecked(true);QCOMPARE(sidebar->isCollapsed(),true);QCOMPARE(sidebar->size(),sidebar->sizeHint());
+                auto* route=page->findChild<QComboBox*>("sidebarActiveRouteControl");QVERIFY(route);route->setCurrentIndex(1);
+                QCOMPARE(sidebar->activeRoute(),route->currentData().toString());
+            }
             if(entry.first=="1307:2"){QVERIFY(choices);QCOMPARE(choices->count(),3);}
         }
     }
@@ -1908,6 +1975,19 @@ auto* secondEditor=editors->widget(1);auto* area=secondEditor->findChild<QMdiAre
         QVERIFY(hover->styleSheet() != dragging->styleSheet());
         QVERIFY(hover->handleWidth() != dragging->handleWidth());
 
+        tree->setCurrentItem(pageItem(tree, QStringLiteral("520:11")));
+        QCoreApplication::processEvents();
+        auto* splitterPage=part<QStackedWidget>("componentPages")->currentWidget();
+        splitterPage->findChild<QTabWidget*>("componentSections")->setCurrentIndex(0);
+        QCoreApplication::processEvents();
+        auto* interactive=splitterPage->findChild<QSplitter*>("splitterInteractivePreview");
+        QVERIFY(interactive);QCOMPARE(interactive->count(),2);QCOMPARE(interactive->size(),QSize(554,196));
+        auto* collapseButton=splitterPage->findChild<QPushButton*>("splitterCollapseControl");QVERIFY(collapseButton);
+        collapseButton->click();QCoreApplication::processEvents();QCOMPARE(interactive->sizes().first(),0);
+        auto* restoreButton=splitterPage->findChild<QPushButton*>("splitterRestoreControl");QVERIFY(restoreButton);
+        restoreButton->click();QCoreApplication::processEvents();QVERIFY(interactive->sizes().first()>0);
+        QVERIFY(splitterPage->findChild<QLabel*>("splitterNativeReadout"));
+
         auto* scrollCanvas = variantCanvas(QStringLiteral("531:11"));
         QVERIFY(scrollCanvas);
         QCOMPARE(scrollCanvas->findChildren<QScrollArea*>().size(), 24);
@@ -1921,8 +2001,21 @@ auto* secondEditor=editors->widget(1);auto* area=secondEditor->findChild<QMdiAre
                                                                : Qt::ScrollBarAlwaysOff);
             QCOMPARE(area->horizontalScrollBarPolicy(), horizontal ? Qt::ScrollBarAlwaysOn
                                                                    : Qt::ScrollBarAlwaysOff);
-            if (variant.contains(QStringLiteral("State=Focus")))
-                QVERIFY(area->styleSheet().contains(QStringLiteral("#6d4aff")));
+            auto* designArea = qobject_cast<commonWidget::Z_ScrollArea*>(area);
+            QVERIFY(designArea);
+            QCOMPARE(designArea->bars(), variant.contains("Bars=Both") ? QString("Both") :
+                     variant.contains("Bars=Vertical") ? QString("Vertical") :
+                     variant.contains("Bars=Horizontal") ? QString("Horizontal") : QString("None"));
+            QCOMPARE(designArea->resizeMode(), variant.contains("Resize=Resizable")
+                         ? QString("Resizable") : QString("Fixed"));
+            QCOMPARE(designArea->snapshotState(), variant.contains("State=Focus")
+                         ? QString("Focus") : variant.contains("State=Disabled")
+                         ? QString("Disabled") : QString("Default"));
+            QVERIFY(area->styleSheet().isEmpty());
+            QCOMPARE(area->verticalScrollBar()->property("designSystemClass").toString(),
+                     QString("commonWidget::Z_ScrollBar"));
+            QCOMPARE(area->horizontalScrollBar()->property("designSystemStyleOwner").toString(),
+                     QString("tokens"));
         }
     }
     void nativeDisplayGalleriesUseRealWidgets() {
@@ -1949,6 +2042,43 @@ auto* secondEditor=editors->widget(1);auto* area=secondEditor->findChild<QMdiAre
             if(pageId=="430:20")QVERIFY(canvas->findChild<QPlainTextEdit*>());
             if(pageId=="431:18")QVERIFY(canvas->findChild<QOpenGLWidget*>());
         }
+        auto* calendarCanvas=variantCanvas(QStringLiteral("423:18"));QVERIFY(calendarCanvas);
+        const auto calendars=calendarCanvas->findChildren<commonWidget::Z_CalendarWidget*>();
+        QCOMPARE(calendars.size(),8);
+        QSet<QString> calendarTuples;
+        for(auto* calendar:calendars){
+            calendarTuples.insert(calendar->property("figmaVariant").toString());
+            QCOMPARE(calendar->size(),QSize(440,360));
+            QCOMPARE(calendar->selectedDate(),QDate(2026,9,23));
+            QCOMPARE(calendar->firstDayOfWeek(),calendar->weekStart()=="Monday"?Qt::Monday:Qt::Sunday);
+            QCOMPARE(calendar->isGridVisible(),calendar->grid());
+            QCOMPARE(calendar->isEnabled(),calendar->snapshotState()!=QString("Disabled"));
+            QCOMPARE(calendar->property("designSystemStyleOwner").toString(),QString("tokens"));
+            auto* navigation=calendar->findChild<QWidget*>(QStringLiteral("qt_calendar_navigationbar"));
+            QVERIFY(navigation);
+            QCOMPARE(navigation->palette().color(QPalette::Window),
+                     calendar->palette().color(QPalette::Active,QPalette::AlternateBase));
+            auto* calendarView=calendar->findChild<QAbstractItemView*>(QStringLiteral("qt_calendar_calendarview"));
+            QVERIFY(calendarView);
+            if(calendar->snapshotState()==QStringLiteral("Disabled")){
+                QCOMPARE(calendarView->palette().color(QPalette::Disabled,QPalette::Base),
+                         calendar->palette().color(QPalette::Active,QPalette::AlternateBase));
+                QVERIFY(calendarView->styleSheet().contains(
+                    calendar->palette().color(QPalette::Disabled,QPalette::Text).name(QColor::HexArgb)));
+            }
+        }
+        QCOMPARE(calendarTuples.size(),8);
+        if(!evidence.isEmpty())
+            QVERIFY(calendarCanvas->grab().save(evidence+"/calendar-gallery.png"));
+        tree->setCurrentItem(pageItem(tree,QStringLiteral("423:18")));QCoreApplication::processEvents();
+        auto* calendarPage=part<QStackedWidget>("componentPages")->currentWidget();
+        calendarPage->findChild<QTabWidget*>("componentSections")->setCurrentIndex(0);QCoreApplication::processEvents();
+        auto* interactiveCalendar=calendarPage->findChild<commonWidget::Z_CalendarWidget*>("componentInteractivePreview");
+        QVERIFY(interactiveCalendar);QCOMPARE(interactiveCalendar->size(),QSize(440,360));
+        auto* weekStart=calendarPage->findChild<QComboBox*>("calendarWeekStartControl");QVERIFY(weekStart);
+        weekStart->setCurrentText("Sunday");QCOMPARE(interactiveCalendar->weekStart(),QString("Sunday"));
+        auto* grid=calendarPage->findChild<QCheckBox*>("calendarGridControl");QVERIFY(grid);grid->setChecked(false);
+        QCOMPARE(interactiveCalendar->grid(),false);
         for (const auto& pageId : {QStringLiteral("426:15"), QStringLiteral("430:20")}) {
             auto* canvas = variantCanvas(pageId);
             QVERIFY(canvas);
@@ -1980,8 +2110,6 @@ auto* secondEditor=editors->widget(1);auto* area=secondEditor->findChild<QMdiAre
         QVERIFY(foundNoPartial);
     }
     void runtimeGalleriesUseFigmaEvidenceInsteadOfGenericMatrices() {
-        QCOMPARE(part<QWidget>("nativeGalleryPage")
-                     ->findChildren<QTabWidget*>("componentSetTabs").size(), 0);
         const QStringList pages{
             QStringLiteral("397:2"), QStringLiteral("400:2"), QStringLiteral("402:2"),
             QStringLiteral("433:7"), QStringLiteral("436:8"), QStringLiteral("242:2720"),
@@ -1999,7 +2127,13 @@ auto* secondEditor=editors->widget(1);auto* area=secondEditor->findChild<QMdiAre
             QVERIFY2(!canvas->findChild<QTabWidget*>("componentSetTabs"), qPrintable(pageId));
             const auto actual = actualVariantNames(canvas);
             const auto expected = expectedVariantNames(pageId);
-            QCOMPARE(actual, expected);
+            const auto missing = expected - actual;
+            const auto extra = actual - expected;
+            QVERIFY2(actual == expected,
+                     qPrintable(pageId + QStringLiteral(" missing=") +
+                                QStringList(missing.values()).join(QStringLiteral(" | ")) +
+                                QStringLiteral(" extra=") +
+                                QStringList(extra.values()).join(QStringLiteral(" | "))));
             QCOMPARE(canvas->property("variantSpecimenCount").toInt(),
                      [&] { int count = 0; for (const auto& p : commonWidget::figmaComponentPages()) if (p.id == pageId) for (const auto& s : p.componentSets) count += s.variants.size(); return count; }());
             if (pageId != QStringLiteral("242:2720"))
@@ -2511,6 +2645,42 @@ auto* secondEditor=editors->widget(1);auto* area=secondEditor->findChild<QMdiAre
         }
         transfer->setSnapshotState("Default");
         commonWidget::FocusIndicator::instance().setEnabledFor(transfer, true);
+
+        auto* tree = part<QTreeWidget>("componentTree");
+        tree->setCurrentItem(pageItem(tree, QStringLiteral("2148:552")));
+        QCoreApplication::processEvents();
+        auto* page = part<QStackedWidget>("componentPages")->currentWidget();
+        auto* demo = page->findChild<commonWidget::Z_Transfer*>("componentInteractivePreview");
+        QVERIFY(demo);
+        auto* availableDemo = qobject_cast<QStandardItemModel*>(demo->availableModel());
+        auto* selectedDemo = qobject_cast<QStandardItemModel*>(demo->selectedModel());
+        QVERIFY(availableDemo && selectedDemo);
+        const int availableBefore = availableDemo->rowCount();
+        const int selectedBefore = selectedDemo->rowCount();
+        demo->availableView()->selectionModel()->select(
+            availableDemo->index(0, 0), QItemSelectionModel::Select | QItemSelectionModel::Rows);
+        demo->moveToSelectedButton()->click();
+        QCOMPARE(availableDemo->rowCount(), availableBefore - 1);
+        QCOMPARE(selectedDemo->rowCount(), selectedBefore + 1);
+    }
+
+    void tooltipSupportsTwelvePlacementsAndMultilineContent() {
+        Z_Tooltip tooltip(profile);
+        const QStringList placements{"TopLeft", "Top", "TopRight", "RightTop", "Right", "RightBottom",
+                                     "BottomRight", "Bottom", "BottomLeft", "LeftBottom", "Left", "LeftTop"};
+        tooltip.setContent(QString::fromUtf8(
+            "设备温度超过建议范围，需要检查当前工艺参数与联锁状态后再继续。"));
+        const int oneLineHeight = Z_Tooltip(profile).sizeHint().height();
+        for (const auto& placement : placements) {
+            tooltip.setPlacement(placement);
+            QCOMPARE(tooltip.placement(), placement);
+            QVERIFY(tooltip.sizeHint().width() <= 303);
+            QVERIFY(tooltip.sizeHint().height() >= oneLineHeight);
+        }
+        tooltip.setPlacement("Top");
+        tooltip.setContent(QString::fromUtf8("第一行\n第二行"));
+        QVERIFY(tooltip.sizeHint().height() > oneLineHeight);
+        QVERIFY_EXCEPTION_THROWN(tooltip.setPlacement("Center"), std::invalid_argument);
     }
 
     void uploadUsesSdkLifecycleContract() {

@@ -375,7 +375,19 @@ void Z_Select::setVariant(const QString& v) {
     d->chrome->setVariant(v);
 }
 void Z_Select::setAppearance(const QString& v) {
-    d->chrome->setAppearance(v);
+    if (v == QStringLiteral("figma-light")) {
+        // figma-light is a captured design appearance rather than a Token
+        // catalog recipe. Keep a valid material underneath for variants that
+        // intentionally fall back, then let FieldChrome own the captured
+        // outlined rendering.
+        d->chrome->setAppearance(QStringLiteral("solid"));
+        d->chrome->setFigmaInputAppearance(true);
+    } else {
+        d->tokens->recipe(v, QStringLiteral("outlined"), QStringLiteral("default"));
+        d->chrome->setFigmaInputAppearance(false);
+        d->chrome->setAppearance(v);
+    }
+    sync();
 }
 void Z_Select::setStatus(const QString& v) {
     d->chrome->setStatus(v);
@@ -718,13 +730,31 @@ void Z_Select::sync() {
     d->syncing = true;
     const auto& t = *d->tokens;
     auto m = t.size(d->chrome->controlSize());
-    const auto css =
-        t.qss(t.recipe(d->chrome->property("surfacePreset").toString(),
-                       d->chrome->property("fieldVariant").toString(), d->chrome->visualState()),
-              d->chrome->controlSize());
+    const bool captured = d->chrome->isFigmaInputAppearance();
+    const auto metrics = captured ? field::inputVisuals()["metrics"].toObject() : QJsonObject{};
+    const auto colors = captured ? field::inputVisuals()["colors"].toObject() : QJsonObject{};
+    const auto capturedSize = captured
+        ? metrics["sizes"].toObject()[d->chrome->controlSize()].toObject() : QJsonObject{};
+    if (captured) {
+        m["paddingInline"] = capturedSize["paddingInline"];
+        m["lineHeight"] = metrics["textFrameHeight"];
+    }
+    const QString css = captured
+        ? QStringLiteral(
+              "QLineEdit[fieldPart=\"EDITOR\"]{background:transparent;border:0;padding:0;"
+              "min-height:0;color:%1;font-family:'Inter','Noto Sans SC';font-size:14px;}"
+              "QLabel{background:transparent;border:0;color:%1;font-family:'Inter','Noto Sans SC';font-size:14px;}"
+              "QLabel#HINT{color:%2;}")
+              .arg(colors[d->chrome->visualState() == QStringLiteral("disabled")
+                              ? QStringLiteral("disabledText") : QStringLiteral("text")].toString(),
+                   colors[d->chrome->visualState() == QStringLiteral("disabled")
+                              ? QStringLiteral("disabledText") : QStringLiteral("placeholder")].toString())
+        : t.qss(t.recipe(d->chrome->property("surfacePreset").toString(),
+                         d->chrome->property("fieldVariant").toString(), d->chrome->visualState()),
+                d->chrome->controlSize());
     if (styleSheet() != css)
         setStyleSheet(css);
-    int pad = m["paddingInline"].toInt() + t.metric("borderWidth");
+    int pad = m["paddingInline"].toInt() + (captured ? 1 : t.metric("borderWidth"));
     d->row->setContentsMargins(pad, 0, pad, 0);
     d->display->setFixedHeight(m["lineHeight"].toInt());
     d->prefix->setVisible(!d->prefixText.isEmpty() || !d->prefixIcon.isNull());
@@ -761,11 +791,12 @@ void Z_Select::sync() {
                                            2 * t.metric("borderWidth") +
                                            2 * m["paddingBlock"].toInt()
                                      : d->chrome->controlHeight());
-    QFont f(t.family());
-    f.setPixelSize(m["fontSize"].toInt());
+    QFont f(captured ? QStringLiteral("Inter") : t.family());
+    f.setPixelSize(captured ? 14 : m["fontSize"].toInt());
     d->popup->setFont(f);
     d->search->setMinimumHeight(t.metric("actionSize"));
-    d->delegate->setAppearance(d->chrome->property("surfacePreset").toString());
+    d->delegate->setAppearance(captured ? QStringLiteral("figma-light")
+                                        : d->chrome->property("surfacePreset").toString());
     for (int row = 0; row < d->model->rowCount(); ++row) {
         auto* item = d->model->item(row);
         if (item->data(GroupRole).toBool())

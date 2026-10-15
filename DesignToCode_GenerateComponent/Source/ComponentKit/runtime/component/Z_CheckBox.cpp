@@ -280,8 +280,9 @@ void Z_CheckBox::refresh() {
 void Z_CheckBox::refreshFigma() {
     const auto state = interactionState();
     const bool disabled = !isEnabled();
-    // Pending designer decision: retain a legible mixed state. The captured
-    // Figma enabled mixed mark is white on white; do not silently ship that.
+    // Product decision: an enabled mixed state must remain identifiable as a
+    // horizontal dash. The captured white-on-white mark is not an acceptable
+    // runtime rendering, so the selected surface is retained for contrast.
     const bool selected = isChecked() || (mixed && !disabled);
     const QString base = "checkbox/base/";
     QString fill = figmaValue(base + (disabled ? "disabled/indicator/background" :

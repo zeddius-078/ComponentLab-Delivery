@@ -1870,6 +1870,9 @@ Z_Switch::Z_Switch(QWidget* parent) : QAbstractButton(parent) {
     setCheckable(true);
     setFocusPolicy(Qt::StrongFocus);
     FocusIndicator::instance().watch(this);
+    // A switch is an intrinsic-size control. Layouts may position it but must
+    // never stretch its track in either axis.
+    setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     setVariantTuple(QStringLiteral("Size=Medium, Value=Off, State=Default"));
     connect(this, &QAbstractButton::toggled, this, [this](bool checked) {
         setVariantProperty(QStringLiteral("Value"), checked ? QStringLiteral("On")
@@ -1891,6 +1894,7 @@ void Z_Switch::setVariantTuple(const QString& tuple) {
     }
     setEnabled(!axisIs(m_variantProperties, "State", "Disabled") &&
                !axisIs(m_variantProperties, "State", "Loading"));
+    setFixedSize(sizeHint());
     emit variantChanged(m_variantTuple); updateGeometry(); update();
 }
 void Z_Switch::setVariantProperty(const QString& name, const QString& value) {

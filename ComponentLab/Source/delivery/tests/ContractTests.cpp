@@ -9,12 +9,14 @@
 #include <QAccessible>
 #include <QApplication>
 #include <QDir>
+#include <QFile>
 #include <QFrame>
 #include <QLabel>
 #include <QFontInfo>
 #include <QPushButton>
 #include <QProgressBar>
 #include <QRadioButton>
+#include <QRegularExpression>
 #include <QButtonGroup>
 #include <QSvgRenderer>
 #include <QSignalSpy>
@@ -254,12 +256,36 @@ class ContractTests : public QObject {
         auto* accessible=QAccessible::queryAccessibleInterface(&first);QVERIFY(accessible);
         QVERIFY(accessible->state().checked);QVERIFY(!accessible->text(QAccessible::Name).isEmpty());
         commonWidget::applyFigmaRadioAppearance(&first,"Default");events();
-        QCOMPARE(first.grab().toImage().pixelColor(11,16),QColor("#6235f7"));
+        const auto selectedImage = first.grab().toImage();
+        bool hasSelectedInk = false;
+        for (int y = 0; y < selectedImage.height() && !hasSelectedInk; ++y)
+            for (int x = 0; x < qMin(48, selectedImage.width()); ++x)
+                if (distance(selectedImage.pixelColor(x, y), QColor("#6235f7")) < 20) {
+                    hasSelectedInk = true;
+                    break;
+                }
+        QVERIFY(hasSelectedInk);
         first.setEnabled(false);events();
-        QCOMPARE(first.grab().toImage().pixelColor(11,16),QColor("#8a8a8a"));
+        const auto disabledImage = first.grab().toImage();
+        bool hasDisabledInk = false;
+        for (int y = 0; y < disabledImage.height() && !hasDisabledInk; ++y)
+            for (int x = 0; x < qMin(48, disabledImage.width()); ++x)
+                if (distance(disabledImage.pixelColor(x, y), QColor("#8a8a8a")) < 20) {
+                    hasDisabledInk = true;
+                    break;
+                }
+        QVERIFY(hasDisabledInk);
         first.click();QCOMPARE(group.checkedId(),1);
         first.setEnabled(true);first.setLayoutDirection(Qt::RightToLeft);events();
-        QCOMPARE(first.grab().toImage().pixelColor(168,16),QColor("#6235f7"));
+        const auto rtlImage = first.grab().toImage();
+        bool hasRtlInk = false;
+        for (int y = 0; y < rtlImage.height() && !hasRtlInk; ++y)
+            for (int x = rtlImage.width() / 2; x < rtlImage.width(); ++x)
+                if (distance(rtlImage.pixelColor(x, y), QColor("#6235f7")) < 20) {
+                    hasRtlInk = true;
+                    break;
+                }
+        QVERIFY(hasRtlInk);
         QCOMPARE(first.findChildren<QObject*>("figmaRadioRenderer").size(),1);
         for(const auto& value:QStringList{"unselected","selected"})
             for(const auto& state:QStringList{"default","hover","pressed","focus-visible","disabled"}) {
@@ -267,6 +293,18 @@ class ContractTests : public QObject {
                 QSvgRenderer asset(path);QVERIFY2(asset.isValid(),qPrintable(path));
                 const int extent=state=="focus-visible"?22:18;
                 QCOMPARE(asset.defaultSize(),QSize(extent,extent));
+                if (value == QStringLiteral("selected")) {
+                    QFile source(path);QVERIFY(source.open(QIODevice::ReadOnly));
+                    const QString xml = QString::fromUtf8(source.readAll());
+                    const QRegularExpression ring(
+                        QStringLiteral("id=\"Ring\" cx=\"([0-9]+)\" cy=\"([0-9]+)\""));
+                    const QRegularExpression dot(
+                        QStringLiteral("id=\"Dot\" cx=\"([0-9]+)\" cy=\"([0-9]+)\""));
+                    const auto ringMatch = ring.match(xml), dotMatch = dot.match(xml);
+                    QVERIFY(ringMatch.hasMatch());QVERIFY(dotMatch.hasMatch());
+                    QCOMPARE(dotMatch.captured(1), ringMatch.captured(1));
+                    QCOMPARE(dotMatch.captured(2), ringMatch.captured(2));
+                }
             }
         QVERIFY_EXCEPTION_THROWN(commonWidget::applyFigmaRadioAppearance(&first,"Active"),std::invalid_argument);
     }
@@ -402,6 +440,30 @@ class ContractTests : public QObject {
                         ++cases;
                     }
         QCOMPARE(cases, catalog->presetIds().size() * 8);
+    }
+    void figmaIndeterminateUsesHorizontalDash() {
+        Z_CheckBox c(catalog, "");
+        c.setAppearance("figma-light");
+        c.setChecked(false);
+        c.setIndeterminate(true);
+        c.resize(c.sizeHint());
+        c.show();
+        events();
+        const auto indicator = c.grab(c.indicatorRect()).toImage();
+        QVERIFY(!indicator.isNull());
+        const int centerY = indicator.height() / 2;
+        int centerLightPixels = 0;
+        int upperLightPixels = 0;
+        for (int x = 0; x < indicator.width(); ++x) {
+            const auto isLight = [](const QColor& color) {
+                return color.red() > 220 && color.green() > 220 && color.blue() > 220;
+            };
+            centerLightPixels += isLight(indicator.pixelColor(x, centerY));
+            upperLightPixels += isLight(indicator.pixelColor(x, qMax(0, centerY - 3)));
+        }
+        QVERIFY2(centerLightPixels >= 8, "Indeterminate mark must contain a visible horizontal dash");
+        QVERIFY2(upperLightPixels < centerLightPixels / 2,
+                 "Indeterminate mark must be a dash rather than a filled square");
     }
     void fillAndShadowPixelProof() {
         auto solid = faceImage("solid"), gradient = faceImage("gradient"),

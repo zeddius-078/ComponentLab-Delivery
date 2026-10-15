@@ -1,6 +1,7 @@
 #include "NavigationGallery.h"
 #include "FigmaGalleryView.h"
 #include "NavigationAppearance.h"
+#include "Z_DesignComponents.h"
 #include "native/Z_Menu.h"
 #include "native/Z_MenuBar.h"
 #include "native/Z_ToolBar.h"
@@ -182,7 +183,62 @@ QWidget* createNavigationAppearance(const QString& id, QWidget* parent) {
         return c;
     };
     QWidget* preview = nullptr;
-    if (id == "482:335") {
+    if (id == "392:2") {
+        auto* sidebar = new commonWidget::Z_Sidebar(previewHost);
+        preview = sidebar;
+        auto* density = combo("Density", {"Comfortable", "Compact"});
+        auto* collapsed = new QCheckBox(QString::fromUtf8("折叠侧边栏"), settings);
+        collapsed->setObjectName("sidebarCollapsedControl");
+        form->addRow("Collapsed", collapsed);
+        auto* active = new QComboBox(settings);
+        active->setObjectName("sidebarActiveRouteControl");
+        for (int index = 0; index < sidebar->routeIds().size(); ++index)
+            active->addItem(sidebar->routeLabels().value(index), sidebar->routeIds().value(index));
+        form->addRow(QString::fromUtf8("当前路由"), active);
+        auto* focus = new QCheckBox(QString::fromUtf8("显示组件焦点指示"), settings);
+        focus->setObjectName("sidebarFocusIndicatorControl");
+        focus->setChecked(sidebar->focusIndicatorEnabled());
+        form->addRow(focus);
+        auto* note = new QLabel(QString::fromUtf8(
+            "NavItem 是 Sidebar 的内部 anatomy，不创建第二个 SDK 类型；这里展示并操作公共 ComponentLab/Sidebar。"), settings);
+        note->setObjectName("sidebarAnatomyNote");
+        note->setWordWrap(true);
+        form->addRow(note);
+        const auto sync = [=] {
+            const QSignalBlocker a(density), b(collapsed), c(active), d(focus);
+            density->setCurrentText(sidebar->density());
+            collapsed->setChecked(sidebar->isCollapsed());
+            active->setCurrentIndex(active->findData(sidebar->activeRoute()));
+            focus->setChecked(sidebar->focusIndicatorEnabled());
+            sidebar->setFixedSize(sidebar->sizeHint());
+            inspect(tree, sidebar, id);
+        };
+        QObject::connect(density, &QComboBox::currentTextChanged, sidebar,
+                         [=](const QString& value) { sidebar->setDensity(value); sync(); });
+        QObject::connect(collapsed, &QCheckBox::toggled, sidebar,
+                         [=](bool value) { sidebar->setCollapsed(value); sync(); });
+        QObject::connect(active, qOverload<int>(&QComboBox::currentIndexChanged), sidebar,
+                         [=](int index) {
+                             if (index >= 0) sidebar->setActiveRoute(active->itemData(index).toString());
+                             sync();
+                         });
+        QObject::connect(focus, &QCheckBox::toggled, sidebar,
+                         [=](bool value) { sidebar->setFocusIndicatorEnabled(value); sync(); });
+        QObject::connect(sidebar, &commonWidget::Z_Sidebar::routeRequested, page,
+                         [=](const QString& routeId) {
+                             sidebar->setActiveRoute(routeId);
+                             events->setText(QStringLiteral("routeRequested: %1").arg(routeId));
+                             sync();
+                         });
+        QObject::connect(sidebar, &commonWidget::Z_Sidebar::collapsedChangeRequested, page,
+                         [=](bool value) {
+                             sidebar->setCollapsed(value);
+                             events->setText(QStringLiteral("collapsedChangeRequested: %1")
+                                 .arg(value ? QStringLiteral("true") : QStringLiteral("false")));
+                             sync();
+                         });
+        sync();
+    } else if (id == "482:335") {
         auto* m = new commonWidget::Z_Menu(previewHost);
         m->setWindowFlags(Qt::Widget);
         nav::populateMenu(m);

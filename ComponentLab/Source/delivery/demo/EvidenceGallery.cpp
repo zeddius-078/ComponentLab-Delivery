@@ -36,6 +36,55 @@ QColor stateColor(const QString& value) {
     return QColor("#6235f7");
 }
 
+bool isPublicSelectSet(const QString& name) {
+    return name.startsWith(QStringLiteral("DSM/Select/Outlined")) ||
+           name.startsWith(QStringLiteral("DSM/Select/Filled")) ||
+           name.startsWith(QStringLiteral("DSM/Select/Borderless")) ||
+           name.startsWith(QStringLiteral("DSM/Select/Underlined"));
+}
+
+void configureSelectSpecimen(commonWidget::Z_Select* select,
+                             const FigmaVariantLayout& item) {
+    const auto step = [](const char* name, const auto& operation) {
+        try {
+            operation();
+        } catch (const std::exception& error) {
+            throw std::runtime_error(QStringLiteral("%1: %2")
+                .arg(QString::fromLatin1(name), QString::fromUtf8(error.what())).toStdString());
+        }
+    };
+    const QString size = figmaAxisValue(item.variant, QStringLiteral("Size")).toLower();
+    const QString state = figmaAxisValue(item.variant, QStringLiteral("State"));
+    const QString setName = item.componentSetName.toLower();
+    step("appearance", [&] { select->setAppearance(QStringLiteral("figma-light")); });
+    step("size", [&] { select->setControlSize(
+        size == QStringLiteral("small") ? QStringLiteral("sm") :
+        size == QStringLiteral("large") ? QStringLiteral("lg") : QStringLiteral("md")); });
+    for (const auto& appearance : {QStringLiteral("outlined"), QStringLiteral("filled"),
+                                   QStringLiteral("borderless"), QStringLiteral("underlined")})
+        if (setName.contains(appearance))
+            step("variant", [&] { select->setVariant(appearance); });
+    step("status", [&] { select->setStatus(
+        setName.contains(QStringLiteral("error")) ? QStringLiteral("error") :
+        setName.contains(QStringLiteral("warning")) ? QStringLiteral("warning") : QString()); });
+    step("placeholder", [&] { select->setPlaceholder(QStringLiteral("Select an option")); });
+    step("options", [&] { select->setOptions(
+        {{QStringLiteral("etch-01"), QStringLiteral("ETCH-01"), {}, false},
+         {QStringLiteral("cvd-02"), QStringLiteral("CVD-02"), {}, false},
+         {QStringLiteral("cmp-03"), QStringLiteral("CMP-03"), {}, false}}); });
+    if (state.contains(QStringLiteral("Selected"), Qt::CaseInsensitive) ||
+        state.contains(QStringLiteral("Filled"), Qt::CaseInsensitive))
+        step("values", [&] { select->setValues({QStringLiteral("etch-01")}); });
+    const QString snapshot = state.contains(QStringLiteral("Focus"), Qt::CaseInsensitive) ||
+                             state.contains(QStringLiteral("Open"), Qt::CaseInsensitive)
+        ? QStringLiteral("Focus") : state;
+    if (QStringList{"Default", "Hover", "Focus", "Filled", "Error", "Disabled"}.contains(snapshot))
+        step("snapshot", [&] { select->control()->setSnapshotState(snapshot); });
+    step("enabled", [&] {
+        select->setEnabled(state.compare(QStringLiteral("Disabled"), Qt::CaseInsensitive) != 0);
+    });
+}
+
 class EvidenceSpecimen final : public QWidget {
 public:
     EvidenceSpecimen(QString pageId, QString setName, QString variant, QWidget* parent)
@@ -366,7 +415,23 @@ QWidget* createEvidenceGallery(
         if (factory && descriptor.instantiable &&
             commonWidget::ComponentFactory::isRegistered(descriptor.sdkClass)) {
             auto* candidate = factory->create(descriptor.sdkClass, canvas);
-            if (candidate->metaObject()->indexOfProperty("variantTuple") >= 0) {
+            if (auto* select = qobject_cast<commonWidget::Z_Select*>(candidate);
+                select && isPublicSelectSet(item.componentSetName)) {
+                try {
+                    configureSelectSpecimen(select, item);
+                } catch (const std::exception& error) {
+                    throw std::runtime_error(
+                        QStringLiteral("Select %1 [%2]: %3")
+                            .arg(item.componentSetName, item.variant,
+                                 QString::fromUtf8(error.what()))
+                            .toStdString());
+                }
+                specimen = candidate;
+                specimen->setObjectName(QStringLiteral("figmaRuntimeSpecimen"));
+                specimen->setProperty("contractOnly", false);
+                specimen->setProperty("runtimeBacked", true);
+                ++runtimeSpecimenCount;
+            } else if (candidate->metaObject()->indexOfProperty("variantTuple") >= 0) {
                 QString error;
                 if (!factory->apply(candidate, QStringLiteral("setVariantTuple"), item.variant,
                                     &error))
@@ -409,6 +474,7 @@ QWidget* createEvidenceGallery(
             specimen->setProperty("runtimeBacked", false);
         }
         specimen->setGeometry(item.rect);
+        specimen->setProperty("figmaVariant", item.variant);
         specimen->setProperty("figmaComponentSetId", item.componentSetId);
         specimen->setProperty("figmaNodeId", item.nodeId);
     }

@@ -111,16 +111,20 @@ void scrollSpecimen(const std::shared_ptr<commonWidget::ComponentFactory>& facto
     if (!area)
         throw std::runtime_error("Z_ScrollArea unavailable");
     area->setGeometry(rect);
-    const auto policy = [&](Qt::Orientation orientation) {
-        const bool has = bars == "Both" || (orientation == Qt::Vertical && bars == "Vertical") ||
-                         (orientation == Qt::Horizontal && bars == "Horizontal");
-        return has ? Qt::ScrollBarAlwaysOn : Qt::ScrollBarAlwaysOff;
-    };
-    area->setVerticalScrollBarPolicy(policy(Qt::Vertical));
-    area->setHorizontalScrollBarPolicy(policy(Qt::Horizontal));
-    auto* content = new QLabel(
-        QStringLiteral("参数 1\n参数 2\n参数 3\n参数 4\n参数 5\n参数 6\n参数 7\n参数 8"), area);
-    content->setStyleSheet("color:#191919;background:transparent;");
+    area->setBars(bars);
+    area->setResizeMode(resize);
+    area->setSnapshotState(state);
+    auto* content = new QWidget(area);
+    content->setObjectName(QStringLiteral("scrollAreaContent"));
+    auto* contentLayout = new QVBoxLayout(content);
+    contentLayout->setContentsMargins(16, 14, 16, 14);
+    contentLayout->setSpacing(8);
+    for (int index = 1; index <= 8; ++index) {
+        auto* row = new QLabel(QStringLiteral("参数 %1").arg(index), content);
+        row->setObjectName(QStringLiteral("scrollAreaContentRow"));
+        contentLayout->addWidget(row);
+    }
+    contentLayout->addStretch(1);
     content->setMinimumWidth(bars == QStringLiteral("Horizontal") || bars == QStringLiteral("Both")
                                  ? rect.width() + 180
                                  : rect.width() - 36);
@@ -128,13 +132,7 @@ void scrollSpecimen(const std::shared_ptr<commonWidget::ComponentFactory>& facto
                                   ? rect.height() + 180
                                   : rect.height() - 36);
     area->setWidget(content);
-    area->setWidgetResizable(resize == "Resizable");
-    if (state == "Disabled")
-        area->setEnabled(false);
     area->setObjectName(QStringLiteral("figmaScrollSpecimen"));
-    area->setStyleSheet(state == QStringLiteral("Focus")
-                            ? QStringLiteral("QScrollArea#figmaScrollSpecimen {border:2px solid #6d4aff;border-radius:7px;background:white;}")
-                            : QStringLiteral("QScrollArea#figmaScrollSpecimen {border:1px solid #d7dbe3;border-radius:7px;background:white;}"));
     passive(area, QStringLiteral("Bars=%1, Resize=%2, State=%3").arg(bars, resize, state),
             state == "Focus" ? state : QString());
 }

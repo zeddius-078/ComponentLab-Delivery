@@ -117,6 +117,36 @@ using commonWidget::DesignLibraryEntry;
 using commonWidget::DesignComponentPage;
 using commonWidget::DesignComponentSet;
 
+QMap<QString, QString> variantProperties(const QString& variant);
+
+bool isSelectFieldSet(const DesignComponentSet& componentSet) {
+    const QString name = componentSet.name;
+    return name.startsWith(QStringLiteral("DSM/Select/Outlined")) ||
+           name.startsWith(QStringLiteral("DSM/Select/Filled")) ||
+           name.startsWith(QStringLiteral("DSM/Select/Borderless")) ||
+           name.startsWith(QStringLiteral("DSM/Select/Underlined"));
+}
+
+void moveTransferRows(commonWidget::Z_Transfer* transfer, bool toSelected,
+                      const QModelIndexList& requested) {
+    auto* source = qobject_cast<QStandardItemModel*>(
+        toSelected ? transfer->availableModel() : transfer->selectedModel());
+    auto* target = qobject_cast<QStandardItemModel*>(
+        toSelected ? transfer->selectedModel() : transfer->availableModel());
+    if (!source || !target || requested.isEmpty())
+        return;
+    QList<int> rows;
+    for (const auto& index : requested)
+        if (index.isValid() && index.model() == source && !rows.contains(index.row()))
+            rows.append(index.row());
+    std::sort(rows.begin(), rows.end(), std::greater<int>());
+    QList<QList<QStandardItem*>> moved;
+    for (int row : rows)
+        moved.prepend(source->takeRow(row));
+    for (const auto& items : moved)
+        target->appendRow(items);
+}
+
 void populateItemModel(QAbstractItemView* view) {
     auto* model = new QStandardItemModel(4, 3, view);
     model->setHorizontalHeaderLabels(
@@ -135,7 +165,10 @@ void configurePreview(QWidget* widget, const QString& qtClass, const QString& sd
     widget->setObjectName("componentRoot_" + sdkClass.section("::", -1));
     if (!qobject_cast<QDialog*>(widget))
         widget->setWindowFlags(Qt::Widget);
-    widget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
+    const bool intrinsicControl = qobject_cast<commonWidget::Z_Switch*>(widget) ||
+                                  qobject_cast<commonWidget::Z_SegmentedControl*>(widget);
+    widget->setSizePolicy(intrinsicControl ? QSizePolicy::Fixed : QSizePolicy::Expanding,
+                          intrinsicControl ? QSizePolicy::Fixed : QSizePolicy::Preferred);
 
     if (auto* command = qobject_cast<QCommandLinkButton*>(widget)) {
         command->setText(QString::fromUtf8("执行工艺复核"));
@@ -190,8 +223,12 @@ void configurePreview(QWidget* widget, const QString& qtClass, const QString& sd
         edit->setPlainText(QString::fromUtf8("工艺备注：等待设备确认。"));
     if (auto* edit = qobject_cast<QPlainTextEdit*>(widget))
         edit->setPlainText(QString::fromUtf8("ALARM: none\nSTATE: running"));
-    if (auto* calendar = qobject_cast<QCalendarWidget*>(widget))
-        calendar->setGridVisible(true);
+    if (auto* calendar = qobject_cast<commonWidget::Z_CalendarWidget*>(widget)) {
+        calendar->setWeekStart(QStringLiteral("Monday"));
+        calendar->setGrid(true);
+        calendar->setSnapshotState(QStringLiteral("Default"));
+        calendar->setFixedSize(calendar->sizeHint());
+    }
     if (auto* graphics = qobject_cast<QGraphicsView*>(widget)) {
         auto* scene = new QGraphicsScene(graphics);
         scene->addRect(8, 8, 180, 72, QPen(QColor("#6d4aff")), QBrush(QColor("#f1edff")));
@@ -307,7 +344,22 @@ void configurePreview(QWidget* widget, const QString& qtClass, const QString& sd
         }
     }
 
-    widget->setMinimumWidth(180);
+    if (auto* transfer = qobject_cast<commonWidget::Z_Transfer*>(widget)) {
+        QObject::connect(transfer, &commonWidget::Z_Transfer::moveToSelectedRequested,
+                         transfer, [transfer](const QModelIndexList& rows) {
+                             moveTransferRows(transfer, true, rows);
+                         });
+        QObject::connect(transfer, &commonWidget::Z_Transfer::moveToAvailableRequested,
+                         transfer, [transfer](const QModelIndexList& rows) {
+                             moveTransferRows(transfer, false, rows);
+                         });
+    }
+
+    if (qobject_cast<commonWidget::Z_Switch*>(widget)) {
+        widget->setFixedSize(widget->sizeHint());
+    } else if (!qobject_cast<commonWidget::Z_SegmentedControl*>(widget)) {
+        widget->setMinimumWidth(180);
+    }
     widget->setMaximumHeight(qtClass.endsWith("Dialog") || qtClass == "QWizard" ? 250 : 210);
 }
 
@@ -514,6 +566,192 @@ QWidget* createNativeAppearance(const DesignComponentDescriptor& descriptor,
         content->setText(preview->property("text").toString());
         QObject::connect(content, &QLineEdit::textChanged, preview,
                          [preview](const QString& text) { preview->setProperty("text", text); });
+    }
+    if (auto* tooltip = qobject_cast<commonWidget::Z_Tooltip*>(preview)) {
+        content->setEnabled(true);
+        content->setText(tooltip->content());
+        if (auto* label = qobject_cast<QLabel*>(controls->labelForField(content)))
+            label->setText(QString::fromUtf8("内容"));
+        auto* placement = new QComboBox(settings);
+        placement->setObjectName("tooltipPlacementControl");
+        placement->addItems({"TopLeft", "Top", "TopRight", "RightTop", "Right", "RightBottom",
+                             "BottomRight", "Bottom", "BottomLeft", "LeftBottom", "Left", "LeftTop"});
+        placement->setCurrentText(tooltip->placement());
+        controls->addRow("Placement", placement);
+        auto* multiline = new QCheckBox(QString::fromUtf8("多行内容"), settings);
+        multiline->setObjectName("tooltipMultilineControl");
+        controls->addRow(multiline);
+        auto* arrow = new QCheckBox(QString::fromUtf8("显示箭头"), settings);
+        arrow->setObjectName("tooltipArrowControl");
+        arrow->setChecked(true);
+        controls->addRow(arrow);
+        const auto refresh = [=] {
+            const QString text = multiline->isChecked()
+                ? QString::fromUtf8("设备温度超过建议范围\n请检查工艺参数后再继续")
+                : content->text();
+            tooltip->setContent(text);
+            tooltip->setPlacement(placement->currentText());
+            tooltip->setShowArrow(arrow->isChecked());
+            tooltip->setFixedSize(tooltip->sizeHint());
+        };
+        QObject::connect(content, &QLineEdit::textChanged, tooltip, [=] { refresh(); });
+        QObject::connect(placement, &QComboBox::currentTextChanged, tooltip, [=] { refresh(); });
+        QObject::connect(multiline, &QCheckBox::toggled, tooltip, [=] { refresh(); });
+        QObject::connect(arrow, &QCheckBox::toggled, tooltip, [=] { refresh(); });
+        QObject::connect(variant, &QComboBox::currentTextChanged, tooltip,
+                         [=](const QString& tuple) {
+                             const QString captured = variantProperties(tuple).value("Placement");
+                             if (!captured.isEmpty())
+                                 placement->setCurrentText(captured);
+                         });
+        auto* note = new QLabel(QString::fromUtf8(
+            "Figma 当前组件集仅记录 Top / Bottom / Left / Right；12 方位与自动换行是本轮经确认的 SDK 扩展，待 Figma 额度恢复后回写组件集。"), settings);
+        note->setObjectName("tooltipContractExtensionNote");
+        note->setWordWrap(true);
+        controls->addRow(note);
+        refresh();
+    }
+    if (auto* calendar = qobject_cast<commonWidget::Z_CalendarWidget*>(preview);
+        calendar && componentSet.id == "423:859") {
+        controls->setRowWrapPolicy(QFormLayout::WrapAllRows);
+        content->hide();
+        if (auto* label = controls->labelForField(content)) label->hide();
+        auto* weekStart = new QComboBox(settings);
+        weekStart->setObjectName("calendarWeekStartControl");
+        weekStart->addItems({"Monday", "Sunday"});
+        controls->addRow("WeekStart", weekStart);
+        auto* grid = new QCheckBox(QString::fromUtf8("显示日期网格"), settings);
+        grid->setObjectName("calendarGridControl");
+        grid->setChecked(true);
+        controls->addRow("Grid", grid);
+        auto* state = new QComboBox(settings);
+        state->setObjectName("calendarStateControl");
+        state->addItems({"Default", "Disabled"});
+        controls->addRow("State", state);
+        auto* date = new QDateEdit(QDate(2026, 9, 23), settings);
+        date->setObjectName("calendarSelectedDateControl");
+        date->setCalendarPopup(true);
+        date->setDisplayFormat("yyyy-MM-dd");
+        controls->addRow(QString::fromUtf8("选中日期"), date);
+        auto* readout = new QLabel(settings);
+        readout->setObjectName("calendarNativeReadout");
+        readout->setWordWrap(true);
+        controls->addRow(readout);
+        auto* note = new QLabel(QString::fromUtf8(
+            "Figma 公共轴为 WeekStart × Grid × State，共 8 个变体；日期选择、翻月和键盘导航继续使用 QCalendarWidget 原生行为。"), settings);
+        note->setObjectName("calendarContractNote");
+        note->setWordWrap(true);
+        controls->addRow(note);
+        calendar->setFixedSize(calendar->sizeHint());
+        const auto sync = [=] {
+            const QSignalBlocker a(weekStart), b(grid), c(state), d(date);
+            weekStart->setCurrentText(calendar->weekStart());
+            grid->setChecked(calendar->grid());
+            state->setCurrentText(calendar->snapshotState());
+            date->setDate(calendar->selectedDate());
+            readout->setText(QString::fromUtf8("当前页：%1-%2\n选中：%3\n首日：%4 / 网格：%5")
+                .arg(calendar->yearShown()).arg(calendar->monthShown(), 2, 10, QLatin1Char('0'))
+                .arg(calendar->selectedDate().toString(Qt::ISODate), calendar->weekStart(),
+                     calendar->grid() ? QStringLiteral("true") : QStringLiteral("false")));
+        };
+        const auto apply = [=] {
+            calendar->setWeekStart(weekStart->currentText());
+            calendar->setGrid(grid->isChecked());
+            calendar->setSnapshotState(state->currentText());
+            calendar->setSelectedDate(date->date());
+            sync();
+        };
+        QObject::connect(weekStart, &QComboBox::currentTextChanged, calendar, [=] { apply(); });
+        QObject::connect(grid, &QCheckBox::toggled, calendar, [=] { apply(); });
+        QObject::connect(state, &QComboBox::currentTextChanged, calendar, [=] { apply(); });
+        QObject::connect(date, &QDateEdit::dateChanged, calendar, [=] { apply(); });
+        QObject::connect(calendar, &QCalendarWidget::selectionChanged, calendar, [=] { sync(); });
+        QObject::connect(calendar, &QCalendarWidget::currentPageChanged, calendar,
+                         [=] { sync(); });
+        QObject::connect(variant, &QComboBox::currentTextChanged, calendar,
+                         [=](const QString& tuple) {
+                             const auto axes = variantProperties(tuple);
+                             weekStart->setCurrentText(axes.value("WeekStart", "Monday"));
+                             grid->setChecked(axes.value("Grid") == "True");
+                             state->setCurrentText(axes.value("State", "Default"));
+                             apply();
+                         });
+        apply();
+    }
+    if (auto* nativeSplitter = qobject_cast<QSplitter*>(preview);
+        nativeSplitter && componentSet.id == "520:120") {
+        controls->setRowWrapPolicy(QFormLayout::WrapAllRows);
+        content->hide();
+        if (auto* label = controls->labelForField(content)) label->hide();
+        nativeSplitter->setObjectName("splitterInteractivePreview");
+        nativeSplitter->setChildrenCollapsible(true);
+        nativeSplitter->setHandleWidth(8);
+        nativeSplitter->setFixedSize(554, 196);
+        for (int index = 0; index < nativeSplitter->count(); ++index) {
+            auto* pane = qobject_cast<QLabel*>(nativeSplitter->widget(index));
+            if (!pane) continue;
+            pane->setObjectName(index ? "splitterContentPane" : "splitterNavigationPane");
+            pane->setAlignment(Qt::AlignCenter);
+            pane->setFrameShape(QFrame::StyledPanel);
+            pane->setMinimumSize(56, 56);
+            pane->setAutoFillBackground(true);
+        }
+        nativeSplitter->setSizes({180, 366});
+        auto* orientation = new QComboBox(settings);
+        orientation->setObjectName("splitterOrientationControl");
+        orientation->addItems({"Horizontal", "Vertical"});
+        controls->addRow("Orientation", orientation);
+        auto* collapse = new QPushButton(QString::fromUtf8("折叠导航区"), settings);
+        collapse->setObjectName("splitterCollapseControl");
+        controls->addRow(collapse);
+        auto* restore = new QPushButton(QString::fromUtf8("恢复两栏"), settings);
+        restore->setObjectName("splitterRestoreControl");
+        controls->addRow(restore);
+        auto* readout = new QLabel(settings);
+        readout->setObjectName("splitterNativeReadout");
+        readout->setWordWrap(true);
+        controls->addRow(QString::fromUtf8("交互结果"), readout);
+        auto* note = new QLabel(QString::fromUtf8(
+            "可直接拖动中间分隔条；Collapsed 是可恢复的尺寸状态，不删除任一 pane。Hover / Dragging 由真实鼠标交互产生。"), settings);
+        note->setObjectName("splitterInteractionNote");
+        note->setWordWrap(true);
+        controls->addRow(note);
+        const auto sync = [=](const QString& event = QString()) {
+            const auto sizes = nativeSplitter->sizes();
+            readout->setText(QString::fromUtf8("方向：%1\n尺寸：%2 / %3\n事件：%4")
+                .arg(nativeSplitter->orientation() == Qt::Horizontal ? "Horizontal" : "Vertical")
+                .arg(sizes.value(0)).arg(sizes.value(1))
+                .arg(event.isEmpty() ? QString::fromUtf8("等待拖动") : event));
+        };
+        QObject::connect(orientation, &QComboBox::currentTextChanged, nativeSplitter,
+                         [=](const QString& value) {
+                             nativeSplitter->setOrientation(value == "Vertical" ? Qt::Vertical
+                                                                                : Qt::Horizontal);
+                             nativeSplitter->setSizes({180, 366});
+                             sync(QStringLiteral("orientationChanged"));
+                         });
+        QObject::connect(collapse, &QPushButton::clicked, nativeSplitter, [=] {
+            nativeSplitter->setSizes({0, 1});
+            sync(QStringLiteral("collapsed"));
+        });
+        QObject::connect(restore, &QPushButton::clicked, nativeSplitter, [=] {
+            nativeSplitter->setSizes({180, 366});
+            sync(QStringLiteral("restored"));
+        });
+        QObject::connect(nativeSplitter, &QSplitter::splitterMoved, nativeSplitter,
+                         [=](int position, int index) {
+                             sync(QStringLiteral("splitterMoved(%1, %2)").arg(position).arg(index));
+                         });
+        QObject::connect(variant, &QComboBox::currentTextChanged, nativeSplitter,
+                         [=](const QString& tuple) {
+                             const auto axes = variantProperties(tuple);
+                             orientation->setCurrentText(axes.value("Orientation", "Horizontal"));
+                             nativeSplitter->setEnabled(axes.value("State") != "Disabled");
+                             nativeSplitter->setSizes(axes.value("State") == "Collapsed"
+                                 ? QList<int>{0, 1} : QList<int>{180, 366});
+                             sync(QStringLiteral("Figma %1").arg(axes.value("State")));
+                         });
+        sync();
     }
     if(auto* dock=qobject_cast<QDockWidget*>(preview);dock&&componentSet.id=="507:443")
         configureDockWidgetEditor(dock,controls,content,hostLayout,settings,variant);
@@ -1446,6 +1684,13 @@ void applyVariant(QWidget* widget, const DesignComponentSet& componentSet,
                         date->property("figmaDateSpecText").toString():QString());
             }
         }
+    if(componentSet.id=="423:859")
+        if(auto* calendar=qobject_cast<commonWidget::Z_CalendarWidget*>(widget)) {
+            calendar->setWeekStart(properties.value("WeekStart"));
+            calendar->setGrid(properties.value("Grid") == QStringLiteral("True"));
+            calendar->setSnapshotState(properties.value("State"));
+            calendar->setFixedSize(calendar->sizeHint());
+        }
     if((componentSet.id=="458:155" || componentSet.id=="460:175"))
         if(auto* spin=qobject_cast<QAbstractSpinBox*>(widget)) {
             spin->setReadOnly(state=="readonly");
@@ -1789,10 +2034,19 @@ QWidget* createVariantCell(const DesignComponentSet& componentSet, const QString
     auto* preview = factory->create(descriptor.sdkClass, host);
     configurePreview(preview, descriptor.qtClass, descriptor.sdkClass);
     preview->setObjectName("variantPreview_" + QString(componentSet.id).replace(':', '_'));
-    preview->setMinimumWidth(100);
-    preview->setMaximumWidth(240);
-    preview->setMaximumHeight(96);
+    const bool selectField = isSelectFieldSet(componentSet);
+    const bool intrinsicControl = qobject_cast<commonWidget::Z_Switch*>(preview) ||
+                                  qobject_cast<commonWidget::Z_SegmentedControl*>(preview);
+    if (!intrinsicControl) {
+        preview->setMinimumWidth(selectField ? 240 : 100);
+        preview->setMaximumWidth(240);
+        preview->setMaximumHeight(96);
+    }
     applyVariant(preview, componentSet, variant);
+    if (selectField)
+        preview->setFixedSize(240, preview->sizeHint().height());
+    else if (intrinsicControl)
+        preview->setFixedSize(preview->sizeHint());
     layout->addWidget(preview, 0, Qt::AlignCenter);
     return host;
 }
@@ -1852,8 +2106,10 @@ QTableWidget* createVariantMatrix(
     table->setColumnCount(columnValues.size());
     table->setHorizontalHeaderLabels(columnValues);
     table->setVerticalHeaderLabels(rows);
+    const bool selectField = isSelectFieldSet(componentSet);
+    const bool segmented = componentSet.name == QStringLiteral("ComponentLab/SegmentedControl");
     for (int row = 0; row < rows.size(); ++row) {
-        table->setRowHeight(row, 92);
+        table->setRowHeight(row, selectField ? 72 : segmented ? 80 : 92);
         for (int column = 0; column < columnValues.size(); ++column) {
             const QString variant = variants.value(rows[row]).value(columnValues[column]);
             if (variant.isEmpty()) {
@@ -1867,8 +2123,15 @@ QTableWidget* createVariantMatrix(
             }
         }
     }
-    table->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
-    table->verticalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+    if (selectField || segmented) {
+        table->horizontalHeader()->setSectionResizeMode(QHeaderView::Fixed);
+        table->horizontalHeader()->setDefaultSectionSize(selectField ? 272 : 464);
+        table->verticalHeader()->setSectionResizeMode(QHeaderView::Fixed);
+        table->verticalHeader()->setDefaultSectionSize(selectField ? 72 : 80);
+    } else {
+        table->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+        table->verticalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+    }
     return table;
 }
 
@@ -2191,6 +2454,11 @@ QWidget* createFigmaPage(const DesignComponentPage& figmaPage,
         appearanceLayout->addWidget(createImageAssetGallery(profile, true, appearance));
     } else if (figmaPage.id == QStringLiteral("2127:5")) {
         appearanceLayout->addWidget(createModelAssetGallery(profile, true, appearance));
+    } else if (figmaPage.id == QStringLiteral("392:2")) {
+        // Sidebar's first Figma set is internal NavItem anatomy. Route the
+        // appearance tab to the public SDK component instead of a blank
+        // contract-only editor; the variant gallery still shows both sets.
+        appearanceLayout->addWidget(createNavigationAppearance(figmaPage.id, appearance));
     } else if (hasNavigationGallery(figmaPage.id)) {
         appearanceLayout->addWidget(createNavigationAppearance(figmaPage.id, appearance));
     } else if (existingSections && existingSections->count()) {

@@ -430,6 +430,45 @@ class FigmaCatalogContractTests(unittest.TestCase):
         self.assertEqual(30, len(checkbox[7]))
         self.assertEqual(4, len(gallery[7][2][7]))
 
+    def test_live_token_binding_audit_updates_only_evidenced_nodes(self):
+        entries = {item["canonicalId"]: item for item in self.catalog["entries"]}
+        verified = {
+            "ComponentLab/Menu": 25,
+            "ComponentLab/ToolBar": 19,
+            "ComponentLab/DockWidget": 17,
+            "ComponentLab/MdiSubWindow": 15,
+            "ComponentLab/StackedWidget": 19,
+            "ComponentLab/Wizard": 29,
+            "ComponentLab/MetricCard": 19,
+            "ComponentLab/ImagePanel": 26,
+            "ComponentLab/GraphicsView": 21,
+            "ComponentLab/Calendar": 27,
+        }
+        overrides = self.traceability["downstreamEvidenceOverrides"]
+        for canonical_id, reference_count in verified.items():
+            self.assertEqual("BOUND_VERIFIED", entries[canonical_id]["verificationStatus"]["tokenBinding"])
+            self.assertEqual(reference_count, overrides[canonical_id]["tokenBindingRefs"])
+        statuses = [item["verificationStatus"]["tokenBinding"] for item in self.catalog["entries"]]
+        self.assertEqual(59, statuses.count("BOUND_VERIFIED"))
+        self.assertEqual(51, statuses.count("UNRESOLVED"))
+
+    def test_parserless_code_connect_templates_cover_b24_components(self):
+        component_dir = ROOT / "runtime/component"
+        expected = {
+            "LineEditAppearance.figma.ts": ("1116-18", "configureFigmaLineEdit"),
+            "SliderAppearance.figma.ts": ("467-195", "configureFigmaSlider"),
+            "ScrollBarAppearance.figma.ts": ("471-477", "configureFigmaScrollBar"),
+            "DateTimeAppearance.figma.ts": ("465-189", "configureFigmaTimePicker"),
+        }
+        self.assertFalse(list(component_dir.glob("*.figma.tsx")))
+        for filename, (node_id, api) in expected.items():
+            source = (component_dir / filename).read_text(encoding="utf-8")
+            self.assertIn(f"node-id={node_id}", source)
+            self.assertIn("export default", source)
+            self.assertIn("figma.code`", source)
+            self.assertNotIn("figma.connect", source)
+            self.assertIn(api, source)
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -16,7 +16,7 @@ GENERATED_STYLE_DIR = ROOT / "design-assets/generated/native"
 SOURCE_MAP = ROOT / "component-definitions/generated-component-source-map.json"
 BUTTON_MANIFEST = ROOT / "design-assets/generated/button/manifest.json"
 RUNTIME_TOKENS = ROOT / "design-assets/DesignSystem/generated/runtime/tokens_qt.json"
-CAPTURED_STYLE_CLASSES = {"QDateTimeEdit", "QDateEdit", "QTimeEdit", "QSlider", "QScrollBar", "QDial", "QLineEdit", "QKeySequenceEdit", "QComboBox", "QFontComboBox", "QCommandLinkButton", "QToolButton", "QDialogButtonBox", "QTabWidget", "QToolBox", "QDockWidget", "QMdiArea", "QMdiSubWindow"}
+CAPTURED_STYLE_CLASSES = {"QDateTimeEdit", "QDateEdit", "QTimeEdit", "QSlider", "QScrollBar", "QDial", "QLineEdit", "QKeySequenceEdit", "QComboBox", "QFontComboBox", "QCommandLinkButton", "QToolButton", "QDialogButtonBox", "QTabWidget", "QToolBox", "QDockWidget", "QMdiArea", "QMdiSubWindow", "QCalendarWidget"}
 
 
 def load_inputs():
@@ -48,6 +48,78 @@ def load_inputs():
 
 
 def header_text(item):
+    if item["qtClass"] == "QCalendarWidget":
+        return '''#pragma once
+
+#include <QCalendarWidget>
+
+namespace commonWidget {
+
+// Token-backed Calendar identity. WeekStart, Grid and State mirror the
+// public Figma component-set axes while date selection remains native Qt API.
+class Z_CalendarWidget : public QCalendarWidget {
+    Q_OBJECT
+    Q_PROPERTY(QString weekStart READ weekStart WRITE setWeekStart NOTIFY weekStartChanged)
+    Q_PROPERTY(bool grid READ grid WRITE setGrid NOTIFY gridChanged)
+    Q_PROPERTY(QString snapshotState READ snapshotState WRITE setSnapshotState NOTIFY snapshotStateChanged)
+  public:
+    explicit Z_CalendarWidget(QWidget* parent = nullptr);
+    QString weekStart() const { return weekStartValue; }
+    bool grid() const { return gridValue; }
+    QString snapshotState() const { return snapshotStateValue; }
+    void setWeekStart(const QString& value);
+    void setGrid(bool value);
+    void setSnapshotState(const QString& value);
+    QSize sizeHint() const override;
+  signals:
+    void weekStartChanged(const QString& value);
+    void gridChanged(bool value);
+    void snapshotStateChanged(const QString& value);
+  private:
+    void refreshContract();
+    QString weekStartValue = QStringLiteral("Monday");
+    bool gridValue = true;
+    QString snapshotStateValue = QStringLiteral("Default");
+};
+
+} // namespace commonWidget
+'''
+    if item["qtClass"] == "QScrollArea":
+        return '''#pragma once
+
+#include <QScrollArea>
+
+namespace commonWidget {
+
+// Token-backed ScrollArea identity. Bars and resize behavior are explicit
+// Figma axes; content ownership and scrolling remain native QScrollArea APIs.
+class Z_ScrollArea : public QScrollArea {
+    Q_OBJECT
+    Q_PROPERTY(QString bars READ bars WRITE setBars NOTIFY barsChanged)
+    Q_PROPERTY(QString resizeMode READ resizeMode WRITE setResizeMode NOTIFY resizeModeChanged)
+    Q_PROPERTY(QString snapshotState READ snapshotState WRITE setSnapshotState NOTIFY snapshotStateChanged)
+  public:
+    explicit Z_ScrollArea(QWidget* parent = nullptr);
+    QString bars() const { return barsValue; }
+    QString resizeMode() const { return resizeModeValue; }
+    QString snapshotState() const { return snapshotStateValue; }
+    void setBars(const QString& value);
+    void setResizeMode(const QString& value);
+    void setSnapshotState(const QString& value);
+    QSize sizeHint() const override;
+  signals:
+    void barsChanged(const QString& value);
+    void resizeModeChanged(const QString& value);
+    void snapshotStateChanged(const QString& value);
+  private:
+    void refreshContract();
+    QString barsValue = QStringLiteral("None");
+    QString resizeModeValue = QStringLiteral("Fixed");
+    QString snapshotStateValue = QStringLiteral("Default");
+};
+
+} // namespace commonWidget
+'''
     return f'''#pragma once
 
 #include <{item["qtClass"]}>
@@ -68,6 +140,226 @@ class {item["sdkClass"]} : public {item["qtClass"]} {{
 def source_text(item):
     style_owner = ('    setProperty("designSystemStyleOwner", "tokens");\n'
                    if item["qtClass"] in CAPTURED_STYLE_CLASSES else "")
+    if item["qtClass"] == "QCalendarWidget":
+        return '''#include "Z_CalendarWidget.h"
+#include "FocusIndicator.h"
+#include <QAbstractItemView>
+#include <QDate>
+#include <QIcon>
+#include <QStyle>
+#include <QTextCharFormat>
+#include <QToolButton>
+#include <QVariant>
+#include <stdexcept>
+
+namespace commonWidget {
+
+Z_CalendarWidget::Z_CalendarWidget(QWidget* parent) : QCalendarWidget(parent) {
+    setProperty("designSystemNative", true);
+    setProperty("designSystemClass", "commonWidget::Z_CalendarWidget");
+    setProperty("nativeQtClass", "QCalendarWidget");
+    setProperty("designSystemStyleOwner", "tokens");
+    setAccessibleName(QStringLiteral("Calendar"));
+    setNavigationBarVisible(true);
+    setVerticalHeaderFormat(QCalendarWidget::NoVerticalHeader);
+    setHorizontalHeaderFormat(QCalendarWidget::ShortDayNames);
+    setDateEditEnabled(false);
+    setSelectedDate(QDate(2026, 9, 23));
+    setCurrentPage(2026, 9);
+    if (auto* previous = findChild<QToolButton*>(QStringLiteral("qt_calendar_prevmonth")))
+        previous->setIcon(QIcon(QStringLiteral(":/figma/composite/chevron-left.svg")));
+    if (auto* next = findChild<QToolButton*>(QStringLiteral("qt_calendar_nextmonth")))
+        next->setIcon(QIcon(QStringLiteral(":/figma/composite/chevron-right.svg")));
+    const auto updateNavigationText = [this] {
+        if (auto* month = findChild<QToolButton*>(QStringLiteral("qt_calendar_monthbutton")))
+            month->setText(QStringLiteral("%1 年 %2 月").arg(yearShown()).arg(monthShown()));
+        if (auto* year = findChild<QToolButton*>(QStringLiteral("qt_calendar_yearbutton")))
+            year->hide();
+    };
+    connect(this, &QCalendarWidget::currentPageChanged, this,
+            [updateNavigationText](int, int) { updateNavigationText(); });
+    if (auto* navigation = findChild<QWidget*>(QStringLiteral("qt_calendar_navigationbar")))
+        navigation->setAttribute(Qt::WA_StyledBackground, true);
+    updateNavigationText();
+    FocusIndicator::instance().watch(this);
+    refreshContract();
+}
+
+void Z_CalendarWidget::setWeekStart(const QString& value) {
+    if (value != QStringLiteral("Monday") && value != QStringLiteral("Sunday"))
+        throw std::invalid_argument("Calendar.weekStart must be Monday or Sunday");
+    if (weekStartValue == value) return;
+    weekStartValue = value;
+    refreshContract();
+    emit weekStartChanged(value);
+}
+
+void Z_CalendarWidget::setGrid(bool value) {
+    if (gridValue == value) return;
+    gridValue = value;
+    refreshContract();
+    emit gridChanged(value);
+}
+
+void Z_CalendarWidget::setSnapshotState(const QString& value) {
+    if (value != QStringLiteral("Default") && value != QStringLiteral("Disabled"))
+        throw std::invalid_argument("Calendar.snapshotState must be Default or Disabled");
+    if (snapshotStateValue == value) return;
+    snapshotStateValue = value;
+    refreshContract();
+    emit snapshotStateChanged(value);
+}
+
+QSize Z_CalendarWidget::sizeHint() const { return {440, 360}; }
+
+void Z_CalendarWidget::refreshContract() {
+    setFirstDayOfWeek(weekStartValue == QStringLiteral("Monday") ? Qt::Monday : Qt::Sunday);
+    setGridVisible(gridValue);
+    setEnabled(snapshotStateValue != QStringLiteral("Disabled"));
+    setProperty("figmaWeekStart", weekStartValue);
+    setProperty("figmaGrid", gridValue ? QStringLiteral("True") : QStringLiteral("False"));
+    setProperty("figmaSnapshotState", snapshotStateValue);
+    QTextCharFormat weekday;
+    weekday.setForeground(isEnabled() ? palette().color(QPalette::Text)
+                                      : palette().color(QPalette::Disabled, QPalette::Text));
+    for (const auto day : {Qt::Monday, Qt::Tuesday, Qt::Wednesday, Qt::Thursday,
+                           Qt::Friday, Qt::Saturday, Qt::Sunday})
+        setWeekdayTextFormat(day, weekday);
+
+    // QCalendarWidget owns private child widgets whose native palette can win
+    // over an ancestor dynamic-property selector. Keep the generated QSS as
+    // the Token source, then bridge those two private surfaces with semantic
+    // palette roles so the Figma header and disabled selection remain stable
+    // across Qt platform styles.
+    if (auto* navigation = findChild<QWidget*>(QStringLiteral("qt_calendar_navigationbar"))) {
+        QPalette navigationPalette = navigation->palette();
+        const QColor header = palette().color(QPalette::Active, QPalette::AlternateBase);
+        navigationPalette.setColor(QPalette::Window, header);
+        navigationPalette.setColor(QPalette::Button, header);
+        navigation->setPalette(navigationPalette);
+        navigation->setAutoFillBackground(true);
+        navigation->setStyleSheet(QStringLiteral("background-color: %1;").arg(header.name(QColor::HexArgb)));
+    }
+    if (auto* view = findChild<QAbstractItemView*>(QStringLiteral("qt_calendar_calendarview"))) {
+        QPalette viewPalette = view->palette();
+        const bool disabled = snapshotStateValue == QStringLiteral("Disabled");
+        const QColor foreground = palette().color(disabled ? QPalette::Disabled : QPalette::Active,
+                                                   QPalette::Text);
+        const QColor surface = palette().color(QPalette::Active,
+                                                disabled ? QPalette::AlternateBase : QPalette::Base);
+        const QColor highlight = disabled
+                                     ? palette().color(QPalette::Disabled, QPalette::Button)
+                                     : palette().color(QPalette::Active, QPalette::Highlight);
+        const QColor highlightedText = palette().color(disabled ? QPalette::Disabled : QPalette::Active,
+                                                        disabled ? QPalette::Text : QPalette::HighlightedText);
+        if (snapshotStateValue == QStringLiteral("Disabled")) {
+            viewPalette.setColor(QPalette::Disabled, QPalette::Base, surface);
+            viewPalette.setColor(QPalette::Disabled, QPalette::Text, foreground);
+            viewPalette.setColor(QPalette::Disabled, QPalette::WindowText, foreground);
+            viewPalette.setColor(QPalette::Disabled, QPalette::Highlight,
+                                 highlight);
+            viewPalette.setColor(QPalette::Disabled, QPalette::HighlightedText,
+                                 highlightedText);
+        } else {
+            viewPalette.setColor(QPalette::Active, QPalette::Base, surface);
+            viewPalette.setColor(QPalette::Active, QPalette::Text, foreground);
+            viewPalette.setColor(QPalette::Active, QPalette::Highlight,
+                                 highlight);
+            viewPalette.setColor(QPalette::Active, QPalette::HighlightedText,
+                                 highlightedText);
+        }
+        view->setPalette(viewPalette);
+        view->setStyleSheet(QStringLiteral(
+            "QAbstractItemView { color: %1; background-color: %2; "
+            "selection-background-color: %3; selection-color: %4; }")
+                .arg(foreground.name(QColor::HexArgb), surface.name(QColor::HexArgb),
+                     highlight.name(QColor::HexArgb), highlightedText.name(QColor::HexArgb)));
+    }
+    style()->unpolish(this);
+    style()->polish(this);
+    if (auto* navigation = findChild<QWidget*>(QStringLiteral("qt_calendar_navigationbar"))) {
+        navigation->style()->unpolish(navigation);
+        navigation->style()->polish(navigation);
+        navigation->update();
+    }
+    updateGeometry();
+    update();
+}
+
+} // namespace commonWidget
+'''
+    if item["qtClass"] == "QScrollArea":
+        return '''#include "Z_ScrollArea.h"
+#include "FocusIndicator.h"
+#include <QScrollBar>
+#include <QStyle>
+#include <QVariant>
+#include <stdexcept>
+
+namespace commonWidget {
+
+Z_ScrollArea::Z_ScrollArea(QWidget* parent) : QScrollArea(parent) {
+    setProperty("designSystemNative", true);
+    setProperty("designSystemClass", "commonWidget::Z_ScrollArea");
+    setProperty("nativeQtClass", "QScrollArea");
+    setAccessibleName(QStringLiteral("Scrollable content"));
+    FocusIndicator::instance().watch(this);
+    refreshContract();
+}
+
+void Z_ScrollArea::setBars(const QString& value) {
+    if (!QStringList{"None", "Vertical", "Horizontal", "Both"}.contains(value))
+        throw std::invalid_argument("ScrollArea.bars must match the Figma axis");
+    if (barsValue == value) return;
+    barsValue = value;
+    refreshContract();
+    emit barsChanged(value);
+}
+
+void Z_ScrollArea::setResizeMode(const QString& value) {
+    if (!QStringList{"Fixed", "Resizable"}.contains(value))
+        throw std::invalid_argument("ScrollArea.resizeMode must match the Figma axis");
+    if (resizeModeValue == value) return;
+    resizeModeValue = value;
+    refreshContract();
+    emit resizeModeChanged(value);
+}
+
+void Z_ScrollArea::setSnapshotState(const QString& value) {
+    if (!QStringList{"Default", "Focus", "Disabled"}.contains(value))
+        throw std::invalid_argument("ScrollArea.snapshotState must match the Figma axis");
+    if (snapshotStateValue == value) return;
+    snapshotStateValue = value;
+    refreshContract();
+    emit snapshotStateChanged(value);
+}
+
+QSize Z_ScrollArea::sizeHint() const { return {372, 210}; }
+
+void Z_ScrollArea::refreshContract() {
+    const bool vertical = barsValue == QStringLiteral("Vertical") ||
+                          barsValue == QStringLiteral("Both");
+    const bool horizontal = barsValue == QStringLiteral("Horizontal") ||
+                            barsValue == QStringLiteral("Both");
+    setVerticalScrollBarPolicy(vertical ? Qt::ScrollBarAlwaysOn : Qt::ScrollBarAlwaysOff);
+    setHorizontalScrollBarPolicy(horizontal ? Qt::ScrollBarAlwaysOn : Qt::ScrollBarAlwaysOff);
+    setWidgetResizable(resizeModeValue == QStringLiteral("Resizable"));
+    setEnabled(snapshotStateValue != QStringLiteral("Disabled"));
+    setProperty("figmaSnapshotState", snapshotStateValue);
+    for (auto* bar : {verticalScrollBar(), horizontalScrollBar()}) {
+        bar->setProperty("designSystemNative", true);
+        bar->setProperty("designSystemClass", "commonWidget::Z_ScrollBar");
+        bar->setProperty("designSystemStyleOwner", "tokens");
+    }
+    style()->unpolish(this);
+    style()->polish(this);
+    viewport()->setAutoFillBackground(true);
+    updateGeometry();
+    update();
+}
+
+} // namespace commonWidget
+'''
     return f'''#include "{item["sdkClass"]}.h"
 #include "FocusIndicator.h"
 #include <QVariant>
@@ -188,6 +480,69 @@ def qss_template(item):
 '''
     elif item["qtClass"] == "QLabel":
         common += f'{selector} {{ background: transparent; border: none; }}\n'
+    elif item["qtClass"] == "QCalendarWidget":
+        common += f'''{selector} {{
+    border: 1px solid @BORDER@;
+    border-radius: @RADIUS@px;
+}}
+{selector} QWidget#qt_calendar_navigationbar {{
+    background-color: @NEUTRAL_HOVER@;
+    border: 0;
+    border-radius: @RADIUS@px;
+    min-height: 42px;
+}}
+{selector} QToolButton {{
+    color: @FOREGROUND@;
+    background: transparent;
+    border: 0;
+    border-radius: @RADIUS@px;
+    min-width: 28px;
+    min-height: 28px;
+    font-weight: 600;
+}}
+{selector} QToolButton:hover {{ background-color: @SURFACE@; }}
+{selector} QSpinBox {{
+    color: @FOREGROUND@;
+    background: transparent;
+    border: 0;
+    selection-background-color: @PRIMARY@;
+}}
+{selector} QAbstractItemView {{
+    color: @FOREGROUND@;
+    background-color: @SURFACE@;
+    border: 0;
+    outline: 0;
+    selection-background-color: @PRIMARY@;
+    selection-color: @ON_BRAND@;
+}}
+{selector} QAbstractItemView::item:selected {{
+    background-color: @PRIMARY@;
+    color: @ON_BRAND@;
+    border-radius: @RADIUS@px;
+}}
+{selector} QAbstractItemView:disabled {{
+    color: @DISABLED_TEXT@;
+    background-color: @DISABLED@;
+    selection-background-color: @DISABLED_BORDER@;
+    selection-color: @DISABLED_TEXT@;
+}}
+{selector} QAbstractItemView:disabled::item:selected {{
+    background-color: @DISABLED_BORDER@;
+    color: @DISABLED_TEXT@;
+}}
+{selector}[figmaSnapshotState="Disabled"] QWidget#qt_calendar_navigationbar {{
+    background-color: @DISABLED@;
+}}
+'''
+    elif item["qtClass"] == "QScrollArea":
+        common += f'''{selector} {{
+    border: 1px solid @BORDER@;
+    border-radius: @RADIUS@px;
+}}
+{selector}[figmaSnapshotState="Focus"],
+{selector}:focus[focusIndicatorVisible="true"] {{ border: 2px solid @FOCUS@; }}
+{selector} QWidget#qt_scrollarea_viewport {{ background-color: @SURFACE@; }}
+'''
     elif item["category"] in {"data", "display", "container"}:
         common += f'''{selector} {{
     border: 1px solid @BORDER@;
@@ -205,6 +560,8 @@ def render_qss(template, profile):
         "SURFACE": palette["surface"],
         "PRIMARY": palette["primary"],
         "PRIMARY_SOFT": palette["primarySoft"],
+        "NEUTRAL_HOVER": palette["neutralHover"],
+        "ON_BRAND": palette["onBrand"],
         "BORDER": palette["border"],
         "DISABLED": palette["disabled"],
         "DISABLED_TEXT": palette["disabledText"],

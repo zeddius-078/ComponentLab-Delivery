@@ -124,9 +124,10 @@ commonWidget::Z_CalendarWidget* calendarSpecimen(
     if (!calendar)
         throw std::runtime_error("Z_CalendarWidget unavailable");
     calendar->setGeometry(rect);
-    calendar->setFirstDayOfWeek(monday ? Qt::Monday : Qt::Sunday);
-    calendar->setGridVisible(grid);
-    calendar->setEnabled(!disabled);
+    calendar->setWeekStart(monday ? QStringLiteral("Monday") : QStringLiteral("Sunday"));
+    calendar->setGrid(grid);
+    calendar->setSnapshotState(disabled ? QStringLiteral("Disabled")
+                                        : QStringLiteral("Default"));
     passive(calendar, QStringLiteral("WeekStart=%1, Grid=%2, State=%3")
                           .arg(monday ? QStringLiteral("Monday") : QStringLiteral("Sunday"),
                                grid ? QStringLiteral("True") : QStringLiteral("False"),
