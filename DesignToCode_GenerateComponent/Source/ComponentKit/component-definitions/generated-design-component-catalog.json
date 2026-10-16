@@ -1204,7 +1204,13 @@
         "ComponentLab/Source/delivery/demo/MdiGallery.cpp",
         "ComponentLab/Source/delivery/tests/CompositionTests.cpp",
         "DesignToCode_GenerateLayout/Source/HtmlDsl/pipeline/mapping/component-mapping.json",
-        "DesignToCode_GenerateLayout/Source/Validation/component/ComponentTests.cpp"
+        "DesignToCode_GenerateLayout/Source/Validation/component/ComponentTests.cpp",
+        "Source/ComponentKit/runtime/component/MdiAppearance.h",
+        "Source/ComponentKit/runtime/component/MdiAppearance.cpp",
+        "Source/ComponentKit/runtime/component/native/Z_MdiArea.h",
+        "Source/ComponentKit/runtime/component/native/Z_MdiArea.cpp",
+        "ComponentLab/Source/delivery/demo/MdiGallery.cpp",
+        "ComponentLab/Source/delivery/tests/CompositionTests.cpp"
       ],
       "designOriginAction": "REUSE",
       "identityMigration": "NONE",
@@ -1216,7 +1222,7 @@
         "runtime": "VERIFIED",
         "runtimeScope": "SDK_FACTORY_COMPONENTLAB_GENERATELAYOUT",
         "factoryRegistration": "VERIFIED",
-        "visual": "NOT_VERIFIED",
+        "visual": "VERIFIED",
         "downstreamConsumption": "VERIFIED",
         "tokenBinding": "BOUND_VERIFIED"
       },
@@ -1233,6 +1239,33 @@
           "TabbedView initial mode"
         ],
         "controllerBoundary": "Free, Cascade and Tile are deterministic authored geometry previews, not Qt viewMode values or arrangement commands. Tabbed maps to QMdiArea::TabbedView; subsequent arrangement, activation, lifecycle, close veto, persistence and ownership remain runtime-owned."
+      },
+      "visualEvidence": {
+        "status": "VERIFIED",
+        "figmaNodeId": "511:280",
+        "figmaScreenshotSha256": "EA982BFD707537C92B90851B93B961A8E108FEC087E8399D104022A7C0FF767C",
+        "profiles": [
+          "light-comfortable",
+          "light-compact",
+          "dark-comfortable",
+          "dark-compact"
+        ],
+        "runtimeGallerySha256": {
+          "light-comfortable": "6528DCE4A590A29E6AEAA7A5B636B22E2BC0EE252DA91AD18E5D53F06D4D3F07",
+          "light-compact": "6528DCE4A590A29E6AEAA7A5B636B22E2BC0EE252DA91AD18E5D53F06D4D3F07",
+          "dark-comfortable": "E97406C3A84087A6C39330125ED87B3EFEBF1EB58197CC1FF65F14972F3EEF6B",
+          "dark-compact": "E97406C3A84087A6C39330125ED87B3EFEBF1EB58197CC1FF65F14972F3EEF6B"
+        },
+        "scope": "Four Presentation=Free|Cascade|Tile|Tabbed variants; authored workspace frame, active and inactive managed subwindows, cascade and tile geometry, TabbedView tab bar, active document content and activation-order label.",
+        "limitations": "Free, Cascade and Tile are authored review geometries while Tabbed maps to QMdiArea::TabbedView. Document creation, activation order, arrangement commands, persistence and lifecycle remain host-owned; Card and Tabs remain construction references rather than MDI equivalents. Formal designer and governance approval remain open.",
+        "runtimeEvidence": [
+          "Source/ComponentKit/runtime/component/MdiAppearance.h",
+          "Source/ComponentKit/runtime/component/MdiAppearance.cpp",
+          "Source/ComponentKit/runtime/component/native/Z_MdiArea.h",
+          "Source/ComponentKit/runtime/component/native/Z_MdiArea.cpp",
+          "ComponentLab/Source/delivery/demo/MdiGallery.cpp",
+          "ComponentLab/Source/delivery/tests/CompositionTests.cpp"
+        ]
       }
     },
     {
@@ -1269,7 +1302,13 @@
         "ComponentLab/Source/delivery/demo/MdiGallery.cpp",
         "ComponentLab/Source/delivery/tests/CompositionTests.cpp",
         "DesignToCode_GenerateLayout/Source/HtmlDsl/pipeline/mapping/component-mapping.json",
-        "DesignToCode_GenerateLayout/Source/Validation/component/ComponentTests.cpp"
+        "DesignToCode_GenerateLayout/Source/Validation/component/ComponentTests.cpp",
+        "Source/ComponentKit/runtime/component/MdiAppearance.h",
+        "Source/ComponentKit/runtime/component/MdiAppearance.cpp",
+        "Source/ComponentKit/runtime/component/native/Z_MdiSubWindow.h",
+        "Source/ComponentKit/runtime/component/native/Z_MdiSubWindow.cpp",
+        "ComponentLab/Source/delivery/demo/MdiGallery.cpp",
+        "ComponentLab/Source/delivery/tests/CompositionTests.cpp"
       ],
       "designOriginAction": "REUSE",
       "identityMigration": "NONE",
@@ -1281,7 +1320,7 @@
         "runtime": "VERIFIED",
         "runtimeScope": "SDK_FACTORY_COMPONENTLAB_GENERATELAYOUT",
         "factoryRegistration": "VERIFIED",
-        "visual": "NOT_VERIFIED",
+        "visual": "VERIFIED",
         "downstreamConsumption": "VERIFIED",
         "tokenBinding": "BOUND_VERIFIED"
       },
@@ -1300,6 +1339,33 @@
           "maximize glyph visibility"
         ],
         "controllerBoundary": "State is deterministic paint metadata. Activation, QWidget window states, enabled, WindowFlags, close veto, system menu, move/resize and ownership remain native runtime authority and are never inferred as one mutually exclusive property."
+      },
+      "visualEvidence": {
+        "status": "VERIFIED",
+        "figmaNodeId": "511:124",
+        "figmaScreenshotSha256": "3ED07F120A2EAD7F4E88F4EB5A7FCBB6E696CCBE9F44FE02E116C413817FC55E",
+        "profiles": [
+          "light-comfortable",
+          "light-compact",
+          "dark-comfortable",
+          "dark-compact"
+        ],
+        "runtimeGallerySha256": {
+          "light-comfortable": "6528DCE4A590A29E6AEAA7A5B636B22E2BC0EE252DA91AD18E5D53F06D4D3F07",
+          "light-compact": "6528DCE4A590A29E6AEAA7A5B636B22E2BC0EE252DA91AD18E5D53F06D4D3F07",
+          "dark-comfortable": "E97406C3A84087A6C39330125ED87B3EFEBF1EB58197CC1FF65F14972F3EEF6B",
+          "dark-compact": "E97406C3A84087A6C39330125ED87B3EFEBF1EB58197CC1FF65F14972F3EEF6B"
+        },
+        "scope": "Six State=Inactive|Active|Maximized|Minimized|Shaded|Disabled variants; authored 280 by 170 or 280 by 72 geometry, title bar, document icon, native window controls, active outline, disabled presentation and document-content slot.",
+        "limitations": "State is deterministic paint metadata rather than a direct QMdiSubWindow state enum. Activation, native window-state transitions, WindowFlags, move and resize, system menu and close-event veto remain Qt or host-controller responsibilities. Formal designer and governance approval remain open.",
+        "runtimeEvidence": [
+          "Source/ComponentKit/runtime/component/MdiAppearance.h",
+          "Source/ComponentKit/runtime/component/MdiAppearance.cpp",
+          "Source/ComponentKit/runtime/component/native/Z_MdiSubWindow.h",
+          "Source/ComponentKit/runtime/component/native/Z_MdiSubWindow.cpp",
+          "ComponentLab/Source/delivery/demo/MdiGallery.cpp",
+          "ComponentLab/Source/delivery/tests/CompositionTests.cpp"
+        ]
       }
     },
     {
@@ -8086,7 +8152,13 @@
         "ComponentLab/Source/delivery/demo/MdiGallery.cpp",
         "ComponentLab/Source/delivery/tests/CompositionTests.cpp",
         "DesignToCode_GenerateLayout/Source/HtmlDsl/pipeline/mapping/component-mapping.json",
-        "DesignToCode_GenerateLayout/Source/Validation/component/ComponentTests.cpp"
+        "DesignToCode_GenerateLayout/Source/Validation/component/ComponentTests.cpp",
+        "Source/ComponentKit/runtime/component/MdiAppearance.h",
+        "Source/ComponentKit/runtime/component/MdiAppearance.cpp",
+        "Source/ComponentKit/runtime/component/native/Z_MdiArea.h",
+        "Source/ComponentKit/runtime/component/native/Z_MdiArea.cpp",
+        "ComponentLab/Source/delivery/demo/MdiGallery.cpp",
+        "ComponentLab/Source/delivery/tests/CompositionTests.cpp"
       ],
       "designOriginAction": "REUSE",
       "identityMigration": "NONE",
@@ -8098,7 +8170,7 @@
         "runtime": "VERIFIED",
         "runtimeScope": "SDK_FACTORY_COMPONENTLAB_GENERATELAYOUT",
         "factoryRegistration": "VERIFIED",
-        "visual": "NOT_VERIFIED",
+        "visual": "VERIFIED",
         "downstreamConsumption": "VERIFIED",
         "tokenBinding": "BOUND_VERIFIED"
       },
@@ -8115,6 +8187,33 @@
           "TabbedView initial mode"
         ],
         "controllerBoundary": "Free, Cascade and Tile are deterministic authored geometry previews, not Qt viewMode values or arrangement commands. Tabbed maps to QMdiArea::TabbedView; subsequent arrangement, activation, lifecycle, close veto, persistence and ownership remain runtime-owned."
+      },
+      "visualEvidence": {
+        "status": "VERIFIED",
+        "figmaNodeId": "511:280",
+        "figmaScreenshotSha256": "EA982BFD707537C92B90851B93B961A8E108FEC087E8399D104022A7C0FF767C",
+        "profiles": [
+          "light-comfortable",
+          "light-compact",
+          "dark-comfortable",
+          "dark-compact"
+        ],
+        "runtimeGallerySha256": {
+          "light-comfortable": "6528DCE4A590A29E6AEAA7A5B636B22E2BC0EE252DA91AD18E5D53F06D4D3F07",
+          "light-compact": "6528DCE4A590A29E6AEAA7A5B636B22E2BC0EE252DA91AD18E5D53F06D4D3F07",
+          "dark-comfortable": "E97406C3A84087A6C39330125ED87B3EFEBF1EB58197CC1FF65F14972F3EEF6B",
+          "dark-compact": "E97406C3A84087A6C39330125ED87B3EFEBF1EB58197CC1FF65F14972F3EEF6B"
+        },
+        "scope": "Four Presentation=Free|Cascade|Tile|Tabbed variants; authored workspace frame, active and inactive managed subwindows, cascade and tile geometry, TabbedView tab bar, active document content and activation-order label.",
+        "limitations": "Free, Cascade and Tile are authored review geometries while Tabbed maps to QMdiArea::TabbedView. Document creation, activation order, arrangement commands, persistence and lifecycle remain host-owned; Card and Tabs remain construction references rather than MDI equivalents. Formal designer and governance approval remain open.",
+        "runtimeEvidence": [
+          "Source/ComponentKit/runtime/component/MdiAppearance.h",
+          "Source/ComponentKit/runtime/component/MdiAppearance.cpp",
+          "Source/ComponentKit/runtime/component/native/Z_MdiArea.h",
+          "Source/ComponentKit/runtime/component/native/Z_MdiArea.cpp",
+          "ComponentLab/Source/delivery/demo/MdiGallery.cpp",
+          "ComponentLab/Source/delivery/tests/CompositionTests.cpp"
+        ]
       }
     },
     {
@@ -8151,7 +8250,13 @@
         "ComponentLab/Source/delivery/demo/MdiGallery.cpp",
         "ComponentLab/Source/delivery/tests/CompositionTests.cpp",
         "DesignToCode_GenerateLayout/Source/HtmlDsl/pipeline/mapping/component-mapping.json",
-        "DesignToCode_GenerateLayout/Source/Validation/component/ComponentTests.cpp"
+        "DesignToCode_GenerateLayout/Source/Validation/component/ComponentTests.cpp",
+        "Source/ComponentKit/runtime/component/MdiAppearance.h",
+        "Source/ComponentKit/runtime/component/MdiAppearance.cpp",
+        "Source/ComponentKit/runtime/component/native/Z_MdiSubWindow.h",
+        "Source/ComponentKit/runtime/component/native/Z_MdiSubWindow.cpp",
+        "ComponentLab/Source/delivery/demo/MdiGallery.cpp",
+        "ComponentLab/Source/delivery/tests/CompositionTests.cpp"
       ],
       "designOriginAction": "REUSE",
       "identityMigration": "NONE",
@@ -8163,7 +8268,7 @@
         "runtime": "VERIFIED",
         "runtimeScope": "SDK_FACTORY_COMPONENTLAB_GENERATELAYOUT",
         "factoryRegistration": "VERIFIED",
-        "visual": "NOT_VERIFIED",
+        "visual": "VERIFIED",
         "downstreamConsumption": "VERIFIED",
         "tokenBinding": "BOUND_VERIFIED"
       },
@@ -8182,6 +8287,33 @@
           "maximize glyph visibility"
         ],
         "controllerBoundary": "State is deterministic paint metadata. Activation, QWidget window states, enabled, WindowFlags, close veto, system menu, move/resize and ownership remain native runtime authority and are never inferred as one mutually exclusive property."
+      },
+      "visualEvidence": {
+        "status": "VERIFIED",
+        "figmaNodeId": "511:124",
+        "figmaScreenshotSha256": "3ED07F120A2EAD7F4E88F4EB5A7FCBB6E696CCBE9F44FE02E116C413817FC55E",
+        "profiles": [
+          "light-comfortable",
+          "light-compact",
+          "dark-comfortable",
+          "dark-compact"
+        ],
+        "runtimeGallerySha256": {
+          "light-comfortable": "6528DCE4A590A29E6AEAA7A5B636B22E2BC0EE252DA91AD18E5D53F06D4D3F07",
+          "light-compact": "6528DCE4A590A29E6AEAA7A5B636B22E2BC0EE252DA91AD18E5D53F06D4D3F07",
+          "dark-comfortable": "E97406C3A84087A6C39330125ED87B3EFEBF1EB58197CC1FF65F14972F3EEF6B",
+          "dark-compact": "E97406C3A84087A6C39330125ED87B3EFEBF1EB58197CC1FF65F14972F3EEF6B"
+        },
+        "scope": "Six State=Inactive|Active|Maximized|Minimized|Shaded|Disabled variants; authored 280 by 170 or 280 by 72 geometry, title bar, document icon, native window controls, active outline, disabled presentation and document-content slot.",
+        "limitations": "State is deterministic paint metadata rather than a direct QMdiSubWindow state enum. Activation, native window-state transitions, WindowFlags, move and resize, system menu and close-event veto remain Qt or host-controller responsibilities. Formal designer and governance approval remain open.",
+        "runtimeEvidence": [
+          "Source/ComponentKit/runtime/component/MdiAppearance.h",
+          "Source/ComponentKit/runtime/component/MdiAppearance.cpp",
+          "Source/ComponentKit/runtime/component/native/Z_MdiSubWindow.h",
+          "Source/ComponentKit/runtime/component/native/Z_MdiSubWindow.cpp",
+          "ComponentLab/Source/delivery/demo/MdiGallery.cpp",
+          "ComponentLab/Source/delivery/tests/CompositionTests.cpp"
+        ]
       }
     },
     {
