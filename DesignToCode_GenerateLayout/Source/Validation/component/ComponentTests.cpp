@@ -1094,6 +1094,9 @@ private slots:
             QCOMPARE(pagination->density(), QString("Compact"));
             QCOMPARE(pagination->snapshotState(), QString("Disabled"));
             QVERIFY(!pagination->isEnabled());
+            QCOMPARE(pagination->sizeHint(), QSize(316, 44));
+            QCOMPARE(pagination->findChildren<QToolButton*>().size(), 9);
+            QCOMPARE(pagination->findChildren<QLabel*>("paginationEllipsis").size(), 2);
         }
         {
             const auto sample = fixture("2148:74", "ComponentLab/PageHeader",

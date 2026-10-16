@@ -29,7 +29,7 @@
         "provider": "QRC/local SVG and transparent PNG via IconSource. QStyle ids below remain legacy-only."
     },
     "inputs": {
-        "DesignSystem/generated/runtime/tokens_qt.json": "009057d46c75409665e850246dc731063ff5e3172ad4ce593125daf5e4890d0a",
+        "DesignSystem/generated/runtime/tokens_qt.json": "fda39291c6b05a189910df37014772a4382c421be95f7b05c267b5ae61112751",
         "styles/Z_PushButton.qss.in": "62079c00587df7793034a055194ba83b45bcc3e503d9765b341463b0de0ae90b",
         "tokens/button-contract.json": "4330947c680bc70aaf3d83a65f9a536b4ecb14368d8e44d38a1a5e04ffbf042f",
         "tools/token_compiler.cpp": "a9e7087ea77e1ae1ac79e860c9be69cd681a5f742c4f9e7f631cc26277921fdb",
@@ -404,6 +404,6 @@
             ]
         }
     ],
-    "sourceHash": "e35b1f706bbffcc0447194bcddf9631373de3b8e6cdf52628d78588694e6e5b0",
+    "sourceHash": "e5f54101838db093d897c8735533e7d79b9caafd72ab24098070124ef4995e8f",
     "status": "DEMO-PROPOSAL-NOT-DESIGN-APPROVED"
 }

@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "updatedAt": "2026-10-15",
+  "updatedAt": "2026-10-17",
   "fileKey": "w92BKW1EcutKmTXkwzNHbf",
   "scope": "48-item-fusion-input-and-full-figma-component-set-governance-with-owner-specific-consumer-status",
   "mappingPolicy": {
@@ -1146,6 +1146,48 @@
         "ComponentLab/Source/delivery/demo/PageFlowGallery.cpp",
         "ComponentLab/Source/delivery/tests/CompositionTests.cpp"
       ]
+    },
+    "ComponentLab/Stepper": {
+      "status": "VERIFIED",
+      "figmaNodeId": "2147:515",
+      "figmaScreenshotSha256": "9EB0B4CD5F292EDDDDB9F11D9BCB07E673250F6B9836DF50AD42CB0901D58C88",
+      "profiles": ["light-comfortable", "light-compact", "dark-comfortable", "dark-compact"],
+      "runtimeGallerySha256": {
+        "light-comfortable": "801AB3DB64BCA195456211E95F6FD390771A68CFFF61C9FF318FD272543C9E57",
+        "light-compact": "801AB3DB64BCA195456211E95F6FD390771A68CFFF61C9FF318FD272543C9E57",
+        "dark-comfortable": "7049C807DE1AFE7EF95898B1D2428FCF5C4D89E6E1FCD95CA003ADAEA3952601",
+        "dark-compact": "7049C807DE1AFE7EF95898B1D2428FCF5C4D89E6E1FCD95CA003ADAEA3952601"
+      },
+      "scope": "Four State=Default|Active|Completed|Error variants; fixed workflow anatomy, variable-width labels, aligned indicator and connector geometry, readable error index and token-driven light/dark presentation.",
+      "limitations": "The component presents controlled workflow progress and does not own route changes, validation, branching or persistence. Formal designer and governance approval remain open.",
+      "runtimeEvidence": [
+        "Source/ComponentKit/runtime/component/Z_FoundationComponents.h",
+        "Source/ComponentKit/runtime/component/Z_FoundationComponents.cpp",
+        "ComponentLab/Source/delivery/demo/NativeGalleryPages.cpp",
+        "ComponentLab/Source/delivery/tests/CompositionTests.cpp"
+      ]
+    },
+    "ComponentLab/Pagination": {
+      "status": "VERIFIED",
+      "figmaNodeId": "2148:438",
+      "figmaScreenshotSha256": "2A750EF7C944E46CAE75AC12FECD41CC1B93EDCEF124DAB0952B836B58005BFD",
+      "profiles": ["light-comfortable", "light-compact", "dark-comfortable", "dark-compact"],
+      "runtimeGallerySha256": {
+        "light-comfortable": "383B6F8AF07FDFAB9D2B5409F97AA1D07A8E90C1C0303260F55774DD96D76A23",
+        "light-compact": "383B6F8AF07FDFAB9D2B5409F97AA1D07A8E90C1C0303260F55774DD96D76A23",
+        "dark-comfortable": "6EBF7C4680CF9C8669BA7E2B0AD87CD1308892123B5EDB826BCD52C8879F10ED",
+        "dark-compact": "6EBF7C4680CF9C8669BA7E2B0AD87CD1308892123B5EDB826BCD52C8879F10ED"
+      },
+      "scope": "Four Density=Default|Compact by State=Default|Disabled variants; 384 by 52 or 316 by 44 authored geometry, outlined previous/next actions, borderless page numbers, solid selected page and first/last plus current-neighbour sequence with ellipses.",
+      "limitations": "Current page, page count, data loading, result bounds and route synchronization remain host-controller responsibilities. Hover and keyboard-focus tokens are runtime interaction roles and are not separate static Figma variants. Formal designer and governance approval remain open.",
+      "runtimeEvidence": [
+        "Source/ComponentKit/runtime/component/Z_FoundationComponents.h",
+        "Source/ComponentKit/runtime/component/Z_FoundationComponents.cpp",
+        "Source/SDKConsumerTest/main.cpp",
+        "ComponentLab/Source/delivery/demo/NativeGalleryPages.cpp",
+        "ComponentLab/Source/delivery/tests/CompositionTests.cpp",
+        "DesignToCode_GenerateLayout/Source/Validation/component/ComponentTests.cpp"
+      ]
     }
   },
   "tokenBindingEvidencePolicy": {
@@ -1919,7 +1961,7 @@
       "developmentComponentId": "commonWidget::Z_Pagination",
       "engineeringStatus": "VERIFIED",
       "tokenStatus": "BOUND_VERIFIED",
-      "tokenBindingRefs": 136,
+      "tokenBindingRefs": 332,
       "focusPolicy": "CHILD_ACTION_GROUP",
       "runtimeContract": {
         "qtBaseClass": "QWidget/QToolButton composition",
@@ -1935,12 +1977,12 @@
           "currentPageChanged",
           "pageCountChanged"
         ],
-        "states": [
-          "Default",
-          "Compact",
-          "Disabled"
-        ],
-        "accessibility": "each visible page and previous/next action is a named keyboard-focusable child"
+        "variantAxes": {
+          "Density": ["Default", "Compact"],
+          "State": ["Default", "Disabled"]
+        },
+        "accessibility": "each visible page and previous/next action is a named keyboard-focusable child; the root exposes Page X of Y",
+        "ownership": "the SDK owns the visible first/last/current-neighbour sequence, ellipses and controlled page requests; page count, current page, data loading, result bounds and route synchronization belong to the host controller"
       },
       "runtimeEvidence": [
         "Source/ComponentKit/runtime/component/Z_FoundationComponents.h",

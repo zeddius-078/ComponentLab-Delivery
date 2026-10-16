@@ -698,15 +698,17 @@ class Z_Pagination final : public QWidget {
     void paintEvent(QPaintEvent*) override;
     void changeEvent(QEvent* event) override;
   private:
+    QList<int> displayPages() const;
     void rebuild();
     void refreshStyle();
     QString profileValue;
     QString densityValue = QStringLiteral("Default");
     QString snapshotStateValue = QStringLiteral("Default");
-    int currentPageValue = 2;
-    int pageCountValue = 3;
+    int currentPageValue = 5;
+    int pageCountValue = 29;
     QHBoxLayout* pageLayout = nullptr;
     QList<QToolButton*> pageButtons;
+    QList<QLabel*> ellipsisLabels;
 };
 
 class Z_PageHeader final : public QWidget {

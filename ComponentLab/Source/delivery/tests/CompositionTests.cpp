@@ -2311,6 +2311,16 @@ auto* secondEditor=editors->widget(1);auto* area=secondEditor->findChild<QMdiAre
                     widget->property("runtimeImplementation").toBool())
                     ++runtimeVariants;
             QCOMPARE(runtimeVariants, expected.count);
+            if (expected.pageId == QStringLiteral("2147:454") ||
+                expected.pageId == QStringLiteral("2148:342") ||
+                expected.pageId == QStringLiteral("2150:2")) {
+                QVERIFY(page->findChild<QScrollArea*>("navigationProgressGallery"));
+                const QString setId = expected.pageId == QStringLiteral("2147:454")
+                    ? QStringLiteral("2147_515")
+                    : expected.pageId == QStringLiteral("2148:342")
+                    ? QStringLiteral("2148_438") : QStringLiteral("2150_82");
+                QVERIFY(!page->findChild<QTableWidget*>("variantMatrix_" + setId));
+            }
         }
         auto* tooltipPage = part<QStackedWidget>("componentPages")->currentWidget();
         auto* tooltipMatrix = tooltipPage->findChild<QTableWidget*>("variantMatrix_2132_189");
@@ -2580,6 +2590,15 @@ auto* secondEditor=editors->widget(1);auto* area=secondEditor->findChild<QMdiAre
         QCOMPARE(stepper->focusPolicy(), Qt::NoFocus);
         stepper->setSnapshotState("Error");
         QCOMPARE(stepper->snapshotState(), QString("Error"));
+        stepper->resize(stepper->sizeHint());
+        if (!evidence.isEmpty()) {
+            const QStringList states{"Default", "Active", "Completed", "Error"};
+            for (const auto& state : states) {
+                stepper->setSnapshotState(state);
+                QVERIFY(stepper->grab().save(
+                    evidence + "/stepper-" + state.toLower() + ".png"));
+            }
+        }
 
         QCOMPARE(timeline->focusPolicy(), Qt::NoFocus);
         timeline->setDensity("Compact");
@@ -2695,9 +2714,32 @@ auto* secondEditor=editors->widget(1);auto* area=secondEditor->findChild<QMdiAre
             QVERIFY(filter->grab().save(evidence + "/filter-panel-default.png"));
 
         QCOMPARE(pagination->focusPolicy(), Qt::NoFocus);
+        pagination->setPageCount(29);
+        pagination->setCurrentPage(5);
+        QCOMPARE(pagination->sizeHint(), QSize(384, 52));
+        QCOMPARE(pagination->findChildren<QToolButton*>().size(), 9);
+        QCOMPARE(pagination->findChildren<QLabel*>("paginationEllipsis").size(), 2);
+        QVERIFY(pagination->findChild<QToolButton*>("page_1"));
+        QVERIFY(pagination->findChild<QToolButton*>("page_29"));
+        QVERIFY(pagination->accessibleDescription().contains("Page 5 of 29"));
+        pagination->resize(pagination->sizeHint());
+        if (!evidence.isEmpty())
+            QVERIFY(pagination->grab().save(evidence + "/pagination-default.png"));
+        pagination->setDensity("Compact");
+        QCOMPARE(pagination->sizeHint(), QSize(316, 44));
+        pagination->resize(pagination->sizeHint());
+        if (!evidence.isEmpty())
+            QVERIFY(pagination->grab().save(evidence + "/pagination-compact.png"));
+        pagination->setSnapshotState("Disabled");
+        QVERIFY(!pagination->isEnabled());
+        if (!evidence.isEmpty())
+            QVERIFY(pagination->grab().save(evidence + "/pagination-disabled.png"));
+        pagination->setSnapshotState("Default");
+        pagination->setDensity("Default");
         pagination->setPageCount(7);
         pagination->setCurrentPage(4);
-        QCOMPARE(pagination->findChildren<QToolButton*>().size(), 5);
+        QCOMPARE(pagination->findChildren<QToolButton*>().size(), 9);
+        QCOMPARE(pagination->findChildren<QLabel*>("paginationEllipsis").size(), 0);
         for (auto* button : pagination->findChildren<QToolButton*>())
             QCOMPARE(button->focusPolicy(), Qt::StrongFocus);
 

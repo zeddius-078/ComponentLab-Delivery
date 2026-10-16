@@ -1039,12 +1039,19 @@ int main(int argc, char *argv[]) {
     numericKeypad->findChild<QToolButton*>(QStringLiteral("numericKeypadKey11"))->click();
     if (!numericCommitRequested)
         return 76;
+    pagination->setPageCount(29);
+    pagination->setCurrentPage(5);
+    if (pagination->sizeHint() != QSize(384, 52) ||
+        pagination->findChildren<QToolButton*>().size() != 9 ||
+        pagination->findChildren<QLabel*>(QStringLiteral("paginationEllipsis")).size() != 2)
+        return 39;
     pagination->setPageCount(7);
     pagination->setCurrentPage(4);
     pagination->setDensity(QStringLiteral("Compact"));
     const auto paginationButtons = pagination->findChildren<QToolButton*>();
     if (pagination->pageCount() != 7 || pagination->currentPage() != 4 ||
-        pagination->focusPolicy() != Qt::NoFocus || paginationButtons.size() != 5)
+        pagination->sizeHint() != QSize(280, 44) ||
+        pagination->focusPolicy() != Qt::NoFocus || paginationButtons.size() != 9)
         return 39;
     for (auto* pageButton : paginationButtons)
         if (pageButton->focusPolicy() != Qt::StrongFocus)

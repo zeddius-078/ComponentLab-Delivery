@@ -1708,11 +1708,18 @@ void Z_Stepper::paintEvent(QPaintEvent*) {
     const Tokens tokens(profileValue);
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
-    const int itemWidth = 72;
     const int connectorWidth = 60;
     const int gap = 8;
-    const int total = itemValues.size() * itemWidth +
-                      (itemValues.size() - 1) * (connectorWidth + gap * 2);
+    const QFont labelFont = componentFont(12);
+    const QFontMetrics labelMetrics(labelFont);
+    QList<int> itemWidths;
+    int total = 0;
+    for (const auto& item : itemValues) {
+        const int itemWidth = qMax(28, labelMetrics.horizontalAdvance(item));
+        itemWidths.append(itemWidth);
+        total += itemWidth;
+    }
+    total += (itemValues.size() - 1) * (connectorWidth + gap * 2);
     int x = (width() - total) / 2;
     const QColor surface = tokens.c("base.stoken.color.background.surface");
     const QColor border = tokens.c("base.stoken.color.border.default");
@@ -1722,23 +1729,24 @@ void Z_Stepper::paintEvent(QPaintEvent*) {
     const QColor subtle = tokens.c("base.stoken.color.interactive.brand.subtle");
     const QColor danger = tokens.c("base.stoken.color.status.danger.default");
     const QColor success = tokens.c("base.stoken.color.status.success.default");
-    painter.setFont(componentFont(12));
+    painter.setFont(labelFont);
     for (int index = 0; index < itemValues.size(); ++index) {
+        const int itemWidth = itemWidths[index];
         const bool active = snapshotStateValue == "Active" && index == currentIndexValue;
         const bool completed = snapshotStateValue == "Completed" && index <= currentIndexValue;
         const bool error = snapshotStateValue == "Error" && index == currentIndexValue;
-        const QRect indicator(x + (itemWidth - 28) / 2, 8, 28, 28);
+        const QRect indicator(x + (itemWidth - 28) / 2, 20, 28, 28);
         painter.setPen(QPen(error ? danger : (active || completed ? brand : border), 1));
         painter.setBrush(error ? danger : (active || completed ? subtle : surface));
         painter.drawRoundedRect(indicator, 4, 4);
-        painter.setPen(error ? QColor(Qt::white) : (active || completed ? brand : primary));
+        painter.setPen(error ? primary : (active || completed ? brand : primary));
         painter.drawText(indicator, Qt::AlignCenter, QString::number(index + 1));
         painter.setPen(primary);
-        painter.drawText(QRect(x, 42, itemWidth, 18), Qt::AlignCenter, itemValues[index]);
+        painter.drawText(QRect(x, 54, itemWidth, 18), Qt::AlignCenter, itemValues[index]);
         x += itemWidth;
         if (index + 1 < itemValues.size()) {
             x += gap;
-            painter.fillRect(QRect(x, 21, connectorWidth, 2),
+            painter.fillRect(QRect(x, 33, connectorWidth, 2),
                              snapshotStateValue == "Completed" && index < currentIndexValue
                                  ? success : borderSecondary);
             x += connectorWidth + gap;
@@ -2233,14 +2241,12 @@ Z_Pagination::Z_Pagination(const QString& profile, QWidget* parent)
     setFocusPolicy(Qt::NoFocus);
     setAccessibleName(QStringLiteral("Pagination"));
     setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-    pageLayout->setContentsMargins(14, 12, 14, 12);
-    pageLayout->setSpacing(10);
     rebuild();
 }
 void Z_Pagination::setDensity(const QString& value) {
     requireOneOf(value, {"Default", "Compact"}, "Pagination.density");
     if (densityValue == value) return;
-    densityValue = value; updateGeometry(); refreshStyle(); emit densityChanged(value);
+    densityValue = value; rebuild(); updateGeometry(); emit densityChanged(value);
 }
 void Z_Pagination::setSnapshotState(const QString& value) {
     requireOneOf(value, {"Default", "Disabled"}, "Pagination.snapshotState");
@@ -2263,15 +2269,48 @@ void Z_Pagination::setPageCount(int value) {
     currentPageValue = qMin(currentPageValue, pageCountValue);
     rebuild(); emit pageCountChanged(value);
 }
-QSize Z_Pagination::sizeHint() const { return {360, 58}; }
-void Z_Pagination::paintEvent(QPaintEvent*) {
+QList<int> Z_Pagination::displayPages() const {
+    QList<int> pages;
+    if (pageCountValue <= 7) {
+        for (int page = 1; page <= pageCountValue; ++page)
+            pages.append(page);
+        return pages;
+    }
+    QList<int> candidates{1};
+    for (int page = qMax(2, currentPageValue - 2);
+         page <= qMin(pageCountValue - 1, currentPageValue + 2); ++page)
+        candidates.append(page);
+    candidates.append(pageCountValue);
+    std::sort(candidates.begin(), candidates.end());
+    candidates.erase(std::unique(candidates.begin(), candidates.end()), candidates.end());
+    int previous = 0;
+    for (const int page : candidates) {
+        if (previous > 0 && page - previous > 1)
+            pages.append(-1);
+        pages.append(page);
+        previous = page;
+    }
+    return pages;
+}
+QSize Z_Pagination::sizeHint() const {
     const Tokens tokens(profileValue);
-    QPainter painter(this);
-    painter.setRenderHint(QPainter::Antialiasing);
-    painter.setPen(QPen(tokens.c(isEnabled() ? "base.stoken.color.border.default"
-                                             : "base.stoken.color.border.disabled"), 1));
-    painter.setBrush(tokens.c("base.stoken.color.background.surface"));
-    painter.drawRoundedRect(rect().adjusted(0, 0, -1, -1), 10, 10);
+    const bool compact = densityValue == QStringLiteral("Compact");
+    const QByteArray prefix = compact ? "base.stoken.pagination.base.compact"
+                                      : "base.stoken.pagination.base.default";
+    const int itemWidth = tokens.n((prefix + ".item.visual-width").constData());
+    const int itemHeight = tokens.n((prefix + ".item.visual-height").constData());
+    const int paddingInline = tokens.n((prefix + ".container.padding-inline").constData());
+    const int paddingBlock = tokens.n((prefix + ".container.padding-block").constData());
+    const int gap = tokens.n((prefix + ".container.gap").constData());
+    const auto pages = displayPages();
+    const int ellipses = std::count(pages.cbegin(), pages.cend(), -1);
+    const int controls = pages.size() + 2;
+    const int width = paddingInline * 2 + (controls - ellipses) * itemWidth +
+                      ellipses * (compact ? 16 : 20) + qMax(0, controls - 1) * gap;
+    return {width, paddingBlock * 2 + itemHeight};
+}
+void Z_Pagination::paintEvent(QPaintEvent* event) {
+    QWidget::paintEvent(event);
 }
 void Z_Pagination::changeEvent(QEvent* event) {
     QWidget::changeEvent(event);
@@ -2283,12 +2322,22 @@ void Z_Pagination::rebuild() {
         delete item;
     }
     pageButtons.clear();
+    ellipsisLabels.clear();
+    const Tokens tokens(profileValue);
+    const bool compact = densityValue == QStringLiteral("Compact");
+    const QByteArray prefix = compact ? "base.stoken.pagination.base.compact"
+                                      : "base.stoken.pagination.base.default";
+    const int itemWidth = tokens.n((prefix + ".item.visual-width").constData());
+    const int itemHeight = tokens.n((prefix + ".item.visual-height").constData());
+    const int paddingInline = tokens.n((prefix + ".container.padding-inline").constData());
+    const int paddingBlock = tokens.n((prefix + ".container.padding-block").constData());
+    pageLayout->setContentsMargins(paddingInline, paddingBlock, paddingInline, paddingBlock);
+    pageLayout->setSpacing(tokens.n((prefix + ".container.gap").constData()));
     const auto add = [this](const QString& text, int page, const QString& objectName) {
         auto* button = new QToolButton(this);
         button->setObjectName(objectName);
         button->setText(text);
         button->setProperty("pageNumber", page);
-        button->setFixedSize(48, 36);
         button->setFocusPolicy(Qt::StrongFocus);
         button->setAccessibleName(page > 0 ? QStringLiteral("Page %1").arg(page) : text);
         FocusIndicator::instance().watch(button);
@@ -2299,38 +2348,79 @@ void Z_Pagination::rebuild() {
         pageButtons.append(button);
     };
     add(QString::fromUtf8("‹"), currentPageValue - 1, QStringLiteral("previousPage"));
-    const int visible = qMin(3, pageCountValue);
-    const int start = qBound(1, currentPageValue - 1, qMax(1, pageCountValue - visible + 1));
-    for (int page = start; page < start + visible; ++page)
-        add(QString::number(page), page, QStringLiteral("page_%1").arg(page));
+    for (const int page : displayPages()) {
+        if (page < 0) {
+            auto* ellipsis = new QLabel(QString::fromUtf8("…"), this);
+            ellipsis->setObjectName(QStringLiteral("paginationEllipsis"));
+            ellipsis->setAlignment(Qt::AlignCenter);
+            ellipsis->setAccessibleName(QStringLiteral("Skipped pages"));
+            ellipsis->setFixedSize(compact ? 16 : 20, itemHeight);
+            pageLayout->addWidget(ellipsis);
+            ellipsisLabels.append(ellipsis);
+        } else {
+            add(QString::number(page), page, QStringLiteral("page_%1").arg(page));
+        }
+    }
     add(QString::fromUtf8("›"), currentPageValue + 1, QStringLiteral("nextPage"));
+    for (auto* button : pageButtons)
+        button->setFixedSize(itemWidth, itemHeight);
+    setAccessibleDescription(QStringLiteral("Page %1 of %2")
+                                 .arg(currentPageValue).arg(pageCountValue));
     refreshStyle();
 }
 void Z_Pagination::refreshStyle() {
     if (pageButtons.isEmpty()) return;
     const Tokens tokens(profileValue);
-    const QString disabled = tokens.c("base.stoken.color.text.disabled").name(QColor::HexArgb);
-    const QString disabledBorder = tokens.c("base.stoken.color.border.disabled").name(QColor::HexArgb);
-    const QString primary = tokens.c("base.stoken.color.text.primary").name(QColor::HexArgb);
-    const QString surface = tokens.c("base.stoken.color.background.surface").name(QColor::HexArgb);
-    const QString border = tokens.c("base.stoken.color.border.default").name(QColor::HexArgb);
-    const QString brand = tokens.c("base.stoken.color.interactive.brand.default").name(QColor::HexArgb);
-    const QString subtle = tokens.c("base.stoken.color.interactive.brand.subtle").name(QColor::HexArgb);
+    const QString disabled = tokens.c("base.stoken.pagination.base.disabled.item.label-color").name(QColor::HexArgb);
+    const QString disabledBorder = tokens.c("base.stoken.pagination.base.disabled.navigation.border-color").name(QColor::HexArgb);
+    const QString disabledBackground = tokens.c("base.stoken.pagination.base.disabled.navigation.background").name(QColor::HexArgb);
+    const QString disabledIcon = tokens.c("base.stoken.pagination.base.disabled.navigation.icon-color").name(QColor::HexArgb);
+    const QString primary = tokens.c("base.stoken.pagination.base.default.item.label-color").name(QColor::HexArgb);
+    const QString surface = tokens.c("base.stoken.pagination.base.default.navigation.background").name(QColor::HexArgb);
+    const QString border = tokens.c("base.stoken.pagination.base.default.navigation.border-color").name(QColor::HexArgb);
+    const QString navigationIcon = tokens.c("base.stoken.pagination.base.default.navigation.icon-color").name(QColor::HexArgb);
+    const QString selectedLabel = tokens.c("base.stoken.pagination.base.selected.item.label-color").name(QColor::HexArgb);
+    const QString selectedBackground = tokens.c("base.stoken.pagination.base.selected.item.background").name(QColor::HexArgb);
+    const QString hoverBackground = tokens.c("base.stoken.pagination.base.hover.item.background").name(QColor::HexArgb);
+    const QString focus = tokens.c("base.stoken.pagination.base.focused.focus-ring.color").name(QColor::HexArgb);
+    const int itemRadius = tokens.n("base.stoken.pagination.base.default.item.radius");
+    const int navigationRadius = tokens.n("base.stoken.pagination.base.default.navigation.radius");
+    const int borderWidth = tokens.n("base.stoken.pagination.base.default.border-width");
     for (auto* button : pageButtons) {
         const int page = button->property("pageNumber").toInt();
         const bool selected = page == currentPageValue && button->objectName().startsWith("page_");
+        const bool navigation = button->objectName() == QStringLiteral("previousPage") ||
+                                button->objectName() == QStringLiteral("nextPage");
         const bool boundaryEnabled = page >= 1 && page <= pageCountValue;
         button->setEnabled(isEnabled() && boundaryEnabled);
         const bool usable = button->isEnabled();
-        const QString foreground = usable ? (selected ? brand : primary) : disabled;
-        const QString edge = usable ? (selected ? brand : border) : disabledBorder;
-        const QString background = selected ? subtle : surface;
+        const QString foreground = usable
+            ? (selected ? selectedLabel : navigation ? navigationIcon : primary)
+            : (navigation ? disabledIcon : disabled);
+        const QString edge = navigation ? (usable ? border : disabledBorder)
+                                        : (selected ? (usable ? selectedBackground : disabledBorder)
+                                                    : QStringLiteral("transparent"));
+        const QString background = navigation ? (usable ? surface : disabledBackground)
+                                              : (selected ? (usable ? selectedBackground : disabledBackground)
+                                                          : QStringLiteral("transparent"));
         button->setStyleSheet(QStringLiteral(
-            "QToolButton { background:%1; color:%2; border:1px solid %3; border-radius:8px; padding:0 14px; }")
-            .arg(background, foreground, edge));
+            "QToolButton { background:%1; color:%2; border:%3px solid %4; border-radius:%5px; padding:0; }"
+            "QToolButton:hover:enabled { background:%6; color:%7; }"
+            "QToolButton[focusIndicatorVisible=\"true\"] { border:2px solid %8; }"
+            "QToolButton:focus { outline:none; }")
+            .arg(background, foreground).arg(borderWidth).arg(edge)
+            .arg(navigation ? navigationRadius : itemRadius)
+            .arg(selected ? selectedBackground : hoverBackground)
+            .arg(selected ? selectedLabel : navigation ? navigationIcon : primary)
+            .arg(focus));
         QFont font = componentFont(14);
         font.setWeight(selected ? QFont::DemiBold : QFont::Normal);
         button->setFont(font);
+    }
+    for (auto* ellipsis : ellipsisLabels) {
+        ellipsis->setStyleSheet(QStringLiteral("color:%1; background:transparent;")
+                                    .arg(isEnabled() ? primary : disabled));
+        ellipsis->setFont(componentFont(14));
     }
     update();
 }

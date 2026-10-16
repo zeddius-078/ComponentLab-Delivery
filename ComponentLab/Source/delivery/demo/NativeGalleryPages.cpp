@@ -1701,6 +1701,25 @@ void applyVariant(QWidget* widget, const DesignComponentSet& componentSet,
             calendar->setSnapshotState(properties.value("State"));
             calendar->setFixedSize(calendar->sizeHint());
         }
+    if(componentSet.id=="2147:515")
+        if(auto* stepper=qobject_cast<commonWidget::Z_Stepper*>(widget)) {
+            stepper->setSnapshotState(properties.value("State"));
+            stepper->setFixedSize(stepper->sizeHint());
+        }
+    if(componentSet.id=="2148:438")
+        if(auto* pagination=qobject_cast<commonWidget::Z_Pagination*>(widget)) {
+            pagination->setDensity(properties.value("Density"));
+            pagination->setPageCount(29);
+            pagination->setCurrentPage(5);
+            pagination->setSnapshotState(properties.value("State"));
+            pagination->setFixedSize(pagination->sizeHint());
+        }
+    if(componentSet.id=="2150:82")
+        if(auto* anchor=qobject_cast<commonWidget::Z_AnchorNavigation*>(widget)) {
+            anchor->setOrientation(properties.value("Orientation"));
+            anchor->setSnapshotState(properties.value("State"));
+            anchor->setFixedSize(anchor->sizeHint());
+        }
     if((componentSet.id=="458:155" || componentSet.id=="460:175"))
         if(auto* spin=qobject_cast<QAbstractSpinBox*>(widget)) {
             spin->setReadOnly(state=="readonly");
@@ -2193,6 +2212,61 @@ QTableWidget* createVariantMatrix(
     return table;
 }
 
+QWidget* createNavigationProgressGallery(
+    const DesignComponentPage& figmaPage,
+    const QList<DesignComponentDescriptor>& descriptors,
+    const std::shared_ptr<commonWidget::ComponentFactory>& factory,
+    QWidget* parent) {
+    auto* scroll = new QScrollArea(parent);
+    scroll->setObjectName("navigationProgressGallery");
+    scroll->setWidgetResizable(true);
+    scroll->setFrameShape(QFrame::NoFrame);
+    scroll->setHorizontalScrollBarPolicy(Qt::ScrollBarAsNeeded);
+
+    auto* content = new QWidget(scroll);
+    auto* grid = new QGridLayout(content);
+    grid->setContentsMargins(16, 16, 16, 16);
+    grid->setHorizontalSpacing(20);
+    grid->setVerticalSpacing(16);
+    int cellIndex = 0;
+    const int columns = figmaPage.id == QStringLiteral("2147:454") ? 1 : 2;
+    for (const auto& componentSet : figmaPage.componentSets) {
+        bool found = false;
+        const auto descriptor = descriptorForSet(componentSet, descriptors, &found);
+        for (const auto& variant : componentSet.variants) {
+            auto* card = new QFrame(content);
+            card->setObjectName("navigationVariantCard");
+            card->setProperty("figmaVariant", variant);
+            auto* cardLayout = new QVBoxLayout(card);
+            cardLayout->setContentsMargins(14, 12, 14, 14);
+            cardLayout->setSpacing(10);
+            auto* label = new QLabel(variant, card);
+            label->setObjectName("navigationVariantLabel");
+            cardLayout->addWidget(label);
+            if (found && descriptor.instantiable) {
+                auto* preview = factory->create(descriptor.sdkClass, card);
+                configurePreview(preview, descriptor.qtClass, descriptor.sdkClass);
+                preview->setObjectName(
+                    "variantPreview_" + QString(componentSet.id).replace(':', '_'));
+                applyVariant(preview, componentSet, variant);
+                preview->setFixedSize(preview->sizeHint());
+                cardLayout->addWidget(preview, 0, Qt::AlignLeft | Qt::AlignVCenter);
+            } else {
+                auto* unavailable = new QLabel(QString::fromUtf8("设计契约"), card);
+                unavailable->setProperty("contractOnly", true);
+                cardLayout->addWidget(unavailable);
+            }
+            grid->addWidget(card, cellIndex / columns, cellIndex % columns);
+            ++cellIndex;
+        }
+    }
+    for (int column = 0; column < columns; ++column)
+        grid->setColumnStretch(column, 1);
+    grid->setRowStretch((cellIndex + columns - 1) / columns, 1);
+    scroll->setWidget(content);
+    return scroll;
+}
+
 QPixmap tintedIconAsset(const QString& assetId, int extent, const QColor& color) {
     QPixmap result = commonWidget::IconSource::load(assetId).pixmap(extent, extent);
     QPainter painter(&result);
@@ -2615,6 +2689,11 @@ QWidget* createFigmaPage(const DesignComponentPage& figmaPage,
     }
     if(figmaPage.id=="516:11") {
         variantsLayout->addWidget(createPageFlowGallery(factory,variants));
+        sections->addTab(variants,QString::fromUtf8("分组与状态"));return page;
+    }
+    if(figmaPage.id=="2147:454" || figmaPage.id=="2148:342" || figmaPage.id=="2150:2") {
+        variantsLayout->addWidget(
+            createNavigationProgressGallery(figmaPage,descriptors,factory,variants));
         sections->addTab(variants,QString::fromUtf8("分组与状态"));return page;
     }
     if(hasCompositeGallery(figmaPage.id)) {

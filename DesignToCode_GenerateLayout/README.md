@@ -75,6 +75,8 @@ Badge、StatusIndicator、Link、Tag、Tooltip 分别通过组件集 ID `2132:21
 
 `ComponentLab/Timeline` 通过组件集 ID `2147:35` 映射到已发布 SDK 的 `commonWidget::Z_Timeline`。编译器只传递 Figma 的 `Density=Comfortable/Compact`，事件内容由页面数据调用 `setEvents` 提供；GenerateLayout 不复制状态标记资源，也不把 Timeline 当作可点击的 Stepper。
 
+`ComponentLab/Pagination` 通过组件集 ID `2148:438` 映射到已发布 SDK 的 `commonWidget::Z_Pagination`。编译器只传递 `Density=Default/Compact` 与 `State=Default/Disabled`；页码数据、当前页、总页数、加载与翻页结果由生成页面 controller 持有，SDK 负责边界翻页按钮、无边框页码、当前页实色块和长序列省略号。
+
 `ComponentLab/AnchorNavigation` 通过组件集 ID `2150:82` 映射到已发布 SDK 的 `commonWidget::Z_AnchorNavigation`。编译器传递 `Orientation=Vertical/Horizontal` 与 `State=Default/Scrolled`；锚点标签、目标绑定和滚动生命周期由生成页面持有，SDK 只发出受控 `anchorActivated` 请求并接收 `currentIndex` 回传。
 
 `ComponentLab/Filter` 通过组件集 ID `2148:244` 映射到已发布 SDK 的 `commonWidget::Z_Filter`。编译器只传递 `Layout=Inline/Panel` 与 `State=Default/Applied`；筛选条件、运算符、值、校验、清除、持久化和状态转换由生成页面的 filter controller 持有，SDK 只发出条件与应用请求。
