@@ -1,6 +1,7 @@
 #include "PageFlowGallery.h"
 #include "ComponentFactory.h"
 #include "PageFlowAppearance.h"
+#include "FieldChrome.h"
 #include "FigmaGalleryView.h"
 #include "native/Z_WizardPage.h"
 #include "Z_PushButton.h"
@@ -115,15 +116,19 @@ public:
         heading->setText(title());subtitle->setText(subTitle());subtitle->setVisible(property("showSpecimenSubtitle").isNull()||property("showSpecimenSubtitle").toBool());
         const bool complete=isComplete();const QString kind=isCommitPage()?"Commit":isFinalPage()?"Final":"Standard";
         status->setText((complete?"Complete · ":"Incomplete · ")+kind+" page");status->setAccessibleName(status->text());
-        status->setStyleSheet(QString("border:0;color:%1;background:%2;font-family:'Inter';font-size:12px;font-weight:504;padding:8px;").arg(complete?"#6235f7":"#191919",complete?"rgba(98,53,247,20)":"white"));
-        const QString asset=QString(":/figma/pageflow/%1.svg").arg(complete?"Check":"Warning");QPixmap pix(16,16);pix.fill(Qt::transparent);QPainter painter(&pix);QSvgRenderer svg(asset);svg.render(&painter,QRectF(0,0,16,16));painter.end();statusIcon->setPixmap(pix);statusIcon->setProperty("figmaAsset",asset);
+        // SDK appearance owns palette and Profile resolution. The demo only supplies
+        // real completion state and content; it must not shadow generated Tokens.
+        status->setStyleSheet({});
         commonWidget::applyFigmaWizardPageAppearance(this);
+        const QString asset=QString(":/figma/pageflow/%1.svg").arg(complete?"Check":"Warning");
+        statusIcon->setPixmap(field::iconPixmap(QIcon(asset),16,devicePixelRatioF(),
+            property("figmaFlowStatusIconColor").value<QColor>()));statusIcon->setProperty("figmaAsset",asset);
     }
     QLineEdit* input;QLabel *heading,*subtitle,*status,*statusIcon;
 };
 void populateWizard(QWizard* wizard) {
     wizard->setWindowTitle("Page Flow · native QWizard");wizard->resize(620,460);wizard->setWizardStyle(QWizard::ClassicStyle);
-    for(int i=0;i<4;++i){auto* page=new DemoPage;page->setProperty("demoNextId",i==3?-1:i+1);page->setProperty("flowPageId",i);page->setTitle(i==2?"Confirm changes":i==3?"Complete setup":"Configure device");page->setCommitPage(i==2);page->setFinalPage(i==3);wizard->setPage(i,page);page->refresh();}
+    for(int i=0;i<4;++i){auto* page=new DemoPage;page->setProperty("designSystemProfile",wizard->property("designSystemProfile"));page->setProperty("demoNextId",i==3?-1:i+1);page->setProperty("flowPageId",i);page->setTitle(i==2?"Confirm changes":i==3?"Complete setup":"Configure device");page->setCommitPage(i==2);page->setFinalPage(i==3);wizard->setPage(i,page);page->refresh();}
     wizard->setStartId(0);wizard->restart();commonWidget::applyFigmaWizardAppearance(wizard);
 }
 void sourceButtons(QWidget* parent,int phase,const std::shared_ptr<commonWidget::ComponentFactory>& factory) {

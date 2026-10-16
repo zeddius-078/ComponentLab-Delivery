@@ -1761,6 +1761,10 @@ auto* secondEditor=editors->widget(1);auto* area=secondEditor->findChild<QMdiAre
         auto* editors=page->findChild<QStackedWidget*>("appearanceComponentSetEditors");QVERIFY(editors);
         auto* stackEditor=editors->widget(0);QVERIFY(stackEditor);
         auto* stack=stackEditor->findChild<QStackedWidget*>("componentInteractivePreview");QVERIFY(stack);
+        QCOMPARE(stack->property("designSystemProfile").toString(),profile);
+        const QString expectedSurface=profile.startsWith("dark-")?QStringLiteral("background:rgba(39,39,39,255)"):QStringLiteral("background:rgba(255,255,255,255)");
+        QVERIFY2(stack->styleSheet().contains(expectedSurface),qPrintable(stack->styleSheet()));
+        if(!evidence.isEmpty())QVERIFY(stack->grab().save(evidence+"/page-flow-stacked-widget.png"));
         const int initial=stack->count();QCOMPARE(initial,3);
         stackEditor->findChild<QPushButton*>("flowAddPageControl")->click();QCOMPARE(stack->count(),initial+1);
         stackEditor->findChild<QPushButton*>("flowRemovePageControl")->click();QCOMPARE(stack->count(),initial);
@@ -1769,16 +1773,21 @@ auto* secondEditor=editors->widget(1);auto* area=secondEditor->findChild<QMdiAre
         auto* pageEditor=editors->widget(1);QVERIFY(pageEditor);
         QVERIFY(pageEditor->findChild<QComboBox*>("flowKindControl"));QVERIFY(pageEditor->findChild<QLineEdit*>("flowFieldControl"));
         auto* standalone=pageEditor->findChild<QWizardPage*>("componentInteractivePreview");QVERIFY(standalone);
+        QVERIFY2(standalone->styleSheet().contains(expectedSurface),qPrintable(standalone->styleSheet()));
         pageEditor->findChild<QLineEdit*>("flowFieldControl")->setText("LOT-1");
         QCOMPARE(standalone->findChild<QLineEdit*>("flowRequiredField")->text(),QString("LOT-1"));
+        if(!evidence.isEmpty())QVERIFY(standalone->grab().save(evidence+"/page-flow-wizard-page.png"));
         choices->setCurrentIndex(2);QTest::qWait(60);
         auto* wizardEditor=editors->widget(2);QVERIFY(wizardEditor);
         auto* wizard=wizardEditor->findChild<QWizard*>("componentInteractivePreview");QVERIFY(wizard);
+        QCOMPARE(wizard->property("designSystemProfile").toString(),profile);
+        QVERIFY2(wizard->styleSheet().contains(expectedSurface),qPrintable(wizard->styleSheet()));
         QCOMPARE(wizard->pageIds().size(),4);
         QVERIFY(wizardEditor->findChild<QComboBox*>("flowWizardStyleControl"));
         QVERIFY(wizardEditor->findChild<QPushButton*>("flowForwardControl"));
         QVERIFY(wizardEditor->findChild<QPushButton*>("flowBackControl"));
         QTest::qWait(80);
+        if(!evidence.isEmpty())QVERIFY(wizard->grab().save(evidence+"/page-flow-wizard.png"));
         for(auto* editor:{stackEditor,pageEditor,wizardEditor})
             QCOMPARE(editor->findChild<QScrollArea*>("componentSettingsScroll")->horizontalScrollBar()->maximum(),0);
     }

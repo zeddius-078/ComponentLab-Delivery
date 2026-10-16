@@ -94,7 +94,10 @@ if(BUILD_TESTING)
         foreach(TEST_NAME ${PROFILE} forms_${PROFILE} solid_inner_shadow_${PROFILE} composition_${PROFILE})
             set_tests_properties(${TEST_NAME} PROPERTIES
                 ENVIRONMENT "QT_QPA_PLATFORM=offscreen;DEMO_PROFILE=${PROFILE};DEMO_EVIDENCE=${TEST_OUTPUT_DIR}/${TEST_NAME}"
-                TIMEOUT 180)
+                # The full native gallery regression currently takes about 165-250 s on
+                # the supported MSVC/Qt runner; leave headroom so concurrent OS activity
+                # does not turn a completed assertion run into a false timeout.
+                TIMEOUT 300)
         endforeach()
     endforeach()
 endif()

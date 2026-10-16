@@ -1080,6 +1080,72 @@
         "ComponentLab/Source/delivery/demo/MdiGallery.cpp",
         "ComponentLab/Source/delivery/tests/CompositionTests.cpp"
       ]
+    },
+    "ComponentLab/StackedWidget": {
+      "status": "VERIFIED",
+      "figmaNodeId": "516:62",
+      "figmaScreenshotSha256": "EF42C471CD76FB00AD4019759CD5F0CB0D6232EE9C46C44DB270CC86FF26963F",
+      "profiles": ["light-comfortable", "light-compact", "dark-comfortable", "dark-compact"],
+      "runtimeGallerySha256": {
+        "light-comfortable": "98C6AA37754CFDD3E98CA6DA47B1AAEDF23C2D606B5CE8DD12196E870DEA8355",
+        "light-compact": "98C6AA37754CFDD3E98CA6DA47B1AAEDF23C2D606B5CE8DD12196E870DEA8355",
+        "dark-comfortable": "0C08F33C09470D37A67285E025912E0FE86520416C9BB13316BD8E0FEAD1D1B8",
+        "dark-compact": "0C08F33C09470D37A67285E025912E0FE86520416C9BB13316BD8E0FEAD1D1B8"
+      },
+      "scope": "Three State=Empty|Content|Disabled variants; deterministic zero- or one-page initialization, 300 by 190 authored frame, Profile-token surface, border, primary text and disabled presentation across all four runtime profiles.",
+      "limitations": "Route history, page identity, transitions and persistence remain host-owned. The live Figma Content and Disabled specimens contain overlapping source text; the frozen source view preserves that fact while the runtime preview remains readable. Formal designer and governance approval remain open.",
+      "runtimeEvidence": [
+        "Source/ComponentKit/runtime/component/PageFlowAppearance.h",
+        "Source/ComponentKit/runtime/component/PageFlowAppearance.cpp",
+        "Source/ComponentKit/runtime/component/native/Z_StackedWidget.h",
+        "Source/ComponentKit/runtime/component/native/Z_StackedWidget.cpp",
+        "ComponentLab/Source/delivery/demo/PageFlowGallery.cpp",
+        "ComponentLab/Source/delivery/tests/CompositionTests.cpp"
+      ]
+    },
+    "ComponentLab/WizardPage": {
+      "status": "VERIFIED",
+      "figmaNodeId": "516:113",
+      "figmaScreenshotSha256": "D7CBF94871E5DEC438AD7FC4190EDAC23417CE2F31DE7149C38E75E2583C5FA8",
+      "profiles": ["light-comfortable", "light-compact", "dark-comfortable", "dark-compact"],
+      "runtimeGallerySha256": {
+        "light-comfortable": "17DA202E481407700D31361C3821E8C1CD0ABE6E5822EF2B8329E4508539D5D5",
+        "light-compact": "17DA202E481407700D31361C3821E8C1CD0ABE6E5822EF2B8329E4508539D5D5",
+        "dark-comfortable": "ED234D31904D6D354507C448A79E6BDB46D7486AB6E505870AFAA48E4604A907",
+        "dark-compact": "ED234D31904D6D354507C448A79E6BDB46D7486AB6E505870AFAA48E4604A907"
+      },
+      "scope": "Six Kind=Standard|Commit|Final by Completion=Incomplete|Complete variants; native QWizardPage semantics, required-field completion, token-backed surface, copy, accent border, status strip and status icon across all four runtime profiles.",
+      "limitations": "Completion is preview metadata unless derived from the real required-field state; the adapter does not override QWizardPage::isComplete(). Validation rules, asynchronous checks and navigation policy remain host-owned. Formal designer and governance approval remain open.",
+      "runtimeEvidence": [
+        "Source/ComponentKit/runtime/component/PageFlowAppearance.h",
+        "Source/ComponentKit/runtime/component/PageFlowAppearance.cpp",
+        "Source/ComponentKit/runtime/component/native/Z_WizardPage.h",
+        "Source/ComponentKit/runtime/component/native/Z_WizardPage.cpp",
+        "ComponentLab/Source/delivery/demo/PageFlowGallery.cpp",
+        "ComponentLab/Source/delivery/tests/CompositionTests.cpp"
+      ]
+    },
+    "ComponentLab/Wizard": {
+      "status": "VERIFIED",
+      "figmaNodeId": "516:669",
+      "figmaScreenshotSha256": "FF54A917697A738D4411D8316A8DED0CDF014EA470AE403245AB8BA99293245A",
+      "profiles": ["light-comfortable", "light-compact", "dark-comfortable", "dark-compact"],
+      "runtimeGallerySha256": {
+        "light-comfortable": "E5A5B70C5ED6B71F6AC235D195132B522F091F5A2AE4C1B3CF9AB60A3EFDB713",
+        "light-compact": "E5A5B70C5ED6B71F6AC235D195132B522F091F5A2AE4C1B3CF9AB60A3EFDB713",
+        "dark-comfortable": "FFE6284C2E6FABDDC189834E18E6BF85613BB01CE3CA815A57C93093909AD298",
+        "dark-compact": "FFE6284C2E6FABDDC189834E18E6BF85613BB01CE3CA815A57C93093909AD298"
+      },
+      "scope": "Sixteen Style=Classic|Modern|Mac|Aero by Phase=Start|Middle|Commit|Finish variants; native QWizard style mapping, four real pages, phase preview, Profile-token frame and native-role button states across all four runtime profiles.",
+      "limitations": "Phase remains deterministic preview metadata rather than forced QWizard navigation state. Branching, validation, asynchronous work, cancellation policy, persistence and application routing remain host-owned. Formal designer and governance approval remain open.",
+      "runtimeEvidence": [
+        "Source/ComponentKit/runtime/component/PageFlowAppearance.h",
+        "Source/ComponentKit/runtime/component/PageFlowAppearance.cpp",
+        "Source/ComponentKit/runtime/component/native/Z_Wizard.h",
+        "Source/ComponentKit/runtime/component/native/Z_Wizard.cpp",
+        "ComponentLab/Source/delivery/demo/PageFlowGallery.cpp",
+        "ComponentLab/Source/delivery/tests/CompositionTests.cpp"
+      ]
     }
   },
   "tokenBindingEvidencePolicy": {

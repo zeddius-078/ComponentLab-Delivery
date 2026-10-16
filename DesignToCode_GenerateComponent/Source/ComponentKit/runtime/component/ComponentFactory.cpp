@@ -177,7 +177,13 @@ QWidget* ComponentFactory::create(const QString& name, QWidget* parent) const {
     if (name == "commonWidget::Z_Spin") return new Z_Spin(parent);
     if (name == "commonWidget::Z_Result") return new Z_Result(parent);
     if (name == "commonWidget::Z_Skeleton") return new Z_Skeleton(parent);
-    if (auto* component = createGeneratedNativeComponent(name, parent)) return component;
+    if (auto* component = createGeneratedNativeComponent(name, parent)) {
+        // Generated native wrappers intentionally keep their Qt-compatible constructors.
+        // Carry the factory profile as internal runtime context so appearance adapters can
+        // resolve generated Tokens without adding a public/demo-only property to the API.
+        component->setProperty("designSystemProfile", profile);
+        return component;
+    }
     throw std::runtime_error(("UNREGISTERED_COMPONENT_CLASS: " + name).toStdString());
 }
 

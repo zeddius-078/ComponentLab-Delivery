@@ -1,11 +1,15 @@
 #include "PageFlowAppearance.h"
 #include "FocusIndicator.h"
+#include "Surface.h"
+#include "TokenResources.h"
 #include "Z_PushButton.h"
+#include "ComponentTheme.h"
 #include "native/Z_WizardPage.h"
 #include <QStackedWidget>
 #include <QWizard>
 #include <QWizardPage>
 #include <QAbstractButton>
+#include <QColor>
 #include <QEvent>
 #include <QFile>
 #include <QFontDatabase>
@@ -13,6 +17,7 @@
 #include <QJsonObject>
 #include <QJsonArray>
 #include <QLabel>
+#include <QRegularExpression>
 #include <QTimer>
 #include <QVBoxLayout>
 #include <stdexcept>
@@ -27,17 +32,44 @@ void fonts() {
     }();
     Q_UNUSED(loaded)
 }
-QString color(const QJsonValue& v) {
-    const auto a=v.toArray();
-    return QString("rgba(%1,%2,%3,%4)").arg(a[0].toInt()).arg(a[1].toInt()).arg(a[2].toInt()).arg(qRound(255*a[3].toDouble(1)));
+QString profileFor(const QWidget* widget) {
+    const auto explicitProfile=widget->property("designSystemProfile").toString();
+    if(!explicitProfile.isEmpty())return explicitProfile;
+    const auto installed=component_theme::activeProfile();
+    return installed.isEmpty()?QStringLiteral("light-comfortable"):installed;
 }
-const QJsonObject& recipes() {
-    static const auto value=[] {
-        QFile f(":/figma/button-visuals.json");
-        if(!f.open(QIODevice::ReadOnly))throw std::runtime_error("Button recipes unavailable");
-        return QJsonDocument::fromJson(f.readAll()).object()["recipes"].toObject();
-    }();
-    return value;
+QString qssColor(const QColor& value) {
+    return QString("rgba(%1,%2,%3,%4)").arg(value.red()).arg(value.green()).arg(value.blue()).arg(value.alpha());
+}
+struct FlowTokens {
+    QJsonObject colors;
+    explicit FlowTokens(const QString& profile) {
+        static const QJsonObject profiles=[] {
+            QJsonParseError error;
+            const auto document=QJsonDocument::fromJson(token_resources::read(":/tokens/tokens_qt.json"),&error);
+            if(error.error!=QJsonParseError::NoError || !document.isObject())
+                throw std::runtime_error("Invalid Page Flow Token document");
+            return document.object()["profiles"].toObject();
+        }();
+        colors=profiles[profile].toObject()["color"].toObject();
+        if(colors.isEmpty())throw std::invalid_argument("Unknown Page Flow profile");
+    }
+    QColor color(const char* key) const {
+        const auto value=colors[QString::fromLatin1(key)].toString();
+        if(value.isEmpty())throw std::runtime_error("Missing Page Flow color Token");
+        const auto rgba=QRegularExpression(QStringLiteral("^rgba\\((\\d+),\\s*(\\d+),\\s*(\\d+),\\s*([0-9.]+)\\)$")).match(value);
+        if(rgba.hasMatch()) {
+            QColor result(rgba.captured(1).toInt(),rgba.captured(2).toInt(),rgba.captured(3).toInt());
+            result.setAlphaF(rgba.captured(4).toDouble());return result;
+        }
+        return surface::color(value);
+    }
+    QString qss(const char* key) const {return qssColor(color(key));}
+    QString subtleBrand() const {auto value=color("base.stoken.color.interactive.brand.default");value.setAlpha(20);return qssColor(value);}
+};
+void inheritProfile(QWidget* child,const QWidget* parent) {
+    const auto profile=parent->property("designSystemProfile");
+    if(profile.isValid())child->setProperty("designSystemProfile",profile);
 }
 class WizardBinding final:public QObject {
 public:
@@ -46,21 +78,37 @@ public:
         connect(w,&QWizard::currentIdChanged,this,[this]{refresh();});
     }
     void refresh() {
+        const FlowTokens tokens(profileFor(wizard));
+        const auto surface=tokens.qss("semantic.color.background.surface");
+        const auto hover=tokens.qss("semantic.color.background.interactive-hover");
+        const auto pressed=tokens.qss("semantic.color.background.interactive-active");
+        const auto text=tokens.qss("semantic.color.text.primary");
+        const auto disabledSurface=tokens.qss("semantic.color.background.disabled");
+        const auto disabledText=tokens.qss("base.stoken.button.base.disabled.label.color");
+        const auto control=tokens.qss("semantic.color.border.control");
+        const auto subtle=tokens.qss("semantic.color.border.subtle");
+        const auto brand=tokens.qss("base.stoken.color.interactive.brand.default");
+        const auto brandHover=tokens.qss("base.stoken.color.interactive.brand.hover");
+        const auto brandPressed=tokens.qss("base.stoken.color.interactive.brand.pressed");
+        const auto onBrand=tokens.qss("semantic.color.text.onBrand");
+        const auto focus=tokens.qss("semantic.color.border.focus");
         // Do not replace custom buttons: Qt keeps each role's exact object and connection.
         for(int n=QWizard::BackButton;n<=QWizard::CustomButton3;++n) {
             auto* b=wizard->button(QWizard::WizardButton(n));
             if(!b || qobject_cast<Z_PushButton*>(b))continue;
             FocusIndicator::instance().watch(b);
             b->setProperty("figmaWizardButton",true);
-            const auto family=(n==QWizard::NextButton || n==QWizard::CommitButton || n==QWizard::FinishButton)?"PRIMARY":"DEFAULT";
+            const bool primary=n==QWizard::NextButton || n==QWizard::CommitButton || n==QWizard::FinishButton;
+            const auto family=primary?"PRIMARY":"DEFAULT";
             b->setProperty("figmaWizardButtonRecipe",family);
-            QString css;
-            for(const auto& pair:QList<QPair<QString,QString>>{{"","default"},{":hover","hover"},{":pressed","active"},{":disabled","disabled"}}) {
-                const auto r=recipes()[family].toObject()[pair.second].toObject();
-                css+=QString("QAbstractButton[figmaWizardButton=true]%1{background:%2;color:%3;border:%4px solid %5;border-radius:%6px;padding:0 12px;min-height:32px;font-family:'Inter';font-size:14px;font-weight:400;}")
-                    .arg(pair.first,color(r["fill"]),color(r["foreground"])).arg(r["strokeWidth"].toDouble()).arg(color(r["stroke"])).arg(r["radius"].toDouble());
-            }
-            css+="QAbstractButton[figmaWizardButton=true]:focus[focusIndicatorVisible=true]{border:1px solid #6235f7;}";
+            const auto buttonRule=[](const QString& pseudo,const QString& fill,const QString& foreground,const QString& border){
+                return QString("QAbstractButton[figmaWizardButton=true]%1{background:%2;color:%3;border:1px solid %4;border-radius:4px;padding:0 12px;min-height:32px;font-family:'Inter';font-size:14px;font-weight:400;}").arg(pseudo,fill,foreground,border);
+            };
+            QString css=primary
+                ?buttonRule("",brand,onBrand,brand)+buttonRule(":hover",brandHover,onBrand,brandHover)+buttonRule(":pressed",brandPressed,onBrand,brandPressed)
+                :buttonRule("",surface,text,control)+buttonRule(":hover",hover,text,control)+buttonRule(":pressed",pressed,text,control);
+            css+=buttonRule(":disabled",disabledSurface,disabledText,subtle);
+            css+=QString("QAbstractButton[figmaWizardButton=true]:focus[focusIndicatorVisible=true]{border:1px solid %1;}").arg(focus);
             if(b->styleSheet()!=css)b->setStyleSheet(css);
         }
     }
@@ -139,6 +187,7 @@ void configureFigmaWizard(QWizard* wizard,const QMap<QString,QString>& propertie
     const QStringList kinds{"Standard","Standard","Commit","Final"};
     for(int i=0;i<4;++i) {
         auto* page=new Z_WizardPage;
+        inheritProfile(page,wizard);
         configureFigmaWizardPage(page,{{"Kind",kinds[i]},{"Completion","Incomplete"},
             {"Title",i==2?"Confirm changes":i==3?"Complete setup":"Configure device"}});
         wizard->setPage(i,page);
@@ -151,7 +200,15 @@ void configureFigmaWizard(QWizard* wizard,const QMap<QString,QString>& propertie
 void applyFigmaStackedWidgetAppearance(QStackedWidget* stack) {
     if(!stack)throw std::invalid_argument("Stack required");fonts();
     stack->setProperty("designSystemStyleOwner","figma-pageflow-captured");
-    stack->setStyleSheet("QStackedWidget[designSystemStyleOwner=\"figma-pageflow-captured\"]{background:white;border:1px solid #d0d0d0;border-radius:8px;color:#191919;}QStackedWidget[designSystemStyleOwner=\"figma-pageflow-captured\"]:disabled{background:#8a8a8a;color:#8a8a8a;}");
+    const FlowTokens tokens(profileFor(stack));
+    const auto root=QStringLiteral("QStackedWidget[designSystemStyleOwner=\"figma-pageflow-captured\"]");
+    stack->setStyleSheet(QString("%1{background:%2;border:1px solid %3;border-radius:8px;color:%4;}"
+                                 "%1 QLabel#flowStackPageTitle,%1 QLabel#flowStackPageBody{background:transparent;border:0;color:%4;}"
+                                 "%1:disabled{background:%5;border-color:%3;color:%6;}"
+                                 "%1:disabled QLabel#flowStackPageTitle,%1:disabled QLabel#flowStackPageBody{color:%6;}")
+        .arg(root,tokens.qss("semantic.color.background.surface"),tokens.qss("semantic.color.border.subtle"),
+             tokens.qss("semantic.color.text.primary"),tokens.qss("semantic.color.text.disabled"),
+             tokens.qss("semantic.color.text.disabled")));
 }
 void applyFigmaWizardPageAppearance(QWizardPage* page) {
     if(!page)throw std::invalid_argument("Wizard page required");fonts();
@@ -159,7 +216,19 @@ void applyFigmaWizardPageAppearance(QWizardPage* page) {
     const auto refresh=[page]{
         const auto preview=page->property("figmaFlowCompletionPreview").toString();
         const bool complete=preview=="Complete" || (preview.isEmpty()&&page->isComplete());
-        const QString css=QString("QWizardPage[designSystemStyleOwner=\"figma-pageflow-captured\"]{background:white;color:#191919;border:1px solid %1;border-radius:8px;}").arg(complete?"#6235f7":"#d0d0d0");
+        const FlowTokens tokens(profileFor(page));
+        page->setProperty("figmaFlowStatusIconColor",
+            complete?tokens.color("base.stoken.color.interactive.brand.default"):
+                     tokens.color("semantic.color.text.primary"));
+        const auto root=QStringLiteral("QWizardPage[designSystemStyleOwner=\"figma-pageflow-captured\"]");
+        const QString css=QString("%1{background:%2;color:%3;border:1px solid %4;border-radius:8px;}"
+                                  "%1 QLabel#flowPageTitle{background:transparent;border:0;color:%3;}"
+                                  "%1 QLabel#flowPageSubtitle{background:transparent;border:0;color:%5;}"
+                                  "%1 QLabel#flowCompletionStatus{background:%6;border:0;color:%7;padding:8px;font-family:'Inter';font-size:12px;font-weight:504;}")
+            .arg(root,tokens.qss("semantic.color.background.surface"),tokens.qss("semantic.color.text.primary"),
+                 complete?tokens.qss("semantic.color.border.focus"):tokens.qss("semantic.color.border.subtle"),
+                 tokens.qss("semantic.color.text.secondary"),complete?tokens.subtleBrand():tokens.qss("semantic.color.background.surface"),
+                 complete?tokens.qss("base.stoken.color.interactive.brand.default"):tokens.qss("semantic.color.text.primary"));
         if(page->styleSheet()!=css)page->setStyleSheet(css);
     };
     if(!page->property("figmaWizardPageBound").toBool()) {
@@ -171,7 +240,9 @@ void applyFigmaWizardPageAppearance(QWizardPage* page) {
 void applyFigmaWizardAppearance(QWizard* wizard) {
     if(!wizard)throw std::invalid_argument("Wizard required");fonts();
     wizard->setProperty("designSystemStyleOwner","figma-pageflow-captured");
-    const QString css="QWizard[designSystemStyleOwner=\"figma-pageflow-captured\"]{background:white;color:#191919;border:1px solid #d0d0d0;border-radius:10px;}";
+    const FlowTokens tokens(profileFor(wizard));
+    const QString css=QString("QWizard[designSystemStyleOwner=\"figma-pageflow-captured\"]{background:%1;color:%2;border:1px solid %3;border-radius:10px;}")
+        .arg(tokens.qss("semantic.color.background.surface"),tokens.qss("semantic.color.text.primary"),tokens.qss("semantic.color.border.subtle"));
     if(wizard->styleSheet()!=css)wizard->setStyleSheet(css);
     auto* binding=static_cast<WizardBinding*>(wizard->findChild<QObject*>("figmaWizardBinding",Qt::FindDirectChildrenOnly));
     if(!binding)binding=new WizardBinding(wizard);

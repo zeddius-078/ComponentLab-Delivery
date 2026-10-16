@@ -610,7 +610,10 @@ int main(int argc, char *argv[]) {
     commonWidget::configureFigmaStackedWidget(
         flowStack, {{QStringLiteral("State"), QStringLiteral("Disabled")}});
     if (flowStack->count() != 1 || flowStack->isEnabled() ||
-        flowStack->property("figmaFlowStatePreview").toString() != QStringLiteral("Disabled"))
+        flowStack->property("figmaFlowStatePreview").toString() != QStringLiteral("Disabled") ||
+        flowStack->property("designSystemProfile").toString() !=
+            QStringLiteral("light-comfortable") ||
+        !flowStack->styleSheet().contains(QStringLiteral("background:rgba(138,138,138,255)")))
         return 127;
     commonWidget::configureFigmaWizardPage(
         flowPage, {{QStringLiteral("Kind"), QStringLiteral("Commit")},
@@ -620,7 +623,10 @@ int main(int argc, char *argv[]) {
     if (!flowPage->isCommitPage() || !flowPage->isComplete() ||
         flowPage->property("figmaFlowKindPreview").toString() != QStringLiteral("Commit") ||
         flowPage->property("figmaFlowCompletionPreview").toString() !=
-            QStringLiteral("Incomplete"))
+            QStringLiteral("Incomplete") ||
+        flowPage->property("designSystemProfile").toString() !=
+            QStringLiteral("light-comfortable") ||
+        !flowPage->styleSheet().contains(QStringLiteral("background:rgba(255,255,255,255)")))
         return 128;
     commonWidget::configureFigmaWizard(
         flowWizard, {{QStringLiteral("Style"), QStringLiteral("Modern")},
@@ -628,7 +634,12 @@ int main(int argc, char *argv[]) {
     if (flowWizard->wizardStyle() != QWizard::ModernStyle || flowWizard->currentId() != 0 ||
         flowWizard->pageIds().size() != 4 || !flowWizard->page(2)->isCommitPage() ||
         !flowWizard->page(3)->isFinalPage() ||
-        flowWizard->property("figmaFlowPhasePreview").toString() != QStringLiteral("Finish"))
+        flowWizard->property("figmaFlowPhasePreview").toString() != QStringLiteral("Finish") ||
+        flowWizard->property("designSystemProfile").toString() !=
+            QStringLiteral("light-comfortable") ||
+        flowWizard->page(0)->property("designSystemProfile").toString() !=
+            QStringLiteral("light-comfortable") ||
+        !flowWizard->styleSheet().contains(QStringLiteral("background:rgba(255,255,255,255)")))
         return 129;
     for (auto* flow : {static_cast<QWidget*>(flowStack), static_cast<QWidget*>(flowPage),
                        static_cast<QWidget*>(flowWizard)})
