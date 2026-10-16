@@ -1730,12 +1730,44 @@
         "the Transfer component set currently has no Code Connect mapping and no mapping was invented without an approved public repository source",
         "the remaining 100 canonical entries still require equivalent live-Figma and four-profile visual evidence"
       ]
+    },
+    {
+      "id": "B37-desktop-bottom-navigation-public-gallery-and-runtime-realignment",
+      "date": "2026-10-16",
+      "status": "VERIFIED",
+      "inputs": [
+        "live Figma design context, variable definitions, metadata, screenshot and Code Connect status for ComponentLab/DesktopBottomNavigation set 1312:96",
+        "user runtime evidence showing page 20.1.09 as a broken mixture of internal anatomy and blank placeholders",
+        "current ComponentLab capture proving that the Appearance tab selected the first private anatomy set instead of the public composite"
+      ],
+      "outputs": [
+        "routed page 1307:2 Appearance to the public SDK Z_DesktopBottomNavigation rather than an internal SubItem placeholder",
+        "added live Top and Start placement control, primary and secondary selection controls, optional focus-indicator control and activation event evidence",
+        "kept SubItem, MainItem and Separator as private anatomy and documented host-owned navigation boundaries",
+        "aligned the SDK primary item gap to the live Figma 8 px component token",
+        "made the navigation Appearance gallery consume the active light or dark profile rather than silently falling back to light-comfortable",
+        "added a regression that exercises real main and secondary action clicks, indices, signals, geometry and public-component routing",
+        "advanced DesktopBottomNavigation to VERIFIED using live Figma and four-profile appearance plus state-gallery hashes"
+      ],
+      "verification": [
+        "the regression failed before the fix because no public placement control existed, reproducing the wrong internal-anatomy route",
+        "the focused navigation regression passed in all four profiles after the fix",
+        "live Figma confirmed IconPlacement Top and Start, 840 px public width, 138 and 122 px heights, three primary and three secondary sample actions, and 8 px governed gaps",
+        "four fresh public Appearance and group/state captures completed and were visually inspected across light-comfortable, light-compact, dark-comfortable and dark-compact",
+        "the canonical catalog remains 110 entries and Token binding remains 110 BOUND_VERIFIED"
+      ],
+      "open": [
+        "VERIFIED is scoped engineering visual evidence rather than formal designer or governance approval",
+        "stable destinations, permissions, route resolution and page switching remain host-controller responsibilities",
+        "the DesktopBottomNavigation component set currently has no Code Connect mapping and no mapping was invented without an approved public repository source",
+        "the remaining 99 canonical entries still require equivalent live-Figma and four-profile visual evidence"
+      ]
     }
   ],
   "currentVisualVerificationSummary": {
-    "asOfBatch": "B36-transfer-interaction-layout-and-runtime-visual-realignment",
-    "verified": 10,
-    "notVerified": 100,
+    "asOfBatch": "B37-desktop-bottom-navigation-public-gallery-and-runtime-realignment",
+    "verified": 11,
+    "notVerified": 99,
     "governanceReviewed": 0,
     "tokenBoundVerified": 110
   },

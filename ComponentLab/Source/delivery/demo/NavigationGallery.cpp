@@ -150,7 +150,7 @@ bool hasNavigationGallery(const QString& id) {
     return id == "482:335" || id == "486:10" || id == "492:10";
 }
 
-QWidget* createNavigationAppearance(const QString& id, QWidget* parent) {
+QWidget* createNavigationAppearance(const QString& id, QWidget* parent, const QString& profile) {
     auto* page = new QWidget(parent);
     auto* layout = new QVBoxLayout(page);
     auto* split = new QSplitter(page);
@@ -183,8 +183,70 @@ QWidget* createNavigationAppearance(const QString& id, QWidget* parent) {
         return c;
     };
     QWidget* preview = nullptr;
-    if (id == "392:2") {
-        auto* sidebar = new commonWidget::Z_Sidebar(previewHost);
+    if (id == "1307:2") {
+        settings->setMaximumWidth(330);
+        stage->setMinimumWidth(880);
+        auto* bottom = new commonWidget::Z_DesktopBottomNavigation(profile, previewHost);
+        preview = bottom;
+        events->setText(QString::fromUtf8("点击主导航或次导航，检查选中状态与激活信号"));
+        auto* placement = combo("IconPlacement", {"Top", "Start"});
+        placement->setObjectName("desktopBottomNavigationPlacementControl");
+        auto* primary = new QComboBox(settings);
+        primary->setObjectName("desktopBottomNavigationPrimaryControl");
+        primary->addItems(bottom->primaryItems());
+        form->addRow(QString::fromUtf8("主导航选中项"), primary);
+        auto* secondary = new QComboBox(settings);
+        secondary->setObjectName("desktopBottomNavigationSecondaryControl");
+        secondary->addItems(bottom->secondaryItems());
+        form->addRow(QString::fromUtf8("次导航选中项"), secondary);
+        auto* focus = new QCheckBox(QString::fromUtf8("显示组件焦点指示"), settings);
+        focus->setObjectName("desktopBottomNavigationFocusIndicatorControl");
+        focus->setChecked(bottom->focusIndicatorEnabled());
+        form->addRow(focus);
+        auto* note = new QLabel(QString::fromUtf8(
+            "内部组件不单独实例化。\n"
+            "路由与页面切换由宿主负责。"), settings);
+        note->setObjectName("desktopBottomNavigationAnatomyNote");
+        note->setWordWrap(true);
+        form->addRow(note);
+        // The public component is 840 px wide in Figma. Keep the contract tree,
+        // but place it below the controls so it cannot cover the specimen.
+        tree->setParent(settings);
+        tree->setMinimumWidth(0);
+        tree->setMinimumHeight(240);
+        form->addRow(tree);
+        const auto sync = [=] {
+            const QSignalBlocker a(placement), b(primary), c(secondary), d(focus);
+            placement->setCurrentText(bottom->iconPlacement());
+            primary->setCurrentIndex(bottom->currentIndex());
+            secondary->setCurrentIndex(bottom->secondaryIndex());
+            focus->setChecked(bottom->focusIndicatorEnabled());
+            bottom->setFixedSize(bottom->sizeHint());
+            inspect(tree, bottom, id);
+        };
+        QObject::connect(placement, &QComboBox::currentTextChanged, bottom,
+                         [=](const QString& value) { bottom->setIconPlacement(value); sync(); });
+        QObject::connect(primary, qOverload<int>(&QComboBox::currentIndexChanged), bottom,
+                         [=](int index) { if (index >= 0) bottom->setCurrentIndex(index); sync(); });
+        QObject::connect(secondary, qOverload<int>(&QComboBox::currentIndexChanged), bottom,
+                         [=](int index) { if (index >= 0) bottom->setSecondaryIndex(index); sync(); });
+        QObject::connect(focus, &QCheckBox::toggled, bottom,
+                         [=](bool value) { bottom->setFocusIndicatorEnabled(value); sync(); });
+        QObject::connect(bottom, &commonWidget::Z_DesktopBottomNavigation::primaryActivated,
+                         page, [=](int index) {
+                             events->setText(QStringLiteral("primaryActivated: %1 · %2")
+                                                 .arg(index).arg(bottom->primaryItems().value(index)));
+                             sync();
+                         });
+        QObject::connect(bottom, &commonWidget::Z_DesktopBottomNavigation::secondaryActivated,
+                         page, [=](int index) {
+                             events->setText(QStringLiteral("secondaryActivated: %1 · %2")
+                                                 .arg(index).arg(bottom->secondaryItems().value(index)));
+                             sync();
+                         });
+        sync();
+    } else if (id == "392:2") {
+        auto* sidebar = new commonWidget::Z_Sidebar(profile, previewHost);
         preview = sidebar;
         auto* density = combo("Density", {"Comfortable", "Compact"});
         auto* collapsed = new QCheckBox(QString::fromUtf8("折叠侧边栏"), settings);
@@ -403,7 +465,8 @@ QWidget* createNavigationAppearance(const QString& id, QWidget* parent) {
     preview->setObjectName("navigationInteractivePreview");
     previewLayout->addWidget(preview, 0, Qt::AlignLeft);
     inspect(tree, preview, id);
-    split->setSizes({240, 500, 300});
+    split->setSizes(id == "1307:2" ? QList<int>{320, 1100}
+                                     : QList<int>{240, 500, 300});
     return page;
 }
 

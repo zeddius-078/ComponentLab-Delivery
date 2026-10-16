@@ -1783,7 +1783,7 @@ Z_DesktopBottomNavigation::Z_DesktopBottomNavigation(const QString& profile, QWi
     m_primaryHost->setObjectName(QStringLiteral("desktopBottomNavigationPrimaryTier"));
     m_primaryLayout = new QHBoxLayout(m_primaryHost);
     m_primaryLayout->setContentsMargins(0, 0, 0, 0);
-    m_primaryLayout->setSpacing(0);
+    m_primaryLayout->setSpacing(8);
     root->addWidget(m_secondaryHost);
     root->addWidget(m_primaryHost);
 

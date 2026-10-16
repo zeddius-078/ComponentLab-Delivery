@@ -2512,13 +2512,14 @@ QWidget* createFigmaPage(const DesignComponentPage& figmaPage,
         appearanceLayout->addWidget(createImageAssetGallery(profile, true, appearance));
     } else if (figmaPage.id == QStringLiteral("2127:5")) {
         appearanceLayout->addWidget(createModelAssetGallery(profile, true, appearance));
-    } else if (figmaPage.id == QStringLiteral("392:2")) {
-        // Sidebar's first Figma set is internal NavItem anatomy. Route the
-        // appearance tab to the public SDK component instead of a blank
-        // contract-only editor; the variant gallery still shows both sets.
-        appearanceLayout->addWidget(createNavigationAppearance(figmaPage.id, appearance));
+    } else if (figmaPage.id == QStringLiteral("392:2") ||
+               figmaPage.id == QStringLiteral("1307:2")) {
+        // These pages list internal anatomy before the public composition.
+        // The appearance tab must demonstrate the public SDK component rather
+        // than defaulting to a blank contract-only editor for the first set.
+        appearanceLayout->addWidget(createNavigationAppearance(figmaPage.id, appearance, profile));
     } else if (hasNavigationGallery(figmaPage.id)) {
-        appearanceLayout->addWidget(createNavigationAppearance(figmaPage.id, appearance));
+        appearanceLayout->addWidget(createNavigationAppearance(figmaPage.id, appearance, profile));
     } else if (existingSections && existingSections->count()) {
         // Keep the original editor, its signal wiring and QObject inspector alive.
         // The Figma navigation owns only presentation and must not replace this contract.

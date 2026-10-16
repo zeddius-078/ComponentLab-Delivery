@@ -285,7 +285,12 @@
         "Source/SDKConsumerTest/main.cpp",
         "DesignToCode_GenerateLayout/Source/HtmlDsl/pipeline/mapping/component-mapping.json",
         "DesignToCode_GenerateLayout/Source/Validation/component/ComponentTests.cpp",
-        "ComponentLab/Source/delivery/demo/CompositeGallery.cpp",
+        "ComponentLab/Source/delivery/demo/NavigationGallery.cpp",
+        "ComponentLab/Source/delivery/tests/CompositionTests.cpp",
+        "Source/ComponentKit/runtime/component/Z_DesignComponents.h",
+        "Source/ComponentKit/runtime/component/Z_DesignComponents.cpp",
+        "Source/SDKConsumerTest/main.cpp",
+        "ComponentLab/Source/delivery/demo/NavigationGallery.cpp",
         "ComponentLab/Source/delivery/tests/CompositionTests.cpp"
       ],
       "designOriginAction": "REUSE",
@@ -298,7 +303,7 @@
         "runtime": "VERIFIED",
         "runtimeScope": "SDK_FACTORY_COMPONENTLAB_GENERATELAYOUT",
         "factoryRegistration": "VERIFIED",
-        "visual": "NOT_VERIFIED",
+        "visual": "VERIFIED",
         "downstreamConsumption": "VERIFIED",
         "tokenBinding": "BOUND_VERIFIED"
       },
@@ -321,6 +326,38 @@
           "secondaryActivated(int)"
         ],
         "controllerBoundary": "Stable destinations, selection synchronization and page switching remain generated-page responsibilities; internal item sets remain SDK anatomy."
+      },
+      "visualEvidence": {
+        "status": "VERIFIED",
+        "figmaNodeId": "1312:96",
+        "figmaScreenshotSha256": "26F60249BDBF0934827805904021B4736CEEEAA595215A5946993E6F114A1573",
+        "profiles": [
+          "light-comfortable",
+          "light-compact",
+          "dark-comfortable",
+          "dark-compact"
+        ],
+        "runtimeGallerySha256": {
+          "light-comfortable": "BF60FB8153F5E4D399F7FC1250D7AC8E4BE9D70062C0FE2573381B2A8193935E",
+          "light-compact": "2AA350BE16D89748C414CB842C3E2237956C0551B0F7FCB44201522E63D64F91",
+          "dark-comfortable": "D47B732524B241196D7DE41A660E498F174EF4B48805961FCB79E809688533BA",
+          "dark-compact": "18E7AFB9C2067BA6C43E44BFC9E02F396B6AC8A04BC69E8ECB35F45B5FEE336D"
+        },
+        "runtimeStateGallerySha256": {
+          "light-comfortable": "9F946A0007E521B6227206BDB3DEF4A19EF3177F81360F75E74749E99BCBEDA1",
+          "light-compact": "687FDC905B5F37882D7A15B40D6E34AC3772AE7EA058B0C53186B8BD6F2F8C62",
+          "dark-comfortable": "3FBA6E02D76ADBE9C0D7E8E704450815A3FBCC54E07A015743C376F00ED8EAA7",
+          "dark-compact": "E17E89BCB6724CD2C81573FF9A4677222CE168829157F8E1DCB4F725AA1F7007"
+        },
+        "scope": "Two public IconPlacement=Top|Start variants; 840 px composite width, muted secondary tier, three sample secondary actions, three icon-and-label primary actions, 8 px governed tier and item gaps, selected state, real child-action activation and optional focus indicator.",
+        "limitations": "SubItem, MainItem and Separator remain private anatomy rather than independent SDK components. Stable destination data, permissions, route resolution and page switching remain host-owned. The component set currently has no Code Connect mapping; none was invented without an approved public repository source. Formal designer and governance approval remain open.",
+        "runtimeEvidence": [
+          "Source/ComponentKit/runtime/component/Z_DesignComponents.h",
+          "Source/ComponentKit/runtime/component/Z_DesignComponents.cpp",
+          "Source/SDKConsumerTest/main.cpp",
+          "ComponentLab/Source/delivery/demo/NavigationGallery.cpp",
+          "ComponentLab/Source/delivery/tests/CompositionTests.cpp"
+        ]
       }
     },
     {
@@ -7130,7 +7167,12 @@
         "Source/SDKConsumerTest/main.cpp",
         "DesignToCode_GenerateLayout/Source/HtmlDsl/pipeline/mapping/component-mapping.json",
         "DesignToCode_GenerateLayout/Source/Validation/component/ComponentTests.cpp",
-        "ComponentLab/Source/delivery/demo/CompositeGallery.cpp",
+        "ComponentLab/Source/delivery/demo/NavigationGallery.cpp",
+        "ComponentLab/Source/delivery/tests/CompositionTests.cpp",
+        "Source/ComponentKit/runtime/component/Z_DesignComponents.h",
+        "Source/ComponentKit/runtime/component/Z_DesignComponents.cpp",
+        "Source/SDKConsumerTest/main.cpp",
+        "ComponentLab/Source/delivery/demo/NavigationGallery.cpp",
         "ComponentLab/Source/delivery/tests/CompositionTests.cpp"
       ],
       "designOriginAction": "REUSE",
@@ -7143,7 +7185,7 @@
         "runtime": "VERIFIED",
         "runtimeScope": "SDK_FACTORY_COMPONENTLAB_GENERATELAYOUT",
         "factoryRegistration": "VERIFIED",
-        "visual": "NOT_VERIFIED",
+        "visual": "VERIFIED",
         "downstreamConsumption": "VERIFIED",
         "tokenBinding": "BOUND_VERIFIED"
       },
@@ -7166,6 +7208,38 @@
           "secondaryActivated(int)"
         ],
         "controllerBoundary": "Stable destinations, selection synchronization and page switching remain generated-page responsibilities; internal item sets remain SDK anatomy."
+      },
+      "visualEvidence": {
+        "status": "VERIFIED",
+        "figmaNodeId": "1312:96",
+        "figmaScreenshotSha256": "26F60249BDBF0934827805904021B4736CEEEAA595215A5946993E6F114A1573",
+        "profiles": [
+          "light-comfortable",
+          "light-compact",
+          "dark-comfortable",
+          "dark-compact"
+        ],
+        "runtimeGallerySha256": {
+          "light-comfortable": "BF60FB8153F5E4D399F7FC1250D7AC8E4BE9D70062C0FE2573381B2A8193935E",
+          "light-compact": "2AA350BE16D89748C414CB842C3E2237956C0551B0F7FCB44201522E63D64F91",
+          "dark-comfortable": "D47B732524B241196D7DE41A660E498F174EF4B48805961FCB79E809688533BA",
+          "dark-compact": "18E7AFB9C2067BA6C43E44BFC9E02F396B6AC8A04BC69E8ECB35F45B5FEE336D"
+        },
+        "runtimeStateGallerySha256": {
+          "light-comfortable": "9F946A0007E521B6227206BDB3DEF4A19EF3177F81360F75E74749E99BCBEDA1",
+          "light-compact": "687FDC905B5F37882D7A15B40D6E34AC3772AE7EA058B0C53186B8BD6F2F8C62",
+          "dark-comfortable": "3FBA6E02D76ADBE9C0D7E8E704450815A3FBCC54E07A015743C376F00ED8EAA7",
+          "dark-compact": "E17E89BCB6724CD2C81573FF9A4677222CE168829157F8E1DCB4F725AA1F7007"
+        },
+        "scope": "Two public IconPlacement=Top|Start variants; 840 px composite width, muted secondary tier, three sample secondary actions, three icon-and-label primary actions, 8 px governed tier and item gaps, selected state, real child-action activation and optional focus indicator.",
+        "limitations": "SubItem, MainItem and Separator remain private anatomy rather than independent SDK components. Stable destination data, permissions, route resolution and page switching remain host-owned. The component set currently has no Code Connect mapping; none was invented without an approved public repository source. Formal designer and governance approval remain open.",
+        "runtimeEvidence": [
+          "Source/ComponentKit/runtime/component/Z_DesignComponents.h",
+          "Source/ComponentKit/runtime/component/Z_DesignComponents.cpp",
+          "Source/SDKConsumerTest/main.cpp",
+          "ComponentLab/Source/delivery/demo/NavigationGallery.cpp",
+          "ComponentLab/Source/delivery/tests/CompositionTests.cpp"
+        ]
       }
     },
     {

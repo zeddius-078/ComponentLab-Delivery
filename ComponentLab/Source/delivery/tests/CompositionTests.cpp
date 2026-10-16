@@ -1851,7 +1851,24 @@ auto* secondEditor=editors->widget(1);auto* area=secondEditor->findChild<QMdiAre
                 auto* route=page->findChild<QComboBox*>("sidebarActiveRouteControl");QVERIFY(route);route->setCurrentIndex(1);
                 QCOMPARE(sidebar->activeRoute(),route->currentData().toString());
             }
-            if(entry.first=="1307:2"){QVERIFY(choices);QCOMPARE(choices->count(),3);}
+            if(entry.first=="1307:2"){
+                QVERIFY(!choices);
+                auto* bottom=page->findChild<Z_DesktopBottomNavigation*>("navigationInteractivePreview");QVERIFY(bottom);
+                QCOMPARE(bottom->variantTuple(),QString("IconPlacement=Top"));
+                QCOMPARE(bottom->size(),QSize(840,138));
+                auto* primaryHost=bottom->findChild<QWidget*>("desktopBottomNavigationPrimaryTier");QVERIFY(primaryHost);
+                auto* primaryLayout=qobject_cast<QHBoxLayout*>(primaryHost->layout());QVERIFY(primaryLayout);QCOMPARE(primaryLayout->spacing(),8);
+                auto* placement=page->findChild<QComboBox*>("desktopBottomNavigationPlacementControl");QVERIFY(placement);
+                placement->setCurrentText("Start");QCOMPARE(bottom->iconPlacement(),QString("Start"));QCOMPARE(bottom->size(),QSize(840,122));
+                auto* primary=page->findChild<QComboBox*>("desktopBottomNavigationPrimaryControl");QVERIFY(primary);
+                auto* secondary=page->findChild<QComboBox*>("desktopBottomNavigationSecondaryControl");QVERIFY(secondary);
+                QSignalSpy primarySpy(bottom,&Z_DesktopBottomNavigation::primaryActivated);
+                QSignalSpy secondarySpy(bottom,&Z_DesktopBottomNavigation::secondaryActivated);
+                const auto primaryButtons=bottom->findChildren<QToolButton*>("desktopBottomNavigationMainItem");QCOMPARE(primaryButtons.size(),3);
+                const auto secondaryButtons=bottom->findChildren<QPushButton*>("desktopBottomNavigationSubItem");QCOMPARE(secondaryButtons.size(),3);
+                primaryButtons[1]->click();QCOMPARE(bottom->currentIndex(),1);QCOMPARE(primary->currentIndex(),1);QCOMPARE(primarySpy.count(),1);
+                secondaryButtons[2]->click();QCOMPARE(bottom->secondaryIndex(),2);QCOMPARE(secondary->currentIndex(),2);QCOMPARE(secondarySpy.count(),1);
+            }
         }
     }
     void dataViewsGalleriesReproduceFigmaListContracts() {
