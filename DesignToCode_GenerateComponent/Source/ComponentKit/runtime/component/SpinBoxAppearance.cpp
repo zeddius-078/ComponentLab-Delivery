@@ -68,7 +68,7 @@ QRectF stepRect(const QAbstractSpinBox* spin, bool up, bool visual) {
 
 QFont textFont(bool affix) {
     QFont font;
-    font.setFamilies({"Inter", "Noto Sans SC"});
+    font.setFamilies({"HarmonyOS Sans", "HarmonyOS Sans SC"});
     font.setPixelSize(affix ? 13 : 14);
     font.setWeight(affix ? QFont::Normal : QFont::Medium);
     return font;
@@ -276,9 +276,9 @@ void applyFigmaSpinBoxAppearance(QAbstractSpinBox* spin, const QString& controls
         throw std::invalid_argument(
             "Captured SpinBox requires a native numeric spin box and source-backed controls/state");
     static const bool fonts = [] {
-        QFontDatabase::addApplicationFont(":/figma/fonts/Inter-Regular.otf");
-        QFontDatabase::addApplicationFont(":/figma/fonts/Inter-Medium.otf");
-        QFontDatabase::addApplicationFont(":/figma/fonts/NotoSansSC-Regular.otf");
+        QFontDatabase::addApplicationFont(":/fonts/HarmonyOS_Sans_Regular.ttf");
+        QFontDatabase::addApplicationFont(":/fonts/HarmonyOS_Sans_Regular.ttf");
+        QFontDatabase::addApplicationFont(":/fonts/HarmonyOS_Sans_SC_Regular.ttf");
         return true;
     }();
     Q_UNUSED(fonts);
@@ -290,9 +290,9 @@ void applyFigmaSpinBoxAppearance(QAbstractSpinBox* spin, const QString& controls
     if (!binding) {
         spin->setStyle(new SpinStyle(spin));
         spin->setStyleSheet(
-            "QAbstractSpinBox {font-family:'Inter','Noto Sans SC';font-size:14px;min-height:0;}"
+            "QAbstractSpinBox {font-family:'HarmonyOS Sans','HarmonyOS Sans SC';font-size:14px;min-height:0;}"
             "QLineEdit {background:transparent;border:0;padding:0;min-height:0;"
-            "font-family:'Inter','Noto Sans SC';font-size:14px;color:#191919;"
+            "font-family:'HarmonyOS Sans','HarmonyOS Sans SC';font-size:14px;color:#191919;"
             "selection-background-color:#6235f7;selection-color:white;} QLineEdit:disabled "
             "{color:#8a8a8a;}");
         spin->ensurePolished();

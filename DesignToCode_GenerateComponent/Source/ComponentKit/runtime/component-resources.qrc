@@ -90,13 +90,11 @@
     <qresource prefix="/figma">
         <file alias="shortcut-visuals.json">../component-definitions/figma-shortcut-visuals.json</file>
     </qresource>
-    <qresource prefix="/figma/fonts">
-        <file alias="NotoSansSC-Bold.otf">assets/fonts/NotoSansSC/NotoSansSC-Bold.otf</file>
-        <file alias="NotoSansSC-Regular.otf">assets/fonts/NotoSansSC/NotoSansSC-Regular.otf</file>
-        <file alias="Inter-Regular.otf">assets/fonts/Inter/Inter-Regular.otf</file>
-        <file alias="Inter-Medium.otf">assets/fonts/Inter/Inter-Medium.otf</file>
-        <file alias="Inter-SemiBold.otf">assets/fonts/Inter/Inter-SemiBold.otf</file>
-        <file alias="LICENSE.txt">assets/fonts/Inter/LICENSE.txt</file>
+    <qresource prefix="/fonts">
+        <!-- Legacy aliases remain for source compatibility; both payloads are variable fonts (wght 40-900). -->
+        <file alias="HarmonyOS_Sans_Regular.ttf">assets/fonts/HarmonyOSSans/HarmonyOS_Sans.ttf</file>
+        <file alias="HarmonyOS_Sans_SC_Regular.ttf">assets/fonts/HarmonyOSSans/HarmonyOS_Sans_SC.ttf</file>
+        <file alias="LICENSE.txt">assets/fonts/HarmonyOSSans/LICENSE.txt</file>
     </qresource>
     <qresource prefix="/figma">
         <file alias="lineedit/Prefix.svg">assets/icons/figma-lineedit/Prefix.svg</file>
@@ -243,9 +241,6 @@
     </qresource>
     <qresource prefix="/button">
         <file alias="manifest.json">../design-assets/generated/button/manifest.json</file>
-        <file alias="Poppins-Regular.ttf">assets/fonts/Poppins-Regular.ttf</file>
-        <file alias="Poppins-Medium.ttf">assets/fonts/Poppins-Medium.ttf</file>
-        <file alias="Poppins-SemiBold.ttf">assets/fonts/Poppins-SemiBold.ttf</file>
         <file alias="light-comfortable.qss">../design-assets/generated/button/light-comfortable/Z_PushButton.qss</file>
         <file alias="light-comfortable-demo.qss">../design-assets/generated/button/light-comfortable/demo.qss</file>
         <file alias="light-compact.qss">../design-assets/generated/button/light-compact/Z_PushButton.qss</file>

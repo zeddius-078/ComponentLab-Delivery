@@ -1,0 +1,2414 @@
+{
+  "$schema": "../schema/v2-token-schema.json",
+  "$description": "ComponentLab V2 canonical token layer: primitive",
+  "layer": "primitive",
+  "root": {
+    "primitive": {
+      "boolean": {
+        "false": {
+          "$type": "boolean",
+          "$value": false,
+          "$description": "Migrated from legacy sToken --boolean/false"
+        },
+        "true": {
+          "$type": "boolean",
+          "$value": true,
+          "$description": "Migrated from legacy sToken --boolean/true"
+        }
+      },
+      "color": {
+        "cosmic": {
+          "blue-cosmic": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                10,
+                89,
+                247
+              ]
+            },
+            "$description": "Migrated from legacy sToken --color/cosmic/blue-cosmic"
+          },
+          "gray-night": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                56,
+                62,
+                66
+              ]
+            },
+            "$description": "Migrated from legacy sToken --color/cosmic/gray-night"
+          },
+          "gray-snow": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                241,
+                243,
+                245
+              ]
+            },
+            "$description": "Migrated from legacy sToken --color/cosmic/gray-snow"
+          },
+          "green-aurora": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                32,
+                180,
+                105
+              ]
+            },
+            "$description": "Migrated from legacy sToken --color/cosmic/green-aurora"
+          },
+          "orange-prome": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                230,
+                111,
+                30
+              ]
+            },
+            "$description": "Migrated from legacy sToken --color/cosmic/orange-prome"
+          },
+          "red-flare": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                199,
+                0,
+                11
+              ]
+            },
+            "$description": "Migrated from legacy sToken --color/cosmic/red-flare"
+          },
+          "yellow-nebula": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                230,
+                175,
+                25
+              ]
+            },
+            "$description": "Migrated from legacy sToken --color/cosmic/yellow-nebula"
+          }
+        },
+        "functional": {
+          "blue": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                56,
+                127,
+                220
+              ]
+            },
+            "$description": "Migrated from legacy sToken --color/functional/blue"
+          },
+          "blue-subtle": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                231,
+                241,
+                255
+              ]
+            },
+            "$description": "Migrated from legacy sToken --color/functional/blue-subtle"
+          },
+          "green": {
+            "10": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  211,
+                  230,
+                  218
+                ]
+              },
+              "$description": "Migrated from legacy sToken --color/functional/green/10"
+            },
+            "100": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  1,
+                  46,
+                  22
+                ]
+              },
+              "$description": "Migrated from legacy sToken --color/functional/green/100"
+            },
+            "15": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  194,
+                  219,
+                  204
+                ]
+              },
+              "$description": "Migrated from legacy sToken --color/functional/green/15"
+            },
+            "20": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  178,
+                  209,
+                  191
+                ]
+              },
+              "$description": "Migrated from legacy sToken --color/functional/green/20"
+            },
+            "25": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  160,
+                  210,
+                  181
+                ]
+              },
+              "$description": "Migrated from legacy sToken --color/functional/green/25"
+            },
+            "30": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  140,
+                  211,
+                  171
+                ]
+              },
+              "$description": "Migrated from legacy sToken --color/functional/green/30"
+            },
+            "35": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  122,
+                  212,
+                  161
+                ]
+              },
+              "$description": "Migrated from legacy sToken --color/functional/green/35"
+            },
+            "40": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  102,
+                  213,
+                  151
+                ]
+              },
+              "$description": "Migrated from legacy sToken --color/functional/green/40"
+            },
+            "45": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  86,
+                  197,
+                  135
+                ]
+              },
+              "$description": "Migrated from legacy sToken --color/functional/green/45"
+            },
+            "5": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  243,
+                  250,
+                  246
+                ]
+              },
+              "$description": "Migrated from legacy sToken --color/functional/green/5"
+            },
+            "50": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  70,
+                  182,
+                  120
+                ]
+              },
+              "$description": "Migrated from legacy sToken --color/functional/green/50"
+            },
+            "55": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  38,
+                  152,
+                  88
+                ]
+              },
+              "$description": "Migrated from legacy sToken --color/functional/green/55"
+            },
+            "60": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  6,
+                  122,
+                  58
+                ]
+              },
+              "$description": "Migrated from legacy sToken --color/functional/green/60"
+            },
+            "65": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  5,
+                  111,
+                  53
+                ]
+              },
+              "$description": "Migrated from legacy sToken --color/functional/green/65"
+            },
+            "70": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  4,
+                  101,
+                  48
+                ]
+              },
+              "$description": "Migrated from legacy sToken --color/functional/green/70"
+            },
+            "75": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  4,
+                  87,
+                  41
+                ]
+              },
+              "$description": "Migrated from legacy sToken --color/functional/green/75"
+            },
+            "80": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  3,
+                  74,
+                  35
+                ]
+              },
+              "$description": "Migrated from legacy sToken --color/functional/green/80"
+            },
+            "85": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  2,
+                  67,
+                  32
+                ]
+              },
+              "$description": "Migrated from legacy sToken --color/functional/green/85"
+            },
+            "90": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  2,
+                  60,
+                  29
+                ]
+              },
+              "$description": "Migrated from legacy sToken --color/functional/green/90"
+            },
+            "95": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  1,
+                  53,
+                  25
+                ]
+              },
+              "$description": "Migrated from legacy sToken --color/functional/green/95"
+            }
+          },
+          "orange": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                230,
+                111,
+                30
+              ]
+            },
+            "$description": "Migrated from legacy sToken --color/functional/orange"
+          },
+          "orange-subtle": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                251,
+                234,
+                221
+              ]
+            },
+            "$description": "Migrated from legacy sToken --color/functional/orange-subtle"
+          },
+          "red": {
+            "10": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  255,
+                  207,
+                  200
+                ]
+              },
+              "$description": "Migrated from legacy sToken --color/functional/red/10"
+            },
+            "100": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  74,
+                  0,
+                  4
+                ]
+              },
+              "$description": "Migrated from legacy sToken --color/functional/red/100"
+            },
+            "15": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  254,
+                  193,
+                  184
+                ]
+              },
+              "$description": "Migrated from legacy sToken --color/functional/red/15"
+            },
+            "20": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  250,
+                  164,
+                  153
+                ]
+              },
+              "$description": "Migrated from legacy sToken --color/functional/red/20"
+            },
+            "25": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  255,
+                  236,
+                  232
+                ]
+              },
+              "$description": "Migrated from legacy sToken --color/functional/red/25"
+            },
+            "30": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  248,
+                  149,
+                  138
+                ]
+              },
+              "$description": "Migrated from legacy sToken --color/functional/red/30"
+            },
+            "35": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  245,
+                  134,
+                  123
+                ]
+              },
+              "$description": "Migrated from legacy sToken --color/functional/red/35"
+            },
+            "40": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  242,
+                  118,
+                  107
+                ]
+              },
+              "$description": "Migrated from legacy sToken --color/functional/red/40"
+            },
+            "45": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  238,
+                  101,
+                  91
+                ]
+              },
+              "$description": "Migrated from legacy sToken --color/functional/red/45"
+            },
+            "5": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  255,
+                  236,
+                  232
+                ]
+              },
+              "$description": "Migrated from legacy sToken --color/functional/red/5"
+            },
+            "50": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  234,
+                  83,
+                  75
+                ]
+              },
+              "$description": "Migrated from legacy sToken --color/functional/red/50"
+            },
+            "55": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  224,
+                  33,
+                  40
+                ]
+              },
+              "$description": "Migrated from legacy sToken --color/functional/red/55"
+            },
+            "60": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  199,
+                  0,
+                  11
+                ]
+              },
+              "$description": "Migrated from legacy sToken --color/functional/red/60"
+            },
+            "65": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  182,
+                  0,
+                  10
+                ]
+              },
+              "$description": "Migrated from legacy sToken --color/functional/red/65"
+            },
+            "70": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  166,
+                  0,
+                  9
+                ]
+              },
+              "$description": "Migrated from legacy sToken --color/functional/red/70"
+            },
+            "75": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  150,
+                  0,
+                  9
+                ]
+              },
+              "$description": "Migrated from legacy sToken --color/functional/red/75"
+            },
+            "80": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  134,
+                  0,
+                  8
+                ]
+              },
+              "$description": "Migrated from legacy sToken --color/functional/red/80"
+            },
+            "85": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  118,
+                  0,
+                  7
+                ]
+              },
+              "$description": "Migrated from legacy sToken --color/functional/red/85"
+            },
+            "90": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  103,
+                  0,
+                  6
+                ]
+              },
+              "$description": "Migrated from legacy sToken --color/functional/red/90"
+            },
+            "95": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  88,
+                  0,
+                  5
+                ]
+              },
+              "$description": "Migrated from legacy sToken --color/functional/red/95"
+            },
+            "default": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  224,
+                  33,
+                  40
+                ]
+              },
+              "$description": "Migrated from legacy sToken --color/functional/red/default"
+            },
+            "hover": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  247,
+                  110,
+                  123
+                ]
+              },
+              "$description": "Migrated from legacy sToken --color/functional/red/hover"
+            },
+            "subtle": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  251,
+                  228,
+                  229
+                ]
+              },
+              "$description": "Migrated from legacy sToken --color/functional/red/subtle"
+            }
+          },
+          "yellow": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                230,
+                175,
+                25
+              ]
+            },
+            "$description": "Migrated from legacy sToken --color/functional/yellow"
+          },
+          "yellow-subtle": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                255,
+                248,
+                227
+              ]
+            },
+            "$description": "Migrated from legacy sToken --color/functional/yellow-subtle"
+          }
+        },
+        "highlight": {
+          "purple-10": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                243,
+                239,
+                255
+              ]
+            },
+            "$description": "Migrated from legacy sToken --color/highlight/purple-10"
+          },
+          "purple-100": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                98,
+                53,
+                247
+              ]
+            },
+            "$description": "Migrated from legacy sToken --color/highlight/purple-100"
+          },
+          "purple-15": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                241,
+                236,
+                255
+              ]
+            },
+            "$description": "Migrated from legacy sToken --color/highlight/purple-15"
+          },
+          "purple-20": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                239,
+                234,
+                254
+              ]
+            },
+            "$description": "Migrated from legacy sToken --color/highlight/purple-20"
+          },
+          "purple-25": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                231,
+                225,
+                254
+              ]
+            },
+            "$description": "Migrated from legacy sToken --color/highlight/purple-25"
+          },
+          "purple-30": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                224,
+                215,
+                253
+              ]
+            },
+            "$description": "Migrated from legacy sToken --color/highlight/purple-30"
+          },
+          "purple-35": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                215,
+                205,
+                253
+              ]
+            },
+            "$description": "Migrated from legacy sToken --color/highlight/purple-35"
+          },
+          "purple-40": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                207,
+                194,
+                252
+              ]
+            },
+            "$description": "Migrated from legacy sToken --color/highlight/purple-40"
+          },
+          "purple-45": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                199,
+                184,
+                252
+              ]
+            },
+            "$description": "Migrated from legacy sToken --color/highlight/purple-45"
+          },
+          "purple-5": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                247,
+                245,
+                254
+              ]
+            },
+            "$description": "Migrated from legacy sToken --color/highlight/purple-5"
+          },
+          "purple-50": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                192,
+                174,
+                252
+              ]
+            },
+            "$description": "Migrated from legacy sToken --color/highlight/purple-50"
+          },
+          "purple-55": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                176,
+                154,
+                251
+              ]
+            },
+            "$description": "Migrated from legacy sToken --color/highlight/purple-55"
+          },
+          "purple-60": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                173,
+                155,
+                247
+              ]
+            },
+            "$description": "Migrated from legacy sToken --color/highlight/purple-60"
+          },
+          "purple-65": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                161,
+                134,
+                250
+              ]
+            },
+            "$description": "Migrated from legacy sToken --color/highlight/purple-65"
+          },
+          "purple-70": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                145,
+                113,
+                249
+              ]
+            },
+            "$description": "Migrated from legacy sToken --color/highlight/purple-70"
+          },
+          "purple-75": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                129,
+                93,
+                249
+              ]
+            },
+            "$description": "Migrated from legacy sToken --color/highlight/purple-75"
+          },
+          "purple-80": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                123,
+                95,
+                237
+              ]
+            },
+            "$description": "Migrated from legacy sToken --color/highlight/purple-80"
+          },
+          "purple-85": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                113,
+                73,
+                247
+              ]
+            },
+            "$description": "Migrated from legacy sToken --color/highlight/purple-85"
+          },
+          "purple-90": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                110,
+                88,
+                217
+              ]
+            },
+            "$description": "Migrated from legacy sToken --color/highlight/purple-90"
+          },
+          "purple-95": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                109,
+                83,
+                216
+              ]
+            },
+            "$description": "Migrated from legacy sToken --color/highlight/purple-95"
+          },
+          "purple-deep-1": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                90,
+                62,
+                193
+              ]
+            },
+            "$description": "Migrated from legacy sToken --color/highlight/purple-deep-1"
+          },
+          "purple-deep-2": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                83,
+                44,
+                209
+              ]
+            },
+            "$description": "Migrated from legacy sToken --color/highlight/purple-deep-2"
+          },
+          "purple-muted": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "srgb",
+              "components": [
+                121,
+                108,
+                212
+              ]
+            },
+            "$description": "Migrated from legacy sToken --color/highlight/purple-muted"
+          }
+        },
+        "neutral": {
+          "gray": {
+            "0": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  255,
+                  255,
+                  255
+                ]
+              },
+              "$description": "Migrated from legacy sToken --color/neutral/gray-0"
+            },
+            "10": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  230,
+                  230,
+                  230
+                ]
+              },
+              "$description": "Migrated from legacy sToken --color/neutral/gray-10"
+            },
+            "100": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  0,
+                  0,
+                  0
+                ]
+              },
+              "$description": "Migrated from legacy sToken --color/neutral/gray-100"
+            },
+            "15": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  219,
+                  219,
+                  219
+                ]
+              },
+              "$description": "Migrated from legacy sToken --color/neutral/gray-15"
+            },
+            "20": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  208,
+                  208,
+                  208
+                ]
+              },
+              "$description": "Migrated from legacy sToken --color/neutral/gray-20"
+            },
+            "25": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  198,
+                  198,
+                  198
+                ]
+              },
+              "$description": "Migrated from legacy sToken --color/neutral/gray-25"
+            },
+            "30": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  187,
+                  187,
+                  187
+                ]
+              },
+              "$description": "Migrated from legacy sToken --color/neutral/gray-30"
+            },
+            "35": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  167,
+                  167,
+                  167
+                ]
+              },
+              "$description": "Migrated from legacy sToken --color/neutral/gray-35"
+            },
+            "40": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  147,
+                  147,
+                  147
+                ]
+              },
+              "$description": "Migrated from legacy sToken --color/neutral/gray-40"
+            },
+            "45": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  138,
+                  138,
+                  138
+                ]
+              },
+              "$description": "Migrated from legacy sToken --color/neutral/gray-45"
+            },
+            "5": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  243,
+                  243,
+                  243
+                ]
+              },
+              "$description": "Migrated from legacy sToken --color/neutral/gray-5"
+            },
+            "50": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  129,
+                  129,
+                  129
+                ]
+              },
+              "$description": "Migrated from legacy sToken --color/neutral/gray-50"
+            },
+            "55": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  103,
+                  103,
+                  103
+                ]
+              },
+              "$description": "Migrated from legacy sToken --color/neutral/gray-55"
+            },
+            "60": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  78,
+                  78,
+                  78
+                ]
+              },
+              "$description": "Migrated from legacy sToken --color/neutral/gray-60"
+            },
+            "65": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  68,
+                  68,
+                  68
+                ]
+              },
+              "$description": "Migrated from legacy sToken --color/neutral/gray-65"
+            },
+            "70": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  57,
+                  57,
+                  57
+                ]
+              },
+              "$description": "Migrated from legacy sToken --color/neutral/gray-70"
+            },
+            "75": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  48,
+                  48,
+                  48
+                ]
+              },
+              "$description": "Migrated from legacy sToken --color/neutral/gray-75"
+            },
+            "80": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  39,
+                  39,
+                  39
+                ]
+              },
+              "$description": "Migrated from legacy sToken --color/neutral/gray-80"
+            },
+            "85": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  32,
+                  32,
+                  32
+                ]
+              },
+              "$description": "Migrated from legacy sToken --color/neutral/gray-85"
+            },
+            "90": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  25,
+                  25,
+                  25
+                ]
+              },
+              "$description": "Migrated from legacy sToken --color/neutral/gray-90"
+            },
+            "95": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  12,
+                  12,
+                  12
+                ]
+              },
+              "$description": "Migrated from legacy sToken --color/neutral/gray-95"
+            }
+          }
+        },
+        "none": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              255,
+              255,
+              255
+            ],
+            "alpha": 0.0
+          },
+          "$description": "Migrated from legacy sToken --color/none"
+        },
+        "reference": {
+          "neutral": {
+            "p-98": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  250,
+                  250,
+                  250
+                ]
+              },
+              "$description": "参考色板：二级容器背景色（L 索引）",
+              "$sourceOwner": "reference-import"
+            },
+            "p-96": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  245,
+                  245,
+                  245
+                ]
+              },
+              "$description": "参考色板：三级容器/悬停背景色（L 索引）",
+              "$sourceOwner": "reference-import"
+            },
+            "p-93": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  238,
+                  238,
+                  238
+                ]
+              },
+              "$description": "参考色板：禁用背景色（L 索引）",
+              "$sourceOwner": "reference-import"
+            },
+            "p-87": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  223,
+                  223,
+                  223
+                ]
+              },
+              "$description": "参考色板：分割线次要（L 索引）",
+              "$sourceOwner": "reference-import"
+            },
+            "p-86": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  220,
+                  219,
+                  219
+                ]
+              },
+              "$description": "参考色板：按下背景色（L 索引）",
+              "$sourceOwner": "reference-import"
+            }
+          },
+          "purple": {
+            "p-96": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  239,
+                  234,
+                  254
+                ]
+              },
+              "$description": "参考色板：强调选中背景色（L 索引）",
+              "$sourceOwner": "reference-import"
+            }
+          },
+          "red": {
+            "p-65": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  233,
+                  99,
+                  104
+                ]
+              },
+              "$description": "参考色板：告警悬停色",
+              "$sourceOwner": "reference-import"
+            },
+            "p-43": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  191,
+                  28,
+                  34
+                ]
+              },
+              "$description": "参考色板：告警选中色",
+              "$sourceOwner": "reference-import"
+            },
+            "p-93": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  250,
+                  222,
+                  223
+                ]
+              },
+              "$description": "参考色板：告警浅色背景",
+              "$sourceOwner": "reference-import"
+            },
+            "p-95": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  252,
+                  232,
+                  233
+                ]
+              },
+              "$description": "参考色板：告警浅色悬停",
+              "$sourceOwner": "reference-import"
+            },
+            "p-79": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  213,
+                  189,
+                  190
+                ]
+              },
+              "$description": "参考色板：告警浅色选中",
+              "$sourceOwner": "reference-import"
+            }
+          },
+          "orange": {
+            "p-65": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  237,
+                  154,
+                  97
+                ]
+              },
+              "$description": "参考色板：紧急告警悬停色",
+              "$sourceOwner": "reference-import"
+            },
+            "p-44": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  196,
+                  94,
+                  26
+                ]
+              },
+              "$description": "参考色板：紧急告警选中色",
+              "$sourceOwner": "reference-import"
+            },
+            "p-79": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  214,
+                  199,
+                  188
+                ]
+              },
+              "$description": "参考色板：紧急告警浅色选中",
+              "$sourceOwner": "reference-import"
+            }
+          },
+          "yellow": {
+            "p-65": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  237,
+                  199,
+                  94
+                ]
+              },
+              "$description": "参考色板：预警告警悬停色",
+              "$sourceOwner": "reference-import"
+            },
+            "p-43": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  196,
+                  149,
+                  21
+                ]
+              },
+              "$description": "参考色板：预警告警选中色",
+              "$sourceOwner": "reference-import"
+            },
+            "p-91": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  246,
+                  239,
+                  220
+                ]
+              },
+              "$description": "参考色板：全局提示背景色",
+              "$sourceOwner": "reference-import"
+            },
+            "p-95": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  252,
+                  246,
+                  231
+                ]
+              },
+              "$description": "参考色板：预警告警浅色悬停",
+              "$sourceOwner": "reference-import"
+            },
+            "p-79": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  214,
+                  207,
+                  188
+                ]
+              },
+              "$description": "参考色板：预警告警浅色选中",
+              "$sourceOwner": "reference-import"
+            }
+          }
+        }
+      },
+      "dimension": {
+        "0": {
+          "$type": "dimension",
+          "$value": 0,
+          "$description": "Migrated from legacy sToken --dimension/dimension-0",
+          "unit": "px"
+        },
+        "1": {
+          "$type": "dimension",
+          "$value": 1,
+          "$description": "Migrated from legacy sToken --dimension/dimension-1",
+          "unit": "px"
+        },
+        "102": {
+          "$type": "dimension",
+          "$value": 102,
+          "$description": "Migrated from legacy sToken --dimension/dimension-102",
+          "unit": "px"
+        },
+        "1040": {
+          "$type": "dimension",
+          "$value": 1040,
+          "$description": "Migrated from legacy sToken --dimension/dimension-1040",
+          "unit": "px"
+        },
+        "108": {
+          "$type": "dimension",
+          "$value": 108,
+          "$description": "Migrated from legacy sToken --dimension/dimension-108",
+          "unit": "px"
+        },
+        "1080": {
+          "$type": "dimension",
+          "$value": 1080,
+          "$description": "Migrated from legacy sToken --dimension/dimension-1080",
+          "unit": "px"
+        },
+        "1096": {
+          "$type": "dimension",
+          "$value": 1096,
+          "$description": "Migrated from legacy sToken --dimension/dimension-1096",
+          "unit": "px"
+        },
+        "1192": {
+          "$type": "dimension",
+          "$value": 1192,
+          "$description": "Migrated from legacy sToken --dimension/dimension-1192",
+          "unit": "px"
+        },
+        "12": {
+          "$type": "dimension",
+          "$value": 12,
+          "$description": "Migrated from legacy sToken --dimension/dimension-12",
+          "unit": "px"
+        },
+        "120": {
+          "$type": "dimension",
+          "$value": 120,
+          "$description": "Migrated from legacy sToken --dimension/dimension-120",
+          "unit": "px"
+        },
+        "1200": {
+          "$type": "dimension",
+          "$value": 1200,
+          "$description": "Migrated from legacy sToken --dimension/dimension-1200",
+          "unit": "px"
+        },
+        "128": {
+          "$type": "dimension",
+          "$value": 128,
+          "$description": "Migrated from legacy sToken --dimension/dimension-128",
+          "unit": "px"
+        },
+        "1280": {
+          "$type": "dimension",
+          "$value": 1280,
+          "$description": "Migrated from legacy sToken --dimension/dimension-1280",
+          "unit": "px"
+        },
+        "140": {
+          "$type": "dimension",
+          "$value": 140,
+          "$description": "Migrated from legacy sToken --dimension/dimension-140",
+          "unit": "px"
+        },
+        "1440": {
+          "$type": "dimension",
+          "$value": 1440,
+          "$description": "Migrated from legacy sToken --dimension/dimension-1440",
+          "unit": "px"
+        },
+        "1464": {
+          "$type": "dimension",
+          "$value": 1464,
+          "$description": "Migrated from legacy sToken --dimension/dimension-1464",
+          "unit": "px"
+        },
+        "16": {
+          "$type": "dimension",
+          "$value": 16,
+          "$description": "Migrated from legacy sToken --dimension/dimension-16",
+          "unit": "px"
+        },
+        "18": {
+          "$type": "dimension",
+          "$value": 18,
+          "$description": "Migrated from legacy sToken --dimension/dimension-18",
+          "unit": "px"
+        },
+        "1920": {
+          "$type": "dimension",
+          "$value": 1920,
+          "$description": "Migrated from legacy sToken --dimension/dimension-1920",
+          "unit": "px"
+        },
+        "2": {
+          "$type": "dimension",
+          "$value": 2,
+          "$description": "Migrated from legacy sToken --dimension/dimension-2",
+          "unit": "px"
+        },
+        "20": {
+          "$type": "dimension",
+          "$value": 20,
+          "$description": "Migrated from legacy sToken --dimension/dimension-20",
+          "unit": "px"
+        },
+        "214": {
+          "$type": "dimension",
+          "$value": 214,
+          "$description": "Migrated from legacy sToken --dimension/dimension-214",
+          "unit": "px"
+        },
+        "22": {
+          "$type": "dimension",
+          "$value": 22,
+          "$description": "Migrated from legacy sToken --dimension/dimension-22",
+          "unit": "px"
+        },
+        "24": {
+          "$type": "dimension",
+          "$value": 24,
+          "$description": "Migrated from legacy sToken --dimension/dimension-24",
+          "unit": "px"
+        },
+        "240": {
+          "$type": "dimension",
+          "$value": 240,
+          "$description": "Migrated from legacy sToken --dimension/dimension-240",
+          "unit": "px"
+        },
+        "256": {
+          "$type": "dimension",
+          "$value": 256,
+          "$description": "Migrated from legacy sToken --dimension/dimension-256",
+          "unit": "px"
+        },
+        "2560": {
+          "$type": "dimension",
+          "$value": 2560,
+          "$description": "Migrated from legacy sToken --dimension/dimension-2560",
+          "unit": "px"
+        },
+        "26": {
+          "$type": "dimension",
+          "$value": 26,
+          "$description": "Migrated from legacy sToken --dimension/dimension-26",
+          "unit": "px"
+        },
+        "28": {
+          "$type": "dimension",
+          "$value": 28,
+          "$description": "Migrated from legacy sToken --dimension/dimension-28",
+          "unit": "px"
+        },
+        "284": {
+          "$type": "dimension",
+          "$value": 284,
+          "$description": "Migrated from legacy sToken --dimension/dimension-284",
+          "unit": "px"
+        },
+        "288": {
+          "$type": "dimension",
+          "$value": 288,
+          "$description": "Migrated from legacy sToken --dimension/dimension-288",
+          "unit": "px"
+        },
+        "310": {
+          "$type": "dimension",
+          "$value": 310,
+          "$description": "Migrated from legacy sToken --dimension/dimension-310",
+          "unit": "px"
+        },
+        "318": {
+          "$type": "dimension",
+          "$value": 318,
+          "$description": "Migrated from legacy sToken --dimension/dimension-318",
+          "unit": "px"
+        },
+        "32": {
+          "$type": "dimension",
+          "$value": 32,
+          "$description": "Migrated from legacy sToken --dimension/dimension-32",
+          "unit": "px"
+        },
+        "34": {
+          "$type": "dimension",
+          "$value": 34,
+          "$description": "Migrated from legacy sToken --dimension/dimension-34",
+          "unit": "px"
+        },
+        "36": {
+          "$type": "dimension",
+          "$value": 36,
+          "$description": "Migrated from legacy sToken --dimension/dimension-36",
+          "unit": "px"
+        },
+        "360": {
+          "$type": "dimension",
+          "$value": 360,
+          "$description": "Migrated from legacy sToken --dimension/dimension-360",
+          "unit": "px"
+        },
+        "380": {
+          "$type": "dimension",
+          "$value": 380,
+          "$description": "Migrated from legacy sToken --dimension/dimension-380",
+          "unit": "px"
+        },
+        "398": {
+          "$type": "dimension",
+          "$value": 398,
+          "$description": "Migrated from legacy sToken --dimension/dimension-398",
+          "unit": "px"
+        },
+        "4": {
+          "$type": "dimension",
+          "$value": 4,
+          "$description": "Migrated from legacy sToken --dimension/dimension-4",
+          "unit": "px"
+        },
+        "40": {
+          "$type": "dimension",
+          "$value": 40,
+          "$description": "Migrated from legacy sToken --dimension/dimension-40",
+          "unit": "px"
+        },
+        "42": {
+          "$type": "dimension",
+          "$value": 42,
+          "$description": "Migrated from legacy sToken --dimension/dimension-42",
+          "unit": "px"
+        },
+        "44": {
+          "$type": "dimension",
+          "$value": 44,
+          "$description": "Migrated from legacy sToken --dimension/dimension-44",
+          "unit": "px"
+        },
+        "48": {
+          "$type": "dimension",
+          "$value": 48,
+          "$description": "Migrated from legacy sToken --dimension/dimension-48",
+          "unit": "px"
+        },
+        "56": {
+          "$type": "dimension",
+          "$value": 56,
+          "$description": "Migrated from legacy sToken --dimension/dimension-56",
+          "unit": "px"
+        },
+        "58": {
+          "$type": "dimension",
+          "$value": 58,
+          "$description": "Migrated from legacy sToken --dimension/dimension-58",
+          "unit": "px"
+        },
+        "590": {
+          "$type": "dimension",
+          "$value": 590,
+          "$description": "Migrated from legacy sToken --dimension/dimension-590",
+          "unit": "px"
+        },
+        "6": {
+          "$type": "dimension",
+          "$value": 6,
+          "$description": "Migrated from legacy sToken --dimension/dimension-6",
+          "unit": "px"
+        },
+        "64": {
+          "$type": "dimension",
+          "$value": 64,
+          "$description": "Migrated from legacy sToken --dimension/dimension-64",
+          "unit": "px"
+        },
+        "7": {
+          "$type": "dimension",
+          "$value": 7,
+          "$description": "Migrated from legacy sToken --dimension/dimension-7",
+          "unit": "px"
+        },
+        "72": {
+          "$type": "dimension",
+          "$value": 72,
+          "$description": "Migrated from legacy sToken --dimension/dimension-72",
+          "unit": "px"
+        },
+        "78": {
+          "$type": "dimension",
+          "$value": 78,
+          "$description": "Migrated from legacy sToken --dimension/dimension-78",
+          "unit": "px"
+        },
+        "780": {
+          "$type": "dimension",
+          "$value": 780,
+          "$description": "Migrated from legacy sToken --dimension/dimension-780",
+          "unit": "px"
+        },
+        "786": {
+          "$type": "dimension",
+          "$value": 786,
+          "$description": "Migrated from legacy sToken --dimension/dimension-786",
+          "unit": "px"
+        },
+        "8": {
+          "$type": "dimension",
+          "$value": 8,
+          "$description": "Migrated from legacy sToken --dimension/dimension-8",
+          "unit": "px"
+        },
+        "80": {
+          "$type": "dimension",
+          "$value": 80,
+          "$description": "Migrated from legacy sToken --dimension/dimension-80",
+          "unit": "px"
+        },
+        "800": {
+          "$type": "dimension",
+          "$value": 800,
+          "$description": "Migrated from legacy sToken --dimension/dimension-800",
+          "unit": "px"
+        },
+        "82": {
+          "$type": "dimension",
+          "$value": 82,
+          "$description": "Migrated from legacy sToken --dimension/dimension-82",
+          "unit": "px"
+        },
+        "896": {
+          "$type": "dimension",
+          "$value": 896,
+          "$description": "Migrated from legacy sToken --dimension/dimension-896",
+          "unit": "px"
+        },
+        "96": {
+          "$type": "dimension",
+          "$value": 96,
+          "$description": "Migrated from legacy sToken --dimension/dimension-96",
+          "unit": "px"
+        },
+        "98": {
+          "$type": "dimension",
+          "$value": 98,
+          "$description": "Migrated from legacy sToken --dimension/dimension-98",
+          "unit": "px"
+        }
+      },
+      "font-family": {
+        "harmony-os-sans": {
+          "$type": "fontFamily",
+          "$value": "HarmonyOS Sans",
+          "$description": "Migrated from legacy sToken --font-family/harmony-os-sans"
+        },
+        "harmony-os-sans-sc": {
+          "$type": "fontFamily",
+          "$value": "HarmonyOS Sans SC",
+          "$description": "Migrated from legacy sToken --font-family/harmony-os-sans-sc"
+        }
+      },
+      "font-size": {
+        "12": {
+          "$type": "fontSize",
+          "$value": 12,
+          "$description": "Migrated from legacy sToken --font-size/12",
+          "unit": "px"
+        },
+        "14": {
+          "$type": "fontSize",
+          "$value": 14,
+          "$description": "Migrated from legacy sToken --font-size/14",
+          "unit": "px"
+        },
+        "16": {
+          "$type": "fontSize",
+          "$value": 16,
+          "$description": "Migrated from legacy sToken --font-size/16",
+          "unit": "px"
+        },
+        "18": {
+          "$type": "fontSize",
+          "$value": 18,
+          "$description": "Migrated from legacy sToken --font-size/18",
+          "unit": "px"
+        },
+        "20": {
+          "$type": "fontSize",
+          "$value": 20,
+          "$description": "Migrated from legacy sToken --font-size/20",
+          "unit": "px"
+        },
+        "22": {
+          "$type": "fontSize",
+          "$value": 22,
+          "$description": "Migrated from legacy sToken --font-size/22",
+          "unit": "px"
+        },
+        "24": {
+          "$type": "fontSize",
+          "$value": 24,
+          "$description": "Migrated from legacy sToken --font-size/24",
+          "unit": "px"
+        },
+        "26": {
+          "$type": "fontSize",
+          "$value": 26,
+          "$description": "Migrated from legacy sToken --font-size/26",
+          "unit": "px"
+        },
+        "28": {
+          "$type": "fontSize",
+          "$value": 28,
+          "$description": "Migrated from legacy sToken --font-size/28",
+          "unit": "px"
+        },
+        "32": {
+          "$type": "fontSize",
+          "$value": 32,
+          "$description": "Migrated from legacy sToken --font-size/32",
+          "unit": "px"
+        },
+        "36": {
+          "$type": "fontSize",
+          "$value": 36,
+          "$description": "Migrated from legacy sToken --font-size/36",
+          "unit": "px"
+        },
+        "40": {
+          "$type": "fontSize",
+          "$value": 40,
+          "$description": "Migrated from legacy sToken --font-size/40",
+          "unit": "px"
+        },
+        "44": {
+          "$type": "fontSize",
+          "$value": 44,
+          "$description": "Migrated from legacy sToken --font-size/44",
+          "unit": "px"
+        },
+        "48": {
+          "$type": "fontSize",
+          "$value": 48,
+          "$description": "Migrated from legacy sToken --font-size/48",
+          "unit": "px"
+        }
+      },
+      "font-weight": {
+        "bold": {
+          "$type": "fontWeight",
+          "$value": 700,
+          "$description": "Migrated from legacy sToken --font-weight/bold"
+        },
+        "medium": {
+          "$type": "fontWeight",
+          "$value": 500,
+          "$description": "Migrated from legacy sToken --font-weight/medium"
+        },
+        "regular": {
+          "$type": "fontWeight",
+          "$value": 400,
+          "$description": "Migrated from legacy sToken --font-weight/regular"
+        },
+        "semibold": {
+          "$type": "fontWeight",
+          "$value": 600,
+          "$description": "Migrated from legacy sToken --font-weight/semibold"
+        }
+      },
+      "letter-spacing": {
+        "default": {
+          "$type": "letterSpacing",
+          "$value": 0,
+          "$description": "Migrated from legacy sToken --letter-spacing/default",
+          "unit": "px"
+        },
+        "tight": {
+          "$type": "letterSpacing",
+          "$value": -0.2,
+          "$description": "Migrated from legacy sToken --letter-spacing/tight",
+          "unit": "px"
+        },
+        "wide": {
+          "$type": "letterSpacing",
+          "$value": 0.4,
+          "$description": "Migrated from legacy sToken --letter-spacing/wide",
+          "unit": "px"
+        }
+      },
+      "line-height": {
+        "12": {
+          "$type": "lineHeight",
+          "$value": 12,
+          "$description": "Migrated from legacy sToken --line-height/12",
+          "unit": "px"
+        },
+        "14": {
+          "$type": "lineHeight",
+          "$value": 14,
+          "$description": "Migrated from legacy sToken --line-height/14",
+          "unit": "px"
+        },
+        "16": {
+          "$type": "lineHeight",
+          "$value": 16,
+          "$description": "Migrated from legacy sToken --line-height/16",
+          "unit": "px"
+        },
+        "18": {
+          "$type": "lineHeight",
+          "$value": 18,
+          "$description": "Migrated from legacy sToken --line-height/18",
+          "unit": "px"
+        },
+        "20": {
+          "$type": "lineHeight",
+          "$value": 20,
+          "$description": "Migrated from legacy sToken --line-height/20",
+          "unit": "px"
+        },
+        "22": {
+          "$type": "lineHeight",
+          "$value": 22,
+          "$description": "Migrated from legacy sToken --line-height/22",
+          "unit": "px"
+        },
+        "24": {
+          "$type": "lineHeight",
+          "$value": 24,
+          "$description": "Migrated from legacy sToken --line-height/24",
+          "unit": "px"
+        },
+        "26": {
+          "$type": "lineHeight",
+          "$value": 26,
+          "$description": "Migrated from legacy sToken --line-height/26",
+          "unit": "px"
+        },
+        "28": {
+          "$type": "lineHeight",
+          "$value": 28,
+          "$description": "Migrated from legacy sToken --line-height/28",
+          "unit": "px"
+        },
+        "32": {
+          "$type": "lineHeight",
+          "$value": 32,
+          "$description": "Migrated from legacy sToken --line-height/32",
+          "unit": "px"
+        },
+        "36": {
+          "$type": "lineHeight",
+          "$value": 36,
+          "$description": "Migrated from legacy sToken --line-height/36",
+          "unit": "px"
+        },
+        "40": {
+          "$type": "lineHeight",
+          "$value": 40,
+          "$description": "Migrated from legacy sToken --line-height/40",
+          "unit": "px"
+        },
+        "44": {
+          "$type": "lineHeight",
+          "$value": 44,
+          "$description": "Migrated from legacy sToken --line-height/44",
+          "unit": "px"
+        },
+        "48": {
+          "$type": "lineHeight",
+          "$value": 48,
+          "$description": "Migrated from legacy sToken --line-height/48",
+          "unit": "px"
+        },
+        "56": {
+          "$type": "lineHeight",
+          "$value": 56,
+          "$description": "Migrated from legacy sToken --line-height/56",
+          "unit": "px"
+        }
+      },
+      "line-width": {
+        "050": {
+          "$type": "borderWidth",
+          "$value": 0.5,
+          "$description": "Migrated from legacy sToken --line-width/050",
+          "unit": "px"
+        },
+        "075": {
+          "$type": "borderWidth",
+          "$value": 0.75,
+          "$description": "Migrated from legacy sToken --line-width/075",
+          "unit": "px"
+        },
+        "100": {
+          "$type": "borderWidth",
+          "$value": 1,
+          "$description": "Migrated from legacy sToken --line-width/100",
+          "unit": "px"
+        },
+        "125": {
+          "$type": "borderWidth",
+          "$value": 1.25,
+          "$description": "Migrated from legacy sToken --line-width/125",
+          "unit": "px"
+        },
+        "150": {
+          "$type": "borderWidth",
+          "$value": 1.5,
+          "$description": "Migrated from legacy sToken --line-width/150",
+          "unit": "px"
+        },
+        "200": {
+          "$type": "borderWidth",
+          "$value": 2,
+          "$description": "Migrated from legacy sToken --line-width/200",
+          "unit": "px"
+        },
+        "250": {
+          "$type": "borderWidth",
+          "$value": 2.5,
+          "$description": "Migrated from legacy sToken --line-width/250",
+          "unit": "px"
+        },
+        "300": {
+          "$type": "borderWidth",
+          "$value": 3,
+          "$description": "Migrated from legacy sToken --line-width/300",
+          "unit": "px"
+        },
+        "400": {
+          "$type": "borderWidth",
+          "$value": 4,
+          "$description": "Migrated from legacy sToken --line-width/400",
+          "unit": "px"
+        },
+        "none": {
+          "$type": "borderWidth",
+          "$value": 0,
+          "$description": "Migrated from legacy sToken --line-width/none",
+          "unit": "px"
+        }
+      },
+      "opacity": {
+        "0": {
+          "$type": "opacity",
+          "$value": 0,
+          "$description": "Migrated from legacy sToken --opacity/0",
+          "unit": "%"
+        },
+        "10": {
+          "$type": "opacity",
+          "$value": 10,
+          "$description": "Migrated from legacy sToken --opacity/10",
+          "unit": "%"
+        },
+        "100": {
+          "$type": "opacity",
+          "$value": 100,
+          "$description": "Migrated from legacy sToken --opacity/100",
+          "unit": "%"
+        },
+        "15": {
+          "$type": "opacity",
+          "$value": 15,
+          "$description": "Migrated from legacy sToken --opacity/15",
+          "unit": "%"
+        },
+        "20": {
+          "$type": "opacity",
+          "$value": 20,
+          "$description": "Migrated from legacy sToken --opacity/20",
+          "unit": "%"
+        },
+        "30": {
+          "$type": "opacity",
+          "$value": 30,
+          "$description": "Migrated from legacy sToken --opacity/30",
+          "unit": "%"
+        },
+        "40": {
+          "$type": "opacity",
+          "$value": 40,
+          "$description": "Migrated from legacy sToken --opacity/40",
+          "unit": "%"
+        },
+        "5": {
+          "$type": "opacity",
+          "$value": 5,
+          "$description": "Migrated from legacy sToken --opacity/5",
+          "unit": "%"
+        },
+        "50": {
+          "$type": "opacity",
+          "$value": 50,
+          "$description": "Migrated from legacy sToken --opacity/50",
+          "unit": "%"
+        },
+        "60": {
+          "$type": "opacity",
+          "$value": 60,
+          "$description": "Migrated from legacy sToken --opacity/60",
+          "unit": "%"
+        },
+        "80": {
+          "$type": "opacity",
+          "$value": 80,
+          "$description": "Migrated from legacy sToken --opacity/80",
+          "unit": "%"
+        },
+        "90": {
+          "$type": "opacity",
+          "$value": 90,
+          "$description": "Migrated from legacy sToken --opacity/90",
+          "unit": "%"
+        }
+      },
+      "paragraph-spacing": {
+        "lg": {
+          "$type": "spacing",
+          "$value": 0,
+          "$description": "Migrated from legacy sToken --paragraph-spacing/lg",
+          "unit": "px"
+        },
+        "md": {
+          "$type": "spacing",
+          "$value": 0,
+          "$description": "Migrated from legacy sToken --paragraph-spacing/md",
+          "unit": "px"
+        },
+        "none": {
+          "$type": "spacing",
+          "$value": 0,
+          "$description": "Migrated from legacy sToken --paragraph-spacing/none",
+          "unit": "px"
+        },
+        "sm": {
+          "$type": "spacing",
+          "$value": 0,
+          "$description": "Migrated from legacy sToken --paragraph-spacing/sm",
+          "unit": "px"
+        }
+      },
+      "radius": {
+        "bg-16": {
+          "$type": "borderRadius",
+          "$value": 16,
+          "$description": "Migrated from legacy sToken --radius/bg-16",
+          "unit": "px"
+        },
+        "full": {
+          "$type": "borderRadius",
+          "$value": 999,
+          "$description": "Migrated from legacy sToken --radius/full",
+          "unit": "px"
+        },
+        "lg-8": {
+          "$type": "borderRadius",
+          "$value": 8,
+          "$description": "Migrated from legacy sToken --radius/lg-8",
+          "unit": "px"
+        },
+        "md-4": {
+          "$type": "borderRadius",
+          "$value": 4,
+          "$description": "Migrated from legacy sToken --radius/md-4",
+          "unit": "px"
+        },
+        "min-1": {
+          "$type": "borderRadius",
+          "$value": 1,
+          "$description": "Migrated from legacy sToken --radius/min-1",
+          "unit": "px"
+        },
+        "none-0": {
+          "$type": "borderRadius",
+          "$value": 0,
+          "$description": "Migrated from legacy sToken --radius/none-0",
+          "unit": "px"
+        },
+        "sm-2": {
+          "$type": "borderRadius",
+          "$value": 2,
+          "$description": "Migrated from legacy sToken --radius/sm-2",
+          "unit": "px"
+        },
+        "xl-20": {
+          "$type": "borderRadius",
+          "$value": 20,
+          "$description": "Migrated from legacy sToken --radius/xl-20",
+          "unit": "px"
+        },
+        "xxl-24": {
+          "$type": "borderRadius",
+          "$value": 24,
+          "$description": "Migrated from legacy sToken --radius/xxl-24",
+          "unit": "px"
+        }
+      },
+      "spacing": {
+        "0": {
+          "$type": "spacing",
+          "$value": 0,
+          "$description": "Migrated from legacy sToken --spacing/spacing-0",
+          "unit": "px"
+        },
+        "12": {
+          "$type": "spacing",
+          "$value": 12,
+          "$description": "Migrated from legacy sToken --spacing/spacing-12",
+          "unit": "px"
+        },
+        "16": {
+          "$type": "spacing",
+          "$value": 16,
+          "$description": "Migrated from legacy sToken --spacing/spacing-16",
+          "unit": "px"
+        },
+        "2": {
+          "$type": "spacing",
+          "$value": 2,
+          "$description": "Migrated from legacy sToken --spacing/spacing-2",
+          "unit": "px"
+        },
+        "20": {
+          "$type": "spacing",
+          "$value": 20,
+          "$description": "Migrated from legacy sToken --spacing/spacing-20",
+          "unit": "px"
+        },
+        "24": {
+          "$type": "spacing",
+          "$value": 24,
+          "$description": "Migrated from legacy sToken --spacing/spacing-24",
+          "unit": "px"
+        },
+        "32": {
+          "$type": "spacing",
+          "$value": 32,
+          "$description": "Migrated from legacy sToken --spacing/spacing-32",
+          "unit": "px"
+        },
+        "4": {
+          "$type": "spacing",
+          "$value": 4,
+          "$description": "Migrated from legacy sToken --spacing/spacing-4",
+          "unit": "px"
+        },
+        "40": {
+          "$type": "spacing",
+          "$value": 40,
+          "$description": "Migrated from legacy sToken --spacing/spacing-40",
+          "unit": "px"
+        },
+        "48": {
+          "$type": "spacing",
+          "$value": 48,
+          "$description": "Migrated from legacy sToken --spacing/spacing-48",
+          "unit": "px"
+        },
+        "56": {
+          "$type": "spacing",
+          "$value": 56,
+          "$description": "Migrated from legacy sToken --spacing/spacing-56",
+          "unit": "px"
+        },
+        "64": {
+          "$type": "spacing",
+          "$value": 64,
+          "$description": "Migrated from legacy sToken --spacing/spacing-64",
+          "unit": "px"
+        },
+        "8": {
+          "$type": "spacing",
+          "$value": 8,
+          "$description": "Migrated from legacy sToken --spacing/spacing-8",
+          "unit": "px"
+        },
+        "5": {
+          "$type": "spacing",
+          "$value": 5,
+          "$description": "参考间距：5px 紧凑间距",
+          "$sourceOwner": "reference-import",
+          "unit": "px"
+        }
+      }
+    }
+  }
+}

@@ -3,8 +3,8 @@
 #include "Z_PushButton.h"
 #include <stdexcept>
 namespace button_generated {
-inline constexpr const char* sourceHash = "e5f54101838db093d897c8735533e7d79b9caafd72ab24098070124ef4995e8f";
-inline constexpr const char* fontFamily = "HarmonyOS Sans SC";
+inline constexpr const char* sourceHash = "0a1c693cd235a81b52ba74fc31992438a2490a24c24e77ba6170709e80000fee";
+inline constexpr const char* fontFamily = "HarmonyOS Sans";
 inline constexpr int bodyFontSize = 14;
 inline constexpr double demoGlyphOccupancy = 0.75;
 inline commonWidget::button_detail::Runtime metrics(const QString& profile) {

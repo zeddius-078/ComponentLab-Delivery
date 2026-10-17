@@ -56,6 +56,8 @@ add_library(d2c_components STATIC
     runtime/surface/Surface.cpp runtime/surface/Surface.h
     runtime/surface/FieldChrome.cpp runtime/surface/FieldChrome.h
     runtime/surface/SolidInnerShadow.cpp runtime/surface/SolidInnerShadow.h
+    runtime/surface/ProfileContext.cpp runtime/surface/ProfileContext.h
+    runtime/surface/Typography.cpp runtime/surface/Typography.h
     runtime/surface/TokenResources.cpp runtime/surface/TokenResources.h)
 target_include_directories(d2c_components PUBLIC runtime/component runtime/component/native runtime/surface)
 target_link_libraries(d2c_components PUBLIC Qt5::Widgets Qt5::Svg)
@@ -109,6 +111,8 @@ set(GENERATED_COMPONENT_SOURCES
     runtime/surface/Surface.cpp runtime/surface/Surface.h
     runtime/surface/FieldChrome.cpp runtime/surface/FieldChrome.h
     runtime/surface/SolidInnerShadow.cpp runtime/surface/SolidInnerShadow.h
+    runtime/surface/ProfileContext.cpp runtime/surface/ProfileContext.h
+    runtime/surface/Typography.cpp runtime/surface/Typography.h
     runtime/surface/TokenResources.cpp runtime/surface/TokenResources.h
     runtime/theme/ComponentTheme.cpp runtime/theme/ComponentTheme.h
     runtime/designer/DesignerWidgets.cpp runtime/designer/DesignerWidgets.h
@@ -134,8 +138,8 @@ if(GENERATED_COMPONENT_SDK_INSTALL)
     install(FILES runtime/adapter/ButtonAppearanceAdapter.h MyDesignSystem.h qt5152_msvc_compat.h
         DESTINATION include/MyDesignSystem)
     install(DIRECTORY licenses/ DESTINATION licenses)
-    install(FILES runtime/assets/fonts/Inter/LICENSE.txt DESTINATION licenses RENAME Inter-OFL.txt)
-    install(FILES runtime/assets/fonts/NotoSansSC/LICENSE.txt DESTINATION licenses RENAME NotoSansSC-OFL.txt)
+    install(FILES runtime/assets/fonts/HarmonyOSSans/LICENSE.txt
+        DESTINATION licenses RENAME HarmonyOS-Sans-LICENSE.txt)
 endif()
 add_library(d2c_theme STATIC runtime/theme/ComponentTheme.cpp runtime/theme/ComponentTheme.h)
 target_include_directories(d2c_theme PUBLIC runtime/theme)

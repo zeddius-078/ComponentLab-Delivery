@@ -1,0 +1,38 @@
+{
+  "schemaVersion": "2.0",
+  "tokenSetVersion": "2.0.0",
+  "sourceHash": "cbf5b005e25d04c1b2fa251515cd915a70863a314ad9aa4e0dcbacee145a284e",
+  "resolvedSourceRevision": "f808a581e535",
+  "contexts": [
+    "standard-light",
+    "standard-dark",
+    "wide-light",
+    "wide-dark"
+  ],
+  "generator": {
+    "name": "componentlab-token-compiler",
+    "version": "2.0.0",
+    "entry": "design-assets/tools/export_tokens.py"
+  },
+  "designSnapshot": {
+    "figmaFileKey": "w92BKW1EcutKmTXkwzNHbf",
+    "file": "DesignSystem/imports/stoken.json",
+    "sha256": "276aaf099919b960906be6474cd0fbdf252a50c5e0e685c40a9829ff7d1df145",
+    "collections": [
+      "01.primitive",
+      "02.profile",
+      "03.semantic",
+      "04.component"
+    ],
+    "note": "Collection/mode counts reflect the frozen export; Figma node rebinding to V2 collections is tracked in the rebind plan."
+  },
+  "darkPublishable": false,
+  "legacyCompat": {
+    "direction": "one-way",
+    "exitConditions": [
+      "runtime C++ components migrate from base.stoken.* and legacy role keys",
+      "contracts and compilers consume canonical paths only",
+      "legacy density axis replaced or removed"
+    ]
+  }
+}

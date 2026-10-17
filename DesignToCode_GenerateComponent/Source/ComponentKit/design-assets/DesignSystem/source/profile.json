@@ -1,0 +1,677 @@
+{
+  "$schema": "../schema/v2-token-schema.json",
+  "$description": "ComponentLab V2 canonical token layer: profile",
+  "layer": "profile",
+  "root": {
+    "profile": {
+      "grid": {
+        "baseline": {
+          "$type": "dimension",
+          "$value": "{primitive.dimension.4}",
+          "$description": "Migrated from legacy sToken --grid/baseline",
+          "unit": "px"
+        },
+        "column-count": {
+          "$type": "number",
+          "$value": 24,
+          "$description": "Migrated from legacy sToken --grid/column-count"
+        },
+        "gutter": {
+          "$type": "dimension",
+          "$value": "{primitive.dimension.16}",
+          "$description": "Migrated from legacy sToken --grid/gutter",
+          "unit": "px"
+        },
+        "margin": {
+          "$type": "dimension",
+          "$value": "{primitive.dimension.20}",
+          "$description": "Migrated from legacy sToken --grid/margin",
+          "unit": "px"
+        }
+      },
+      "interaction-size": {
+        "01": {
+          "$type": "dimension",
+          "$value": "{primitive.dimension.20}",
+          "$description": "Migrated from legacy sToken --interaction-size/01",
+          "unit": "px"
+        },
+        "02": {
+          "$type": "dimension",
+          "$value": "{primitive.dimension.24}",
+          "$description": "Migrated from legacy sToken --interaction-size/02",
+          "unit": "px"
+        },
+        "03": {
+          "$type": "dimension",
+          "$value": "{primitive.dimension.28}",
+          "$description": "Migrated from legacy sToken --interaction-size/03",
+          "unit": "px"
+        },
+        "04": {
+          "$type": "dimension",
+          "$value": "{primitive.dimension.32}",
+          "$description": "Migrated from legacy sToken --interaction-size/04",
+          "unit": "px"
+        },
+        "05": {
+          "$type": "dimension",
+          "$value": "{primitive.dimension.36}",
+          "$description": "Migrated from legacy sToken --interaction-size/05",
+          "unit": "px"
+        },
+        "06": {
+          "$type": "dimension",
+          "$value": "{primitive.dimension.40}",
+          "$description": "Migrated from legacy sToken --interaction-size/06",
+          "unit": "px"
+        },
+        "07": {
+          "$type": "dimension",
+          "$value": "{primitive.dimension.48}",
+          "$description": "Migrated from legacy sToken --interaction-size/07",
+          "unit": "px"
+        },
+        "08": {
+          "$type": "dimension",
+          "$value": "{primitive.dimension.56}",
+          "$description": "Migrated from legacy sToken --interaction-size/08",
+          "unit": "px"
+        }
+      },
+      "safe-area": {
+        "inset-block": {
+          "$type": "dimension",
+          "$value": "{primitive.dimension.24}",
+          "$description": "Migrated from legacy sToken --safe-area/inset-block",
+          "unit": "px"
+        },
+        "inset-inline": {
+          "$type": "dimension",
+          "$value": "{primitive.dimension.24}",
+          "$description": "Migrated from legacy sToken --safe-area/inset-inline",
+          "unit": "px"
+        }
+      },
+      "spacing-scale": {
+        "00": {
+          "$type": "spacing",
+          "$value": "{primitive.dimension.0}",
+          "$description": "Migrated from legacy sToken --spacing-scale/00",
+          "unit": "px"
+        },
+        "01": {
+          "$type": "spacing",
+          "$value": "{primitive.dimension.4}",
+          "$description": "Migrated from legacy sToken --spacing-scale/01",
+          "unit": "px"
+        },
+        "02": {
+          "$type": "spacing",
+          "$value": "{primitive.dimension.4}",
+          "$description": "Migrated from legacy sToken --spacing-scale/02",
+          "unit": "px"
+        },
+        "03": {
+          "$type": "spacing",
+          "$value": "{primitive.dimension.8}",
+          "$description": "Migrated from legacy sToken --spacing-scale/03",
+          "unit": "px"
+        },
+        "04": {
+          "$type": "spacing",
+          "$value": "{primitive.dimension.12}",
+          "$description": "Migrated from legacy sToken --spacing-scale/04",
+          "unit": "px"
+        },
+        "05": {
+          "$type": "spacing",
+          "$value": "{primitive.dimension.16}",
+          "$description": "Migrated from legacy sToken --spacing-scale/05",
+          "unit": "px"
+        },
+        "06": {
+          "$type": "spacing",
+          "$value": "{primitive.dimension.20}",
+          "$description": "Migrated from legacy sToken --spacing-scale/06",
+          "unit": "px"
+        },
+        "07": {
+          "$type": "spacing",
+          "$value": "{primitive.dimension.24}",
+          "$description": "Migrated from legacy sToken --spacing-scale/07",
+          "unit": "px"
+        },
+        "08": {
+          "$type": "spacing",
+          "$value": "{primitive.dimension.32}",
+          "$description": "Migrated from legacy sToken --spacing-scale/08",
+          "unit": "px"
+        },
+        "09": {
+          "$type": "spacing",
+          "$value": "{primitive.dimension.36}",
+          "$description": "Migrated from legacy sToken --spacing-scale/09",
+          "unit": "px"
+        },
+        "10": {
+          "$type": "spacing",
+          "$value": "{primitive.dimension.40}",
+          "$description": "Migrated from legacy sToken --spacing-scale/10",
+          "unit": "px"
+        }
+      },
+      "typography-scale": {
+        "font-size": {
+          "01": {
+            "$type": "fontSize",
+            "$value": "{primitive.font-size.12}",
+            "$description": "Migrated from legacy sToken --typography-scale/font-size/01",
+            "unit": "px"
+          },
+          "02": {
+            "$type": "fontSize",
+            "$value": "{primitive.font-size.14}",
+            "$description": "Migrated from legacy sToken --typography-scale/font-size/02",
+            "unit": "px"
+          },
+          "03": {
+            "$type": "fontSize",
+            "$value": "{primitive.font-size.16}",
+            "$description": "Migrated from legacy sToken --typography-scale/font-size/03",
+            "unit": "px"
+          },
+          "04": {
+            "$type": "fontSize",
+            "$value": "{primitive.font-size.18}",
+            "$description": "Migrated from legacy sToken --typography-scale/font-size/04",
+            "unit": "px"
+          },
+          "05": {
+            "$type": "fontSize",
+            "$value": "{primitive.font-size.20}",
+            "$description": "Migrated from legacy sToken --typography-scale/font-size/05",
+            "unit": "px"
+          },
+          "06": {
+            "$type": "fontSize",
+            "$value": "{primitive.font-size.24}",
+            "$description": "Migrated from legacy sToken --typography-scale/font-size/06",
+            "unit": "px"
+          },
+          "07": {
+            "$type": "fontSize",
+            "$value": "{primitive.font-size.28}",
+            "$description": "Migrated from legacy sToken --typography-scale/font-size/07",
+            "unit": "px"
+          },
+          "08": {
+            "$type": "fontSize",
+            "$value": "{primitive.font-size.32}",
+            "$description": "Migrated from legacy sToken --typography-scale/font-size/08",
+            "unit": "px"
+          },
+          "09": {
+            "$type": "fontSize",
+            "$value": "{primitive.font-size.36}",
+            "$description": "Migrated from legacy sToken --typography-scale/font-size/09",
+            "unit": "px"
+          },
+          "10": {
+            "$type": "fontSize",
+            "$value": "{primitive.font-size.40}",
+            "$description": "Migrated from legacy sToken --typography-scale/font-size/10",
+            "unit": "px"
+          }
+        },
+        "letter-spacing": {
+          "default": {
+            "$type": "letterSpacing",
+            "$value": "{primitive.letter-spacing.default}",
+            "$description": "Migrated from legacy sToken --typography-scale/letter-spacing/default",
+            "unit": "px"
+          }
+        },
+        "line-height": {
+          "chrome": {
+            "$type": "lineHeight",
+            "$value": "{primitive.line-height.24}",
+            "$description": "Migrated from legacy sToken --typography-scale/line-height/chrome",
+            "unit": "px"
+          },
+          "compact": {
+            "01": {
+              "$type": "lineHeight",
+              "$value": "{primitive.line-height.12}",
+              "$description": "Migrated from legacy sToken --typography-scale/line-height/compact/01",
+              "unit": "px"
+            },
+            "02": {
+              "$type": "lineHeight",
+              "$value": "{primitive.line-height.14}",
+              "$description": "Migrated from legacy sToken --typography-scale/line-height/compact/02",
+              "unit": "px"
+            },
+            "03": {
+              "$type": "lineHeight",
+              "$value": "{primitive.line-height.16}",
+              "$description": "Migrated from legacy sToken --typography-scale/line-height/compact/03",
+              "unit": "px"
+            },
+            "04": {
+              "$type": "lineHeight",
+              "$value": "{primitive.line-height.18}",
+              "$description": "Migrated from legacy sToken --typography-scale/line-height/compact/04",
+              "unit": "px"
+            },
+            "05": {
+              "$type": "lineHeight",
+              "$value": "{primitive.line-height.20}",
+              "$description": "Migrated from legacy sToken --typography-scale/line-height/compact/05",
+              "unit": "px"
+            },
+            "06": {
+              "$type": "lineHeight",
+              "$value": "{primitive.line-height.22}",
+              "$description": "Migrated from legacy sToken --typography-scale/line-height/compact/06",
+              "unit": "px"
+            },
+            "07": {
+              "$type": "lineHeight",
+              "$value": "{primitive.line-height.24}",
+              "$description": "Migrated from legacy sToken --typography-scale/line-height/compact/07",
+              "unit": "px"
+            },
+            "08": {
+              "$type": "lineHeight",
+              "$value": "{primitive.line-height.26}",
+              "$description": "Migrated from legacy sToken --typography-scale/line-height/compact/08",
+              "unit": "px"
+            },
+            "09": {
+              "$type": "lineHeight",
+              "$value": "{primitive.line-height.28}",
+              "$description": "Migrated from legacy sToken --typography-scale/line-height/compact/09",
+              "unit": "px"
+            },
+            "10": {
+              "$type": "lineHeight",
+              "$value": "{primitive.line-height.32}",
+              "$description": "Migrated from legacy sToken --typography-scale/line-height/compact/10",
+              "unit": "px"
+            },
+            "36": {
+              "$type": "lineHeight",
+              "$value": "{primitive.line-height.36}",
+              "$description": "Migrated from legacy sToken --typography-scale/line-height/compact/36",
+              "unit": "px"
+            }
+          },
+          "default": {
+            "01": {
+              "$type": "lineHeight",
+              "$value": "{primitive.line-height.20}",
+              "$description": "Migrated from legacy sToken --typography-scale/line-height/default/01",
+              "unit": "px"
+            },
+            "02": {
+              "$type": "lineHeight",
+              "$value": "{primitive.line-height.22}",
+              "$description": "Migrated from legacy sToken --typography-scale/line-height/default/02",
+              "unit": "px"
+            },
+            "03": {
+              "$type": "lineHeight",
+              "$value": "{primitive.line-height.24}",
+              "$description": "Migrated from legacy sToken --typography-scale/line-height/default/03",
+              "unit": "px"
+            },
+            "04": {
+              "$type": "lineHeight",
+              "$value": "{primitive.line-height.18}",
+              "$description": "Migrated from legacy sToken --typography-scale/line-height/default/04",
+              "unit": "px"
+            },
+            "05": {
+              "$type": "lineHeight",
+              "$value": "{primitive.line-height.20}",
+              "$description": "Migrated from legacy sToken --typography-scale/line-height/default/05",
+              "unit": "px"
+            },
+            "06": {
+              "$type": "lineHeight",
+              "$value": "{primitive.line-height.22}",
+              "$description": "Migrated from legacy sToken --typography-scale/line-height/default/06",
+              "unit": "px"
+            },
+            "07": {
+              "$type": "lineHeight",
+              "$value": "{primitive.line-height.24}",
+              "$description": "Migrated from legacy sToken --typography-scale/line-height/default/07",
+              "unit": "px"
+            },
+            "08": {
+              "$type": "lineHeight",
+              "$value": "{primitive.line-height.26}",
+              "$description": "Migrated from legacy sToken --typography-scale/line-height/default/08",
+              "unit": "px"
+            },
+            "09": {
+              "$type": "lineHeight",
+              "$value": "{primitive.line-height.28}",
+              "$description": "Migrated from legacy sToken --typography-scale/line-height/default/09",
+              "unit": "px"
+            },
+            "10": {
+              "$type": "lineHeight",
+              "$value": "{primitive.line-height.32}",
+              "$description": "Migrated from legacy sToken --typography-scale/line-height/default/10",
+              "unit": "px"
+            },
+            "36": {
+              "$type": "lineHeight",
+              "$value": "{primitive.line-height.36}",
+              "$description": "Migrated from legacy sToken --typography-scale/line-height/default/36",
+              "unit": "px"
+            }
+          },
+          "display-large": {
+            "$type": "lineHeight",
+            "$value": "{primitive.line-height.40}",
+            "$description": "Migrated from legacy sToken --typography-scale/line-height/display-large",
+            "unit": "px"
+          }
+        }
+      },
+      "viewport": {
+        "height": {
+          "$type": "dimension",
+          "$value": "{primitive.dimension.1080}",
+          "$description": "Migrated from legacy sToken --viewport/height",
+          "unit": "px"
+        },
+        "navigation-width": {
+          "$type": "dimension",
+          "$value": "{primitive.dimension.1920}",
+          "$description": "Migrated from legacy sToken --viewport/navigation-width",
+          "unit": "px"
+        },
+        "output-scale": {
+          "$type": "number",
+          "$value": 1,
+          "$description": "Migrated from legacy sToken --viewport/output-scale"
+        },
+        "width": {
+          "$type": "dimension",
+          "$value": "{primitive.dimension.1920}",
+          "$description": "Migrated from legacy sToken --viewport/width",
+          "unit": "px"
+        }
+      },
+      "visualization-size": {
+        "01": {
+          "$type": "dimension",
+          "$value": "{primitive.dimension.16}",
+          "$description": "Migrated from legacy sToken --visualization-size/01",
+          "unit": "px"
+        },
+        "02": {
+          "$type": "dimension",
+          "$value": "{primitive.dimension.20}",
+          "$description": "Migrated from legacy sToken --visualization-size/02",
+          "unit": "px"
+        },
+        "03": {
+          "$type": "dimension",
+          "$value": "{primitive.dimension.24}",
+          "$description": "Migrated from legacy sToken --visualization-size/03",
+          "unit": "px"
+        },
+        "04": {
+          "$type": "dimension",
+          "$value": "{primitive.dimension.32}",
+          "$description": "Migrated from legacy sToken --visualization-size/04",
+          "unit": "px"
+        },
+        "05": {
+          "$type": "dimension",
+          "$value": "{primitive.dimension.36}",
+          "$description": "Migrated from legacy sToken --visualization-size/05",
+          "unit": "px"
+        },
+        "06": {
+          "$type": "dimension",
+          "$value": "{primitive.dimension.40}",
+          "$description": "Migrated from legacy sToken --visualization-size/06",
+          "unit": "px"
+        },
+        "07": {
+          "$type": "dimension",
+          "$value": "{primitive.dimension.48}",
+          "$description": "Migrated from legacy sToken --visualization-size/07",
+          "unit": "px"
+        },
+        "08": {
+          "$type": "dimension",
+          "$value": "{primitive.dimension.56}",
+          "$description": "Migrated from legacy sToken --visualization-size/08",
+          "unit": "px"
+        }
+      }
+    },
+    "$modeOverrides": {
+      "wide": {
+        "profile.grid.baseline": {
+          "$value": "{primitive.dimension.4}"
+        },
+        "profile.grid.gutter": {
+          "$value": "{primitive.dimension.24}"
+        },
+        "profile.grid.margin": {
+          "$value": "{primitive.dimension.24}"
+        },
+        "profile.interaction-size.01": {
+          "$value": "{primitive.dimension.24}"
+        },
+        "profile.interaction-size.02": {
+          "$value": "{primitive.dimension.32}"
+        },
+        "profile.interaction-size.03": {
+          "$value": "{primitive.dimension.36}"
+        },
+        "profile.interaction-size.04": {
+          "$value": "{primitive.dimension.40}"
+        },
+        "profile.interaction-size.05": {
+          "$value": "{primitive.dimension.48}"
+        },
+        "profile.interaction-size.06": {
+          "$value": "{primitive.dimension.56}"
+        },
+        "profile.interaction-size.07": {
+          "$value": "{primitive.dimension.64}"
+        },
+        "profile.interaction-size.08": {
+          "$value": "{primitive.dimension.64}"
+        },
+        "profile.safe-area.inset-block": {
+          "$value": "{primitive.dimension.32}"
+        },
+        "profile.safe-area.inset-inline": {
+          "$value": "{primitive.dimension.32}"
+        },
+        "profile.spacing-scale.00": {
+          "$value": "{primitive.dimension.0}"
+        },
+        "profile.spacing-scale.01": {
+          "$value": "{primitive.dimension.4}"
+        },
+        "profile.spacing-scale.02": {
+          "$value": "{primitive.dimension.8}"
+        },
+        "profile.spacing-scale.03": {
+          "$value": "{primitive.dimension.12}"
+        },
+        "profile.spacing-scale.04": {
+          "$value": "{primitive.dimension.16}"
+        },
+        "profile.spacing-scale.05": {
+          "$value": "{primitive.dimension.20}"
+        },
+        "profile.spacing-scale.06": {
+          "$value": "{primitive.dimension.24}"
+        },
+        "profile.spacing-scale.07": {
+          "$value": "{primitive.dimension.32}"
+        },
+        "profile.spacing-scale.08": {
+          "$value": "{primitive.dimension.36}"
+        },
+        "profile.spacing-scale.09": {
+          "$value": "{primitive.dimension.40}"
+        },
+        "profile.spacing-scale.10": {
+          "$value": "{primitive.dimension.48}"
+        },
+        "profile.typography-scale.font-size.01": {
+          "$value": "{primitive.font-size.14}"
+        },
+        "profile.typography-scale.font-size.02": {
+          "$value": "{primitive.font-size.18}"
+        },
+        "profile.typography-scale.font-size.03": {
+          "$value": "{primitive.font-size.20}"
+        },
+        "profile.typography-scale.font-size.04": {
+          "$value": "{primitive.font-size.24}"
+        },
+        "profile.typography-scale.font-size.05": {
+          "$value": "{primitive.font-size.26}"
+        },
+        "profile.typography-scale.font-size.06": {
+          "$value": "{primitive.font-size.28}"
+        },
+        "profile.typography-scale.font-size.07": {
+          "$value": "{primitive.font-size.32}"
+        },
+        "profile.typography-scale.font-size.08": {
+          "$value": "{primitive.font-size.36}"
+        },
+        "profile.typography-scale.font-size.09": {
+          "$value": "{primitive.font-size.36}"
+        },
+        "profile.typography-scale.font-size.10": {
+          "$value": "{primitive.font-size.36}"
+        },
+        "profile.typography-scale.letter-spacing.default": {
+          "$value": "{primitive.letter-spacing.default}"
+        },
+        "profile.typography-scale.line-height.chrome": {
+          "$value": "{primitive.line-height.32}"
+        },
+        "profile.typography-scale.line-height.compact.01": {
+          "$value": "{primitive.line-height.14}"
+        },
+        "profile.typography-scale.line-height.compact.02": {
+          "$value": "{primitive.line-height.18}"
+        },
+        "profile.typography-scale.line-height.compact.03": {
+          "$value": "{primitive.line-height.20}"
+        },
+        "profile.typography-scale.line-height.compact.04": {
+          "$value": "{primitive.line-height.24}"
+        },
+        "profile.typography-scale.line-height.compact.05": {
+          "$value": "{primitive.line-height.26}"
+        },
+        "profile.typography-scale.line-height.compact.06": {
+          "$value": "{primitive.line-height.26}"
+        },
+        "profile.typography-scale.line-height.compact.07": {
+          "$value": "{primitive.line-height.28}"
+        },
+        "profile.typography-scale.line-height.compact.08": {
+          "$value": "{primitive.line-height.28}"
+        },
+        "profile.typography-scale.line-height.compact.09": {
+          "$value": "{primitive.line-height.32}"
+        },
+        "profile.typography-scale.line-height.compact.10": {
+          "$value": "{primitive.line-height.36}"
+        },
+        "profile.typography-scale.line-height.compact.36": {
+          "$value": "{primitive.line-height.40}"
+        },
+        "profile.typography-scale.line-height.default.01": {
+          "$value": "{primitive.line-height.14}"
+        },
+        "profile.typography-scale.line-height.default.02": {
+          "$value": "{primitive.line-height.18}"
+        },
+        "profile.typography-scale.line-height.default.03": {
+          "$value": "{primitive.line-height.20}"
+        },
+        "profile.typography-scale.line-height.default.04": {
+          "$value": "{primitive.line-height.24}"
+        },
+        "profile.typography-scale.line-height.default.05": {
+          "$value": "{primitive.line-height.26}"
+        },
+        "profile.typography-scale.line-height.default.06": {
+          "$value": "{primitive.line-height.26}"
+        },
+        "profile.typography-scale.line-height.default.07": {
+          "$value": "{primitive.line-height.28}"
+        },
+        "profile.typography-scale.line-height.default.08": {
+          "$value": "{primitive.line-height.28}"
+        },
+        "profile.typography-scale.line-height.default.09": {
+          "$value": "{primitive.line-height.32}"
+        },
+        "profile.typography-scale.line-height.default.10": {
+          "$value": "{primitive.line-height.36}"
+        },
+        "profile.typography-scale.line-height.default.36": {
+          "$value": "{primitive.line-height.40}"
+        },
+        "profile.typography-scale.line-height.display-large": {
+          "$value": "{primitive.line-height.48}"
+        },
+        "profile.viewport.height": {
+          "$value": "{primitive.dimension.1440}"
+        },
+        "profile.viewport.navigation-width": {
+          "$value": "{primitive.dimension.2560}"
+        },
+        "profile.viewport.width": {
+          "$value": "{primitive.dimension.2560}"
+        },
+        "profile.visualization-size.01": {
+          "$value": "{primitive.dimension.20}"
+        },
+        "profile.visualization-size.02": {
+          "$value": "{primitive.dimension.24}"
+        },
+        "profile.visualization-size.03": {
+          "$value": "{primitive.dimension.32}"
+        },
+        "profile.visualization-size.04": {
+          "$value": "{primitive.dimension.36}"
+        },
+        "profile.visualization-size.05": {
+          "$value": "{primitive.dimension.40}"
+        },
+        "profile.visualization-size.06": {
+          "$value": "{primitive.dimension.48}"
+        },
+        "profile.visualization-size.07": {
+          "$value": "{primitive.dimension.56}"
+        },
+        "profile.visualization-size.08": {
+          "$value": "{primitive.dimension.64}"
+        }
+      }
+    }
+  }
+}

@@ -36,7 +36,7 @@ QString visualState(const QSlider* slider) {
 }
 
 QFont valueFont() {
-    QFont font("Inter");
+    QFont font("HarmonyOS Sans");
     font.setPixelSize(14);
     font.setWeight(QFont::Medium);
     return font;
@@ -264,7 +264,7 @@ void applyFigmaSliderAppearance(QSlider* slider, const QString& snapshotState,
     if (!slider || !QStringList{"", "Default", "Focus", "Dragging"}.contains(snapshotState))
         throw std::invalid_argument(
             "Captured Slider requires QSlider and a source-backed snapshot state");
-    static const int font = QFontDatabase::addApplicationFont(":/figma/fonts/Inter-Medium.otf");
+    static const int font = QFontDatabase::addApplicationFont(":/fonts/HarmonyOS_Sans_Regular.ttf");
     Q_UNUSED(font);
     slider->setProperty("figmaAppearance", "figma-light");
     slider->setProperty("designSystemStyleOwner", "figma-slider-captured");

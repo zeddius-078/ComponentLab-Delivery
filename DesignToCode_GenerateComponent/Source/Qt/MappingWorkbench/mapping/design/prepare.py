@@ -44,9 +44,9 @@ def prepare():
             scope = ["FONT_SIZE"] if key == "fontSize" else ["GAP"] if key == "paddingInline" else ["WIDTH_HEIGHT"]
             add(metrics[key], scope, f"forms.{size}.{key}")
     for path, scopes, owner in (
-        ("component.basic.checkbox.radius", ["CORNER_RADIUS"], "checkbox.radius"),
-        ("component.basic.checkbox.sizes.sm.indicator", ["WIDTH_HEIGHT"], "checkbox.sm.indicator"),
-        ("component.basic.checkbox.sizes.lg.indicator", ["WIDTH_HEIGHT"], "checkbox.lg.indicator"),
+        ("component.checkbox.base.default.indicator.radius", ["CORNER_RADIUS"], "checkbox.radius"),
+        ("component.checkbox.size.small.indicator.size", ["WIDTH_HEIGHT"], "checkbox.sm.indicator"),
+        ("component.checkbox.size.large.indicator.size", ["WIDTH_HEIGHT"], "checkbox.lg.indicator"),
     ):
         add("{" + path + "}", scopes, owner)
 

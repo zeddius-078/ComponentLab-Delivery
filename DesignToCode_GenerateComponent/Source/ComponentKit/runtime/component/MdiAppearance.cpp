@@ -42,7 +42,7 @@ protected:
 };
 
 QFont font(int size, int weight = QFont::Normal) {
-    QFont f("Inter");
+    QFont f("HarmonyOS Sans");
     f.setPixelSize(size);
     f.setWeight(weight);
     return f;
@@ -523,7 +523,7 @@ void applyFigmaMdiSubWindowAppearance(QMdiSubWindow* sub, const QString& snapsho
         !QStringList{"", "Inactive", "Active", "Maximized", "Minimized", "Shaded", "Disabled"}
              .contains(snapshot))
         throw std::invalid_argument("Native QMdiSubWindow and captured State required");
-    static const int f = QFontDatabase::addApplicationFont(":/figma/fonts/Inter-Medium.otf");
+    static const int f = QFontDatabase::addApplicationFont(":/fonts/HarmonyOS_Sans_Regular.ttf");
     Q_UNUSED(f);
     sub->setProperty("designSystemStyleOwner", "figma-mdi-captured");
     sub->setProperty("figmaMdiSnapshotState", snapshot);
@@ -591,8 +591,8 @@ void configureFigmaMdiArea(QMdiArea* area, const QMap<QString, QString>& propert
 void applyFigmaMdiAreaAppearance(QMdiArea* area) {
     if (!area)
         throw std::invalid_argument("Native QMdiArea required");
-    for (const char* face : {"Regular", "Medium", "SemiBold"})
-        QFontDatabase::addApplicationFont(QString(":/figma/fonts/Inter-%1.otf").arg(face));
+    QFontDatabase::addApplicationFont(
+        QStringLiteral(":/fonts/HarmonyOS_Sans_Regular.ttf"));
     area->setProperty("designSystemStyleOwner", "figma-mdi-captured");
     area->setStyleSheet("QMdiArea[designSystemStyleOwner=\"figma-mdi-captured\"]{background:white;"
                         "border:1px solid #d0d0d0;border-radius:10px;}");

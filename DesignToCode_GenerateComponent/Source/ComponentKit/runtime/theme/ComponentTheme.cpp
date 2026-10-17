@@ -1,10 +1,11 @@
 #include "ComponentTheme.h"
 #include "FieldChrome.h"
 #include "FocusIndicator.h"
+#include "ProfileContext.h"
 #include "TokenResources.h"
+#include "Typography.h"
 #include "Z_PushButton.h"
 #include <QApplication>
-#include <QFontDatabase>
 #include <QJsonArray>
 #include <QJsonDocument>
 #include <QtMath>
@@ -14,8 +15,6 @@ static void initializeComponentResources() { Q_INIT_RESOURCE(component_resources
 
 namespace component_theme {
 namespace {
-QString installedProfile;
-
 QJsonObject readObject(const QString &path) {
     QJsonParseError error;
     const auto document = QJsonDocument::fromJson(token_resources::read(path), &error);
@@ -27,12 +26,12 @@ QJsonObject readObject(const QString &path) {
 
 } // namespace
 
-QString activeProfile() { return installedProfile; }
+QString activeProfile() { return profile_context::activeProfile(); }
 
 void install(QApplication &application, const QString &profile) {
     initializeComponentResources();
     // 现有 Button 运行配置为进程级单次安装；沿用此约束，不在本轮改写主题生命周期。
-    if (!installedProfile.isEmpty())
+    if (!activeProfile().isEmpty())
         throw std::logic_error("Component theme is already installed");
     const auto manifest = readObject(":/button/manifest.json");
     QJsonObject selected;
@@ -80,12 +79,11 @@ void install(QApplication &application, const QString &profile) {
     runtime.dangerFocusColor = color("danger");
     runtime.ghostFocusColor = color("onBrand");
 
-    // 字体与基础调色板属于主题安装；页面只选择 profile，避免自行填写字体与色值。
-    for (const auto *file : {"Poppins-Regular.ttf", "Poppins-Medium.ttf", "Poppins-SemiBold.ttf"}) {
-        if (QFontDatabase::addApplicationFont(":/button/" + QString::fromLatin1(file)) < 0)
-            throw std::runtime_error("Cannot load component font");
-    }
-    QFont font(manifest["fontFamily"].toString());
+    // 全局文本使用 HarmonyOS Sans；缺失的简体中文字形显式回退到 SC。
+    // 字体资产由 SDK 注册，不依赖操作系统是否预装字体。
+    typography::installApplicationFonts();
+    QFont font;
+    font.setFamilies(typography::applicationFamilies());
     font.setPixelSize(manifest["bodyFontSize"].toInt());
     application.setFont(font);
     auto palette = application.palette();
@@ -111,6 +109,6 @@ void install(QApplication &application, const QString &profile) {
     commonWidget::FocusIndicator::instance().configure(focus["mode"].toString(),
                                                        focus["opacity"].toDouble(-1));
     commonWidget::button_detail::installButtonRuntime(application, runtime);
-    installedProfile = profile;
+    profile_context::install(application, profile);
 }
 } // namespace component_theme

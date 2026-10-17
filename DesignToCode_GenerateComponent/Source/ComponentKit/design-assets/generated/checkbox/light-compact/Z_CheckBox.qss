@@ -6,31 +6,31 @@ QFrame[checkboxPart="FACE"][surfacePreset="solid"][selectionState="unchecked"][i
 
 QFrame[checkboxPart="FACE"][surfacePreset="solid"][selectionState="selected"][interactionState="default"] { background: #6235f7; color: #ffffff; border-style: solid; border-color: #6235f7; border-radius: 4px; border-width:1px; }
 
-QFrame[checkboxPart="FACE"][surfacePreset="solid"][selectionState="unchecked"][interactionState="hover"] { background: #f3f3f3; color: #ffffff; border-style: solid; border-color: #6235f7; border-radius: 4px; border-width:1px; }
+QFrame[checkboxPart="FACE"][surfacePreset="solid"][selectionState="unchecked"][interactionState="hover"] { background: #f5f5f5; color: #ffffff; border-style: solid; border-color: #6235f7; border-radius: 4px; border-width:1px; }
 
-QFrame[checkboxPart="FACE"][surfacePreset="solid"][selectionState="selected"][interactionState="hover"] { background: #6e58d9; color: #ffffff; border-style: solid; border-color: #6e58d9; border-radius: 4px; border-width:1px; }
+QFrame[checkboxPart="FACE"][surfacePreset="solid"][selectionState="selected"][interactionState="hover"] { background: #7b5fed; color: #ffffff; border-style: solid; border-color: #7b5fed; border-radius: 4px; border-width:1px; }
 
-QFrame[checkboxPart="FACE"][surfacePreset="solid"][selectionState="unchecked"][interactionState="pressed"] { background: #f3f3f3; color: #ffffff; border-style: solid; border-color: #532cd1; border-radius: 4px; border-width:1px; }
+QFrame[checkboxPart="FACE"][surfacePreset="solid"][selectionState="unchecked"][interactionState="pressed"] { background: #dcdbdb; color: #ffffff; border-style: solid; border-color: #6235f7; border-radius: 4px; border-width:1px; }
 
-QFrame[checkboxPart="FACE"][surfacePreset="solid"][selectionState="selected"][interactionState="pressed"] { background: #532cd1; color: #ffffff; border-style: solid; border-color: #532cd1; border-radius: 4px; border-width:1px; }
+QFrame[checkboxPart="FACE"][surfacePreset="solid"][selectionState="selected"][interactionState="pressed"] { background: #6235f7; color: #ffffff; border-style: solid; border-color: #6235f7; border-radius: 4px; border-width:1px; }
 
-QFrame[checkboxPart="FACE"][surfacePreset="solid"][selectionState="unchecked"][interactionState="disabled"] { background: #f3f3f3; color: #ffffff; border-style: solid; border-color: #d0d0d0; border-radius: 4px; border-width:1px; }
+QFrame[checkboxPart="FACE"][surfacePreset="solid"][selectionState="unchecked"][interactionState="disabled"] { background: #eeeeee; color: #ffffff; border-style: solid; border-color: #d0d0d0; border-radius: 4px; border-width:1px; }
 
 QFrame[checkboxPart="FACE"][surfacePreset="solid"][selectionState="selected"][interactionState="disabled"] { background: #8a8a8a; color: #ffffff; border-style: solid; border-color: #8a8a8a; border-radius: 4px; border-width:1px; }
 
-QFrame[checkboxPart="FACE"][surfacePreset="gradient"][selectionState="unchecked"][interactionState="default"] { background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #f3f3f3, stop:1 #f3f3f3); color: #ffffff; border-style: solid; border-color: #444444; border-radius: 4px; border-width:1px; }
+QFrame[checkboxPart="FACE"][surfacePreset="gradient"][selectionState="unchecked"][interactionState="default"] { background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #f5f5f5, stop:1 #dcdbdb); color: #ffffff; border-style: solid; border-color: #444444; border-radius: 4px; border-width:1px; }
 
-QFrame[checkboxPart="FACE"][surfacePreset="gradient"][selectionState="selected"][interactionState="default"] { background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #6e58d9, stop:1 #532cd1); color: #ffffff; border-style: solid; border-color: #6235f7; border-radius: 4px; border-width:1px; }
+QFrame[checkboxPart="FACE"][surfacePreset="gradient"][selectionState="selected"][interactionState="default"] { background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #7b5fed, stop:1 #6235f7); color: #ffffff; border-style: solid; border-color: #6235f7; border-radius: 4px; border-width:1px; }
 
-QFrame[checkboxPart="FACE"][surfacePreset="gradient"][selectionState="unchecked"][interactionState="hover"] { background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #f3f3f3, stop:1 #ffffff); color: #ffffff; border-style: solid; border-color: #6235f7; border-radius: 4px; border-width:1px; }
+QFrame[checkboxPart="FACE"][surfacePreset="gradient"][selectionState="unchecked"][interactionState="hover"] { background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #f5f5f5, stop:1 #ffffff); color: #ffffff; border-style: solid; border-color: #6235f7; border-radius: 4px; border-width:1px; }
 
-QFrame[checkboxPart="FACE"][surfacePreset="gradient"][selectionState="selected"][interactionState="hover"] { background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #6e58d9, stop:1 #6235f7); color: #ffffff; border-style: solid; border-color: #6e58d9; border-radius: 4px; border-width:1px; }
+QFrame[checkboxPart="FACE"][surfacePreset="gradient"][selectionState="selected"][interactionState="hover"] { background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #7b5fed, stop:1 #6235f7); color: #ffffff; border-style: solid; border-color: #7b5fed; border-radius: 4px; border-width:1px; }
 
-QFrame[checkboxPart="FACE"][surfacePreset="gradient"][selectionState="unchecked"][interactionState="pressed"] { background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #ffffff, stop:1 #f3f3f3); color: #ffffff; border-style: solid; border-color: #532cd1; border-radius: 4px; border-width:1px; }
+QFrame[checkboxPart="FACE"][surfacePreset="gradient"][selectionState="unchecked"][interactionState="pressed"] { background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #ffffff, stop:1 #dcdbdb); color: #ffffff; border-style: solid; border-color: #6235f7; border-radius: 4px; border-width:1px; }
 
-QFrame[checkboxPart="FACE"][surfacePreset="gradient"][selectionState="selected"][interactionState="pressed"] { background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #6235f7, stop:1 #532cd1); color: #ffffff; border-style: solid; border-color: #532cd1; border-radius: 4px; border-width:1px; }
+QFrame[checkboxPart="FACE"][surfacePreset="gradient"][selectionState="selected"][interactionState="pressed"] { background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #6235f7, stop:1 #6235f7); color: #ffffff; border-style: solid; border-color: #6235f7; border-radius: 4px; border-width:1px; }
 
-QFrame[checkboxPart="FACE"][surfacePreset="gradient"][selectionState="unchecked"][interactionState="disabled"] { background: #f3f3f3; color: #ffffff; border-style: solid; border-color: #d0d0d0; border-radius: 4px; border-width:1px; }
+QFrame[checkboxPart="FACE"][surfacePreset="gradient"][selectionState="unchecked"][interactionState="disabled"] { background: #eeeeee; color: #ffffff; border-style: solid; border-color: #d0d0d0; border-radius: 4px; border-width:1px; }
 
 QFrame[checkboxPart="FACE"][surfacePreset="gradient"][selectionState="selected"][interactionState="disabled"] { background: #8a8a8a; color: #ffffff; border-style: solid; border-color: #8a8a8a; border-radius: 4px; border-width:1px; }
 
@@ -38,31 +38,31 @@ QFrame[checkboxPart="FACE"][surfacePreset="inset"][selectionState="unchecked"][i
 
 QFrame[checkboxPart="FACE"][surfacePreset="inset"][selectionState="selected"][interactionState="default"] { background: #6235f7; color: #ffffff; border-style: solid; border-color: #6235f7; border-radius: 4px; border-width:1px; }
 
-QFrame[checkboxPart="FACE"][surfacePreset="inset"][selectionState="unchecked"][interactionState="hover"] { background: #f3f3f3; color: #ffffff; border-style: solid; border-color: #6235f7; border-radius: 4px; border-width:1px; }
+QFrame[checkboxPart="FACE"][surfacePreset="inset"][selectionState="unchecked"][interactionState="hover"] { background: #f5f5f5; color: #ffffff; border-style: solid; border-color: #6235f7; border-radius: 4px; border-width:1px; }
 
-QFrame[checkboxPart="FACE"][surfacePreset="inset"][selectionState="selected"][interactionState="hover"] { background: #6e58d9; color: #ffffff; border-style: solid; border-color: #6e58d9; border-radius: 4px; border-width:1px; }
+QFrame[checkboxPart="FACE"][surfacePreset="inset"][selectionState="selected"][interactionState="hover"] { background: #7b5fed; color: #ffffff; border-style: solid; border-color: #7b5fed; border-radius: 4px; border-width:1px; }
 
-QFrame[checkboxPart="FACE"][surfacePreset="inset"][selectionState="unchecked"][interactionState="pressed"] { background: #f3f3f3; color: #ffffff; border-style: solid; border-color: #532cd1; border-radius: 4px; border-width:1px; }
+QFrame[checkboxPart="FACE"][surfacePreset="inset"][selectionState="unchecked"][interactionState="pressed"] { background: #dcdbdb; color: #ffffff; border-style: solid; border-color: #6235f7; border-radius: 4px; border-width:1px; }
 
-QFrame[checkboxPart="FACE"][surfacePreset="inset"][selectionState="selected"][interactionState="pressed"] { background: #532cd1; color: #ffffff; border-style: solid; border-color: #532cd1; border-radius: 4px; border-width:1px; }
+QFrame[checkboxPart="FACE"][surfacePreset="inset"][selectionState="selected"][interactionState="pressed"] { background: #6235f7; color: #ffffff; border-style: solid; border-color: #6235f7; border-radius: 4px; border-width:1px; }
 
-QFrame[checkboxPart="FACE"][surfacePreset="inset"][selectionState="unchecked"][interactionState="disabled"] { background: #f3f3f3; color: #ffffff; border-style: solid; border-color: #d0d0d0; border-radius: 4px; border-width:1px; }
+QFrame[checkboxPart="FACE"][surfacePreset="inset"][selectionState="unchecked"][interactionState="disabled"] { background: #eeeeee; color: #ffffff; border-style: solid; border-color: #d0d0d0; border-radius: 4px; border-width:1px; }
 
 QFrame[checkboxPart="FACE"][surfacePreset="inset"][selectionState="selected"][interactionState="disabled"] { background: #8a8a8a; color: #ffffff; border-style: solid; border-color: #8a8a8a; border-radius: 4px; border-width:1px; }
 
-QFrame[checkboxPart="FACE"][surfacePreset="gradient-inset"][selectionState="unchecked"][interactionState="default"] { background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #f3f3f3, stop:0.5 #ffffff, stop:1 #f3f3f3); color: #ffffff; border-style: solid; border-color: #444444; border-radius: 4px; border-width:1px; }
+QFrame[checkboxPart="FACE"][surfacePreset="gradient-inset"][selectionState="unchecked"][interactionState="default"] { background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #f5f5f5, stop:0.5 #ffffff, stop:1 #dcdbdb); color: #ffffff; border-style: solid; border-color: #444444; border-radius: 4px; border-width:1px; }
 
-QFrame[checkboxPart="FACE"][surfacePreset="gradient-inset"][selectionState="selected"][interactionState="default"] { background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #6e58d9, stop:0.5 #6235f7, stop:1 #532cd1); color: #ffffff; border-style: solid; border-color: #6235f7; border-radius: 4px; border-width:1px; }
+QFrame[checkboxPart="FACE"][surfacePreset="gradient-inset"][selectionState="selected"][interactionState="default"] { background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #7b5fed, stop:0.5 #6235f7, stop:1 #6235f7); color: #ffffff; border-style: solid; border-color: #6235f7; border-radius: 4px; border-width:1px; }
 
-QFrame[checkboxPart="FACE"][surfacePreset="gradient-inset"][selectionState="unchecked"][interactionState="hover"] { background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #f3f3f3, stop:0.5 #f3f3f3, stop:1 #ffffff); color: #ffffff; border-style: solid; border-color: #6235f7; border-radius: 4px; border-width:1px; }
+QFrame[checkboxPart="FACE"][surfacePreset="gradient-inset"][selectionState="unchecked"][interactionState="hover"] { background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #f5f5f5, stop:0.5 #f5f5f5, stop:1 #ffffff); color: #ffffff; border-style: solid; border-color: #6235f7; border-radius: 4px; border-width:1px; }
 
-QFrame[checkboxPart="FACE"][surfacePreset="gradient-inset"][selectionState="selected"][interactionState="hover"] { background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #6e58d9, stop:0.5 #6e58d9, stop:1 #6235f7); color: #ffffff; border-style: solid; border-color: #6e58d9; border-radius: 4px; border-width:1px; }
+QFrame[checkboxPart="FACE"][surfacePreset="gradient-inset"][selectionState="selected"][interactionState="hover"] { background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #7b5fed, stop:0.5 #7b5fed, stop:1 #6235f7); color: #ffffff; border-style: solid; border-color: #7b5fed; border-radius: 4px; border-width:1px; }
 
-QFrame[checkboxPart="FACE"][surfacePreset="gradient-inset"][selectionState="unchecked"][interactionState="pressed"] { background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #ffffff, stop:0.5 #f3f3f3, stop:1 #f3f3f3); color: #ffffff; border-style: solid; border-color: #532cd1; border-radius: 4px; border-width:1px; }
+QFrame[checkboxPart="FACE"][surfacePreset="gradient-inset"][selectionState="unchecked"][interactionState="pressed"] { background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #ffffff, stop:0.5 #dcdbdb, stop:1 #dcdbdb); color: #ffffff; border-style: solid; border-color: #6235f7; border-radius: 4px; border-width:1px; }
 
-QFrame[checkboxPart="FACE"][surfacePreset="gradient-inset"][selectionState="selected"][interactionState="pressed"] { background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #6235f7, stop:0.5 #532cd1, stop:1 #532cd1); color: #ffffff; border-style: solid; border-color: #532cd1; border-radius: 4px; border-width:1px; }
+QFrame[checkboxPart="FACE"][surfacePreset="gradient-inset"][selectionState="selected"][interactionState="pressed"] { background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #6235f7, stop:0.5 #6235f7, stop:1 #6235f7); color: #ffffff; border-style: solid; border-color: #6235f7; border-radius: 4px; border-width:1px; }
 
-QFrame[checkboxPart="FACE"][surfacePreset="gradient-inset"][selectionState="unchecked"][interactionState="disabled"] { background: #f3f3f3; color: #ffffff; border-style: solid; border-color: #d0d0d0; border-radius: 4px; border-width:1px; }
+QFrame[checkboxPart="FACE"][surfacePreset="gradient-inset"][selectionState="unchecked"][interactionState="disabled"] { background: #eeeeee; color: #ffffff; border-style: solid; border-color: #d0d0d0; border-radius: 4px; border-width:1px; }
 
 QFrame[checkboxPart="FACE"][surfacePreset="gradient-inset"][selectionState="selected"][interactionState="disabled"] { background: #8a8a8a; color: #ffffff; border-style: solid; border-color: #8a8a8a; border-radius: 4px; border-width:1px; }
 
@@ -70,13 +70,13 @@ QFrame[checkboxPart="FACE"][surfacePreset="outline"][selectionState="unchecked"]
 
 QFrame[checkboxPart="FACE"][surfacePreset="outline"][selectionState="selected"][interactionState="default"] { background: transparent; color: #6235f7; border-style: solid; border-color: #6235f7; border-radius: 4px; border-width:1px; }
 
-QFrame[checkboxPart="FACE"][surfacePreset="outline"][selectionState="unchecked"][interactionState="hover"] { background: transparent; color: #6e58d9; border-style: solid; border-color: #6e58d9; border-radius: 4px; border-width:1px; }
+QFrame[checkboxPart="FACE"][surfacePreset="outline"][selectionState="unchecked"][interactionState="hover"] { background: transparent; color: #7b5fed; border-style: solid; border-color: #7b5fed; border-radius: 4px; border-width:1px; }
 
-QFrame[checkboxPart="FACE"][surfacePreset="outline"][selectionState="selected"][interactionState="hover"] { background: transparent; color: #6e58d9; border-style: solid; border-color: #6e58d9; border-radius: 4px; border-width:1px; }
+QFrame[checkboxPart="FACE"][surfacePreset="outline"][selectionState="selected"][interactionState="hover"] { background: transparent; color: #7b5fed; border-style: solid; border-color: #7b5fed; border-radius: 4px; border-width:1px; }
 
-QFrame[checkboxPart="FACE"][surfacePreset="outline"][selectionState="unchecked"][interactionState="pressed"] { background: transparent; color: #532cd1; border-style: solid; border-color: #532cd1; border-radius: 4px; border-width:1px; }
+QFrame[checkboxPart="FACE"][surfacePreset="outline"][selectionState="unchecked"][interactionState="pressed"] { background: transparent; color: #6235f7; border-style: solid; border-color: #6235f7; border-radius: 4px; border-width:1px; }
 
-QFrame[checkboxPart="FACE"][surfacePreset="outline"][selectionState="selected"][interactionState="pressed"] { background: transparent; color: #532cd1; border-style: solid; border-color: #532cd1; border-radius: 4px; border-width:1px; }
+QFrame[checkboxPart="FACE"][surfacePreset="outline"][selectionState="selected"][interactionState="pressed"] { background: transparent; color: #6235f7; border-style: solid; border-color: #6235f7; border-radius: 4px; border-width:1px; }
 
 QFrame[checkboxPart="FACE"][surfacePreset="outline"][selectionState="unchecked"][interactionState="disabled"] { background: transparent; color: #8a8a8a; border-style: solid; border-color: #8a8a8a; border-radius: 4px; border-width:1px; }
 
@@ -86,30 +86,30 @@ QFrame[checkboxPart="FACE"][surfacePreset="elevated"][selectionState="unchecked"
 
 QFrame[checkboxPart="FACE"][surfacePreset="elevated"][selectionState="selected"][interactionState="default"] { background: #6235f7; color: #ffffff; border-style: solid; border-color: #6235f7; border-radius: 4px; border-width:1px; }
 
-QFrame[checkboxPart="FACE"][surfacePreset="elevated"][selectionState="unchecked"][interactionState="hover"] { background: #f3f3f3; color: #ffffff; border-style: solid; border-color: #6235f7; border-radius: 4px; border-width:1px; }
+QFrame[checkboxPart="FACE"][surfacePreset="elevated"][selectionState="unchecked"][interactionState="hover"] { background: #f5f5f5; color: #ffffff; border-style: solid; border-color: #6235f7; border-radius: 4px; border-width:1px; }
 
-QFrame[checkboxPart="FACE"][surfacePreset="elevated"][selectionState="selected"][interactionState="hover"] { background: #6e58d9; color: #ffffff; border-style: solid; border-color: #6e58d9; border-radius: 4px; border-width:1px; }
+QFrame[checkboxPart="FACE"][surfacePreset="elevated"][selectionState="selected"][interactionState="hover"] { background: #7b5fed; color: #ffffff; border-style: solid; border-color: #7b5fed; border-radius: 4px; border-width:1px; }
 
-QFrame[checkboxPart="FACE"][surfacePreset="elevated"][selectionState="unchecked"][interactionState="pressed"] { background: #f3f3f3; color: #ffffff; border-style: solid; border-color: #532cd1; border-radius: 4px; border-width:1px; }
+QFrame[checkboxPart="FACE"][surfacePreset="elevated"][selectionState="unchecked"][interactionState="pressed"] { background: #dcdbdb; color: #ffffff; border-style: solid; border-color: #6235f7; border-radius: 4px; border-width:1px; }
 
-QFrame[checkboxPart="FACE"][surfacePreset="elevated"][selectionState="selected"][interactionState="pressed"] { background: #532cd1; color: #ffffff; border-style: solid; border-color: #532cd1; border-radius: 4px; border-width:1px; }
+QFrame[checkboxPart="FACE"][surfacePreset="elevated"][selectionState="selected"][interactionState="pressed"] { background: #6235f7; color: #ffffff; border-style: solid; border-color: #6235f7; border-radius: 4px; border-width:1px; }
 
-QFrame[checkboxPart="FACE"][surfacePreset="elevated"][selectionState="unchecked"][interactionState="disabled"] { background: #f3f3f3; color: #ffffff; border-style: solid; border-color: #d0d0d0; border-radius: 4px; border-width:1px; }
+QFrame[checkboxPart="FACE"][surfacePreset="elevated"][selectionState="unchecked"][interactionState="disabled"] { background: #eeeeee; color: #ffffff; border-style: solid; border-color: #d0d0d0; border-radius: 4px; border-width:1px; }
 
 QFrame[checkboxPart="FACE"][surfacePreset="elevated"][selectionState="selected"][interactionState="disabled"] { background: #8a8a8a; color: #ffffff; border-style: solid; border-color: #8a8a8a; border-radius: 4px; border-width:1px; }
 
-QFrame[checkboxPart="FACE"][surfacePreset="gradient-elevated"][selectionState="unchecked"][interactionState="default"] { background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #f3f3f3, stop:1 #f3f3f3); color: #ffffff; border-style: solid; border-color: #444444; border-radius: 4px; border-width:1px; }
+QFrame[checkboxPart="FACE"][surfacePreset="gradient-elevated"][selectionState="unchecked"][interactionState="default"] { background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #f5f5f5, stop:1 #dcdbdb); color: #ffffff; border-style: solid; border-color: #444444; border-radius: 4px; border-width:1px; }
 
-QFrame[checkboxPart="FACE"][surfacePreset="gradient-elevated"][selectionState="selected"][interactionState="default"] { background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #6e58d9, stop:1 #532cd1); color: #ffffff; border-style: solid; border-color: #6235f7; border-radius: 4px; border-width:1px; }
+QFrame[checkboxPart="FACE"][surfacePreset="gradient-elevated"][selectionState="selected"][interactionState="default"] { background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #7b5fed, stop:1 #6235f7); color: #ffffff; border-style: solid; border-color: #6235f7; border-radius: 4px; border-width:1px; }
 
-QFrame[checkboxPart="FACE"][surfacePreset="gradient-elevated"][selectionState="unchecked"][interactionState="hover"] { background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #f3f3f3, stop:1 #ffffff); color: #ffffff; border-style: solid; border-color: #6235f7; border-radius: 4px; border-width:1px; }
+QFrame[checkboxPart="FACE"][surfacePreset="gradient-elevated"][selectionState="unchecked"][interactionState="hover"] { background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #f5f5f5, stop:1 #ffffff); color: #ffffff; border-style: solid; border-color: #6235f7; border-radius: 4px; border-width:1px; }
 
-QFrame[checkboxPart="FACE"][surfacePreset="gradient-elevated"][selectionState="selected"][interactionState="hover"] { background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #6e58d9, stop:1 #6235f7); color: #ffffff; border-style: solid; border-color: #6e58d9; border-radius: 4px; border-width:1px; }
+QFrame[checkboxPart="FACE"][surfacePreset="gradient-elevated"][selectionState="selected"][interactionState="hover"] { background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #7b5fed, stop:1 #6235f7); color: #ffffff; border-style: solid; border-color: #7b5fed; border-radius: 4px; border-width:1px; }
 
-QFrame[checkboxPart="FACE"][surfacePreset="gradient-elevated"][selectionState="unchecked"][interactionState="pressed"] { background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #ffffff, stop:1 #f3f3f3); color: #ffffff; border-style: solid; border-color: #532cd1; border-radius: 4px; border-width:1px; }
+QFrame[checkboxPart="FACE"][surfacePreset="gradient-elevated"][selectionState="unchecked"][interactionState="pressed"] { background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #ffffff, stop:1 #dcdbdb); color: #ffffff; border-style: solid; border-color: #6235f7; border-radius: 4px; border-width:1px; }
 
-QFrame[checkboxPart="FACE"][surfacePreset="gradient-elevated"][selectionState="selected"][interactionState="pressed"] { background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #6235f7, stop:1 #532cd1); color: #ffffff; border-style: solid; border-color: #532cd1; border-radius: 4px; border-width:1px; }
+QFrame[checkboxPart="FACE"][surfacePreset="gradient-elevated"][selectionState="selected"][interactionState="pressed"] { background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #6235f7, stop:1 #6235f7); color: #ffffff; border-style: solid; border-color: #6235f7; border-radius: 4px; border-width:1px; }
 
-QFrame[checkboxPart="FACE"][surfacePreset="gradient-elevated"][selectionState="unchecked"][interactionState="disabled"] { background: #f3f3f3; color: #ffffff; border-style: solid; border-color: #d0d0d0; border-radius: 4px; border-width:1px; }
+QFrame[checkboxPart="FACE"][surfacePreset="gradient-elevated"][selectionState="unchecked"][interactionState="disabled"] { background: #eeeeee; color: #ffffff; border-style: solid; border-color: #d0d0d0; border-radius: 4px; border-width:1px; }
 
 QFrame[checkboxPart="FACE"][surfacePreset="gradient-elevated"][selectionState="selected"][interactionState="disabled"] { background: #8a8a8a; color: #ffffff; border-style: solid; border-color: #8a8a8a; border-radius: 4px; border-width:1px; }

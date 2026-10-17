@@ -19,7 +19,7 @@
           "name": "LEADING",
           "level": "project-structure",
           "tokenPaths": [
-            "component.basic.button.size.md.height"
+            "adapter.qt.button.size.md.height"
           ]
         },
         {
@@ -33,14 +33,14 @@
           "name": "LABEL",
           "level": "project-structure",
           "tokenPaths": [
-            "component.basic.button.size.md.fontSize"
+            "semantic.typography.label.default.font-size"
           ]
         },
         {
           "name": "TRAILING",
           "level": "project-structure",
           "tokenPaths": [
-            "component.basic.button.size.md.height"
+            "adapter.qt.button.size.md.height"
           ]
         }
       ]
@@ -59,23 +59,23 @@
           "name": "INDICATOR_FACE",
           "level": "project-structure",
           "tokenPaths": [
-            "component.basic.checkbox.sizes.sm.indicator",
-            "component.basic.checkbox.radius"
+            "component.checkbox.size.small.indicator.size",
+            "component.checkbox.base.default.indicator.radius"
           ]
         },
         {
           "name": "GLYPH",
           "level": "project-structure",
           "tokenPaths": [
-            "component.basic.checkbox.state.selected.background"
+            "semantic.color.interactive.brand.default"
           ]
         },
         {
           "name": "LABEL",
           "level": "project-structure",
           "tokenPaths": [
-            "component.basic.checkbox.sizes.sm.fontSize",
-            "component.basic.checkbox.sizes.sm.spacing"
+            "component.checkbox.base.default.label.font-size",
+            "component.checkbox.base.default.content.gap"
           ]
         }
       ]
@@ -102,7 +102,7 @@
           "node": "35:1246",
           "level": "inspected-design-context",
           "tokenPaths": [
-            "base.stoken.typography.font-size.label.default"
+            "semantic.typography.label.default.font-size"
           ]
         },
         {
@@ -110,9 +110,9 @@
           "node": "35:1247",
           "level": "inspected-design-context",
           "tokenPaths": [
-            "component.basic.input.size.md.height",
-            "component.basic.input.radius",
-            "component.basic.input.state.default.background"
+            "adapter.qt.input.size.md.height",
+            "component.input.base.default.container.radius",
+            "component.input.base.default.container.background-color"
           ]
         },
         {
@@ -120,8 +120,8 @@
           "node": "35:1643",
           "level": "inspected-design-context",
           "tokenPaths": [
-            "base.stoken.metric.visualization-size.xs",
-            "component.basic.input.state.default.text"
+            "semantic.visualization-size.xs",
+            "component.input.base.default.content.color"
           ]
         },
         {
@@ -129,8 +129,8 @@
           "node": "35:1248",
           "level": "inspected-design-context",
           "tokenPaths": [
-            "component.basic.input.size.md.fontSize",
-            "component.basic.input.state.default.placeholder"
+            "component.input.base.default.content.font-size",
+            "component.input.base.default.placeholder.color"
           ]
         },
         {
@@ -138,7 +138,7 @@
           "node": "35:1662",
           "level": "inspected-design-context",
           "tokenPaths": [
-            "base.stoken.metric.visualization-size.xs"
+            "semantic.visualization-size.xs"
           ]
         },
         {
@@ -146,7 +146,7 @@
           "node": "35:1379",
           "level": "inspected-design-context",
           "tokenPaths": [
-            "base.stoken.typography.font-size.label.default-auxiliary",
+            "semantic.typography.label.default-auxiliary.font-size",
             "semantic.color.text.muted"
           ]
         },
@@ -154,7 +154,7 @@
           "name": "CLEAR",
           "level": "project-extension",
           "tokenPaths": [
-            "semantic.dimension.control.height-xs"
+            "adapter.qt.dimension.control-height.xs"
           ],
           "componentRef": "button"
         },
@@ -162,22 +162,22 @@
           "name": "COUNT",
           "level": "project-extension",
           "tokenPaths": [
-            "base.stoken.typography.font-size.label.default-auxiliary"
+            "semantic.typography.label.default-auxiliary.font-size"
           ]
         },
         {
           "name": "TEXTAREA",
           "level": "project-extension",
           "tokenPaths": [
-            "component.basic.input.size.md.fontSize",
-            "base.lineHeight.body-sm"
+            "component.input.base.default.content.font-size",
+            "semantic.typography.body.default.line-height"
           ]
         },
         {
           "name": "PASSWORD_TOGGLE",
           "level": "project-extension",
           "tokenPaths": [
-            "semantic.dimension.control.height-xs"
+            "adapter.qt.dimension.control-height.xs"
           ],
           "componentRef": "button"
         },
@@ -185,7 +185,7 @@
           "name": "SEARCH_ACTION",
           "level": "project-extension",
           "tokenPaths": [
-            "semantic.dimension.control.height-xs"
+            "adapter.qt.dimension.control-height.xs"
           ],
           "componentRef": "button"
         }
@@ -205,44 +205,44 @@
           "name": "LABEL",
           "level": "shared-input-structure",
           "tokenPaths": [
-            "base.stoken.typography.font-size.label.default"
+            "semantic.typography.label.default.font-size"
           ]
         },
         {
           "name": "CONTROL",
           "level": "shared-input-structure",
           "tokenPaths": [
-            "component.basic.input.size.md.height",
-            "component.basic.input.radius"
+            "adapter.qt.input.size.md.height",
+            "component.input.base.default.container.radius"
           ]
         },
         {
           "name": "DISPLAY",
           "level": "project-extension",
           "tokenPaths": [
-            "component.basic.input.size.md.fontSize"
+            "component.input.base.default.content.font-size"
           ]
         },
         {
           "name": "CONTENT",
           "level": "project-extension",
           "tokenPaths": [
-            "semantic.dimension.control.interactive-size",
-            "base.space.4"
+            "adapter.qt.dimension.control-height.interactive-size",
+            "primitive.spacing.4"
           ]
         },
         {
           "name": "PREFIX",
           "level": "shared-input-structure",
           "tokenPaths": [
-            "base.stoken.metric.visualization-size.xs"
+            "semantic.visualization-size.xs"
           ]
         },
         {
           "name": "SUFFIX",
           "level": "project-extension",
           "tokenPaths": [
-            "semantic.dimension.control.height-xs"
+            "adapter.qt.dimension.control-height.xs"
           ],
           "componentRef": "button"
         },
@@ -250,7 +250,7 @@
           "name": "CLEAR",
           "level": "project-extension",
           "tokenPaths": [
-            "semantic.dimension.control.height-xs"
+            "adapter.qt.dimension.control-height.xs"
           ],
           "componentRef": "button"
         },
@@ -258,30 +258,30 @@
           "name": "POPUP",
           "level": "project-extension",
           "tokenPaths": [
-            "semantic.radius.control-md",
-            "base.space.4"
+            "semantic.radius.control-default",
+            "primitive.spacing.4"
           ]
         },
         {
           "name": "SEARCH",
           "level": "project-extension",
           "tokenPaths": [
-            "semantic.dimension.control.interactive-size"
+            "adapter.qt.dimension.control-height.interactive-size"
           ]
         },
         {
           "name": "LIST",
           "level": "project-extension",
           "tokenPaths": [
-            "semantic.dimension.control.height-md",
-            "semantic.color.action.primary-bg"
+            "adapter.qt.dimension.control-height.md",
+            "semantic.color.interactive.brand.subtle"
           ]
         },
         {
           "name": "EMPTY",
           "level": "project-extension",
           "tokenPaths": [
-            "semantic.dimension.control.height-md"
+            "adapter.qt.dimension.control-height.md"
           ]
         }
       ]
@@ -315,5 +315,5 @@
       "referenceLevel": "project-composition-of-existing-checkbox"
     }
   },
-  "parameterEvidence": "design-assets/DesignSystem/generated/stoken-mapping-report.json"
+  "parameterEvidence": "design-assets/DesignSystem/generated/reports/v2-mapping-report.json (V2 canonical mapping; the legacy stoken-mapping-report.json is archived under DesignSystem/archive/commerly/)"
 }

@@ -5,8 +5,8 @@
     font-size: 14px;
 }
 *[designSystemClass="commonWidget::Z_Splitter"]:disabled {
-    color: #8a8a8a;
-    background-color: #f3f3f3;
+    color: #bbbbbb;
+    background-color: #eeeeee;
     border-color: #d0d0d0;
 }
 *[designSystemClass="commonWidget::Z_Splitter"] {
@@ -19,7 +19,7 @@
 }
 *[designSystemClass="commonWidget::Z_SplitterHandle"]:hover,
 *[designSystemClass="commonWidget::Z_SplitterHandle"][figmaSnapshotState="Hover"] {
-    background-color: #f3f3f3;
+    background-color: #f5f5f5;
 }
 *[designSystemClass="commonWidget::Z_SplitterHandle"]:pressed,
 *[designSystemClass="commonWidget::Z_SplitterHandle"][figmaSnapshotState="Dragging"] {

@@ -5,8 +5,8 @@
     font-size: 14px;
 }
 *[designSystemClass="commonWidget::Z_LCDNumber"]:disabled {
-    color: #8a8a8a;
-    background-color: #f3f3f3;
+    color: #bbbbbb;
+    background-color: #eeeeee;
     border-color: #d0d0d0;
 }
 *[designSystemClass="commonWidget::Z_LCDNumber"] {

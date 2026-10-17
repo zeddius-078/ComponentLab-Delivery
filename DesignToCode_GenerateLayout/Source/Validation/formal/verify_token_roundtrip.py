@@ -1,4 +1,4 @@
-"""隔离修改原始 sToken，再调用既有生成链和公开 SDK；不修改正式源或交付文件。"""
+"""隔离修改 V2 规范 Primitive 源，再调用 V2 生成链和公开 SDK；不修改正式源或交付文件。"""
 import argparse
 import hashlib
 import json
@@ -32,8 +32,8 @@ def main():
     # Token compilers run from the publisher's disposable build cache; this directory is not an SDK output.
     compiler_build_dir = args.component_root / 'build/cache/GeneratedComponentSDK'
     env = dict(os.environ, QT_QPA_PLATFORM='offscreen')
-    result = {'status': 'RUNNING', 'scope': 'Primitive -> Alias/Profile -> SDK generated artifacts -> page button pixel',
-              'sourceToken': '--color/highlight/purple-100', 'phases': {}}
+    result = {'status': 'RUNNING', 'scope': 'V2 Primitive -> Alias/Profile -> SDK generated artifacts -> page button pixel',
+              'sourceToken': 'primitive.color.highlight.purple-100', 'phases': {}}
 
     def run(command, name):
         process = subprocess.run([str(x) for x in command], env=env, capture_output=True, timeout=120)
@@ -46,18 +46,18 @@ def main():
         with tempfile.TemporaryDirectory(prefix='token-roundtrip-', dir=PROJECT / 'build/cache') as temporary:
             root = Path(temporary) / 'assets'
             shutil.copytree(source, root, ignore=shutil.ignore_patterns('__pycache__'))
-            token_file = root / 'DesignSystem/imports/stoken.json'
+            token_file = root / 'DesignSystem/source/primitive.json'
             baseline_bytes = token_file.read_bytes()
             source_json = json.loads(baseline_bytes.decode('utf-8-sig'))
-            primitive = next(mode['参数'] for entry in source_json for mode in entry.get('01.primitive', []) if '参数' in mode)
-            old_value = primitive[result['sourceToken']]
+            primitive = source_json['root']['primitive']['color']['highlight']['purple-100']
+            old_value = primitive['$value']
             result['originalValue'] = old_value
-            result['testValue'] = 'rgba(12, 123, 99, 1)'
+            result['testValue'] = {'colorSpace': 'srgb', 'components': [12, 123, 99]}
             baseline_generated = None
             for phase in ['baseline', 'changed', 'restored']:
                 if phase == 'changed':
-                    primitive[result['sourceToken']] = result['testValue']
-                    token_file.write_text(json.dumps(source_json, ensure_ascii=False, indent=2), encoding='utf-8')
+                    primitive['$value'] = result['testValue']
+                    token_file.write_text(json.dumps(source_json, ensure_ascii=False, indent=2) + "\n", encoding='utf-8')
                 elif phase == 'restored':
                     token_file.write_bytes(baseline_bytes)
                 run([sys.executable, '-B', source / 'tools/export_tokens.py', '--root', root], phase + '-resolve')

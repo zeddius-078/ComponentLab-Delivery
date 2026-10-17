@@ -34,7 +34,7 @@ const QJsonObject& figmaButtonVisuals() {
         QFile file(":/figma/button-visuals.json");
         if (!file.open(QIODevice::ReadOnly))
             throw std::runtime_error("Captured Button appearance missing");
-        QFontDatabase::addApplicationFont(":/figma/fonts/Inter-Regular.otf");
+        QFontDatabase::addApplicationFont(":/fonts/HarmonyOS_Sans_Regular.ttf");
         return QJsonDocument::fromJson(file.readAll()).object();
     }();
     return data;
@@ -45,7 +45,7 @@ QColor capturedColor(const QJsonValue& value) {
 }
 QFont capturedButtonFont(bool large) {
     figmaButtonVisuals();
-    QFont font("Inter"); font.setPixelSize(large?16:14); font.setWeight(QFont::Normal);
+    QFont font("HarmonyOS Sans"); font.setPixelSize(large?16:14); font.setWeight(QFont::Normal);
     return font;
 }
 void drawCapturedSvg(QPainter& painter,const QString& name,const QRectF& bounds) {

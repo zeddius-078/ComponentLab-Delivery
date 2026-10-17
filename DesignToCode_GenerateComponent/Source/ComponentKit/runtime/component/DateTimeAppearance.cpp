@@ -70,7 +70,7 @@ QRectF editorRect(const QDateTimeEdit* edit) {
 
 QFont sourceFont(int size = 14, int weight = QFont::Medium) {
     QFont font;
-    font.setFamilies({"Inter", "Noto Sans SC"});
+    font.setFamilies({"HarmonyOS Sans", "HarmonyOS Sans SC"});
     font.setPixelSize(size);
     font.setWeight(weight);
     return font;
@@ -323,9 +323,9 @@ void applyFigmaDateTimeAppearance(QDateTimeEdit* edit, const QString& snapshotSt
         throw std::invalid_argument(
             "Captured date/time requires a native QDateTimeEdit and source-backed snapshot state");
     static const bool fonts = [] {
-        for (const auto* name : {"Inter-Regular.otf", "Inter-Medium.otf", "Inter-SemiBold.otf",
-                                 "NotoSansSC-Regular.otf"})
-            QFontDatabase::addApplicationFont(QString(":/figma/fonts/") + name);
+        for (const auto* name : {"HarmonyOS_Sans_Regular.ttf", "HarmonyOS_Sans_Regular.ttf", "HarmonyOS_Sans_Regular.ttf",
+                                 "HarmonyOS_Sans_SC_Regular.ttf"})
+            QFontDatabase::addApplicationFont(QString(":/fonts/") + name);
         return true;
     }();
     Q_UNUSED(fonts);
@@ -338,10 +338,10 @@ void applyFigmaDateTimeAppearance(QDateTimeEdit* edit, const QString& snapshotSt
     if (!binding) {
         edit->setStyle(new DateStyle(edit));
         edit->setStyleSheet(
-            "QDateTimeEdit {font-family:'Inter','Noto Sans SC';font-size:14px;min-height:0;}"
+            "QDateTimeEdit {font-family:'HarmonyOS Sans','HarmonyOS Sans SC';font-size:14px;min-height:0;}"
             "QLineEdit "
-            "{background:transparent;border:0;padding:0;min-height:0;font-family:'Inter','Noto "
-            "Sans SC';font-size:14px;color:#191919;"
+            "{background:transparent;border:0;padding:0;min-height:0;font-family:'HarmonyOS Sans',"
+            "'HarmonyOS Sans SC';font-size:14px;color:#191919;"
             "selection-background-color:#f3f3f3;selection-color:#191919;} QLineEdit:disabled "
             "{color:#8a8a8a;}");
         edit->ensurePolished();

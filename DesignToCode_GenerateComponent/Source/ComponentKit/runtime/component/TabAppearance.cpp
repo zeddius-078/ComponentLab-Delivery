@@ -28,19 +28,19 @@ QLabel* compositionLabel(QWidget* parent, const QString& text, const QRect& rect
     result->setGeometry(rect);
     result->setWordWrap(true);
     result->setAlignment(Qt::AlignLeft | Qt::AlignTop);
-    QFont labelFont("Inter");
+    QFont labelFont("HarmonyOS Sans");
     labelFont.setPixelSize(size);
     labelFont.setWeight(weight);
     result->setFont(labelFont);
     result->setStyleSheet(
-        QString("background:transparent;border:0;color:%1;font-family:'Inter';font-size:%2px;")
+        QString("background:transparent;border:0;color:%1;font-family:'HarmonyOS Sans';font-size:%2px;")
             .arg(color)
             .arg(size));
     return result;
 }
 
 QFont font() {
-    QFont f("Inter");
+    QFont f("HarmonyOS Sans");
     f.setPixelSize(14);
     f.setWeight(QFont::DemiBold);
     return f;
@@ -431,7 +431,7 @@ void applyFigmaTabBarAppearance(QTabBar* bar, const QString& snapshotState, int 
                     snapshotState))
         throw std::invalid_argument("Native tab bar and captured state required");
     static const bool fonts = [] {
-        QFontDatabase::addApplicationFont(":/figma/fonts/Inter-SemiBold.otf");
+        QFontDatabase::addApplicationFont(":/fonts/HarmonyOS_Sans_Regular.ttf");
         return true;
     }();
     Q_UNUSED(fonts);

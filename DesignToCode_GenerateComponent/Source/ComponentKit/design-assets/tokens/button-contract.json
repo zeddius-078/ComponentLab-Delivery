@@ -14,7 +14,7 @@
     "id": "solid-inner-shadow",
     "label": "实色几何内阴影",
     "colorPolicy": {
-      "black": "{base.color.neutral.black.500}",
+      "black": "{primitive.color.neutral.gray.100}",
       "blackMix": {
         "primary": "{component.basic.button.innerShadow.blackMix.primary}",
         "secondary": "{component.basic.button.innerShadow.blackMix.secondary}",
@@ -112,73 +112,73 @@
     ]
   ],
   "font": {
-    "family": "{base.stoken.typography.font-family.harmony-os-sans-sc}",
-    "weight": "{base.stoken.typography.font-weight.body}",
+    "family": "{semantic.typography.font-family.harmony-os-sans}",
+    "weight": "{semantic.typography.font-weight.body}",
     "decision": "sToken font; installed locally, no font redistribution in this delivery"
   },
   "metrics": [
     {
       "name": "XS",
-      "iconOnlySize": "{semantic.dimension.control.height-xs}",
-      "minimumHeight": "{semantic.dimension.control.height-xs}",
-      "paddingInline": "{base.stoken.button.size.small.container.padding-inline}",
-      "paddingBlock": "{base.stoken.button.base.default.container.padding-block}",
-      "gap": "{base.stoken.button.icon-text.base.default.container.gap}",
-      "borderWidth": "{base.stoken.button.base.default.border.width}",
-      "iconCanvas": "{base.stoken.button.icon.size.small.icon.size}",
-      "iconContainer": "{base.stokenAdapter.button.XS.iconContainer}",
-      "indicatorSize": "{base.stoken.button.size.small.spinner.size}",
+      "iconOnlySize": "{adapter.qt.dimension.control-height.xs}",
+      "minimumHeight": "{adapter.qt.dimension.control-height.xs}",
+      "paddingInline": "{component.button.size.small.container.padding-inline}",
+      "paddingBlock": "{component.button.base.default.container.padding-block}",
+      "gap": "{component.button.icon-text.base.default.container.gap}",
+      "borderWidth": "{component.button.base.default.border.width}",
+      "iconCanvas": "{component.button.icon.size.small.icon.size}",
+      "iconContainer": "{adapter.qt.button.iconContainer.XS}",
+      "indicatorSize": "{component.button.size.small.spinner.size}",
       "indicatorStroke": 1.5,
-      "fontSize": "{base.stoken.typography.font-size.label.default}"
+      "fontSize": "{semantic.typography.label.default.font-size}"
     },
     {
       "name": "S",
-      "iconOnlySize": "{component.basic.button.size.sm.height}",
-      "minimumHeight": "{component.basic.button.size.sm.height}",
-      "paddingInline": "{base.stoken.button.size.small.container.padding-inline}",
-      "paddingBlock": "{base.stoken.button.base.default.container.padding-block}",
-      "gap": "{base.stoken.button.icon-text.base.default.container.gap}",
-      "borderWidth": "{base.stoken.button.base.default.border.width}",
-      "iconCanvas": "{base.stoken.button.icon.size.small.icon.size}",
-      "iconContainer": "{base.stokenAdapter.button.S.iconContainer}",
-      "indicatorSize": "{base.stoken.button.size.small.spinner.size}",
+      "iconOnlySize": "{adapter.qt.button.size.sm.height}",
+      "minimumHeight": "{adapter.qt.button.size.sm.height}",
+      "paddingInline": "{component.button.size.small.container.padding-inline}",
+      "paddingBlock": "{component.button.base.default.container.padding-block}",
+      "gap": "{component.button.icon-text.base.default.container.gap}",
+      "borderWidth": "{component.button.base.default.border.width}",
+      "iconCanvas": "{component.button.icon.size.small.icon.size}",
+      "iconContainer": "{adapter.qt.button.iconContainer.S}",
+      "indicatorSize": "{component.button.size.small.spinner.size}",
       "indicatorStroke": 1.5,
-      "fontSize": "{base.stoken.typography.font-size.label.default}"
+      "fontSize": "{semantic.typography.label.default.font-size}"
     },
     {
       "name": "M",
-      "iconOnlySize": "{component.basic.button.size.md.height}",
-      "minimumHeight": "{component.basic.button.size.md.height}",
-      "paddingInline": "{base.stoken.button.size.medium.container.padding-inline}",
-      "paddingBlock": "{base.stoken.button.base.default.container.padding-block}",
-      "gap": "{base.stoken.button.icon-text.base.default.container.gap}",
-      "borderWidth": "{base.stoken.button.base.default.border.width}",
-      "iconCanvas": "{base.stoken.button.icon.size.medium.icon.size}",
-      "iconContainer": "{base.stokenAdapter.button.M.iconContainer}",
-      "indicatorSize": "{base.stoken.button.size.medium.spinner.size}",
+      "iconOnlySize": "{adapter.qt.button.size.md.height}",
+      "minimumHeight": "{adapter.qt.button.size.md.height}",
+      "paddingInline": "{component.button.size.medium.container.padding-inline}",
+      "paddingBlock": "{component.button.base.default.container.padding-block}",
+      "gap": "{component.button.icon-text.base.default.container.gap}",
+      "borderWidth": "{component.button.base.default.border.width}",
+      "iconCanvas": "{component.button.icon.size.medium.icon.size}",
+      "iconContainer": "{adapter.qt.button.iconContainer.M}",
+      "indicatorSize": "{component.button.size.medium.spinner.size}",
       "indicatorStroke": 1.5,
-      "fontSize": "{base.stoken.typography.font-size.label.default}"
+      "fontSize": "{semantic.typography.label.default.font-size}"
     },
     {
       "name": "L",
-      "iconOnlySize": "{component.basic.button.size.lg.height}",
-      "minimumHeight": "{component.basic.button.size.lg.height}",
-      "paddingInline": "{base.stoken.button.size.large.container.padding-inline}",
-      "paddingBlock": "{base.stoken.button.base.default.container.padding-block}",
-      "gap": "{base.stoken.button.icon-text.base.default.container.gap}",
-      "borderWidth": "{base.stoken.button.base.default.border.width}",
-      "iconCanvas": "{base.stoken.button.icon.size.large.icon.size}",
-      "iconContainer": "{base.stokenAdapter.button.L.iconContainer}",
-      "indicatorSize": "{base.stoken.button.size.large.spinner.size}",
+      "iconOnlySize": "{adapter.qt.button.size.lg.height}",
+      "minimumHeight": "{adapter.qt.button.size.lg.height}",
+      "paddingInline": "{component.button.size.large.container.padding-inline}",
+      "paddingBlock": "{component.button.base.default.container.padding-block}",
+      "gap": "{component.button.icon-text.base.default.container.gap}",
+      "borderWidth": "{component.button.base.default.border.width}",
+      "iconCanvas": "{component.button.icon.size.large.icon.size}",
+      "iconContainer": "{adapter.qt.button.iconContainer.L}",
+      "indicatorSize": "{component.button.size.large.spinner.size}",
       "indicatorStroke": 2,
-      "fontSize": "{base.stoken.typography.font-size.label.default}"
+      "fontSize": "{semantic.typography.label.default.font-size}"
     }
   ],
   "compact": {},
   "shape": {
-    "radius": "{base.stoken.button.base.default.container.radius}",
-    "iconRadius": "{base.stoken.metric.radius.control-sm}",
-    "iconBorderWidth": "{base.stoken.metric.border-width.boundary-default}",
+    "radius": "{component.button.base.default.container.radius}",
+    "iconRadius": "{semantic.radius.control-sm}",
+    "iconBorderWidth": "{semantic.border-width.boundary-default}",
     "iconFilledOpacity": 0.2
   },
   "loading": {
@@ -192,7 +192,7 @@
     "hoverOpacity": 0.1,
     "pressedOpacity": 0.2,
     "disabledOpacity": 0.4,
-    "surface": "{semantic.color.background.brand}"
+    "surface": "{semantic.color.interactive.brand.default}"
   },
   "palette": {
     "surface": "{semantic.color.background.surface}",
@@ -200,22 +200,22 @@
     "foreground": "{semantic.color.text.primary}",
     "muted": "{semantic.color.text.muted}",
     "border": "{semantic.color.border.default}",
-    "focus": "{semantic.color.border.focus}",
-    "onBrand": "{semantic.color.text.onBrand}",
+    "focus": "{semantic.color.interactive.brand.focus-ring}",
+    "onBrand": "{semantic.color.text.invert}",
     "disabled": "{semantic.color.background.disabled}",
     "disabledText": "{semantic.color.text.disabled}",
-    "disabledBorder": "{semantic.color.border.subtle}",
-    "neutralHover": "{semantic.color.background.interactive-hover}",
-    "neutralPressed": "{semantic.color.background.interactive-active}",
-    "primary": "{semantic.color.action.primary}",
-    "primaryHover": "{semantic.color.action.primary-hover}",
-    "primaryPressed": "{semantic.color.action.primary-pressed}",
-    "primaryText": "{semantic.color.action.primary-text}",
-    "primarySoft": "{semantic.color.action.primary-bg}",
-    "danger": "{semantic.color.status.danger}",
-    "dangerHover": "{semantic.color.status.danger-hover}",
-    "dangerPressed": "{semantic.color.status.danger-pressed}",
-    "dangerSoft": "{semantic.color.status.danger-bg}"
+    "disabledBorder": "{semantic.color.border.secondary}",
+    "neutralHover": "{semantic.color.background.hover}",
+    "neutralPressed": "{semantic.color.background.pressed}",
+    "primary": "{semantic.color.interactive.brand.default}",
+    "primaryHover": "{semantic.color.interactive.brand.hover}",
+    "primaryPressed": "{semantic.color.interactive.brand.pressed}",
+    "primaryText": "{semantic.color.text.invert}",
+    "primarySoft": "{semantic.color.interactive.brand.subtle}",
+    "danger": "{semantic.color.status.danger.default}",
+    "dangerHover": "{semantic.color.status.danger.hover}",
+    "dangerPressed": "{semantic.color.status.danger.pressed}",
+    "dangerSoft": "{semantic.color.status.danger.subtle}"
   },
   "demoIcons": {
     "glyphOccupancy": 0.75,
@@ -249,109 +249,109 @@
         "stops": [
           {
             "at": 0,
-            "color": "{base.stoken.button.primary.default.container.gradient-stop-01}"
+            "color": "{component.button.primary.default.container.gradient-stop-01}"
           },
           {
             "at": 0.25,
-            "color": "{base.stoken.button.primary.default.container.gradient-stop-02}"
+            "color": "{component.button.primary.default.container.gradient-stop-02}"
           },
           {
             "at": 0.5,
-            "color": "{base.stoken.button.primary.default.container.gradient-stop-03}"
+            "color": "{component.button.primary.default.container.gradient-stop-03}"
           },
           {
             "at": 0.75,
-            "color": "{base.stoken.button.primary.default.container.gradient-stop-04}"
+            "color": "{component.button.primary.default.container.gradient-stop-04}"
           },
           {
             "at": 1,
-            "color": "{base.stoken.button.primary.default.container.gradient-stop-05}"
+            "color": "{component.button.primary.default.container.gradient-stop-05}"
           }
         ],
-        "border": "{base.stoken.button.primary.default.border.color}",
-        "foreground": "{base.stoken.button.primary.default.label.color}",
-        "innerShadow": "{base.stoken.button.primary.default.container.inner-shadow-color}"
+        "border": "{component.button.primary.default.border.color}",
+        "foreground": "{component.button.primary.default.label.color}",
+        "innerShadow": "{component.button.primary.default.container.inner-shadow-color}"
       },
       "hover": {
         "stops": [
           {
             "at": 0,
-            "color": "{base.stoken.button.primary.hover.container.gradient-stop-01}"
+            "color": "{component.button.primary.hover.container.gradient-stop-01}"
           },
           {
             "at": 0.25,
-            "color": "{base.stoken.button.primary.hover.container.gradient-stop-02}"
+            "color": "{component.button.primary.hover.container.gradient-stop-02}"
           },
           {
             "at": 0.5,
-            "color": "{base.stoken.button.primary.hover.container.gradient-stop-03}"
+            "color": "{component.button.primary.hover.container.gradient-stop-03}"
           },
           {
             "at": 0.75,
-            "color": "{base.stoken.button.primary.hover.container.gradient-stop-04}"
+            "color": "{component.button.primary.hover.container.gradient-stop-04}"
           },
           {
             "at": 1,
-            "color": "{base.stoken.button.primary.hover.container.gradient-stop-05}"
+            "color": "{component.button.primary.hover.container.gradient-stop-05}"
           }
         ],
-        "border": "{base.stoken.button.primary.hover.border.color}",
-        "foreground": "{base.stoken.button.primary.hover.label.color}",
-        "innerShadow": "{base.stoken.button.primary.hover.container.inner-shadow-color}"
+        "border": "{component.button.primary.hover.border.color}",
+        "foreground": "{component.button.primary.hover.label.color}",
+        "innerShadow": "{component.button.primary.hover.container.inner-shadow-color}"
       },
       "pressed": {
         "stops": [
           {
             "at": 0,
-            "color": "{base.stoken.button.primary.pressed.container.gradient-stop-01}"
+            "color": "{component.button.primary.pressed.container.gradient-stop-01}"
           },
           {
             "at": 0.25,
-            "color": "{base.stoken.button.primary.pressed.container.gradient-stop-02}"
+            "color": "{component.button.primary.pressed.container.gradient-stop-02}"
           },
           {
             "at": 0.5,
-            "color": "{base.stoken.button.primary.pressed.container.gradient-stop-03}"
+            "color": "{component.button.primary.pressed.container.gradient-stop-03}"
           },
           {
             "at": 0.75,
-            "color": "{base.stoken.button.primary.pressed.container.gradient-stop-04}"
+            "color": "{component.button.primary.pressed.container.gradient-stop-04}"
           },
           {
             "at": 1,
-            "color": "{base.stoken.button.primary.pressed.container.gradient-stop-05}"
+            "color": "{component.button.primary.pressed.container.gradient-stop-05}"
           }
         ],
-        "border": "{base.stoken.button.primary.pressed.border.color}",
-        "foreground": "{base.stoken.button.primary.pressed.label.color}",
-        "innerShadow": "{base.stoken.button.primary.pressed.container.inner-shadow-color}"
+        "border": "{component.button.primary.pressed.border.color}",
+        "foreground": "{component.button.primary.pressed.label.color}",
+        "innerShadow": "{component.button.primary.pressed.container.inner-shadow-color}"
       },
       "disabled": {
         "stops": [
           {
             "at": 0,
-            "color": "{base.stoken.button.base.disabled.container.gradient-stop-01}"
+            "color": "{component.button.base.disabled.container.gradient-stop-01}"
           },
           {
             "at": 0.25,
-            "color": "{base.stoken.button.base.disabled.container.gradient-stop-02}"
+            "color": "{component.button.base.disabled.container.gradient-stop-02}"
           },
           {
             "at": 0.5,
-            "color": "{base.stoken.button.base.disabled.container.gradient-stop-03}"
+            "color": "{component.button.base.disabled.container.gradient-stop-03}"
           },
           {
             "at": 0.75,
-            "color": "{base.stoken.button.base.disabled.container.gradient-stop-04}"
+            "color": "{component.button.base.disabled.container.gradient-stop-04}"
           },
           {
             "at": 1,
-            "color": "{base.stoken.button.base.disabled.container.gradient-stop-05}"
+            "color": "{component.button.base.disabled.container.gradient-stop-05}"
           }
         ],
-        "border": "{base.stoken.button.base.disabled.border.color}",
-        "foreground": "{base.stoken.button.base.disabled.label.color}",
-        "innerShadow": "{base.stoken.button.base.disabled.container.inner-shadow-color}"
+        "border": "{component.button.base.disabled.border.color}",
+        "foreground": "{component.button.base.disabled.label.color}",
+        "innerShadow": "{component.button.base.disabled.container.inner-shadow-color}"
       }
     },
     "secondary": {
@@ -359,109 +359,109 @@
         "stops": [
           {
             "at": 0,
-            "color": "{base.stoken.button.secondary.default.container.gradient-stop-01}"
+            "color": "{component.button.secondary.default.container.gradient-stop-01}"
           },
           {
             "at": 0.25,
-            "color": "{base.stoken.button.secondary.default.container.gradient-stop-02}"
+            "color": "{component.button.secondary.default.container.gradient-stop-02}"
           },
           {
             "at": 0.5,
-            "color": "{base.stoken.button.secondary.default.container.gradient-stop-03}"
+            "color": "{component.button.secondary.default.container.gradient-stop-03}"
           },
           {
             "at": 0.75,
-            "color": "{base.stoken.button.secondary.default.container.gradient-stop-04}"
+            "color": "{component.button.secondary.default.container.gradient-stop-04}"
           },
           {
             "at": 1,
-            "color": "{base.stoken.button.secondary.default.container.gradient-stop-05}"
+            "color": "{component.button.secondary.default.container.gradient-stop-05}"
           }
         ],
-        "border": "{base.stoken.button.secondary.default.border.color}",
-        "foreground": "{base.stoken.color.text.primary}",
-        "innerShadow": "{base.stoken.button.secondary.default.container.inner-shadow-color}"
+        "border": "{component.button.secondary.default.border.color}",
+        "foreground": "{semantic.color.text.primary}",
+        "innerShadow": "{component.button.secondary.default.container.inner-shadow-color}"
       },
       "hover": {
         "stops": [
           {
             "at": 0,
-            "color": "{base.stoken.button.secondary.hover.container.gradient-stop-01}"
+            "color": "{component.button.secondary.hover.container.gradient-stop-01}"
           },
           {
             "at": 0.25,
-            "color": "{base.stoken.button.secondary.hover.container.gradient-stop-02}"
+            "color": "{component.button.secondary.hover.container.gradient-stop-02}"
           },
           {
             "at": 0.5,
-            "color": "{base.stoken.button.secondary.hover.container.gradient-stop-03}"
+            "color": "{component.button.secondary.hover.container.gradient-stop-03}"
           },
           {
             "at": 0.75,
-            "color": "{base.stoken.button.secondary.hover.container.gradient-stop-04}"
+            "color": "{component.button.secondary.hover.container.gradient-stop-04}"
           },
           {
             "at": 1,
-            "color": "{base.stoken.button.secondary.hover.container.gradient-stop-05}"
+            "color": "{component.button.secondary.hover.container.gradient-stop-05}"
           }
         ],
-        "border": "{base.stoken.button.secondary.hover.border.color}",
-        "foreground": "{base.stoken.color.text.primary}",
-        "innerShadow": "{base.stoken.button.secondary.hover.container.inner-shadow-color}"
+        "border": "{component.button.secondary.hover.border.color}",
+        "foreground": "{semantic.color.text.primary}",
+        "innerShadow": "{component.button.secondary.hover.container.inner-shadow-color}"
       },
       "pressed": {
         "stops": [
           {
             "at": 0,
-            "color": "{base.stoken.button.secondary.pressed.container.gradient-stop-01}"
+            "color": "{component.button.secondary.pressed.container.gradient-stop-01}"
           },
           {
             "at": 0.25,
-            "color": "{base.stoken.button.secondary.pressed.container.gradient-stop-02}"
+            "color": "{component.button.secondary.pressed.container.gradient-stop-02}"
           },
           {
             "at": 0.5,
-            "color": "{base.stoken.button.secondary.pressed.container.gradient-stop-03}"
+            "color": "{component.button.secondary.pressed.container.gradient-stop-03}"
           },
           {
             "at": 0.75,
-            "color": "{base.stoken.button.secondary.pressed.container.gradient-stop-04}"
+            "color": "{component.button.secondary.pressed.container.gradient-stop-04}"
           },
           {
             "at": 1,
-            "color": "{base.stoken.button.secondary.pressed.container.gradient-stop-05}"
+            "color": "{component.button.secondary.pressed.container.gradient-stop-05}"
           }
         ],
-        "border": "{base.stoken.button.secondary.pressed.border.color}",
-        "foreground": "{base.stoken.color.text.primary}",
-        "innerShadow": "{base.stoken.button.secondary.pressed.container.inner-shadow-color}"
+        "border": "{component.button.secondary.pressed.border.color}",
+        "foreground": "{semantic.color.text.primary}",
+        "innerShadow": "{component.button.secondary.pressed.container.inner-shadow-color}"
       },
       "disabled": {
         "stops": [
           {
             "at": 0,
-            "color": "{base.stoken.button.base.disabled.container.gradient-stop-01}"
+            "color": "{component.button.base.disabled.container.gradient-stop-01}"
           },
           {
             "at": 0.25,
-            "color": "{base.stoken.button.base.disabled.container.gradient-stop-02}"
+            "color": "{component.button.base.disabled.container.gradient-stop-02}"
           },
           {
             "at": 0.5,
-            "color": "{base.stoken.button.base.disabled.container.gradient-stop-03}"
+            "color": "{component.button.base.disabled.container.gradient-stop-03}"
           },
           {
             "at": 0.75,
-            "color": "{base.stoken.button.base.disabled.container.gradient-stop-04}"
+            "color": "{component.button.base.disabled.container.gradient-stop-04}"
           },
           {
             "at": 1,
-            "color": "{base.stoken.button.base.disabled.container.gradient-stop-05}"
+            "color": "{component.button.base.disabled.container.gradient-stop-05}"
           }
         ],
-        "border": "{base.stoken.button.base.disabled.border.color}",
-        "foreground": "{base.stoken.button.base.disabled.label.color}",
-        "innerShadow": "{base.stoken.button.base.disabled.container.inner-shadow-color}"
+        "border": "{component.button.base.disabled.border.color}",
+        "foreground": "{component.button.base.disabled.label.color}",
+        "innerShadow": "{component.button.base.disabled.container.inner-shadow-color}"
       }
     },
     "danger": {
@@ -469,109 +469,109 @@
         "stops": [
           {
             "at": 0,
-            "color": "{base.stoken.button.danger.default.container.gradient-stop-01}"
+            "color": "{component.button.danger.default.container.gradient-stop-01}"
           },
           {
             "at": 0.25,
-            "color": "{base.stoken.button.danger.default.container.gradient-stop-02}"
+            "color": "{component.button.danger.default.container.gradient-stop-02}"
           },
           {
             "at": 0.5,
-            "color": "{base.stoken.button.danger.default.container.gradient-stop-03}"
+            "color": "{component.button.danger.default.container.gradient-stop-03}"
           },
           {
             "at": 0.75,
-            "color": "{base.stoken.button.danger.default.container.gradient-stop-04}"
+            "color": "{component.button.danger.default.container.gradient-stop-04}"
           },
           {
             "at": 1,
-            "color": "{base.stoken.button.danger.default.container.gradient-stop-05}"
+            "color": "{component.button.danger.default.container.gradient-stop-05}"
           }
         ],
-        "border": "{base.stoken.button.danger.default.border.color}",
-        "foreground": "{base.stoken.button.danger.default.label.color}",
-        "innerShadow": "{base.stoken.button.danger.default.container.inner-shadow-color}"
+        "border": "{component.button.danger.default.border.color}",
+        "foreground": "{component.button.danger.default.label.color}",
+        "innerShadow": "{component.button.danger.default.container.inner-shadow-color}"
       },
       "hover": {
         "stops": [
           {
             "at": 0,
-            "color": "{base.stoken.button.danger.hover.container.gradient-stop-01}"
+            "color": "{component.button.danger.hover.container.gradient-stop-01}"
           },
           {
             "at": 0.25,
-            "color": "{base.stoken.button.danger.hover.container.gradient-stop-02}"
+            "color": "{component.button.danger.hover.container.gradient-stop-02}"
           },
           {
             "at": 0.5,
-            "color": "{base.stoken.button.danger.hover.container.gradient-stop-03}"
+            "color": "{component.button.danger.hover.container.gradient-stop-03}"
           },
           {
             "at": 0.75,
-            "color": "{base.stoken.button.danger.hover.container.gradient-stop-04}"
+            "color": "{component.button.danger.hover.container.gradient-stop-04}"
           },
           {
             "at": 1,
-            "color": "{base.stoken.button.danger.hover.container.gradient-stop-05}"
+            "color": "{component.button.danger.hover.container.gradient-stop-05}"
           }
         ],
-        "border": "{base.stoken.button.danger.hover.border.color}",
-        "foreground": "{base.stoken.button.danger.hover.label.color}",
-        "innerShadow": "{base.stoken.button.danger.hover.container.inner-shadow-color}"
+        "border": "{component.button.danger.hover.border.color}",
+        "foreground": "{component.button.danger.hover.label.color}",
+        "innerShadow": "{component.button.danger.hover.container.inner-shadow-color}"
       },
       "pressed": {
         "stops": [
           {
             "at": 0,
-            "color": "{base.stoken.button.danger.pressed.container.gradient-stop-01}"
+            "color": "{component.button.danger.pressed.container.gradient-stop-01}"
           },
           {
             "at": 0.25,
-            "color": "{base.stoken.button.danger.pressed.container.gradient-stop-02}"
+            "color": "{component.button.danger.pressed.container.gradient-stop-02}"
           },
           {
             "at": 0.5,
-            "color": "{base.stoken.button.danger.pressed.container.gradient-stop-03}"
+            "color": "{component.button.danger.pressed.container.gradient-stop-03}"
           },
           {
             "at": 0.75,
-            "color": "{base.stoken.button.danger.pressed.container.gradient-stop-04}"
+            "color": "{component.button.danger.pressed.container.gradient-stop-04}"
           },
           {
             "at": 1,
-            "color": "{base.stoken.button.danger.pressed.container.gradient-stop-05}"
+            "color": "{component.button.danger.pressed.container.gradient-stop-05}"
           }
         ],
-        "border": "{base.stoken.button.danger.pressed.border.color}",
-        "foreground": "{base.stoken.button.danger.pressed.label.color}",
-        "innerShadow": "{base.stoken.button.danger.pressed.container.inner-shadow-color}"
+        "border": "{component.button.danger.pressed.border.color}",
+        "foreground": "{component.button.danger.pressed.label.color}",
+        "innerShadow": "{component.button.danger.pressed.container.inner-shadow-color}"
       },
       "disabled": {
         "stops": [
           {
             "at": 0,
-            "color": "{base.stoken.button.base.disabled.container.gradient-stop-01}"
+            "color": "{component.button.base.disabled.container.gradient-stop-01}"
           },
           {
             "at": 0.25,
-            "color": "{base.stoken.button.base.disabled.container.gradient-stop-02}"
+            "color": "{component.button.base.disabled.container.gradient-stop-02}"
           },
           {
             "at": 0.5,
-            "color": "{base.stoken.button.base.disabled.container.gradient-stop-03}"
+            "color": "{component.button.base.disabled.container.gradient-stop-03}"
           },
           {
             "at": 0.75,
-            "color": "{base.stoken.button.base.disabled.container.gradient-stop-04}"
+            "color": "{component.button.base.disabled.container.gradient-stop-04}"
           },
           {
             "at": 1,
-            "color": "{base.stoken.button.base.disabled.container.gradient-stop-05}"
+            "color": "{component.button.base.disabled.container.gradient-stop-05}"
           }
         ],
-        "border": "{base.stoken.button.base.disabled.border.color}",
-        "foreground": "{base.stoken.button.base.disabled.label.color}",
-        "innerShadow": "{base.stoken.button.base.disabled.container.inner-shadow-color}"
+        "border": "{component.button.base.disabled.border.color}",
+        "foreground": "{component.button.base.disabled.label.color}",
+        "innerShadow": "{component.button.base.disabled.container.inner-shadow-color}"
       }
     }
   }

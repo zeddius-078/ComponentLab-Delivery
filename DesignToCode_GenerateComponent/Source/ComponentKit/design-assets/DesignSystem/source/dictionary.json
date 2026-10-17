@@ -1,0 +1,171 @@
+{
+  "$description": "ComponentLab V2 token vocabulary. Only names registered here (or valid enum steps per group) may enter the canonical source. The compiler rejects unregistered words in enumerated positions. This file is the naming authority; it deliberately has no synonyms for the same concept.",
+  "$version": 1,
+  "roots": ["primitive", "profile", "semantic", "component", "product"],
+  "legacyRootNames": {
+    "$description": "Legacy root names kept only in the legacy map; they are never parallel V2 roots.",
+    "Foundation": "primitive",
+    "Base": "primitive",
+    "sys": "primitive",
+    "comp": "component",
+    "base": "registered only as a component branch (component.base.*), not a Primitive alias"
+  },
+  "layers": {
+    "primitive": {
+      "duty": "Raw color values, scales, fonts, weights. No component state intent.",
+      "groups": {
+        "color": {
+          "families": ["none", "highlight", "functional", "neutral", "cosmic", "reference"],
+          "step": "registered enum",
+          "reference": {
+            "$description": "The reference palette family carries the L-indexed p-* steps from the design reference files (DesignSystem/imports/reference). p-87/p-93/p-96/p-98 are light-background steps; the family is kept separate from the reverse-indexed gray/purple scales so values never collide by name.",
+            "families": ["neutral", "purple", "red", "orange", "yellow"]
+          }
+        },
+        "dimension": {"step": "numeric value 0..2560"},
+        "radius": {"step": "registered enum", "enum": ["none-0", "min-1", "sm-2", "md-4", "lg-8", "bg-16", "xl-20", "xxl-24", "full"]},
+        "spacing": {"step": "numeric value 0..64"},
+        "line-width": {"step": "registered enum", "enum": ["none", "050", "075", "100", "125", "150", "200", "250", "300", "400"]},
+        "opacity": {"step": "numeric value 0..100", "unit": "%"},
+        "boolean": {"enum": ["true", "false"]},
+        "font-family": {"enum": ["harmony-os-sans", "harmony-os-sans-sc"]},
+        "font-weight": {"enum": ["regular", "medium", "semibold", "bold"]},
+        "font-size": {"step": "numeric value 12..48"},
+        "line-height": {"step": "numeric value 12..56"},
+        "letter-spacing": {"enum": ["tight", "default", "wide"]},
+        "paragraph-spacing": {"enum": ["none", "sm", "md", "lg"]}
+      }
+    },
+    "profile": {
+      "duty": "Environment-dependent sizes, typography scale, grid mapping. Never mixes Light/Dark or component states.",
+      "groups": {
+        "visualization-size": {"step": "indexed scale step", "enum": ["01", "02", "03", "04", "05", "06", "07", "08"]},
+        "interaction-size": {"step": "indexed scale step", "enum": ["01", "02", "03", "04", "05", "06", "07", "08"]},
+        "viewport": {"enum": ["width", "height", "navigation-width", "output-scale"]},
+        "grid": {"enum": ["column-count", "margin", "gutter", "baseline"]},
+        "spacing-scale": {"step": "indexed scale step", "enum": ["00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10"]},
+        "safe-area": {"enum": ["inset-inline", "inset-block"]},
+        "typography-scale": {
+          "subgroups": {
+            "font-size": {"step": "indexed scale step", "enum": ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10"]},
+            "letter-spacing": {"enum": ["default"]},
+            "line-height": {
+              "branches": {
+                "default": {"step": "indexed scale step or registered variant", "enum": ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "36"]},
+                "compact": {"enum": ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "36"]},
+                "chrome": "single",
+                "display-large": "single"
+              }
+            }
+          }
+        }
+      }
+    },
+    "semantic": {
+      "duty": "Shared usage intent: surfaces, text, icons, borders, actions, status. Must not depend on private component paths.",
+      "groups": {
+        "color": {"domains": ["background", "text", "border", "icon", "interactive", "status"]},
+        "typography": {
+          "roles": {
+            "registered": ["label", "value", "title", "body", "description", "placeholder", "helper-text", "error-text", "status-text"],
+            "projectRoles": {
+              "heading": "title-like display role carried from the audited design",
+              "subtitle": "secondary title role",
+              "display": "display-scale title role",
+              "data": "numeric/unit data role",
+              "content": "reserved for actual content containers, never a text style"
+            }
+          },
+          "leafProperties": ["font-size", "line-height", "font-weight", "letter-spacing"],
+          "sharedGroups": {
+            "$description": "Shared scales that are intentionally not copied into every role variant.",
+            "font-family": "shared",
+            "font-weight": "shared scale; role variants reference it when a weight is role-specific",
+            "letter-spacing": "shared"
+          }
+        },
+        "border-width": {"role": "semantic border width roles"},
+        "radius": {"role": "semantic radius roles"},
+        "interaction-size": {"role": "semantic interactive control heights"},
+        "visualization-size": {"role": "semantic visualization unit sizes", "enum": ["xs", "sm", "md", "lg", "xl", "xxl"]},
+        "size": {
+          "role": "reference-defined content/icon height and padding scale (fixed 16..56 heights, 2..12 paddings); distinct from interaction-size (profile-scaled interactive control heights)",
+          "height": {"enum": ["sm", "md", "lg", "xl", "2xl", "4xl", "5xl", "6xl"]},
+          "padding": {"enum": ["sm", "md", "lg", "2xl", "3xl"]}
+        },
+        "space": {"role": "semantic spacing scale"},
+        "opacity": {"role": "semantic opacity roles", "unit": "%"},
+        "layout": {"role": "layout spacing roles: margin / padding / grid"},
+        "asset": {"role": "asset reference registry; values are asset identifiers, not copy text"}
+      }
+    },
+    "component": {
+      "duty": "Registered component parts, states, sizes and private style decisions.",
+      "grammar": [
+        "{component-id}/{variant}/{state}/{slot-path}/{property}",
+        "{component-id}/size/{size}/{slot-path}/{property}",
+        "{component-id}/base/{state}/{slot-path}/{property}"
+      ],
+      "reservedBranch": {
+        "base": "cross-variant common baseline",
+        "size": "registered size branch",
+        "state": "registered state branch"
+      },
+      "sizeEnum": {"canonical": ["small", "medium", "large"], "legacyInput": {"sm": "small", "md": "medium", "lg": "large"}},
+      "stateAxes": {
+        "availability": ["disabled"],
+        "interaction": ["hover", "pressed", "hover-pressed", "dragging"],
+        "focus": ["focused"],
+        "selection": ["selected", "checked", "checked-hover", "open", "selected-hover", "selected-pressed", "selected-disabled"],
+        "validation": ["error"],
+        "loading": ["loading"],
+        "progress": ["paused", "in-progress", "completed"],
+        "rowStatus": {
+          "$description": "Table row status axis from the reference files; states combine row status with interaction (e.g. alarm-hover).",
+          "values": ["alarm", "alarm-hover", "alarm-select", "alarm-soft", "alarm-soft-hover", "alarm-soft-select",
+                     "error", "error-hover", "error-select", "error-soft", "error-soft-hover", "error-soft-select",
+                     "warning", "warning-hover", "warning-select", "warning-soft", "warning-soft-hover", "warning-soft-select"]
+        }
+      },
+      "slotVocabulary": {
+        "registered": ["container", "content", "label", "icon", "border", "focus-ring", "indicator", "track", "thumb", "knob", "rail", "handle", "item", "navigation", "option", "tag", "button-row", "digit", "line-button", "hub", "notch", "arc", "tier", "spinner", "placeholder", "hit-target", "action", "menu", "preview", "glyph", "header"]
+      },
+      "propertyVocabulary": {
+        "$description": "Fixed property vocabulary; border_width/borderWidth/bw are mapped to border-width only when identified as the same concept.",
+        "registered": ["color", "background-color", "background", "border-color", "border-width", "radius", "width", "height", "min-width", "min-height", "visual-width", "visual-height", "visual-thickness", "visual-diameter", "visual-size", "size", "gap", "gap-sm", "gap-md", "padding", "padding-md", "padding-lg", "padding-2xl", "padding-3xl", "padding-inline", "padding-block", "opacity", "inset", "font-size", "font-weight", "line-height", "line-height-xs", "line-height-sm", "line-height-md", "letter-spacing", "font-family", "inner-shadow-color", "gradient-stop-01", "gradient-stop-02", "gradient-stop-03", "gradient-stop-04", "gradient-stop-05", "stroke-width", "processing-height", "hit-target"],
+        "background": "kept only for true multi-layer backgrounds; a plain color background must use background-color"
+      },
+      "gradient": {
+        "$description": "Gradient stops are registered slots; position, direction, geometry and interpolation are component drawing contracts, not per-state hand-maintained scattered colors.",
+        "stops": ["gradient-stop-01", "gradient-stop-02", "gradient-stop-03", "gradient-stop-04", "gradient-stop-05"],
+        "stopPositions": [0, 0.25, 0.5, 0.75, 1],
+        "direction": "vertical"
+      }
+    },
+    "product": {
+      "duty": "Product configuration / override packages inside the same publishing system, never a fifth base layer.",
+      "required": ["unit", "product", "source", "consumers"]
+    }
+  },
+  "contexts": {
+    "axes": [
+      {"name": "profile", "values": ["standard", "wide"], "description": "Design profile modes from the audited 02.profile collection."},
+      {"name": "theme", "values": ["light", "dark"], "description": "Color-scheme modes from the audited 03.semantic collection."}
+    ],
+    "runtimeLegacyAxes": {
+      "$description": "Legacy Qt runtime axis names are consumers, not design modes. comfortable/compact density is NOT equivalent to standard/wide profile.",
+      "density": ["comfortable", "compact"],
+      "densityPolicy": "Separately recorded; no V2 token carries a density mode."
+    }
+  },
+  "opacityPolicy": {
+    "sourceUnit": "%",
+    "computationUnit": "0..1 ratio",
+    "rule": "Computation always converts the declared source unit to 0..1; percent values are never silently read as ratios."
+  },
+  "colorPolicy": {
+    "srgbComponents": "8-bit integers 0..255",
+    "alpha": "0..1 float",
+    "none": "color/none means no paint; expressed through component drawing contracts, never converted to white"
+  }
+}

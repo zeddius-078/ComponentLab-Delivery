@@ -148,7 +148,7 @@ public:
             if (editor_)
                 editor_->installEventFilter(this);
         }
-        QFont font("Inter");
+        QFont font("HarmonyOS Sans");
         font.setPixelSize(14);
         font.setWeight(QFont::Medium);
         if (combo_->font() != font)
@@ -225,7 +225,7 @@ void applyFigmaComboBoxAppearance(QComboBox* combo, const QString& size,
         throw std::invalid_argument(
             "Captured ComboBox requires native QComboBox and source-backed size/state");
     static const bool fonts = [] {
-        QFontDatabase::addApplicationFont(":/figma/fonts/Inter-Medium.otf");
+        QFontDatabase::addApplicationFont(":/fonts/HarmonyOS_Sans_Regular.ttf");
         return true;
     }();
     Q_UNUSED(fonts);

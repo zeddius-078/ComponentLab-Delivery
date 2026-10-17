@@ -29,7 +29,7 @@ QString state(const QCommandLinkButton* button) {
 }
 
 QFont textFont(bool title) {
-    QFont font("Inter");
+    QFont font("HarmonyOS Sans");
     font.setPixelSize(title ? 14 : 12);
     font.setWeight(title ? QFont::Medium : QFont::Normal);
     return font;
@@ -255,8 +255,8 @@ void applyFigmaCommandLinkAppearance(QCommandLinkButton* button, const QString& 
         throw std::invalid_argument(
             "Captured CommandLink requires native QCommandLinkButton and source-backed state");
     static const bool fonts = [] {
-        QFontDatabase::addApplicationFont(":/figma/fonts/Inter-Regular.otf");
-        QFontDatabase::addApplicationFont(":/figma/fonts/Inter-Medium.otf");
+        QFontDatabase::addApplicationFont(":/fonts/HarmonyOS_Sans_Regular.ttf");
+        QFontDatabase::addApplicationFont(":/fonts/HarmonyOS_Sans_Regular.ttf");
         return true;
     }();
     Q_UNUSED(fonts);

@@ -9,6 +9,6 @@
     "dark-compact"
   ],
   "definitionSha256": "450af6244e117520803b41f703a0cfd32e39d63df20ec8dfb2533b7452c4efcb",
-  "runtimeTokenSha256": "fda39291c6b05a189910df37014772a4382c421be95f7b05c267b5ae61112751",
+  "runtimeTokenSha256": "0e37cdaf8407cbf14f7f9df5635b358981c5f5bdbcca5e665b555c8df4152e81",
   "namingRule": "Q<Class> -> commonWidget::Z_<Class>"
 }

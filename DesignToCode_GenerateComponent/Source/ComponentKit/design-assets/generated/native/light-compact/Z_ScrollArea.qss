@@ -5,8 +5,8 @@
     font-size: 14px;
 }
 *[designSystemClass="commonWidget::Z_ScrollArea"]:disabled {
-    color: #8a8a8a;
-    background-color: #f3f3f3;
+    color: #bbbbbb;
+    background-color: #eeeeee;
     border-color: #d0d0d0;
 }
 *[designSystemClass="commonWidget::Z_ScrollArea"] {
@@ -16,15 +16,15 @@
 *[designSystemClass="commonWidget::Z_ScrollArea"][figmaSnapshotState="Focus"],
 *[designSystemClass="commonWidget::Z_ScrollArea"]:focus[focusIndicatorVisible="true"] { border: 2px solid #6235f7; }
 *[designSystemClass="commonWidget::Z_ScrollArea"] QWidget#qt_scrollarea_viewport { background-color: #ffffff; }
-*[designSystemClass="commonWidget::Z_ScrollArea"]:disabled QWidget#qt_scrollarea_viewport { background-color: #f3f3f3; }
+*[designSystemClass="commonWidget::Z_ScrollArea"]:disabled QWidget#qt_scrollarea_viewport { background-color: #eeeeee; }
 *[designSystemClass="commonWidget::Z_ScrollAreaContent"] {
     background-color: #ffffff;
 }
 *[designSystemClass="commonWidget::Z_ScrollAreaContent"]:disabled {
-    background-color: #f3f3f3;
+    background-color: #eeeeee;
 }
 *[designSystemClass="commonWidget::Z_ScrollAreaContentSkeleton"] {
-    background-color: #f3f3f3;
+    background-color: #eeeeee;
     border: 0;
     border-radius: 4px;
 }

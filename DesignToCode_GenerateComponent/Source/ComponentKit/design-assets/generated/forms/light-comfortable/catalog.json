@@ -1,13 +1,13 @@
 {
-    "canonicalRevision": "bcb515403b7d",
+    "canonicalRevision": "cbf5b005e25d",
     "decisions": {
-        "F01": "Font family is sToken HarmonyOS Sans SC; not bundled. Qt fallback applies when unavailable; Field retains Microsoft YaHei UI fallback.",
+        "F01": "Global text uses bundled HarmonyOS Sans; simplified-Chinese glyphs fall back only to bundled HarmonyOS Sans SC.",
         "F02": "Popup bounds, preferred width and textarea row defaults remain local parameters. Action Loading reuses the Button contract.",
         "F03": "The sToken embedded interaction size resolves to 24px in all four current runtime configurations; the shared Input/Select field adapter applies a 32px minimum height and 14px minimum body font size.",
         "F04": "Surface presets use the same checkbox-contract.json data; borderless and underlined preserve their structural border semantics and have no decorative shadow."
     },
-    "fallbackFontFamily": "Microsoft YaHei UI",
-    "fontFamily": "HarmonyOS Sans SC",
+    "fallbackFontFamily": "HarmonyOS Sans SC",
+    "fontFamily": "HarmonyOS Sans",
     "icons": {
         "arrow": ":/icons/chevron-down.svg",
         "clear": ":/icons/x.svg",
@@ -17,13 +17,13 @@
     },
     "id": "COMPONENT-LAB-FORMS-R4-STOKEN",
     "inputs": {
-        "DesignSystem/generated/runtime/tokens_qt.json": "fda39291c6b05a189910df37014772a4382c421be95f7b05c267b5ae61112751",
+        "DesignSystem/generated/runtime/tokens_qt.json": "0e37cdaf8407cbf14f7f9df5635b358981c5f5bdbcca5e665b555c8df4152e81",
         "styles/Z_Field.qss.in": "28f64be34ce79bbd53a631a9e2f2102bd25a23ae6da73004c434392b99d5be7a",
         "styles/Z_Select.qss.in": "4a8f58aa71ff07f6145b8d5dc19fbe18b30c2738c42ff05138fb6496dc57b083",
-        "tokens/checkbox-contract.json": "4f09560bf675ba6de673be4dcf2ed2316fbd970a0c5cae544c4e13eb277dcfd9",
-        "tokens/forms-contract.json": "4033c71aba678774e7e607d80aec3d328b8db498fdfd588adf47a01171eb2fbd",
+        "tokens/checkbox-contract.json": "2ac7ec4b764e2cebe83aae45d3f72c7294f257f23067540a3b4e906102d70a43",
+        "tokens/forms-contract.json": "d8234dc0ede5cf0b232d06bda83cdd0d98c04217a442ea11a81f570854a4ab99",
         "tools/contract_values.h": "e7797f2e03178cb355662ba34351869968ea9969389caeb787345270418c95ec",
-        "tools/forms_token_compiler.cpp": "c2588ff74547fe9485ef61ece45fe77f8f91360ea05f52646b67bb85bf6dda51",
+        "tools/forms_token_compiler.cpp": "98a24c56ce9a87a92cf74ba8eda4a7624c1f745dfe60bab388a06e9a6e025e26",
         "tools/token_inputs.h": "bf8b737dad30a74db3efd8da6a524e9b3e18419835b2c32f12366ba4fc73a00f"
     },
     "metrics": {
@@ -57,9 +57,9 @@
         "accent": "#6235f7",
         "background": "#ffffff",
         "border": "#a7a7a7",
-        "disabledBackground": "#f3f3f3",
+        "disabledBackground": "#eeeeee",
         "disabledBorder": "#d0d0d0",
-        "disabledText": "#8a8a8a",
+        "disabledText": "#bbbbbb",
         "errorBackground": "#fbe4e5",
         "errorBorder": "#e02128",
         "filledBackground": "#f3f3f3",
@@ -70,7 +70,7 @@
         "hoverBorder": "#191919",
         "muted": "#444444",
         "onAccent": "#ffffff",
-        "optionHover": "#f3f3f3",
+        "optionHover": "#f5f5f5",
         "optionSelected": "#f3efff",
         "placeholder": "#676767",
         "tagBackground": "#f3f3f3",
@@ -93,8 +93,8 @@
         "elevated/borderless/disabled": {
             "borderWidth": 1,
             "fill": "transparent",
-            "foreground": "#8a8a8a",
-            "glyph": "#8a8a8a",
+            "foreground": "#bbbbbb",
+            "glyph": "#bbbbbb",
             "qss": "background:transparent; border:1px solid transparent; border-radius:0px;border:0;",
             "radius": 0,
             "shadows": [
@@ -161,10 +161,10 @@
         },
         "elevated/filled/disabled": {
             "borderWidth": 1,
-            "fill": "#f3f3f3",
-            "foreground": "#8a8a8a",
-            "glyph": "#8a8a8a",
-            "qss": "background:#f3f3f3; border:1px solid #d0d0d0; border-radius:4px;",
+            "fill": "#eeeeee",
+            "foreground": "#bbbbbb",
+            "glyph": "#bbbbbb",
+            "qss": "background:#eeeeee; border:1px solid #d0d0d0; border-radius:4px;",
             "radius": 4,
             "shadows": [
             ]
@@ -266,10 +266,10 @@
         },
         "elevated/outlined/disabled": {
             "borderWidth": 1,
-            "fill": "#f3f3f3",
-            "foreground": "#8a8a8a",
-            "glyph": "#8a8a8a",
-            "qss": "background:#f3f3f3; border:1px solid #d0d0d0; border-radius:4px;",
+            "fill": "#eeeeee",
+            "foreground": "#bbbbbb",
+            "glyph": "#bbbbbb",
+            "qss": "background:#eeeeee; border:1px solid #d0d0d0; border-radius:4px;",
             "radius": 4,
             "shadows": [
             ]
@@ -363,8 +363,8 @@
         "elevated/underlined/disabled": {
             "borderWidth": 1,
             "fill": "transparent",
-            "foreground": "#8a8a8a",
-            "glyph": "#8a8a8a",
+            "foreground": "#bbbbbb",
+            "glyph": "#bbbbbb",
             "qss": "background:transparent; border:1px solid #d0d0d0; border-radius:0px;border-top:0;border-left:0;border-right:0;",
             "radius": 0,
             "shadows": [
@@ -423,8 +423,8 @@
         "gradient-elevated/borderless/disabled": {
             "borderWidth": 1,
             "fill": "transparent",
-            "foreground": "#8a8a8a",
-            "glyph": "#8a8a8a",
+            "foreground": "#bbbbbb",
+            "glyph": "#bbbbbb",
             "qss": "background:transparent; border:1px solid transparent; border-radius:0px;border:0;",
             "radius": 0,
             "shadows": [
@@ -500,10 +500,10 @@
         },
         "gradient-elevated/filled/disabled": {
             "borderWidth": 1,
-            "fill": "#f3f3f3",
-            "foreground": "#8a8a8a",
-            "glyph": "#8a8a8a",
-            "qss": "background:#f3f3f3; border:1px solid #d0d0d0; border-radius:4px;",
+            "fill": "#eeeeee",
+            "foreground": "#bbbbbb",
+            "glyph": "#bbbbbb",
+            "qss": "background:#eeeeee; border:1px solid #d0d0d0; border-radius:4px;",
             "radius": 4,
             "shadows": [
             ]
@@ -650,10 +650,10 @@
         },
         "gradient-elevated/outlined/disabled": {
             "borderWidth": 1,
-            "fill": "#f3f3f3",
-            "foreground": "#8a8a8a",
-            "glyph": "#8a8a8a",
-            "qss": "background:#f3f3f3; border:1px solid #d0d0d0; border-radius:4px;",
+            "fill": "#eeeeee",
+            "foreground": "#bbbbbb",
+            "glyph": "#bbbbbb",
+            "qss": "background:#eeeeee; border:1px solid #d0d0d0; border-radius:4px;",
             "radius": 4,
             "shadows": [
             ]
@@ -783,8 +783,8 @@
         "gradient-elevated/underlined/disabled": {
             "borderWidth": 1,
             "fill": "transparent",
-            "foreground": "#8a8a8a",
-            "glyph": "#8a8a8a",
+            "foreground": "#bbbbbb",
+            "glyph": "#bbbbbb",
             "qss": "background:transparent; border:1px solid #d0d0d0; border-radius:0px;border-top:0;border-left:0;border-right:0;",
             "radius": 0,
             "shadows": [
@@ -843,8 +843,8 @@
         "gradient-inset/borderless/disabled": {
             "borderWidth": 1,
             "fill": "transparent",
-            "foreground": "#8a8a8a",
-            "glyph": "#8a8a8a",
+            "foreground": "#bbbbbb",
+            "glyph": "#bbbbbb",
             "qss": "background:transparent; border:1px solid transparent; border-radius:0px;border:0;",
             "radius": 0,
             "shadows": [
@@ -911,10 +911,10 @@
         },
         "gradient-inset/filled/disabled": {
             "borderWidth": 1,
-            "fill": "#f3f3f3",
-            "foreground": "#8a8a8a",
-            "glyph": "#8a8a8a",
-            "qss": "background:#f3f3f3; border:1px solid #d0d0d0; border-radius:4px;",
+            "fill": "#eeeeee",
+            "foreground": "#bbbbbb",
+            "glyph": "#bbbbbb",
+            "qss": "background:#eeeeee; border:1px solid #d0d0d0; border-radius:4px;",
             "radius": 4,
             "shadows": [
             ]
@@ -1016,10 +1016,10 @@
         },
         "gradient-inset/outlined/disabled": {
             "borderWidth": 1,
-            "fill": "#f3f3f3",
-            "foreground": "#8a8a8a",
-            "glyph": "#8a8a8a",
-            "qss": "background:#f3f3f3; border:1px solid #d0d0d0; border-radius:4px;",
+            "fill": "#eeeeee",
+            "foreground": "#bbbbbb",
+            "glyph": "#bbbbbb",
+            "qss": "background:#eeeeee; border:1px solid #d0d0d0; border-radius:4px;",
             "radius": 4,
             "shadows": [
             ]
@@ -1113,8 +1113,8 @@
         "gradient-inset/underlined/disabled": {
             "borderWidth": 1,
             "fill": "transparent",
-            "foreground": "#8a8a8a",
-            "glyph": "#8a8a8a",
+            "foreground": "#bbbbbb",
+            "glyph": "#bbbbbb",
             "qss": "background:transparent; border:1px solid #d0d0d0; border-radius:0px;border-top:0;border-left:0;border-right:0;",
             "radius": 0,
             "shadows": [
@@ -1173,8 +1173,8 @@
         "gradient/borderless/disabled": {
             "borderWidth": 1,
             "fill": "transparent",
-            "foreground": "#8a8a8a",
-            "glyph": "#8a8a8a",
+            "foreground": "#bbbbbb",
+            "glyph": "#bbbbbb",
             "qss": "background:transparent; border:1px solid transparent; border-radius:0px;border:0;",
             "radius": 0,
             "shadows": [
@@ -1232,10 +1232,10 @@
         },
         "gradient/filled/disabled": {
             "borderWidth": 1,
-            "fill": "#f3f3f3",
-            "foreground": "#8a8a8a",
-            "glyph": "#8a8a8a",
-            "qss": "background:#f3f3f3; border:1px solid #d0d0d0; border-radius:4px;",
+            "fill": "#eeeeee",
+            "foreground": "#bbbbbb",
+            "glyph": "#bbbbbb",
+            "qss": "background:#eeeeee; border:1px solid #d0d0d0; border-radius:4px;",
             "radius": 4,
             "shadows": [
             ]
@@ -1292,10 +1292,10 @@
         },
         "gradient/outlined/disabled": {
             "borderWidth": 1,
-            "fill": "#f3f3f3",
-            "foreground": "#8a8a8a",
-            "glyph": "#8a8a8a",
-            "qss": "background:#f3f3f3; border:1px solid #d0d0d0; border-radius:4px;",
+            "fill": "#eeeeee",
+            "foreground": "#bbbbbb",
+            "glyph": "#bbbbbb",
+            "qss": "background:#eeeeee; border:1px solid #d0d0d0; border-radius:4px;",
             "radius": 4,
             "shadows": [
             ]
@@ -1353,8 +1353,8 @@
         "gradient/underlined/disabled": {
             "borderWidth": 1,
             "fill": "transparent",
-            "foreground": "#8a8a8a",
-            "glyph": "#8a8a8a",
+            "foreground": "#bbbbbb",
+            "glyph": "#bbbbbb",
             "qss": "background:transparent; border:1px solid #d0d0d0; border-radius:0px;border-top:0;border-left:0;border-right:0;",
             "radius": 0,
             "shadows": [
@@ -1413,8 +1413,8 @@
         "inset/borderless/disabled": {
             "borderWidth": 1,
             "fill": "transparent",
-            "foreground": "#8a8a8a",
-            "glyph": "#8a8a8a",
+            "foreground": "#bbbbbb",
+            "glyph": "#bbbbbb",
             "qss": "background:transparent; border:1px solid transparent; border-radius:0px;border:0;",
             "radius": 0,
             "shadows": [
@@ -1481,10 +1481,10 @@
         },
         "inset/filled/disabled": {
             "borderWidth": 1,
-            "fill": "#f3f3f3",
-            "foreground": "#8a8a8a",
-            "glyph": "#8a8a8a",
-            "qss": "background:#f3f3f3; border:1px solid #d0d0d0; border-radius:4px;",
+            "fill": "#eeeeee",
+            "foreground": "#bbbbbb",
+            "glyph": "#bbbbbb",
+            "qss": "background:#eeeeee; border:1px solid #d0d0d0; border-radius:4px;",
             "radius": 4,
             "shadows": [
             ]
@@ -1586,10 +1586,10 @@
         },
         "inset/outlined/disabled": {
             "borderWidth": 1,
-            "fill": "#f3f3f3",
-            "foreground": "#8a8a8a",
-            "glyph": "#8a8a8a",
-            "qss": "background:#f3f3f3; border:1px solid #d0d0d0; border-radius:4px;",
+            "fill": "#eeeeee",
+            "foreground": "#bbbbbb",
+            "glyph": "#bbbbbb",
+            "qss": "background:#eeeeee; border:1px solid #d0d0d0; border-radius:4px;",
             "radius": 4,
             "shadows": [
             ]
@@ -1683,8 +1683,8 @@
         "inset/underlined/disabled": {
             "borderWidth": 1,
             "fill": "transparent",
-            "foreground": "#8a8a8a",
-            "glyph": "#8a8a8a",
+            "foreground": "#bbbbbb",
+            "glyph": "#bbbbbb",
             "qss": "background:transparent; border:1px solid #d0d0d0; border-radius:0px;border-top:0;border-left:0;border-right:0;",
             "radius": 0,
             "shadows": [
@@ -1743,8 +1743,8 @@
         "outline/borderless/disabled": {
             "borderWidth": 1,
             "fill": "transparent",
-            "foreground": "#8a8a8a",
-            "glyph": "#8a8a8a",
+            "foreground": "#bbbbbb",
+            "glyph": "#bbbbbb",
             "qss": "background:transparent; border:1px solid transparent; border-radius:0px;border:0;",
             "radius": 0,
             "shadows": [
@@ -1803,8 +1803,8 @@
         "outline/filled/disabled": {
             "borderWidth": 1,
             "fill": "transparent",
-            "foreground": "#8a8a8a",
-            "glyph": "#8a8a8a",
+            "foreground": "#bbbbbb",
+            "glyph": "#bbbbbb",
             "qss": "background:transparent; border:1px solid #d0d0d0; border-radius:4px;",
             "radius": 4,
             "shadows": [
@@ -1863,8 +1863,8 @@
         "outline/outlined/disabled": {
             "borderWidth": 1,
             "fill": "transparent",
-            "foreground": "#8a8a8a",
-            "glyph": "#8a8a8a",
+            "foreground": "#bbbbbb",
+            "glyph": "#bbbbbb",
             "qss": "background:transparent; border:1px solid #d0d0d0; border-radius:4px;",
             "radius": 4,
             "shadows": [
@@ -1923,8 +1923,8 @@
         "outline/underlined/disabled": {
             "borderWidth": 1,
             "fill": "transparent",
-            "foreground": "#8a8a8a",
-            "glyph": "#8a8a8a",
+            "foreground": "#bbbbbb",
+            "glyph": "#bbbbbb",
             "qss": "background:transparent; border:1px solid #d0d0d0; border-radius:0px;border-top:0;border-left:0;border-right:0;",
             "radius": 0,
             "shadows": [
@@ -1983,8 +1983,8 @@
         "solid/borderless/disabled": {
             "borderWidth": 1,
             "fill": "transparent",
-            "foreground": "#8a8a8a",
-            "glyph": "#8a8a8a",
+            "foreground": "#bbbbbb",
+            "glyph": "#bbbbbb",
             "qss": "background:transparent; border:1px solid transparent; border-radius:0px;border:0;",
             "radius": 0,
             "shadows": [
@@ -2042,10 +2042,10 @@
         },
         "solid/filled/disabled": {
             "borderWidth": 1,
-            "fill": "#f3f3f3",
-            "foreground": "#8a8a8a",
-            "glyph": "#8a8a8a",
-            "qss": "background:#f3f3f3; border:1px solid #d0d0d0; border-radius:4px;",
+            "fill": "#eeeeee",
+            "foreground": "#bbbbbb",
+            "glyph": "#bbbbbb",
+            "qss": "background:#eeeeee; border:1px solid #d0d0d0; border-radius:4px;",
             "radius": 4,
             "shadows": [
             ]
@@ -2102,10 +2102,10 @@
         },
         "solid/outlined/disabled": {
             "borderWidth": 1,
-            "fill": "#f3f3f3",
-            "foreground": "#8a8a8a",
-            "glyph": "#8a8a8a",
-            "qss": "background:#f3f3f3; border:1px solid #d0d0d0; border-radius:4px;",
+            "fill": "#eeeeee",
+            "foreground": "#bbbbbb",
+            "glyph": "#bbbbbb",
+            "qss": "background:#eeeeee; border:1px solid #d0d0d0; border-radius:4px;",
             "radius": 4,
             "shadows": [
             ]
@@ -2163,8 +2163,8 @@
         "solid/underlined/disabled": {
             "borderWidth": 1,
             "fill": "transparent",
-            "foreground": "#8a8a8a",
-            "glyph": "#8a8a8a",
+            "foreground": "#bbbbbb",
+            "glyph": "#bbbbbb",
             "qss": "background:transparent; border:1px solid #d0d0d0; border-radius:0px;border-top:0;border-left:0;border-right:0;",
             "radius": 0,
             "shadows": [
@@ -2234,7 +2234,7 @@
             "paddingInline": 8
         }
     },
-    "sourceHash": "19d23f9c367473f1a04513f6ff17737881fefba5b54785771958896d3cf44e9a",
+    "sourceHash": "080ea7c23bbd4641e2847765c3c35c049bf8772c083ad607099794e548f7c31e",
     "sourcePolicy": "sToken overlay via the canonical parser; Input and Select share component.basic.input. Unspecified popup bounds and layout defaults remain explicit project contract values.",
     "status": "PROJECT-ADAPTER-PROPOSAL"
 }

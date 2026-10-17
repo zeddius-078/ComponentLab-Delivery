@@ -88,11 +88,12 @@ description: 在 G:/ComponentLab-Delivery/DesignToCode_GenerateComponent 中维�
 
 ### 修改 Token
 
-1. 确认修改属于 Base、Semantic、Component 还是 Profile。
-2. 修改唯一 Token 源和必要的组件合同。
-3. 运行生成器，检查四个 Profile 的 Catalog 与 QSS。
-4. 搜索硬编码值，确认运行时使用生成结果。
-5. 重新发布 SDK；消费项目通过导入脚本升级。
+1. 确认修改属于四层中的哪一层：`primitive`、`profile`、`semantic`、`component`（产品专属布局改 `DesignSystem/source/product/application-layout.json`，不是公共层）。
+2. 修改唯一规范源 `DesignSystem/source/*.json` 和必要的组件合同（`design-assets/tokens/*-contract.json`）。Figma 调整先作为候选差异进入 `DesignSystem/config/legacy-map.json` 或冲突清单，不以设计文件/运行时文件双向覆盖。
+3. 运行 `python -B design-assets/tools/export_tokens.py`，检查四个上下文（standard/wide × light/dark）的 Catalog、CSS、DTCG 与 Qt 运行时产物。
+4. 运行 `python -B -m unittest discover -s DesignSystem/scripts/v2/tests`。
+5. 搜索硬编码值，确认运行时使用生成结果。
+6. 重新发布 SDK；消费项目通过导入脚本升级。旧 stoken.json 只是冻结设计快照与单向兼容产物，不再是写入入口。
 
 ### 修改设计映射
 

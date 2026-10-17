@@ -10,7 +10,7 @@
         "R2": "Explicit iconOnly square uses source height aliases; source loading is orthogonal to five appearance Types.",
         "STOKEN": "See tokens/stoken-map.json and mapping report. XS shares small; 32px floor retained. Material state colors consume sToken; geometry/state APIs unchanged."
     },
-    "fontFamily": "HarmonyOS Sans SC",
+    "fontFamily": "HarmonyOS Sans",
     "icons": {
         "allowedCanvases": [
             20,
@@ -29,10 +29,10 @@
         "provider": "QRC/local SVG and transparent PNG via IconSource. QStyle ids below remain legacy-only."
     },
     "inputs": {
-        "DesignSystem/generated/runtime/tokens_qt.json": "fda39291c6b05a189910df37014772a4382c421be95f7b05c267b5ae61112751",
+        "DesignSystem/generated/runtime/tokens_qt.json": "0e37cdaf8407cbf14f7f9df5635b358981c5f5bdbcca5e665b555c8df4152e81",
         "styles/Z_PushButton.qss.in": "62079c00587df7793034a055194ba83b45bcc3e503d9765b341463b0de0ae90b",
-        "tokens/button-contract.json": "4330947c680bc70aaf3d83a65f9a536b4ecb14368d8e44d38a1a5e04ffbf042f",
-        "tools/token_compiler.cpp": "a9e7087ea77e1ae1ac79e860c9be69cd681a5f742c4f9e7f631cc26277921fdb",
+        "tokens/button-contract.json": "5af64f4d0899d4725bb641e05844da049ebba1397af487b89ef3369e7450185a",
+        "tools/token_compiler.cpp": "d7984b036c9cc58910e6dfc129963274d97ebed22204a85b3f7659a0cbf4b4bb",
         "tools/token_inputs.h": "bf8b737dad30a74db3efd8da6a524e9b3e18419835b2c32f12366ba4fc73a00f"
     },
     "loading": {
@@ -55,24 +55,24 @@
                 "dangerHover": "#f76e7b",
                 "dangerPressed": "#e02128",
                 "dangerSoft": "#fbe4e5",
-                "disabled": "#f3f3f3",
+                "disabled": "#eeeeee",
                 "disabledBorder": "#d0d0d0",
-                "disabledText": "#8a8a8a",
+                "disabledText": "#bbbbbb",
                 "focus": "#6235f7",
                 "foreground": "#191919",
                 "muted": "#444444",
-                "neutralHover": "#f3f3f3",
-                "neutralPressed": "#f3f3f3",
+                "neutralHover": "#f5f5f5",
+                "neutralPressed": "#dcdbdb",
                 "onBrand": "#ffffff",
                 "primary": "#6235f7",
-                "primaryHover": "#6e58d9",
-                "primaryPressed": "#532cd1",
+                "primaryHover": "#7b5fed",
+                "primaryPressed": "#6235f7",
                 "primarySoft": "#f3efff",
                 "primaryText": "#ffffff",
                 "surface": "#ffffff"
             },
             "profile": "light-comfortable",
-            "qssBytes": 1087327,
+            "qssBytes": 1085407,
             "rows": 320,
             "sizes": [
                 {
@@ -145,24 +145,24 @@
                 "dangerHover": "#f76e7b",
                 "dangerPressed": "#e02128",
                 "dangerSoft": "#fbe4e5",
-                "disabled": "#f3f3f3",
+                "disabled": "#eeeeee",
                 "disabledBorder": "#d0d0d0",
-                "disabledText": "#8a8a8a",
+                "disabledText": "#bbbbbb",
                 "focus": "#6235f7",
                 "foreground": "#191919",
                 "muted": "#444444",
-                "neutralHover": "#f3f3f3",
-                "neutralPressed": "#f3f3f3",
+                "neutralHover": "#f5f5f5",
+                "neutralPressed": "#dcdbdb",
                 "onBrand": "#ffffff",
                 "primary": "#6235f7",
-                "primaryHover": "#6e58d9",
-                "primaryPressed": "#532cd1",
+                "primaryHover": "#7b5fed",
+                "primaryPressed": "#6235f7",
                 "primarySoft": "#f3efff",
                 "primaryText": "#ffffff",
                 "surface": "#ffffff"
             },
             "profile": "light-compact",
-            "qssBytes": 1087323,
+            "qssBytes": 1085403,
             "rows": 320,
             "sizes": [
                 {
@@ -245,14 +245,14 @@
                 "neutralPressed": "#444444",
                 "onBrand": "#ffffff",
                 "primary": "#6235f7",
-                "primaryHover": "#6e58d9",
-                "primaryPressed": "#532cd1",
+                "primaryHover": "#7b5fed",
+                "primaryPressed": "#6235f7",
                 "primarySoft": "#f3efff",
                 "primaryText": "#ffffff",
                 "surface": "#272727"
             },
             "profile": "dark-comfortable",
-            "qssBytes": 1087326,
+            "qssBytes": 1085406,
             "rows": 320,
             "sizes": [
                 {
@@ -335,14 +335,14 @@
                 "neutralPressed": "#444444",
                 "onBrand": "#ffffff",
                 "primary": "#6235f7",
-                "primaryHover": "#6e58d9",
-                "primaryPressed": "#532cd1",
+                "primaryHover": "#7b5fed",
+                "primaryPressed": "#6235f7",
                 "primarySoft": "#f3efff",
                 "primaryText": "#ffffff",
                 "surface": "#272727"
             },
             "profile": "dark-compact",
-            "qssBytes": 1087322,
+            "qssBytes": 1085402,
             "rows": 320,
             "sizes": [
                 {
@@ -404,6 +404,6 @@
             ]
         }
     ],
-    "sourceHash": "e5f54101838db093d897c8735533e7d79b9caafd72ab24098070124ef4995e8f",
+    "sourceHash": "0a1c693cd235a81b52ba74fc31992438a2490a24c24e77ba6170709e80000fee",
     "status": "DEMO-PROPOSAL-NOT-DESIGN-APPROVED"
 }

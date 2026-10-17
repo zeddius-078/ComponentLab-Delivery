@@ -1,5 +1,7 @@
 # Figma → sToken → 状态账本基线计划（2026-10-11）
 
+> **状态（2026-10-17）**：本文件描述的"保留现有结构、增量优化"基线已被《Token 架构重建与设计—开发同步 V2》替代。V2 已落地：规范源为 `DesignSystem/source/*`（四层 primitive/profile/semantic/component + 产品域），旧 `stoken.json` 降级为冻结设计快照与单向兼容产物，旧 Commerly 链归档于 `DesignSystem/archive/commerly/`。验收报告见 `design-assets/DesignSystem/generated/reports/acceptance-report.md`。本文件与 `figma-core-rebuild-state.json` 保留为历史证据，不再作为当前权威描述。
+
 ## 结论
 
 第一阶段基线按以下顺序建立：

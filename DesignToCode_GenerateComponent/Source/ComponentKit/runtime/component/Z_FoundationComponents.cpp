@@ -205,7 +205,7 @@ QColor toneText(const Tokens& tokens, const QString& tone) {
 }
 
 QFont componentFont(int pixelSize) {
-    QFont font(QStringLiteral("Noto Sans SC"));
+    QFont font(QStringLiteral("HarmonyOS Sans SC"));
     font.setPixelSize(pixelSize);
     font.setWeight(QFont::Medium);
     return font;
@@ -1038,7 +1038,7 @@ void Z_Transfer::refreshStyle() {
     findChild<QFrame*>(QStringLiteral("transferAvailablePanel"))->setStyleSheet(panelStyle);
     findChild<QFrame*>(QStringLiteral("transferSelectedPanel"))->setStyleSheet(panelStyle);
     setStyleSheet(QStringLiteral(
-        "QToolButton { font-family:'Noto Sans SC'; font-size:14px; min-width:0; min-height:0; }"
+        "QToolButton { font-family:'HarmonyOS Sans SC'; font-size:14px; min-width:0; min-height:0; }"
         "QToolButton#transferMoveToSelected { background:%1; border:1px solid %2; border-radius:8px; color:%2; font-weight:600; }"
         "QToolButton#transferMoveToAvailable { background:%3; border:1px solid %4; border-radius:8px; color:%5; }"
         "QToolButton#transferMoveToSelected:disabled, "
@@ -1471,7 +1471,7 @@ void Z_NumericKeypad::refreshStyle() {
             "QToolButton:focus { outline:none; }")
             .arg(background, foreground, edge, brand, subtle,
                  QString::number(keyContentHeight), focus));
-        QFont font(QStringLiteral("Inter"));
+        QFont font(QStringLiteral("HarmonyOS Sans"));
         font.setPixelSize(14);
         font.setWeight(emphasized ? QFont::DemiBold : QFont::Normal);
         button->setFont(font);
@@ -1813,10 +1813,10 @@ void Z_Timeline::paintEvent(QPaintEvent*) {
     painter.setBrush(tokens.c("base.stoken.color.background.surface"));
     painter.drawRoundedRect(rect().adjusted(0, 0, -1, -1), 4, 4);
 
-    QFont titleFont(QStringLiteral("Inter"));
+    QFont titleFont(QStringLiteral("HarmonyOS Sans"));
     titleFont.setPixelSize(13);
     titleFont.setWeight(QFont::Medium);
-    QFont timeFont(QStringLiteral("Inter"));
+    QFont timeFont(QStringLiteral("HarmonyOS Sans"));
     timeFont.setPixelSize(11);
     timeFont.setWeight(QFont::Normal);
     const QFontMetrics titleMetrics(titleFont);
@@ -2047,7 +2047,7 @@ void Z_AnchorNavigation::refreshStyle() {
             "QToolButton { background:%1; color:%2; border:1px solid %3; border-radius:7px; padding:0 10px; }"
             "QToolButton[focusIndicatorVisible=\"true\"] { border:2px solid %4; }"
             "QToolButton:focus { outline:none; }").arg(background, foreground, edge, focus));
-        QFont font(QStringLiteral("Inter"));
+        QFont font(QStringLiteral("HarmonyOS Sans"));
         font.setPixelSize(13);
         font.setWeight(selected ? QFont::DemiBold : QFont::Normal);
         button->setFont(font);
@@ -2215,7 +2215,7 @@ void Z_Filter::refreshStyle() {
             "QToolButton { background:%1; color:%2; border:1px solid %3; border-radius:8px; padding:0 14px; }"
             "QToolButton[focusIndicatorVisible=\"true\"] { border:2px solid %4; }"
             "QToolButton:focus { outline:none; }").arg(background, foreground, edge, focus));
-        QFont font(QStringLiteral("Inter"));
+        QFont font(QStringLiteral("HarmonyOS Sans"));
         font.setPixelSize(14);
         font.setWeight(active ? QFont::DemiBold : QFont::Normal);
         button->setFont(font);

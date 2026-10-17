@@ -1,0 +1,242 @@
+{
+  "table": {
+    "color": {
+      "bg": {
+        "header": {"$type": "color", "$value": "{color/bg/disabled}", "$description": "用于：表头背景色"},
+        "default": {"$type": "color", "$value": "{color/bg/primary}", "$description": "用于：表格行背景色"},
+        "zebraPrint": {"$type": "color", "$value": "{color/bg/secondary}", "$description": "用于：表格行斑马线背景色"},
+        "Hover": {"$type": "color", "$value": "{color/bg/hover}"},
+        "disable": {"$type": "color", "$value": "{color/bg/disabled}"},
+        "pressed": {"$type": "color", "$value": "{color/accent/soft}", "$description": "选中行的背景色，表格选中的底色"},
+        "alarm": {"$type": "color", "$value": "{color/status/alarm/default}"},
+        "alarmHover": {"$type": "color", "$value": "{color/status/alarm/hover}"},
+        "alarmSelect": {"$type": "color", "$value": "{color/status/alarm/select}"},
+        "alarmSoft": {"$type": "color", "$value": "{color/status/alarm/soft}"},
+        "alarmSoftHover": {"$type": "color", "$value": "{color/status/alarm/softhover}"},
+        "alarmSoftSelect": {"$type": "color", "$value": "{color/status/alarm/softselect}"},
+        "error": {"$type": "color", "$value": "{color/status/error/default}"},
+        "errorHover": {"$type": "color", "$value": "{color/status/error/hover}"},
+        "errorSelect": {"$type": "color", "$value": "{color/status/error/select}"},
+        "errorSoft": {"$type": "color", "$value": "{color/status/error/soft}"},
+        "errorSoftHover": {"$type": "color", "$value": "{color/status/error/softhover}"},
+        "errorSoftSelect": {"$type": "color", "$value": "{color/status/error/softselect}"},
+        "warning": {"$type": "color", "$value": "{color/status/warning/default}"},
+        "warningHover": {"$type": "color", "$value": "{color/status/warning/hover}"},
+        "warningSelect": {"$type": "color", "$value": "{color/status/warning/select}"},
+        "warningSoft": {"$type": "color", "$value": "{color/status/warning/soft}"},
+        "warningSoftHover": {"$type": "color", "$value": "{color/status/warning/softhover}"},
+        "warningSoftSelect": {"$type": "color", "$value": "{color/status/warning/softselect}"}
+      },
+      "border": {
+        "default": {"$type": "color", "$value": "{color/border/tertiary}", "$description": "用于：表格边框色"},
+        "select": {"$type": "color", "$value": "{color/accent/default}", "$description": "用于：表格边框色"},
+        "alarm": {"$type": "color", "$value": "{color/status/alarm/default}"},
+        "warning": {"$type": "color", "$value": "{color/status/warning/default}"}
+      },
+      "text": {
+        "default": {"$type": "color", "$value": "{color/text/primary}", "$description": "用于：表格默认文本色"},
+        "invert": {"$type": "color", "$value": "{color/text/invert}", "$description": "用于：表格反色文本色"},
+        "disable": {"$type": "color", "$value": "{color/text/disabled}"},
+        "alarm": {"$type": "color", "$value": "{color/status/alarm/default}"},
+        "warning": {"$type": "color", "$value": "{color/status/warning/default}"},
+        "error": {"$type": "color", "$value": "{color/status/error/default}"},
+        "revise": {"$type": "color", "$value": "{color/accent/default}"},
+        "disabled": {"$type": "color", "$value": "{color/text/disabled}", "$description": "用于：表格失效背景色"},
+        "unit": {"$type": "color", "$value": "{color/text/unit}", "$description": "用于：表格失效背景色"}
+      }
+    },
+    "content": {
+      "height": {
+        "sm": {"$type": "number", "$value": "{size/height/md}", "$description": "用于：表格内部容器高度"},
+        "md": {"$type": "number", "$value": "{size/height/lg}", "$description": "用于：表格内部容器高度"},
+        "lg": {"$type": "number", "$value": "{size/height/4xl}", "$description": "用于：表格内部容器高度"},
+        "xl": {"$type": "number", "$value": "{size/height/5xl }", "$description": "用于：表格内部容器高度"}
+      },
+      "iconSize": {
+        "sm": {"$type": "number", "$value": "{size/height/md}", "$description": "用于：表格内部容器高度"}
+      },
+      "fontSize": {
+        "md": {"$type": "number", "$value": "{typography/fontSize/body}"}
+      },
+      "fontWeight": {
+        "md": {"$type": "number", "$value": "{typography/fontWeight/regular}"},
+        "lg": {"$type": "number", "$value": "{typography/fontWeight/bold}"}
+      },
+      "lineHeight": {
+        "xs": {"$type": "number", "$value": "{typography/lineHeight/caption-sm}"},
+        "sm": {"$type": "number", "$value": "{typography/lineHeight/caption-lg}"},
+        "md": {"$type": "number", "$value": "{typography/lineHeight/heading4}"}
+      }
+    },
+    "padding": {
+      "horizontal": {"$type": "number", "$value": "{size/padding/2xl}", "$description": "表格的左右边距"},
+      "vertical": {"$type": "number", "$value": "{size/padding/md}", "$description": "表格的上下边距"}
+    },
+    "size": {
+      "sm": {"$type": "number", "$value": "{size/height/xl}", "$description": "表格的左右边距"},
+      "md": {"$type": "number", "$value": "{size/height/2xl}", "$description": "表格的上下边距"},
+      "lg": {"$type": "number", "$value": "{size/height/6xl}", "$description": "表格的上下边距"}
+    },
+    "spacing": {
+      "default": {"$type": "number", "$value": "{size/padding/md}", "$description": "表格的上下边距"}
+    },
+    "borderWidth": {
+      "md": {"$type": "number", "$value": "{borderWidth/hairline}", "$description": "用于：表格描边常规宽度"},
+      "lg": {"$type": "number", "$value": "{borderWidth/thick}", "$description": "用于：表格描边最宽宽度"}
+    }
+  },
+  "semantic": {
+    "color": {
+      "bg": {
+        "disabled": {"$type": "color", "$value": "{color/neutral/p-93}", "$description": "禁用背景色\n用于：按钮、输入框、表格、进度条背景、TAB的禁用状态背景、表格行悬浮等"},
+        "primary": {"$type": "color", "$value": "{color/neutral/p-100}", "$description": "一级容器背景色"},
+        "secondary": {"$type": "color", "$value": "{color/neutral/p-98}", "$description": "二级容器背景色"},
+        "hover": {"$type": "color", "$value": "{color/neutral/p-96}", "$description": "悬停状态背景色\n用于：输入框类、默认按钮等背景"}
+      },
+      "accent": {
+        "soft": {"$type": "color", "$value": "{color/purple/p-96}", "$description": "强调状态背景色\n用于：选中状态背景色，生产状态背景色等"},
+        "default": {"$type": "color", "$value": "{color/purple/p-59}", "$description": "默认强调状态色\n用于：状态强调，数值强调等"}
+      },
+      "status": {
+        "alarm": {
+          "default": {"$type": "color", "$value": "{color/red/p-50}", "$description": "标准红色：用于告警文本、错误分割线、\n无效状态、输入框气泡、输入框描边、标记"},
+          "hover": {"$type": "color", "$value": "{color/red/p-65}", "$description": " 危险告警深色悬停色"},
+          "select": {"$type": "color", "$value": "{color/red/p-43}", "$description": "危险告警深色选中色"},
+          "soft": {"$type": "color", "$value": "{color/red/p-93}", "$description": "用于：表示危险告警的背景色"},
+          "softhover": {"$type": "color", "$value": "{color/red/p-95}", "$description": "危险告警浅色悬停色"},
+          "softselect": {"$type": "color", "$value": "{color/red/p-79}", "$description": "危险告警浅色选中色"}
+        },
+        "error": {
+          "default": {"$type": "color", "$value": "{color/orange/p-51}", "$description": "标准橙色 用于：紧急告警背景，标签文字，图标"},
+          "hover": {"$type": "color", "$value": "{color/orange/p-65}", "$description": "紧急告警深色悬停色"},
+          "select": {"$type": "color", "$value": "{color/orange/p-44}", "$description": "紧急告警深色选中色"},
+          "soft": {"$type": "color", "$value": "{color/orange/p-93}", "$description": "浅橙色 用于：紧急告警背景色"},
+          "softhover": {"$type": "color", "$value": "{color/orange/p-93}", "$description": "紧急告警浅色悬停色"},
+          "softselect": {"$type": "color", "$value": "{color/orange/p-79}", "$description": "紧急告警浅色选中色"}
+        },
+        "warning": {
+          "default": {"$type": "color", "$value": "{color/yellow/p-50}", "$description": "成功安全背景，标签文字，图标"},
+          "hover": {"$type": "color", "$value": "{color/yellow/p-65}"},
+          "select": {"$type": "color", "$value": "{color/yellow/p-43}"},
+          "soft": {"$type": "color", "$value": "{color/yellow/p-91}", "$description": "全局提示状态背景色，标签背景"},
+          "softhover": {"$type": "color", "$value": "{color/yellow/p-95}"},
+          "softselect": {"$type": "color", "$value": "{color/yellow/p-79}"}
+        }
+      },
+      "border": {
+        "tertiary": {"$type": "color", "$value": "{color/neutral/p-87}", "$description": "分割线-次要"}
+      },
+      "text": {
+        "primary": {"$type": "color", "$value": "{color/neutral/p-10}", "$description": "用于：主要默认文本色"},
+        "invert": {"$type": "color", "$value": "{color/neutral/p-100}", "$description": "用于：反色文本"},
+        "disabled": {"$type": "color", "$value": "{color/neutral/p-73}", "$description": "用于：浅色背景/禁用文本色"},
+        "unit": {"$type": "color", "$value": "{color/neutral/p-31}", "$description": "用于：单位文本"}
+      }
+    },
+    "size": {
+      "height": {
+        "md": {"$type": "number", "$value": "{size/p-20}", "$description": "文本辅助图标\n用于：常规、日期输入框、状态等场景"},
+        "lg": {"$type": "number", "$value": "{size/p-24}", "$description": "描述图标\n用于：侧边栏、对文本标题描述的图标"},
+        "4xl": {"$type": "number", "$value": "{size/p-44}", "$description": "用于：导航栏图标"},
+        "5xl ": {"$type": "number", "$value": "{size/p-48}", "$description": "用于：导航栏图标"},
+        "xl": {"$type": "number", "$value": "{size/p-28}"},
+        "2xl": {"$type": "number", "$value": "{size/p-32}"},
+        "6xl": {"$type": "number", "$value": "{size/p-56}", "$description": "双行的高度"}
+      },
+      "padding": {
+        "2xl": {"$type": "number", "$value": "{spacing/p-8}"},
+        "md": {"$type": "number", "$value": "{spacing/p-4}"}
+      }
+    },
+    "typography": {
+      "fontSize": {
+        "body": {"$type": "number", "$value": "{font/fontSize/p-14}", "$description": "用于：正文文本"}
+      },
+      "fontWeight": {
+        "regular": {"$type": "number", "$value": "{font/fontWeight/p-400}", "$description": "用于：常规正文"},
+        "bold": {"$type": "number", "$value": "{font/fontWeight/p-700}", "$description": "用于：标准强调，标题 / 结论"}
+      },
+      "lineHeight": {
+        "caption-sm": {"$type": "number", "$value": "{lineHeight/p-16}"},
+        "caption-lg": {"$type": "number", "$value": "{lineHeight/p-20}", "$description": "用于：导航 / 辅助文本"},
+        "heading4": {"$type": "number", "$value": "{lineHeight/p-24}", "$description": "用于：四级标题"}
+      }
+    },
+    "borderWidth": {
+      "hairline": {"$type": "number", "$value": "{borderWidth/p-100}", "$description": "用于：输入框、页签底部、分割线等、16px图标"},
+      "thick": {"$type": "number", "$value": "{borderWidth/p-200}"}
+    }
+  },
+  "primitive": {
+    "color": {
+      "neutral": {
+        "p-93": {"$type": "color", "$value": {"colorSpace": "srgb", "components": [0.9333333333333333, 0.9333333333333333, 0.9333333333333333], "alpha": 1, "hex": "#EEEEEE"}, "$description": "用于：禁用背景色、用于按钮、输入框、表格、进度条背景、次要分割线、滚动条两端的按钮背景色\n\n数值代表在HSL色值中的L明度值，仅用于色阶中相对明度的参考。"},
+        "p-100": {"$type": "color", "$value": {"colorSpace": "srgb", "components": [1, 1, 1], "alpha": 1, "hex": "#FFFFFF"}, "$description": "标准白色\n用于：白色一级容器、气泡背景、反色文本、反色图标"},
+        "p-98": {"$type": "color", "$value": {"colorSpace": "srgb", "components": [0.9803921568627451, 0.9803921568627451, 0.9803921568627451], "alpha": 1, "hex": "#FAFAFA"}, "$description": "用于：二级容器背景色\n数值代表在HSL色值中的L明度值，仅用于色阶中相对明度的参考。\n\n数值越小越深、数值越大越浅。"},
+        "p-96": {"$type": "color", "$value": {"colorSpace": "srgb", "components": [0.9607843137254902, 0.9607843137254902, 0.9607843137254902], "alpha": 1, "hex": "#F5F5F5"}, "$description": "用于：次要按钮按下、输入框默认状态、\n数值代表在HSL色值中的L明度值，仅用于色阶中相对明度的参考。"},
+        "p-87": {"$type": "color", "$value": {"colorSpace": "srgb", "components": [0.8745098039215686, 0.8745098039215686, 0.8745098039215686], "alpha": 1, "hex": "#DFDFDF"}, "$description": "用于：分割线，页签容器下划线、滚动条两端按钮描边\n\n数值代表在HSL色值中的L明度值，仅用于色阶中相对明度的参考。"},
+        "p-10": {"$type": "color", "$value": {"colorSpace": "srgb", "components": [0.09803921568627451, 0.09803921568627451, 0.09803921568627451], "alpha": 1, "hex": "#191919"}, "$description": "用于：文本、图标、页签选中下划线、输入框悬停描边、链接文本默认\n数值代表在HSL色值中的L明度值，仅用于色阶中相对明度的参考。"},
+        "p-73": {"$type": "color", "$value": {"colorSpace": "srgb", "components": [0.7333333333333333, 0.7333333333333333, 0.7333333333333333], "alpha": 1, "hex": "#BBBBBB"}, "$description": "用于：浅色背景、禁用文本色、禁用链接文本、滚动条两端按钮的箭头、滚动条的默认状态色\n数值代表在HSL色值中的L明度值，仅用于色阶中相对明度的参考。"},
+        "p-31": {"$type": "color", "$value": {"colorSpace": "srgb", "components": [0.3058823529411765, 0.3058823529411765, 0.3058823529411765], "alpha": 1, "hex": "#4E4E4E"}, "$description": "中性色板/灰阶\n数值代表在HSL色值中的L明度值，仅用于色阶中相对明度的参考。"}
+      },
+      "purple": {
+        "p-96": {"$type": "color", "$value": {"colorSpace": "srgb", "components": [0.9372549019607843, 0.9176470588235294, 0.996078431372549], "alpha": 1, "hex": "#EFEAFE"}, "$description": "用于：控件选中背景色；\n名称中数值表示以高亮色#6235F7为基准，在白色背景上透明度的数值对应色填充色。\n如“10”代表10%透明的#6235F7紫色。"},
+        "p-59": {"$type": "color", "$value": {"colorSpace": "srgb", "components": [0.3843137254901961, 0.20784313725490197, 0.9686274509803922], "alpha": 1, "hex": "#6235F7"}, "$description": "标准紫色\n常用于：按钮高亮按下、文本高亮色、气路管道内描边、接口外描边"}
+      },
+      "red": {
+        "p-50": {"$type": "color", "$value": {"colorSpace": "srgb", "components": [0.8784313725490196, 0.12941176470588237, 0.1568627450980392], "alpha": 1, "hex": "#E02128"}, "$description": "标准红色；\n用于：告警文本、错误分割线、无效状态输入框气泡、输入框描边、标记"},
+        "p-65": {"$type": "color", "$value": {"colorSpace": "srgb", "components": [0.9137254901960784, 0.38823529411764707, 0.40784313725490196], "alpha": 1, "hex": "#E96368"}, "$description": "用于：告警色深色hover态；"},
+        "p-43": {"$type": "color", "$value": {"colorSpace": "srgb", "components": [0.7490196078431373, 0.10980392156862745, 0.13333333333333333], "alpha": 1, "hex": "#BF1C22"}, "$description": "用于：告警色深色select态；"},
+        "p-93": {"$type": "color", "$value": {"colorSpace": "srgb", "components": [0.9803921568627451, 0.8705882352941177, 0.8745098039215686], "alpha": 1, "hex": "#FADEDF"}, "$description": "用于：alarm背景色；\n数值代表在HSL色值中的L明度值，数值50最接近标准红色，数值越小越深、数值越大越浅。"},
+        "p-95": {"$type": "color", "$value": {"colorSpace": "srgb", "components": [0.9882352941176471, 0.9098039215686274, 0.9137254901960784], "alpha": 1, "hex": "#FCE8E9"}, "$description": "用于：告警色浅色hover态；"},
+        "p-79": {"$type": "color", "$value": {"colorSpace": "srgb", "components": [0.8352941176470589, 0.7411764705882353, 0.7450980392156863], "alpha": 1, "hex": "#D5BDBE"}, "$description": "用于：告警色浅色select态；"}
+      },
+      "orange": {
+        "p-51": {"$type": "color", "$value": {"colorSpace": "srgb", "components": [0.9019607843137255, 0.43529411764705883, 0.11764705882352941], "alpha": 1, "hex": "#E66F1E"}, "$description": "标准橙色\n用于：紧急告警色背景、图标；热水管的外描边；"},
+        "p-65": {"$type": "color", "$value": {"colorSpace": "srgb", "components": [0.9294117647058824, 0.6039215686274509, 0.3803921568627451], "alpha": 1, "hex": "#ED9A61"}, "$description": "用于：紧急告警色深色hover态；"},
+        "p-44": {"$type": "color", "$value": {"colorSpace": "srgb", "components": [0.7686274509803922, 0.3686274509803922, 0.10196078431372549], "alpha": 1, "hex": "#C45E1A"}, "$description": "用于：紧急告警色深色select态；"},
+        "p-93": {"$type": "color", "$value": {"colorSpace": "srgb", "components": [0.984313725490196, 0.9176470588235294, 0.8666666666666667], "alpha": 1, "hex": "#FBEADD"}, "$description": "警告文字背景，标签背景\n色"},
+        "p-79": {"$type": "color", "$value": {"colorSpace": "srgb", "components": [0.8392156862745098, 0.7803921568627451, 0.7372549019607844], "alpha": 1, "hex": "#D6C7BC"}, "$description": "用于：紧急告警色浅色select态；"}
+      },
+      "yellow": {
+        "p-50": {"$type": "color", "$value": {"colorSpace": "srgb", "components": [0.9019607843137255, 0.6862745098039216, 0.09803921568627451], "alpha": 1, "hex": "#E6AF19"}, "$description": "标准黄色\n用于：预警告警色深色背景、图标；"},
+        "p-65": {"$type": "color", "$value": {"colorSpace": "srgb", "components": [0.9294117647058824, 0.7803921568627451, 0.3686274509803922], "alpha": 1, "hex": "#EDC75E"}, "$description": "用于：预警告警色深色hover态；"},
+        "p-43": {"$type": "color", "$value": {"colorSpace": "srgb", "components": [0.7686274509803922, 0.5843137254901961, 0.08235294117647059], "alpha": 1, "hex": "#C49515"}, "$description": "用于：预警告警色深色select态；"},
+        "p-91": {"$type": "color", "$value": {"colorSpace": "srgb", "components": [0.9647058823529412, 0.9372549019607843, 0.8627450980392157], "alpha": 1, "hex": "#F6EFDC"}, "$description": "浅黄色\n用于：全局提示状态背景色；\n数值代表在HSL色值中的L明度值，数值50最接近标准色，数值越小越深、数值越大越浅。"},
+        "p-95": {"$type": "color", "$value": {"colorSpace": "srgb", "components": [0.9882352941176471, 0.9647058823529412, 0.9058823529411765], "alpha": 1, "hex": "#FCF6E7"}, "$description": "用于：预警告警色浅色hover态；"},
+        "p-79": {"$type": "color", "$value": {"colorSpace": "srgb", "components": [0.8392156862745098, 0.8117647058823529, 0.7372549019607844], "alpha": 1, "hex": "#D6CFBC"}, "$description": "用于：预警告警色浅色的select态；"}
+      }
+    },
+    "size": {
+      "p-20": {"$type": "number", "$value": 20, "$description": "小尺寸"},
+      "p-24": {"$type": "number", "$value": 24, "$description": "中尺寸"},
+      "p-44": {"$type": "number", "$value": 44, "$description": "加大尺寸"},
+      "p-48": {"$type": "number", "$value": 48, "$description": "超大尺寸"},
+      "p-28": {"$type": "number", "$value": 28},
+      "p-32": {"$type": "number", "$value": 32, "$description": "大尺寸"},
+      "p-56": {"$type": "number", "$value": 56}
+    },
+    "font": {
+      "fontSize": {
+        "p-14": {"$type": "number", "$value": 14, "$description": "小字号"}
+      },
+      "fontWeight": {
+        "p-400": {"$type": "number", "$value": 400, "$description": "Regular"},
+        "p-700": {"$type": "number", "$value": 700, "$description": "Bold"}
+      }
+    },
+    "lineHeight": {
+      "p-16": {"$type": "number", "$value": 16, "$description": "最小字号行高"},
+      "p-20": {"$type": "number", "$value": 20, "$description": "最小字号行高"},
+      "p-24": {"$type": "number", "$value": 24, "$description": "中字号行高"}
+    },
+    "spacing": {
+      "p-8": {"$type": "number", "$value": 8, "$description": "紧凑间距"},
+      "p-4": {"$type": "number", "$value": 4, "$description": "紧凑间距"}
+    },
+    "borderWidth": {
+      "p-100": {"$type": "number", "$value": 1, "$description": "内描边"},
+      "p-200": {"$type": "number", "$value": 2, "$description": "居中描边"}
+    }
+  }
+}

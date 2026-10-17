@@ -178,9 +178,9 @@ void applyFigmaProgressAppearance(QProgressBar* progress, const QString& status,
                                   "In-progress", "Completed"}
                           .contains(status))
         throw std::invalid_argument("Unknown Figma Progress status");
-    static const int fontId = QFontDatabase::addApplicationFont(":/figma/fonts/Inter-Medium.otf");
+    static const int fontId = QFontDatabase::addApplicationFont(":/fonts/HarmonyOS_Sans_Regular.ttf");
     Q_UNUSED(fontId);
-    QFont font("Inter");
+    QFont font("HarmonyOS Sans");
     font.setPixelSize(14);
     font.setWeight(QFont::Medium);
     progress->setFont(font);
@@ -189,7 +189,7 @@ void applyFigmaProgressAppearance(QProgressBar* progress, const QString& status,
     progress->setProperty("figmaProgressSnapshot", snapshot);
     progress->setStyleSheet(
         "QProgressBar {background:transparent;border:0;padding:0;min-height:0;"
-        "font-family:'Inter';font-size:14px;font-weight:500;}");
+        "font-family:'HarmonyOS Sans';font-size:14px;font-weight:500;}");
     if (!progress->findChild<QObject*>("figmaProgressRenderer", Qt::FindDirectChildrenOnly))
         new ProgressRenderer(progress);
     progress->update();

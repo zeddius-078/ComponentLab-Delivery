@@ -46,6 +46,25 @@ class IndependenceTests(unittest.TestCase):
                            else [node.module or ""] if isinstance(node, ast.ImportFrom) else [])
                 self.assertFalse(any(name.startswith(("PySide", "PyQt", "shiboken")) for name in modules), str(path))
 
+    def test_components_do_not_reverse_depend_on_theme(self):
+        component_dir = KIT / "runtime/component"
+        for path in component_dir.rglob("*"):
+            if path.suffix not in {".cpp", ".h"}:
+                continue
+            content = path.read_text(encoding="utf-8-sig")
+            self.assertNotIn("ComponentTheme.h", content, str(path))
+            self.assertNotIn("component_theme::", content, str(path))
+
+    def test_runtime_font_chain_is_harmony_only(self):
+        font_root = KIT / "runtime/assets/fonts"
+        self.assertEqual({path.name for path in font_root.iterdir() if path.is_dir()},
+                         {"HarmonyOSSans"})
+        qrc = (KIT / "runtime/component-resources.qrc").read_text(encoding="utf-8-sig")
+        self.assertIn("HarmonyOS_Sans.ttf", qrc)
+        self.assertIn("HarmonyOS_Sans_SC.ttf", qrc)
+        for forbidden in ("Inter", "Poppins", "NotoSans", "Microsoft YaHei"):
+            self.assertNotIn(forbidden, qrc)
+
 
 if __name__ == "__main__":
     unittest.main()

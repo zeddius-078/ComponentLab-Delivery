@@ -51,7 +51,7 @@ int main(int argc, char** argv) {
             auto palette = data["palette"].toObject();
             for (auto i = palette.begin(); i != palette.end(); ++i)
                 i.value() = color(i.value());
-            palette["onAccent"] = color(tokens["semantic.color.text.onBrand"]);
+            palette["onAccent"] = color(tokens["semantic.color.text.invert"]);
             data["palette"] = palette;
             data["profile"] = p.key();
             data["sourceHash"] = hashText;

@@ -27,7 +27,7 @@ QColor color(const QJsonValue& value) {
 
 const QJsonObject& recipes() {
     static const auto result = [] {
-        QFontDatabase::addApplicationFont(":/figma/fonts/Inter-Regular.otf");
+        QFontDatabase::addApplicationFont(":/fonts/HarmonyOS_Sans_Regular.ttf");
         QFile file(":/figma/button-visuals.json");
         if (!file.open(QIODevice::ReadOnly))
             throw std::runtime_error("Captured Button recipes unavailable");
@@ -80,7 +80,7 @@ protected:
         p.setPen(QPen(color(recipe["stroke"]), stroke));
         p.setBrush(color(recipe["fill"]));
         p.drawPath(path);
-        QFont font("Inter");
+        QFont font("HarmonyOS Sans");
         font.setPixelSize(14);
         font.setWeight(QFont::Normal);
         p.setFont(font);
@@ -145,7 +145,7 @@ public:
                 new NativeButtonPaint(button, box_);
                 button->setStyleSheet(
                     "QPushButton {background:transparent;border:0;padding:0 "
-                    "12px;min-height:32px;font-family:'Inter';font-size:14px;font-weight:400;}");
+                    "12px;min-height:32px;font-family:'HarmonyOS Sans';font-size:14px;font-weight:400;}");
             }
             button->update();
         }

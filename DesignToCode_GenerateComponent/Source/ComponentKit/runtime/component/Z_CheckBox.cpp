@@ -21,9 +21,9 @@ const QJsonObject& figmaValues() {
         QFile file(":/figma/checkbox-gallery.json");
         if (!file.open(QIODevice::ReadOnly))
             throw std::runtime_error("Figma checkbox visual contract missing");
-        for (const auto* weight : {"Regular", "Medium", "SemiBold"})
-            if (QFontDatabase::addApplicationFont(QString(":/figma/fonts/Inter-%1.otf").arg(weight)) < 0)
-                throw std::runtime_error("Figma checkbox Inter font missing");
+        if (QFontDatabase::addApplicationFont(
+                QStringLiteral(":/fonts/HarmonyOS_Sans_Regular.ttf")) < 0)
+            throw std::runtime_error("HarmonyOS Sans font missing");
         return QJsonDocument::fromJson(file.readAll()).object()["variables"].toObject();
     }();
     return values;
@@ -298,7 +298,7 @@ void Z_CheckBox::refreshFigma() {
     face->setProperty("interactionState", state);
     face->setStyleSheet(QString("QFrame[checkboxPart=\"FACE\"] {background:%1;border:%2px solid %3;border-radius:%4px;}")
         .arg(fill,figmaValue(base+"default/indicator/border-width"),border,figmaValue(base+"default/indicator/radius")));
-    label->setStyleSheet(QString("QLabel {color:%1;font-family:'Inter';font-size:%2px;font-weight:500;background:transparent;border:0;}")
+    label->setStyleSheet(QString("QLabel {color:%1;font-family:'HarmonyOS Sans';font-size:%2px;font-weight:500;background:transparent;border:0;}")
         .arg(figmaValue(base+(disabled?"disabled/label/color":"default/label/color")),figmaValue("typography/font-size/data/numeric")));
     inset->hide();outer->setEnabled(false);
     const int extent=figmaExtent(sizeName);const qreal dpr=devicePixelRatioF();

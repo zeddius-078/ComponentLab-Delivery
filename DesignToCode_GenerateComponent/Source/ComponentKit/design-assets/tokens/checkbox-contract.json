@@ -2,7 +2,7 @@
   "id": "CHECKBOX-SURFACE-R4-STOKEN",
   "status": "ISOLATED-DEMO-NOT-DESIGN-APPROVED",
   "units": "Qt logical px; font px; shadow blur = Qt QGraphicsBlurEffect radius; alpha 0..1",
-  "fontFamily": "{base.stoken.typography.font-family.harmony-os-sans-sc}",
+  "fontFamily": "{semantic.typography.font-family.harmony-os-sans}",
   "gradientStateBindings": {
     "default": {
       "high": "hover",
@@ -22,41 +22,41 @@
     }
   },
   "checkbox": {
-    "radius": "{component.basic.checkbox.radius}",
-    "borderWidth": "{component.basic.checkbox.borderWidth}",
-    "focusWidth": "{component.basic.checkbox.focus.borderWidth}",
+    "radius": "{component.checkbox.base.default.indicator.radius}",
+    "borderWidth": "{component.checkbox.base.default.indicator.border-width}",
+    "focusWidth": "{component.checkbox.base.focused.focus-ring.width}",
     "focusGap": 2,
     "sizes": {
       "sm": {
-        "indicator": "{component.basic.checkbox.sizes.sm.indicator}",
-        "hitTarget": "{component.basic.checkbox.sizes.sm.hitTarget}",
-        "fontSize": "{component.basic.checkbox.sizes.sm.fontSize}",
-        "spacing": "{component.basic.checkbox.sizes.sm.spacing}"
+        "indicator": "{component.checkbox.size.small.indicator.size}",
+        "hitTarget": "{adapter.qt.checkbox.hitTarget.sm}",
+        "fontSize": "{component.checkbox.base.default.label.font-size}",
+        "spacing": "{component.checkbox.base.default.content.gap}"
       },
       "lg": {
-        "indicator": "{component.basic.checkbox.sizes.lg.indicator}",
-        "hitTarget": "{component.basic.checkbox.sizes.lg.hitTarget}",
-        "fontSize": "{component.basic.checkbox.sizes.lg.fontSize}",
-        "spacing": "{component.basic.checkbox.sizes.lg.spacing}"
+        "indicator": "{component.checkbox.size.large.indicator.size}",
+        "hitTarget": "{adapter.qt.checkbox.hitTarget.lg}",
+        "fontSize": "{component.checkbox.base.default.label.font-size}",
+        "spacing": "{component.checkbox.base.default.content.gap}"
       }
     },
     "palette": {
       "text": "{component.basic.checkbox.text}",
       "disabledText": "{component.basic.checkbox.disabledText}",
       "focus": "{component.basic.checkbox.focus.border}",
-      "onAccent": "{semantic.color.text.onBrand}",
+      "onAccent": "{semantic.color.text.invert}",
       "unchecked": "{component.basic.checkbox.state.unchecked.background}",
       "uncheckedHover": "{component.basic.checkbox.state.unchecked.hoverBackground}",
       "uncheckedPressed": "{component.basic.checkbox.state.unchecked.pressedBackground}",
       "uncheckedDisabled": "{component.basic.checkbox.state.unchecked.disabledBackground}",
-      "border": "{component.basic.checkbox.state.unchecked.border}",
+      "border": "{semantic.color.icon.secondary}",
       "borderHover": "{component.basic.checkbox.state.unchecked.hoverBorder}",
       "borderPressed": "{component.basic.checkbox.state.unchecked.pressedBorder}",
       "borderDisabled": "{component.basic.checkbox.state.unchecked.disabledBorder}",
-      "accent": "{component.basic.checkbox.state.selected.background}",
-      "accentHover": "{component.basic.checkbox.state.selected.hoverBackground}",
-      "accentPressed": "{component.basic.checkbox.state.selected.pressedBackground}",
-      "accentDisabled": "{component.basic.checkbox.state.selected.disabledBackground}"
+      "accent": "{semantic.color.interactive.brand.default}",
+      "accentHover": "{semantic.color.interactive.brand.hover}",
+      "accentPressed": "{semantic.color.interactive.brand.pressed}",
+      "accentDisabled": "{semantic.color.icon.disabled}"
     },
     "glyphs": {
       "checked": ":/icons/checkbox-check.svg",

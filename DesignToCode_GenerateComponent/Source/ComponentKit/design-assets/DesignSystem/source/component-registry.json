@@ -1,0 +1,304 @@
+{
+  "$description": "ComponentLab V2 component registry. Registers every component family in the canonical component layer, its supported state matrix, slot vocabulary and private-material permissions. A missing state here means 'not supported', never 'free fallback'.",
+  "$version": 1,
+  "stateAxes": {
+    "availability": {"values": ["disabled"], "description": "Whether the control accepts input"},
+    "interaction": {"values": ["hover", "pressed", "hover-pressed", "dragging"], "description": "Pointer interaction states; hover-pressed is a registered merged state (shared surface for hover or pressed)"},
+    "focus": {"values": ["focused"], "description": "Keyboard/pointer focus; focus-ring visibility is a separate axis"},
+    "selection": {"values": ["selected", "checked", "checked-hover", "open"], "description": "Selection/value states"},
+    "validation": {"values": ["error"], "description": "Validation outcome; Filled (has value) is a separate contract, not a token state"},
+    "loading": {"values": ["loading"], "description": "Processing; Button loading pauses indicator and blocks input"},
+    "progress": {"values": ["paused", "in-progress", "completed"], "description": "ProgressBar process states; design-only until runtime support is verified"}
+  },
+  "components": {
+    "button": {
+      "figmaPage": "20.3.01", "figmaNode": "172:2710",
+      "qtClass": "commonWidget::Z_PushButton",
+      "userProvidedClassName": "X_pushbutton",
+      "classRegistration": "User-specified name X_pushbutton is not present in the audited source; the registered runtime class is commonWidget::Z_PushButton (runtime/component/Z_PushButton.h). Both identities are recorded; no source class was renamed.",
+      "variants": ["primary", "secondary", "danger", "production", "dark", "base"],
+      "sizes": ["small", "medium", "large"],
+      "states": {
+        "supported": ["default", "hover", "pressed", "disabled", "focused", "loading"],
+        "default": "default"
+      },
+      "slots": ["container", "label", "icon", "border", "focus-ring", "spinner", "content"],
+      "privateMaterial": ["container.gradient-stop-01..05", "container.inner-shadow-color"]
+    },
+    "input": {
+      "figmaPage": "20.4.01", "figmaNode": "339:2",
+      "qtClass": "commonWidget::Z_InputField",
+      "sizes": ["small", "medium", "large"],
+      "states": {"supported": ["default", "hover", "focused", "disabled", "error", "filled"], "default": "default"},
+      "slots": ["container", "content", "placeholder", "border", "focus-ring", "action"]
+    },
+    "line-edit": {
+      "figmaPage": "20.4.11", "figmaNode": "1116:2",
+      "qtClass": "commonWidget::Z_LineEdit",
+      "sizes": ["small", "medium", "large"],
+      "states": {"supported": ["default"], "default": "default"},
+      "slots": ["container"],
+      "sharedBase": "input",
+      "decision": "LineEdit and Input are separate registered components. Shared sizing comes from the canonical input size enum and semantic padding roles; LineEdit defines no duplicate private sizes."
+    },
+    "select": {
+      "figmaPage": "20.5.02", "figmaNode": "242:2720",
+      "qtClass": "commonWidget::Z_Select",
+      "sizes": ["small", "medium", "large"],
+      "states": {"supported": ["default", "hover", "focused", "disabled", "error"], "default": "default"},
+      "slots": ["container", "content", "placeholder", "border", "focus-ring", "option", "tag"],
+      "decision": "Select shared control surfaces re-point to the same semantic roles Input uses; no horizontal aliases between the two components remain."
+    },
+    "checkbox": {
+      "figmaPage": "20.5.01", "figmaNode": "234:2717",
+      "qtClass": "commonWidget::Z_CheckBox",
+      "sizes": ["small", "large"],
+      "states": {"supported": ["unchecked", "selected", "hover", "pressed", "disabled", "focused"], "default": "unchecked"},
+      "slots": ["indicator", "label", "content", "focus-ring"]
+    },
+    "radio": {
+      "figmaPage": "20.5.03", "figmaNode": "341:2",
+      "qtClass": "QRadioButton (native Z_RadioButton)",
+      "source": "reference-import (DesignSystem/imports/reference/radio.json)",
+      "sizes": ["sm", "md"],
+      "states": {"supported": ["default", "hover", "pressed", "selected", "selected-hover", "selected-pressed", "disabled", "selected-disabled"], "default": "default"},
+      "slots": ["indicator", "label", "content", "glyph", "container"],
+      "referenceNote": "参考文件 radio.size.sm 与 radio.size.md 均解析为 16px 指示器尺寸；按参考值保留，未做结构推测。"
+    },
+    "menu": {
+      "figmaPage": "20.1.03", "figmaNode": "482:335",
+      "qtClass": "QMenu (native Z_Menu)",
+      "source": "reference-import (DesignSystem/imports/reference/menu.json)",
+      "variants": ["default", "emphasis", "none"],
+      "sizes": ["sm", "md"],
+      "states": {"supported": ["default", "hover", "pressed", "selected", "disabled"], "default": "default"},
+      "slots": ["container", "content", "item", "icon", "border"],
+      "gradientContract": {"slots": ["gradient-stop-01", "gradient-stop-02"], "direction": "vertical", "positions": [0, 1], "source": "参考文件 color/gradient/primary 位置值 0/100 以比例 0/1 登记"}
+    },
+    "tree": {
+      "figmaPage": "20.7.05", "figmaNode": "713:3",
+      "qtClass": "QTreeWidget (native Z_TreeWidget)",
+      "source": "reference-import (DesignSystem/imports/reference/tree.json)",
+      "states": {"supported": ["default", "hover", "selected"], "default": "default"},
+      "slots": ["container", "content", "item", "icon", "border"],
+      "pending": "参考文件注明“待优化并补多icon多实例结构内容”；多图标/多实例的补充结构属设计侧待补项，本批次仅落地已提供的参数值。"
+    },
+    "table": {
+      "figmaPage": "20.7.09", "figmaNode": "1111:2",
+      "qtClass": "QTableWidget (native Z_TableWidget)",
+      "source": "reference-import (DesignSystem/imports/reference/table.json)",
+      "variants": ["base", "zebra", "emphasis", "strong"],
+      "sizes": ["sm", "md", "lg", "xl"],
+      "states": {
+        "supported": ["default", "hover", "pressed", "selected", "disabled",
+                      "alarm", "alarm-hover", "alarm-select", "alarm-soft", "alarm-soft-hover", "alarm-soft-select",
+                      "error", "error-hover", "error-select", "error-soft", "error-soft-hover", "error-soft-select",
+                      "warning", "warning-hover", "warning-select", "warning-soft", "warning-soft-hover", "warning-soft-select"],
+        "default": "default"
+      },
+      "slots": ["container", "content", "item", "icon", "border", "header"],
+      "referenceNote": "参考文件内容高度 5xl 键名含尾随空格（结构问题），按值 48px 落地为 semantic.size.height.5xl。"
+    },
+    "selection-control": {
+      "figmaPage": "20.5", "figmaNode": null,
+      "qtClass": null,
+      "role": "shared-base",
+      "states": {"supported": ["default", "selected", "disabled", "focused"], "default": "default"},
+      "slots": ["indicator", "focus-ring"]
+    },
+    "switch": {
+      "figmaPage": "20.5.04", "figmaNode": "346:2",
+      "qtClass": "commonWidget (Z_DesignComponents switch)",
+      "sizes": ["small", "medium"],
+      "states": {"supported": ["off", "on", "disabled"], "default": "off"},
+      "slots": ["track", "knob"]
+    },
+    "chip": {
+      "figmaPage": "20.5.05", "figmaNode": "351:2",
+      "qtClass": "commonWidget (Z_DesignComponents chip)",
+      "states": {"supported": ["unselected", "selected", "hover", "disabled", "focused"], "default": "unselected"},
+      "slots": ["container", "label", "focus-ring"]
+    },
+    "progress-bar": {
+      "figmaPage": "20.2.04", "figmaNode": "410:13",
+      "qtClass": "QProgressBar (native Z_ProgressBar wrapper)",
+      "states": {
+        "supported": ["default", "disabled", "loading"],
+        "designOnly": ["paused", "error", "in-progress", "completed"],
+        "default": "default"
+      },
+      "slots": ["track", "indicator", "label"],
+      "runtimeGap": "paused/error/in-progress/completed indicator colors exist in the design; Qt runtime support is unverified (ProgressAppearance currently carries hard-coded colors). Registered as design-defined, runtime-unverified."
+    },
+    "tool-button": {
+      "figmaPage": "20.3.02", "figmaNode": "443:2",
+      "qtClass": "QToolButton (native Z_ToolButton wrapper)",
+      "states": {"supported": ["default", "hover-pressed", "pressed", "disabled", "checked", "checked-hover", "open", "focused", "auto-raise"], "default": "default"},
+      "slots": ["container", "icon", "foreground", "border", "focus-ring", "label", "menu"]
+    },
+    "scroll-bar": {
+      "figmaPage": "20.4.08", "figmaNode": "471:334",
+      "qtClass": "QScrollBar (native Z_ScrollBar wrapper)",
+      "states": {"supported": ["default", "hover", "dragging", "disabled"], "default": "default"},
+      "slots": ["track", "thumb", "line-button"]
+    },
+    "slider": {
+      "figmaPage": "20.4.07", "figmaNode": "467:2",
+      "qtClass": "QSlider (native Z_Slider wrapper)",
+      "states": {"supported": ["default", "dragging", "focused"], "default": "default"},
+      "slots": ["active-track", "rail", "handle", "focus-ring"]
+    },
+    "dial": {
+      "figmaPage": "20.4.09", "figmaNode": "478:337",
+      "qtClass": "QDial (native Z_Dial wrapper)",
+      "states": {"supported": ["default", "focused"], "default": "default"},
+      "slots": ["arc", "active-indicator", "hub", "notch", "focus-ring"]
+    },
+    "pagination": {
+      "figmaPage": "20.1.13", "figmaNode": "2148:342",
+      "qtClass": "commonWidget (Z_FoundationComponents pagination)",
+      "variants": ["default", "compact"],
+      "states": {"supported": ["default", "hover", "selected", "disabled", "focused"], "default": "default"},
+      "slots": ["container", "item", "navigation", "focus-ring"]
+    },
+    "badge": {
+      "figmaPage": "20.2.15", "figmaNode": "2131:2",
+      "qtClass": "commonWidget (Z_FoundationComponents badge)",
+      "states": {"supported": ["default"], "default": "default"},
+      "slots": ["container", "label"]
+    },
+    "tag": {
+      "figmaPage": "20.2.17", "figmaNode": "2131:4",
+      "qtClass": "commonWidget (Z_FoundationComponents tag)",
+      "states": {"supported": ["default", "selected"], "default": "default"},
+      "slots": ["container", "label", "border"]
+    },
+    "tooltip": {
+      "figmaPage": "20.8.05", "figmaNode": "2131:6",
+      "qtClass": "commonWidget (Z_FoundationComponents tooltip)",
+      "variants": ["base", "chart", "camera"],
+      "states": {"supported": ["default"], "default": "default"},
+      "slots": ["container", "content"]
+    },
+    "message": {
+      "figmaPage": "20.8.01", "figmaNode": "579:33",
+      "qtClass": "commonWidget",
+      "states": {"supported": ["default", "error", "warning", "success"], "default": "default"},
+      "slots": ["container", "border", "icon"]
+    },
+    "stepper": {
+      "figmaPage": "20.1.12", "figmaNode": "2147:454",
+      "qtClass": "commonWidget",
+      "states": {"supported": ["default", "selected"], "default": "default"},
+      "slots": ["container", "content", "indicator"]
+    },
+    "navigation-bar": {
+      "figmaPage": "20.1.01", "figmaNode": "380:2",
+      "qtClass": "commonWidget (Z_DesignComponents navbar)",
+      "states": {"supported": ["default", "hover", "pressed"], "default": "default"},
+      "slots": ["container", "content", "icon"]
+    },
+    "desktop-bottom-navigation": {
+      "figmaPage": "20.1.09", "figmaNode": "1307:2",
+      "qtClass": "commonWidget",
+      "states": {"supported": ["default"], "default": "default"},
+      "slots": ["tier", "primary", "secondary"]
+    },
+    "side-menu": {
+      "figmaPage": "20.1.02", "figmaNode": "392:2",
+      "qtClass": "commonWidget (Z_DesignComponents sidebar)",
+      "states": {"supported": ["default", "selected"], "default": "default"},
+      "slots": ["container", "content", "icon", "indicator"]
+    },
+    "menu-bar": {
+      "figmaPage": "20.1.04", "figmaNode": "486:10",
+      "qtClass": "QMenuBar (native Z_MenuBar wrapper)",
+      "states": {"supported": ["default"], "default": "default"},
+      "slots": ["container", "border"]
+    },
+    "menu-bar-item": {
+      "figmaPage": "20.1.04", "figmaNode": "486:10",
+      "qtClass": "QMenuBar item",
+      "states": {"supported": ["default", "hover", "disabled", "open", "focused"], "default": "default"},
+      "slots": ["label", "container", "focus-ring", "mnemonic"]
+    },
+    "dialog-button-group": {
+      "figmaPage": "20.3.03", "figmaNode": "447:2",
+      "qtClass": "QDialogButtonBox (native Z_DialogButtonBox wrapper)",
+      "states": {"supported": ["default"], "default": "default"},
+      "slots": ["button-row", "container"]
+    },
+    "spin-box": {
+      "figmaPage": "20.4.02", "figmaNode": "458:2",
+      "qtClass": "QSpinBox (native Z_SpinBox wrapper)",
+      "states": {"supported": ["default"], "default": "default"},
+      "slots": ["container"]
+    },
+    "double-spin-box": {
+      "figmaPage": "20.4.03", "figmaNode": "460:2",
+      "qtClass": "QDoubleSpinBox (native Z_DoubleSpinBox wrapper)",
+      "states": {"supported": ["default"], "default": "default"},
+      "slots": ["container"]
+    },
+    "date-picker": {
+      "figmaPage": "20.4.05", "figmaNode": "464:2",
+      "qtClass": "QDateEdit (native Z_DateEdit wrapper)",
+      "states": {"supported": ["default"], "default": "default"},
+      "slots": ["container"]
+    },
+    "time-picker": {
+      "figmaPage": "20.4.06", "figmaNode": "465:2",
+      "qtClass": "QTimeEdit (native Z_TimeEdit wrapper)",
+      "states": {"supported": ["default"], "default": "default"},
+      "slots": ["container"]
+    },
+    "date-time-picker": {
+      "figmaPage": "20.4.04", "figmaNode": "463:2",
+      "qtClass": "QDateTimeEdit (native Z_DateTimeEdit wrapper)",
+      "states": {"supported": ["default"], "default": "default"},
+      "slots": ["container"]
+    },
+    "label": {
+      "figmaPage": "20.2.05", "figmaNode": "414:7",
+      "qtClass": "QLabel (native Z_Label wrapper)",
+      "states": {"supported": ["default", "disabled"], "default": "default"},
+      "slots": ["content"]
+    },
+    "lcd-number": {
+      "figmaPage": "20.2.06", "figmaNode": "418:11",
+      "qtClass": "QLCDNumber (native Z_LCDNumber wrapper)",
+      "states": {"supported": ["default", "disabled"], "default": "default"},
+      "slots": ["digit"]
+    },
+    "text-browser": {
+      "figmaPage": "20.2.07", "figmaNode": "420:13",
+      "qtClass": "QTextBrowser (native Z_TextBrowser wrapper)",
+      "states": {"supported": ["default", "disabled"], "default": "default"},
+      "slots": ["content"]
+    },
+    "data-display": {
+      "figmaPage": "20.2", "figmaNode": null,
+      "qtClass": "commonWidget",
+      "states": {"supported": ["default", "error"], "default": "default"},
+      "slots": ["content", "label"]
+    },
+    "container": {
+      "figmaPage": "20.6.01", "figmaNode": "359:2",
+      "qtClass": "QFrame (native Z_Frame wrapper)",
+      "states": {"supported": ["default"], "default": "default"},
+      "slots": ["container", "content"]
+    },
+    "divider": {
+      "figmaPage": "20.6.07", "figmaNode": "542:2",
+      "qtClass": "QFrame",
+      "states": {"supported": ["default"], "default": "default"},
+      "slots": ["border"]
+    },
+    "frame": {
+      "figmaPage": "20.6.06", "figmaNode": "537:2",
+      "qtClass": "QFrame",
+      "states": {"supported": ["default"], "default": "default"},
+      "slots": ["shape"]
+    }
+  }
+}

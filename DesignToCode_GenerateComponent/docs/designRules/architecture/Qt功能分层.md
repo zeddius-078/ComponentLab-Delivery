@@ -1,4 +1,33 @@
 
+## 零、SDK 运行时依赖方向
+
+GenerateComponent 运行时必须保持单向依赖：
+
+```text
+Theme（安装 Profile、字体、Palette、全局 QSS）
+  ↓
+Components / Appearance（组件行为和外观适配）
+  ↓
+Surface（ProfileContext、Typography、TokenResources、绘制原语）
+  ↓
+Qt
+```
+
+- `Components / Appearance` 不得包含或调用 `ComponentTheme`。组件需要 Profile 时，通过
+  `ProfileContext` 读取对象/父对象覆盖值，再回退到应用级 Profile。
+- `ComponentTheme` 是安装编排模块，不是供组件反向查询的全局工具箱。
+- `ProfileContext` 是 Profile 状态的唯一运行时事实源；Theme 不再维护第二份静态状态。
+- `Typography` 是字体注册和字体族命名的唯一事实源。全球化文本主字体为
+  `HarmonyOS Sans`，简体中文字形回退为 `HarmonyOS Sans SC`。二者均使用官方可变字体资源
+  （`wght` 40–900），字体顺序不得倒置。SDK 不依赖操作系统预装字体，
+  也不允许组件自行引入 Inter、Poppins 或 Noto 字体链。
+- CMake 的依赖方向必须与上述方向一致；新增外观适配后必须用全新构建目录验证，不能以旧对象文件的测试结果代替。
+
+这条规则用于避免此前 `PageFlowAppearance → ComponentTheme → d2c_components` 的反向依赖：
+它不仅会造成 include 缺失，还会让组件层知道安装层生命周期，形成难以隔离测试的潜在循环。
+
+---
+
 ## 一、三者的角色定位
 
 | 文件 | 本质 | 角色 | 类比 |

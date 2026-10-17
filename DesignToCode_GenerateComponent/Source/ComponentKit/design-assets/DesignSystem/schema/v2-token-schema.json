@@ -1,0 +1,79 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://componentlab.local/token-schema/v2",
+  "$description": "ComponentLab V2 canonical token source schema. One layer per file: primitive / profile / semantic / component. Product-scope packages (product/*) reuse the same token-node rules. DTCG 2025.10 type names are used where they exist; opacity / asset / lineWidth are registered project extensions, never presented as DTCG standard types.",
+  "type": "object",
+  "required": ["$schema", "layer", "root"],
+  "properties": {
+    "$schema": {"type": "string"},
+    "$description": {"type": "string"},
+    "layer": {
+      "enum": ["primitive", "profile", "semantic", "component", "product"]
+    },
+    "product": {"type": "string"},
+    "root": {
+      "$ref": "#/$defs/group"
+    },
+    "$defaultMode": {"type": "string"},
+    "$modeOverrides": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "propertyNames": {"pattern": "^[a-z0-9]+(-[a-z0-9]+)*(\\.[a-z0-9]+(-[a-z0-9]+)*)*$"},
+        "additionalProperties": {
+          "$ref": "#/$defs/tokenNode"
+        }
+      }
+    }
+  },
+  "$defs": {
+    "group": {
+      "type": "object",
+      "propertyNames": {"pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"},
+      "additionalProperties": {
+        "oneOf": [
+          {"$ref": "#/$defs/tokenNode"},
+          {"$ref": "#/$defs/group"}
+        ]
+      }
+    },
+    "tokenNode": {
+      "type": "object",
+      "required": ["$type", "$value"],
+      "properties": {
+        "$type": {
+          "enum": [
+            "color", "dimension", "number", "fontFamily", "fontWeight",
+            "fontSize", "lineHeight", "letterSpacing", "spacing",
+            "borderRadius", "borderWidth", "boolean", "string",
+            "opacity", "asset", "lineWidth"
+          ]
+        },
+        "$value": {},
+        "unit": {
+          "enum": ["px", "%"]
+        },
+        "$description": {"type": "string"},
+        "$extensions": {"type": "object"},
+        "$owner": {"type": "string"},
+        "$sourceOwner": {"type": "string"}
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"$type": {"const": "dimension"}}},
+          "then": {
+            "required": ["unit"],
+            "properties": {"unit": {"const": "px"}}
+          }
+        },
+        {
+          "if": {"properties": {"$type": {"const": "opacity"}}},
+          "then": {
+            "required": ["unit"],
+            "properties": {"unit": {"const": "%"}}
+          }
+        }
+      ]
+    }
+  }
+}

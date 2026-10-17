@@ -185,9 +185,9 @@ QString profileForDensity(const QString& profile, const QString& density) {
 QString compositeCjkFontFamily() {
     static const QString family = [] {
         const int id = QFontDatabase::addApplicationFont(
-            QStringLiteral(":/figma/fonts/NotoSansSC-Regular.otf"));
+            QStringLiteral(":/fonts/HarmonyOS_Sans_SC_Regular.ttf"));
         return QFontDatabase::applicationFontFamilies(id).value(
-            0, QStringLiteral("Noto Sans SC"));
+            0, QStringLiteral("HarmonyOS Sans SC"));
     }();
     return family;
 }
@@ -725,16 +725,16 @@ void Z_DesignComponent::paintEvent(QPaintEvent*) {
 namespace {
 QFont metricFont(int pixelSize, QFont::Weight weight) {
     static const bool loaded = [] {
-        QFontDatabase::addApplicationFont(QStringLiteral(":/figma/fonts/Inter-Regular.otf"));
-        QFontDatabase::addApplicationFont(QStringLiteral(":/figma/fonts/Inter-Medium.otf"));
-        QFontDatabase::addApplicationFont(QStringLiteral(":/figma/fonts/Inter-SemiBold.otf"));
-        QFontDatabase::addApplicationFont(QStringLiteral(":/figma/fonts/NotoSansSC-Bold.otf"));
-        QFontDatabase::addApplicationFont(QStringLiteral(":/figma/fonts/NotoSansSC-Regular.otf"));
+        QFontDatabase::addApplicationFont(QStringLiteral(":/fonts/HarmonyOS_Sans_Regular.ttf"));
+        QFontDatabase::addApplicationFont(QStringLiteral(":/fonts/HarmonyOS_Sans_Regular.ttf"));
+        QFontDatabase::addApplicationFont(QStringLiteral(":/fonts/HarmonyOS_Sans_Regular.ttf"));
+        QFontDatabase::addApplicationFont(QStringLiteral(":/fonts/HarmonyOS_Sans_SC_Regular.ttf"));
+        QFontDatabase::addApplicationFont(QStringLiteral(":/fonts/HarmonyOS_Sans_SC_Regular.ttf"));
         return true;
     }();
     Q_UNUSED(loaded)
     QFont font;
-    font.setFamilies({QStringLiteral("Inter"), QStringLiteral("Noto Sans SC")});
+    font.setFamilies({QStringLiteral("HarmonyOS Sans"), QStringLiteral("HarmonyOS Sans SC")});
     font.setPixelSize(pixelSize);
     font.setWeight(weight);
     return font;
@@ -1762,7 +1762,7 @@ Z_DesktopBottomNavigation::Z_DesktopBottomNavigation(QWidget* parent)
 Z_DesktopBottomNavigation::Z_DesktopBottomNavigation(const QString& profile, QWidget* parent)
     : QWidget(parent), m_profile(profile) {
     static const int interFont =
-        QFontDatabase::addApplicationFont(QStringLiteral(":/figma/fonts/Inter-Regular.otf"));
+        QFontDatabase::addApplicationFont(QStringLiteral(":/fonts/HarmonyOS_Sans_Regular.ttf"));
     Q_UNUSED(interFont)
     configureRuntimeIdentity(this, QStringLiteral("DesktopBottomNavigation"));
     setObjectName(QStringLiteral("desktopBottomNavigation"));

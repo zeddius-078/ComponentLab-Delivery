@@ -47,14 +47,13 @@ QColor role(const char* name, const QWidget* widget = nullptr) {
 
 QFont labelFont(int size = 14, bool strong = false) {
     static const bool fontsLoaded = [] {
-        for (const auto* name : {"Regular", "SemiBold"})
-            if (QFontDatabase::addApplicationFont(QString(":/figma/fonts/Inter-%1.otf").arg(name)) <
-                0)
-                throw std::runtime_error("Figma Inter font unavailable");
+        if (QFontDatabase::addApplicationFont(
+                QStringLiteral(":/fonts/HarmonyOS_Sans_Regular.ttf")) < 0)
+            throw std::runtime_error("HarmonyOS Sans font unavailable");
         return true;
     }();
     Q_UNUSED(fontsLoaded);
-    QFont font("Inter");
+    QFont font("HarmonyOS Sans");
     font.setPixelSize(size);
     font.setWeight(strong ? QFont::DemiBold : QFont::Normal);
     return font;
@@ -436,7 +435,7 @@ void configureToolBar(QToolBar* bar, const QMap<QString, QString>& props) {
     bar->setStyleSheet(
         QString("QToolBar {background:white; border:%1px solid "
                 "%2;border-radius:%3px;padding:8px;spacing:4px;} QToolButton {border:0; "
-                "background:transparent; font:600 14px 'Inter'; padding:0 8px; height:32px;} "
+                "background:transparent; font:600 14px 'HarmonyOS Sans'; padding:0 8px; height:32px;} "
                 "QToolButton:hover {background:#f3f3f3;} QToolBar::separator "
                 "{background:#d0d0d0;width:1px;height:1px;margin:4px;}")
             .arg(floating ? 2 : 1)

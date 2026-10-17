@@ -39,13 +39,13 @@ void applyFigmaLabelAppearance(QLabel* label, const QString& alignment, bool wra
     if (!label || !QStringList{"Start", "Center", "End"}.contains(alignment))
         throw std::invalid_argument("Label requires Start, Center or End logical alignment");
     static const bool fonts = [] {
-        QFontDatabase::addApplicationFont(":/figma/fonts/Inter-Regular.otf");
-        QFontDatabase::addApplicationFont(":/figma/fonts/NotoSansSC-Regular.otf");
+        QFontDatabase::addApplicationFont(":/fonts/HarmonyOS_Sans_Regular.ttf");
+        QFontDatabase::addApplicationFont(":/fonts/HarmonyOS_Sans_SC_Regular.ttf");
         return true;
     }();
     Q_UNUSED(fonts);
     QFont font;
-    font.setFamilies({"Inter", "Noto Sans SC"});
+    font.setFamilies({"HarmonyOS Sans", "HarmonyOS Sans SC"});
     font.setPixelSize(14);
     font.setWeight(QFont::Normal);
     label->setFont(font);
@@ -59,7 +59,7 @@ void applyFigmaLabelAppearance(QLabel* label, const QString& alignment, bool wra
     label->setIndent(0);
     label->setMinimumHeight(wrap ? 72 : 32);
     label->setStyleSheet("QLabel {background:transparent;border:0;padding:0;color:#191919;"
-                         "font-family:'Inter','Noto Sans SC';font-size:14px;font-weight:400;}"
+                         "font-family:'HarmonyOS Sans','HarmonyOS Sans SC';font-size:14px;font-weight:400;}"
                          "QLabel:disabled {color:#8a8a8a;}");
 }
 

@@ -1,4 +1,9 @@
-"""Regression checks for the four-layer DSM sToken design-mode contract."""
+"""Regression checks for the frozen legacy sToken design-mode contract.
+
+The snapshot at DesignSystem/imports/stoken.json is read-only design evidence;
+its structural contract is still guarded here (mode axes, alias sanity) even
+though the canonical V2 source is the daily write target.
+"""
 
 import copy
 import importlib.util
@@ -7,7 +12,8 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-SPEC = importlib.util.spec_from_file_location("stoken_import", Path(__file__).with_name("stoken_import.py"))
+LEGACY_IMPORT = ROOT / "DesignSystem/archive/commerly/stoken_import.py"
+SPEC = importlib.util.spec_from_file_location("stoken_import", LEGACY_IMPORT)
 STOKEN = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(STOKEN)
 

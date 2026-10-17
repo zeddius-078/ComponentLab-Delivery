@@ -1,0 +1,140 @@
+{
+  "$description": "Figma-side V2 rebind plan. The canonical V2 token source lives in the repository (DesignSystem/source). This file is the executable candidate-diff the design tool needs to apply so the Figma variable collections become a traceable mirror of the canonical source. Applying it requires Figma write access (Variables REST API or manual action by the designer); the desktop MCP used for the audit is read-only, so the design-tool rebind is an isolated external action, not silently assumed done.",
+  "figmaFileKey": "w92BKW1EcutKmTXkwzNHbf",
+  "status": "pending-design-tool-action",
+  "targetCollections": [
+    {"displayName": "Primitive", "logicalRoot": "primitive", "modes": ["Value"]},
+    {"displayName": "Profile", "logicalRoot": "profile", "modes": ["Standard", "Wide"]},
+    {"displayName": "Semantic", "logicalRoot": "semantic", "modes": ["Light", "Dark"]},
+    {"displayName": "Component", "logicalRoot": "component", "modes": ["default"]}
+  ],
+  "legacyCollections": {
+    "01.primitive": "freeze writes; keep as compatibility evidence until the rebind completes",
+    "02.profile": "freeze writes",
+    "03.semantic": "freeze writes",
+    "04.component": "freeze writes"
+  },
+  "renameRules": {
+    "pathSeparator": "Figma collection paths use '/'; canonical paths use '.'; a/b-c and a-b/c are distinct canonical paths and must not collapse into one CSS/export name (checked by the CSS adapter).",
+    "backgroundProperty": "component token property 'background' that is a plain color becomes 'background-color' in V2; multi-layer backgrounds keep 'background'.",
+    "inputSizeEnum": "input size branch sm/md/lg is renamed to the registered enum small/medium/large in V2.",
+    "mergedRoles": "semantic color border/primary is merged into border/default; nodes bound to border/primary rebind to border/default.",
+    "productScope": "the 17 application-layout variables move out of the public Profile collection into the product-scope package (product/application-layout); they must not be re-exported into the public library.",
+    "typographyAggregation": "semantic typography/font-size/{role}/{variant} and typography/line-height/{role}/{variant} aggregate into typography/{role}/{variant}/{font-size|line-height}.",
+    "metricSplit": "metric/space, metric/border-width, metric/radius, metric/interaction-size, metric/visualization-size become semantic trunks space/border-width/radius/interaction-size/visualization-size; the metric trunk is removed.",
+    "crossComponentAliases": "component-to-component aliases (line-edit->input, select->input, checkbox/radio->selection-control) are re-pointed to their semantic/primitive terminal targets; the 17 cross-family aliases are registered in the legacy map.",
+    "gradientStops": "gradient-stop-01..05 remain registered slots; direction/geometry live in the component drawing contract, not as extra variables."
+  },
+  "legacyRuntimeVariables": {
+    "description": "Canvas audit found three legacy variable families still bound on pages beyond the four collections.",
+    "var(--qtlab-*)": {"action": "rebind to semantic.color.* canonical roles", "examples": {"var(--qtlab-semantic-color-text-primary)": "semantic.color.text.primary", "var(--qtlab-semantic-color-action-primary)": "semantic.color.interactive.brand.default"}},
+    "var(--component-basic-*)": {"action": "rebind to component.* canonical paths (see DesignSystem/config/legacy-map.json runtime role table)"},
+    "color/*": {"action": "rebind to primitive.color.* (plain color variables)"},
+    "token.*": {"action": "isolate; antd-style leftovers on the Select page, not a ComponentLab token family"},
+    "DSM/*": {"action": "composite styles (Font/Effect) are regenerated from V2 semantic roles; keep style names, re-point style properties to V2 variables"}
+  },
+  "nodeRebindEvidence": {
+    "auditedPages": ["20.3.01 Button (172:2710)", "20.4.01 Input (339:2)", "20.4.11 LineEdit (1116:2)", "20.5.01 Checkbox (234:2717)", "20.5.02 Select (242:2720)", "20.2.04 ProgressBar (410:13)", "20.2.09 Calendar (423:18)", "20.3.02 ToolButton (443:2)", "20.4.08 ScrollBar (471:334)"],
+    "note": "The enumeration above is bounded to the audited pages; other pages may carry additional legacy bindings and must be re-audited during the rebind pass."
+  },
+  "pendingConflicts": {
+    "visualization-size": "8 steps diverge between Figma (Standard 16..40, Wide 16..40) and the file export (Standard 16..56, Wide 20..64). Values are kept as the file baseline until a binding consumer verifies the design intent; Wide consumers stay gated. See DesignSystem/config/legacy-map.json pendingConflicts."
+  },
+  "rollback": {
+    "strategy": "per-collection freeze + re-run of the legacy import path (DesignSystem/archive/commerly/stoken_import.py) for comparison; V2 generated artifacts regenerate deterministically from the canonical source.",
+    "evidence": "DesignSystem/config/manifest.json sourceHash and designSnapshot sha256"
+  },
+  "referenceComponentRebind": {
+    "$description": "radio / menu / tree / table 参考值批次。参考文件保存在 DesignSystem/imports/reference/（与 stoken 同级）。Figma 侧先改：以下为按参考文件解析出的目标值，设计页面现有绑定仍为旧值，需重绑定/改值到目标值；开发侧已通过 V2 源同步（组件属性值与参考文件逐项一致，117 项机器校验）。",
+    "source": "DesignSystem/imports/reference/{radio,menu,tree,table}.json",
+    "auditedPages": {
+      "radio": {"figmaPage": "20.5.03", "figmaNode": "341:2"},
+      "menu": {"figmaPage": "20.1.03", "figmaNode": "482:335"},
+      "tree": {"figmaPage": "20.7.05 · TreeWidget Component Contract", "figmaNode": "2015:27507"},
+      "table": {"figmaPage": "20.7.09", "figmaNode": "1111:2"}
+    },
+    "targetValues": {
+      "menu": {
+        "说明": "现有绑定 var(--component-menu-*) 为旧值；按参考文件改为下列值。",
+        "containerPadding": {"md": 4, "lg": 5, "2xl": 8, "3xl": 12},
+        "contentGap": {"sm": 4, "md": 8},
+        "radius": {"default": 4, "none": 0},
+        "borderWidth": 1,
+        "contentFontSize": 14,
+        "contentFontWeight": {"regular": 400, "bold": 700},
+        "iconSize": {"onlyIcon-sm": 16, "onlyIcon-md": 20},
+        "itemHeight": {"sm": 20, "md": 24},
+        "contentLineHeight": 22,
+        "colors": {
+          "gradientStop1": "#F5F5F5", "gradientStop2": "#FFFFFF",
+          "selectedBg": "#F5F5F5", "pressedBg": "#DCDBDB", "defaultBg": "#FFFFFF",
+          "selectedItemBg": "#EFEAFE", "hoverBg": "#F5F5F5", "disabledBg": "#EEEEEE",
+          "contentDefault": "#191919", "contentSelected": "#6235F7", "contentDisabled": "#BBBBBB",
+          "border": "#DFDFDF"
+        },
+        "currentBindingsToUpdate": {
+          "var(--component-menu-hover)": "#f3f3f3 -> #F5F5F5",
+          "var(--component-menu-disabled)": "#8a8a8a -> #BBBBBB",
+          "var(--qtlab-semantic-color-text-disabled)": "#8a8a8a -> #BBBBBB",
+          "var(--component-menu-divider)": "#d0d0d0 -> #DFDFDF",
+          "var(--component-menu-border)": "#d0d0d0 -> #DFDFDF"
+        }
+      },
+      "tree": {
+        "说明": "现有绑定 var(--component-native-tree-*) / var(--component-native-list-*) 为旧值。",
+        "colors": {
+          "bgPrimary": "#FFFFFF", "bgHover": "#F5F5F5", "bgSelect": "#EFEAFE",
+          "border": "#BBBBBB", "textDefault": "#191919"
+        },
+        "content": {"fontSize": 14, "fontWeight": 400, "lineHeight": 22, "iconSize": 20, "itemHeight": 32},
+        "padding": 4,
+        "borderWidth": 1,
+        "currentBindingsToUpdate": {
+          "var(--component-native-tree-header-background)": "#f3f3f3 -> #EEEEEE（参考表头=bg/disabled）",
+          "var(--component-native-tree-branch)": "#444444（保留，参考文件未定义分支色）",
+          "var(--component-native-list-item-hover-background)": "#f3f3f3 -> #F5F5F5",
+          "var(--component-native-list-item-selected-background)": "#f3efff -> #EFEAFE",
+          "var(--component-native-list-border)": "#d0d0d0 -> #BBBBBB（参考 border/primary）"
+        }
+      },
+      "table": {
+        "说明": "现有绑定 var(--component-composite-table-*) 为旧值。",
+        "colors": {
+          "headerBg": "#EEEEEE", "rowBg": "#FFFFFF", "zebraBg": "#FAFAFA", "hoverBg": "#F5F5F5",
+          "disabledBg": "#EEEEEE", "pressedBg": "#EFEAFE",
+          "alarm": {"default": "#E02128", "hover": "#E96368", "select": "#BF1C22", "soft": "#FADEDF", "softHover": "#FCE8E9", "softSelect": "#D5BDBE"},
+          "error": {"default": "#E66F1E", "hover": "#ED9A61", "select": "#C45E1A", "soft": "#FBEADD", "softHover": "#FBEADD", "softSelect": "#D6C7BC"},
+          "warning": {"default": "#E6AF19", "hover": "#EDC75E", "select": "#C49515", "soft": "#F6EFDC", "softHover": "#FCF6E7", "softSelect": "#D6CFBC"},
+          "border": "#DFDFDF", "selectedBorder": "#6235F7",
+          "textDefault": "#191919", "textInvert": "#FFFFFF", "textDisabled": "#BBBBBB", "textUnit": "#4E4E4E", "textRevise": "#6235F7"
+        },
+        "content": {"heights": {"sm": 20, "md": 24, "lg": 44, "xl": 48}, "iconSize": 20,
+                    "fontSize": 14, "fontWeight": {"regular": 400, "bold": 700},
+                    "lineHeights": {"xs": 16, "sm": 20, "md": 24}},
+        "padding": {"inline": 8, "block": 4},
+        "rowHeights": {"sm": 28, "md": 32, "lg": 56},
+        "contentGap": 4,
+        "borderWidth": {"default": 1, "strong": 2},
+        "currentBindingsToUpdate": {
+          "var(--component-composite-table-header-bg)": "#00000005 -> #EEEEEE",
+          "var(--component-composite-table-header-split)": "#d0d0d0 -> #DFDFDF",
+          "var(--component-composite-table-row-hover-background)": "#f3f3f3 -> #F5F5F5",
+          "var(--component-composite-table-row-selected-background)": "#f3efff -> #EFEAFE",
+          "var(--component-composite-table-row-border)": "#d0d0d0 -> #DFDFDF"
+        }
+      },
+      "radio": {
+        "说明": "参考文件 radio.json 定义；页面现有旧变量按下列值改。",
+        "colors": {
+          "textDefault": "#191919", "textDisabled": "#BBBBBB",
+          "onDefault": "#6235F7", "onDisabled": "#E0D7FD", "onPressed": "#6235F7", "onHover": "#7B5FED", "onGlyph": "#FFFFFF",
+          "offDefault": "#F5F5F5", "offDisabled": "#EEEEEE", "offPressed": "#DCDBDB", "offHover": "#EEEEEE", "offBorder": "#6235F7"
+        },
+        "sizes": {"sm": 16, "md": 16},
+        "borderWidth": 1,
+        "padding": {"sm": 2, "md": 8},
+        "content": {"fontSize": 14, "fontWeight": 400, "lineHeight": 22}
+      }
+    }
+  }
+}

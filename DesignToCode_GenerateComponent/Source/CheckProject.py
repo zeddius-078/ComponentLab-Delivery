@@ -24,6 +24,17 @@ def check():
         SOURCE / "ComponentKit/design-assets/tools/checkbox_token_compiler.cpp",
         SOURCE / "ComponentKit/design-assets/tools/forms_token_compiler.cpp",
         SOURCE / "ComponentKit/design-assets/generated",
+        SOURCE / "ComponentKit/design-assets/DesignSystem/source/primitive.json",
+        SOURCE / "ComponentKit/design-assets/DesignSystem/source/profile.json",
+        SOURCE / "ComponentKit/design-assets/DesignSystem/source/semantic.json",
+        SOURCE / "ComponentKit/design-assets/DesignSystem/source/component.json",
+        SOURCE / "ComponentKit/design-assets/DesignSystem/source/product/application-layout.json",
+        SOURCE / "ComponentKit/design-assets/DesignSystem/source/dictionary.json",
+        SOURCE / "ComponentKit/design-assets/DesignSystem/source/component-registry.json",
+        SOURCE / "ComponentKit/design-assets/DesignSystem/config/legacy-map.json",
+        SOURCE / "ComponentKit/design-assets/DesignSystem/config/manifest.json",
+        SOURCE / "ComponentKit/design-assets/DesignSystem/schema/v2-token-schema.json",
+        SOURCE / "ComponentKit/design-assets/DesignSystem/scripts/v2/compile.py",
     ]
     for path in token_chain:
         assert path.exists(), ("missing component Token chain input", path)

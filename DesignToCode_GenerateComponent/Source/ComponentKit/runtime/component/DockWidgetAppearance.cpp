@@ -19,7 +19,7 @@
 namespace commonWidget {
 namespace {
 QFont titleFont() {
-    QFont f("Inter");
+    QFont f("HarmonyOS Sans");
     f.setPixelSize(14);
     f.setWeight(QFont::Medium);
     return f;
@@ -198,12 +198,12 @@ void populateFigmaDockWidget(QDockWidget* dock, const QString& caption, const QS
     text->setWordWrap(true);
     text->setAlignment(Qt::AlignLeft | Qt::AlignTop);
     text->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Preferred);
-    QFont body(QStringLiteral("Inter"));
+    QFont body(QStringLiteral("HarmonyOS Sans"));
     body.setPixelSize(12);
     body.setWeight(QFont::Normal);
     text->setFont(body);
     text->setStyleSheet(QStringLiteral(
-        "background:transparent;border:0;color:#191919;font-family:'Inter';font-size:12px;"));
+        "background:transparent;border:0;color:#191919;font-family:'HarmonyOS Sans';font-size:12px;"));
     inner->addWidget(text);
     inner->addStretch();
     outer->addWidget(card);
@@ -232,7 +232,7 @@ void applyFigmaDockWidgetAppearance(QDockWidget* dock, const QString& area,
     if (!dock || !QStringList{"", "Left", "Right", "Top", "Bottom"}.contains(area) ||
         !QStringList{"", "Docked", "Floating"}.contains(placement))
         throw std::invalid_argument("Native DockWidget and captured Area/Placement required");
-    static const int font = QFontDatabase::addApplicationFont(":/figma/fonts/Inter-Medium.otf");
+    static const int font = QFontDatabase::addApplicationFont(":/fonts/HarmonyOS_Sans_Regular.ttf");
     Q_UNUSED(font);
     dock->setProperty("designSystemStyleOwner", "figma-dockwidget-captured");
     dock->setProperty("figmaDockAreaPreview", area);
@@ -242,7 +242,7 @@ void applyFigmaDockWidgetAppearance(QDockWidget* dock, const QString& area,
     dock->setFont(titleFont());
     dock->setStyleSheet(
         "QDockWidget[designSystemStyleOwner=\"figma-dockwidget-captured\"]{background:transparent;"
-        "border:0;font-family:'Inter';font-size:14px;min-height:0;}");
+        "border:0;font-family:'HarmonyOS Sans';font-size:14px;min-height:0;}");
     if (!dock->findChild<QObject*>("figmaDockStyle", Qt::FindDirectChildrenOnly))
         dock->setStyle(new DockStyle(dock));
     if (!dock->findChild<QObject*>("figmaDockBinding", Qt::FindDirectChildrenOnly))

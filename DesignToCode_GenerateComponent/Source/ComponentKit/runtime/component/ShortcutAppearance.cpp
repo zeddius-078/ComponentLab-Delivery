@@ -52,7 +52,7 @@ QString hintText(const QKeySequenceEdit* edit) {
 }
 
 QFont sourceFont(int pixels, bool strong = false) {
-    QFont font("Inter");
+    QFont font("HarmonyOS Sans");
     font.setPixelSize(pixels);
     font.setWeight(strong ? QFont::DemiBold : QFont::Normal);
     return font;
@@ -340,8 +340,8 @@ void applyFigmaShortcutAppearance(QKeySequenceEdit* edit, const QString& snapsho
         throw std::invalid_argument(
             "Captured ShortcutInput requires native QKeySequenceEdit and a source-backed state");
     static const bool fonts = [] {
-        QFontDatabase::addApplicationFont(":/figma/fonts/Inter-Regular.otf");
-        QFontDatabase::addApplicationFont(":/figma/fonts/Inter-SemiBold.otf");
+        QFontDatabase::addApplicationFont(":/fonts/HarmonyOS_Sans_Regular.ttf");
+        QFontDatabase::addApplicationFont(":/fonts/HarmonyOS_Sans_Regular.ttf");
         return true;
     }();
     Q_UNUSED(fonts);

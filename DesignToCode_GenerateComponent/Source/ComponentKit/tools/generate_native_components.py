@@ -40,9 +40,9 @@ def load_inputs():
     for name, profile in profiles.items():
         values = runtime_tokens["profiles"][name]
         profile["nativeMetrics"] = {
-            "height": values["layout"]["semantic.dimension.control.height-md"],
-            "radius": values["layout"]["semantic.radius.control-md"],
-            "fontSize": values["font"]["base.stoken.typography.font-size.label.default"],
+            "height": values["layout"]["adapter.qt.dimension.control-height.md"],
+            "radius": values["layout"]["semantic.radius.control-default"],
+            "fontSize": values["font"]["semantic.typography.label.default.font-size"],
         }
     return components, profiles
 
@@ -354,7 +354,7 @@ void Z_CalendarWidget::refreshLayout() {
     if (auto* view = findChild<QAbstractItemView*>(QStringLiteral("qt_calendar_calendarview"))) {
         static const QString cjkFamily = [] {
             const int id = QFontDatabase::addApplicationFont(
-                QStringLiteral(":/figma/fonts/NotoSansSC-Regular.otf"));
+                QStringLiteral(":/fonts/HarmonyOS_Sans_SC_Regular.ttf"));
             const QStringList families = QFontDatabase::applicationFontFamilies(id);
             return families.isEmpty() ? QStringLiteral("Noto Sans SC") : families.first();
         }();
@@ -387,7 +387,7 @@ void Z_CalendarWidget::refreshContract() {
                            Qt::Friday, Qt::Saturday, Qt::Sunday})
         setWeekdayTextFormat(day, weekday);
     QTextCharFormat header;
-    header.setFontFamily(QStringLiteral("Noto Sans SC"));
+    header.setFontFamily(QStringLiteral("HarmonyOS Sans SC"));
     header.setFontPointSize(9.0);
     header.setFontWeight(QFont::Medium);
     header.setForeground(isEnabled() ? palette().color(QPalette::Text)

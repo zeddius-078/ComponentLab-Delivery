@@ -319,9 +319,9 @@ void Z_InputField::setVariant(const QString& value) {
 void Z_InputField::setAppearance(const QString& value) {
     if (value == "figma-light") {
         static const bool fontsLoaded = [] {
-            QFontDatabase::addApplicationFont(":/figma/fonts/Inter-Regular.otf");
-            QFontDatabase::addApplicationFont(":/figma/fonts/Inter-Medium.otf");
-            QFontDatabase::addApplicationFont(":/figma/fonts/NotoSansSC-Regular.otf");
+            QFontDatabase::addApplicationFont(":/fonts/HarmonyOS_Sans_Regular.ttf");
+            QFontDatabase::addApplicationFont(":/fonts/HarmonyOS_Sans_Regular.ttf");
+            QFontDatabase::addApplicationFont(":/fonts/HarmonyOS_Sans_SC_Regular.ttf");
             return true;
         }();
         Q_UNUSED(fontsLoaded);
@@ -483,10 +483,10 @@ void Z_InputField::sync() {
         css =
             QString("QLineEdit[fieldPart=\"EDITOR\"], QPlainTextEdit[fieldPart=\"EDITOR\"] {"
                     "background:transparent;border:0;padding:0;min-height:0;color:%1;"
-                    "font-family:'Inter';font-size:14px;selection-background-color:#6235f7;"
+                    "font-family:'HarmonyOS Sans';font-size:14px;selection-background-color:#6235f7;"
                     "selection-color:white;}"
                     "QLabel "
-                    "{background:transparent;border:0;font-family:'Inter';font-size:14px;color:%1;}"
+                    "{background:transparent;border:0;font-family:'HarmonyOS Sans';font-size:14px;color:%1;}"
                     "QLabel[fieldPart=\"HINT\"],QLabel[fieldPart=\"COUNT\"] {color:%2;}"
                     "QLabel[fieldPart=\"COUNT\"][countExceeded=\"true\"] {color:#e02128;}")
                 .arg(foreground.name())
@@ -500,14 +500,14 @@ void Z_InputField::sync() {
         setStyleSheet(css);
     const QString editorCss =
         captured ? QString("background:transparent;border:0;padding:0;min-height:0;color:%1;"
-                           "font-family:'Inter','Noto Sans SC';font-size:14px;"
+                           "font-family:'HarmonyOS Sans','HarmonyOS Sans SC';font-size:14px;"
                            "lineedit-password-character:8226;lineedit-password-mask-delay:0;"
                            "selection-background-color:#6235f7;selection-color:white;")
                        .arg(foreground.name())
                  : QString();
-    QFont editorFont(captured ? "Inter" : t.family());
+    QFont editorFont(captured ? "HarmonyOS Sans" : t.family());
     if (captured)
-        editorFont.setFamilies({"Inter", "Noto Sans SC"});
+        editorFont.setFamilies({"HarmonyOS Sans", "HarmonyOS Sans SC"});
     editorFont.setPixelSize(captured ? 14 : m["fontSize"].toInt());
     editorFont.setWeight(captured && !d->value.isEmpty() ? QFont::Medium : QFont::Normal);
     // Chrome has its own QSS scope. Set editor typography locally, not via an ancestor selector.
@@ -553,7 +553,7 @@ void Z_InputField::sync() {
     d->line->setPalette(p);
     d->area->setPalette(p);
     for (auto* w : {d->label, d->hint, d->count}) {
-        QFont f(captured ? "Inter" : t.family());
+        QFont f(captured ? "HarmonyOS Sans" : t.family());
         f.setPixelSize(captured ? 14 : t.metric(w == d->label ? "labelFontSize" : "hintFontSize"));
         w->setFont(f);
         auto pal = w->palette();

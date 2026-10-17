@@ -1,10 +1,10 @@
-/* GENERATED DEMO SHELL | e5f54101838db093d897c8735533e7d79b9caafd72ab24098070124ef4995e8f */
+/* GENERATED DEMO SHELL | 0a1c693cd235a81b52ba74fc31992438a2490a24c24e77ba6170709e80000fee */
 QMainWindow, QDialog { background: #191919; }
-QWidget { color: #f3f3f3; font-family: 'HarmonyOS Sans SC'; font-size: 14px; }
+QWidget { color: #f3f3f3; font-family: 'HarmonyOS Sans'; font-size: 14px; }
 QLineEdit, QComboBox, QTreeWidget, QTableWidget, QPlainTextEdit { background: #272727; color: #f3f3f3; selection-background-color: #6235f7; selection-color: #ffffff; }
 QGroupBox { border: 1px solid #676767; border-radius: 4px; padding-top: 14px; }
 QGroupBox::title { subcontrol-origin: margin; left: 8px; }
 QWidget#previewHost { background: #272727; }
 QWidget#previewHost[ghostSurface="true"], QWidget#ghostSampleHost { background: #6235f7; }
-QLabel#titleLabel { font-size: 20px; font-weight: 600; }
+QLabel#titleLabel { font-size: 16px; font-weight: 600; }
 QLineEdit, QComboBox, QCheckBox, QRadioButton, QToolButton { min-height: 32px; }

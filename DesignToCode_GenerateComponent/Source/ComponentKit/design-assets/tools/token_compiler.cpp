@@ -173,7 +173,7 @@ int main(int argc, char** argv) {
         header += "inline constexpr const char* sourceHash = \"" + hash + "\";\n";
         header += "inline constexpr const char* fontFamily = \"" + family + "\";\n";
         header += "inline constexpr int bodyFontSize = " +
-                  n(number(base["base.fontSize.body-sm"], base, "body")) + ";\n";
+                  n(number(base["adapter.qt.font-size.body-sm"], base, "body")) + ";\n";
         const auto occupancy =
             number(contract["demoIcons"].toObject()["glyphOccupancy"], base, "demoGlyphOccupancy");
         require(occupancy > 0 && occupancy <= 1, "Invalid demo glyph occupancy");
@@ -385,16 +385,17 @@ int main(int argc, char** argv) {
                             "background: %10; }\n"
                             "QLabel#titleLabel { font-size: %11px; font-weight: 600; }\n")
                         .arg(hash, palette["app"], palette["foreground"], family,
-                             n(number(base["base.fontSize.body-sm"], tokens, "body")),
+                             n(number(base["adapter.qt.font-size.body-sm"], tokens, "body")),
                              palette["surface"], palette["primary"], palette["primaryText"],
                              palette["border"]);
                 QString demoFinal = demo;
                 demoFinal.replace("%10", qssColor(ghost["surface"], tokens));
                 demoFinal.replace(
-                    "%11", n(number(base["base.fontSize.subheading-sm"], tokens, "heading")));
+                    "%11", n(number(tokens["semantic.typography.heading.heading3.font-size"],
+                                    tokens, "heading")));
                 demoFinal +=
                     "QLineEdit, QComboBox, QCheckBox, QRadioButton, QToolButton { min-height: " +
-                    n(number(tokens["semantic.dimension.control.height-xs"], tokens, "control")) +
+                    n(number(tokens["adapter.qt.dimension.control-height.xs"], tokens, "control")) +
                     "px; }\n";
                 output(dest + '/' + profile + "/demo.qss", demoFinal.toUtf8(), check);
                 QJsonObject resolvedPalette;
@@ -421,7 +422,7 @@ int main(int argc, char** argv) {
             {"decisions", contract["decisions"]},
             {"loading", motion},
             {"fontFamily", family},
-            {"bodyFontSize", number(base["base.fontSize.body-sm"], base, "body")}};
+            {"bodyFontSize", number(base["adapter.qt.font-size.body-sm"], base, "body")}};
         output(dest + "/manifest.json", QJsonDocument(manifest).toJson(QJsonDocument::Indented),
                check);
         QTextStream(stdout) << (check ? "CHECK OK" : "GENERATED") << " | 4 profiles | " << hash

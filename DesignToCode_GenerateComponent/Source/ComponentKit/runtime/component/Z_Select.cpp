@@ -742,8 +742,8 @@ void Z_Select::sync() {
     const QString css = captured
         ? QStringLiteral(
               "QLineEdit[fieldPart=\"EDITOR\"]{background:transparent;border:0;padding:0;"
-              "min-height:0;color:%1;font-family:'Inter','Noto Sans SC';font-size:14px;}"
-              "QLabel{background:transparent;border:0;color:%1;font-family:'Inter','Noto Sans SC';font-size:14px;}"
+              "min-height:0;color:%1;font-family:'HarmonyOS Sans','HarmonyOS Sans SC';font-size:14px;}"
+              "QLabel{background:transparent;border:0;color:%1;font-family:'HarmonyOS Sans','HarmonyOS Sans SC';font-size:14px;}"
               "QLabel#HINT{color:%2;}")
               .arg(colors[d->chrome->visualState() == QStringLiteral("disabled")
                               ? QStringLiteral("disabledText") : QStringLiteral("text")].toString(),
@@ -791,7 +791,7 @@ void Z_Select::sync() {
                                            2 * t.metric("borderWidth") +
                                            2 * m["paddingBlock"].toInt()
                                      : d->chrome->controlHeight());
-    QFont f(captured ? QStringLiteral("Inter") : t.family());
+    QFont f(captured ? QStringLiteral("HarmonyOS Sans") : t.family());
     f.setPixelSize(captured ? 14 : m["fontSize"].toInt());
     d->popup->setFont(f);
     d->search->setMinimumHeight(t.metric("actionSize"));

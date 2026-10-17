@@ -2,8 +2,8 @@
 #include "FocusIndicator.h"
 #include "Surface.h"
 #include "TokenResources.h"
+#include "ProfileContext.h"
 #include "Z_PushButton.h"
-#include "ComponentTheme.h"
 #include "native/Z_WizardPage.h"
 #include <QStackedWidget>
 #include <QWizard>
@@ -26,17 +26,14 @@ namespace commonWidget {
 namespace {
 void fonts() {
     static const bool loaded=[] {
-        for(const auto* f:{"Regular","Medium","SemiBold"})
-            QFontDatabase::addApplicationFont(QString(":/figma/fonts/Inter-%1.otf").arg(f));
+        QFontDatabase::addApplicationFont(
+            QStringLiteral(":/fonts/HarmonyOS_Sans_Regular.ttf"));
         return true;
     }();
     Q_UNUSED(loaded)
 }
 QString profileFor(const QWidget* widget) {
-    const auto explicitProfile=widget->property("designSystemProfile").toString();
-    if(!explicitProfile.isEmpty())return explicitProfile;
-    const auto installed=component_theme::activeProfile();
-    return installed.isEmpty()?QStringLiteral("light-comfortable"):installed;
+    return profile_context::resolve(widget);
 }
 QString qssColor(const QColor& value) {
     return QString("rgba(%1,%2,%3,%4)").arg(value.red()).arg(value.green()).arg(value.blue()).arg(value.alpha());
@@ -102,7 +99,7 @@ public:
             const auto family=primary?"PRIMARY":"DEFAULT";
             b->setProperty("figmaWizardButtonRecipe",family);
             const auto buttonRule=[](const QString& pseudo,const QString& fill,const QString& foreground,const QString& border){
-                return QString("QAbstractButton[figmaWizardButton=true]%1{background:%2;color:%3;border:1px solid %4;border-radius:4px;padding:0 12px;min-height:32px;font-family:'Inter';font-size:14px;font-weight:400;}").arg(pseudo,fill,foreground,border);
+                return QString("QAbstractButton[figmaWizardButton=true]%1{background:%2;color:%3;border:1px solid %4;border-radius:4px;padding:0 12px;min-height:32px;font-family:'HarmonyOS Sans';font-size:14px;font-weight:400;}").arg(pseudo,fill,foreground,border);
             };
             QString css=primary
                 ?buttonRule("",brand,onBrand,brand)+buttonRule(":hover",brandHover,onBrand,brandHover)+buttonRule(":pressed",brandPressed,onBrand,brandPressed)
@@ -224,7 +221,7 @@ void applyFigmaWizardPageAppearance(QWizardPage* page) {
         const QString css=QString("%1{background:%2;color:%3;border:1px solid %4;border-radius:8px;}"
                                   "%1 QLabel#flowPageTitle{background:transparent;border:0;color:%3;}"
                                   "%1 QLabel#flowPageSubtitle{background:transparent;border:0;color:%5;}"
-                                  "%1 QLabel#flowCompletionStatus{background:%6;border:0;color:%7;padding:8px;font-family:'Inter';font-size:12px;font-weight:504;}")
+                                  "%1 QLabel#flowCompletionStatus{background:%6;border:0;color:%7;padding:8px;font-family:'HarmonyOS Sans';font-size:12px;font-weight:504;}")
             .arg(root,tokens.qss("semantic.color.background.surface"),tokens.qss("semantic.color.text.primary"),
                  complete?tokens.qss("semantic.color.border.focus"):tokens.qss("semantic.color.border.subtle"),
                  tokens.qss("semantic.color.text.secondary"),complete?tokens.subtleBrand():tokens.qss("semantic.color.background.surface"),

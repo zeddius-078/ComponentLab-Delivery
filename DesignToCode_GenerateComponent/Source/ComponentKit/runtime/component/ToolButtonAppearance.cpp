@@ -14,7 +14,7 @@
 namespace commonWidget {
 namespace {
 QFont labelFont() {
-    QFont f("Inter");
+    QFont f("HarmonyOS Sans");
     f.setPixelSize(14);
     f.setWeight(QFont::DemiBold);
     return f;
@@ -318,7 +318,7 @@ void applyFigmaToolButtonAppearance(QToolButton* button, const QString& snapshot
         throw std::invalid_argument("Captured ToolButton requires a native button and valid source "
                                     "state; Open requires Split");
     static const bool fonts = [] {
-        QFontDatabase::addApplicationFont(":/figma/fonts/Inter-SemiBold.otf");
+        QFontDatabase::addApplicationFont(":/fonts/HarmonyOS_Sans_Regular.ttf");
         return true;
     }();
     Q_UNUSED(fonts);

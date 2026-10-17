@@ -1,5 +1,7 @@
 {
   "id": "COMPONENT-LAB-R4-STOKEN",
+  "status": "superseded-by-v2",
+  "supersededBy": "DesignSystem/config/legacy-map.json (V2 migration decisions) + DesignSystem/scripts/v2 (canonical compiler). This file is retained as read-only legacy importer evidence for DesignSystem/archive/commerly/stoken_import.py; it is no longer a write target.",
   "deviceProfile": "Standard",
   "profilePolicy": "sToken 02.profile has Standard (1920) and Wide (2560) design modes; Standard is the current runtime export selection. 03.semantic has Light/Dark design modes, with Dark role coverage still partial. Qt runtime theme/density combinations are consumers, not the authority for design modes.",
   "mappings": {

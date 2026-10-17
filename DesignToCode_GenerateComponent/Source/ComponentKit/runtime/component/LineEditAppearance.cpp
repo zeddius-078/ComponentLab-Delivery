@@ -126,7 +126,7 @@ public:
             return;
         refreshing_ = true;
         const auto visual = state(edit_);
-        QFont font("Inter");
+        QFont font("HarmonyOS Sans");
         font.setPixelSize(14);
         font.setWeight(edit_->text().isEmpty() ? QFont::Normal : QFont::Medium);
         if (edit_->font() != font)
@@ -211,8 +211,8 @@ void applyFigmaLineEditAppearance(QLineEdit* edit, const QString& size,
         throw std::invalid_argument(
             "Captured LineEdit requires native QLineEdit and source-backed size/state");
     static const bool fonts = [] {
-        QFontDatabase::addApplicationFont(":/figma/fonts/Inter-Regular.otf");
-        QFontDatabase::addApplicationFont(":/figma/fonts/Inter-Medium.otf");
+        QFontDatabase::addApplicationFont(":/fonts/HarmonyOS_Sans_Regular.ttf");
+        QFontDatabase::addApplicationFont(":/fonts/HarmonyOS_Sans_Regular.ttf");
         return true;
     }();
     Q_UNUSED(fonts);

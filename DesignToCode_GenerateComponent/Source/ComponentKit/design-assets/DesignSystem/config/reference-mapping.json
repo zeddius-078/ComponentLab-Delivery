@@ -1,0 +1,530 @@
+{
+  "$description": "Reference value import report for radio/menu/tree/table",
+  "records": [
+    {
+      "kind": "primitive-added",
+      "path": "primitive.color.reference.neutral.p-98",
+      "oldValue": null,
+      "newValue": "#FAFAFA",
+      "source": "reference-import"
+    },
+    {
+      "kind": "primitive-added",
+      "path": "primitive.color.reference.neutral.p-96",
+      "oldValue": null,
+      "newValue": "#F5F5F5",
+      "source": "reference-import"
+    },
+    {
+      "kind": "primitive-added",
+      "path": "primitive.color.reference.neutral.p-93",
+      "oldValue": null,
+      "newValue": "#EEEEEE",
+      "source": "reference-import"
+    },
+    {
+      "kind": "primitive-added",
+      "path": "primitive.color.reference.neutral.p-87",
+      "oldValue": null,
+      "newValue": "#DFDFDF",
+      "source": "reference-import"
+    },
+    {
+      "kind": "primitive-added",
+      "path": "primitive.color.reference.neutral.p-86",
+      "oldValue": null,
+      "newValue": "#DCDBDB",
+      "source": "reference-import"
+    },
+    {
+      "kind": "primitive-added",
+      "path": "primitive.color.reference.purple.p-96",
+      "oldValue": null,
+      "newValue": "#EFEAFE",
+      "source": "reference-import"
+    },
+    {
+      "kind": "primitive-added",
+      "path": "primitive.color.reference.red.p-65",
+      "oldValue": null,
+      "newValue": "#E96368",
+      "source": "reference-import"
+    },
+    {
+      "kind": "primitive-added",
+      "path": "primitive.color.reference.red.p-43",
+      "oldValue": null,
+      "newValue": "#BF1C22",
+      "source": "reference-import"
+    },
+    {
+      "kind": "primitive-added",
+      "path": "primitive.color.reference.red.p-93",
+      "oldValue": null,
+      "newValue": "#FADEDF",
+      "source": "reference-import"
+    },
+    {
+      "kind": "primitive-added",
+      "path": "primitive.color.reference.red.p-95",
+      "oldValue": null,
+      "newValue": "#FCE8E9",
+      "source": "reference-import"
+    },
+    {
+      "kind": "primitive-added",
+      "path": "primitive.color.reference.red.p-79",
+      "oldValue": null,
+      "newValue": "#D5BDBE",
+      "source": "reference-import"
+    },
+    {
+      "kind": "primitive-added",
+      "path": "primitive.color.reference.orange.p-65",
+      "oldValue": null,
+      "newValue": "#ED9A61",
+      "source": "reference-import"
+    },
+    {
+      "kind": "primitive-added",
+      "path": "primitive.color.reference.orange.p-44",
+      "oldValue": null,
+      "newValue": "#C45E1A",
+      "source": "reference-import"
+    },
+    {
+      "kind": "primitive-added",
+      "path": "primitive.color.reference.orange.p-79",
+      "oldValue": null,
+      "newValue": "#D6C7BC",
+      "source": "reference-import"
+    },
+    {
+      "kind": "primitive-added",
+      "path": "primitive.color.reference.yellow.p-65",
+      "oldValue": null,
+      "newValue": "#EDC75E",
+      "source": "reference-import"
+    },
+    {
+      "kind": "primitive-added",
+      "path": "primitive.color.reference.yellow.p-43",
+      "oldValue": null,
+      "newValue": "#C49515",
+      "source": "reference-import"
+    },
+    {
+      "kind": "primitive-added",
+      "path": "primitive.color.reference.yellow.p-91",
+      "oldValue": null,
+      "newValue": "#F6EFDC",
+      "source": "reference-import"
+    },
+    {
+      "kind": "primitive-added",
+      "path": "primitive.color.reference.yellow.p-95",
+      "oldValue": null,
+      "newValue": "#FCF6E7",
+      "source": "reference-import"
+    },
+    {
+      "kind": "primitive-added",
+      "path": "primitive.color.reference.yellow.p-79",
+      "oldValue": null,
+      "newValue": "#D6CFBC",
+      "source": "reference-import"
+    },
+    {
+      "kind": "primitive-added",
+      "path": "primitive.spacing.5",
+      "oldValue": null,
+      "newValue": 5,
+      "source": "reference-import"
+    },
+    {
+      "kind": "semantic-fix-value",
+      "path": "semantic.color.text.disabled",
+      "oldValue": "{primitive.color.neutral.gray.45}",
+      "newValue": "{primitive.color.neutral.gray.30}",
+      "source": "reference-import"
+    },
+    {
+      "kind": "semantic-fix-value",
+      "path": "semantic.color.text.unit",
+      "oldValue": "{primitive.color.neutral.gray.70}",
+      "newValue": "{primitive.color.neutral.gray.60}",
+      "source": "reference-import"
+    },
+    {
+      "kind": "semantic-fix-value",
+      "path": "semantic.color.background.hover",
+      "oldValue": "{primitive.color.neutral.gray.5}",
+      "newValue": "{primitive.color.reference.neutral.p-96}",
+      "source": "reference-import"
+    },
+    {
+      "kind": "semantic-fix-value",
+      "path": "semantic.color.background.pressed",
+      "oldValue": "{primitive.color.neutral.gray.5}",
+      "newValue": "{primitive.color.reference.neutral.p-86}",
+      "source": "reference-import"
+    },
+    {
+      "kind": "semantic-fix-value",
+      "path": "semantic.color.background.disabled",
+      "oldValue": "{primitive.color.neutral.gray.5}",
+      "newValue": "{primitive.color.reference.neutral.p-93}",
+      "source": "reference-import"
+    },
+    {
+      "kind": "semantic-fix-value",
+      "path": "semantic.color.interactive.brand.hover",
+      "oldValue": "{primitive.color.highlight.purple-90}",
+      "newValue": "{primitive.color.highlight.purple-80}",
+      "source": "reference-import"
+    },
+    {
+      "kind": "semantic-fix-value",
+      "path": "semantic.color.interactive.brand.pressed",
+      "oldValue": "{primitive.color.highlight.purple-deep-2}",
+      "newValue": "{primitive.color.highlight.purple-100}",
+      "source": "reference-import"
+    },
+    {
+      "kind": "semantic-fix-value",
+      "path": "semantic.typography.heading.heading4.line-height",
+      "oldValue": "{profile.typography-scale.line-height.default.06}",
+      "newValue": "{primitive.line-height.24}",
+      "source": "reference-import"
+    },
+    {
+      "kind": "semantic-added",
+      "path": "semantic.color.background.secondary",
+      "oldValue": null,
+      "newValue": "{primitive.color.reference.neutral.p-98}",
+      "source": "reference-import"
+    },
+    {
+      "kind": "semantic-added",
+      "path": "semantic.color.background.tertiary",
+      "oldValue": null,
+      "newValue": "{primitive.color.reference.neutral.p-96}",
+      "source": "reference-import"
+    },
+    {
+      "kind": "semantic-added",
+      "path": "semantic.color.border.primary",
+      "oldValue": null,
+      "newValue": "{primitive.color.neutral.gray.30}",
+      "source": "reference-import"
+    },
+    {
+      "kind": "semantic-updated",
+      "path": "semantic.color.border.tertiary",
+      "oldValue": null,
+      "newValue": "{primitive.color.reference.neutral.p-87}",
+      "source": "reference-import"
+    },
+    {
+      "kind": "semantic-added",
+      "path": "semantic.color.interactive.brand.soft",
+      "oldValue": null,
+      "newValue": "{primitive.color.reference.purple.p-96}",
+      "source": "reference-import"
+    },
+    {
+      "kind": "semantic-added",
+      "path": "semantic.color.status.alarm.default",
+      "oldValue": null,
+      "newValue": "{primitive.color.functional.red.default}",
+      "source": "reference-import"
+    },
+    {
+      "kind": "semantic-added",
+      "path": "semantic.color.status.alarm.hover",
+      "oldValue": null,
+      "newValue": "{primitive.color.reference.red.p-65}",
+      "source": "reference-import"
+    },
+    {
+      "kind": "semantic-added",
+      "path": "semantic.color.status.alarm.select",
+      "oldValue": null,
+      "newValue": "{primitive.color.reference.red.p-43}",
+      "source": "reference-import"
+    },
+    {
+      "kind": "semantic-added",
+      "path": "semantic.color.status.alarm.soft",
+      "oldValue": null,
+      "newValue": "{primitive.color.reference.red.p-93}",
+      "source": "reference-import"
+    },
+    {
+      "kind": "semantic-added",
+      "path": "semantic.color.status.alarm.soft-hover",
+      "oldValue": null,
+      "newValue": "{primitive.color.reference.red.p-95}",
+      "source": "reference-import"
+    },
+    {
+      "kind": "semantic-added",
+      "path": "semantic.color.status.alarm.soft-select",
+      "oldValue": null,
+      "newValue": "{primitive.color.reference.red.p-79}",
+      "source": "reference-import"
+    },
+    {
+      "kind": "semantic-added",
+      "path": "semantic.color.status.error.default",
+      "oldValue": null,
+      "newValue": "{primitive.color.functional.orange}",
+      "source": "reference-import"
+    },
+    {
+      "kind": "semantic-added",
+      "path": "semantic.color.status.error.hover",
+      "oldValue": null,
+      "newValue": "{primitive.color.reference.orange.p-65}",
+      "source": "reference-import"
+    },
+    {
+      "kind": "semantic-added",
+      "path": "semantic.color.status.error.select",
+      "oldValue": null,
+      "newValue": "{primitive.color.reference.orange.p-44}",
+      "source": "reference-import"
+    },
+    {
+      "kind": "semantic-added",
+      "path": "semantic.color.status.error.soft",
+      "oldValue": null,
+      "newValue": "{primitive.color.functional.orange-subtle}",
+      "source": "reference-import"
+    },
+    {
+      "kind": "semantic-added",
+      "path": "semantic.color.status.error.soft-hover",
+      "oldValue": null,
+      "newValue": "{primitive.color.functional.orange-subtle}",
+      "source": "reference-import"
+    },
+    {
+      "kind": "semantic-added",
+      "path": "semantic.color.status.error.soft-select",
+      "oldValue": null,
+      "newValue": "{primitive.color.reference.orange.p-79}",
+      "source": "reference-import"
+    },
+    {
+      "kind": "semantic-added",
+      "path": "semantic.color.status.warning.hover",
+      "oldValue": null,
+      "newValue": "{primitive.color.reference.yellow.p-65}",
+      "source": "reference-import"
+    },
+    {
+      "kind": "semantic-added",
+      "path": "semantic.color.status.warning.select",
+      "oldValue": null,
+      "newValue": "{primitive.color.reference.yellow.p-43}",
+      "source": "reference-import"
+    },
+    {
+      "kind": "semantic-added",
+      "path": "semantic.color.status.warning.soft",
+      "oldValue": null,
+      "newValue": "{primitive.color.reference.yellow.p-91}",
+      "source": "reference-import"
+    },
+    {
+      "kind": "semantic-added",
+      "path": "semantic.color.status.warning.soft-hover",
+      "oldValue": null,
+      "newValue": "{primitive.color.reference.yellow.p-95}",
+      "source": "reference-import"
+    },
+    {
+      "kind": "semantic-added",
+      "path": "semantic.color.status.warning.soft-select",
+      "oldValue": null,
+      "newValue": "{primitive.color.reference.yellow.p-79}",
+      "source": "reference-import"
+    },
+    {
+      "kind": "semantic-added",
+      "path": "semantic.size.height.sm",
+      "oldValue": null,
+      "newValue": "{primitive.dimension.16}",
+      "source": "reference-import"
+    },
+    {
+      "kind": "semantic-added",
+      "path": "semantic.size.height.md",
+      "oldValue": null,
+      "newValue": "{primitive.dimension.20}",
+      "source": "reference-import"
+    },
+    {
+      "kind": "semantic-added",
+      "path": "semantic.size.height.lg",
+      "oldValue": null,
+      "newValue": "{primitive.dimension.24}",
+      "source": "reference-import"
+    },
+    {
+      "kind": "semantic-added",
+      "path": "semantic.size.height.xl",
+      "oldValue": null,
+      "newValue": "{primitive.dimension.28}",
+      "source": "reference-import"
+    },
+    {
+      "kind": "semantic-added",
+      "path": "semantic.size.height.2xl",
+      "oldValue": null,
+      "newValue": "{primitive.dimension.32}",
+      "source": "reference-import"
+    },
+    {
+      "kind": "semantic-added",
+      "path": "semantic.size.height.4xl",
+      "oldValue": null,
+      "newValue": "{primitive.dimension.44}",
+      "source": "reference-import"
+    },
+    {
+      "kind": "semantic-added",
+      "path": "semantic.size.height.5xl",
+      "oldValue": null,
+      "newValue": "{primitive.dimension.48}",
+      "source": "reference-import"
+    },
+    {
+      "kind": "semantic-added",
+      "path": "semantic.size.height.6xl",
+      "oldValue": null,
+      "newValue": "{primitive.dimension.56}",
+      "source": "reference-import"
+    },
+    {
+      "kind": "semantic-added",
+      "path": "semantic.size.padding.sm",
+      "oldValue": null,
+      "newValue": "{primitive.spacing.2}",
+      "source": "reference-import"
+    },
+    {
+      "kind": "semantic-added",
+      "path": "semantic.size.padding.md",
+      "oldValue": null,
+      "newValue": "{primitive.spacing.4}",
+      "source": "reference-import"
+    },
+    {
+      "kind": "semantic-added",
+      "path": "semantic.size.padding.lg",
+      "oldValue": null,
+      "newValue": "{primitive.spacing.5}",
+      "source": "reference-import"
+    },
+    {
+      "kind": "semantic-added",
+      "path": "semantic.size.padding.2xl",
+      "oldValue": null,
+      "newValue": "{primitive.spacing.8}",
+      "source": "reference-import"
+    },
+    {
+      "kind": "semantic-added",
+      "path": "semantic.size.padding.3xl",
+      "oldValue": null,
+      "newValue": "{primitive.spacing.12}",
+      "source": "reference-import"
+    },
+    {
+      "kind": "semantic-added",
+      "path": "semantic.border-width.hairline",
+      "oldValue": null,
+      "newValue": "{primitive.line-width.100}",
+      "source": "reference-import"
+    },
+    {
+      "kind": "semantic-added",
+      "path": "semantic.border-width.thick",
+      "oldValue": null,
+      "newValue": "{primitive.line-width.200}",
+      "source": "reference-import"
+    },
+    {
+      "kind": "semantic-added",
+      "path": "semantic.typography.caption.sm.line-height",
+      "oldValue": null,
+      "newValue": "{primitive.line-height.16}",
+      "source": "reference-import"
+    },
+    {
+      "kind": "semantic-added",
+      "path": "semantic.typography.caption.lg.line-height",
+      "oldValue": null,
+      "newValue": "{primitive.line-height.20}",
+      "source": "reference-import"
+    },
+    {
+      "kind": "component-replace",
+      "path": "component.radio",
+      "oldValue": {
+        "removed": [
+          "component.radio.base.default.content.gap",
+          "component.radio.base.default.hit-target.min-height",
+          "component.radio.base.default.indicator.border-width",
+          "component.radio.base.default.indicator.size",
+          "component.radio.base.default.label.color",
+          "component.radio.base.default.label.font-size",
+          "component.radio.base.default.label.font-weight",
+          "component.radio.base.default.label.letter-spacing",
+          "component.radio.base.disabled.indicator.color",
+          "component.radio.base.disabled.label.color",
+          "component.radio.base.selected.indicator.color"
+        ]
+      },
+      "newValue": {
+        "added": 20
+      },
+      "source": "reference-import"
+    },
+    {
+      "kind": "component-replace",
+      "path": "component.menu",
+      "oldValue": {
+        "removed": []
+      },
+      "newValue": {
+        "added": 29
+      },
+      "source": "reference-import"
+    },
+    {
+      "kind": "component-replace",
+      "path": "component.tree",
+      "oldValue": {
+        "removed": []
+      },
+      "newValue": {
+        "added": 12
+      },
+      "source": "reference-import"
+    },
+    {
+      "kind": "component-replace",
+      "path": "component.table",
+      "oldValue": {
+        "removed": []
+      },
+      "newValue": {
+        "added": 55
+      },
+      "source": "reference-import"
+    }
+  ]
+}

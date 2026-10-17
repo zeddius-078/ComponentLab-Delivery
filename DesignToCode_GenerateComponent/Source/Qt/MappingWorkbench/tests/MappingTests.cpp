@@ -4,6 +4,8 @@
 #include "MappingGuide.h"
 #include "DesignComponentCatalog.h"
 #include "ComponentTheme.h"
+#include "ProfileContext.h"
+#include "Typography.h"
 #include "Z_DesignComponents.h"
 #include "Z_CheckBox.h"
 #include "Z_InputField.h"
@@ -71,6 +73,7 @@
 #include "native/Z_DoubleSpinBox.h"
 #include <QStyleOptionSpinBox>
 #include <QFontInfo>
+#include <QRawFont>
 #include <QAccessible>
 #include "native/Z_RadioButton.h"
 #include <QApplication>
@@ -118,6 +121,27 @@ class MappingTests : public QObject {
     Q_OBJECT
     QString profile = qEnvironmentVariable("DEMO_PROFILE", "light-comfortable");
   private slots:
+    void themePublishesProfileAndHarmonyTypographyWithoutReverseDependency() {
+        QCOMPARE(component_theme::activeProfile(), profile);
+        QCOMPARE(profile_context::activeProfile(), profile);
+        QObject parent;
+        QObject child(&parent);
+        QCOMPARE(profile_context::resolve(&child), profile);
+        parent.setProperty("designSystemProfile", "dark-compact");
+        QCOMPARE(profile_context::resolve(&child), QStringLiteral("dark-compact"));
+
+        QCOMPARE(typography::globalFamily(), QStringLiteral("HarmonyOS Sans"));
+        QCOMPARE(typography::simplifiedChineseFamily(), QStringLiteral("HarmonyOS Sans SC"));
+        QCOMPARE(QApplication::font().families(), typography::applicationFamilies());
+        const QRawFont global = QRawFont::fromFont(QFont(typography::globalFamily()));
+        const QRawFont chinese =
+            QRawFont::fromFont(QFont(typography::simplifiedChineseFamily()));
+        QVERIFY(global.isValid());
+        QVERIFY(chinese.isValid());
+        QVERIFY(global.supportsCharacter(QLatin1Char('A')));
+        QVERIFY(chinese.supportsCharacter(QChar(0x7EC4))); // 组
+    }
+
     void capturedMdiRetainsNativeStateOwnershipAndCloseVeto() {
         qRegisterMetaType<QMdiSubWindow*>("QMdiSubWindow*");qRegisterMetaType<Qt::WindowStates>("Qt::WindowStates");
         const auto click=[](QMdiSubWindow* sub,const QPoint& point){QMouseEvent hover(QEvent::MouseMove,QPointF(point),QPointF(sub->mapToGlobal(point)),Qt::NoButton,Qt::NoButton,Qt::NoModifier);QApplication::sendEvent(sub,&hover);QTest::mouseClick(sub,Qt::LeftButton,Qt::NoModifier,point);};
@@ -554,7 +578,7 @@ class MappingTests : public QObject {
         time.setCurrentSection(QDateTimeEdit::HourSection);time.stepUp();QCOMPARE(time.time(),QTime(15,30,45));
         time.setTimeRange(QTime(8,0),QTime(18,0));time.setTime(QTime(19,0));QCOMPARE(time.time(),QTime(18,0));
         time.setReadOnly(true);QTest::keyClick(&time,Qt::Key_Down);QCOMPARE(time.time(),QTime(18,0));
-        QCOMPARE(time.findChild<QLineEdit*>(),timeEditor);QCOMPARE(QFontInfo(timeEditor->font()).family(),QString("Inter"));
+        QCOMPARE(time.findChild<QLineEdit*>(),timeEditor);QCOMPARE(QFontInfo(timeEditor->font()).family(),QString("HarmonyOS Sans"));
         QVERIFY_EXCEPTION_THROWN(applyFigmaDateTimeAppearance(&time,"Invented"),std::invalid_argument);
     }
     void capturedSpinBoxRetainsNativeEditingAndStepping() {
@@ -589,7 +613,7 @@ class MappingTests : public QObject {
         QTest::mouseClick(&spin,Qt::LeftButton,Qt::NoModifier,step(true).center());QCOMPARE(spin.value(),129);
         spin.setLayoutDirection(Qt::LeftToRight);spin.setFocus();spin.selectAll();QTest::keyClicks(&spin,"42");QTest::keyClick(&spin,Qt::Key_Return);
         QCOMPARE(spin.value(),42);QVERIFY(spin.hasAcceptableInput());QCOMPARE(spin.prefix(),QString::fromUtf8("¥"));
-        QCOMPARE(QFontInfo(editor->font()).family(),QString("Inter"));QCOMPARE(editor->font().weight(),int(QFont::Medium));
+        QCOMPARE(QFontInfo(editor->font()).family(),QString("HarmonyOS Sans"));QCOMPARE(editor->font().weight(),int(QFont::Medium));
         auto* accessible=QAccessible::queryAccessibleInterface(&spin);QVERIFY(accessible);QVERIFY(accessible->valueInterface());
         QCOMPARE(accessible->valueInterface()->currentValue().toInt(),42);
         QVERIFY_EXCEPTION_THROWN(applyFigmaSpinBoxAppearance(&spin,"Invented"),std::invalid_argument);

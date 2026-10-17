@@ -13,5 +13,6 @@
 - [DesignEvidence 结构与职责](mainSkill/generate-component-pipeline/references/design-evidence/DesignEvidence结构与职责.md)
 - [组件完成度与 Ant 对照](designRules/mapping/组件完成度与Ant对照.md)
 - [Figma 与 sToken 状态基线](designRules/design-system/Figma-sToken状态账本基线.md)
+- [Component 层 Token 构建规范](designRules/design-system/Component层Token构建规范.md)
 
 阶段性审计、交接、迁移和排期记录集中在 `build/reports`。当前规则以本目录和实际源码、生成物、测试结果为准。

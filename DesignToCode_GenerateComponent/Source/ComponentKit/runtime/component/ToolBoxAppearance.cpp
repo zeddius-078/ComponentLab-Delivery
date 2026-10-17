@@ -27,19 +27,19 @@ QLabel* compositionLabel(QWidget* parent, const QString& text, const QRect& rect
     result->setGeometry(rect);
     result->setWordWrap(wrap);
     result->setAlignment(Qt::AlignLeft | Qt::AlignTop);
-    QFont labelFont("Inter");
+    QFont labelFont("HarmonyOS Sans");
     labelFont.setPixelSize(size);
     labelFont.setWeight(weight);
     result->setFont(labelFont);
     result->setStyleSheet(
-        QString("background:transparent;border:0;color:%1;font-family:'Inter';font-size:%2px;")
+        QString("background:transparent;border:0;color:%1;font-family:'HarmonyOS Sans';font-size:%2px;")
             .arg(color)
             .arg(size));
     return result;
 }
 
 QFont labelFont() {
-    QFont f("Inter");
+    QFont f("HarmonyOS Sans");
     f.setPixelSize(14);
     f.setWeight(QFont::DemiBold);
     return f;
@@ -156,7 +156,7 @@ public:
             QFontMetrics(labelFont())
                 .elidedText(opt->text, Qt::ElideRight, textRect.width(), Qt::TextShowMnemonic));
         if (!hint.isEmpty()) {
-            QFont caption("Inter");
+            QFont caption("HarmonyOS Sans");
             caption.setPixelSize(12);
             caption.setWeight(QFont::Normal);
             p->setFont(caption);
@@ -284,8 +284,8 @@ void applyFigmaToolBoxAppearance(QToolBox* box, const QString& snapshotState, in
                     snapshotState))
         throw std::invalid_argument("Native ToolBox and captured state required");
     static const bool fonts = [] {
-        QFontDatabase::addApplicationFont(":/figma/fonts/Inter-SemiBold.otf");
-        QFontDatabase::addApplicationFont(":/figma/fonts/Inter-Regular.otf");
+        QFontDatabase::addApplicationFont(":/fonts/HarmonyOS_Sans_Regular.ttf");
+        QFontDatabase::addApplicationFont(":/fonts/HarmonyOS_Sans_Regular.ttf");
         return true;
     }();
     Q_UNUSED(fonts);

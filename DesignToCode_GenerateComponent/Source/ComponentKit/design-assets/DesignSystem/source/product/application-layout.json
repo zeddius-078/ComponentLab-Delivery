@@ -1,0 +1,193 @@
+{
+  "$schema": "../../schema/v2-token-schema.json",
+  "$description": "ComponentLab V2 canonical token layer: product",
+  "layer": "product",
+  "product": "ComponentLab",
+  "root": {
+    "product": {
+      "application-layout": {
+        "main-content": {
+          "height": {
+            "$type": "dimension",
+            "$value": "{primitive.dimension.896}",
+            "$description": "Migrated from legacy sToken --application-layout/main-content/height",
+            "unit": "px"
+          },
+          "width": {
+            "$type": "dimension",
+            "$value": "{primitive.dimension.1096}",
+            "$description": "Migrated from legacy sToken --application-layout/main-content/width",
+            "unit": "px"
+          }
+        },
+        "mask-handler": {
+          "height": {
+            "$type": "dimension",
+            "$value": "{primitive.dimension.590}",
+            "$description": "Migrated from legacy sToken --application-layout/mask-handler/height",
+            "unit": "px"
+          },
+          "width": {
+            "$type": "dimension",
+            "$value": "{primitive.dimension.288}",
+            "$description": "Migrated from legacy sToken --application-layout/mask-handler/width",
+            "unit": "px"
+          }
+        },
+        "mask-stage": {
+          "height": {
+            "$type": "dimension",
+            "$value": "{primitive.dimension.284}",
+            "$description": "Migrated from legacy sToken --application-layout/mask-stage/height",
+            "unit": "px"
+          },
+          "width": {
+            "$type": "dimension",
+            "$value": "{primitive.dimension.310}",
+            "$description": "Migrated from legacy sToken --application-layout/mask-stage/width",
+            "unit": "px"
+          }
+        },
+        "section": {
+          "bottom-navigation-bar-section": {
+            "height": {
+              "$type": "dimension",
+              "$value": "{primitive.dimension.82}",
+              "$description": "Migrated from legacy sToken --application-layout/section/bottom-navigation-bar-section/height",
+              "unit": "px"
+            }
+          },
+          "bottom-navigation-bar": {
+            "height": {
+              "$type": "dimension",
+              "$value": "{primitive.dimension.42}",
+              "$description": "Migrated from legacy sToken --application-layout/section/bottom-navigation-bar/height",
+              "unit": "px"
+            }
+          },
+          "bottom-system-bar": {
+            "height": {
+              "$type": "dimension",
+              "$value": "{primitive.dimension.40}",
+              "$description": "Migrated from legacy sToken --application-layout/section/bottom-system-bar/height",
+              "unit": "px"
+            }
+          },
+          "top-logs-bar": {
+            "height": {
+              "$type": "dimension",
+              "$value": "{primitive.dimension.34}",
+              "$description": "Migrated from legacy sToken --application-layout/section/top-logs-bar/height",
+              "unit": "px"
+            }
+          },
+          "top-status-bar-section": {
+            "height": {
+              "$type": "dimension",
+              "$value": "{primitive.dimension.78}",
+              "$description": "Migrated from legacy sToken --application-layout/section/top-status-bar-section/height",
+              "unit": "px"
+            }
+          },
+          "top-status-bar": {
+            "height": {
+              "$type": "dimension",
+              "$value": "{primitive.dimension.44}",
+              "$description": "Migrated from legacy sToken --application-layout/section/top-status-bar/height",
+              "unit": "px"
+            }
+          }
+        },
+        "stripe": {
+          "height": {
+            "$type": "dimension",
+            "$value": "{primitive.dimension.240}",
+            "$description": "Migrated from legacy sToken --application-layout/stripe/height",
+            "unit": "px"
+          },
+          "processing-height": {
+            "$type": "dimension",
+            "$value": "{primitive.dimension.108}",
+            "$description": "Migrated from legacy sToken --application-layout/stripe/processing-height",
+            "unit": "px"
+          },
+          "width": {
+            "$type": "dimension",
+            "$value": "{primitive.dimension.240}",
+            "$description": "Migrated from legacy sToken --application-layout/stripe/width",
+            "unit": "px"
+          }
+        },
+        "visual-area": {
+          "height": {
+            "$type": "dimension",
+            "$value": "{primitive.dimension.896}",
+            "$description": "Migrated from legacy sToken --application-layout/visual-area/height",
+            "unit": "px"
+          },
+          "width": {
+            "$type": "dimension",
+            "$value": "{primitive.dimension.780}",
+            "$description": "Migrated from legacy sToken --application-layout/visual-area/width",
+            "unit": "px"
+          }
+        }
+      }
+    },
+    "$modeOverrides": {
+      "wide": {
+        "product.application-layout.main-content.height": {
+          "$value": "{primitive.dimension.1192}"
+        },
+        "product.application-layout.main-content.width": {
+          "$value": "{primitive.dimension.1464}"
+        },
+        "product.application-layout.mask-handler.height": {
+          "$value": "{primitive.dimension.786}"
+        },
+        "product.application-layout.mask-handler.width": {
+          "$value": "{primitive.dimension.398}"
+        },
+        "product.application-layout.mask-stage.height": {
+          "$value": "{primitive.dimension.360}"
+        },
+        "product.application-layout.mask-stage.width": {
+          "$value": "{primitive.dimension.380}"
+        },
+        "product.application-layout.section.bottom-navigation-bar-section.height": {
+          "$value": "{primitive.dimension.102}"
+        },
+        "product.application-layout.section.bottom-navigation-bar.height": {
+          "$value": "{primitive.dimension.58}"
+        },
+        "product.application-layout.section.bottom-system-bar.height": {
+          "$value": "{primitive.dimension.42}"
+        },
+        "product.application-layout.section.top-logs-bar.height": {
+          "$value": "{primitive.dimension.42}"
+        },
+        "product.application-layout.section.top-status-bar-section.height": {
+          "$value": "{primitive.dimension.98}"
+        },
+        "product.application-layout.section.top-status-bar.height": {
+          "$value": "{primitive.dimension.56}"
+        },
+        "product.application-layout.stripe.height": {
+          "$value": "{primitive.dimension.318}"
+        },
+        "product.application-layout.stripe.processing-height": {
+          "$value": "{primitive.dimension.214}"
+        },
+        "product.application-layout.stripe.width": {
+          "$value": "{primitive.dimension.318}"
+        },
+        "product.application-layout.visual-area.height": {
+          "$value": "{primitive.dimension.1192}"
+        },
+        "product.application-layout.visual-area.width": {
+          "$value": "{primitive.dimension.1040}"
+        }
+      }
+    }
+  }
+}

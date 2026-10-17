@@ -90,13 +90,13 @@ void applyFigmaRadioAppearance(QRadioButton* button, const QString& snapshotStat
             snapshotState))
         throw std::invalid_argument("Radio requires a current Figma state or empty live state");
     static const bool fonts = [] {
-        QFontDatabase::addApplicationFont(":/figma/fonts/Inter-Medium.otf");
-        QFontDatabase::addApplicationFont(":/figma/fonts/NotoSansSC-Regular.otf");
+        QFontDatabase::addApplicationFont(":/fonts/HarmonyOS_Sans_Regular.ttf");
+        QFontDatabase::addApplicationFont(":/fonts/HarmonyOS_Sans_SC_Regular.ttf");
         return true;
     }();
     Q_UNUSED(fonts);
     QFont font;
-    font.setFamilies({"Inter", "Noto Sans SC"});
+    font.setFamilies({"HarmonyOS Sans", "HarmonyOS Sans SC"});
     font.setPixelSize(14);
     font.setWeight(QFont::Medium);
     button->setFont(font);
@@ -106,7 +106,7 @@ void applyFigmaRadioAppearance(QRadioButton* button, const QString& snapshotStat
     // Native style geometry still governs sizeHint and hitButton; painting alone
     // is adapted. Keep the native text for mnemonic and accessibility contracts.
     button->setStyleSheet("QRadioButton {background:transparent;border:0;padding:2px;spacing:8px;"
-                          "min-height:28px;color:#191919;font-family:'Inter','Noto Sans SC';"
+                          "min-height:28px;color:#191919;font-family:'HarmonyOS Sans','HarmonyOS Sans SC';"
                           "font-size:14px;font-weight:500;}"
                           "QRadioButton::indicator {width:18px;height:18px;}"
                           "QRadioButton:disabled {color:#8a8a8a;}");
