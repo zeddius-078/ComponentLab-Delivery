@@ -11,10 +11,11 @@ description: 维护 G:/ComponentLab-Delivery/ComponentLab 的 Qt5 C++ 组件展�
 
 ## 开始前
 
-1. 读取 `G:/ComponentLab-Delivery/ComponentLab/README.md`。
-2. 读取 `docs/tutorial/组件展示上手指南.md`。
-3. 检查 `../DesignToCode_GenerateComponent/build/sdk/manifest/component-sdk.json` 的发布者与版本。
-4. 运行 `git status --short`，保留现有修改。
+1. 先读取工作区 AGENTS.md；不安装或更新 Python、Qt、编译器、依赖及系统配置，环境缺口先问用户。
+2. 读取 `G:/ComponentLab-Delivery/ComponentLab/README.md`。
+3. 读取 `docs/tutorial/组件展示上手指南.md`。
+4. 检查 `../DesignToCode_GenerateComponent/build/sdk/manifest/component-sdk.json` 的发布者与版本。
+5. 运行 `git status --short`，保留现有修改。
 
 ## 关键目录
 
@@ -32,7 +33,7 @@ description: 维护 G:/ComponentLab-Delivery/ComponentLab 的 Qt5 C++ 组件展�
 
 ### 展示一个新组件
 
-1. 在 SDK 公共头或注册表中确认组件存在。
+1. 在 SDK 公共头、注册表与实现中确认组件存在，并进行实际构造验证；不能仅凭登记认定可运行。
 2. 在 `Source/delivery/demo` 为该组件建立独立展示页。
 3. 展示默认、交互、禁用、焦点及组件特有状态。
 4. 展示对象树和关键公开属性，使用真实 `Z_*` 类名。
@@ -50,6 +51,13 @@ description: 维护 G:/ComponentLab-Delivery/ComponentLab 的 Qt5 C++ 组件展�
 - Profile 只切换权威 SDK 提供的 Token 资源。
 - 演示代码可以组合组件，但不得新增组件生产能力。
 - 展示用数据与业务数据分离，示例不写入组件合同。
+
+## 状态与归档
+
+- GenerateLayout 的 analysis-system 是未实现类名合同，不能加入本项目并伪装成真实组件。
+- 当前导航栏 container.height Token 消费问题按用户决定挂起；缺口影响构造测试时如实报告，不临时造替代类。
+- 历史测试数量、迁移过程和旧说明放 docs/archive；build/reports 只存当次可再生输出。
+- Profile/Theme 以 SDK 发布资源为准，standard/wide 与 light/dark 组合成四上下文；Density 不等同于 Profile。
 
 ## 验证
 

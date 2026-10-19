@@ -20,7 +20,7 @@ int main(int argc, char** argv) {
     app.setApplicationName("Component Lab");
     QCommandLineParser p;
     p.addHelpOption();
-    p.addOption({"profile", "Token Profile", "name", "light-comfortable"});
+    p.addOption({"profile", "Token Profile", "name", "standard-light"});
     p.addOption({"appearance", "Initial surface preset", "id", "solid"});
     p.addOption({"focus-indicator", "Focus feedback: off, keyboard or always", "mode"});
     p.addOption({"capture-dir", "Capture all tabs", "path"});

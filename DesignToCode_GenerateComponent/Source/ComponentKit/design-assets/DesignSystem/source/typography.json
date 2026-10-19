@@ -1,0 +1,120 @@
+{
+  "$schema": "../schema/composite-token-schema.json",
+  "$description": "Typography Composite package. Values are references to existing Semantic/Primitive values; HarmonyOS Sans is the primary asset and HarmonyOS Sans SC is the explicit Chinese fallback in one managed font package.",
+  "$version": "2.0",
+  "$status": "active",
+  "layer": "composite",
+  "kind": "typography",
+  "policy": {
+    "fontFamily": "{semantic.typography.font-family.harmony-os-sans}",
+    "fontFallback": "{semantic.typography.font-family.harmony-os-sans-sc}",
+    "fontPackage": "harmony-os",
+    "letterSpacing": "{semantic.typography.letter-spacing.default}",
+    "fontWeight": "semantic-role-preserving",
+    "source": "project-harmonyos-font-package",
+    "defaultFamily": "harmony-os-sans",
+    "latinCharacterPolicy": "use-harmony-os-sans",
+    "fallbackPolicy": "harmony-os-sans-then-harmony-os-sans-sc",
+    "unicodePolicy": {
+      "status": "reserved-metadata",
+      "model": "font-package-character-coverage",
+      "visualToken": false,
+      "adapterOwner": "platform-typography-adapter"
+    },
+    "reviewRequired": [],
+    "verification": {
+      "status": "verified",
+      "evidence": [
+        "runtime/surface/Typography.cpp",
+        "runtime/assets/fonts/HarmonyOSSans/HarmonyOS_Sans.ttf",
+        "runtime/assets/fonts/HarmonyOSSans/HarmonyOS_Sans_SC.ttf"
+      ],
+      "policy": "HarmonyOS Sans is the global family; HarmonyOS Sans SC is the explicit Simplified-Chinese fallback."
+    }
+  },
+  "fontAssets": {
+    "harmony-os-sans": {
+      "family": "HarmonyOS Sans",
+      "weights": ["regular", "medium", "semibold", "bold"],
+      "status": "active",
+      "usage": "primary-global-latin"
+    },
+    "harmony-os-sans-sc": {
+      "family": "HarmonyOS Sans SC",
+      "weights": ["regular", "medium", "semibold", "bold"],
+      "status": "active",
+      "usage": "explicit-cjk-fallback"
+    }
+  },
+  "roleMapping": {
+    "body": { "fontWeight": "regular", "status": "active" },
+    "heading2": { "fontWeight": "semibold", "status": "active" },
+    "label-strong": { "fontWeight": "semibold", "status": "active" },
+    "display": { "fontWeight": "bold", "status": "active" },
+    "emphasis": { "fontWeight": "bold", "status": "active" },
+    "title-strong": { "fontWeight": "bold", "status": "active" },
+    "subemphasis": { "fontWeight": "medium", "status": "active" },
+    "unicode": { "fontWeight": "unresolved", "status": "reserved-metadata" }
+  },
+  "tokens": {
+    "body": {
+      "body-1": { "fontFamily": "{semantic.typography.font-family.harmony-os-sans}", "fontSize": "{semantic.typography.body.default.font-size}", "fontWeight": "{semantic.typography.font-weight.body}", "lineHeight": "{semantic.typography.body.default.line-height}", "letterSpacing": "{semantic.typography.letter-spacing.default}" },
+      "body-compact": { "fontFamily": "{semantic.typography.font-family.harmony-os-sans}", "fontSize": "{semantic.typography.body.compact.font-size}", "fontWeight": "{semantic.typography.font-weight.body}", "lineHeight": "{semantic.typography.body.compact.line-height}", "letterSpacing": "{semantic.typography.letter-spacing.default}" },
+      "body-emphasis": { "fontFamily": "{semantic.typography.font-family.harmony-os-sans}", "fontSize": "{semantic.typography.body.emphasis.font-size}", "fontWeight": "{semantic.typography.font-weight.emphasis}", "lineHeight": "{semantic.typography.body.emphasis.line-height}", "letterSpacing": "{semantic.typography.letter-spacing.default}" },
+      "body-small": { "fontFamily": "{semantic.typography.font-family.harmony-os-sans}", "fontSize": "{semantic.typography.body.small.font-size}", "fontWeight": "{semantic.typography.font-weight.body}", "lineHeight": "{semantic.typography.body.small.line-height}", "letterSpacing": "{semantic.typography.letter-spacing.default}" }
+    },
+    "caption": {
+      "caption-1": { "fontFamily": "{semantic.typography.font-family.harmony-os-sans}", "fontSize": "{semantic.typography.label.caption.font-size}", "fontWeight": "{semantic.typography.font-weight.body}", "lineHeight": "{semantic.typography.caption.sm.line-height}", "letterSpacing": "{semantic.typography.letter-spacing.default}" },
+      "caption-2": { "fontFamily": "{semantic.typography.font-family.harmony-os-sans}", "fontSize": "{semantic.typography.label.caption.font-size}", "fontWeight": "{semantic.typography.font-weight.body}", "lineHeight": "{semantic.typography.caption.lg.line-height}", "letterSpacing": "{semantic.typography.letter-spacing.default}" }
+    },
+    "data": {
+      "data-1": { "fontFamily": "{semantic.typography.font-family.harmony-os-sans}", "fontSize": "{semantic.typography.data.numeric.font-size}", "fontWeight": "{semantic.typography.font-weight.body}", "lineHeight": "{semantic.typography.data.numeric.line-height}", "letterSpacing": "{semantic.typography.letter-spacing.default}" },
+      "data-compact-unit": { "fontFamily": "{semantic.typography.font-family.harmony-os-sans}", "fontSize": "{semantic.typography.data.compact-unit.font-size}", "fontWeight": "{semantic.typography.font-weight.body}", "lineHeight": "{semantic.typography.data.compact-unit.line-height}", "letterSpacing": "{semantic.typography.letter-spacing.default}" },
+      "data-emphasis-unit": { "fontFamily": "{semantic.typography.font-family.harmony-os-sans}", "fontSize": "{semantic.typography.data.emphasis-unit.font-size}", "fontWeight": "{semantic.typography.font-weight.emphasis}", "lineHeight": "{semantic.typography.data.emphasis-unit.line-height}", "letterSpacing": "{semantic.typography.letter-spacing.default}" },
+      "data-affix": { "fontFamily": "{semantic.typography.font-family.harmony-os-sans}", "fontSize": "{semantic.typography.data.affix.font-size}", "fontWeight": "{semantic.typography.font-weight.body}", "lineHeight": "{semantic.typography.data.affix.line-height}", "letterSpacing": "{semantic.typography.letter-spacing.default}" },
+      "data-unit": { "fontFamily": "{semantic.typography.font-family.harmony-os-sans}", "fontSize": "{semantic.typography.data.unit.font-size}", "fontWeight": "{semantic.typography.font-weight.body}", "lineHeight": "{semantic.typography.data.unit.line-height}", "letterSpacing": "{semantic.typography.letter-spacing.default}" }
+    },
+    "display": {
+      "display-1": { "fontFamily": "{semantic.typography.font-family.harmony-os-sans}", "fontSize": "{semantic.typography.display.large.font-size}", "fontWeight": "{semantic.typography.font-weight.display}", "lineHeight": "{semantic.typography.display.large.line-height}", "letterSpacing": "{semantic.typography.letter-spacing.default}" },
+      "display-chrome": { "fontFamily": "{semantic.typography.font-family.harmony-os-sans}", "fontSize": "{semantic.typography.display.chrome.font-size}", "fontWeight": "{semantic.typography.font-weight.display}", "lineHeight": "{semantic.typography.display.chrome.line-height}", "letterSpacing": "{semantic.typography.letter-spacing.default}" }
+    },
+    "heading": {
+      "heading-1": { "fontFamily": "{semantic.typography.font-family.harmony-os-sans}", "fontSize": "{semantic.typography.heading.heading1.font-size}", "fontWeight": "{semantic.typography.font-weight.heading2}", "lineHeight": "{semantic.typography.heading.heading1.line-height}", "letterSpacing": "{semantic.typography.letter-spacing.default}" },
+      "heading-2": { "fontFamily": "{semantic.typography.font-family.harmony-os-sans}", "fontSize": "{semantic.typography.heading.heading2.font-size}", "fontWeight": "{semantic.typography.font-weight.heading2}", "lineHeight": "{semantic.typography.heading.heading2.line-height}", "letterSpacing": "{semantic.typography.letter-spacing.default}" },
+      "heading-3": { "fontFamily": "{semantic.typography.font-family.harmony-os-sans}", "fontSize": "{semantic.typography.heading.heading3.font-size}", "fontWeight": "{semantic.typography.font-weight.heading2}", "lineHeight": "{semantic.typography.heading.heading3.line-height}", "letterSpacing": "{semantic.typography.letter-spacing.default}" },
+      "heading-4": { "fontFamily": "{semantic.typography.font-family.harmony-os-sans}", "fontSize": "{semantic.typography.heading.heading4.font-size}", "fontWeight": "{semantic.typography.font-weight.heading2}", "lineHeight": "{semantic.typography.heading.heading4.line-height}", "letterSpacing": "{semantic.typography.letter-spacing.default}" },
+      "heading-dialog": { "fontFamily": "{semantic.typography.font-family.harmony-os-sans}", "fontSize": "{semantic.typography.heading.dialog.font-size}", "fontWeight": "{semantic.typography.font-weight.heading2}", "lineHeight": "{semantic.typography.heading.dialog.line-height}", "letterSpacing": "{semantic.typography.letter-spacing.default}" },
+      "heading-message": { "fontFamily": "{semantic.typography.font-family.harmony-os-sans}", "fontSize": "{semantic.typography.heading.message.font-size}", "fontWeight": "{semantic.typography.font-weight.heading2}", "lineHeight": "{semantic.typography.heading.message.line-height}", "letterSpacing": "{semantic.typography.letter-spacing.default}" }
+    },
+    "label": {
+      "label-1": { "fontFamily": "{semantic.typography.font-family.harmony-os-sans}", "fontSize": "{semantic.typography.label.default.font-size}", "fontWeight": "{semantic.typography.font-weight.body}", "lineHeight": "{semantic.typography.label.default.line-height}", "letterSpacing": "{semantic.typography.letter-spacing.default}" },
+      "label-small": { "fontFamily": "{semantic.typography.font-family.harmony-os-sans}", "fontSize": "{semantic.typography.label.small.font-size}", "fontWeight": "{semantic.typography.font-weight.body}", "lineHeight": "{semantic.typography.label.small.line-height}", "letterSpacing": "{semantic.typography.letter-spacing.default}" },
+      "label-large": { "fontFamily": "{semantic.typography.font-family.harmony-os-sans}", "fontSize": "{semantic.typography.label.large.font-size}", "fontWeight": "{semantic.typography.font-weight.label-strong}", "lineHeight": "{semantic.typography.label.large.line-height}", "letterSpacing": "{semantic.typography.letter-spacing.default}" },
+      "label-emphasis": { "fontFamily": "{semantic.typography.font-family.harmony-os-sans}", "fontSize": "{semantic.typography.label.emphasis.font-size}", "fontWeight": "{semantic.typography.font-weight.label-strong}", "lineHeight": "{semantic.typography.label.emphasis.line-height}", "letterSpacing": "{semantic.typography.letter-spacing.default}" },
+      "label-caption": { "fontFamily": "{semantic.typography.font-family.harmony-os-sans}", "fontSize": "{semantic.typography.label.caption.font-size}", "fontWeight": "{semantic.typography.font-weight.body}", "lineHeight": "{semantic.typography.label.caption.line-height}", "letterSpacing": "{semantic.typography.letter-spacing.default}" },
+      "label-micro": { "fontFamily": "{semantic.typography.font-family.harmony-os-sans}", "fontSize": "{semantic.typography.label.micro.font-size}", "fontWeight": "{semantic.typography.font-weight.body}", "lineHeight": "{semantic.typography.label.micro.line-height}", "letterSpacing": "{semantic.typography.letter-spacing.default}" },
+      "label-auxiliary-emphasis": { "fontFamily": "{semantic.typography.font-family.harmony-os-sans}", "fontSize": "{semantic.typography.label.auxiliary-emphasis.font-size}", "fontWeight": "{semantic.typography.font-weight.label-strong}", "lineHeight": "{semantic.typography.label.auxiliary-emphasis.line-height}", "letterSpacing": "{semantic.typography.letter-spacing.default}" },
+      "label-compact-auxiliary": { "fontFamily": "{semantic.typography.font-family.harmony-os-sans}", "fontSize": "{semantic.typography.label.compact-auxiliary.font-size}", "fontWeight": "{semantic.typography.font-weight.body}", "lineHeight": "{semantic.typography.label.compact-auxiliary.line-height}", "letterSpacing": "{semantic.typography.letter-spacing.default}" },
+      "label-default-auxiliary": { "fontFamily": "{semantic.typography.font-family.harmony-os-sans}", "fontSize": "{semantic.typography.label.default-auxiliary.font-size}", "fontWeight": "{semantic.typography.font-weight.body}", "lineHeight": "{semantic.typography.label.default-auxiliary.line-height}", "letterSpacing": "{semantic.typography.letter-spacing.default}" }
+    },
+    "subtitle": {
+      "subtitle-1": { "fontFamily": "{semantic.typography.font-family.harmony-os-sans}", "fontSize": "{semantic.typography.subtitle.sub-title.font-size}", "fontWeight": "{semantic.typography.font-weight.body}", "lineHeight": "{semantic.typography.subtitle.sub-title.line-height}", "letterSpacing": "{semantic.typography.letter-spacing.default}" },
+      "subtitle-form-label": { "fontFamily": "{semantic.typography.font-family.harmony-os-sans}", "fontSize": "{semantic.typography.subtitle.formlabel.font-size}", "fontWeight": "{semantic.typography.font-weight.label-strong}", "lineHeight": "{semantic.typography.subtitle.formlabel.line-height}", "letterSpacing": "{semantic.typography.letter-spacing.default}" }
+    },
+    "unicode": {}
+  },
+  "migrationSources": [
+    { "source": "source/primitive.json#/root/primitive/font-family", "role": "font-family-assets" },
+    { "source": "source/primitive.json#/root/primitive/font-weight", "role": "weight-assets" },
+    { "source": "legacy sToken typography roles and presets", "status": "migration-reference" },
+    { "source": "runtime/surface/Typography.cpp", "role": "verified-font-family-order" }
+  ],
+  "diagnostics": [
+    {
+      "severity": "info",
+      "code": "TYPOGRAPHY-UNICODE-NOT-A-VISUAL-TOKEN",
+      "message": "Unicode is intentionally not modeled as a visual Typography preset; character coverage and font fallback are owned by the HarmonyOS font package adapter.",
+      "source": "source/typography.json#/policy/unicodePolicy"
+    }
+  ]
+}

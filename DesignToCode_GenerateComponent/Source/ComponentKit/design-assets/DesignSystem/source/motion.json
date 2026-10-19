@@ -1,0 +1,186 @@
+{
+  "$schema": "../schema/composite-token-schema.json",
+  "$description": "Motion Composite package. Release is slice-scoped: loading.spinner is released for runtime use; all other presets remain candidates and are omitted from platform outputs.",
+  "$version": "2.0",
+  "$status": "candidate",
+  "layer": "composite",
+  "kind": "motion",
+  "policy": {
+    "candidateValues": true,
+    "source": "UX motion course reference values plus V2 motion model",
+    "releaseGate": "slice-level-design-review",
+    "releaseScope": "token-slice",
+    "releasedSlices": ["loading.spinner"],
+    "candidateSlicesRemainBlocked": true,
+    "runtimeTriggerOwner": "component-state"
+  },
+  "tokens": {
+    "feedback": {
+      "button-press": {
+        "$status": "candidate",
+        "tracks": [
+          { "property": "scale", "from": "{primitive.motion.scale.identity}", "to": "{primitive.motion.scale.press}" },
+          { "property": "opacity", "from": "{primitive.motion.opacity.visible}", "to": "{primitive.motion.opacity.visible}" }
+        ],
+        "timing": { "duration": "{primitive.motion.duration.fast}", "delay": "{primitive.motion.delay.none}", "easing": "{primitive.motion.easing.ease-out}" },
+        "repeat": { "count": 1, "direction": "normal" },
+        "metadata": { "purpose": "feedback", "target": "button" }
+      },
+      "focus": {
+        "$status": "candidate",
+        "tracks": [
+          { "property": "opacity", "from": "{primitive.motion.opacity.subtle}", "to": "{primitive.motion.opacity.visible}" }
+        ],
+        "timing": { "duration": "{primitive.motion.duration.fast}", "delay": "{primitive.motion.delay.none}", "easing": "{primitive.motion.easing.standard}" },
+        "repeat": { "count": 1, "direction": "normal" },
+        "metadata": { "purpose": "feedback", "target": "focus-indicator" }
+      }
+    },
+    "transition": {
+      "slide-up": {
+        "$status": "candidate",
+        "tracks": [
+          { "property": "position", "space": "logical-px", "from": { "x": "{primitive.motion.distance.none}", "y": "{primitive.motion.distance.medium}" }, "to": { "x": "{primitive.motion.distance.none}", "y": "{primitive.motion.distance.none}" } },
+          { "property": "opacity", "from": "{primitive.motion.opacity.transparent}", "to": "{primitive.motion.opacity.visible}" }
+        ],
+        "timing": { "duration": "{primitive.motion.duration.standard}", "delay": "{primitive.motion.delay.none}", "easing": "{primitive.motion.easing.standard}" },
+        "repeat": { "count": 1, "direction": "normal" },
+        "metadata": { "purpose": "transition", "target": "panel-or-sheet" }
+      },
+      "fade": {
+        "$status": "candidate",
+        "tracks": [
+          { "property": "opacity", "from": "{primitive.motion.opacity.transparent}", "to": "{primitive.motion.opacity.visible}" }
+        ],
+        "timing": { "duration": "{primitive.motion.duration.fast}", "delay": "{primitive.motion.delay.none}", "easing": "{primitive.motion.easing.ease-out}" },
+        "repeat": { "count": 1, "direction": "normal" },
+        "metadata": { "purpose": "transition", "target": "overlay-or-toast" }
+      }
+    },
+    "state-change": {
+      "accordion-arrow": {
+        "$status": "candidate",
+        "tracks": [
+          { "property": "rotation", "from": "{primitive.motion.rotation.none}", "to": "{primitive.motion.rotation.half-turn}" }
+        ],
+        "timing": { "duration": "{primitive.motion.duration.fast}", "delay": "{primitive.motion.delay.none}", "easing": "{primitive.motion.easing.standard}" },
+        "repeat": { "count": 1, "direction": "normal" },
+        "metadata": { "purpose": "state-change", "target": "dropdown-indicator" }
+      },
+      "select-open": {
+        "$status": "candidate",
+        "sequence": {
+          "steps": [
+            { "motion": "transition.fade" },
+            { "motion": "transition.slide-up" }
+          ]
+        },
+        "metadata": { "purpose": "state-change", "target": "select-popup" }
+      }
+    },
+    "loading": {
+      "spinner": {
+        "$status": "active",
+        "tracks": [
+          { "property": "rotation", "from": "{primitive.motion.rotation.none}", "to": "{primitive.motion.rotation.full-turn}" }
+        ],
+        "timing": { "duration": "{primitive.motion.duration.loop}", "delay": "{primitive.motion.delay.none}", "easing": "{primitive.motion.easing.linear}" },
+        "repeat": { "count": "infinite", "direction": "normal" },
+        "metadata": {
+          "purpose": "loading",
+          "target": "spinner",
+          "releaseScope": "runtime",
+          "activation": "component-state.loading",
+          "renderer": "runtime-dynamic-rotation"
+        }
+      },
+      "skeleton-pulse": {
+        "$status": "candidate",
+        "tracks": [
+          { "property": "opacity", "from": "{primitive.motion.opacity.subtle}", "to": "{primitive.motion.opacity.visible}" }
+        ],
+        "timing": { "duration": "{primitive.motion.duration.emphasis}", "delay": "{primitive.motion.delay.none}", "easing": "{primitive.motion.easing.ease-in-out}" },
+        "repeat": { "count": "infinite", "direction": "alternate" },
+        "metadata": { "purpose": "loading", "target": "skeleton" }
+      }
+    },
+    "enter": {
+      "modal": {
+        "$status": "candidate",
+        "tracks": [
+          { "property": "position", "space": "logical-px", "from": { "x": "{primitive.motion.distance.none}", "y": "{primitive.motion.distance.small}" }, "to": { "x": "{primitive.motion.distance.none}", "y": "{primitive.motion.distance.none}" } },
+          { "property": "scale", "from": "{primitive.motion.scale.enter}", "to": "{primitive.motion.scale.identity}" },
+          { "property": "opacity", "from": "{primitive.motion.opacity.transparent}", "to": "{primitive.motion.opacity.visible}" }
+        ],
+        "timing": { "duration": "{primitive.motion.duration.standard}", "delay": "{primitive.motion.delay.none}", "easing": "{primitive.motion.easing.standard}" },
+        "repeat": { "count": 1, "direction": "normal" },
+        "metadata": { "purpose": "enter", "target": "modal" }
+      },
+      "list-item": {
+        "$status": "candidate",
+        "tracks": [
+          { "property": "position", "space": "logical-px", "from": { "x": "{primitive.motion.distance.none}", "y": "{primitive.motion.distance.small}" }, "to": { "x": "{primitive.motion.distance.none}", "y": "{primitive.motion.distance.none}" } },
+          { "property": "opacity", "from": "{primitive.motion.opacity.transparent}", "to": "{primitive.motion.opacity.visible}" }
+        ],
+        "timing": { "duration": "{primitive.motion.duration.fast}", "delay": "{primitive.motion.delay.none}", "easing": "{primitive.motion.easing.ease-out}" },
+        "stagger": { "interval": "{primitive.motion.delay.short}", "direction": "forward" },
+        "repeat": { "count": 1, "direction": "normal" },
+        "metadata": { "purpose": "enter", "target": "list-item" }
+      }
+    },
+    "exit": {
+      "fade-out": {
+        "$status": "candidate",
+        "tracks": [
+          { "property": "opacity", "from": "{primitive.motion.opacity.visible}", "to": "{primitive.motion.opacity.transparent}" }
+        ],
+        "timing": { "duration": "{primitive.motion.duration.fast}", "delay": "{primitive.motion.delay.none}", "easing": "{primitive.motion.easing.ease-in}" },
+        "repeat": { "count": 1, "direction": "normal" },
+        "metadata": { "purpose": "exit", "target": "toast-or-tooltip" }
+      }
+    },
+    "attention": {
+      "pulse": {
+        "$status": "candidate",
+        "tracks": [
+          { "property": "scale", "keyframes": [
+            { "at": 0, "value": "{primitive.motion.scale.identity}" },
+            { "at": 0.5, "value": "{primitive.motion.scale.pulse}" },
+            { "at": 1, "value": "{primitive.motion.scale.identity}" }
+          ] }
+        ],
+        "timing": { "duration": "{primitive.motion.duration.emphasis}", "delay": "{primitive.motion.delay.none}", "easing": "{primitive.motion.easing.ease-in-out}" },
+        "repeat": { "count": 1, "direction": "normal" },
+        "metadata": { "purpose": "attention", "target": "fab-or-selected-card" }
+      }
+    }
+  },
+  "hooks": {
+    "button": {
+      "press": "feedback.button-press",
+      "focus": "feedback.focus",
+      "loading-start": "loading.spinner",
+      "loading-stop": "feedback.focus",
+      "attention": "attention.pulse"
+    },
+    "input": {
+      "focus": "feedback.focus",
+      "loading-start": "loading.spinner",
+      "loading-stop": "feedback.focus"
+    },
+    "select": {
+      "open": "state-change.select-open",
+      "close": "transition.fade",
+      "loading-start": "loading.spinner",
+      "loading-stop": "feedback.focus"
+    }
+  },
+  "diagnostics": [
+    {
+      "severity": "warning",
+      "code": "MOTION-CANDIDATE-SLICES-REMAIN-BLOCKED",
+      "message": "Only loading.spinner is released for runtime use; other Motion presets remain candidates and are omitted from platform outputs without blocking the released slice.",
+      "source": "source/motion.json"
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+/* Z_FileDialog <- QFileDialog; compiled from the active Token profile. */
+*[designSystemClass="commonWidget::Z_FileDialog"] {
+    color: #191919;
+    background-color: #FFFFFF;
+    font-size: 18px;
+}
+*[designSystemClass="commonWidget::Z_FileDialog"]:disabled {
+    color: #BBBBBB;
+    background-color: #EEEEEE;
+    border-color: #8A8A8A;
+}

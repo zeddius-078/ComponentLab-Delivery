@@ -1,21 +1,11 @@
 #include "DemoRuntime.h"
 #include "ComponentTheme.h"
-#include "TokenResources.h"
 #include <QApplication>
-#include <QJsonDocument>
 #include <QStyle>
 #include <QStyleFactory>
 #include <stdexcept>
 
 namespace button_demo {
-QString readResource(const QString& path) {
-    return QString::fromUtf8(token_resources::read(path));
-}
-
-QJsonObject manifest() {
-    return QJsonDocument::fromJson(readResource(":/button/manifest.json").toUtf8()).object();
-}
-
 QIcon icon(const QString& assetId) {
     const QMap<QString, QStyle::StandardPixmap> ids{{"arrow-left", QStyle::SP_ArrowLeft},
                                                     {"arrow-right", QStyle::SP_ArrowRight},
@@ -30,10 +20,6 @@ QIcon icon(const QString& assetId) {
 
 void install(QApplication& app, const QString& profile) {
     component_theme::install(app, profile);
-    // ComponentTheme installs the SDK-wide native Token sheet first. The
-    // ComponentLab-only button/demo rules must extend it, never replace it.
-    app.setStyleSheet(app.styleSheet() + QLatin1Char('\n') +
-                      readResource(":/button/" + profile + "-demo.qss"));
 }
 
 QString validate(const commonWidget::Z_PushButton& button) {

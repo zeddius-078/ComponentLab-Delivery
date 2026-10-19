@@ -1,0 +1,30 @@
+/* Z_Splitter <- QSplitter; compiled from the active Token profile. */
+*[designSystemClass="commonWidget::Z_Splitter"] {
+    color: #F3F3F3;
+    background-color: #272727;
+    font-size: 18px;
+}
+*[designSystemClass="commonWidget::Z_Splitter"]:disabled {
+    color: #8A8A8A;
+    background-color: #303030;
+    border-color: #8A8A8A;
+}
+*[designSystemClass="commonWidget::Z_Splitter"] {
+    border: 1px solid #8A8A8A;
+    border-radius: 9px;
+}
+*[designSystemClass="commonWidget::Z_SplitterHandle"] {
+    background-color: #8A8A8A;
+    border: 0;
+}
+*[designSystemClass="commonWidget::Z_SplitterHandle"]:hover,
+*[designSystemClass="commonWidget::Z_SplitterHandle"][figmaSnapshotState="Hover"] {
+    background-color: #202020;
+}
+*[designSystemClass="commonWidget::Z_SplitterHandle"]:pressed,
+*[designSystemClass="commonWidget::Z_SplitterHandle"][figmaSnapshotState="Dragging"] {
+    background-color: #6235F7;
+}
+*[designSystemClass="commonWidget::Z_SplitterHandle"]:disabled {
+    background-color: #8A8A8A;
+}

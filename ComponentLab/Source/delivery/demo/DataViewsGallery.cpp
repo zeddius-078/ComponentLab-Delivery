@@ -1,9 +1,15 @@
 #include "DataViewsGallery.h"
+#include "ComponentTheme.h"
 #include "FigmaGalleryView.h"
+#include "TokenResources.h"
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QJsonValue>
 #include <QPainter>
 #include <QPainterPath>
 #include <QPaintEvent>
 #include <QSvgRenderer>
+#include <QtMath>
 #include <functional>
 #include <stdexcept>
 
@@ -23,8 +29,112 @@ const QColor kSelectedHoverBg(0xf1, 0xec, 0xff);
 const QColor kKeyBg(0xf7, 0xf9, 0xfc);
 const QColor kKeyText(0x50, 0x58, 0x68);
 
+QJsonValue tableToken(const QString& path) {
+    static const QJsonObject profile = [] {
+        QJsonParseError error;
+        const auto document = QJsonDocument::fromJson(
+            token_resources::read(QStringLiteral(":/tokens/tokens_qt.json")), &error);
+        if (error.error != QJsonParseError::NoError || !document.isObject())
+            throw std::runtime_error("Invalid generated V2 Token runtime document");
+        const auto selected = document.object()[QStringLiteral("profiles")]
+                                  .toObject()[component_theme::activeProfile()].toObject();
+        if (selected.isEmpty())
+            throw std::runtime_error("Active Table Token profile is unavailable");
+        return selected;
+    }();
+    for (const auto& category : {"color", "layout", "number", "font", "boolean", "string", "asset"}) {
+        const auto values = profile[QString::fromLatin1(category)].toObject();
+        if (values.contains(path))
+            return values[path];
+    }
+    throw std::runtime_error(("Missing generated V2 Table token: " + path).toStdString());
+}
+
+QColor tableColor(const QString& path) {
+    const QColor result(tableToken(path).toString());
+    if (!result.isValid())
+        throw std::runtime_error(("Invalid generated V2 Table color: " + path).toStdString());
+    return result;
+}
+
+int tableNumber(const QString& path) {
+    const auto result = tableToken(path);
+    if (!result.isDouble())
+        throw std::runtime_error(("Non-numeric generated V2 Table token: " + path).toStdString());
+    return qRound(result.toDouble());
+}
+
+QFont::Weight tableFontWeight(int cssWeight) {
+    if (cssWeight <= 400) return QFont::Normal;
+    if (cssWeight <= 500) return QFont::Medium;
+    if (cssWeight <= 600) return QFont::DemiBold;
+    return QFont::Bold;
+}
+
+struct TableVisualTokens {
+    QColor container;
+    QColor header;
+    QColor headerText;
+    QColor row;
+    QColor hover;
+    QColor selected;
+    QColor disabled;
+    QColor cellText;
+    QColor disabledText;
+    QColor border;
+    int borderWidth;
+    int cellPaddingInline;
+    int headerPaddingInline;
+    int headerHeight;
+    int cellFontSize;
+    int headerFontSize;
+    QFont::Weight cellWeight;
+    QFont::Weight headerWeight;
+};
+
+const TableVisualTokens& tableVisualTokens() {
+    static const TableVisualTokens tokens{
+        tableColor(QStringLiteral("component.table.base.shared.slot.container.background-color")),
+        tableColor(QStringLiteral("component.table.base.shared.slot.header.background-color")),
+        tableColor(QStringLiteral("component.table.base.shared.slot.header.color")),
+        tableColor(QStringLiteral("component.table.base.striping.none.slot.row.background-color")),
+        tableColor(QStringLiteral("component.table.overlay.row-interaction.hover.slot.row.background-color")),
+        tableColor(QStringLiteral("component.table.overlay.cell-selection.selected.slot.cell.background-color")),
+        tableColor(QStringLiteral("component.table.overlay.availability.disabled.slot.container.background-color")),
+        tableColor(QStringLiteral("component.table.base.shared.slot.cell.color")),
+        tableColor(QStringLiteral("component.table.overlay.availability.disabled.slot.cell.color")),
+        tableColor(QStringLiteral("component.table.base.shared.slot.border.color")),
+        tableNumber(QStringLiteral("component.table.base.shared.slot.border.border-width")),
+        tableNumber(QStringLiteral("component.table.base.shared.slot.cell.padding-inline")),
+        tableNumber(QStringLiteral("component.table.base.shared.slot.header.padding-inline")),
+        tableNumber(QStringLiteral("component.table.base.shared.slot.header.line-height")) +
+            2 * tableNumber(QStringLiteral("component.table.base.shared.slot.header.padding-block")),
+        tableNumber(QStringLiteral("component.table.base.shared.slot.cell.font-size")),
+        tableNumber(QStringLiteral("component.table.base.shared.slot.header.font-size")),
+        tableFontWeight(tableNumber(QStringLiteral("component.table.base.shared.slot.cell.font-weight"))),
+        tableFontWeight(tableNumber(QStringLiteral("component.table.base.shared.slot.header.font-weight"))),
+    };
+    return tokens;
+}
+
+QString tableDensityForLegacySize(const QString& sizeName) {
+    if (sizeName == QStringLiteral("Small")) return QStringLiteral("compact");
+    if (sizeName == QStringLiteral("Medium")) return QStringLiteral("small");
+    return QStringLiteral("medium");
+}
+
+int tableRowHeight(const QString& sizeName) {
+    return tableNumber(QStringLiteral("component.table.base.density.%1.slot.row.min-height")
+                           .arg(tableDensityForLegacySize(sizeName)));
+}
+
+int tableSpecimenHeight(const QString& sizeName) {
+    return tableVisualTokens().headerHeight + 3 * tableRowHeight(sizeName) +
+           2 * tableVisualTokens().borderWidth;
+}
+
 QFont inter(int px, QFont::Weight weight) {
-    QFont font(QStringLiteral("Inter"));
+    QFont font(QStringLiteral("HarmonyOS Sans"));
     font.setPixelSize(px);
     font.setWeight(weight);
     return font;
@@ -317,59 +427,78 @@ const TreeGalleryDef& treeGallery(const QString& pageId) {
 // The state applies to Row/1 only; Disabled dims the whole root to 58% with muted text.
 void paintTableSpecimen(QPainter& p, const QRect& bounds, const QString& sizeName,
                         const QString& state) {
-    const int cellH = sizeName == "Large" ? 54 : sizeName == "Medium" ? 46 : 38;
-    const int step = cellH + 1;
-    const int padX = sizeName == "Large" ? 16 : 8;
-    const int textY = sizeName == "Large" ? 16 : sizeName == "Medium" ? 12 : 8;
+    const auto& tokens = tableVisualTokens();
+    const int rowH = tableRowHeight(sizeName);
+    const int headerH = tokens.headerHeight;
+    const int step = rowH + tokens.borderWidth;
     const bool disabled = state == "Disabled";
     const bool hover = state == "Hover";
     const bool selected = state == "Selected" || state == "Selected-hover";
-    const bool selectedHover = state == "Selected-hover";
     p.save();
-    if (disabled)
-        p.setOpacity(0.58);
-    fillRounded(p, QRectF(bounds), 8, Qt::white, kBorderSubtle, 1);
+    p.translate(bounds.topLeft());
+    const QRectF localBounds(0, 0, bounds.width(), bounds.height());
+    p.fillRect(localBounds, disabled ? tokens.disabled : tokens.container);
+    p.setPen(QPen(tokens.border, tokens.borderWidth));
+    p.drawRect(localBounds.adjusted(tokens.borderWidth / 2.0, tokens.borderWidth / 2.0,
+                                    -tokens.borderWidth / 2.0, -tokens.borderWidth / 2.0));
     p.save();
-    p.setClipPath(roundedPath(QRectF(bounds).adjusted(1, 1, -1, -1), 7), Qt::IntersectClip);
-    p.fillRect(QRectF(1, 1, 658, cellH), QColor(0xfa, 0xfa, 0xfa));
-    p.fillRect(QRectF(1, 1 + cellH, 658, 1), kBorderSubtle);
-    const QColor headerFg = disabled ? kMutedText : kText;
+    p.setClipRect(localBounds.adjusted(tokens.borderWidth, tokens.borderWidth,
+                                       -tokens.borderWidth, -tokens.borderWidth));
+    p.fillRect(QRectF(1, 1, 658, headerH), disabled ? tokens.disabled : tokens.header);
+    p.fillRect(QRectF(1, 1 + headerH, 658, tokens.borderWidth), tokens.border);
+    const QColor headerFg = disabled ? tokens.disabledText : tokens.headerText;
     const QStringList headers{QStringLiteral("Name"), QStringLiteral("Status"),
                               QStringLiteral("Value")};
-    drawText(p, QRectF(1 + padX, 1 + textY, 260 - 2 * padX, 22), headers[0], 14,
-             QFont::DemiBold, headerFg, Qt::AlignLeft | Qt::AlignVCenter);
-    drawIcon(p, QRectF(1 + 260 - padX - 16, 1 + (cellH - 16) / 2.0, 16, 16),
+    drawText(p, QRectF(1 + tokens.headerPaddingInline, 1,
+                       260 - 2 * tokens.headerPaddingInline, headerH), headers[0],
+             tokens.headerFontSize, tokens.headerWeight, headerFg,
+             Qt::AlignLeft | Qt::AlignVCenter);
+    drawIcon(p, QRectF(1 + 260 - tokens.headerPaddingInline - 16,
+                       1 + (headerH - 16) / 2.0, 16, 16),
              QStringLiteral("sort.svg"));
-    drawText(p, QRectF(1 + 260 + padX, 1 + textY, 180 - 2 * padX, 22), headers[1], 14,
-             QFont::DemiBold, headerFg, Qt::AlignLeft | Qt::AlignVCenter);
-    drawText(p, QRectF(1 + 440 + padX, 1 + textY, 658 - 440 - 2 * padX, 22), headers[2], 14,
-             QFont::DemiBold, headerFg, Qt::AlignLeft | Qt::AlignVCenter);
+    drawText(p, QRectF(1 + 260 + tokens.headerPaddingInline, 1,
+                       180 - 2 * tokens.headerPaddingInline, headerH), headers[1],
+             tokens.headerFontSize, tokens.headerWeight, headerFg,
+             Qt::AlignLeft | Qt::AlignVCenter);
+    drawText(p, QRectF(1 + 440 + tokens.headerPaddingInline, 1,
+                       658 - 440 - 2 * tokens.headerPaddingInline, headerH), headers[2],
+             tokens.headerFontSize, tokens.headerWeight, headerFg,
+             Qt::AlignLeft | Qt::AlignVCenter);
     const QStringList c1{QStringLiteral("Alpha"), QStringLiteral("Beta"),
                          QStringLiteral("Gamma")};
     const QStringList c2{QStringLiteral("Ready"), QStringLiteral("Pending"),
                          QStringLiteral("Idle")};
     const QStringList c3{QStringLiteral("128"), QStringLiteral("64"), QStringLiteral("32")};
     for (int i = 0; i < 3; ++i) {
-        const QRectF row(1, 1 + cellH + 1 + i * step, 658, cellH);
+        const QRectF row(1, 1 + headerH + tokens.borderWidth + i * step, 658, rowH);
+        p.fillRect(row, disabled ? tokens.disabled : tokens.row);
         if (i == 1) {
-            QColor bg = Qt::white;
+            QColor bg = tokens.row;
             if (hover)
-                bg = kHoverBg;
+                bg = tokens.hover;
             else if (selected)
-                bg = selectedHover ? kSelectedHoverBg : kSelectedBg;
-            if (bg != Qt::white)
+                bg = tokens.selected;
+            if (!disabled)
                 p.fillRect(row, bg);
         }
-        const QColor fg = disabled ? kMutedText : kText;
-        drawText(p, QRectF(row.x() + padX, row.y() + textY, 260 - 2 * padX, 22), c1[i], 14,
-                 QFont::Normal, fg, Qt::AlignLeft | Qt::AlignVCenter);
-        drawText(p, QRectF(row.x() + 260 + padX, row.y() + textY, 180 - 2 * padX, 22), c2[i],
-                 14, QFont::Normal, fg, Qt::AlignLeft | Qt::AlignVCenter);
-        drawText(p, QRectF(row.x() + 440 + padX, row.y() + textY, row.width() - 440 - 2 * padX,
-                           14),
-                 c3[i], 14, QFont::Medium, fg, Qt::AlignLeft | Qt::AlignTop);
-        p.fillRect(QRectF(row.x(), row.y() + cellH, row.width(), 1), kBorderSubtle);
+        const QColor fg = disabled ? tokens.disabledText : tokens.cellText;
+        drawText(p, QRectF(row.x() + tokens.cellPaddingInline, row.y(),
+                           260 - 2 * tokens.cellPaddingInline, rowH), c1[i],
+                 tokens.cellFontSize, tokens.cellWeight, fg,
+                 Qt::AlignLeft | Qt::AlignVCenter);
+        drawText(p, QRectF(row.x() + 260 + tokens.cellPaddingInline, row.y(),
+                           180 - 2 * tokens.cellPaddingInline, rowH), c2[i],
+                 tokens.cellFontSize, tokens.cellWeight, fg,
+                 Qt::AlignLeft | Qt::AlignVCenter);
+        drawText(p, QRectF(row.x() + 440 + tokens.cellPaddingInline, row.y(),
+                           row.width() - 440 - 2 * tokens.cellPaddingInline, rowH), c3[i],
+                 tokens.cellFontSize, tokens.cellWeight, fg,
+                 Qt::AlignLeft | Qt::AlignVCenter);
+        p.fillRect(QRectF(row.x(), row.y() + rowH, row.width(), tokens.borderWidth),
+                   tokens.border);
     }
+    for (const int x : {260, 440})
+        p.fillRect(QRectF(x, 1, tokens.borderWidth, localBounds.height() - 2), tokens.border);
     p.restore();
     p.restore();
 }
@@ -629,9 +758,7 @@ QWidget* createDataViewsGallery(const QString& pageId, QWidget* parent) {
                 {1428, 1085, "Large", "Disabled"},
             };
             for (const auto& spec : specs) {
-                const int h = QString(spec.size) == "Small" ? 158
-                              : QString(spec.size) == "Medium" ? 190
-                                                               : 222;
+                const int h = tableSpecimenHeight(QString::fromLatin1(spec.size));
                 paintTableSpecimen(p, QRect(spec.x, spec.y, 660, h), spec.size, spec.state);
             }
         };

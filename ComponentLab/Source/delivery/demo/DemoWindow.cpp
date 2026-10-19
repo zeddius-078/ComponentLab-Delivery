@@ -1,8 +1,9 @@
 #include "DemoWindow.h"
 #include "NativeGalleryPages.h"
+#include "V2ComponentMapPage.h"
 #include "ui_ComponentLab.h"
 #include "Z_CheckBox.h"
-#include "ButtonAppearanceAdapter.h"
+#include "Z_PushButton.h"
 #include "CheckBoxGroupController.h"
 #include "TokenResources.h"
 #include "FocusIndicator.h"
@@ -11,6 +12,7 @@
 #include <QCheckBox>
 #include <QComboBox>
 #include <QDir>
+#include <QElapsedTimer>
 #include <QEvent>
 #include <QEventLoop>
 #include <QFormLayout>
@@ -108,10 +110,10 @@ DemoWindow::DemoWindow(const QString& current)
         ui->focusIndicatorCombo->setCurrentIndex(ui->focusIndicatorCombo->findData(
             FocusIndicator::modeName(FocusIndicator::instance().mode())));
     });
-    ui->profileCombo->addItem(QString::fromUtf8("亮色 / 舒适"), "light-comfortable");
-    ui->profileCombo->addItem(QString::fromUtf8("亮色 / 紧凑"), "light-compact");
-    ui->profileCombo->addItem(QString::fromUtf8("暗色 / 舒适"), "dark-comfortable");
-    ui->profileCombo->addItem(QString::fromUtf8("暗色 / 紧凑"), "dark-compact");
+    ui->profileCombo->addItem(QString::fromUtf8("亮色 / 舒适"), "standard-light");
+    ui->profileCombo->addItem(QString::fromUtf8("亮色 / 紧凑"), "wide-light");
+    ui->profileCombo->addItem(QString::fromUtf8("暗色 / 舒适"), "standard-dark");
+    ui->profileCombo->addItem(QString::fromUtf8("暗色 / 紧凑"), "wide-dark");
     ui->profileCombo->setCurrentIndex(ui->profileCombo->findData(current));
     connect(ui->profileCombo, qOverload<int>(&QComboBox::activated), this, [this](int index) {
         QStringList arguments{"--profile", ui->profileCombo->itemData(index).toString()};
@@ -129,8 +131,17 @@ DemoWindow::DemoWindow(const QString& current)
     buttonStatesPage();
     formPages();
     nativePages();
+    // V2 组件地图：每个组件的外观绑定与状态表由 V2 规范产物数据驱动，
+    // 与 Figma 变量组映射全量对齐，不再需要逐组件手写图库页面。
+    ui->nativeSections->addTab(new component_lab_v2::V2ComponentMapPage(ui->nativeRegistryTab),
+                               QString::fromUtf8("V2 Token 地图（当前）"));
+    // The first registry tab is the historical SDK catalog and is retained for
+    // compatibility.  Make the authoritative V2 map the default view so a
+    // fresh launch cannot be mistaken for the legacy token mapping.
+    ui->nativeSections->setTabText(1, QString::fromUtf8("组件映射（Legacy）"));
+    ui->nativeSections->setCurrentIndex(2);
     setWindowTitle("Component Lab | Component SDK Gallery");
-    ui->statusLabel->setText("COMPONENT-LAB R4-sToken  |  " + current + "  |  " +
+    ui->statusLabel->setText("COMPONENT-LAB V2 Token Architecture  |  " + current + "  |  " +
                              catalog->sourceHash().left(16));
     auto* timer = new QTimer(this);
     connect(timer, &QTimer::timeout, this, &DemoWindow::updateTrees);
@@ -366,6 +377,11 @@ void DemoWindow::updateTrees() {
     for (auto pair : inspections) {
         if (!pair.first || !pair.second)
             continue;
+        // Detailed editors are retained for lazy reuse inside the Figma page stack.
+        // Most are hidden, so rebuilding all of their QObject trees every 400 ms
+        // blocks the UI thread without producing any visible change.
+        if (!pair.first->isVisibleTo(this) || !pair.second->isVisibleTo(this))
+            continue;
         const int scroll = pair.first->verticalScrollBar()->value();
         const bool initial = pair.first->topLevelItemCount() == 0;
         QSet<QString> expanded;
@@ -449,6 +465,27 @@ void DemoWindow::capture(const QString& path, const QString& pageId) {
             QEventLoop settled;
             QTimer::singleShot(80,&settled,&QEventLoop::quit);
             settled.exec(QEventLoop::ExcludeUserInputEvents);
+            if (auto* gallery = page ? page->findChild<QGraphicsView*>("figmaVariantGallery")
+                                     : nullptr;
+                gallery && gallery->property("variantBuildComplete").isValid()) {
+                QElapsedTimer buildDeadline;
+                buildDeadline.start();
+                while (!gallery->property("variantBuildComplete").toBool() &&
+                       buildDeadline.elapsed() < 30000) {
+                    QEventLoop buildStep;
+                    QTimer::singleShot(10,&buildStep,&QEventLoop::quit);
+                    buildStep.exec(QEventLoop::ExcludeUserInputEvents);
+                }
+                if (!gallery->property("variantBuildComplete").toBool())
+                    throw std::runtime_error(
+                        QString("Input gallery build timed out during capture (%1 / %2 specimens)")
+                            .arg(gallery->property("variantBuiltCount").toInt())
+                            .arg(gallery->property("variantSpecimenCount").toInt())
+                            .toStdString());
+                if (!gallery->property("variantBuildError").toString().isEmpty())
+                    throw std::runtime_error(
+                        gallery->property("variantBuildError").toString().toStdString());
+            }
             updateTrees();
             QApplication::processEvents();
             if(j==0 && page) {
@@ -502,8 +539,8 @@ void DemoWindow::capture(const QString& path, const QString& pageId) {
         {"navigation", navigation},
         {"layoutDiagnostics",layoutDiagnostics},
         {"presets", QJsonArray::fromStringList(catalog->presetIds())},
-        {"buttonPresets", QJsonArray::fromStringList(catalog->buttonPresetIds())},
-        {"buttonAppearance", buttonPreview->findChild<ButtonAppearanceAdapter*>()->appearance()},
+        {"buttonAppearances", QJsonArray{"filled", "outlined", "dashed", "text", "link"}},
+        {"buttonAppearance", buttonPreview->property("buttonAppearance").toString()},
         {"checkboxSize", QString("%1x%2").arg(preview->width()).arg(preview->height())},
         {"indicatorSize", preview->indicatorRect().width()},
         {"buttonIconSource", buttonPreview->leadingIconSource()},

@@ -1,0 +1,183 @@
+{
+  "$description": "Select V2 Component Contract. Select owns trigger, popup, option-item and tag composition; data source and selection reconciliation remain runtime-owned.",
+  "component": "select",
+  "version": "1.0",
+  "$status": "draft-v2",
+  "contractKind": "selection-field",
+  "registryBindings": {
+    "source": "source/component-registry.json#/components/select",
+    "axes": ["selection", "searchable", "appearance", "state", "open", "size"],
+    "slots": ["container", "content", "placeholder", "border", "focus-ring", "dropdown-indicator", "clear", "spinner", "popup", "option-item", "tag", "selected-indicator", "popup-bulk-control", "empty-state", "label"],
+    "authority": "component-registry"
+  },
+  "structure": [
+    "container",
+    "content",
+    "placeholder",
+    "border",
+    "focus-ring",
+    "dropdown-indicator",
+    "clear",
+    "spinner",
+    "popup",
+    "option-item",
+    "tag",
+    "selected-indicator",
+    "popup-bulk-control",
+    "empty-state",
+    "label"
+  ],
+  "runtimeModel": {
+    "selection": {
+      "registryAxis": "selection",
+      "single": "one selected option; selecting an option closes the popup",
+      "multiple": "multiple selected options; selection can remain open for continued search"
+    },
+    "search": {
+      "registryAxis": "searchable",
+      "scope": "popup-option-results-only",
+      "doesNotChange": ["parent-select-value", "parent-select-options"],
+      "emptyResult": "empty-state-slot"
+    },
+    "open": {
+      "registryAxis": "open",
+      "owner": "runtime-api",
+      "disabledAndLoading": "popup-must-remain-closed"
+    },
+    "popup": {
+      "optionItem": {
+        "states": ["default", "hover", "focused", "selected", "disabled"],
+        "single": "an option item is a single selectable option, not a Checkbox component",
+        "multiple": "option item may contain a Checkbox plus label; the item owns the interaction state"
+      },
+      "bulkControl": {
+        "availableFor": ["multiple"],
+        "states": ["unchecked", "indeterminate", "checked", "disabled"],
+        "scope": "all-search-results",
+        "position": "frozen-first-row-separated-from-options"
+      }
+    },
+    "tags": {
+      "availableFor": ["multiple"],
+      "layout": ["single-row", "multi-row"],
+      "singleRowOverflow": "right-edge-fade",
+      "multiRowOverflow": "ellipsis-after-last-visible-tag",
+      "searchTrigger": "dedicated-area-after-tag-region-before-trailing-controls"
+    },
+    "validation": {
+      "selectedOptionBecomesInvalid": "select-error-option-disabled-tag-disabled",
+      "invalidSelectedOption": "cannot-be-selected-again-but-remains-visible-until-cleared",
+      "clearPolicy": "clear-current-value-without-changing-popup-search-state",
+      "reconciliation": "validate-on-popup-open-or-parent-close-as-runtime-capability"
+    },
+    "loading": {
+      "state": "loading",
+      "visualPolicy": "disabled-like-select-with-trailing-spinner",
+      "editPolicy": "lock-selection-and-popup-opening"
+    }
+  },
+  "stateLayers": {
+    "pointerInteraction": {
+      "registryAxis": "state",
+      "meaning": "default and hover describe the Select trigger"
+    },
+    "focus": {
+      "registryAxis": "state",
+      "meaning": "focused describes trigger focus; popup item focus is an internal runtime focus"
+    },
+    "validation": {
+      "registryAxis": "state",
+      "meaning": "error describes Select-level invalidity and has priority over hover/focus/disabled-like visuals"
+    },
+    "availability": {
+      "registryAxis": "state",
+      "meaning": "disabled and loading lock trigger, popup and selection interaction"
+    },
+    "popup": {
+      "registryAxis": "open",
+      "meaning": "open controls popup lifecycle; it is constrained by state and runtime availability"
+    },
+    "selection": {
+      "registryAxis": "selection",
+      "meaning": "single and multiple change selection semantics and internal structure, not the public Select family"
+    }
+  },
+  "compositionRules": [
+    "Selection, Searchable, Appearance, State, Open and Size are Registry axes; data source and option availability are runtime data.",
+    "Select owns the trigger and popup composition; Option Item is a Select-owned structural Slot and is not a separate public component.",
+    "Single Option Item is a single option; Multiple Option Item may compose Checkbox visuals but does not become Checkbox semantically.",
+    "Multiple mode supports tags, popup bulk control and search-result selection; Single mode does not use tag collection semantics.",
+    "Popup search filters popup option results only and does not mutate the parent Select options or value.",
+    "The popup bulk control is a three-state selection control plus disabled state and acts on the declared search-result scope.",
+    "The popup bulk control remains frozen at the first row and is separated from option items by a divider.",
+    "Selecting a new Single option closes the popup; Multiple selection keeps the popup available for continued selection.",
+    "Clear changes the current value independently from popup open state and search text lifecycle.",
+    "Loading and disabled keep the popup closed and lock selection; error retains the Select structure while presenting invalidity.",
+    "Select reuses shared Checkbox visuals only where the Contract explicitly declares the internal composition."
+  ],
+  "contentModel": {
+    "placeholderText": {
+      "kind": "localized-content-key",
+      "defaultLocale": "en-US",
+      "fallbackLocale": "en-US",
+      "visualToken": false
+    },
+    "selectedValueText": {
+      "kind": "instance-content",
+      "source": "runtime-option-label-or-content-key",
+      "visualToken": false
+    },
+    "tagText": {
+      "kind": "instance-content",
+      "source": "runtime-selected-option-label",
+      "structure": "nested-tag-instance",
+      "visualToken": false
+    },
+    "optionItemText": {
+      "kind": "instance-content",
+      "source": "runtime-option-label-or-content-key",
+      "structure": "nested-option-item-slot",
+      "visualToken": false
+    },
+    "popupText": {
+      "bulkControl": {
+        "kind": "localized-content-key",
+        "defaultLocale": "en-US",
+        "fallbackLocale": "en-US"
+      },
+      "emptyState": {
+        "kind": "localized-content-key",
+        "defaultLocale": "en-US",
+        "fallbackLocale": "en-US"
+      },
+      "searchText": {
+        "kind": "runtime-transient-content",
+        "notPersistedToCatalog": true
+      }
+    },
+    "forbiddenContentResponsibilities": [
+      "selection-mode", "searchable-mode", "open-state", "option-availability",
+      "popup-structure", "business-value", "visual-token"
+    ]
+  },
+  "tokenBoundary": {
+    "recipeOwns": [
+      "trigger, popup, option-item, tag, bulk-control, empty-state and indicator visual references",
+      "shared size, padding and spacing bindings",
+      "sparse appearance, state and open visual overrides"
+    ],
+    "runtimeOwns": [
+      "data source, option identity and availability",
+      "selection reconciliation and invalid-value handling",
+      "popup lifecycle, search query and keyboard navigation",
+      "tag overflow layout and search trigger activation",
+      "bulk selection scope and backend validation",
+      "clear behavior and event dispatch"
+    ],
+    "contractDoesNotOwn": [
+      "option data, selected values or search text",
+      "resolved visual Token values",
+      "business warning/info event semantics"
+    ]
+  }
+}

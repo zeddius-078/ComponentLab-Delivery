@@ -1,0 +1,36 @@
+{
+  "$registry": {
+    "component": "text-browser",
+    "version": "2.0"
+  },
+  "$status": "active",
+  "base": {
+    "state": {
+      "default": {
+        "slot": {
+          "content": {
+            "color": {
+              "$type": "color",
+              "$value": "{semantic.color.text.primary}",
+              "$description": "Recovered from legacy V2 layer component.text-browser.base.default.content.color",
+              "$sourceOwner": "old-tree-recovery"
+            }
+          }
+        }
+      },
+      "disabled": {
+        "slot": {
+          "content": {
+            "color": {
+              "$type": "color",
+              "$value": "{semantic.color.text.disabled}",
+              "$description": "Recovered from legacy V2 layer component.text-browser.base.disabled.content.color",
+              "$sourceOwner": "old-tree-recovery"
+            }
+          }
+        }
+      }
+    }
+  },
+  "overrides": []
+}

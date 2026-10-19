@@ -1,0 +1,349 @@
+{
+  "color": {
+    "background": {
+      "primary": {"$type": "color","$value": "{Color/neutral/gray-0}"},
+      "secondary": {"$type": "color","$value": "{Color/neutral/gray-5}"},
+      "tertiary": {"$type": "color","$value": "{Color/neutral/gray-10}"},
+      "quaternary": {"$type": "color","$value": "{Color/neutral/gray-30}"},
+      "hover": {"$type": "color","$value": "{Color/neutral/gray-3}"},
+      "disabled": {"$type": "color","$value": "{Color/neutral/gray-8}"},
+      "pressed": {"$type": "color","$value": "{Color/neutral/gray-20}"},
+      "hover-dark": {"$type": "color","$value": "{Color/neutral/gray-50}"},
+      "pressed-dark": {"$type": "color","$value": "{Color/neutral/gray-40}"},
+      "alarm": {"$type": "color","$value": "{Color/functional/red/red-55}"},
+      "alarmHover": {"$type": "color","$value": "{Color/functional/red/red-42}"},
+      "alarmSelect": {"$type": "color","$value": "{Color/functional/red/red-65}"},
+      "alarmSoft": {"$type": "color","$value": "{Color/functional/red/red-10}"},
+      "alarmSoftHover": {"$type": "color","$value": "{Color/functional/red/red-8}"},
+      "alarmSoftSelect": {"$type": "color","$value": "{Color/functional/red/red-25}"},
+      "error": {"$type": "color","$value": {"colorSpace": "srgb","components": [0.9019607843137255,0.43529411764705883,0.11764705882352941],"alpha": 1,"hex": "#E66F1E"}},
+      "errorHover": {"$type": "color","$value": {"colorSpace": "srgb","components": [0.9294117647058824,0.6039215686274509,0.3803921568627451],"alpha": 1,"hex": "#ED9A61"}},
+      "errorSelect": {"$type": "color","$value": {"colorSpace": "srgb","components": [0.7686274509803922,0.3686274509803922,0.10196078431372549],"alpha": 1,"hex": "#C45E1A"}},
+      "errorSoft": {"$type": "color","$value": {"colorSpace": "srgb","components": [0.984313725490196,0.9176470588235294,0.8666666666666667],"alpha": 1,"hex": "#FBEADD"}},
+      "errorSoftHover": {"$type": "color","$value": {"colorSpace": "srgb","components": [0.984313725490196,0.9176470588235294,0.8666666666666667],"alpha": 1,"hex": "#FBEADD"}},
+      "errorSoftSelect": {"$type": "color","$value": {"colorSpace": "srgb","components": [0.8392156862745098,0.7803921568627451,0.7372549019607844],"alpha": 1,"hex": "#D6C7BC"}},
+      "warning": {"$type": "color","$value": {"colorSpace": "srgb","components": [0.9019607843137255,0.6862745098039216,0.09803921568627451],"alpha": 1,"hex": "#E6AF19"}},
+      "warningHover": {"$type": "color","$value": {"colorSpace": "srgb","components": [0.9294117647058824,0.7803921568627451,0.3686274509803922],"alpha": 1,"hex": "#EDC75E"}},
+      "warningSelect": {"$type": "color","$value": {"colorSpace": "srgb","components": [0.7686274509803922,0.5843137254901961,0.08235294117647059],"alpha": 1,"hex": "#C49515"}},
+      "warningSoft": {"$type": "color","$value": {"colorSpace": "srgb","components": [0.9647058823529412,0.9372549019607843,0.8627450980392157],"alpha": 1,"hex": "#F6EFDC"}},
+      "warningSoftHover": {"$type": "color","$value": {"colorSpace": "srgb","components": [0.9882352941176471,0.9647058823529412,0.9058823529411765],"alpha": 1,"hex": "#FCF6E7"}},
+      "warningSoftSelect": {"$type": "color","$value": {"colorSpace": "srgb","components": [0.8392156862745098,0.8117647058823529,0.7372549019607844],"alpha": 1,"hex": "#D6CFBC"}},
+      "zebraPrintWhite": {"$type": "color","$value": "{Color/neutral/gray-10}"},
+      "zebraPrintGrey": {"$type": "color","$value": "{Color/neutral/gray-60}"},
+      "activeBrand": {"$type": "color","$value": "{Color/highlight/purple-10}"},
+      "disabledBrand": {"$type": "color","$value": "{Color/highlight/purple-30}"},
+      "hoverbrand": {"$type": "color","$value": "{Color/highlight/purple-20}"}
+    },
+    "text": {
+      "primary": {"$type": "color","$value": "{Color/neutral/gray-90}","$description": "页面主要文字、标题、核心数据"},
+      "secondary": {"$type": "color","$value": "{Color/neutral/gray-55}","$description": "次级说明、辅助信息"},
+      "tertiary": {"$type": "color","$value": "{Color/neutral/gray-40}","$description": "弱化信息、注释、时间等"},
+      "disabled": {"$type": "color","$value": "{Color/neutral/gray-30}","$description": "禁用状态文字"},
+      "active-brand": {"$type": "color","$value": "{Color/highlight/purple-100}","$description": "禁用状态文字"},
+      "active-brand-hover": {"$type": "color","$value": "{Color/highlight/purple-muted}","$description": "禁用状态文字"},
+      "waring": {"$type": "color","$value": "{Color/functional/red/red-55}","$description": "禁用状态文字"},
+      "waring-hover": {"$type": "color","$value": "{Color/functional/red/red-42}","$description": "禁用状态文字"},
+      "invert": {"$type": "color","$value": "{Color/neutral/gray-0}"},
+      "unit": {"$type": "color","$value": "{Color/neutral/gray-65}"}
+    },
+    "border": {
+      "primary": {"$type": "color","$value": "{Color/neutral/gray-30}","$description": "页面主要文字、标题、核心数据"},
+      "secondary": {"$type": "color","$value": "{Color/neutral/gray-25}","$description": "次级说明、辅助信息"},
+      "tertiary": {"$type": "color","$value": "{Color/neutral/gray-20}","$description": "弱化信息、注释、时间等"},
+      "quaternary": {"$type": "color","$value": "{Color/neutral/gray-10}","$description": "弱化信息、注释、时间等"},
+      "disabled": {"$type": "color","$value": "{Color/neutral/gray-30}","$description": "禁用状态文字"},
+      "hover": {"$type": "color","$value": "{Color/neutral/gray-90}"},
+      "active-brand": {"$type": "color","$value": "{Color/highlight/purple-100}"},
+      "active-black": {"$type": "color","$value": "{Color/neutral/gray-90}"},
+      "link": {"$type": "color","$value": "{Color/neutral/gray-90}"},
+      "axis": {"$type": "color","$value": "{Color/neutral/gray-25}"},
+      "grid": {"$type": "color","$value": "{Color/neutral/gray-10}"},
+      "waring": {"$type": "color","$value": "{Color/functional/red/red-55}","$description": "禁用状态文字"}
+    },
+    "icon": {
+      "primary": {"$type": "color","$value": "{Color/neutral/gray-90}","$description": "页面主要文字、标题、核心数据"},
+      "secondary": {"$type": "color","$value": "{Color/neutral/gray-65}","$description": "次级说明、辅助信息"},
+      "tertiary": {"$type": "color","$value": "{Color/neutral/gray-55}","$description": "弱化信息、注释、时间等"},
+      "lowest": {"$type": "color","$value": "{Color/neutral/gray-30}","$description": "弱化信息、注释、时间等"},
+      "placeholder": {"$type": "color","$value": "{Color/neutral/gray-55}"},
+      "disabled": {"$type": "color","$value": "{Color/neutral/gray-45}","$description": "禁用状态文字"},
+      "invert": {"$type": "color","$value": "{Color/neutral/gray-0}"},
+      "operation": {"$type": "color","$value": "{Color/neutral/gray-75}"},
+      "active-brand": {"$type": "color","$value": "{Color/highlight/purple-100}"},
+      "waring": {"$type": "color","$value": "{Color/functional/red/red-55}","$description": "禁用状态文字"}
+    },
+    "accent": {
+      "primary": {"$type": "color","$value": "{Color/highlight/purple-100}"},
+      "soft": {"$type": "color","$value": "{Color/highlight/purple-10}"},
+      "hover": {"$type": "color","$value": "{Color/highlight/purple-90}"},
+      "pressed": {"$type": "color","$value": "{Color/highlight/purple-deep-2}"},
+      "disabled": {"$type": "color","$value": "{Color/highlight/purple-30}"},
+      "invert": {"$type": "color","$value": "{Color/highlight/purple-5}"}
+    },
+    "status": {
+      "production": {"$type": "color","$value": "{Color/highlight/purple-50}","$description": "高亮强调文本"},
+      "waiting": {"$type": "color","$value": "{Color/neutral/gray-25}","$description": "高亮强调文本"},
+      "process": {"$type": "color","$value": "{Color/neutral/gray-25}","$description": "高亮强调文本"},
+      "process-soft": {"$type": "color","$value": "{Color/neutral/gray-25}","$description": "高亮强调文本"},
+      "success": {"$type": "color","$value": "{Color/functional/green/green-10}","$description": "成功状态文字"},
+      "success-soft": {"$type": "color","$value": "{Color/functional/green/green-55}","$description": "成功状态文字"},
+      "emphsis": {"$type": "color","$value": "{Color/highlight/purple-100}","$description": "高亮强调文本"},
+      "warning": {"$type": "color","$value": "{Color/functional/yellow}","$description": "警告状态文字"},
+      "warning-soft": {"$type": "color","$value": "{Color/functional/yellow-subtle}","$description": "警告状态文字"},
+      "alarm": {"$type": "color","$value": "{Color/functional/red/red-55}","$description": "警告状态文字"},
+      "alarm-soft": {"$type": "color","$value": "{Color/functional/red/red-8}","$description": "警告状态文字"},
+      "alarm-hover": {"$type": "color","$value": "{Color/functional/red/red-42}","$description": "警告状态文字"},
+      "alarm-pressed": {"$type": "color","$value": "{Color/functional/red/red-55}","$description": "警告状态文字"},
+      "error": {"$type": "color","$value": "{Color/functional/red/red-55}","$description": "错误、危险状态文字"},
+      "error-soft": {"$type": "color","$value": "{Color/functional/red/red-8}","$description": "错误、危险状态文字"}
+    }
+  },
+  "typography": {
+    "fontfamily": {
+      "HarmonyOS Sans": {"$type": "string","$value": "{font_family/HarmonyOS Sans}"},
+      "HarmonyOS Sans SC": {"$type": "string","$value": "{font_family/HarmonyOS Sans SC}"}
+    },
+    "fontsize": {
+      "heading": {
+        "heading1": {"$type": "number","$value": "{typography/fontsize/06}"},
+        "heading2": {"$type": "number","$value": "{typography/fontsize/04}"},
+        "heading3": {"$type": "number","$value": "{typography/fontsize/03}"},
+        "heading4": {"$type": "number","$value": "{typography/fontsize/02}"}
+      },
+      "subtitle": {
+        "formlabel": {"$type": "number","$value": "{typography/fontsize/04}"},
+        "SubTitle": {"$type": "number","$value": "{typography/fontsize/03}"}
+      },
+      "display": {
+        "Navigation": {"$type": "number","$value": "{typography/fontsize/03}"},
+        "large": {"$type": "number","$value": "{typography/fontsize/10}"}
+      },
+      "body": {
+        "Emphasis": {"$type": "number","$value": "{typography/fontsize/02}"},
+        "default": {"$type": "number","$value": "{typography/fontsize/02}"},
+        "compact": {"$type": "number","$value": "{typography/fontsize/02}"}
+      },
+      "label": {
+        "Default": {"$type": "number","$value": "{typography/fontsize/02}"},
+        "Emphasis": {"$type": "number","$value": "{typography/fontsize/02}"},
+        "DefualtAuxiliary": {"$type": "number","$value": "{typography/fontsize/01}"},
+        "CompactAuxiliary": {"$type": "number","$value": "{typography/fontsize/01}"}
+      },
+      "Data": {
+        "Unit": {"$type": "number","$value": "{typography/fontsize/02}"},
+        "EmphasisUnit": {"$type": "number","$value": "{typography/fontsize/02}"},
+        "CompactUnit": {"$type": "number","$value": "{typography/fontsize/02}"},
+        "numeric": {"$type": "number","$value": "{typography/fontsize/02}"}
+      }
+    },
+    "lineheight": {
+      "heading": {
+        "heading1": {"$type": "number","$value": "{typography/lineheight/default/07}"},
+        "heading2": {"$type": "number","$value": "{typography/lineheight/default/04}"},
+        "heading3": {"$type": "number","$value": "{typography/lineheight/default/03}"},
+        "heading4": {"$type": "number","$value": "{typography/lineheight/default/02}"}
+      },
+      "Subtitle": {
+        "formlabel": {"$type": "number","$value": "{typography/lineheight/default/04}"},
+        "SubTitle": {"$type": "number","$value": "{typography/lineheight/default/03}"},
+        "subTitle-compact": {"$type": "number","$value": "{typography/lineheight/compact/03}"},
+        "subTitle-medium": {"$type": "number","$value": "{typography/lineheight/compact/07}"}
+      },
+      "display": {
+        "Navigation": {"$type": "number","$value": "{typography/lineheight/default/03}"},
+        "large": {"$type": "number","$value": "{typography/lineheight/default/11}"}
+      },
+      "body": {
+        "Emphasis": {"$type": "number","$value": "{typography/lineheight/default/02}"},
+        "default": {"$type": "number","$value": "{typography/lineheight/default/02}"},
+        "compact": {"$type": "number","$value": "{typography/lineheight/compact/02}"}
+      },
+      "label": {
+        "Default": {"$type": "number","$value": "{typography/lineheight/default/02}"},
+        "Emphasis": {"$type": "number","$value": "{typography/lineheight/default/02}"},
+        "DefualtAuxiliary": {"$type": "number","$value": "{typography/lineheight/default/01}"},
+        "CompactAuxiliary": {"$type": "number","$value": "{typography/lineheight/compact/01}"}
+      },
+      "Data": {
+        "Unit": {"$type": "number","$value": "{typography/lineheight/default/02}"},
+        "EmphasisUnit": {"$type": "number","$value": "{typography/lineheight/compact/02}"},
+        "CompactUnit": {"$type": "number","$value": "{typography/lineheight/compact/02}"},
+        "numeric": {"$type": "number","$value": "{typography/lineheight/compact/02}"}
+      }
+    },
+    "fontweight": {
+      "body": {"$type": "number","$value": "{font_weight/regular}","$description": "正文、说明、日志"},
+      "subemphasis": {"$type": "number","$value": "{font_weight/medium}","$description": "正文局部强调、数据值"},
+      "heading": {"$type": "number","$value": "{font_weight/semibold}"},
+      "labelStrong": {"$type": "number","$value": "{font_weight/semibold}"},
+      "emphasis": {"$type": "number","$value": "{font_weight/bold}"},
+      "titleStrong": {"$type": "number","$value": "{font_weight/bold}"},
+      "display": {"$type": "number","$value": "{font_weight/bold}"}
+    },
+    "letterspacing": {
+      "normal": {"$type": "number","$value": "{letter_spacing/normal}"}
+    }
+  },
+  "border_width": {
+    "none": {"$type": "number","$value": "{line_width/none}","$description": "无边框、取消默认边界"},
+    "divider-subtle": {"$type": "number","$value": "{line_width/050}","$description": "弱分割线、表格内部辅助线"},
+    "divider-default": {"$type": "number","$value": "{line_width/075}","$description": "常规信息分割线"},
+    "boundary-default": {"$type": "number","$value": "{line_width/100}","$description": "容器、面板、输入控件的常规边界"},
+    "boundary-strong": {"$type": "number","$value": "{line_width/125}","$description": "需要加强但不突出的结构边界"},
+    "control-emphasis": {"$type": "number","$value": "{line_width/150}","$description": "强调型输入框、按钮或可操作控件边界"},
+    "control-emphasisLg": {"$type": "number","$value": "{line_width/175}","$description": "强调型输入框、按钮或可操作控件边界"},
+    "focus-ring": {"$type": "number","$value": "{line_width/200}","$description": "强调型输入框、按钮或可操作控件边界"},
+    "selection-ring": {"$type": "number","$value": "{line_width/250}","$description": "画布对象、节点、工位的选中轮廓"},
+    "status-emphasis": {"$type": "number","$value": "{line_width/300}","$description": "警告、错误、运行中等高优先级状态轮廓"},
+    "highlight-ring": {"$type": "number","$value": "{line_width/400}","$description": "强引导、高亮定位、临时教学指示"}
+  },
+  "opacity": {
+    "surface": {"$type": "number","$value": "{opacity/100}","$description": "完全不透明背景"},
+    "tooltip-chart": {"$type": "number","$value": "{opacity/90}"},
+    "tooltip-cemera": {"$type": "number","$value": "{opacity/80}","$description": "深色模式强遮罩"},
+    "overlay": {"$type": "number","$value": "{opacity/50}"},
+    "maskImage": {"$type": "number","$value": "{opacity/50}"},
+    "invisible": {"$type": "number","$value": "{opacity/0}","$description": "完全隐藏、透明占位"},
+    "content": {
+      "muted": {"$type": "number","$value": "{opacity/60}","$description": "弱提示、非重点内容"},
+      "secondary": {"$type": "number","$value": "{opacity/30}","$description": "次级文字、次级图标"},
+      "primary": {"$type": "number","$value": "{opacity/100}","$description": "主要文字、图标、正常组件"}
+    },
+    "state": {
+      "hover": {"$type": "number","$value": "{opacity/5}","$description": "浅色背景上的 Hover 状态蒙层"},
+      "selected": {"$type": "number","$value": "{opacity/10}","$description": "选中状态、轻量高亮"},
+      "pressed": {"$type": "number","$value": "{opacity/15}","$description": "Pressed、Active 状态蒙层"},
+      "dragged": {"$type": "number","$value": "{opacity/20}","$description": "拖拽状态、较强交互反馈"},
+      "subtle": {"$type": "number","$value": "{opacity/30}","$description": "装饰线、辅助图形、水印"}
+    }
+  },
+  "radius": {
+    "control-none": {"$type": "number","$value": "{radius/none-0}","$description": "控件默认圆角"},
+    "control-min": {"$type": "number","$value": "{radius/min-1}","$description": "控件默认圆角"},
+    "control-sm": {"$type": "number","$value": "{radius/sm-2}","$description": "控件默认圆角"},
+    "control-default": {"$type": "number","$value": "{radius/md-4}","$description": "控件默认圆角"},
+    "card-default": {"$type": "number","$value": "{radius/lg-8}","$description": "卡片默认圆角"},
+    "container-sharp": {"$type": "number","$value": "{radius/none-0}","$description": "控件默认圆角"},
+    "container-md": {"$type": "number","$value": "{radius/md-4}","$description": "控件默认圆角"},
+    "container-lg": {"$type": "number","$value": "{radius/bg-16}","$description": "控件默认圆角"},
+    "container-default": {"$type": "number","$value": "{radius/xxl-24}","$description": "控件默认圆角"},
+    "container-full": {"$type": "number","$value": "{radius/full}","$description": "控件默认圆角"}
+  },
+  "size": {
+    "interaction": {
+      "indicator": {"$type": "number","$value": "{size/interaction/c-01}","$description": "开关滑块、状态点、大组件内部小结构"},
+      "embedded": {"$type": "number","$value": "{size/interaction/c-02}","$description": "控件内图标、嵌入式操作图标"},
+      "compact": {"$type": "number","$value": "{size/interaction/c-03}","$description": "紧凑表格操作、密集工具栏"},
+      "default": {"$type": "number","$value": "{size/interaction/c-04}","$description": "默认按钮、输入框、下拉框"},
+      "comfortable": {"$type": "number","$value": "{size/interaction/c-05}","$description": "主要表单、常规操作区"},
+      "large": {"$type": "number","$value": "{size/interaction/c-06}","$description": "重点操作、较大工具栏"},
+      "prominent": {"$type": "number","$value": "{size/interaction/c-07}","$description": "关键操作、触控或大尺寸入口"}
+    },
+    "visualization": {
+      "xs": {"$type": "number","$value": "{size/visualization/v-01}","$description": "状态辅助图标"},
+      "sm": {"$type": "number","$value": "{size/visualization/v-02}","$description": "输入框、按钮默认图标"},
+      "md": {"$type": "number","$value": "{size/visualization/v-03}","$description": "导航、工具栏"},
+      "lg": {"$type": "number","$value": "{size/visualization/v-04}","$description": "主要功能入口"},
+      "xl": {"$type": "number","$value": "{size/visualization/v-05}","$description": "空状态、卡片图标"},
+      "xxl": {"$type": "number","$value": "{size/visualization/v-06}","$description": "大型状态提示"}
+    }
+  },
+  "spacing": {
+    "horizontal": {
+      "none": {"$type": "number","$value": "{layout/spacing/s00}","$description": "图标角标、紧密状态信息"},
+      "micro": {"$type": "number","$value": "{layout/spacing/s01}","$description": "图标与文字、标题与状态"},
+      "compact": {"$type": "number","$value": "{layout/spacing/s02}","$description": "图标与文字、标题与状态"},
+      "standard": {"$type": "number","$value": "{layout/spacing/s03}","$description": "同组相邻参数项、操作项"},
+      "comfortable": {"$type": "number","$value": "{layout/spacing/s04}","$description": "同一任务组内部"},
+      "spacious": {"$type": "number","$value": "{layout/spacing/s05}","$description": "模块内部的主要内容组"},
+      "expanded": {"$type": "number","$value": "{layout/spacing/s06}","$description": "页面章节、模块之间"},
+      "large": {"$type": "number","$value": "{layout/spacing/s07}","$description": "页面主要功能区域之间"},
+      "section": {"$type": "number","$value": "{layout/spacing/s08}","$description": "最大常规间距"}
+    },
+    "vertical": {
+      "none": {"$type": "number","$value": "{layout/spacing/s00}","$description": "图标角标、紧密状态信息"},
+      "micro": {"$type": "number","$value": "{layout/spacing/s01}","$description": "图标与文字、标题与状态"},
+      "compact": {"$type": "number","$value": "{layout/spacing/s02}","$description": "图标与文字、标题与状态"},
+      "standard": {"$type": "number","$value": "{layout/spacing/s03}","$description": "同组相邻参数项、操作项"},
+      "comfortable": {"$type": "number","$value": "{layout/spacing/s04}","$description": "同一任务组内部"},
+      "spacious": {"$type": "number","$value": "{layout/spacing/s05}","$description": "模块内部的主要内容组"},
+      "expanded": {"$type": "number","$value": "{layout/spacing/s06}","$description": "页面章节、模块之间"},
+      "large": {"$type": "number","$value": "{layout/spacing/s07}","$description": "页面主要功能区域之间"},
+      "section": {"$type": "number","$value": "{layout/spacing/s08}","$description": "最大常规间距"},
+      "section-L": {"$type": "number","$value": "{layout/spacing/s09}","$description": "最大常规间距"},
+      "section-SL": {"$type": "number","$value": "{layout/spacing/s10}","$description": "最大常规间距"}
+    },
+    "section-gap": {"$type": "number","$value": "{dimension/dimension-16}"},
+    "iconText": {"$type": "number","$value": "{spacing/spacing-8}","$description": "图标与文字"},
+    "related": {"$type": "number","$value": "{spacing/spacing-8}","$description": "强相关行内元素"},
+    "default": {"$type": "number","$value": "{spacing/spacing-12}","$description": "默认行内元素"},
+    "separated": {"$type": "number","$value": "{spacing/spacing-16}","$description": "默认行内元素"}
+  },
+  "layout": {
+    "content-gap": {"$type": "number","$value": "{spacing/default}"},
+    "panel-gap": {"$type": "number","$value": "{spacing/default}"},
+    "margin": {
+      "inline": {
+        "micro": {"$type": "number","$value": "{layout/spacing/s01}","$description": "仅用于视觉微调、描边与内容的极小补偿；不得作为常规模块间距"},
+        "tight": {"$type": "number","$value": "{layout/spacing/s02}","$description": "图标角标、紧密状态信息"},
+        "compact": {"$type": "number","$value": "{layout/spacing/s03}","$description": "紧凑工具栏、标签、图标按钮、小型信息块"},
+        "small": {"$type": "number","$value": "{layout/spacing/s04}","$description": "高密度表单、紧凑型按钮、参数项、轻量容器"},
+        "standard": {"$type": "number","$value": "{layout/spacing/s05}","$description": "默认布局基准；常规按钮、输入框、面板和内容容器优先使用"},
+        "comfortable": {"$type": "number","$value": "{layout/spacing/s06}","$description": "中等信息密度面板、工具区、标题与内容区域"},
+        "spacious": {"$type": "number","$value": "{layout/spacing/s07}","$description": "页面章节、大型功能区域、主工作区与辅助区的强分隔"},
+        "section": {"$type": "number","$value": "{layout/spacing/s08}","$description": "页面章节、大型功能区域、主工作区与辅助区的强分隔"},
+        "expanded": {"$type": "number","$value": "{layout/spacing/s09}","$description": "大型画布、低密度展示页或特殊宽松布局；不建议用于普通控件"},
+        "large": {"$type": "number","$value": "{layout/spacing/s10}","$description": "超大间距"}
+      },
+      "block": {
+        "micro": {"$type": "number","$value": "{layout/spacing/s01}","$description": "仅用于视觉微调、描边与内容的极小补偿；不得作为常规模块间距"},
+        "tight": {"$type": "number","$value": "{layout/spacing/s02}","$description": "图标角标、紧密状态信息"},
+        "compact": {"$type": "number","$value": "{layout/spacing/s03}","$description": "紧凑工具栏、标签、图标按钮、小型信息块"},
+        "small": {"$type": "number","$value": "{layout/spacing/s04}","$description": "高密度表单、紧凑型按钮、参数项、轻量容器"},
+        "standard": {"$type": "number","$value": "{layout/spacing/s05}","$description": "默认布局基准；常规按钮、输入框、面板和内容容器优先使用"},
+        "comfortable": {"$type": "number","$value": "{layout/spacing/s06}","$description": "中等信息密度面板、工具区、标题与内容区域"},
+        "spacious": {"$type": "number","$value": "{layout/spacing/s07}","$description": "页面章节、大型功能区域、主工作区与辅助区的强分隔"},
+        "section": {"$type": "number","$value": "{layout/spacing/s08}","$description": "页面章节、大型功能区域、主工作区与辅助区的强分隔"},
+        "expanded": {"$type": "number","$value": "{layout/spacing/s09}","$description": "大型画布、低密度展示页或特殊宽松布局；不建议用于普通控件"},
+        "large": {"$type": "number","$value": "{layout/spacing/s10}","$description": "超大间距"}
+      }
+    },
+    "padding": {
+      "inline": {
+        "none": {"$type": "number","$value": "{layout/spacing/s00}","$description": "仅用于视觉微调、描边与内容的极小补偿；不得作为常规模块间距"},
+        "micro": {"$type": "number","$value": "{layout/spacing/s01}","$description": "仅用于视觉微调、描边与内容的极小补偿；不得作为常规模块间距"},
+        "tight": {"$type": "number","$value": "{layout/spacing/s02}","$description": "图标角标、紧密状态信息"},
+        "compact": {"$type": "number","$value": "{layout/spacing/s03}","$description": "紧凑工具栏、标签、图标按钮、小型信息块"},
+        "small": {"$type": "number","$value": "{layout/spacing/s04}","$description": "高密度表单、紧凑型按钮、参数项、轻量容器"},
+        "standard": {"$type": "number","$value": "{layout/spacing/s05}","$description": "默认布局基准；常规按钮、输入框、面板和内容容器优先使用"},
+        "comfortable": {"$type": "number","$value": "{layout/spacing/s06}","$description": "中等信息密度面板、工具区、标题与内容区域"},
+        "spacious": {"$type": "number","$value": "{layout/spacing/s07}","$description": "页面章节、大型功能区域、主工作区与辅助区的强分隔"},
+        "section": {"$type": "number","$value": "{layout/spacing/s08}","$description": "页面章节、大型功能区域、主工作区与辅助区的强分隔"},
+        "expanded": {"$type": "number","$value": "{layout/spacing/s09}","$description": "大型画布、低密度展示页或特殊宽松布局；不建议用于普通控件"},
+        "large": {"$type": "number","$value": "{layout/spacing/s10}","$description": "超大间距"}
+      },
+      "block": {
+        "none": {"$type": "number","$value": "{layout/spacing/s00}","$description": "仅用于视觉微调、描边与内容的极小补偿；不得作为常规模块间距"},
+        "micro": {"$type": "number","$value": "{layout/spacing/s01}","$description": "仅用于视觉微调、描边与内容的极小补偿；不得作为常规模块间距"},
+        "tight": {"$type": "number","$value": "{layout/spacing/s02}","$description": "图标角标、紧密状态信息"},
+        "compact": {"$type": "number","$value": "{layout/spacing/s03}","$description": "紧凑工具栏、标签、图标按钮、小型信息块"},
+        "small": {"$type": "number","$value": "{layout/spacing/s04}","$description": "高密度表单、紧凑型按钮、参数项、轻量容器"},
+        "standard": {"$type": "number","$value": "{layout/spacing/s05}","$description": "默认布局基准；常规按钮、输入框、面板和内容容器优先使用"},
+        "comfortable": {"$type": "number","$value": "{layout/spacing/s06}","$description": "中等信息密度面板、工具区、标题与内容区域"},
+        "spacious": {"$type": "number","$value": "{layout/spacing/s07}","$description": "页面章节、大型功能区域、主工作区与辅助区的强分隔"},
+        "section": {"$type": "number","$value": "{layout/spacing/s08}","$description": "页面章节、大型功能区域、主工作区与辅助区的强分隔"},
+        "expanded": {"$type": "number","$value": "{layout/spacing/s09}","$description": "大型画布、低密度展示页或特殊宽松布局；不建议用于普通控件"},
+        "large": {"$type": "number","$value": "{layout/spacing/s10}","$description": "超大间距"}
+      }
+    },
+    "viewport": {
+      "designWidth": {"$type": "number","$value": "{layout/viewport/width}"},
+      "designHeight": {"$type": "number","$value": "{layout/viewport/height}"},
+      "grid": {
+        "columnCount": {"$type": "number","$value": "{layout/grid/column-count}"},
+        "gutter": {"$type": "number","$value": "{layout/grid/gutter}"},
+        "marginInline": {"$type": "number","$value": "{dimension/dimension-20}"}
+      }
+    }
+  }
+}

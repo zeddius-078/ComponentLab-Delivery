@@ -1,0 +1,63 @@
+{
+  "$description": "Read-only design variable capacity audit. This is an adapter measurement artifact, not a Token source.",
+  "$schemaVersion": "1.0",
+  "status": "capacity-unverified",
+  "capturedAt": "2026-10-19",
+  "sourceManifest": "../../source/v2-source-manifest.json",
+  "modelBaselineDesignSourceTokenCount": 634,
+  "designSourceTokenCount": 639,
+  "designSourceCountStatus": "reconciliation-required",
+  "runtimeExpandedCount": 7153,
+  "componentMeasurements": {
+    "button": {
+      "designSourceTokenCount": 111,
+      "modelBaselineDesignSourceTokenCount": 106,
+      "designSourceCountStatus": "reconciliation-required",
+      "observedVariableCount": 887,
+      "variantCount": 132,
+      "variantCountStatus": "verified",
+      "variantCountIsNotMappingBaseline": false,
+      "runtimeExpandedCount": 4998,
+      "sourceBreakdown": {
+        "base": 78,
+        "necessaryOverrides": 28
+      },
+      "overExpansionEvidence": {
+        "label": {
+          "observedVariableCount": 636,
+          "distinctResolvedValueCount": 13
+        },
+        "content": {
+          "observedVariableCount": 108,
+          "distinctResolvedValueCount": 8
+        },
+        "icon": {
+          "observedVariableCount": 42,
+          "distinctResolvedValueCount": 3
+        }
+      }
+    }
+  },
+  "collections": [
+    {
+      "name": "DSM/Component",
+      "platforms": {
+        "Figma": {
+          "observedVariableCount": 2229,
+          "platformHardMax": 5000,
+          "status": "verified"
+        },
+        "Pixso": {
+          "observedVariableCount": null,
+          "platformHardMax": null,
+          "status": "capacity-unverified"
+        }
+      }
+    }
+  ],
+  "measurementPolicy": {
+    "figma": "Read actual variables from the target collection without writing changes.",
+    "pixso": "Measure the target workspace or run a minimal import probe before publication.",
+    "designSourceIsNotRewritten": true
+  }
+}

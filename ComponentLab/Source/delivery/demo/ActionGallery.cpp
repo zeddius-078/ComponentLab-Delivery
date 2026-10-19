@@ -3,7 +3,6 @@
 #include "CommandLinkAppearance.h"
 #include "ToolButtonAppearance.h"
 #include "DialogButtonBoxAppearance.h"
-#include "ButtonAppearanceAdapter.h"
 #include "Z_PushButton.h"
 #include <QDialogButtonBox>
 #include <QLayout>
@@ -101,10 +100,6 @@ QWidget* createActionGallery(const QString& pageId,
                                    : commonWidget::ButtonType::Default);
                     b->setDanger(role == QDialogButtonBox::DestructiveRole);
                     b->setSize(commonWidget::ButtonSize::M);
-                    QString error;
-                    if (!factory->apply(b, "ButtonAppearanceAdapter.setAppearance", "figma-light",
-                                        &error))
-                        throw std::runtime_error(error.toStdString());
                     b->setProperty("figmaPreviewState", "default");
                     b->setProperty("figmaNodeId", child[0].toString());
                     box->addButton(b, role);
@@ -184,13 +179,13 @@ QWidget* createActionGallery(const QString& pageId,
             label->setGeometry(bounds(node));
             label->setTextFormat(Qt::PlainText);
             const bool heading = node[1].toString().startsWith("Component set");
-            QFont font("Inter");
+            QFont font("HarmonyOS Sans");
             font.setPixelSize(key ? 12 : heading ? 22 : 13);
             font.setWeight(key || heading ? QFont::DemiBold : QFont::Normal);
             label->setFont(font);
             label->setStyleSheet(
                 QString(
-                    "background:transparent;border:0;color:%1;font-family:'Inter';font-size:%2px;")
+                    "background:transparent;border:0;color:%1;font-family:'HarmonyOS Sans';font-size:%2px;")
                     .arg(key       ? "#505868"
                          : heading ? "#202124"
                                    : "#666666")

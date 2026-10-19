@@ -1,0 +1,144 @@
+{
+  "$registry": {
+    "component": "select",
+    "version": "2.0"
+  },
+  "shared": {
+    "base/size/large/slot/container/min-height": {
+      "$type": "dimension",
+      "$value": "{semantic.interaction-size.large}",
+      "$description": "Recovered from legacy V2 layer component.select.size.large.container.min-height",
+      "$sourceOwner": "old-tree-recovery",
+      "unit": "px"
+    },
+    "base/size/medium/slot/container/min-height": {
+      "$type": "dimension",
+      "$value": "{semantic.interaction-size.default}",
+      "$description": "Recovered from legacy V2 layer component.select.size.medium.container.min-height",
+      "$sourceOwner": "old-tree-recovery",
+      "unit": "px"
+    },
+    "base/size/small/slot/container/min-height": {
+      "$type": "dimension",
+      "$value": "{semantic.interaction-size.embedded}",
+      "$description": "Recovered from legacy V2 layer component.select.size.small.container.min-height",
+      "$sourceOwner": "old-tree-recovery",
+      "unit": "px"
+    },
+    "base/state/default/slot/border/color": {
+      "$type": "color",
+      "$value": "{semantic.color.border.default}",
+      "$description": "Recovered from legacy V2 layer component.select.base.default.border.color",
+      "$sourceOwner": "old-tree-recovery"
+    },
+    "base/state/default/slot/container/background-color": {
+      "$type": "color",
+      "$value": "{semantic.color.background.page}",
+      "$description": "Recovered from legacy V2 layer component.select.base.default.container.background-color",
+      "$sourceOwner": "old-tree-recovery"
+    },
+    "base/state/default/slot/container/min-height": {
+      "$type": "dimension",
+      "$value": "{semantic.interaction-size.default}",
+      "$description": "Recovered from legacy V2 layer component.select.base.default.container.min-height",
+      "$sourceOwner": "old-tree-recovery",
+      "unit": "px"
+    },
+    "base/state/default/slot/container/radius": {
+      "$type": "borderRadius",
+      "$value": "{semantic.radius.control-default}",
+      "$description": "Recovered from legacy V2 layer component.select.base.default.container.radius",
+      "$sourceOwner": "old-tree-recovery",
+      "unit": "px"
+    },
+    "base/state/default/slot/content/color": {
+      "$type": "color",
+      "$value": "{semantic.color.text.primary}",
+      "$description": "Recovered from legacy V2 layer component.select.base.default.content.color",
+      "$sourceOwner": "old-tree-recovery"
+    },
+    "base/state/default/slot/content/font-weight": {
+      "$type": "fontWeight",
+      "$value": "{semantic.typography.font-weight.body}",
+      "$description": "Recovered from legacy V2 layer component.select.base.default.content.font-weight",
+      "$sourceOwner": "old-tree-recovery"
+    },
+    "base/state/default/slot/content/letter-spacing": {
+      "$type": "letterSpacing",
+      "$value": "{semantic.typography.letter-spacing.default}",
+      "$description": "Recovered from legacy V2 layer component.select.base.default.content.letter-spacing",
+      "$sourceOwner": "old-tree-recovery",
+      "unit": "px"
+    },
+    "base/state/default/slot/option-item/font-weight": {
+      "$type": "fontWeight",
+      "$value": "{semantic.typography.font-weight.body}",
+      "$description": "Recovered from legacy V2 layer component.select.option.base.label.font-weight",
+      "$sourceOwner": "old-tree-recovery"
+    },
+    "base/state/default/slot/option-item/letter-spacing": {
+      "$type": "letterSpacing",
+      "$value": "{semantic.typography.letter-spacing.default}",
+      "$description": "Recovered from legacy V2 layer component.select.option.base.label.letter-spacing",
+      "$sourceOwner": "old-tree-recovery",
+      "unit": "px"
+    },
+    "base/state/default/slot/placeholder/color": {
+      "$type": "color",
+      "$value": "{semantic.color.text.tertiary}",
+      "$description": "Recovered from legacy V2 layer component.select.base.default.placeholder.color",
+      "$sourceOwner": "old-tree-recovery"
+    },
+    "base/state/default/slot/popup/radius": {
+      "$type": "borderRadius",
+      "$value": "{semantic.radius.control-default}",
+      "$description": "Recovered from legacy V2 layer component.select.option.base.container.radius",
+      "$sourceOwner": "old-tree-recovery",
+      "unit": "px"
+    },
+    "base/state/default/slot/tag/radius": {
+      "$type": "borderRadius",
+      "$value": "{semantic.radius.control-default}",
+      "$description": "Recovered from legacy V2 layer component.select.tag.base.container.radius",
+      "$sourceOwner": "old-tree-recovery",
+      "unit": "px"
+    },
+    "base/state/disabled/slot/content/color": {
+      "$type": "color",
+      "$value": "{semantic.color.text.disabled}",
+      "$description": "Recovered from legacy V2 layer component.select.base.disabled.content.color",
+      "$sourceOwner": "old-tree-recovery"
+    },
+    "base/state/error/slot/border/color": {
+      "$type": "color",
+      "$value": "{semantic.color.status.danger.default}",
+      "$description": "Recovered from legacy V2 layer component.select.base.error.border.color",
+      "$sourceOwner": "old-tree-recovery"
+    },
+    "base/state/focused/slot/border/color": {
+      "$type": "color",
+      "$value": "{semantic.color.interactive.brand.focus-ring}",
+      "$description": "Recovered from legacy V2 layer component.select.base.focused.border.color",
+      "$sourceOwner": "old-tree-recovery"
+    },
+    "base/state/focused/slot/focus-ring/preview-color": {
+      "$type": "color",
+      "$value": "{primitive.color.highlight.purple-10}",
+      "$description": "Recovered from legacy V2 layer component.select.base.focused.focus-ring.preview-color",
+      "$sourceOwner": "old-tree-recovery"
+    },
+    "base/state/hover/slot/border/color": {
+      "$type": "color",
+      "$value": "{semantic.color.border.hover}",
+      "$description": "Recovered from legacy V2 layer component.select.base.hover.border.color",
+      "$sourceOwner": "old-tree-recovery"
+    },
+    "base/state/selected/slot/option-item/font-weight": {
+      "$type": "fontWeight",
+      "$value": "{semantic.typography.font-weight.label-strong}",
+      "$description": "Recovered from legacy V2 layer component.select.option.selected.label.font-weight",
+      "$sourceOwner": "old-tree-recovery"
+    }
+  },
+  "overrides": []
+}

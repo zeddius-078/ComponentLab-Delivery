@@ -1,0 +1,5 @@
+# Every build file is disposable; durable inputs and examples live in docs.
+/build/
+/待删除-build-20261020/
+__pycache__/
+*.pyc

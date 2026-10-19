@@ -1,0 +1,83 @@
+{
+  "$description": "navigation-bar V2 Component Contract. A fixed two-row navigation shell with a runtime-selected log bar.",
+  "component": "navigation-bar",
+  "version": "2.0",
+  "$status": "draft-v2",
+  "contractKind": "navigation-bar",
+  "registryBindings": {
+    "source": "source/component-registry.json#/components/navigation-bar",
+    "axes": ["state"],
+    "slots": ["container", "utility-row", "navigation-row", "log-bar"],
+    "authority": "component-registry"
+  },
+  "structure": ["container", "utility-row", "navigation-row", "log-bar"],
+  "childComponentBoundary": {
+    "account": ["Avatar", "Label", "Menu"],
+    "utility-actions": ["ToolButton", "Button", "Menu"],
+    "brand": ["Icon", "Label"],
+    "tabs": ["TabWidget.tab-bar"],
+    "page-actions": ["Button", "ToolButton"],
+    "notifications": ["Badge", "ToolButton"],
+    "log-bar": ["Icon", "Label", "Tooltip"]
+  },
+  "stateLayers": {
+    "navigationInteraction": {
+      "owner": "runtime-api",
+      "appliesTo": "interactive-child-slots",
+      "states": ["default", "hover", "pressed", "focused", "disabled"]
+    },
+    "routeSelection": {
+      "owner": "runtime-api",
+      "appliesTo": "tabs",
+      "state": "selected-route"
+    }
+  },
+  "compositionRules": [
+    "Navigation Bar always contains utility-row and navigation-row.",
+    "log-bar is a child structure of navigation-row, not a third top-level row.",
+    "Tabs reuse TabWidget.tab-bar and do not create a parallel Tabs component.",
+    "All account, brand, tab, action, notification and log contents are child components or Slots.",
+    "Row visibility is fixed and is not a design Variant."
+  ],
+  "stateModel": {
+    "states": ["default", "hover", "pressed", "focused", "disabled"],
+    "scope": "interactive-child-slots",
+    "selectedRoute": "runtime-owned",
+    "rowVisibility": "fixed-two-row-structure",
+    "loading": "runtime-owned",
+    "selected": "runtime-route-state-not-component-state"
+  },
+  "logModel": {
+    "types": ["info", "warning", "error", "alarm"],
+    "priority": ["info", "warning", "error", "alarm"],
+    "selection": "runtime-selects-one-active-message",
+    "content": "runtime-or-localized-content-key",
+    "visualRole": "type-icon-and-semantic-color"
+  },
+  "tokenBoundary": {
+    "recipeOwns": [
+      "container background and border",
+      "utility-row height",
+      "navigation-row height",
+      "log-bar height and background"
+    ],
+    "sharedTokenOwners": [
+      "Profile spacing and platform width",
+      "Typography Composite",
+      "Icon",
+      "Button",
+      "ToolButton",
+      "Badge",
+      "Tooltip",
+      "TabWidget"
+    ],
+    "runtimeOwns": [
+      "account data",
+      "route and active tab",
+      "actions and events",
+      "notification count",
+      "log queue and priority selection",
+      "window/platform width"
+    ]
+  }
+}

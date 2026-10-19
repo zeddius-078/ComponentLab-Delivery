@@ -66,7 +66,7 @@ private:
             if(name=="Header title")value=phase==2?"Confirm changes":phase==3?"Complete setup":"Configure device";
             if(name=="Header subtitle")value=kind+"Style · "+phases[phase];
             if(name=="Progress")value=QString("Step %1 of 4").arg(phase+1);
-            QFont font("Inter");font.setPixelSize(text[2].toInt());const auto style=text[1].toObject()["style"].toString();font.setWeight(style=="Semi Bold"?QFont::DemiBold:style=="Medium"?QFont::Medium:QFont::Normal);
+            QFont font("HarmonyOS Sans");font.setPixelSize(text[2].toInt());const auto style=text[1].toObject()["style"].toString();font.setWeight(style=="Semi Bold"?QFont::DemiBold:style=="Medium"?QFont::Medium:QFont::Normal);
             p.setPen(paintColor(n[7].toArray()));p.setFont(font);
             QTextLayout layout(value,font);QTextOption option;option.setWrapMode(text[5]=="WIDTH_AND_HEIGHT"?QTextOption::NoWrap:QTextOption::WrapAtWordBoundaryOrAnywhere);layout.setTextOption(option);
             const double lineHeight=text[3].toObject()["value"].toDouble(QFontMetricsF(font).height());
@@ -83,7 +83,7 @@ private:
 };
 QLabel* label(QWidget* parent,const QString& text,const QRect& geometry,int px,int weight,const QString& color,bool wrap=false) {
     auto* l=new QLabel(text,parent);l->setTextFormat(Qt::PlainText);l->setGeometry(geometry);l->setWordWrap(wrap);l->setAlignment(Qt::AlignTop|Qt::AlignLeft);
-    l->setStyleSheet(QString("background:transparent;border:0;color:%1;font-family:'Inter';font-size:%2px;font-weight:%3;").arg(color).arg(px).arg(weight*8));
+    l->setStyleSheet(QString("background:transparent;border:0;color:%1;font-family:'HarmonyOS Sans';font-size:%2px;font-weight:%3;").arg(color).arg(px).arg(weight*8));
     if(!wrap)l->resize(qMax(l->width(),l->fontMetrics().horizontalAdvance(text)+1),l->height());return l;
 }
 class DemoPage final:public commonWidget::Z_WizardPage {
@@ -133,7 +133,7 @@ void populateWizard(QWizard* wizard) {
 }
 void sourceButtons(QWidget* parent,int phase,const std::shared_ptr<commonWidget::ComponentFactory>& factory) {
     const QStringList texts={"Back",phase==2?"Commit":phase==3?"Finish":"Next","Cancel"};
-    for(int i=0;i<3;++i){auto* b=qobject_cast<commonWidget::Z_PushButton*>(factory->create("commonWidget::Z_PushButton",parent));if(!b)throw std::runtime_error("Canonical Button unavailable");b->setText(texts[i]);b->setType(i==1?commonWidget::ButtonType::Primary:commonWidget::ButtonType::Default);b->setSize(commonWidget::ButtonSize::M);QString error;if(!factory->apply(b,"ButtonAppearanceAdapter.setAppearance","figma-light",&error))throw std::runtime_error(error.toStdString());b->setProperty("figmaPreviewState",i==0&&phase==0?"disabled":"default");if(i==0&&phase==0)b->setEnabled(false);b->setAutoDefault(false);b->setFocusPolicy(Qt::NoFocus);b->setAttribute(Qt::WA_TransparentForMouseEvents);const int width=i==0?57:i==2?70:phase==2?76:phase==3?65:56;b->setFixedSize(width,32);b->move(54+78*i,196);b->setProperty("figmaDesignBounds",b->geometry());}
+    for(int i=0;i<3;++i){auto* b=qobject_cast<commonWidget::Z_PushButton*>(factory->create("commonWidget::Z_PushButton",parent));if(!b)throw std::runtime_error("Canonical Button unavailable");b->setText(texts[i]);b->setType(i==1?commonWidget::ButtonType::Primary:commonWidget::ButtonType::Default);b->setSize(commonWidget::ButtonSize::M);b->setProperty("figmaPreviewState",i==0&&phase==0?"disabled":"default");if(i==0&&phase==0)b->setEnabled(false);b->setAutoDefault(false);b->setFocusPolicy(Qt::NoFocus);b->setAttribute(Qt::WA_TransparentForMouseEvents);const int width=i==0?57:i==2?70:phase==2?76:phase==3?65:56;b->setFixedSize(width,32);b->move(54+78*i,196);b->setProperty("figmaDesignBounds",b->geometry());}
 }
 }
 QWidget* createPageFlowPreview(const QString& sdkClass,const std::shared_ptr<commonWidget::ComponentFactory>& factory,QWidget* parent) {

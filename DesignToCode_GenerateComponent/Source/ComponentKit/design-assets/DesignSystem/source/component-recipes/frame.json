@@ -1,0 +1,25 @@
+{
+  "$registry": {
+    "component": "frame",
+    "version": "2.0"
+  },
+  "$status": "active",
+  "base": {
+    "state": {
+      "default": {
+        "slot": {
+          "line": {
+            "visual-thickness": {
+              "$type": "dimension",
+              "$value": "{primitive.dimension.2}",
+              "$description": "Recovered from legacy V2 layer component.frame.shape.line.visual-thickness",
+              "$sourceOwner": "old-tree-recovery",
+              "unit": "px"
+            }
+          }
+        }
+      }
+    }
+  },
+  "overrides": []
+}

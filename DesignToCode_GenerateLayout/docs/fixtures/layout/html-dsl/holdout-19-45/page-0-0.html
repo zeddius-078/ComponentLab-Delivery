@@ -1,0 +1,1162 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pixso HTML</title>
+  <style>
+@font-face {
+	font-family: 'HarmonyOS Sans SC';
+	font-style: normal;
+	font-weight: 400;
+	src: url(http://localhost:3667/assets/1790210810853/HarmonyOS_Sans_SC_Regular.ttf) format('truetype');
+}
+</style>
+  <script src="js/animation.js"></script>
+  <style>
+:root, 
+[data-collection-12-424-mode="standard-light"] {
+  /* standard-light */
+  --contract-forms-metrics-labelgap: 8px;
+  --derived-qt-forms-md-controlheight: 40px;
+  --contract-forms-metrics-radius: 4px;
+  --contract-forms-palette-muted: rgba(68, 68, 68, 1);
+  --contract-forms-palette-border: rgba(167, 167, 167, 1);
+  --contract-forms-palette-placeholder: rgba(103, 103, 103, 1);
+  --contract-forms-palette-text: rgba(25, 25, 25, 1);
+  --contract-forms-palette-background: rgba(255, 255, 255, 1);
+  --contract-forms-sizes-md-fontsize: 14px;
+  --contract-forms-metrics-labelfontsize: 14px;
+  --contract-forms-metrics-hintfontsize: 12px;
+}
+
+[data-collection-12-424-mode="wide-light"] {
+  /* wide-light */
+  --contract-forms-metrics-labelgap: 8px;
+  --derived-qt-forms-md-controlheight: 40px;
+  --contract-forms-metrics-radius: 4px;
+  --contract-forms-palette-muted: rgba(68, 68, 68, 1);
+  --contract-forms-palette-border: rgba(167, 167, 167, 1);
+  --contract-forms-palette-placeholder: rgba(103, 103, 103, 1);
+  --contract-forms-palette-text: rgba(25, 25, 25, 1);
+  --contract-forms-palette-background: rgba(255, 255, 255, 1);
+  --contract-forms-sizes-md-fontsize: 14px;
+  --contract-forms-metrics-labelfontsize: 14px;
+  --contract-forms-metrics-hintfontsize: 12px;
+}
+
+[data-collection-12-424-mode="standard-dark"] {
+  /* standard-dark */
+  --contract-forms-metrics-labelgap: 8px;
+  --derived-qt-forms-md-controlheight: 40px;
+  --contract-forms-metrics-radius: 4px;
+  --contract-forms-palette-muted: rgba(198, 198, 198, 1);
+  --contract-forms-palette-border: rgba(103, 103, 103, 1);
+  --contract-forms-palette-placeholder: rgba(147, 147, 147, 1);
+  --contract-forms-palette-text: rgba(243, 243, 243, 1);
+  --contract-forms-palette-background: rgba(39, 39, 39, 1);
+  --contract-forms-sizes-md-fontsize: 14px;
+  --contract-forms-metrics-labelfontsize: 14px;
+  --contract-forms-metrics-hintfontsize: 12px;
+}
+
+[data-collection-12-424-mode="wide-dark"] {
+  /* wide-dark */
+  --contract-forms-metrics-labelgap: 8px;
+  --derived-qt-forms-md-controlheight: 40px;
+  --contract-forms-metrics-radius: 4px;
+  --contract-forms-palette-muted: rgba(198, 198, 198, 1);
+  --contract-forms-palette-border: rgba(103, 103, 103, 1);
+  --contract-forms-palette-placeholder: rgba(147, 147, 147, 1);
+  --contract-forms-palette-text: rgba(243, 243, 243, 1);
+  --contract-forms-palette-background: rgba(39, 39, 39, 1);
+  --contract-forms-sizes-md-fontsize: 14px;
+  --contract-forms-metrics-labelfontsize: 14px;
+  --contract-forms-metrics-hintfontsize: 12px;
+}
+
+:root, 
+[data-collection-3-3093-mode="standard-light"] {
+  /* standard-light */
+  --contract-checkbox-checkbox-palette-accent: var(--project-basic-checkbox-state-selected-background);
+  --contract-checkbox-checkbox-palette-text: var(--project-basic-checkbox-text);
+  --contract-checkbox-checkbox-sizes-sm-fontsize: var(--project-basic-checkbox-sizes-sm-fontsize);
+  --contract-checkbox-checkbox-sizes-sm-hittarget: var(--project-basic-checkbox-sizes-sm-hittarget);
+  --contract-checkbox-checkbox-sizes-sm-indicator: var(--project-basic-checkbox-sizes-sm-indicator);
+  --contract-checkbox-checkbox-radius: var(--project-basic-checkbox-radius);
+  --contract-button-materialstates-secondary-disabled-foreground: var(--stoken-button-base-disabled-label-color);
+  --contract-button-materialstates-secondary-disabled-border: var(--stoken-button-base-disabled-border-color);
+  --contract-button-materialstates-secondary-disabled-stops-0-color: var(--stoken-button-base-disabled-container-gradient-stop-01);
+  --contract-button-materialstates-primary-default-foreground: var(--stoken-button-primary-default-label-color);
+  --contract-button-materialstates-primary-default-border: var(--stoken-button-primary-default-border-color);
+  --contract-button-palette-primary: var(--project-color-action-primary);
+  --contract-button-shape-radius: var(--stoken-button-base-default-container-radius);
+  --contract-button-metrics-m-fontsize: var(--stoken-typography-font-size-label-default);
+  --contract-button-metrics-m-gap: var(--stoken-button-icon-text-base-default-container-gap);
+  --contract-button-metrics-m-minimumheight: var(--project-basic-button-size-md-height);
+  --stoken-button-icon-text-base-default-container-gap: var(--stoken-metric-space-horizontal-micro);
+  --stoken-button-base-default-container-radius: var(--stoken-metric-radius-control-default);
+  --stoken-button-primary-default-label-color: var(--stoken-color-text-invert);
+  --stoken-button-primary-default-border-color: var(--stoken-color-highlight-purple-deep-1);
+  --stoken-button-base-disabled-label-color: var(--stoken-color-text-disabled-strong);
+  --stoken-button-base-disabled-border-color: var(--stoken-color-neutral-gray-20);
+  --stoken-button-base-disabled-container-gradient-stop-01: var(--stoken-color-neutral-gray-0);
+  --project-basic-checkbox-text: var(--project-color-text-primary);
+  --project-basic-checkbox-state-selected-background: var(--stoken-selection-control-base-selected-indicator-color);
+  --stoken-selection-control-base-selected-indicator-color: var(--stoken-color-interactive-brand-default);
+  --project-basic-checkbox-radius: var(--stoken-metric-radius-control-default);
+  --project-basic-checkbox-sizes-sm-fontsize: var(--stoken-typography-font-size-body-default);
+  --project-basic-checkbox-sizes-sm-hittarget: 32px;
+  --project-basic-checkbox-sizes-sm-indicator: var(--stoken-selection-control-base-default-indicator-size);
+  --stoken-selection-control-base-default-indicator-size: var(--stoken-metric-visualization-size-sm);
+  --project-basic-button-size-md-height: var(--stoken-button-size-medium-container-min-height);
+  --stoken-button-size-medium-container-min-height: var(--stoken-metric-interaction-size-default);
+}
+
+[data-collection-3-3093-mode="wide-light"] {
+  /* wide-light */
+  --contract-checkbox-checkbox-palette-accent: var(--project-basic-checkbox-state-selected-background);
+  --contract-checkbox-checkbox-palette-text: var(--project-basic-checkbox-text);
+  --contract-checkbox-checkbox-sizes-sm-fontsize: var(--project-basic-checkbox-sizes-sm-fontsize);
+  --contract-checkbox-checkbox-sizes-sm-hittarget: var(--project-basic-checkbox-sizes-sm-hittarget);
+  --contract-checkbox-checkbox-sizes-sm-indicator: var(--project-basic-checkbox-sizes-sm-indicator);
+  --contract-checkbox-checkbox-radius: var(--project-basic-checkbox-radius);
+  --contract-button-materialstates-secondary-disabled-foreground: var(--stoken-button-base-disabled-label-color);
+  --contract-button-materialstates-secondary-disabled-border: var(--stoken-button-base-disabled-border-color);
+  --contract-button-materialstates-secondary-disabled-stops-0-color: var(--stoken-button-base-disabled-container-gradient-stop-01);
+  --contract-button-materialstates-primary-default-foreground: var(--stoken-button-primary-default-label-color);
+  --contract-button-materialstates-primary-default-border: var(--stoken-button-primary-default-border-color);
+  --contract-button-palette-primary: var(--project-color-action-primary);
+  --contract-button-shape-radius: var(--stoken-button-base-default-container-radius);
+  --contract-button-metrics-m-fontsize: var(--stoken-typography-font-size-label-default);
+  --contract-button-metrics-m-gap: var(--stoken-button-icon-text-base-default-container-gap);
+  --contract-button-metrics-m-minimumheight: var(--project-basic-button-size-md-height);
+  --stoken-button-icon-text-base-default-container-gap: var(--stoken-metric-space-horizontal-micro);
+  --stoken-button-base-default-container-radius: var(--stoken-metric-radius-control-default);
+  --stoken-button-primary-default-label-color: var(--stoken-color-text-invert);
+  --stoken-button-primary-default-border-color: var(--stoken-color-highlight-purple-deep-1);
+  --stoken-button-base-disabled-label-color: var(--stoken-color-text-disabled-strong);
+  --stoken-button-base-disabled-border-color: var(--stoken-color-neutral-gray-20);
+  --stoken-button-base-disabled-container-gradient-stop-01: var(--stoken-color-neutral-gray-0);
+  --project-basic-checkbox-text: var(--project-color-text-primary);
+  --project-basic-checkbox-state-selected-background: var(--stoken-selection-control-base-selected-indicator-color);
+  --stoken-selection-control-base-selected-indicator-color: var(--stoken-color-interactive-brand-default);
+  --project-basic-checkbox-radius: var(--stoken-metric-radius-control-default);
+  --project-basic-checkbox-sizes-sm-fontsize: var(--stoken-typography-font-size-body-default);
+  --project-basic-checkbox-sizes-sm-hittarget: 32px;
+  --project-basic-checkbox-sizes-sm-indicator: var(--stoken-selection-control-base-default-indicator-size);
+  --stoken-selection-control-base-default-indicator-size: var(--stoken-metric-visualization-size-sm);
+  --project-basic-button-size-md-height: var(--stoken-button-size-medium-container-min-height);
+  --stoken-button-size-medium-container-min-height: var(--stoken-metric-interaction-size-default);
+}
+
+[data-collection-3-3093-mode="standard-dark"] {
+  /* standard-dark */
+  --contract-checkbox-checkbox-palette-accent: var(--project-basic-checkbox-state-selected-background);
+  --contract-checkbox-checkbox-palette-text: var(--project-basic-checkbox-text);
+  --contract-checkbox-checkbox-sizes-sm-fontsize: var(--project-basic-checkbox-sizes-sm-fontsize);
+  --contract-checkbox-checkbox-sizes-sm-hittarget: var(--project-basic-checkbox-sizes-sm-hittarget);
+  --contract-checkbox-checkbox-sizes-sm-indicator: var(--project-basic-checkbox-sizes-sm-indicator);
+  --contract-checkbox-checkbox-radius: var(--project-basic-checkbox-radius);
+  --contract-button-materialstates-secondary-disabled-foreground: var(--stoken-button-base-disabled-label-color);
+  --contract-button-materialstates-secondary-disabled-border: var(--stoken-button-base-disabled-border-color);
+  --contract-button-materialstates-secondary-disabled-stops-0-color: var(--stoken-button-base-disabled-container-gradient-stop-01);
+  --contract-button-materialstates-primary-default-foreground: var(--stoken-button-primary-default-label-color);
+  --contract-button-materialstates-primary-default-border: var(--stoken-button-primary-default-border-color);
+  --contract-button-palette-primary: var(--project-color-action-primary);
+  --contract-button-shape-radius: var(--stoken-button-base-default-container-radius);
+  --contract-button-metrics-m-fontsize: var(--stoken-typography-font-size-label-default);
+  --contract-button-metrics-m-gap: var(--stoken-button-icon-text-base-default-container-gap);
+  --contract-button-metrics-m-minimumheight: var(--project-basic-button-size-md-height);
+  --stoken-button-icon-text-base-default-container-gap: var(--stoken-metric-space-horizontal-micro);
+  --stoken-button-base-default-container-radius: var(--stoken-metric-radius-control-default);
+  --stoken-button-primary-default-label-color: var(--stoken-color-text-invert);
+  --stoken-button-primary-default-border-color: var(--stoken-color-highlight-purple-deep-1);
+  --stoken-button-base-disabled-label-color: var(--stoken-color-text-disabled-strong);
+  --stoken-button-base-disabled-border-color: var(--stoken-color-neutral-gray-20);
+  --stoken-button-base-disabled-container-gradient-stop-01: var(--stoken-color-neutral-gray-0);
+  --project-basic-checkbox-text: var(--project-color-text-primary);
+  --project-basic-checkbox-state-selected-background: var(--stoken-selection-control-base-selected-indicator-color);
+  --stoken-selection-control-base-selected-indicator-color: var(--stoken-color-interactive-brand-default);
+  --project-basic-checkbox-radius: var(--stoken-metric-radius-control-default);
+  --project-basic-checkbox-sizes-sm-fontsize: var(--stoken-typography-font-size-body-default);
+  --project-basic-checkbox-sizes-sm-hittarget: 32px;
+  --project-basic-checkbox-sizes-sm-indicator: var(--stoken-selection-control-base-default-indicator-size);
+  --stoken-selection-control-base-default-indicator-size: var(--stoken-metric-visualization-size-sm);
+  --project-basic-button-size-md-height: var(--stoken-button-size-medium-container-min-height);
+  --stoken-button-size-medium-container-min-height: var(--stoken-metric-interaction-size-default);
+}
+
+[data-collection-3-3093-mode="wide-dark"] {
+  /* wide-dark */
+  --contract-checkbox-checkbox-palette-accent: var(--project-basic-checkbox-state-selected-background);
+  --contract-checkbox-checkbox-palette-text: var(--project-basic-checkbox-text);
+  --contract-checkbox-checkbox-sizes-sm-fontsize: var(--project-basic-checkbox-sizes-sm-fontsize);
+  --contract-checkbox-checkbox-sizes-sm-hittarget: var(--project-basic-checkbox-sizes-sm-hittarget);
+  --contract-checkbox-checkbox-sizes-sm-indicator: var(--project-basic-checkbox-sizes-sm-indicator);
+  --contract-checkbox-checkbox-radius: var(--project-basic-checkbox-radius);
+  --contract-button-materialstates-secondary-disabled-foreground: var(--stoken-button-base-disabled-label-color);
+  --contract-button-materialstates-secondary-disabled-border: var(--stoken-button-base-disabled-border-color);
+  --contract-button-materialstates-secondary-disabled-stops-0-color: var(--stoken-button-base-disabled-container-gradient-stop-01);
+  --contract-button-materialstates-primary-default-foreground: var(--stoken-button-primary-default-label-color);
+  --contract-button-materialstates-primary-default-border: var(--stoken-button-primary-default-border-color);
+  --contract-button-palette-primary: var(--project-color-action-primary);
+  --contract-button-shape-radius: var(--stoken-button-base-default-container-radius);
+  --contract-button-metrics-m-fontsize: var(--stoken-typography-font-size-label-default);
+  --contract-button-metrics-m-gap: var(--stoken-button-icon-text-base-default-container-gap);
+  --contract-button-metrics-m-minimumheight: var(--project-basic-button-size-md-height);
+  --stoken-button-icon-text-base-default-container-gap: var(--stoken-metric-space-horizontal-micro);
+  --stoken-button-base-default-container-radius: var(--stoken-metric-radius-control-default);
+  --stoken-button-primary-default-label-color: var(--stoken-color-text-invert);
+  --stoken-button-primary-default-border-color: var(--stoken-color-highlight-purple-deep-1);
+  --stoken-button-base-disabled-label-color: var(--stoken-color-text-disabled-strong);
+  --stoken-button-base-disabled-border-color: var(--stoken-color-neutral-gray-20);
+  --stoken-button-base-disabled-container-gradient-stop-01: var(--stoken-color-neutral-gray-0);
+  --project-basic-checkbox-text: var(--project-color-text-primary);
+  --project-basic-checkbox-state-selected-background: var(--stoken-selection-control-base-selected-indicator-color);
+  --stoken-selection-control-base-selected-indicator-color: var(--stoken-color-interactive-brand-default);
+  --project-basic-checkbox-radius: var(--stoken-metric-radius-control-default);
+  --project-basic-checkbox-sizes-sm-fontsize: var(--stoken-typography-font-size-body-default);
+  --project-basic-checkbox-sizes-sm-hittarget: 32px;
+  --project-basic-checkbox-sizes-sm-indicator: var(--stoken-selection-control-base-default-indicator-size);
+  --stoken-selection-control-base-default-indicator-size: var(--stoken-metric-visualization-size-sm);
+  --project-basic-button-size-md-height: var(--stoken-button-size-medium-container-min-height);
+  --stoken-button-size-medium-container-min-height: var(--stoken-metric-interaction-size-default);
+}
+
+[data-collection-3-3093-mode="teal-standard-light"] {
+  /* teal/standard-light */
+  --contract-checkbox-checkbox-palette-accent: var(--project-basic-checkbox-state-selected-background);
+  --contract-checkbox-checkbox-palette-text: var(--project-basic-checkbox-text);
+  --contract-checkbox-checkbox-sizes-sm-fontsize: var(--project-basic-checkbox-sizes-sm-fontsize);
+  --contract-checkbox-checkbox-sizes-sm-hittarget: var(--project-basic-checkbox-sizes-sm-hittarget);
+  --contract-checkbox-checkbox-sizes-sm-indicator: var(--project-basic-checkbox-sizes-sm-indicator);
+  --contract-checkbox-checkbox-radius: var(--project-basic-checkbox-radius);
+  --contract-button-materialstates-secondary-disabled-foreground: var(--stoken-button-base-disabled-label-color);
+  --contract-button-materialstates-secondary-disabled-border: var(--stoken-button-base-disabled-border-color);
+  --contract-button-materialstates-secondary-disabled-stops-0-color: var(--stoken-button-base-disabled-container-gradient-stop-01);
+  --contract-button-materialstates-primary-default-foreground: var(--stoken-button-primary-default-label-color);
+  --contract-button-materialstates-primary-default-border: var(--stoken-button-primary-default-border-color);
+  --contract-button-palette-primary: var(--project-color-action-primary);
+  --contract-button-shape-radius: var(--stoken-button-base-default-container-radius);
+  --contract-button-metrics-m-fontsize: var(--stoken-typography-font-size-label-default);
+  --contract-button-metrics-m-gap: var(--stoken-button-icon-text-base-default-container-gap);
+  --contract-button-metrics-m-minimumheight: var(--project-basic-button-size-md-height);
+  --stoken-button-icon-text-base-default-container-gap: var(--stoken-metric-space-horizontal-micro);
+  --stoken-button-base-default-container-radius: var(--stoken-metric-radius-control-default);
+  --stoken-button-primary-default-label-color: var(--stoken-color-text-invert);
+  --stoken-button-primary-default-border-color: rgba(22, 54, 48, 1);
+  --stoken-button-base-disabled-label-color: var(--stoken-color-text-disabled-strong);
+  --stoken-button-base-disabled-border-color: var(--stoken-color-neutral-gray-20);
+  --stoken-button-base-disabled-container-gradient-stop-01: var(--stoken-color-neutral-gray-0);
+  --project-basic-checkbox-text: var(--project-color-text-primary);
+  --project-basic-checkbox-state-selected-background: var(--stoken-selection-control-base-selected-indicator-color);
+  --stoken-selection-control-base-selected-indicator-color: var(--stoken-color-interactive-brand-default);
+  --project-basic-checkbox-radius: var(--stoken-metric-radius-control-default);
+  --project-basic-checkbox-sizes-sm-fontsize: var(--stoken-typography-font-size-body-default);
+  --project-basic-checkbox-sizes-sm-hittarget: 32px;
+  --project-basic-checkbox-sizes-sm-indicator: var(--stoken-selection-control-base-default-indicator-size);
+  --stoken-selection-control-base-default-indicator-size: 22px;
+  --project-basic-button-size-md-height: var(--stoken-button-size-medium-container-min-height);
+  --stoken-button-size-medium-container-min-height: 40px;
+}
+
+[data-collection-3-3093-mode="teal-wide-light"] {
+  /* teal/wide-light */
+  --contract-checkbox-checkbox-palette-accent: var(--project-basic-checkbox-state-selected-background);
+  --contract-checkbox-checkbox-palette-text: var(--project-basic-checkbox-text);
+  --contract-checkbox-checkbox-sizes-sm-fontsize: var(--project-basic-checkbox-sizes-sm-fontsize);
+  --contract-checkbox-checkbox-sizes-sm-hittarget: var(--project-basic-checkbox-sizes-sm-hittarget);
+  --contract-checkbox-checkbox-sizes-sm-indicator: var(--project-basic-checkbox-sizes-sm-indicator);
+  --contract-checkbox-checkbox-radius: var(--project-basic-checkbox-radius);
+  --contract-button-materialstates-secondary-disabled-foreground: var(--stoken-button-base-disabled-label-color);
+  --contract-button-materialstates-secondary-disabled-border: var(--stoken-button-base-disabled-border-color);
+  --contract-button-materialstates-secondary-disabled-stops-0-color: var(--stoken-button-base-disabled-container-gradient-stop-01);
+  --contract-button-materialstates-primary-default-foreground: var(--stoken-button-primary-default-label-color);
+  --contract-button-materialstates-primary-default-border: var(--stoken-button-primary-default-border-color);
+  --contract-button-palette-primary: var(--project-color-action-primary);
+  --contract-button-shape-radius: var(--stoken-button-base-default-container-radius);
+  --contract-button-metrics-m-fontsize: var(--stoken-typography-font-size-label-default);
+  --contract-button-metrics-m-gap: var(--stoken-button-icon-text-base-default-container-gap);
+  --contract-button-metrics-m-minimumheight: var(--project-basic-button-size-md-height);
+  --stoken-button-icon-text-base-default-container-gap: var(--stoken-metric-space-horizontal-micro);
+  --stoken-button-base-default-container-radius: var(--stoken-metric-radius-control-default);
+  --stoken-button-primary-default-label-color: var(--stoken-color-text-invert);
+  --stoken-button-primary-default-border-color: rgba(22, 54, 48, 1);
+  --stoken-button-base-disabled-label-color: var(--stoken-color-text-disabled-strong);
+  --stoken-button-base-disabled-border-color: var(--stoken-color-neutral-gray-20);
+  --stoken-button-base-disabled-container-gradient-stop-01: var(--stoken-color-neutral-gray-0);
+  --project-basic-checkbox-text: var(--project-color-text-primary);
+  --project-basic-checkbox-state-selected-background: var(--stoken-selection-control-base-selected-indicator-color);
+  --stoken-selection-control-base-selected-indicator-color: var(--stoken-color-interactive-brand-default);
+  --project-basic-checkbox-radius: var(--stoken-metric-radius-control-default);
+  --project-basic-checkbox-sizes-sm-fontsize: var(--stoken-typography-font-size-body-default);
+  --project-basic-checkbox-sizes-sm-hittarget: 32px;
+  --project-basic-checkbox-sizes-sm-indicator: var(--stoken-selection-control-base-default-indicator-size);
+  --stoken-selection-control-base-default-indicator-size: 22px;
+  --project-basic-button-size-md-height: var(--stoken-button-size-medium-container-min-height);
+  --stoken-button-size-medium-container-min-height: 40px;
+}
+
+[data-collection-3-3093-mode="teal-standard-dark"] {
+  /* teal/standard-dark */
+  --contract-checkbox-checkbox-palette-accent: var(--project-basic-checkbox-state-selected-background);
+  --contract-checkbox-checkbox-palette-text: var(--project-basic-checkbox-text);
+  --contract-checkbox-checkbox-sizes-sm-fontsize: var(--project-basic-checkbox-sizes-sm-fontsize);
+  --contract-checkbox-checkbox-sizes-sm-hittarget: var(--project-basic-checkbox-sizes-sm-hittarget);
+  --contract-checkbox-checkbox-sizes-sm-indicator: var(--project-basic-checkbox-sizes-sm-indicator);
+  --contract-checkbox-checkbox-radius: var(--project-basic-checkbox-radius);
+  --contract-button-materialstates-secondary-disabled-foreground: var(--stoken-button-base-disabled-label-color);
+  --contract-button-materialstates-secondary-disabled-border: var(--stoken-button-base-disabled-border-color);
+  --contract-button-materialstates-secondary-disabled-stops-0-color: var(--stoken-button-base-disabled-container-gradient-stop-01);
+  --contract-button-materialstates-primary-default-foreground: var(--stoken-button-primary-default-label-color);
+  --contract-button-materialstates-primary-default-border: var(--stoken-button-primary-default-border-color);
+  --contract-button-palette-primary: var(--project-color-action-primary);
+  --contract-button-shape-radius: var(--stoken-button-base-default-container-radius);
+  --contract-button-metrics-m-fontsize: var(--stoken-typography-font-size-label-default);
+  --contract-button-metrics-m-gap: var(--stoken-button-icon-text-base-default-container-gap);
+  --contract-button-metrics-m-minimumheight: var(--project-basic-button-size-md-height);
+  --stoken-button-icon-text-base-default-container-gap: var(--stoken-metric-space-horizontal-micro);
+  --stoken-button-base-default-container-radius: var(--stoken-metric-radius-control-default);
+  --stoken-button-primary-default-label-color: var(--stoken-color-text-invert);
+  --stoken-button-primary-default-border-color: rgba(22, 54, 48, 1);
+  --stoken-button-base-disabled-label-color: var(--stoken-color-text-disabled-strong);
+  --stoken-button-base-disabled-border-color: var(--stoken-color-neutral-gray-20);
+  --stoken-button-base-disabled-container-gradient-stop-01: var(--stoken-color-neutral-gray-0);
+  --project-basic-checkbox-text: var(--project-color-text-primary);
+  --project-basic-checkbox-state-selected-background: var(--stoken-selection-control-base-selected-indicator-color);
+  --stoken-selection-control-base-selected-indicator-color: var(--stoken-color-interactive-brand-default);
+  --project-basic-checkbox-radius: var(--stoken-metric-radius-control-default);
+  --project-basic-checkbox-sizes-sm-fontsize: var(--stoken-typography-font-size-body-default);
+  --project-basic-checkbox-sizes-sm-hittarget: 32px;
+  --project-basic-checkbox-sizes-sm-indicator: var(--stoken-selection-control-base-default-indicator-size);
+  --stoken-selection-control-base-default-indicator-size: 22px;
+  --project-basic-button-size-md-height: var(--stoken-button-size-medium-container-min-height);
+  --stoken-button-size-medium-container-min-height: 40px;
+}
+
+[data-collection-3-3093-mode="teal-wide-dark"] {
+  /* teal/wide-dark */
+  --contract-checkbox-checkbox-palette-accent: var(--project-basic-checkbox-state-selected-background);
+  --contract-checkbox-checkbox-palette-text: var(--project-basic-checkbox-text);
+  --contract-checkbox-checkbox-sizes-sm-fontsize: var(--project-basic-checkbox-sizes-sm-fontsize);
+  --contract-checkbox-checkbox-sizes-sm-hittarget: var(--project-basic-checkbox-sizes-sm-hittarget);
+  --contract-checkbox-checkbox-sizes-sm-indicator: var(--project-basic-checkbox-sizes-sm-indicator);
+  --contract-checkbox-checkbox-radius: var(--project-basic-checkbox-radius);
+  --contract-button-materialstates-secondary-disabled-foreground: var(--stoken-button-base-disabled-label-color);
+  --contract-button-materialstates-secondary-disabled-border: var(--stoken-button-base-disabled-border-color);
+  --contract-button-materialstates-secondary-disabled-stops-0-color: var(--stoken-button-base-disabled-container-gradient-stop-01);
+  --contract-button-materialstates-primary-default-foreground: var(--stoken-button-primary-default-label-color);
+  --contract-button-materialstates-primary-default-border: var(--stoken-button-primary-default-border-color);
+  --contract-button-palette-primary: var(--project-color-action-primary);
+  --contract-button-shape-radius: var(--stoken-button-base-default-container-radius);
+  --contract-button-metrics-m-fontsize: var(--stoken-typography-font-size-label-default);
+  --contract-button-metrics-m-gap: var(--stoken-button-icon-text-base-default-container-gap);
+  --contract-button-metrics-m-minimumheight: var(--project-basic-button-size-md-height);
+  --stoken-button-icon-text-base-default-container-gap: var(--stoken-metric-space-horizontal-micro);
+  --stoken-button-base-default-container-radius: var(--stoken-metric-radius-control-default);
+  --stoken-button-primary-default-label-color: var(--stoken-color-text-invert);
+  --stoken-button-primary-default-border-color: rgba(22, 54, 48, 1);
+  --stoken-button-base-disabled-label-color: var(--stoken-color-text-disabled-strong);
+  --stoken-button-base-disabled-border-color: var(--stoken-color-neutral-gray-20);
+  --stoken-button-base-disabled-container-gradient-stop-01: var(--stoken-color-neutral-gray-0);
+  --project-basic-checkbox-text: var(--project-color-text-primary);
+  --project-basic-checkbox-state-selected-background: var(--stoken-selection-control-base-selected-indicator-color);
+  --stoken-selection-control-base-selected-indicator-color: var(--stoken-color-interactive-brand-default);
+  --project-basic-checkbox-radius: var(--stoken-metric-radius-control-default);
+  --project-basic-checkbox-sizes-sm-fontsize: var(--stoken-typography-font-size-body-default);
+  --project-basic-checkbox-sizes-sm-hittarget: 32px;
+  --project-basic-checkbox-sizes-sm-indicator: var(--stoken-selection-control-base-default-indicator-size);
+  --stoken-selection-control-base-default-indicator-size: 22px;
+  --project-basic-button-size-md-height: var(--stoken-button-size-medium-container-min-height);
+  --stoken-button-size-medium-container-min-height: 40px;
+}
+
+:root, 
+[data-collection-3-3088-mode="standard-light"] {
+  /* standard-light */
+  --stoken-color-text-disabled-strong: var(--stoken-color-neutral-gray-30);
+  --stoken-metric-space-horizontal-micro: var(--stoken-spacing-scale-01);
+  --stoken-metric-radius-control-default: var(--stoken-radius-md-4);
+  --stoken-metric-visualization-size-sm: var(--stoken-visualization-size-02);
+  --stoken-typography-font-size-label-default: var(--stoken-typography-scale-font-size-02);
+  --stoken-metric-interaction-size-default: var(--stoken-interaction-size-04);
+  --project-color-action-primary: var(--stoken-color-interactive-brand-default);
+  --stoken-color-text-invert: var(--stoken-color-neutral-gray-0);
+  --project-color-text-primary: var(--stoken-color-text-primary);
+  --stoken-color-text-primary: var(--stoken-color-neutral-gray-90);
+  --stoken-color-interactive-brand-default: var(--stoken-color-highlight-purple-100);
+  --stoken-typography-font-size-body-default: var(--stoken-typography-scale-font-size-02);
+}
+
+[data-collection-3-3088-mode="wide-light"] {
+  /* wide-light */
+  --stoken-color-text-disabled-strong: var(--stoken-color-neutral-gray-30);
+  --stoken-metric-space-horizontal-micro: var(--stoken-spacing-scale-01);
+  --stoken-metric-radius-control-default: var(--stoken-radius-md-4);
+  --stoken-metric-visualization-size-sm: var(--stoken-visualization-size-02);
+  --stoken-typography-font-size-label-default: var(--stoken-typography-scale-font-size-02);
+  --stoken-metric-interaction-size-default: var(--stoken-interaction-size-04);
+  --project-color-action-primary: var(--stoken-color-interactive-brand-default);
+  --stoken-color-text-invert: var(--stoken-color-neutral-gray-0);
+  --project-color-text-primary: var(--stoken-color-text-primary);
+  --stoken-color-text-primary: var(--stoken-color-neutral-gray-90);
+  --stoken-color-interactive-brand-default: var(--stoken-color-highlight-purple-100);
+  --stoken-typography-font-size-body-default: var(--stoken-typography-scale-font-size-02);
+}
+
+[data-collection-3-3088-mode="standard-dark"] {
+  /* standard-dark */
+  --stoken-color-text-disabled-strong: var(--stoken-color-neutral-gray-30);
+  --stoken-metric-space-horizontal-micro: var(--stoken-spacing-scale-01);
+  --stoken-metric-radius-control-default: var(--stoken-radius-md-4);
+  --stoken-metric-visualization-size-sm: var(--stoken-visualization-size-02);
+  --stoken-typography-font-size-label-default: var(--stoken-typography-scale-font-size-02);
+  --stoken-metric-interaction-size-default: var(--stoken-interaction-size-04);
+  --project-color-action-primary: var(--stoken-color-interactive-brand-default);
+  --stoken-color-text-invert: var(--stoken-color-neutral-gray-0);
+  --project-color-text-primary: var(--stoken-color-neutral-gray-5);
+  --stoken-color-text-primary: var(--stoken-color-neutral-gray-90);
+  --stoken-color-interactive-brand-default: var(--stoken-color-highlight-purple-100);
+  --stoken-typography-font-size-body-default: var(--stoken-typography-scale-font-size-02);
+}
+
+[data-collection-3-3088-mode="wide-dark"] {
+  /* wide-dark */
+  --stoken-color-text-disabled-strong: var(--stoken-color-neutral-gray-30);
+  --stoken-metric-space-horizontal-micro: var(--stoken-spacing-scale-01);
+  --stoken-metric-radius-control-default: var(--stoken-radius-md-4);
+  --stoken-metric-visualization-size-sm: var(--stoken-visualization-size-02);
+  --stoken-typography-font-size-label-default: var(--stoken-typography-scale-font-size-02);
+  --stoken-metric-interaction-size-default: var(--stoken-interaction-size-04);
+  --project-color-action-primary: var(--stoken-color-interactive-brand-default);
+  --stoken-color-text-invert: var(--stoken-color-neutral-gray-0);
+  --project-color-text-primary: var(--stoken-color-neutral-gray-5);
+  --stoken-color-text-primary: var(--stoken-color-neutral-gray-90);
+  --stoken-color-interactive-brand-default: var(--stoken-color-highlight-purple-100);
+  --stoken-typography-font-size-body-default: var(--stoken-typography-scale-font-size-02);
+}
+
+[data-collection-3-3088-mode="teal-standard-light"] {
+  /* teal/standard-light */
+  --stoken-color-text-disabled-strong: var(--stoken-color-neutral-gray-30);
+  --stoken-metric-space-horizontal-micro: var(--stoken-spacing-scale-01);
+  --stoken-metric-radius-control-default: 6px;
+  --stoken-metric-visualization-size-sm: var(--stoken-visualization-size-02);
+  --stoken-typography-font-size-label-default: 16px;
+  --stoken-metric-interaction-size-default: var(--stoken-interaction-size-04);
+  --project-color-action-primary: var(--stoken-color-interactive-brand-default);
+  --stoken-color-text-invert: var(--stoken-color-neutral-gray-0);
+  --project-color-text-primary: var(--stoken-color-text-primary);
+  --stoken-color-text-primary: var(--stoken-color-neutral-gray-90);
+  --stoken-color-interactive-brand-default: rgba(29, 72, 64, 1);
+  --stoken-typography-font-size-body-default: 16px;
+}
+
+[data-collection-3-3088-mode="teal-wide-light"] {
+  /* teal/wide-light */
+  --stoken-color-text-disabled-strong: var(--stoken-color-neutral-gray-30);
+  --stoken-metric-space-horizontal-micro: var(--stoken-spacing-scale-01);
+  --stoken-metric-radius-control-default: 6px;
+  --stoken-metric-visualization-size-sm: var(--stoken-visualization-size-02);
+  --stoken-typography-font-size-label-default: 16px;
+  --stoken-metric-interaction-size-default: var(--stoken-interaction-size-04);
+  --project-color-action-primary: var(--stoken-color-interactive-brand-default);
+  --stoken-color-text-invert: var(--stoken-color-neutral-gray-0);
+  --project-color-text-primary: var(--stoken-color-text-primary);
+  --stoken-color-text-primary: var(--stoken-color-neutral-gray-90);
+  --stoken-color-interactive-brand-default: rgba(29, 72, 64, 1);
+  --stoken-typography-font-size-body-default: 16px;
+}
+
+[data-collection-3-3088-mode="teal-standard-dark"] {
+  /* teal/standard-dark */
+  --stoken-color-text-disabled-strong: var(--stoken-color-neutral-gray-30);
+  --stoken-metric-space-horizontal-micro: var(--stoken-spacing-scale-01);
+  --stoken-metric-radius-control-default: 6px;
+  --stoken-metric-visualization-size-sm: var(--stoken-visualization-size-02);
+  --stoken-typography-font-size-label-default: 16px;
+  --stoken-metric-interaction-size-default: var(--stoken-interaction-size-04);
+  --project-color-action-primary: var(--stoken-color-interactive-brand-default);
+  --stoken-color-text-invert: var(--stoken-color-neutral-gray-0);
+  --project-color-text-primary: var(--stoken-color-neutral-gray-5);
+  --stoken-color-text-primary: var(--stoken-color-neutral-gray-90);
+  --stoken-color-interactive-brand-default: rgba(29, 72, 64, 1);
+  --stoken-typography-font-size-body-default: 16px;
+}
+
+[data-collection-3-3088-mode="teal-wide-dark"] {
+  /* teal/wide-dark */
+  --stoken-color-text-disabled-strong: var(--stoken-color-neutral-gray-30);
+  --stoken-metric-space-horizontal-micro: var(--stoken-spacing-scale-01);
+  --stoken-metric-radius-control-default: 6px;
+  --stoken-metric-visualization-size-sm: var(--stoken-visualization-size-02);
+  --stoken-typography-font-size-label-default: 16px;
+  --stoken-metric-interaction-size-default: var(--stoken-interaction-size-04);
+  --project-color-action-primary: var(--stoken-color-interactive-brand-default);
+  --stoken-color-text-invert: var(--stoken-color-neutral-gray-0);
+  --project-color-text-primary: var(--stoken-color-neutral-gray-5);
+  --stoken-color-text-primary: var(--stoken-color-neutral-gray-90);
+  --stoken-color-interactive-brand-default: rgba(29, 72, 64, 1);
+  --stoken-typography-font-size-body-default: 16px;
+}
+
+:root, 
+[data-collection-3-3083-mode="standard-light"] {
+  /* standard-light */
+  --stoken-spacing-scale-01: var(--stoken-dimension-dimension-4);
+  --stoken-visualization-size-02: var(--stoken-dimension-dimension-20);
+  --stoken-interaction-size-04: var(--stoken-dimension-dimension-32);
+  --stoken-typography-scale-font-size-02: var(--stoken-font-size-14);
+}
+
+[data-collection-3-3083-mode="wide-light"] {
+  /* wide-light */
+  --stoken-spacing-scale-01: var(--stoken-dimension-dimension-4);
+  --stoken-visualization-size-02: var(--stoken-dimension-dimension-20);
+  --stoken-interaction-size-04: var(--stoken-dimension-dimension-32);
+  --stoken-typography-scale-font-size-02: var(--stoken-font-size-14);
+}
+
+[data-collection-3-3083-mode="standard-dark"] {
+  /* standard-dark */
+  --stoken-spacing-scale-01: var(--stoken-dimension-dimension-4);
+  --stoken-visualization-size-02: var(--stoken-dimension-dimension-20);
+  --stoken-interaction-size-04: var(--stoken-dimension-dimension-32);
+  --stoken-typography-scale-font-size-02: var(--stoken-font-size-14);
+}
+
+[data-collection-3-3083-mode="wide-dark"] {
+  /* wide-dark */
+  --stoken-spacing-scale-01: var(--stoken-dimension-dimension-4);
+  --stoken-visualization-size-02: var(--stoken-dimension-dimension-20);
+  --stoken-interaction-size-04: var(--stoken-dimension-dimension-32);
+  --stoken-typography-scale-font-size-02: var(--stoken-font-size-14);
+}
+
+[data-collection-3-3083-mode="teal-standard-light"] {
+  /* teal/standard-light */
+  --stoken-spacing-scale-01: var(--stoken-dimension-dimension-4);
+  --stoken-visualization-size-02: var(--stoken-dimension-dimension-20);
+  --stoken-interaction-size-04: var(--stoken-dimension-dimension-32);
+  --stoken-typography-scale-font-size-02: var(--stoken-font-size-14);
+}
+
+[data-collection-3-3083-mode="teal-wide-light"] {
+  /* teal/wide-light */
+  --stoken-spacing-scale-01: var(--stoken-dimension-dimension-4);
+  --stoken-visualization-size-02: var(--stoken-dimension-dimension-20);
+  --stoken-interaction-size-04: var(--stoken-dimension-dimension-32);
+  --stoken-typography-scale-font-size-02: var(--stoken-font-size-14);
+}
+
+[data-collection-3-3083-mode="teal-standard-dark"] {
+  /* teal/standard-dark */
+  --stoken-spacing-scale-01: var(--stoken-dimension-dimension-4);
+  --stoken-visualization-size-02: var(--stoken-dimension-dimension-20);
+  --stoken-interaction-size-04: var(--stoken-dimension-dimension-32);
+  --stoken-typography-scale-font-size-02: var(--stoken-font-size-14);
+}
+
+[data-collection-3-3083-mode="teal-wide-dark"] {
+  /* teal/wide-dark */
+  --stoken-spacing-scale-01: var(--stoken-dimension-dimension-4);
+  --stoken-visualization-size-02: var(--stoken-dimension-dimension-20);
+  --stoken-interaction-size-04: var(--stoken-dimension-dimension-32);
+  --stoken-typography-scale-font-size-02: var(--stoken-font-size-14);
+}
+
+:root, 
+[data-collection-3-3078-mode="standard-light"] {
+  /* standard-light */
+  --stoken-radius-md-4: 4px;
+  --stoken-dimension-dimension-4: 4px;
+  --stoken-color-neutral-gray-30: rgba(187, 187, 187, 1);
+  --stoken-color-highlight-purple-deep-1: rgba(90, 62, 193, 1);
+  --stoken-dimension-dimension-20: 20px;
+  --stoken-dimension-dimension-32: 32px;
+  --stoken-color-neutral-gray-20: rgba(208, 208, 208, 1);
+  --stoken-color-neutral-gray-90: rgba(25, 25, 25, 1);
+  --stoken-color-highlight-purple-100: rgba(98, 53, 247, 1);
+  --stoken-color-neutral-gray-0: rgba(255, 255, 255, 1);
+  --stoken-color-neutral-gray-5: rgba(243, 243, 243, 1);
+  --stoken-font-size-14: 14px;
+}
+
+[data-collection-3-3078-mode="wide-light"] {
+  /* wide-light */
+  --stoken-radius-md-4: 4px;
+  --stoken-dimension-dimension-4: 4px;
+  --stoken-color-neutral-gray-30: rgba(187, 187, 187, 1);
+  --stoken-color-highlight-purple-deep-1: rgba(90, 62, 193, 1);
+  --stoken-dimension-dimension-20: 20px;
+  --stoken-dimension-dimension-32: 32px;
+  --stoken-color-neutral-gray-20: rgba(208, 208, 208, 1);
+  --stoken-color-neutral-gray-90: rgba(25, 25, 25, 1);
+  --stoken-color-highlight-purple-100: rgba(98, 53, 247, 1);
+  --stoken-color-neutral-gray-0: rgba(255, 255, 255, 1);
+  --stoken-color-neutral-gray-5: rgba(243, 243, 243, 1);
+  --stoken-font-size-14: 14px;
+}
+
+[data-collection-3-3078-mode="standard-dark"] {
+  /* standard-dark */
+  --stoken-radius-md-4: 4px;
+  --stoken-dimension-dimension-4: 4px;
+  --stoken-color-neutral-gray-30: rgba(187, 187, 187, 1);
+  --stoken-color-highlight-purple-deep-1: rgba(90, 62, 193, 1);
+  --stoken-dimension-dimension-20: 20px;
+  --stoken-dimension-dimension-32: 32px;
+  --stoken-color-neutral-gray-20: rgba(208, 208, 208, 1);
+  --stoken-color-neutral-gray-90: rgba(25, 25, 25, 1);
+  --stoken-color-highlight-purple-100: rgba(98, 53, 247, 1);
+  --stoken-color-neutral-gray-0: rgba(255, 255, 255, 1);
+  --stoken-color-neutral-gray-5: rgba(243, 243, 243, 1);
+  --stoken-font-size-14: 14px;
+}
+
+[data-collection-3-3078-mode="wide-dark"] {
+  /* wide-dark */
+  --stoken-radius-md-4: 4px;
+  --stoken-dimension-dimension-4: 4px;
+  --stoken-color-neutral-gray-30: rgba(187, 187, 187, 1);
+  --stoken-color-highlight-purple-deep-1: rgba(90, 62, 193, 1);
+  --stoken-dimension-dimension-20: 20px;
+  --stoken-dimension-dimension-32: 32px;
+  --stoken-color-neutral-gray-20: rgba(208, 208, 208, 1);
+  --stoken-color-neutral-gray-90: rgba(25, 25, 25, 1);
+  --stoken-color-highlight-purple-100: rgba(98, 53, 247, 1);
+  --stoken-color-neutral-gray-0: rgba(255, 255, 255, 1);
+  --stoken-color-neutral-gray-5: rgba(243, 243, 243, 1);
+  --stoken-font-size-14: 14px;
+}
+
+[data-collection-3-3078-mode="teal-standard-light"] {
+  /* teal/standard-light */
+  --stoken-radius-md-4: 4px;
+  --stoken-dimension-dimension-4: 4px;
+  --stoken-color-neutral-gray-30: rgba(187, 187, 187, 1);
+  --stoken-color-highlight-purple-deep-1: rgba(90, 62, 193, 1);
+  --stoken-dimension-dimension-20: 20px;
+  --stoken-dimension-dimension-32: 32px;
+  --stoken-color-neutral-gray-20: rgba(208, 208, 208, 1);
+  --stoken-color-neutral-gray-90: rgba(25, 25, 25, 1);
+  --stoken-color-highlight-purple-100: rgba(98, 53, 247, 1);
+  --stoken-color-neutral-gray-0: rgba(255, 255, 255, 1);
+  --stoken-color-neutral-gray-5: rgba(243, 243, 243, 1);
+  --stoken-font-size-14: 14px;
+}
+
+[data-collection-3-3078-mode="teal-wide-light"] {
+  /* teal/wide-light */
+  --stoken-radius-md-4: 4px;
+  --stoken-dimension-dimension-4: 4px;
+  --stoken-color-neutral-gray-30: rgba(187, 187, 187, 1);
+  --stoken-color-highlight-purple-deep-1: rgba(90, 62, 193, 1);
+  --stoken-dimension-dimension-20: 20px;
+  --stoken-dimension-dimension-32: 32px;
+  --stoken-color-neutral-gray-20: rgba(208, 208, 208, 1);
+  --stoken-color-neutral-gray-90: rgba(25, 25, 25, 1);
+  --stoken-color-highlight-purple-100: rgba(98, 53, 247, 1);
+  --stoken-color-neutral-gray-0: rgba(255, 255, 255, 1);
+  --stoken-color-neutral-gray-5: rgba(243, 243, 243, 1);
+  --stoken-font-size-14: 14px;
+}
+
+[data-collection-3-3078-mode="teal-standard-dark"] {
+  /* teal/standard-dark */
+  --stoken-radius-md-4: 4px;
+  --stoken-dimension-dimension-4: 4px;
+  --stoken-color-neutral-gray-30: rgba(187, 187, 187, 1);
+  --stoken-color-highlight-purple-deep-1: rgba(90, 62, 193, 1);
+  --stoken-dimension-dimension-20: 20px;
+  --stoken-dimension-dimension-32: 32px;
+  --stoken-color-neutral-gray-20: rgba(208, 208, 208, 1);
+  --stoken-color-neutral-gray-90: rgba(25, 25, 25, 1);
+  --stoken-color-highlight-purple-100: rgba(98, 53, 247, 1);
+  --stoken-color-neutral-gray-0: rgba(255, 255, 255, 1);
+  --stoken-color-neutral-gray-5: rgba(243, 243, 243, 1);
+  --stoken-font-size-14: 14px;
+}
+
+[data-collection-3-3078-mode="teal-wide-dark"] {
+  /* teal/wide-dark */
+  --stoken-radius-md-4: 4px;
+  --stoken-dimension-dimension-4: 4px;
+  --stoken-color-neutral-gray-30: rgba(187, 187, 187, 1);
+  --stoken-color-highlight-purple-deep-1: rgba(90, 62, 193, 1);
+  --stoken-dimension-dimension-20: 20px;
+  --stoken-dimension-dimension-32: 32px;
+  --stoken-color-neutral-gray-20: rgba(208, 208, 208, 1);
+  --stoken-color-neutral-gray-90: rgba(25, 25, 25, 1);
+  --stoken-color-highlight-purple-100: rgba(98, 53, 247, 1);
+  --stoken-color-neutral-gray-0: rgba(255, 255, 255, 1);
+  --stoken-color-neutral-gray-5: rgba(243, 243, 243, 1);
+  --stoken-font-size-14: 14px;
+}
+
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+ol,ul,menu {
+  padding-inline-start: 0;
+  list-style: none;
+}
+
+ol li::marker, ul li::before {
+  letter-spacing: 0;
+}
+
+.scroll-container > div {
+  width: 100%;
+}
+
+.container > div {
+  width: 100%;
+}
+
+.Pixso-canvas-0_1 > div {
+  width: 100%;
+}
+
+html {
+  width: 100%;
+  height: 100%;
+}
+
+body { 
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  background-color: white;
+}
+    
+span {
+  word-break: break-word;
+}
+
+.container {
+  width: 100%;
+  height: 100%;
+}
+
+.scroll-container {
+  height: 100%;
+  width: 100%;
+  overflow: auto;
+}
+
+.Pixso-canvas-0_1,.Pixso-frame-19_45 {
+  width: 100%;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.Pixso-canvas-0_1 {
+  height: 100%;
+}
+
+.Pixso-frame-19_45,.frame-content-19_45 {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-start;
+}
+
+.Pixso-frame-19_45 {
+  height: 560px;
+  min-width: 600px;
+  overflow: hidden;
+  background-color: rgba(255, 255, 255, 1);
+}
+
+.frame-content-19_45 {
+  gap: 20px;
+  padding: 24px 28px 32px 36px;
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.Pixso-paragraph-19_46,.Pixso-instance-19_47,.Pixso-paragraph-19_48,.Pixso-frame-19_49,.stroke-wrapper-19_49 {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.Pixso-paragraph-19_46,.Pixso-paragraph-19_48,.Pixso-paragraph-19_50,.Pixso-paragraph-19_51,.Pixso-paragraph-19_56,.Pixso-paragraph-19_58,.Pixso-paragraph-19_60 {
+  font-family: "HarmonyOS Sans SC-Regular";
+  font-weight: 400;
+  text-align: left;
+  letter-spacing: 0px;
+  text-decoration: none;
+}
+
+.Pixso-paragraph-19_46 {
+  font-size: 24px;
+  line-height: 32px;
+  color: rgba(31, 36, 41, 1);
+  width: 320px;
+  height: 32px;
+}
+
+.Pixso-instance-19_47 {
+  width: 100%;
+  height: 88px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--contract-forms-metrics-labelgap);
+  align-items: flex-start;
+}
+
+.Pixso-paragraph-19_48 {
+  font-size: var(--contract-forms-metrics-labelfontsize);
+  line-height: 17px;
+  font-feature-settings: "locl" 0;
+  color: var(--contract-forms-palette-text);
+  width: 100%;
+  height: auto;
+  flex-grow: 0;
+}
+
+.Pixso-frame-19_49 {
+  width: 100%;
+  height: 100%;
+  border-radius: var(--contract-forms-metrics-radius) var(--contract-forms-metrics-radius) var(--contract-forms-metrics-radius) var(--contract-forms-metrics-radius);
+  z-index: 0;
+  background-color: var(--contract-forms-palette-background);
+}
+
+.stroke-wrapper-19_49 {
+  isolation: isolate;
+  width: 100%;
+  height: var(--derived-qt-forms-md-controlheight);
+}
+
+.stroke-19_49,.stroke-19_53,.stroke-19_57,.stroke-19_59 {
+  border-radius: 4px 4px 4px 4px;
+  pointer-events: none;
+  border-width: 1px 1px 1px 1px;
+  border-style: solid;
+  box-sizing: border-box;
+}
+
+.stroke-19_49 {
+  position: absolute;
+  inset: 0px;
+  z-index: 1;
+  border-color: var(--contract-forms-palette-border);
+}
+
+.Pixso-paragraph-19_50 {
+  font-size: var(--contract-forms-sizes-md-fontsize);
+  line-height: 22px;
+  font-feature-settings: "locl" 0;
+  color: var(--contract-forms-palette-placeholder);
+  width: 288px;
+  height: auto;
+  position: absolute;
+  left: 16px;
+  top: 8px;
+  white-space: pre;
+}
+
+.Pixso-frame-19_49-content-layer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+}
+
+.Pixso-paragraph-19_51,.Pixso-instance-19_52,.Pixso-frame-19_53 {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.Pixso-paragraph-19_51 {
+  font-size: var(--contract-forms-metrics-hintfontsize);
+  line-height: 15px;
+  font-feature-settings: "locl" 0;
+  color: var(--contract-forms-palette-muted);
+  width: 100%;
+  height: auto;
+  flex-grow: 0;
+}
+
+.Pixso-instance-19_52,.Pixso-frame-19_53,.frame-content-19_53,.Pixso-instance-19_57,.Pixso-instance-19_59 {
+  flex-direction: row;
+  align-items: center;
+}
+
+.Pixso-instance-19_52 {
+  width: 120px;
+  height: var(--contract-checkbox-checkbox-sizes-sm-hittarget);
+  display: flex;
+  gap: 12px;
+  padding: 0px 0px 0px 4px;
+}
+
+.Pixso-frame-19_53,.frame-content-19_53 {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.Pixso-frame-19_53 {
+  border-radius: var(--contract-checkbox-checkbox-radius) var(--contract-checkbox-checkbox-radius) var(--contract-checkbox-checkbox-radius) var(--contract-checkbox-checkbox-radius);
+  z-index: 0;
+  background-color: var(--contract-checkbox-checkbox-palette-accent);
+}
+
+.frame-content-19_53 {
+  position: relative;
+}
+
+.stroke-wrapper-19_53 {
+  position: relative;
+  isolation: isolate;
+  width: var(--contract-checkbox-checkbox-sizes-sm-indicator);
+  height: var(--contract-checkbox-checkbox-sizes-sm-indicator);
+  display: flex;
+  flex-shrink: 0;
+}
+
+.stroke-19_53 {
+  position: absolute;
+  inset: 0px;
+  z-index: 1;
+  border-color: var(--contract-checkbox-checkbox-palette-accent);
+}
+
+.Pixso-vector-19_54 {
+  width: 20px;
+  height: 20px;
+  background-image: url("http://localhost:3667/assets/1790210810853/GLYPHcheckboxcheck.svg");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.Pixso-frame-19_53-content-layer,.Pixso-instance-19_57,.Pixso-instance-19_59 {
+  width: 100%;
+  height: 100%;
+}
+
+.Pixso-frame-19_53-content-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+}
+
+.Pixso-paragraph-19_56,.Pixso-instance-19_57 {
+  display: flex;
+  justify-content: center;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.Pixso-paragraph-19_56 {
+  font-size: var(--contract-checkbox-checkbox-sizes-sm-fontsize);
+  flex-direction: column;
+  line-height: 17px;
+  color: var(--contract-checkbox-checkbox-palette-text);
+  width: 84px;
+  height: 21px;
+}
+
+.Pixso-instance-19_57,.Pixso-instance-19_59 {
+  gap: var(--contract-button-metrics-m-gap);
+  padding: 0px 13px 0px 13px;
+  border-radius: var(--contract-button-shape-radius) var(--contract-button-shape-radius) var(--contract-button-shape-radius) var(--contract-button-shape-radius);
+  z-index: 1;
+}
+
+.Pixso-instance-19_57 {
+  background-color: var(--contract-button-palette-primary);
+}
+
+.stroke-wrapper-19_57,.stroke-wrapper-19_59 {
+  position: relative;
+  isolation: isolate;
+  width: 82px;
+  height: var(--contract-button-metrics-m-minimumheight);
+  display: flex;
+  flex-shrink: 0;
+}
+
+.stroke-19_57,.stroke-19_59 {
+  inset: 0px;
+  z-index: 0;
+}
+
+.stroke-19_57 {
+  position: absolute;
+  border-color: var(--contract-button-materialstates-primary-default-border);
+}
+
+.Pixso-paragraph-19_58,.Pixso-paragraph-19_60 {
+  font-size: var(--contract-button-metrics-m-fontsize);
+  line-height: 17.5px;
+  width: auto;
+  height: auto;
+}
+
+.Pixso-paragraph-19_58 {
+  color: var(--contract-button-materialstates-primary-default-foreground);
+  position: relative;
+  flex-shrink: 0;
+  white-space: pre;
+  flex-grow: 0;
+}
+
+.Pixso-instance-19_59 {
+  position: relative;
+  flex-shrink: 0;
+  display: flex;
+  justify-content: center;
+  background-color: var(--contract-button-materialstates-secondary-disabled-stops-0-color);
+}
+
+.stroke-19_59 {
+  position: absolute;
+  border-color: var(--contract-button-materialstates-secondary-disabled-border);
+}
+
+.Pixso-paragraph-19_60 {
+  color: var(--contract-button-materialstates-secondary-disabled-foreground);
+  position: relative;
+  flex-shrink: 0;
+  white-space: pre;
+  flex-grow: 0;
+}
+
+
+  </style>
+</head>
+<body>
+<div class="scroll-container">
+  <div id="0_1" class="Pixso-canvas-0_1">
+    <div id="19_45" class="Pixso-frame-19_45">
+      <div class="frame-content-19_45">
+        <p id="19_46" class="Pixso-paragraph-19_46">复核工单</p>
+        <div id="19_47" class="Pixso-instance-19_47">
+          <p id="19_48" class="Pixso-paragraph-19_48">工单编号</p>
+          <div id="19_49" class="stroke-wrapper-19_49">
+            <div class="Pixso-frame-19_49"></div>
+            <div class="stroke-19_49"></div>
+            <div class="Pixso-frame-19_49-content-layer">
+              <p id="19_50" class="Pixso-paragraph-19_50">请输入复核工单</p>
+            </div>
+          </div>
+          <p id="19_51" class="Pixso-paragraph-19_51">核对设备编号后提交</p>
+        </div>
+        <div id="19_52" class="Pixso-instance-19_52">
+          <div id="19_53" class="stroke-wrapper-19_53">
+            <div class="Pixso-frame-19_53"></div>
+            <div class="stroke-19_53"></div>
+            <div class="Pixso-frame-19_53-content-layer">
+              <div class="frame-content-19_53">
+                <div id="19_54" class="Pixso-vector-19_54"></div>
+              </div>
+            </div>
+          </div>
+          <p id="19_56" class="Pixso-paragraph-19_56">启用质量检查</p>
+        </div>
+        <div id="19_57" class="stroke-wrapper-19_57">
+          <div class="Pixso-instance-19_57">
+            <p id="19_58" class="Pixso-paragraph-19_58">确认复核</p>
+          </div>
+          <div class="stroke-19_57"></div>
+        </div>
+        <div id="19_59" class="stroke-wrapper-19_59">
+          <div class="Pixso-instance-19_59">
+            <p id="19_60" class="Pixso-paragraph-19_60">撤回复核</p>
+          </div>
+          <div class="stroke-19_59"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script>
+
+</script>
+<script>
+  // 设置图层变量模式
+  document.addEventListener('DOMContentLoaded', function() {
+            const element_19_47 = document.getElementById('19_47');
+            if (element_19_47) {
+              element_19_47.setAttribute('data-collection-3-3078-mode', 'standard-light');
+            }
+            const element_19_47 = document.getElementById('19_47');
+            if (element_19_47) {
+              element_19_47.setAttribute('data-collection-3-3083-mode', 'standard-light');
+            }
+            const element_19_47 = document.getElementById('19_47');
+            if (element_19_47) {
+              element_19_47.setAttribute('data-collection-3-3088-mode', 'standard-light');
+            }
+            const element_19_47 = document.getElementById('19_47');
+            if (element_19_47) {
+              element_19_47.setAttribute('data-collection-3-3093-mode', 'standard-light');
+            }
+            const element_19_52 = document.getElementById('19_52');
+            if (element_19_52) {
+              element_19_52.setAttribute('data-collection-3-3078-mode', 'standard-light');
+            }
+            const element_19_52 = document.getElementById('19_52');
+            if (element_19_52) {
+              element_19_52.setAttribute('data-collection-3-3083-mode', 'standard-light');
+            }
+            const element_19_52 = document.getElementById('19_52');
+            if (element_19_52) {
+              element_19_52.setAttribute('data-collection-3-3088-mode', 'standard-light');
+            }
+            const element_19_52 = document.getElementById('19_52');
+            if (element_19_52) {
+              element_19_52.setAttribute('data-collection-3-3093-mode', 'standard-light');
+            }
+            const element_19_57 = document.getElementById('19_57');
+            if (element_19_57) {
+              element_19_57.setAttribute('data-collection-3-3078-mode', 'standard-light');
+            }
+            const element_19_57 = document.getElementById('19_57');
+            if (element_19_57) {
+              element_19_57.setAttribute('data-collection-3-3083-mode', 'standard-light');
+            }
+            const element_19_57 = document.getElementById('19_57');
+            if (element_19_57) {
+              element_19_57.setAttribute('data-collection-3-3088-mode', 'standard-light');
+            }
+            const element_19_57 = document.getElementById('19_57');
+            if (element_19_57) {
+              element_19_57.setAttribute('data-collection-3-3093-mode', 'standard-light');
+            }
+            const element_19_59 = document.getElementById('19_59');
+            if (element_19_59) {
+              element_19_59.setAttribute('data-collection-3-3078-mode', 'standard-light');
+            }
+            const element_19_59 = document.getElementById('19_59');
+            if (element_19_59) {
+              element_19_59.setAttribute('data-collection-3-3083-mode', 'standard-light');
+            }
+            const element_19_59 = document.getElementById('19_59');
+            if (element_19_59) {
+              element_19_59.setAttribute('data-collection-3-3088-mode', 'standard-light');
+            }
+            const element_19_59 = document.getElementById('19_59');
+            if (element_19_59) {
+              element_19_59.setAttribute('data-collection-3-3093-mode', 'standard-light');
+            }
+  });
+</script>
+</body>
+</html>

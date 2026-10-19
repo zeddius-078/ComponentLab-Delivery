@@ -1,0 +1,301 @@
+{
+  "component": "menu",
+  "version": "2.0",
+  "authority": "value-evidence-only",
+  "entries": [
+    {
+      "path": "padding/md",
+      "type": "number",
+      "value": 4,
+      "source": "imports/reference/menu.json"
+    },
+    {
+      "path": "padding/lg",
+      "type": "number",
+      "value": 5,
+      "source": "imports/reference/menu.json"
+    },
+    {
+      "path": "padding/2xl",
+      "type": "number",
+      "value": 8,
+      "source": "imports/reference/menu.json"
+    },
+    {
+      "path": "padding/3xl",
+      "type": "number",
+      "value": 12,
+      "source": "imports/reference/menu.json"
+    },
+    {
+      "path": "spacing/sm",
+      "type": "number",
+      "value": 4,
+      "source": "imports/reference/menu.json"
+    },
+    {
+      "path": "spacing/md",
+      "type": "number",
+      "value": 8,
+      "source": "imports/reference/menu.json"
+    },
+    {
+      "path": "radius/default",
+      "type": "number",
+      "value": 4,
+      "source": "imports/reference/menu.json"
+    },
+    {
+      "path": "radius/none",
+      "type": "number",
+      "value": 0,
+      "source": "imports/reference/menu.json"
+    },
+    {
+      "path": "border/default",
+      "type": "number",
+      "value": 1,
+      "source": "imports/reference/menu.json"
+    },
+    {
+      "path": "content/fontSize/default",
+      "type": "number",
+      "value": 14,
+      "source": "imports/reference/menu.json"
+    },
+    {
+      "path": "content/fontWeight/regular",
+      "type": "number",
+      "value": 400,
+      "source": "imports/reference/menu.json"
+    },
+    {
+      "path": "content/fontWeight/bold",
+      "type": "number",
+      "value": 700,
+      "source": "imports/reference/menu.json"
+    },
+    {
+      "path": "content/iconSize/onlyIcon-sm",
+      "type": "number",
+      "value": 16,
+      "source": "imports/reference/menu.json"
+    },
+    {
+      "path": "content/iconSize/onlyIcon-md",
+      "type": "number",
+      "value": 20,
+      "source": "imports/reference/menu.json"
+    },
+    {
+      "path": "content/height/sm",
+      "type": "number",
+      "value": 20,
+      "source": "imports/reference/menu.json"
+    },
+    {
+      "path": "content/height/md",
+      "type": "number",
+      "value": 24,
+      "source": "imports/reference/menu.json"
+    },
+    {
+      "path": "content/lineHeight/default",
+      "type": "number",
+      "value": 22,
+      "source": "imports/reference/menu.json"
+    },
+    {
+      "path": "color/bg/defaultColor1-primary",
+      "type": "color",
+      "value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.9607843137254902,
+          0.9607843137254902,
+          0.9607843137254902
+        ],
+        "alpha": 1,
+        "hex": "#F5F5F5"
+      },
+      "source": "imports/reference/menu.json"
+    },
+    {
+      "path": "color/bg/defaultColor2-primary",
+      "type": "color",
+      "value": {
+        "colorSpace": "srgb",
+        "components": [
+          1,
+          1,
+          1
+        ],
+        "alpha": 1,
+        "hex": "#FFFFFF"
+      },
+      "source": "imports/reference/menu.json"
+    },
+    {
+      "path": "color/bg/defaultPosition1-primary",
+      "type": "number",
+      "value": 0,
+      "source": "imports/reference/menu.json"
+    },
+    {
+      "path": "color/bg/defaultPosition2-primary",
+      "type": "number",
+      "value": 100,
+      "source": "imports/reference/menu.json"
+    },
+    {
+      "path": "color/bg/selected-primary",
+      "type": "color",
+      "value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.9607843137254902,
+          0.9607843137254902,
+          0.9607843137254902
+        ],
+        "alpha": 1,
+        "hex": "#F5F5F5"
+      },
+      "source": "imports/reference/menu.json"
+    },
+    {
+      "path": "color/bg/Pressed-primary",
+      "type": "color",
+      "value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.8627450980392157,
+          0.8588235294117647,
+          0.8588235294117647
+        ],
+        "alpha": 1,
+        "hex": "#DCDBDB"
+      },
+      "source": "imports/reference/menu.json"
+    },
+    {
+      "path": "color/bg/defaultColor-secondary",
+      "type": "color",
+      "value": {
+        "colorSpace": "srgb",
+        "components": [
+          1,
+          1,
+          1
+        ],
+        "alpha": 1,
+        "hex": "#FFFFFF"
+      },
+      "source": "imports/reference/menu.json"
+    },
+    {
+      "path": "color/bg/selected-secondary",
+      "type": "color",
+      "value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.9372549019607843,
+          0.9176470588235294,
+          0.996078431372549
+        ],
+        "alpha": 1,
+        "hex": "#EFEAFE"
+      },
+      "source": "imports/reference/menu.json"
+    },
+    {
+      "path": "color/bg/hover-secondary",
+      "type": "color",
+      "value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.9607843137254902,
+          0.9607843137254902,
+          0.9607843137254902
+        ],
+        "alpha": 1,
+        "hex": "#F5F5F5"
+      },
+      "source": "imports/reference/menu.json"
+    },
+    {
+      "path": "color/bg/disabled",
+      "type": "color",
+      "value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.9333333333333333,
+          0.9333333333333333,
+          0.9333333333333333
+        ],
+        "alpha": 1,
+        "hex": "#EEEEEE"
+      },
+      "source": "imports/reference/menu.json"
+    },
+    {
+      "path": "color/content/default",
+      "type": "color",
+      "value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.09803921568627451,
+          0.09803921568627451,
+          0.09803921568627451
+        ],
+        "alpha": 1,
+        "hex": "#191919"
+      },
+      "source": "imports/reference/menu.json"
+    },
+    {
+      "path": "color/content/selected",
+      "type": "color",
+      "value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.3843137254901961,
+          0.20784313725490197,
+          0.9686274509803922
+        ],
+        "alpha": 1,
+        "hex": "#6235F7"
+      },
+      "source": "imports/reference/menu.json"
+    },
+    {
+      "path": "color/content/disabled",
+      "type": "color",
+      "value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.7333333333333333,
+          0.7333333333333333,
+          0.7333333333333333
+        ],
+        "alpha": 1,
+        "hex": "#BBBBBB"
+      },
+      "source": "imports/reference/menu.json"
+    },
+    {
+      "path": "color/border/default",
+      "type": "color",
+      "value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.8745098039215686,
+          0.8745098039215686,
+          0.8745098039215686
+        ],
+        "alpha": 1,
+        "hex": "#DFDFDF"
+      },
+      "source": "imports/reference/menu.json"
+    }
+  ]
+}

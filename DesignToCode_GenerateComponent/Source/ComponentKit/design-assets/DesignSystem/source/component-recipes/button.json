@@ -1,0 +1,213 @@
+{
+  "$schema": "../../schema/component-recipe-schema.json",
+  "$registry": {
+    "component": "button",
+    "version": "2.0"
+  },
+  "$status": "draft-v2",
+  "$description": "Button V2 sparse recipe. The registry owns axes and legal combinations; this file owns only design decisions and sparse overrides.",
+  "base": {
+    "size": {
+      "small": {
+        "slot/container/min-height": "{semantic.interaction-size.embedded}",
+        "slot/container/min-width": "{semantic.interaction-size.indicator}",
+        "slot/container/padding-inline": "{semantic.layout.padding.inline.compact}",
+        "slot/container/padding-block": "{semantic.layout.padding.block.none}",
+        "slot/icon/size": "{semantic.visualization-size.sm}",
+        "slot/spinner/size": "{semantic.visualization-size.sm}"
+      },
+      "medium": {
+        "slot/container/min-height": "{semantic.interaction-size.default}",
+        "slot/container/min-width": "{semantic.interaction-size.indicator}",
+        "slot/container/padding-inline": "{semantic.layout.padding.inline.small}",
+        "slot/container/padding-block": "{semantic.layout.padding.block.none}",
+        "slot/icon/size": "{semantic.visualization-size.md}",
+        "slot/spinner/size": "{semantic.visualization-size.md}"
+      },
+      "large": {
+        "slot/container/min-height": "{semantic.interaction-size.large}",
+        "slot/container/min-width": "{semantic.interaction-size.default}",
+        "slot/container/padding-inline": "{semantic.space.separated}",
+        "slot/container/padding-block": "{semantic.layout.padding.block.none}",
+        "slot/icon/size": "{semantic.visualization-size.lg}",
+        "slot/spinner/size": "{semantic.visualization-size.lg}"
+      }
+    },
+    "content": {
+      "icon-only": {
+        "slot/content/gap": "{semantic.space.horizontal.micro}",
+        "slot/container/padding-inline": "{semantic.space.horizontal.micro}"
+      },
+      "icon-left-text": {
+        "slot/content/gap": "{semantic.space.icon-gap}"
+      },
+      "text-icon-right": {
+        "slot/content/gap": "{semantic.space.icon-gap}"
+      },
+      "text-only": {
+        "slot/content/gap": "{semantic.space.icon-gap}"
+      },
+      "icon-left-text-icon-right": {
+        "slot/content/gap": "{semantic.space.icon-gap}"
+      }
+    },
+    "typography": {
+      "slot/label/typography": "{typography.label.label-1}"
+    },
+    "shared": {
+      "slot/container/border-radius": "{semantic.radius.control-default}",
+      "slot/border/border-width": "{semantic.border-width.boundary-default}",
+    "slot/container/opacity": "{semantic.opacity.content.primary}",
+    "slot/spinner/stroke-width": "{primitive.spinner.stroke-width}",
+    "slot/spinner/track-opacity": "{primitive.spinner.track-opacity}",
+    "slot/spinner/arc-start-angle": "{primitive.spinner.arc-start-angle}",
+    "slot/spinner/arc-sweep-angle": "{primitive.spinner.arc-sweep-angle}"
+    },
+    "intent": {
+      "primary": {
+        "slot/container/background-color": "{semantic.color.interactive.brand.default}",
+        "slot/border/color": "{semantic.color.interactive.brand.default}",
+        "slot/label/color": "{semantic.color.text.invert}",
+        "slot/icon/color": "{semantic.color.icon.invert}",
+        "slot/spinner/color": "{semantic.color.icon.invert}"
+      },
+      "secondary": {
+        "slot/container/background-color": "{semantic.color.background.control-default}",
+        "slot/border/color": "{semantic.color.border.default}",
+        "slot/label/color": "{semantic.color.text.primary}",
+        "slot/icon/color": "{semantic.color.icon.primary}",
+        "slot/spinner/color": "{semantic.color.icon.primary}"
+      },
+      "operation": {
+        "slot/container/background-color": "{semantic.color.background.control-default}",
+        "slot/border/color": "{semantic.color.border.default}",
+        "slot/label/color": "{semantic.color.text.primary}",
+        "slot/icon/color": "{semantic.color.icon.operation}",
+        "slot/spinner/color": "{semantic.color.icon.operation}"
+      },
+      "danger": {
+        "slot/container/background-color": "{semantic.color.status.danger.default}",
+        "slot/border/color": "{semantic.color.status.danger.default}",
+        "slot/label/color": "{semantic.color.text.invert}",
+        "slot/icon/color": "{semantic.color.icon.invert}",
+        "slot/spinner/color": "{semantic.color.icon.invert}"
+      },
+      "dark": {
+        "slot/container/background-color": "{semantic.color.background.surface-raised}",
+        "slot/border/color": "{semantic.color.border.default}",
+        "slot/label/color": "{semantic.color.text.primary}",
+        "slot/icon/color": "{semantic.color.icon.primary}",
+        "slot/spinner/color": "{semantic.color.icon.primary}"
+      }
+    },
+    "appearance": {
+      "filled": {
+        "slot/border/border-width": "{semantic.border-width.boundary-default}"
+      },
+      "outlined": {
+        "slot/container/background-color": "{semantic.color.background.control-default}",
+        "slot/border/border-width": "{semantic.border-width.boundary-default}"
+      },
+      "dashed": {
+        "slot/container/background-color": "{semantic.color.background.control-default}",
+        "slot/border/border-width": "{semantic.border-width.boundary-default}"
+      },
+      "text": {
+        "slot/container/background-color": "{primitive.color.none}",
+        "slot/border/border-width": "{semantic.border-width.none}"
+      },
+      "link": {
+        "slot/container/background-color": "{primitive.color.none}",
+        "slot/border/border-width": "{semantic.border-width.none}"
+      }
+    },
+    "state": {
+      "default": {
+        "slot/container/opacity": "{semantic.opacity.content.primary}"
+      },
+      "hover": {
+        "slot/container/background-color": "{semantic.color.background.hover}",
+        "slot/container/opacity": "{semantic.opacity.content.primary}"
+      },
+      "pressed": {
+        "slot/container/background-color": "{semantic.color.background.pressed}",
+        "slot/container/opacity": "{semantic.opacity.content.primary}"
+      },
+      "focused": {
+        "slot/focus-ring/color": "{semantic.color.interactive.brand.focus-ring}",
+        "slot/focus-ring/border-width": "{semantic.border-width.focus-ring}"
+      },
+      "disabled": {
+        "slot/container/background-color": "{semantic.color.background.disabled}",
+        "slot/border/color": "{semantic.color.border.disabled}",
+        "slot/label/color": "{semantic.color.text.disabled}",
+        "slot/icon/color": "{semantic.color.icon.disabled}",
+        "slot/spinner/color": "{semantic.color.icon.disabled}"
+      },
+      "loading": {
+        "slot/container/opacity": "{semantic.opacity.content.primary}"
+      }
+    }
+  },
+  "overrides": [
+    { "when": { "intent": "primary", "appearance": "filled", "state": "hover" }, "slot": "container", "property": "background-color", "value": "{semantic.color.interactive.brand.hover}", "$type": "color" },
+    { "when": { "intent": "primary", "appearance": "filled", "state": "hover" }, "slot": "border", "property": "color", "value": "{semantic.color.interactive.brand.hover}", "$type": "color" },
+    { "when": { "intent": "primary", "appearance": "filled", "state": "pressed" }, "slot": "container", "property": "background-color", "value": "{semantic.color.interactive.brand.pressed}", "$type": "color" },
+    { "when": { "intent": "primary", "appearance": "filled", "state": "pressed" }, "slot": "border", "property": "color", "value": "{semantic.color.interactive.brand.pressed}", "$type": "color" },
+    { "when": { "intent": "danger", "appearance": "filled", "state": "hover" }, "slot": "container", "property": "background-color", "value": "{semantic.color.status.danger.hover}", "$type": "color" },
+    { "when": { "intent": "danger", "appearance": "filled", "state": "hover" }, "slot": "border", "property": "color", "value": "{semantic.color.status.danger.hover}", "$type": "color" },
+    { "when": { "intent": "danger", "appearance": "filled", "state": "pressed" }, "slot": "container", "property": "background-color", "value": "{semantic.color.status.danger.pressed}", "$type": "color" },
+    { "when": { "intent": "danger", "appearance": "filled", "state": "pressed" }, "slot": "border", "property": "color", "value": "{semantic.color.status.danger.pressed}", "$type": "color" },
+    { "when": { "intent": "secondary", "state": "hover" }, "slot": "container", "property": "background-color", "value": "{semantic.color.background.hover}", "$type": "color" },
+    { "when": { "intent": "secondary", "state": "pressed" }, "slot": "container", "property": "background-color", "value": "{semantic.color.background.pressed}", "$type": "color" },
+    { "when": { "intent": "operation", "state": "hover" }, "slot": "container", "property": "background-color", "value": "{semantic.color.background.hover}", "$type": "color" },
+    { "when": { "intent": "operation", "state": "pressed" }, "slot": "container", "property": "background-color", "value": "{semantic.color.background.pressed}", "$type": "color" },
+    { "when": { "intent": "primary", "appearance": "outlined" }, "slot": "label", "property": "color", "value": "{semantic.color.interactive.brand.default}", "$type": "color" },
+    { "when": { "intent": "primary", "appearance": "outlined" }, "slot": "icon", "property": "color", "value": "{semantic.color.interactive.brand.default}", "$type": "color" },
+    { "when": { "intent": "primary", "appearance": "dashed" }, "slot": "label", "property": "color", "value": "{semantic.color.interactive.brand.default}", "$type": "color" },
+    { "when": { "intent": "primary", "appearance": "dashed" }, "slot": "icon", "property": "color", "value": "{semantic.color.interactive.brand.default}", "$type": "color" },
+    { "when": { "intent": "primary", "appearance": "text" }, "slot": "label", "property": "color", "value": "{semantic.color.interactive.brand.default}", "$type": "color" },
+    { "when": { "intent": "primary", "appearance": "text" }, "slot": "icon", "property": "color", "value": "{semantic.color.interactive.brand.default}", "$type": "color" },
+    { "when": { "intent": "primary", "appearance": "link" }, "slot": "label", "property": "color", "value": "{semantic.color.interactive.brand.default}", "$type": "color" },
+    { "when": { "intent": "primary", "appearance": "link" }, "slot": "icon", "property": "color", "value": "{semantic.color.interactive.brand.default}", "$type": "color" },
+    { "when": { "intent": "danger", "appearance": "outlined" }, "slot": "label", "property": "color", "value": "{semantic.color.status.danger.default}", "$type": "color" },
+    { "when": { "intent": "danger", "appearance": "outlined" }, "slot": "icon", "property": "color", "value": "{semantic.color.status.danger.default}", "$type": "color" },
+    { "when": { "intent": "danger", "appearance": "dashed" }, "slot": "label", "property": "color", "value": "{semantic.color.status.danger.default}", "$type": "color" },
+    { "when": { "intent": "danger", "appearance": "dashed" }, "slot": "icon", "property": "color", "value": "{semantic.color.status.danger.default}", "$type": "color" },
+    { "when": { "intent": "danger", "appearance": "text" }, "slot": "label", "property": "color", "value": "{semantic.color.status.danger.default}", "$type": "color" },
+    { "when": { "intent": "danger", "appearance": "text" }, "slot": "icon", "property": "color", "value": "{semantic.color.status.danger.default}", "$type": "color" },
+    { "when": { "intent": "danger", "appearance": "link" }, "slot": "label", "property": "color", "value": "{semantic.color.status.danger.default}", "$type": "color" },
+    { "when": { "intent": "danger", "appearance": "link" }, "slot": "icon", "property": "color", "value": "{semantic.color.status.danger.default}", "$type": "color" }
+  ],
+  "rules": {
+    "loading": {
+      "visualSourceState": "pressed",
+      "contentMode": "spinner",
+      "preserve": ["size", "visual-size", "interaction-size", "padding", "spacing", "border-radius"],
+      "lockInteraction": true
+    },
+    "iconOnly": {
+      "shapeIsIndependent": true,
+      "sizeAxisIsShared": true
+    },
+    "dark": {
+      "source": "profile-or-theme",
+      "isIntent": false
+    }
+  },
+  "motion": {
+    "press": "{motion.feedback.button-press}",
+    "focus": "{motion.feedback.focus}",
+    "loading-start": "{motion.loading.spinner}",
+    "loading-stop": "{motion.feedback.focus}",
+    "attention": "{motion.attention.pulse}"
+  },
+  "diagnostics": [
+    {
+      "severity": "warning",
+      "code": "V2-DRAFT-INNER-SHADOW-PLACEHOLDER",
+      "message": "Filled/outlined/dashed/text/link and interaction states now compile from V2 semantic roles. filled-inner-shadow remains a structural placeholder until the Shadow Composite is reviewed.",
+      "source": "component-recipes/button.json"
+    }
+  ]
+}

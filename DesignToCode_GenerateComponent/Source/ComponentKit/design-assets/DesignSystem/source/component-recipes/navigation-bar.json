@@ -1,0 +1,60 @@
+{
+  "$registry": {
+    "component": "navigation-bar",
+    "version": "2.0"
+  },
+  "$status": "active",
+  "base": {
+    "state": {
+      "default": {
+        "slot": {
+          "container": {
+            "background-color": {
+              "$type": "color",
+              "$value": "{semantic.color.background.page}",
+              "$description": "Navigation Bar container background",
+              "$sourceOwner": "v2-component-contract"
+            },
+            "border-color": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [208, 208, 208]
+              },
+              "$description": "Navigation Bar structural separator",
+              "$sourceOwner": "figma-audit-v2"
+            }
+          },
+          "utility-row": {
+            "height": {
+              "$type": "dimension",
+              "$value": 56,
+              "$description": "Top account and utility row height",
+              "$sourceOwner": "v2-component-contract",
+              "unit": "px"
+            }
+          },
+          "navigation-row": {
+            "height": {
+              "$type": "dimension",
+              "$value": 63,
+              "$description": "Main navigation row height",
+              "$sourceOwner": "figma-audit-v2",
+              "unit": "px"
+            }
+          },
+          "log-bar": {
+            "height": {
+              "$type": "dimension",
+              "$value": 24,
+              "$description": "Single-line runtime log bar height",
+              "$sourceOwner": "v2-component-contract",
+              "unit": "px"
+            }
+          }
+        }
+      }
+    }
+  },
+  "overrides": []
+}

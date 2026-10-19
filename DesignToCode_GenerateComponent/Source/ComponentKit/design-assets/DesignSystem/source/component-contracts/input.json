@@ -1,0 +1,162 @@
+{
+  "$description": "Input V2 Component Contract. Input and LineEdit share the public input family; visual values remain in the Recipe.",
+  "component": "input",
+  "version": "1.0",
+  "$status": "draft-v2",
+  "contractKind": "editable-field",
+  "registryBindings": {
+    "source": "source/component-registry.json#/components/input",
+    "axes": ["mode", "appearance", "state", "size"],
+    "slots": ["container", "content", "placeholder", "border", "focus-ring", "clear", "password-toggle", "search-icon", "browse-action", "spinner"],
+    "authority": "component-registry"
+  },
+  "structure": [
+    "container",
+    "content",
+    "placeholder",
+    "border",
+    "focus-ring",
+    "clear",
+    "password-toggle",
+    "search-icon",
+    "browse-action",
+    "spinner"
+  ],
+  "runtimeModel": {
+    "mode": {
+      "registryAxis": "mode",
+      "definitions": {
+        "plain": "single-line editable text",
+        "password": "single-line protected text with password visibility toggle",
+        "search": "single-line search input with search affordance",
+        "multiline": "multi-line editable text without native clear action",
+        "dropdown-search": "searchable input with a dropdown result surface",
+        "file-browser": "editable resource text with browse action and clear action"
+      }
+    },
+    "actions": {
+      "clear": {
+        "availableFor": ["plain", "password", "search", "dropdown-search", "file-browser"],
+        "multiline": "external-runtime-clear-only",
+        "disabledPolicy": "preserve-current-value-and-lock-action"
+      },
+      "password-toggle": {
+        "availableFor": ["password"],
+        "purpose": "toggle-password-visibility-only"
+      },
+      "search-icon": {
+        "availableFor": ["search"],
+        "purpose": "decorative-or-search-affordance-as-declared-by-runtime"
+      },
+      "browse-action": {
+        "availableFor": ["file-browser"],
+        "purpose": "open-resource-browser-overlay"
+      }
+    },
+    "loading": {
+      "state": "loading",
+      "priority": "loading-overrides-disabled-visual",
+      "visualPolicy": "disabled-like-input-with-spinner-at-trailing-edge",
+      "editPolicy": "lock-editing",
+      "clearPolicy": "preserve-clear-control-but-disable-it",
+      "actionPolicy": "spinner-is-added-at-the-right-of-the-existing-action"
+    },
+    "focus": {
+      "state": "focused",
+      "borderPolicy": "accent-border",
+      "focusRing": "globally-disabled",
+      "keyboardCaret": "runtime-owned"
+    },
+    "validation": {
+      "errorPriority": "error-overrides-focus-and-hover",
+      "errorLocksInteraction": true,
+      "readonlyVisual": "same-as-disabled",
+      "readonlyInteraction": "runtime-distinct-from-disabled"
+    }
+  },
+  "stateLayers": {
+    "pointerInteraction": {
+      "registryAxis": "state",
+      "meaning": "default and hover describe the field surface before editing"
+    },
+    "focus": {
+      "registryAxis": "state",
+      "meaning": "focused changes border presentation and preserves the caret"
+    },
+    "validation": {
+      "registryAxis": "state",
+      "meaning": "error has priority over focused, hover and default"
+    },
+    "availability": {
+      "registryAxis": "state",
+      "meaning": "disabled and loading lock interaction; readonly shares the disabled visual"
+    },
+    "mode": {
+      "registryAxis": "mode",
+      "meaning": "mode controls Slot qualification and editing behavior, not a second component family"
+    }
+  },
+  "compositionRules": [
+    "Input and LineEdit are one public input family; Qt class choice is a platform implementation detail.",
+    "Mode, Appearance, State and Size are independent Registry axes; mode-specific Slot qualification is resolved by the Contract.",
+    "Placeholder uses the active State text color and does not create a dedicated placeholder-color Token.",
+    "Multiline uses the same input family and is expressed through mode; line count and height are runtime API values, not design axes.",
+    "Multiline does not expose a native clear action; external runtime code may clear its value through an explicit interface.",
+    "Password visibility toggling changes only password visibility and does not introduce another axis.",
+    "Resource-picker is an Input mode with browse action and may open a secondary resource browser overlay.",
+    "Loading preserves trailing actions, adds the spinner to their right, disables the actions and locks editing.",
+    "Focus Ring is never enabled; focused visual emphasis is expressed by the border Slot.",
+    "Error has higher visual priority than focused, hover and disabled-like presentation."
+  ],
+  "contentModel": {
+    "valueText": {
+      "kind": "instance-content",
+      "designSource": "sample-value-or-content-key",
+      "runtimeSource": "controlled-input-value",
+      "visualToken": false,
+      "localeResolution": "content-catalog-when-authored; runtime-value-when-edited"
+    },
+    "placeholderText": {
+      "kind": "localized-content-key",
+      "defaultLocale": "en-US",
+      "fallbackLocale": "en-US",
+      "visualToken": false,
+      "stateColor": "active-state-content-color"
+    },
+    "actionVisibility": {
+      "kind": "mode-qualified-structure",
+      "runtimeOwned": true,
+      "notContentLocale": true,
+      "rules": [
+        "multiline has no native clear action",
+        "password-toggle is valid only for password mode",
+        "search-icon is valid only for search and dropdown-search mode",
+        "browse-action is valid only for file-browser mode",
+        "loading keeps qualified actions and places spinner to their right"
+      ]
+    },
+    "forbiddenContentResponsibilities": [
+      "mode", "appearance", "state", "slot-structure", "runtime-events", "business-data"
+    ]
+  },
+  "tokenBoundary": {
+    "recipeOwns": [
+      "container, content, placeholder, border, focus-ring, action and spinner visual references",
+      "shared size, padding and spacing bindings",
+      "sparse mode, appearance and state visual overrides"
+    ],
+    "runtimeOwns": [
+      "text editing, caret and IME behavior",
+      "mode-specific action visibility",
+      "loading lifecycle and edit locking",
+      "readonly versus disabled capability",
+      "resource browser opening and returned value",
+      "multiline height, line count and external clear"
+    ],
+    "contractDoesNotOwn": [
+      "label, help text or validation message layout",
+      "resolved visual Token values",
+      "business validation rules"
+    ]
+  }
+}

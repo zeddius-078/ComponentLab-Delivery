@@ -1,0 +1,143 @@
+{
+  "$description": "Select V2 Figma structure and variable binding manifest. Specification only; it does not write or mutate the Figma file.",
+  "component": "select",
+  "version": "2.0",
+  "architectureAuthority": "V2 component-registry, component-contracts, and component-recipes; any reference JSON supplies values only and never defines Figma variable names.",
+  "$status": "draft-v2",
+  "writePolicy": "specification-only",
+  "publicComponentSet": "ComponentLab/Select",
+  "figmaComponentSet": "2258:17336",
+  "figmaComponentSetStatus": "verified",
+  "figmaVariantCount": 48,
+  "figmaVariantCountStatus": "verified",
+  "legacyFigmaComponentSets": ["244:2769", "244:2866", "244:2963", "244:3060", "244:3157", "244:3254", "244:3351", "244:3448", "244:3545", "244:3642", "244:3739", "244:3836"],
+  "variantAxes": {
+    "selection": ["single", "multiple"],
+    "searchable": ["false", "true"],
+    "appearance": ["outlined", "filled", "dashed"],
+    "state": ["default", "hover", "focused", "error", "disabled", "loading"],
+    "open": ["false", "true"],
+    "size": ["small", "medium", "large"]
+  },
+  "materialization": {
+    "mode": "generator-managed",
+    "logicalCombinationCount": 360,
+    "manualVariantAuthoring": false,
+    "runtimeOnlyAxes": []
+  },
+  "nestedStructure": {
+    "select": ["container", "content", "placeholder", "border", "focus-ring", "dropdown-indicator", "clear", "spinner", "label"],
+    "popup": ["option-item", "selected-indicator", "popup-bulk-control", "empty-state", "tag"]
+  },
+  "componentProperties": {
+    "placeholderText": "text",
+    "selectedValueText": "text",
+    "selectedTags": "instance-swap",
+    "popupVisible": "boolean",
+    "clearVisible": "boolean",
+    "emptyStateVisible": "boolean"
+  },
+  "contentProperties": {
+    "placeholderText": {
+      "kind": "localized-content-key",
+      "defaultLocale": "en-US",
+      "fallbackLocale": "en-US"
+    },
+    "selectedValueText": {
+      "kind": "instance-content",
+      "source": "runtime-option-label-or-content-key"
+    },
+    "selectedTags": {
+      "kind": "nested-instance-content",
+      "source": "runtime-selected-option-labels"
+    },
+    "optionItemLabelText": {
+      "kind": "nested-instance-content",
+      "source": "option-item-slot"
+    },
+    "popupText": {
+      "bulkControlText": "localized-content-key",
+      "emptyStateText": "localized-content-key",
+      "searchText": "runtime-transient-content"
+    }
+  },
+  "variableNamespace": {
+    "collection": "DSM/Component",
+    "prefix": "select/",
+    "canonicalPrefix": "component.select."
+  },
+  "bindingRules": [
+    {
+      "figmaSlot": "Select/Container",
+      "figmaProperty": "fill-radius-padding-size",
+      "canonicalPattern": "component.select.base.{size|shared}.slot.container.*",
+      "source": "component-recipes/select.json#/base"
+    },
+    {
+      "figmaSlot": "Select/Content",
+      "figmaProperty": "text-style-fill-gap",
+      "canonicalPattern": "component.select.base.{shared|appearance|state}.slot.content.*",
+      "source": "component-recipes/select.json#/base"
+    },
+    {
+      "figmaSlot": "Select/Border",
+      "figmaProperty": "stroke-stroke-weight",
+      "canonicalPattern": "component.select.*.slot.border.*",
+      "source": "component-recipes/select.json#/base+overrides"
+    },
+    {
+      "figmaSlot": "Select/Trigger",
+      "figmaProperty": "focus-indicator-clear-spinner",
+      "canonicalPattern": "component.select.*.slot.{focus-ring|dropdown-indicator|clear|spinner}.*",
+      "source": "component-recipes/select.json#/base+overrides"
+    },
+    {
+      "figmaSlot": "Select/Popup",
+      "figmaProperty": "fill-border-radius-gap",
+      "canonicalPattern": "component.select.base.shared.slot.popup.*",
+      "source": "component-recipes/select.json#/base/shared"
+    },
+    {
+      "figmaSlot": "Select/OptionItem",
+      "figmaProperty": "text-fill-background-radius",
+      "canonicalPattern": "component.select.base.shared.slot.option-item.*",
+      "source": "component-recipes/select.json#/base/shared"
+    },
+    {
+      "figmaSlot": "Select/Tag",
+      "figmaProperty": "fill-border-radius",
+      "canonicalPattern": "component.select.base.shared.slot.tag.*",
+      "source": "component-recipes/select.json#/base/shared"
+    },
+    {
+      "figmaSlot": "Select/PopupBulkControl",
+      "figmaProperty": "fill-text-stroke",
+      "canonicalPattern": "component.select.base.shared.slot.popup-bulk-control.*",
+      "source": "component-recipes/select.json#/base/shared"
+    },
+    {
+      "figmaSlot": "Select/EmptyState",
+      "figmaProperty": "fill-asset-min-height",
+      "canonicalPattern": "component.select.base.shared.slot.empty-state.*",
+      "source": "component-recipes/select.json#/base/shared"
+    }
+  ],
+  "sharedComponentBindings": {
+    "typography": "composite.typography",
+    "spinner": "component.spinner",
+    "checkboxVisuals": "component.checkbox",
+    "tooltipPopover": "shared.tooltip-popover",
+    "icons": "component.icon"
+  },
+  "runtimeOnly": [
+    "data-source",
+    "option-identity-and-availability",
+    "selected-values",
+    "search-query",
+    "popup-lifecycle",
+    "keyboard-navigation",
+    "selection-reconciliation",
+    "backend-validation",
+    "warning-and-info-events"
+  ]
+}

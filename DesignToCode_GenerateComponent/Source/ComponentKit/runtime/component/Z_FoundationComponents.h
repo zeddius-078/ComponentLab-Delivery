@@ -36,7 +36,7 @@ class Z_Badge final : public QWidget {
     Q_PROPERTY(QString kind READ kind WRITE setKind NOTIFY kindChanged)
     Q_PROPERTY(QString tone READ tone WRITE setTone NOTIFY toneChanged)
   public:
-    explicit Z_Badge(const QString& profile = QStringLiteral("light-comfortable"),
+    explicit Z_Badge(const QString& profile = QStringLiteral("standard-light"),
                      QWidget* parent = nullptr);
     QString label() const { return labelValue; }
     QString kind() const { return kindValue; }
@@ -65,7 +65,7 @@ class Z_StatusIndicator final : public QWidget {
     Q_PROPERTY(QString size READ size WRITE setSize NOTIFY sizeChanged)
     Q_PROPERTY(QString tone READ tone WRITE setTone NOTIFY toneChanged)
   public:
-    explicit Z_StatusIndicator(const QString& profile = QStringLiteral("light-comfortable"),
+    explicit Z_StatusIndicator(const QString& profile = QStringLiteral("standard-light"),
                                QWidget* parent = nullptr);
     QString label() const { return labelValue; }
     bool showLabel() const { return showLabelValue; }
@@ -96,7 +96,7 @@ class Z_Link final : public QAbstractButton {
     Q_PROPERTY(QUrl target READ target WRITE setTarget NOTIFY targetChanged)
     Q_PROPERTY(QString snapshotState READ snapshotState WRITE setSnapshotState NOTIFY snapshotStateChanged)
   public:
-    explicit Z_Link(const QString& profile = QStringLiteral("light-comfortable"),
+    explicit Z_Link(const QString& profile = QStringLiteral("standard-light"),
                     QWidget* parent = nullptr);
     QUrl target() const { return targetValue; }
     QString snapshotState() const { return snapshotStateValue; }
@@ -125,7 +125,7 @@ class Z_Tag final : public QWidget {
     Q_PROPERTY(QString tone READ tone WRITE setTone NOTIFY toneChanged)
     Q_PROPERTY(bool dismissible READ isDismissible WRITE setDismissible NOTIFY dismissibleChanged)
   public:
-    explicit Z_Tag(const QString& profile = QStringLiteral("light-comfortable"),
+    explicit Z_Tag(const QString& profile = QStringLiteral("standard-light"),
                    QWidget* parent = nullptr);
     QString label() const { return labelValue; }
     QString size() const { return sizeValue; }
@@ -160,7 +160,7 @@ class Z_Tooltip final : public QWidget {
     Q_PROPERTY(QString placement READ placement WRITE setPlacement NOTIFY placementChanged)
     Q_PROPERTY(bool showArrow READ showArrow WRITE setShowArrow NOTIFY showArrowChanged)
   public:
-    explicit Z_Tooltip(const QString& profile = QStringLiteral("light-comfortable"),
+    explicit Z_Tooltip(const QString& profile = QStringLiteral("standard-light"),
                        QWidget* parent = nullptr);
     ~Z_Tooltip() override;
     QString content() const { return contentValue; }
@@ -196,7 +196,7 @@ class Z_SearchInput final : public Z_InputField {
     Q_PROPERTY(QString shortcutText READ shortcutText WRITE setShortcutText NOTIFY shortcutTextChanged)
     Q_PROPERTY(QString snapshotState READ snapshotState WRITE setSnapshotState NOTIFY snapshotStateChanged)
   public:
-    explicit Z_SearchInput(const QString& profile = QStringLiteral("light-comfortable"),
+    explicit Z_SearchInput(const QString& profile = QStringLiteral("standard-light"),
                            QWidget* parent = nullptr);
     QString shortcutText() const { return shortcutValue; }
     QString snapshotState() const { return snapshotStateValue; }
@@ -222,7 +222,7 @@ class Z_NumberInput final : public QWidget {
     Q_PROPERTY(double singleStep READ singleStep WRITE setSingleStep)
     Q_PROPERTY(QString snapshotState READ snapshotState WRITE setSnapshotState NOTIFY snapshotStateChanged)
   public:
-    explicit Z_NumberInput(const QString& profile = QStringLiteral("light-comfortable"),
+    explicit Z_NumberInput(const QString& profile = QStringLiteral("standard-light"),
                            QWidget* parent = nullptr);
     QString type() const { return typeValue; }
     double value() const;
@@ -265,7 +265,7 @@ class Z_ColorPicker final : public QAbstractButton {
     Q_PROPERTY(QString snapshotState READ snapshotState WRITE setSnapshotState NOTIFY snapshotStateChanged)
   public:
     explicit Z_ColorPicker(
-        const QString& profile = QStringLiteral("light-comfortable"),
+        const QString& profile = QStringLiteral("standard-light"),
         QWidget* parent = nullptr);
     QColor color() const { return colorValue; }
     QString colorFormat() const { return colorFormatValue; }
@@ -304,7 +304,7 @@ class Z_Transfer final : public QWidget {
     Q_PROPERTY(bool moveToAvailableAllowed READ isMoveToAvailableAllowed WRITE setMoveToAvailableAllowed NOTIFY moveToAvailableAllowedChanged)
   public:
     explicit Z_Transfer(
-        const QString& profile = QStringLiteral("light-comfortable"),
+        const QString& profile = QStringLiteral("standard-light"),
         QWidget* parent = nullptr);
     QString snapshotState() const { return snapshotStateValue; }
     QString availableTitle() const { return availableTitleValue; }
@@ -371,7 +371,7 @@ class Z_Upload final : public QAbstractButton {
     Q_PROPERTY(QString helperText READ helperText WRITE setHelperText NOTIFY helperTextChanged)
   public:
     explicit Z_Upload(
-        const QString& profile = QStringLiteral("light-comfortable"),
+        const QString& profile = QStringLiteral("standard-light"),
         QWidget* parent = nullptr);
     QString snapshotState() const { return snapshotStateValue; }
     int progress() const { return progressValue; }
@@ -418,7 +418,7 @@ class Z_NumericKeypad final : public QWidget {
     Q_PROPERTY(QString decimalSeparator READ decimalSeparator WRITE setDecimalSeparator NOTIFY decimalSeparatorChanged)
   public:
     explicit Z_NumericKeypad(
-        const QString& profile = QStringLiteral("light-comfortable"),
+        const QString& profile = QStringLiteral("standard-light"),
         QWidget* parent = nullptr);
     QString density() const { return densityValue; }
     QStringList keyLayout() const { return keyValues; }
@@ -463,7 +463,7 @@ class Z_OverflowMenuButton final : public QToolButton {
     Q_OBJECT
     Q_PROPERTY(QString snapshotState READ snapshotState WRITE setSnapshotState NOTIFY snapshotStateChanged)
   public:
-    explicit Z_OverflowMenuButton(const QString& profile = QStringLiteral("light-comfortable"),
+    explicit Z_OverflowMenuButton(const QString& profile = QStringLiteral("standard-light"),
                                   QWidget* parent = nullptr);
     QString snapshotState() const { return snapshotStateValue; }
     void setSnapshotState(const QString& value);
@@ -483,7 +483,7 @@ class Z_SegmentedControl final : public QWidget {
     Q_PROPERTY(int segmentCount READ segmentCount WRITE setSegmentCount NOTIFY segmentCountChanged)
     Q_PROPERTY(int currentIndex READ currentIndex WRITE setCurrentIndex NOTIFY currentIndexChanged)
   public:
-    explicit Z_SegmentedControl(const QString& profile = QStringLiteral("light-comfortable"),
+    explicit Z_SegmentedControl(const QString& profile = QStringLiteral("standard-light"),
                                 QWidget* parent = nullptr);
     QStringList items() const { return itemValues; }
     int segmentCount() const { return itemValues.size(); }
@@ -520,7 +520,7 @@ class Z_Stepper final : public QWidget {
     Q_PROPERTY(int currentIndex READ currentIndex WRITE setCurrentIndex NOTIFY currentIndexChanged)
     Q_PROPERTY(QString snapshotState READ snapshotState WRITE setSnapshotState NOTIFY snapshotStateChanged)
   public:
-    explicit Z_Stepper(const QString& profile = QStringLiteral("light-comfortable"),
+    explicit Z_Stepper(const QString& profile = QStringLiteral("standard-light"),
                        QWidget* parent = nullptr);
     QStringList items() const { return itemValues; }
     int currentIndex() const { return currentIndexValue; }
@@ -549,7 +549,7 @@ class Z_Timeline final : public QWidget {
     Q_OBJECT
     Q_PROPERTY(QString density READ density WRITE setDensity NOTIFY densityChanged)
   public:
-    explicit Z_Timeline(const QString& profile = QStringLiteral("light-comfortable"),
+    explicit Z_Timeline(const QString& profile = QStringLiteral("standard-light"),
                         QWidget* parent = nullptr);
     QString density() const { return densityValue; }
     QStringList eventLabels() const { return eventLabelValues; }
@@ -588,7 +588,7 @@ class Z_AnchorNavigation final : public QWidget {
     Q_PROPERTY(int currentIndex READ currentIndex WRITE setCurrentIndex NOTIFY currentIndexChanged)
   public:
     explicit Z_AnchorNavigation(
-        const QString& profile = QStringLiteral("light-comfortable"),
+        const QString& profile = QStringLiteral("standard-light"),
         QWidget* parent = nullptr);
     QString orientation() const { return orientationValue; }
     QString snapshotState() const;
@@ -635,7 +635,7 @@ class Z_Filter final : public QWidget {
     Q_PROPERTY(QStringList criteria READ criteria WRITE setCriteria NOTIFY criteriaChanged)
     Q_PROPERTY(QString applyLabel READ applyLabel WRITE setApplyLabel NOTIFY applyLabelChanged)
   public:
-    explicit Z_Filter(const QString& profile = QStringLiteral("light-comfortable"),
+    explicit Z_Filter(const QString& profile = QStringLiteral("standard-light"),
                       QWidget* parent = nullptr);
     QString layoutMode() const { return layoutModeValue; }
     QString snapshotState() const { return snapshotStateValue; }
@@ -678,7 +678,7 @@ class Z_Pagination final : public QWidget {
     Q_PROPERTY(int currentPage READ currentPage WRITE setCurrentPage NOTIFY currentPageChanged)
     Q_PROPERTY(int pageCount READ pageCount WRITE setPageCount NOTIFY pageCountChanged)
   public:
-    explicit Z_Pagination(const QString& profile = QStringLiteral("light-comfortable"),
+    explicit Z_Pagination(const QString& profile = QStringLiteral("standard-light"),
                           QWidget* parent = nullptr);
     QString density() const { return densityValue; }
     QString snapshotState() const { return snapshotStateValue; }
@@ -719,7 +719,7 @@ class Z_PageHeader final : public QWidget {
     Q_PROPERTY(QString density READ density WRITE setDensity NOTIFY densityChanged)
     Q_PROPERTY(bool actionsVisible READ actionsVisible WRITE setActionsVisible NOTIFY actionsVisibleChanged)
   public:
-    explicit Z_PageHeader(const QString& profile = QStringLiteral("light-comfortable"),
+    explicit Z_PageHeader(const QString& profile = QStringLiteral("standard-light"),
                           QWidget* parent = nullptr);
     QString title() const { return titleValue; }
     QString contextText() const { return contextValue; }
@@ -763,7 +763,7 @@ class Z_TitleBar final : public QWidget {
     Q_PROPERTY(QString title READ title WRITE setTitle NOTIFY titleChanged)
     Q_PROPERTY(QString snapshotState READ snapshotState WRITE setSnapshotState NOTIFY snapshotStateChanged)
   public:
-    explicit Z_TitleBar(const QString& profile = QStringLiteral("light-comfortable"),
+    explicit Z_TitleBar(const QString& profile = QStringLiteral("standard-light"),
                         QWidget* parent = nullptr);
     QString title() const { return titleValue; }
     QString snapshotState() const { return snapshotStateValue; }

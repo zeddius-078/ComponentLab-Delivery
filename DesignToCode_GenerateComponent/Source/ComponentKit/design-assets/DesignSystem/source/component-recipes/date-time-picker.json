@@ -1,0 +1,32 @@
+{
+  "$registry": {
+    "component": "date-time-picker",
+    "version": "2.0"
+  },
+    "$status": "internal-adapter",
+  "base": {
+    "state": {
+      "default": {
+        "slot": {
+          "container": {
+            "radius": {
+              "$type": "borderRadius",
+              "$value": "{semantic.radius.control-default}",
+              "$description": "Recovered from legacy V2 layer component.date-time-picker.base.default.container.radius",
+              "$sourceOwner": "old-tree-recovery",
+              "unit": "px"
+            },
+            "visual-height": {
+              "$type": "dimension",
+              "$value": "{primitive.dimension.32}",
+              "$description": "Recovered from legacy V2 layer component.date-time-picker.base.default.container.visual-height",
+              "$sourceOwner": "old-tree-recovery",
+              "unit": "px"
+            }
+          }
+        }
+      }
+    }
+  },
+  "overrides": []
+}

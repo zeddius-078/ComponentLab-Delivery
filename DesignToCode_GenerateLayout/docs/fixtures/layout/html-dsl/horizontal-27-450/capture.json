@@ -1,0 +1,24 @@
+{
+  "schemaVersion": "capture-manifest.v1",
+  "manifestType": "preview-fixture",
+  "generatedAtUtc": "2026-10-19T15:11:56.830324+00:00",
+  "expectedRootId": "27:450",
+  "fileKey": "4S0Ktm81WnvzuJmZHvRuOg",
+  "sourceHtml": "page-0-0.html",
+  "sourceDsl": "../../design-inputs/horizontal-27-450-full/canonical.raw.json",
+  "fontFamily": "HarmonyOS Sans SC-Regular",
+  "resources": [
+    {
+      "url": "http://localhost:3667/assets/1792422674342/HarmonyOS_Sans_SC_Regular.ttf",
+      "local": "assets/HarmonyOS_Sans_SC_Regular.ttf"
+    },
+    {
+      "url": "http://localhost:3667/assets/1792422674342/GLYPHarrowleft.svg",
+      "local": "assets/GLYPHarrowleft.svg"
+    }
+  ],
+  "sourceHashes": {
+    "htmlSha256": "a0abb0268d64db187dcffe21a5afea4d361e7579f136265bb5171e10052e5128",
+    "dslSha256": "f5bf2fbfba76f82ab9b48df03fa14fa61d4d4aa1d3cacf68ddc6234f80e5ccd4"
+  }
+}

@@ -1,0 +1,80 @@
+{
+  "$registry": {
+    "component": "menu-bar-item",
+    "version": "2.0"
+  },
+  "$status": "active",
+  "base": {
+    "state": {
+      "default": {
+        "slot": {
+          "label": {
+            "color": {
+              "$type": "color",
+              "$value": "{semantic.color.text.primary}",
+              "$description": "Recovered from legacy V2 layer component.menu-bar-item.base.default.label.color",
+              "$sourceOwner": "old-tree-recovery"
+            }
+          },
+          "mnemonic": {
+            "color": {
+              "$type": "color",
+              "$value": "{semantic.color.interactive.brand.default}",
+              "$description": "Recovered from legacy V2 layer component.menu-bar-item.base.default.mnemonic.color",
+              "$sourceOwner": "old-tree-recovery"
+            }
+          }
+        }
+      },
+      "disabled": {
+        "slot": {
+          "label": {
+            "color": {
+              "$type": "color",
+              "$value": "{semantic.color.text.disabled}",
+              "$description": "Recovered from legacy V2 layer component.menu-bar-item.base.disabled.label.color",
+              "$sourceOwner": "old-tree-recovery"
+            }
+          }
+        }
+      },
+      "focused": {
+        "slot": {
+          "focus-ring": {
+            "color": {
+              "$type": "color",
+              "$value": "{semantic.color.interactive.brand.focus-ring}",
+              "$description": "Recovered from legacy V2 layer component.menu-bar-item.base.focused.focus-ring.color",
+              "$sourceOwner": "old-tree-recovery"
+            }
+          }
+        }
+      },
+      "hover": {
+        "slot": {
+          "container": {
+            "color": {
+              "$type": "color",
+              "$value": "{semantic.color.background.hover}",
+              "$description": "Recovered from legacy V2 layer component.menu-bar-item.base.hover.container.color",
+              "$sourceOwner": "old-tree-recovery"
+            }
+          }
+        }
+      },
+      "open": {
+        "slot": {
+          "container": {
+            "color": {
+              "$type": "color",
+              "$value": "{semantic.color.interactive.brand.default}",
+              "$description": "Recovered from legacy V2 layer component.menu-bar-item.base.open.container.color",
+              "$sourceOwner": "old-tree-recovery"
+            }
+          }
+        }
+      }
+    }
+  },
+  "overrides": []
+}

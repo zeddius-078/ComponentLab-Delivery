@@ -4,7 +4,7 @@ ReferencePage 展示开发仓库可直接接手的 `.ui + .h + .cpp` 页面结�
 
 | 文件 | 作用 |
 | --- | --- |
-| `Source/Qt/ReferencePage/ReferencePage.ui` | 声明布局和 SDK 中的自定义控件类 |
+| `docs/examples/Qt/ReferencePage/ReferencePage.ui` | 声明布局和 SDK 中的自定义控件类 |
 | `ReferencePage.h` | 暴露页面字段、设值接口和业务信号 |
 | `ReferencePage.cpp` | 初始化选项、连接信号、切换 busy/error 等运行态 |
 | `ReferencePage.source.json` | 记录来源类型、组件对象和布局 Token 的已解析值 |
@@ -19,7 +19,7 @@ ReferencePage 展示开发仓库可直接接手的 `.ui + .h + .cpp` 页面结�
 
 ```powershell
 pwsh -File Source/Verify-GeneratedComponentSDK.ps1
-pwsh -File Source/Qt/ReferencePage/Build.ps1 -Test -Deploy
+pwsh -File docs/examples/Qt/ReferencePage/Build.ps1 -Test -Deploy
 ```
 
 构建读取同级 `DesignToCode_GenerateComponent/build/sdk`；外部工作区可设置 `GENERATED_COMPONENT_SDK_ROOT`。ReferencePage 不包含 Token 生成参数；更新样式时由 GenerateComponent 重新发布并校验 SDK。

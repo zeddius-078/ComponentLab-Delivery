@@ -1,0 +1,830 @@
+{
+  "schemaVersion": 1,
+  "fileKey": "w92BKW1EcutKmTXkwzNHbf",
+  "scope": "Current public component catalog identity and mapping source; reconciled with the live Figma inventory and traceability manifest by the catalog generator.",
+  "entries": {
+    "button": {
+      "pageId": "172:2710",
+      "mappingType": "native",
+      "componentSetIds": [
+        "173:2710",
+        "173:2804",
+        "173:2898",
+        "173:2992",
+        "173:3086",
+        "1135:20"
+      ],
+      "variantCount": 108,
+      "designComponent": "ComponentLab/Button"
+    },
+    "checkbox": {
+      "pageId": "234:2717",
+      "mappingType": "native",
+      "componentSetId": "235:2710",
+      "variantCount": 30,
+      "groupVariantCount": 4,
+      "designComponent": "ComponentLab/Checkbox"
+    },
+    "select": {
+      "pageId": "242:2720",
+      "mappingType": "design-system",
+      "variantCount": 214,
+      "designComponent": "ComponentLab/Select"
+    },
+    "comboBox": {
+      "pageId": "1120:2",
+      "mappingType": "native",
+      "componentSetId": "1120:18",
+      "variantCount": 12,
+      "designComponent": "ComponentLab/ComboBox"
+    },
+    "fontComboBox": {
+      "pageId": "1121:2",
+      "mappingType": "native",
+      "componentSetId": "1121:18",
+      "variantCount": 12,
+      "designComponent": "ComponentLab/FontComboBox"
+    },
+    "input": {
+      "pageId": "339:2",
+      "mappingType": "design-system",
+      "componentSetId": "339:111",
+      "variantCount": 18,
+      "designComponent": "ComponentLab/Input"
+    },
+    "lineEdit": {
+      "pageId": "1116:2",
+      "mappingType": "native",
+      "componentSetId": "1116:18",
+      "variantCount": 18,
+      "designComponent": "ComponentLab/LineEdit"
+    },
+    "radio": {
+      "pageId": "341:2",
+      "mappingType": "native",
+      "componentSetId": "341:53",
+      "variantCount": 10,
+      "groupVariantCount": 4,
+      "designComponent": "ComponentLab/RadioButton"
+    },
+    "switch": {
+      "pageId": "346:2",
+      "mappingType": "design-system",
+      "componentSetId": "346:19",
+      "variantCount": 24,
+      "designComponent": "ComponentLab/Switch"
+    },
+    "chip": {
+      "pageId": "351:2",
+      "mappingType": "design-system",
+      "componentSetId": "351:27",
+      "variantCount": 20,
+      "groupVariantCount": 8,
+      "designComponent": "ComponentLab/Chip"
+    },
+    "card": {
+      "pageId": "359:2",
+      "mappingType": "design-system",
+      "componentSetId": "359:75",
+      "variantCount": 6,
+      "designComponent": "ComponentLab/Card"
+    },
+    "dataTable": {
+      "pageId": "363:2",
+      "mappingType": "design-system",
+      "componentSetId": "363:366",
+      "variantCount": 15,
+      "designComponent": "ComponentLab/DataTable"
+    },
+    "tableWidget": {
+      "pageId": "1111:2",
+      "mappingType": "native",
+      "componentSetId": "1111:21",
+      "variantCount": 15,
+      "designComponent": "ComponentLab/TableWidget"
+    },
+    "listView": {
+      "pageId": "707:19",
+      "mappingType": "native",
+      "componentSetId": "707:270",
+      "variantCount": 12,
+      "designComponent": "ComponentLab/ListView"
+    },
+    "listWidget": {
+      "pageId": "709:2",
+      "mappingType": "native",
+      "componentSetId": "709:21",
+      "variantCount": 12,
+      "designComponent": "ComponentLab/ListWidget"
+    },
+    "treeView": {
+      "pageId": "712:8",
+      "mappingType": "native",
+      "componentSetId": "712:27",
+      "variantCount": 12,
+      "designComponent": "ComponentLab/TreeView"
+    },
+    "treeWidget": {
+      "pageId": "713:2",
+      "mappingType": "native",
+      "componentSetId": "713:21",
+      "variantCount": 12,
+      "designComponent": "ComponentLab/TreeWidget"
+    },
+    "tableView": {
+      "pageId": "717:2",
+      "mappingType": "native",
+      "componentSetId": "717:21",
+      "variantCount": 15,
+      "designComponent": "ComponentLab/TableView"
+    },
+    "columnView": {
+      "pageId": "720:6",
+      "mappingType": "native",
+      "componentSetId": "720:25",
+      "variantCount": 12,
+      "designComponent": "ComponentLab/ColumnView"
+    },
+    "undoView": {
+      "pageId": "721:5",
+      "mappingType": "native",
+      "componentSetId": "721:24",
+      "variantCount": 14,
+      "designComponent": "ComponentLab/UndoView"
+    },
+    "innerShadowMaterial": {
+      "recordKind": "component-specimen",
+      "pageId": "374:2",
+      "componentSetId": "374:49",
+      "variantCount": 4,
+      "publicDesignComponent": "ComponentLab/Button"
+    },
+    "navbar": {
+      "pageId": "380:2",
+      "mappingType": "composite",
+      "componentSetId": "380:113",
+      "variantCount": 2,
+      "designComponent": "ComponentLab/Navbar"
+    },
+    "sidebar": {
+      "pageId": "392:2",
+      "mappingType": "composite",
+      "componentSetId": "392:216",
+      "variantCount": 4,
+      "navItemVariantCount": 16,
+      "designComponent": "ComponentLab/Sidebar"
+    },
+    "desktopBottomNavigation": {
+      "pageId": "1307:2",
+      "mappingType": "composite",
+      "componentSetId": "1312:96",
+      "variantCount": 2,
+      "designComponent": "ComponentLab/DesktopBottomNavigation"
+    },
+    "metricCard": {
+      "mappingType": "composite",
+      "pageId": "397:2",
+      "componentSetId": "397:39",
+      "publicComponentSetName": "ComponentLab/MetricCard",
+      "variantCount": 4
+    },
+    "chart": {
+      "mappingType": "composite",
+      "pageId": "400:2",
+      "componentSetId": "400:106",
+      "publicComponentSetName": "ComponentLab/Chart",
+      "variantCount": 6
+    },
+    "imagePanel": {
+      "mappingType": "composite",
+      "pageId": "402:2",
+      "componentSetId": "402:52",
+      "publicComponentSetName": "ComponentLab/ImagePanel",
+      "variantCount": 2
+    },
+    "integrationCard": {
+      "mappingType": "composite",
+      "pageId": "405:2",
+      "componentSetId": "405:57",
+      "publicComponentSetName": "ComponentLab/IntegrationCard",
+      "variantCount": 2
+    },
+    "progress": {
+      "pageId": "410:13",
+      "mappingType": "native",
+      "componentSetId": "410:57",
+      "publicComponentSetName": "ComponentLab/ProgressBar",
+      "variantCount": 12
+    },
+    "spin": {
+      "mappingType": "composite",
+      "pageId": "727:14",
+      "componentSetId": "727:93",
+      "variantCount": 12,
+      "designComponent": "ComponentLab/Spin"
+    },
+    "result": {
+      "mappingType": "composite",
+      "pageId": "735:2",
+      "componentSetId": "735:106",
+      "variantCount": 8,
+      "designComponent": "ComponentLab/Result"
+    },
+    "skeleton": {
+      "mappingType": "composite",
+      "pageId": "737:2",
+      "componentSetId": "737:192",
+      "variantCount": 6,
+      "designComponent": "ComponentLab/Skeleton"
+    },
+    "label": {
+      "pageId": "414:7",
+      "mappingType": "native",
+      "componentSetId": "414:39",
+      "publicComponentSetName": "ComponentLab/Label",
+      "variantCount": 12
+    },
+    "lcdNumber": {
+      "pageId": "418:11",
+      "mappingType": "native",
+      "componentSetId": "418:493",
+      "variantCount": 24
+    },
+    "textBrowser": {
+      "pageId": "420:13",
+      "mappingType": "native",
+      "componentSetId": "420:50",
+      "variantCount": 6
+    },
+    "graphicsView": {
+      "pageId": "422:16",
+      "mappingType": "native",
+      "componentSetId": "422:181",
+      "variantCount": 8
+    },
+    "calendar": {
+      "pageId": "423:18",
+      "mappingType": "native",
+      "componentSetId": "423:859",
+      "variantCount": 8
+    },
+    "richTextEdit": {
+      "pageId": "426:15",
+      "mappingType": "native",
+      "componentSetId": "426:76",
+      "variantCount": 12
+    },
+    "plainTextEdit": {
+      "pageId": "430:20",
+      "mappingType": "native",
+      "componentSetId": "430:73",
+      "variantCount": 8
+    },
+    "openGLViewport": {
+      "pageId": "431:18",
+      "mappingType": "native",
+      "componentSetId": "431:224",
+      "variantCount": 6
+    },
+    "empty": {
+      "mappingType": "composite",
+      "pageId": "433:7",
+      "componentSetId": "433:119",
+      "variantCount": 8
+    },
+    "statistic": {
+      "mappingType": "composite",
+      "pageId": "436:8",
+      "componentSetId": "436:79",
+      "variantCount": 8
+    },
+    "toolButton": {
+      "mappingType": "native",
+      "pageId": "443:2",
+      "componentSetId": "443:222",
+      "variantCount": 34
+    },
+    "dialogButtonGroup": {
+      "mappingType": "native",
+      "pageId": "447:2",
+      "componentSetId": "447:593",
+      "variantCount": 32
+    },
+    "commandLinkButton": {
+      "mappingType": "native",
+      "pageId": "450:2",
+      "componentSetId": "450:102",
+      "variantCount": 16
+    },
+    "spinBox": {
+      "mappingType": "native",
+      "pageId": "458:2",
+      "componentSetId": "458:155",
+      "variantCount": 12
+    },
+    "doubleSpinBox": {
+      "mappingType": "native",
+      "pageId": "460:2",
+      "componentSetId": "460:175",
+      "variantCount": 12
+    },
+    "dateTimePicker": {
+      "mappingType": "native",
+      "pageId": "463:2",
+      "componentSetId": "463:136",
+      "variantCount": 8
+    },
+    "datePicker": {
+      "mappingType": "native",
+      "pageId": "464:2",
+      "componentSetId": "464:111",
+      "variantCount": 8
+    },
+    "timePicker": {
+      "mappingType": "native",
+      "pageId": "465:2",
+      "componentSetId": "465:189",
+      "variantCount": 8
+    },
+    "slider": {
+      "mappingType": "native",
+      "pageId": "467:2",
+      "componentSetId": "467:195",
+      "variantCount": 8
+    },
+    "scrollBar": {
+      "mappingType": "native",
+      "pageId": "471:334",
+      "componentSetId": "471:477",
+      "variantCount": 8
+    },
+    "dial": {
+      "mappingType": "native",
+      "pageId": "475:334",
+      "componentSetId": "475:551",
+      "variantCount": 8
+    },
+    "shortcutInput": {
+      "mappingType": "native",
+      "pageId": "478:337",
+      "componentSetId": "478:439",
+      "variantCount": 6
+    },
+    "menu": {
+      "mappingType": "native",
+      "pageId": "482:335",
+      "itemComponentSetId": "482:490",
+      "variantCount": 20
+    },
+    "menuBar": {
+      "mappingType": "native",
+      "pageId": "486:10",
+      "itemComponentSetId": "487:22",
+      "variantCount": 5
+    },
+    "toolBar": {
+      "mappingType": "native",
+      "pageId": "492:10",
+      "componentSetId": "494:370",
+      "variantCount": 16
+    },
+    "tabs": {
+      "mappingType": "native",
+      "pageId": "500:2",
+      "tabItemComponentSetId": "500:847",
+      "variantCount": 20
+    },
+    "toolbox": {
+      "mappingType": "native",
+      "pageId": "505:2",
+      "itemComponentSetId": "505:553",
+      "variantCount": 5
+    },
+    "dockWidget": {
+      "mappingType": "native",
+      "pageId": "507:2",
+      "componentSetId": "507:443",
+      "variantCount": 8
+    },
+    "mdiWorkspace": {
+      "recordKind": "multi-asset-page",
+      "assetClassifications": [
+        {
+          "designComponentId": "ComponentLab/MdiArea",
+          "componentSetId": "511:280",
+          "assetClass": "native-component",
+          "qtClass": "QMdiArea",
+          "mappingType": "native"
+        },
+        {
+          "designComponentId": "ComponentLab/MdiSubWindow",
+          "componentSetId": "511:124",
+          "assetClass": "native-component",
+          "qtClass": "QMdiSubWindow",
+          "mappingType": "native"
+        }
+      ],
+      "pageId": "511:11",
+      "mdiAreaComponentSetId": "511:280",
+      "mdiSubWindowComponentSetId": "511:124",
+      "variantCount": 10
+    },
+    "pageFlow": {
+      "recordKind": "multi-asset-page",
+      "assetClassifications": [
+        {
+          "designComponentId": "ComponentLab/StackedWidget",
+          "componentSetId": "516:62",
+          "assetClass": "native-component",
+          "qtClass": "QStackedWidget",
+          "mappingType": "native"
+        },
+        {
+          "designComponentId": "ComponentLab/WizardPage",
+          "componentSetId": "516:113",
+          "assetClass": "native-component",
+          "qtClass": "QWizardPage",
+          "mappingType": "native"
+        },
+        {
+          "designComponentId": "ComponentLab/Wizard",
+          "componentSetId": "516:669",
+          "assetClass": "native-component",
+          "qtClass": "QWizard",
+          "mappingType": "native"
+        }
+      ],
+      "pageId": "516:11",
+      "stackedWidgetComponentSetId": "516:62",
+      "wizardPageComponentSetId": "516:113",
+      "wizardComponentSetId": "516:669",
+      "variantCount": 25
+    },
+    "splitter": {
+      "mappingType": "native",
+      "pageId": "520:11",
+      "componentSetId": "520:120",
+      "variantCount": 10
+    },
+    "groupBox": {
+      "mappingType": "native",
+      "pageId": "526:11",
+      "componentSetId": "526:447",
+      "variantCount": 18
+    },
+    "scrollArea": {
+      "mappingType": "native",
+      "pageId": "531:11",
+      "componentSetId": "531:912",
+      "variantCount": 24
+    },
+    "widgetFrameFoundation": {
+      "recordKind": "multi-asset-page",
+      "assetClassifications": [
+        {
+          "designComponentId": "ComponentLab/Widget",
+          "componentSetId": "537:75",
+          "assetClass": "native-component",
+          "qtClass": "QWidget",
+          "mappingType": "native"
+        },
+        {
+          "designComponentId": "ComponentLab/Frame",
+          "componentSetId": "537:165",
+          "assetClass": "native-component",
+          "qtClass": "QFrame",
+          "mappingType": "native"
+        }
+      ],
+      "pageId": "537:2",
+      "widgetComponentSetId": "537:75",
+      "frameComponentSetId": "537:165",
+      "variantCount": 30
+    },
+    "layoutDivider": {
+      "recordKind": "multi-asset-page",
+      "assetClassifications": [
+        {
+          "designComponentId": "Contract/LayoutPrimitive",
+          "componentSetId": "542:187",
+          "assetClass": "engineering-contract",
+          "qtContractClass": "QLayout",
+          "visualMapping": "not-applicable"
+        },
+        {
+          "designComponentId": "ComponentLab/Divider",
+          "componentSetId": "544:80",
+          "assetClass": "composite-component",
+          "qtCompositionBasis": "QFrame",
+          "mappingType": "composite"
+        }
+      ],
+      "pageId": "542:2",
+      "layoutComponentSetId": "542:187",
+      "dividerComponentSetId": "544:80",
+      "layoutVariantCount": 12,
+      "dividerVariantCount": 10
+    },
+    "formDescriptions": {
+      "recordKind": "multi-asset-page",
+      "assetClassifications": [
+        {
+          "designComponentId": "ComponentLab/Form",
+          "componentSetId": "555:754",
+          "assetClass": "composite-component",
+          "qtCompositionBasis": "QFormLayout",
+          "mappingType": "composite"
+        },
+        {
+          "designComponentId": "ComponentLab/Descriptions",
+          "componentSetId": "556:530",
+          "assetClass": "composite-component",
+          "qtCompositionBasis": "QGridLayout",
+          "mappingType": "composite"
+        }
+      ],
+      "pageId": "553:15",
+      "formComponentSetId": "555:754",
+      "descriptionsComponentSetId": "556:530",
+      "formVariantCount": 16,
+      "descriptionsVariantCount": 8
+    },
+    "collapseOverlayDrawer": {
+      "recordKind": "multi-asset-page",
+      "assetClassifications": [
+        {
+          "designComponentId": "ComponentLab/Collapse",
+          "componentSetId": "568:326",
+          "assetClass": "composite-component",
+          "qtCompositionBasis": "QWidget",
+          "mappingType": "composite"
+        },
+        {
+          "designComponentId": "ComponentLab/OverlayDrawer",
+          "componentSetId": "569:632",
+          "assetClass": "composite-component",
+          "qtCompositionBasis": "QWidget",
+          "mappingType": "composite"
+        }
+      ],
+      "pageId": "567:2",
+      "collapseComponentSetId": "568:326",
+      "overlayDrawerComponentSetId": "569:632",
+      "collapseVariantCount": 12,
+      "overlayDrawerVariantCount": 16
+    },
+    "dialogMessageDialog": {
+      "recordKind": "multi-asset-page",
+      "assetClassifications": [
+        {
+          "designComponentId": "ComponentLab/Dialog",
+          "componentSetId": "574:454",
+          "assetClass": "native-component",
+          "qtClass": "QDialog",
+          "mappingType": "native"
+        },
+        {
+          "designComponentId": "ComponentLab/MessageDialog",
+          "componentSetId": "575:418",
+          "assetClass": "native-component",
+          "qtClass": "QMessageBox",
+          "mappingType": "native"
+        }
+      ],
+      "pageId": "573:2",
+      "dialogComponentSetId": "574:454",
+      "messageDialogComponentSetId": "575:418",
+      "dialogVariantCount": 12,
+      "messageDialogVariantCount": 10
+    },
+    "alertMessageNotification": {
+      "recordKind": "multi-asset-page",
+      "assetClassifications": [
+        {
+          "designComponentId": "ComponentLab/Alert",
+          "componentSetId": "580:382",
+          "assetClass": "composite-component",
+          "qtCompositionBasis": "QWidget",
+          "mappingType": "composite"
+        },
+        {
+          "designComponentId": "ComponentLab/Message",
+          "componentSetId": "581:97",
+          "assetClass": "composite-component",
+          "qtCompositionBasis": "QWidget",
+          "mappingType": "composite"
+        },
+        {
+          "designComponentId": "ComponentLab/Notification",
+          "componentSetId": "582:489",
+          "assetClass": "composite-component",
+          "qtCompositionBasis": "QWidget",
+          "mappingType": "composite"
+        }
+      ],
+      "pageId": "579:33",
+      "alertComponentSetId": "580:382",
+      "messageComponentSetId": "581:97",
+      "notificationComponentSetId": "582:489",
+      "alertVariantCount": 8,
+      "messageVariantCount": 5,
+      "notificationVariantCount": 16
+    },
+    "statusBar": {
+      "pageId": "588:12",
+      "componentSetId": "588:127",
+      "mappingType": "native",
+      "variantCount": 6
+    },
+    "systemPickers": {
+      "recordKind": "multi-asset-page",
+      "assetClassifications": [
+        {
+          "designComponentId": "ComponentLab/FileDialog",
+          "componentSetId": "592:370",
+          "assetClass": "native-component",
+          "qtClass": "QFileDialog",
+          "mappingType": "native"
+        },
+        {
+          "designComponentId": "ComponentLab/ColorDialog",
+          "componentSetId": "593:368",
+          "assetClass": "native-component",
+          "qtClass": "QColorDialog",
+          "mappingType": "native"
+        },
+        {
+          "designComponentId": "ComponentLab/FontDialog",
+          "componentSetId": "593:778",
+          "assetClass": "native-component",
+          "qtClass": "QFontDialog",
+          "mappingType": "native"
+        }
+      ],
+      "pageId": "591:14",
+      "componentSets": {
+        "fileDialog": {
+          "componentSetId": "592:370",
+          "variantCount": 8,
+          "editablePropertyCount": 4,
+          "componentPropertyIds": [
+            "Title#592:32",
+            "Initial path#592:33",
+            "Filter#592:34",
+            "Show hidden#592:35"
+          ],
+          "canonicalButtonInstanceCount": 16,
+          "variantAxes": {
+            "Intent": [
+              "OpenFile",
+              "OpenFiles",
+              "SaveFile",
+              "Directory"
+            ],
+            "Surface": [
+              "Native",
+              "QtWidget"
+            ]
+          }
+        },
+        "colorDialog": {
+          "componentSetId": "593:368",
+          "variantCount": 8,
+          "editablePropertyCount": 3,
+          "componentPropertyIds": [
+            "Title#593:24",
+            "Hex value#593:25",
+            "Show custom colors#593:26"
+          ],
+          "canonicalButtonInstanceCount": 16,
+          "variantAxes": {
+            "Surface": [
+              "Native",
+              "QtWidget"
+            ],
+            "Alpha": [
+              "Hidden",
+              "Shown"
+            ],
+            "Mode": [
+              "Confirm",
+              "Live"
+            ]
+          }
+        },
+        "fontDialog": {
+          "componentSetId": "593:778",
+          "variantCount": 8,
+          "editablePropertyCount": 3,
+          "componentPropertyIds": [
+            "Title#593:51",
+            "Preview text#593:52",
+            "Show selection metadata#593:53"
+          ],
+          "canonicalButtonInstanceCount": 16,
+          "variantAxes": {
+            "Surface": [
+              "Native",
+              "QtWidget"
+            ],
+            "Filter": [
+              "All",
+              "Monospaced"
+            ],
+            "Mode": [
+              "Confirm",
+              "Live"
+            ]
+          }
+        }
+      },
+      "variantCount": 24
+    },
+    "specializedDialogs": {
+      "recordKind": "multi-asset-page",
+      "assetClassifications": [
+        {
+          "designComponentId": "ComponentLab/InputDialog",
+          "componentSetId": "600:264",
+          "assetClass": "native-component",
+          "qtClass": "QInputDialog",
+          "mappingType": "native"
+        },
+        {
+          "designComponentId": "ComponentLab/ProgressDialog",
+          "componentSetId": "601:196",
+          "assetClass": "native-component",
+          "qtClass": "QProgressDialog",
+          "mappingType": "native"
+        }
+      ],
+      "pageId": "598:2",
+      "componentSets": {
+        "inputDialog": {
+          "componentSetId": "600:264",
+          "variantCount": 10,
+          "editablePropertyCount": 4,
+          "componentPropertyIds": [
+            "Title#600:0",
+            "Prompt#600:11",
+            "Value#600:22",
+            "Show guidance#600:33"
+          ],
+          "canonicalFieldInstanceCount": 10,
+          "canonicalButtonInstanceCount": 10,
+          "canonicalSources": [
+            "339:51",
+            "430:37",
+            "244:2780",
+            "458:58",
+            "460:78",
+            "173:2711",
+            "173:2805"
+          ],
+          "variantAxes": {
+            "Input": [
+              "Text",
+              "Multiline",
+              "Item",
+              "Integer",
+              "Double"
+            ],
+            "Mode": [
+              "Confirm",
+              "Live"
+            ]
+          }
+        },
+        "progressDialog": {
+          "componentSetId": "601:196",
+          "variantCount": 4,
+          "editablePropertyCount": 4,
+          "componentPropertyIds": [
+            "Title#601:0",
+            "Task label#601:5",
+            "Progress detail#601:10",
+            "Show cancel#601:15"
+          ],
+          "canonicalProgressInstanceCount": 4,
+          "canonicalButtonInstanceCount": 4,
+          "canonicalSources": [
+            "410:21",
+            "410:27",
+            "173:2805"
+          ],
+          "variantAxes": {
+            "Progress": [
+              "Determinate",
+              "Indeterminate"
+            ],
+            "Mode": [
+              "Modal",
+              "Modeless"
+            ]
+          }
+        }
+      },
+      "variantCount": 14
+    }
+  }
+}

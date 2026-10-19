@@ -1,0 +1,117 @@
+{
+  "$description": "Checkbox V2 Component Contract. Value, interaction state and content structure remain independent; the Registry owns their legal axes.",
+  "component": "checkbox",
+  "version": "1.0",
+  "$status": "draft-v2",
+  "contractKind": "selection-control",
+  "registryBindings": {
+    "source": "source/component-registry.json#/components/checkbox",
+    "axes": ["value", "state", "content", "size"],
+    "slots": ["container", "indicator", "label", "content", "focus-ring"],
+    "authority": "component-registry"
+  },
+  "structure": ["container", "indicator", "label", "content", "focus-ring"],
+  "runtimeModel": {
+    "value": {
+      "registryAxis": "value",
+      "values": ["unchecked", "checked", "indeterminate"],
+      "owner": "runtime-interaction",
+      "visualScope": "indicator-only"
+    },
+    "state": {
+      "registryAxis": "state",
+      "priority": ["disabled", "pressed", "focused", "hover", "default"]
+    },
+    "focus": {
+      "state": "focused",
+      "activation": "keyboard-only",
+      "visual": "border-only",
+      "mouseHover": false,
+      "mousePress": false
+    },
+    "disabled": {
+      "preserveValue": true,
+      "preserveValueVisualStructure": true,
+      "lockInteraction": true
+    },
+    "interactionSurface": {
+      "parts": ["indicator", "label"],
+      "labelClick": "delegate-to-checkbox",
+      "keyboardFocusTarget": "checkbox-control",
+      "labelHasIndependentFocus": false
+    }
+  },
+  "stateLayers": {
+    "value": {
+      "registryAxis": "value",
+      "meaning": "selection value and aggregate selection result"
+    },
+    "pointerInteraction": {
+      "registryAxis": "state",
+      "meaning": "default, hover and pressed express interaction visuals"
+    },
+    "focus": {
+      "registryAxis": "state",
+      "meaning": "focused expresses keyboard focus with border-only ring"
+    },
+    "availability": {
+      "registryAxis": "state",
+      "meaning": "disabled preserves value and locks all interaction"
+    },
+    "content": {
+      "registryAxis": "content",
+      "meaning": "control-only and control-with-label define interaction surface structure"
+    }
+  },
+  "compositionRules": [
+    "Value and State are independent axes; checked, unchecked and indeterminate are not interaction states.",
+    "Value changes only the Indicator structure and value palette; Label, Size and interaction state remain independent.",
+    "Pressed is visual-only and must not mutate Value inside the Token layer.",
+    "Disabled preserves the current Value and Indicator structure, changes availability visuals and locks interaction.",
+    "Focused enables a keyboard-only border Focus Ring; mouse hover and mouse press do not activate it.",
+    "Control-only uses the whole control as the interaction-size scope; control-with-label uses the indicator region for interaction sizing.",
+    "The indicator and label share one interaction surface; the label does not create an independent focus target.",
+    "Indeterminate transition semantics are owned by the runtime or the parent selection model."
+  ],
+  "contentModel": {
+    "labelText": {
+      "kind": "localized-content-key",
+      "defaultLocale": "en-US",
+      "fallbackLocale": "en-US",
+      "requiredWhen": "content=control-with-label",
+      "visualToken": false
+    },
+    "controlOnly": {
+      "kind": "content-structure",
+      "meaning": "indicator-only",
+      "label": "not-applicable"
+    },
+    "controlWithLabel": {
+      "kind": "content-structure",
+      "meaning": "indicator-plus-label",
+      "label": "localized-content-key"
+    },
+    "forbiddenContentResponsibilities": [
+      "value", "state", "size", "interaction-size", "business-field-value", "visual-token"
+    ]
+  },
+  "tokenBoundary": {
+    "recipeOwns": [
+      "indicator value visuals",
+      "state palette and focus-ring visuals",
+      "label and content typography/spacing",
+      "shared visual and interaction size references"
+    ],
+    "runtimeOwns": [
+      "value mutation and indeterminate calculation",
+      "group or parent selection reconciliation",
+      "keyboard and pointer event handling",
+      "disabled permission and interaction lock"
+    ],
+    "contractDoesNotOwn": [
+      "resolved color or dimension values",
+      "business selection scope",
+      "parent Table or Select selection semantics"
+    ]
+  }
+}

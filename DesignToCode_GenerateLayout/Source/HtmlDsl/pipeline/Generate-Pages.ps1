@@ -1,14 +1,22 @@
 # 路线私有静态编译步骤：只处理调用方提供的页面清单，不主动读取任何路线目录。
 param(
     [Parameter(Mandatory)][System.Collections.IDictionary]$Pages,
-    [Parameter(Mandatory)][string]$OutputDirectory
+    [Parameter(Mandatory)][string]$OutputDirectory,
+    [Parameter(Mandatory)][string]$MappingDirectory,
+    [Parameter(Mandatory)][string]$Font,
+    [string]$LibraryProfile
 )
 $ErrorActionPreference = 'Stop'
 . "$PSScriptRoot/../../NativeTools.ps1"
 Initialize-NativeTools
+$buildRoot = [IO.Path]::GetFullPath("$D2CProjectRoot/build")
+$resolvedOutput = Assert-BuildOutput $OutputDirectory
+if ($resolvedOutput -ne $buildRoot -and -not $resolvedOutput.StartsWith("$buildRoot$([IO.Path]::DirectorySeparatorChar)", [StringComparison]::OrdinalIgnoreCase)) {
+    throw 'OUTPUT_MUST_BE_IN_BUILD'
+}
 $compiler = "$D2CProjectRoot/build/cache/V2-html-dsl/v2_ui_compiler.exe"
 # 先要求编译器存在；构建由 Qt 工程负责，解析入口保持为明确的数据转换步骤。
-if (-not (Test-Path -LiteralPath $compiler)) { throw '请先执行 ./Qt/V2/Build.ps1 -CompileOnly' }
+if (-not (Test-Path -LiteralPath $compiler)) { throw '请先执行 Source/Build.ps1' }
 $previousPath = $env:PATH
 $previousPlatform = $env:QT_QPA_PLATFORM
 try {
@@ -17,7 +25,10 @@ try {
     New-Item -ItemType Directory -Force $OutputDirectory | Out-Null
     # 按路线声明逐页编译；输入和目标前缀由路线提供，路线私有层只负责规则转换与 XML 检查。
     foreach ($name in $Pages.Keys) {
-        & $compiler --raw $Pages[$name] --mapping "$PSScriptRoot/mapping" --extensions "$PSScriptRoot/mapping/extensions.json" --font "$PSScriptRoot/resources/HarmonyOS_Sans_SC_Regular.ttf" --output "$OutputDirectory/$name"
+        if ($name -notmatch '^[A-Za-z0-9][A-Za-z0-9_-]*$') { throw 'INVALID_PAGE_NAME' }
+        $profileArgs = @()
+        if ($LibraryProfile) { $profileArgs = @('--library-profile', $LibraryProfile) }
+        & $compiler --raw $Pages[$name] --mapping $MappingDirectory --extensions "$MappingDirectory/extensions.json" --font $Font --output "$OutputDirectory/$name" @profileArgs
         # 单页失败立即停止，避免后续部署使用不完整的一组页面。
         if ($LASTEXITCODE -ne 0) { throw "UI generation failed: $name" }
         & "$env:QT_ROOT/bin/uic.exe" "$OutputDirectory/$name.ui" | Out-Null

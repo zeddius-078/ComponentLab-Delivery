@@ -1,0 +1,199 @@
+{
+  "$schema": "../../schema/component-recipe-schema.json",
+  "$registry": {
+    "component": "select",
+    "version": "2.0"
+  },
+  "$status": "draft-v2",
+  "$description": "Select V2 sparse recipe. Selection/searchability are governed capabilities; popup, option-item, tag and bulk controls remain Select anatomy slots.",
+  "base": {
+    "size": {
+      "small": {
+        "slot/container/min-height": "{semantic.interaction-size.embedded}",
+        "slot/container/padding-inline": "{semantic.layout.padding.inline.compact}"
+      },
+      "medium": {
+        "slot/container/min-height": "{semantic.interaction-size.default}",
+        "slot/container/padding-inline": "{semantic.layout.padding.inline.small}"
+      },
+      "large": {
+        "slot/container/min-height": "{semantic.interaction-size.large}",
+        "slot/container/padding-inline": "{semantic.layout.padding.inline.standard}"
+      }
+    },
+    "shared": {
+      "slot/container/radius": "{semantic.radius.control-default}",
+      "slot/content/typography": "{typography.body.body-1}",
+      "slot/option-item/typography": "{typography.body.body-1}",
+      "slot/tag/radius": "{semantic.radius.control-default}",
+      "slot/popup/radius": "{semantic.radius.control-default}",
+      "slot/dropdown-indicator/size": "{semantic.visualization-size.sm}",
+      "slot/clear/size": "{semantic.visualization-size.sm}",
+    "slot/spinner/size": "{semantic.visualization-size.sm}",
+    "slot/spinner/stroke-width": "{primitive.spinner.stroke-width}",
+    "slot/spinner/track-opacity": "{primitive.spinner.track-opacity}",
+    "slot/spinner/arc-start-angle": "{primitive.spinner.arc-start-angle}",
+    "slot/spinner/arc-sweep-angle": "{primitive.spinner.arc-sweep-angle}"
+    },
+    "appearance": {
+      "outlined": {
+        "slot/container/background-color": "{semantic.color.background.control-default}",
+        "slot/border/border-width": "{semantic.border-width.boundary-default}"
+      }
+    },
+    "state": {
+      "default": {
+        "slot/border/color": "{semantic.color.border.default}",
+        "slot/content/color": "{semantic.color.text.primary}",
+        "slot/placeholder/color": "{semantic.color.text.tertiary}",
+        "slot/dropdown-indicator/color": "{semantic.color.icon.secondary}",
+        "slot/clear/color": "{semantic.color.icon.secondary}",
+        "slot/spinner/color": "{semantic.color.interactive.brand.default}",
+        "slot/popup/background-color": "{semantic.color.background.surface-raised}",
+        "slot/popup/border-color": "{semantic.color.border.default}",
+        "slot/option-item/background-color": "{semantic.color.background.control-default}",
+        "slot/option-item/color": "{semantic.color.text.primary}",
+        "slot/tag/background-color": "{semantic.color.interactive.brand.subtle}",
+        "slot/tag/border-color": "{semantic.color.interactive.brand.default}",
+        "slot/selected-indicator/color": "{semantic.color.interactive.brand.default}"
+      },
+      "hover": {
+        "slot/border/color": "{semantic.color.border.hover}",
+        "slot/option-item/background-color": "{semantic.color.background.hover}"
+      },
+      "focused": {
+        "slot/border/color": "{semantic.color.interactive.brand.default}",
+        "slot/focus-ring/color": "{semantic.color.interactive.brand.focus-ring}",
+        "slot/focus-ring/border-width": "{semantic.border-width.focus-ring}"
+      },
+      "error": {
+        "slot/border/color": "{semantic.color.status.danger.default}",
+        "slot/tag/background-color": "{semantic.color.status.danger.subtle}",
+        "slot/tag/border-color": "{semantic.color.status.danger.default}"
+      },
+      "disabled": {
+        "slot/container/background-color": "{semantic.color.background.disabled}",
+        "slot/border/color": "{semantic.color.border.disabled}",
+        "slot/content/color": "{semantic.color.text.disabled}",
+        "slot/placeholder/color": "{semantic.color.text.disabled}",
+        "slot/dropdown-indicator/color": "{semantic.color.icon.disabled}",
+        "slot/clear/color": "{semantic.color.icon.disabled}"
+      },
+      "loading": {
+        "slot/container/background-color": "{semantic.color.background.disabled}",
+        "slot/border/color": "{semantic.color.border.disabled}",
+        "slot/content/color": "{semantic.color.text.disabled}",
+        "slot/spinner/color": "{semantic.color.interactive.brand.default}"
+      }
+    }
+  },
+  "overrides": [
+    {
+      "when": { "state": "default", "open": "true" },
+      "slot": "border",
+      "property": "color",
+      "$type": "color",
+      "value": "{semantic.color.interactive.brand.default}"
+    },
+    {
+      "when": { "state": "default", "open": "true" },
+      "slot": "dropdown-indicator",
+      "property": "color",
+      "$type": "color",
+      "value": "{semantic.color.interactive.brand.default}"
+    },
+    {
+      "when": { "state": "hover", "open": "true" },
+      "slot": "border",
+      "property": "color",
+      "$type": "color",
+      "value": "{semantic.color.interactive.brand.default}"
+    },
+    {
+      "when": { "state": "hover", "open": "true" },
+      "slot": "dropdown-indicator",
+      "property": "color",
+      "$type": "color",
+      "value": "{semantic.color.interactive.brand.default}"
+    },
+    {
+      "when": { "state": "focused", "open": "true" },
+      "slot": "dropdown-indicator",
+      "property": "color",
+      "$type": "color",
+      "value": "{semantic.color.interactive.brand.default}"
+    },
+    {
+      "when": { "state": "error", "open": "true" },
+      "slot": "dropdown-indicator",
+      "property": "color",
+      "$type": "color",
+      "value": "{semantic.color.interactive.brand.default}"
+    }
+  ],
+  "selectionRules": {
+    "single": {
+      "tag": "not-applicable",
+      "optionItem": "single-value",
+      "clear": "trigger-or-popup"
+    },
+    "multiple": {
+      "tag": "selected-values",
+      "optionItem": "checkbox-plus-label",
+      "bulkControl": "tri-state",
+      "clear": "popup-only"
+    }
+  },
+  "searchRules": {
+    "false": {
+      "inputSurface": "trigger-placeholder-or-selection"
+    },
+    "true": {
+      "inputSurface": "editable-filter",
+      "popup": "preserve-parent-select-model",
+      "emptyState": "illustrated-and-editable"
+    }
+  },
+  "stateRules": {
+    "loading": {
+      "visualSourceState": "disabled",
+      "popup": "closed",
+      "spinner": "trailing",
+      "preserveSelection": true,
+      "lockInteraction": true
+    },
+    "error": {
+      "select": "error",
+      "optionItem": "disabled-for-invalid-selection",
+      "tag": "disabled-color",
+      "checkbox": "enabled-disabled-appearance",
+      "clearInvalidValue": "runtime-or-popup-clear"
+    },
+    "popup": {
+      "bulkControl": "frozen-first-row",
+      "bulkControlSeparator": true,
+      "scope": "all-search-results",
+      "optionFocusRing": "checkbox-focus-ring",
+      "operationElement": "separate-focus-target"
+    },
+    "open": {
+      "axis": "independent-boolean-condition",
+      "coexistsWith": ["default", "hover", "focused", "error"],
+      "forcedFalseFor": ["disabled", "loading"]
+    }
+  },
+  "motion": {
+    "open": "{motion.state-change.select-open}",
+    "close": "{motion.transition.fade}",
+    "loading-start": "{motion.loading.spinner}",
+    "loading-stop": "{motion.feedback.focus}"
+  },
+  "diagnostics": [
+    {
+      "severity": "warning",
+      "code": "V2-DRAFT-OUTLINED-ONLY",
+      "message": "Outlined now has a complete buildable visual/state Token set; filled and dashed remain explicit structural placeholders pending design values.",
+      "source": "component-recipes/select.json"
+    }
+  ]
+}

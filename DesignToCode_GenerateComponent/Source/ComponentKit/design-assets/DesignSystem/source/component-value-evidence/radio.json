@@ -1,0 +1,235 @@
+{
+  "component": "radio",
+  "version": "2.0",
+  "authority": "value-evidence-only",
+  "entries": [
+    {
+      "path": "content/fontSize/md",
+      "type": "number",
+      "value": 14,
+      "source": "imports/reference/radio.json"
+    },
+    {
+      "path": "content/fontWeight/regular",
+      "type": "number",
+      "value": 400,
+      "source": "imports/reference/radio.json"
+    },
+    {
+      "path": "content/lineHeight/md",
+      "type": "number",
+      "value": 22,
+      "source": "imports/reference/radio.json"
+    },
+    {
+      "path": "color/text/default",
+      "type": "color",
+      "value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.09803921568627451,
+          0.09803921568627451,
+          0.09803921568627451
+        ],
+        "alpha": 1,
+        "hex": "#191919"
+      },
+      "source": "imports/reference/radio.json"
+    },
+    {
+      "path": "color/text/disabled",
+      "type": "color",
+      "value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.7333333333333333,
+          0.7333333333333333,
+          0.7333333333333333
+        ],
+        "alpha": 1,
+        "hex": "#BBBBBB"
+      },
+      "source": "imports/reference/radio.json"
+    },
+    {
+      "path": "color/on/bgDefault",
+      "type": "color",
+      "value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.3843137254901961,
+          0.20784313725490197,
+          0.9686274509803922
+        ],
+        "alpha": 1,
+        "hex": "#6235F7"
+      },
+      "source": "imports/reference/radio.json"
+    },
+    {
+      "path": "color/on/bgDisable",
+      "type": "color",
+      "value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.8784313725490196,
+          0.8431372549019608,
+          0.9921568627450981
+        ],
+        "alpha": 1,
+        "hex": "#E0D7FD"
+      },
+      "source": "imports/reference/radio.json"
+    },
+    {
+      "path": "color/on/bgPressed",
+      "type": "color",
+      "value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.3843137254901961,
+          0.20784313725490197,
+          0.9686274509803922
+        ],
+        "alpha": 1,
+        "hex": "#6235F7"
+      },
+      "source": "imports/reference/radio.json"
+    },
+    {
+      "path": "color/on/bgHover",
+      "type": "color",
+      "value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.4823529411764706,
+          0.37254901960784315,
+          0.9294117647058824
+        ],
+        "alpha": 1,
+        "hex": "#7B5FED"
+      },
+      "source": "imports/reference/radio.json"
+    },
+    {
+      "path": "color/on/bgInvert",
+      "type": "color",
+      "value": {
+        "colorSpace": "srgb",
+        "components": [
+          1,
+          1,
+          1
+        ],
+        "alpha": 1,
+        "hex": "#FFFFFF"
+      },
+      "source": "imports/reference/radio.json"
+    },
+    {
+      "path": "color/off/bgDefault",
+      "type": "color",
+      "value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.9607843137254902,
+          0.9607843137254902,
+          0.9607843137254902
+        ],
+        "alpha": 1,
+        "hex": "#F5F5F5"
+      },
+      "source": "imports/reference/radio.json"
+    },
+    {
+      "path": "color/off/bgDisable",
+      "type": "color",
+      "value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.9333333333333333,
+          0.9333333333333333,
+          0.9333333333333333
+        ],
+        "alpha": 1,
+        "hex": "#EEEEEE"
+      },
+      "source": "imports/reference/radio.json"
+    },
+    {
+      "path": "color/off/bgPressed",
+      "type": "color",
+      "value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.8627450980392157,
+          0.8588235294117647,
+          0.8588235294117647
+        ],
+        "alpha": 1,
+        "hex": "#DCDBDB"
+      },
+      "source": "imports/reference/radio.json"
+    },
+    {
+      "path": "color/off/bgHover",
+      "type": "color",
+      "value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.9333333333333333,
+          0.9333333333333333,
+          0.9333333333333333
+        ],
+        "alpha": 1,
+        "hex": "#EEEEEE"
+      },
+      "source": "imports/reference/radio.json"
+    },
+    {
+      "path": "color/off/Border",
+      "type": "color",
+      "value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.3843137254901961,
+          0.20784313725490197,
+          0.9686274509803922
+        ],
+        "alpha": 1,
+        "hex": "#6235F7"
+      },
+      "source": "imports/reference/radio.json"
+    },
+    {
+      "path": "size/sm",
+      "type": "number",
+      "value": 16,
+      "source": "imports/reference/radio.json"
+    },
+    {
+      "path": "size/md",
+      "type": "number",
+      "value": 16,
+      "source": "imports/reference/radio.json"
+    },
+    {
+      "path": "border/default",
+      "type": "number",
+      "value": 1,
+      "source": "imports/reference/radio.json"
+    },
+    {
+      "path": "padding/sm",
+      "type": "number",
+      "value": 2,
+      "source": "imports/reference/radio.json"
+    },
+    {
+      "path": "padding/md",
+      "type": "number",
+      "value": 8,
+      "source": "imports/reference/radio.json"
+    }
+  ]
+}

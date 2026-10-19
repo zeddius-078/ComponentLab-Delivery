@@ -1,0 +1,87 @@
+{
+  "$registry": {
+    "component": "slider",
+    "version": "2.0"
+  },
+  "$status": "active",
+  "base": {
+    "state": {
+      "default": {
+        "slot": {
+          "active-track": {
+            "color": {
+              "$type": "color",
+              "$value": "{semantic.color.interactive.brand.default}",
+              "$description": "Recovered from legacy V2 layer component.slider.base.default.active-track.color",
+              "$sourceOwner": "old-tree-recovery"
+            }
+          },
+          "handle": {
+            "border-color": {
+              "$type": "color",
+              "$value": "{semantic.color.interactive.brand.default}",
+              "$description": "Recovered from legacy V2 layer component.slider.base.default.handle.border-color",
+              "$sourceOwner": "old-tree-recovery"
+            },
+            "visual-diameter": {
+              "$type": "dimension",
+              "$value": "{primitive.dimension.18}",
+              "$description": "Recovered from legacy V2 layer component.slider.base.default.handle.visual-diameter",
+              "$sourceOwner": "old-tree-recovery",
+              "unit": "px"
+            }
+          },
+          "rail": {
+            "visual-thickness": {
+              "$type": "dimension",
+              "$value": "{primitive.dimension.6}",
+              "$description": "Recovered from legacy V2 layer component.slider.base.default.rail.visual-thickness",
+              "$sourceOwner": "old-tree-recovery",
+              "unit": "px"
+            }
+          }
+        }
+      },
+      "dragging": {
+        "slot": {
+          "handle": {
+            "visual-diameter": {
+              "$type": "dimension",
+              "$value": "{primitive.dimension.20}",
+              "$description": "Recovered from legacy V2 layer component.slider.base.dragging.handle.visual-diameter",
+              "$sourceOwner": "old-tree-recovery",
+              "unit": "px"
+            }
+          }
+        }
+      },
+      "focused": {
+        "slot": {
+          "focus-ring": {
+            "color": {
+              "$type": "color",
+              "$value": "{semantic.color.interactive.brand.focus-ring}",
+              "$description": "Recovered from legacy V2 layer component.slider.base.focused.focus-ring.color",
+              "$sourceOwner": "old-tree-recovery"
+            },
+            "stroke-width": {
+              "$type": "borderWidth",
+              "$value": "{semantic.border-width.focus-ring}",
+              "$description": "Recovered from legacy V2 layer component.slider.base.focused.focus-ring.stroke-width",
+              "$sourceOwner": "old-tree-recovery",
+              "unit": "px"
+            },
+            "visual-diameter": {
+              "$type": "dimension",
+              "$value": "{primitive.dimension.24}",
+              "$description": "Recovered from legacy V2 layer component.slider.base.focused.focus-ring.visual-diameter",
+              "$sourceOwner": "old-tree-recovery",
+              "unit": "px"
+            }
+          }
+        }
+      }
+    }
+  },
+  "overrides": []
+}

@@ -1,0 +1,13 @@
+{
+  "$description": "V2 mapping and conflict report. Machine-checked inputs for the acceptance review.",
+  "schemaVersion": "2.0",
+  "sourceHash": "b2a9c3bf74c0c61cc136abdd624398a5f47d1f569c3862acd8d017a52ec658ec",
+  "resolvedSourceRevision": "c815bbe1856e",
+  "canonicalTokenCounts": {
+    "primitive": 303,
+    "profile": 72,
+    "semantic": 310,
+    "component": 7146
+  },
+  "productTokenCount": 17
+}

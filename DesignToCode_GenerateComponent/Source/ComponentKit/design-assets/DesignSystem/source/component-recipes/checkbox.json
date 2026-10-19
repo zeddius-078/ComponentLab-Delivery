@@ -1,0 +1,219 @@
+{
+  "$schema": "../../schema/component-recipe-schema.json",
+  "$registry": {
+    "component": "checkbox",
+    "version": "2.0"
+  },
+  "$status": "draft-v2",
+  "$description": "Checkbox V2 sparse recipe. Value and interaction state are independent axes.",
+  "base": {
+    "size": {
+      "compact": {
+        "slot/indicator/visual-size": "{profile.interaction-size.01}",
+        "slot/container/interaction-size": "{profile.interaction-size.02}"
+      },
+      "small": {
+        "slot/indicator/visual-size": "{profile.interaction-size.02}",
+        "slot/container/interaction-size": "{profile.interaction-size.03}"
+      },
+      "medium": {
+        "slot/indicator/visual-size": "{profile.interaction-size.03}",
+        "slot/container/interaction-size": "{profile.interaction-size.04}"
+      },
+      "large": {
+        "slot/indicator/visual-size": "{profile.interaction-size.04}",
+        "slot/container/interaction-size": "{profile.interaction-size.05}"
+      }
+    },
+    "shared": {
+      "slot/content/gap": "{semantic.space.icon-text}",
+      "slot/label/typography": "{typography.body.body-1}",
+      "slot/indicator/radius": "{semantic.radius.control-default}"
+    }
+  },
+  "overrides": [],
+  "valueStructure": {
+    "unchecked": {
+      "indicator-structure": "empty-indicator",
+      "palette-group": "unchecked"
+    },
+    "checked": {
+      "indicator-structure": "checkmark",
+      "palette-group": "selected"
+    },
+    "indeterminate": {
+      "indicator-structure": "horizontal-bar",
+      "palette-group": "selected"
+    }
+  },
+  "paletteGroups": {
+    "unchecked": {
+      "slot/indicator/background-color": "{semantic.color.background.control-default}",
+      "slot/indicator/border-color": "{semantic.color.border.default}",
+      "slot/indicator/border-width": "{semantic.border-width.boundary-default}"
+    },
+    "selected": {
+      "slot/indicator/background-color": "{semantic.color.interactive.brand.default}",
+      "slot/indicator/border-color": "{semantic.color.interactive.brand.default}",
+      "slot/indicator/border-width": "{semantic.border-width.boundary-default}",
+      "slot/indicator/color": "{semantic.color.icon.invert}"
+    }
+  },
+  "overlayPolicy": {
+    "resolutionOrder": ["shared-base", "value-structure", "value-palette-group", "state-sparse-override", "focus-ring"],
+    "stateOverrideMode": "sparse-inherit-unmentioned",
+    "focusRingIndependentFromIndicatorBorder": true,
+    "disabledPreservesValueStructure": true
+  },
+  "stateOverrides": {
+    "default": {},
+    "hover": {
+      "paletteGroups": {
+        "unchecked": {
+          "slot/indicator/background-color": "{semantic.color.background.hover}",
+          "slot/indicator/border-color": "{semantic.color.border.hover}"
+        },
+        "selected": {
+          "slot/indicator/background-color": "{semantic.color.interactive.brand.hover}",
+          "slot/indicator/border-color": "{semantic.color.interactive.brand.hover}"
+        }
+      }
+    },
+    "pressed": {
+      "paletteGroups": {
+        "unchecked": {
+          "slot/indicator/background-color": "{semantic.color.background.pressed}",
+          "slot/indicator/border-color": "{semantic.color.border.primary}"
+        },
+        "selected": {
+          "slot/indicator/background-color": "{semantic.color.interactive.brand.pressed}",
+          "slot/indicator/border-color": "{semantic.color.interactive.brand.pressed}"
+        }
+      }
+    },
+    "focused": {
+      "tokens": {
+        "slot/focus-ring/color": "{semantic.color.interactive.brand.focus-ring}",
+        "slot/focus-ring/border-width": "{semantic.border-width.focus-ring}"
+      }
+    },
+    "disabled": {
+      "paletteGroups": {
+        "unchecked": {
+          "slot/indicator/background-color": "{semantic.color.background.disabled}",
+          "slot/indicator/border-color": "{semantic.color.border.disabled}"
+        },
+        "selected": {
+          "slot/indicator/background-color": "{semantic.color.interactive.brand.disabled}",
+          "slot/indicator/border-color": "{semantic.color.interactive.brand.disabled}"
+        }
+      },
+      "tokens": {
+        "slot/label/color": "{semantic.color.text.disabled}"
+      }
+    }
+  },
+  "valueRules": {
+    "unchecked": {
+      "meaning": "no selection",
+      "stateIndependent": true,
+      "indicator": "empty-indicator"
+    },
+    "checked": {
+      "meaning": "selected",
+      "stateIndependent": true,
+      "indicator": "selected-indicator-with-checkmark"
+    },
+    "indeterminate": {
+      "meaning": "partially selected or aggregate selection",
+      "stateIndependent": true,
+      "indicator": "partial-indicator-with-horizontal-bar"
+    }
+  },
+  "stateRules": {
+    "default": { "interaction": "available" },
+    "hover": { "interaction": "available" },
+    "focused": {
+      "interaction": "keyboard-focus",
+      "focusRing": {
+        "enabled": true,
+        "visual": "border-only",
+        "activation": "keyboard-only",
+        "mouseHover": false,
+        "mousePress": false
+      }
+    },
+    "pressed": {
+      "interaction": "activation-in-progress",
+      "preserveValueDuringPress": true,
+      "valueMutationOwner": "runtime-interaction",
+      "tokenDoesNotMutateValue": true
+    },
+    "disabled": {
+      "interaction": "locked",
+      "preserveValue": true,
+      "preserveIndicatorStructure": true,
+      "visualSource": "disabled"
+    }
+  },
+  "statePriority": ["disabled", "pressed", "focused", "hover", "default"],
+  "stateResolution": {
+    "winner": "highest-priority-active-state",
+    "valueAxisIndependent": true
+  },
+  "valueTransitionPolicy": {
+    "genericCheckbox": {
+      "owner": "runtime",
+      "tokenDefinesTransition": false
+    },
+    "selectPopupBulkControl": {
+      "unchecked": "checked",
+      "indeterminate": "checked",
+      "checked": "unchecked",
+      "owner": "select-runtime"
+    }
+  },
+  "interactionSurface": {
+    "parts": ["indicator", "label"],
+    "scope": "single-interaction-region",
+    "labelClick": "delegate-to-checkbox",
+    "keyboardFocusTarget": "checkbox-control",
+    "labelHasIndependentFocus": false
+  },
+  "contentRules": {
+    "control-only": {
+      "label": "not-applicable",
+      "labelSlotParticipates": false,
+      "interactionSizeScope": "whole-control"
+    },
+    "control-with-label": {
+      "label": "required-or-configured",
+      "labelSlotParticipates": true,
+      "interactionSizeScope": "indicator-region"
+    }
+  },
+  "legalPairingExamples": [
+    { "value": "checked", "state": "disabled", "meaning": "selected but unavailable" },
+    { "value": "indeterminate", "state": "focused", "meaning": "partially selected and keyboard-focused" }
+  ],
+  "valueVisualRules": {
+    "scope": "indicator-only",
+    "preserve": ["label", "size", "layout", "interaction-state"],
+    "selectReuse": "same-indicator-contract-for-option-item-and-popup-bulk-control"
+  },
+  "usage": {
+    "selectMultipleOptionItem": {
+      "reuse": "checkbox-visual-and-interaction-contract",
+      "focusRing": "reuse-checkbox-focused-border",
+      "parentOwns": ["selection-result", "option-availability", "tag-projection"]
+    }
+  },
+  "diagnostics": [
+    {
+      "severity": "warning",
+      "code": "V2-DRAFT-CHECKBOX-VISUALS-PENDING",
+      "message": "Value/state axis separation is confirmed; complete visual overrides remain pending and are not copied from old-tree-recovery.",
+      "source": "source/component-recipes/checkbox.json"
+    }
+  ]
+}

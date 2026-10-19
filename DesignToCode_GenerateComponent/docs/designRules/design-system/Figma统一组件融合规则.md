@@ -10,7 +10,7 @@
 
 1. 公共组件身份严格一对一：一个 `ComponentLab/<CanonicalName>` 只对应一个工程公共身份；一个工程公共身份也只能对应一个 Figma 公共身份。
 2. 内部 anatomy、variant、slot 可以一对多，但不得注册为第二个公共组件身份。
-3. 不保留历史别名。拼写错误、Qt 类名式名称与旧项目名称通过一次破坏性迁移替换。
+3. 公共目录不新增历史别名。现存兼容符号不能形成第二个公共身份；删除源码或二进制兼容接口属于独立变更，需要核对消费者，不由文档整理自动执行。
 4. 仅视觉相似不能合并。用途、结构、公开属性、状态、事件和生命周期全部一致，才允许复用同一公共身份。
 5. 部分重叠不得做“半映射”。无法证明等价时，先作为同一组件集中的独立候选项，状态标记为 `UNRESOLVED`，待证据齐全后再合并或保留。
 6. Qt 类名记录在实现字段，不覆盖设计语义名。Figma 公共名采用 `ComponentLab/<PascalCaseName>`。
@@ -20,7 +20,9 @@
 
 统一链路为：
 
-`01.primitive → 02.profile → 03.semantic → 04.component → ComponentLab/<CanonicalName> → 融合判定 → 工程公共身份`
+`Primitive / Profile / Theme / Semantic / Composite / Content → Component Recipe + Contract → 设计公共身份 → 融合判定 → 选定目标库的工程公共身份`
+
+七层物理源与依赖以 v2-source-manifest.json 为准，Theme 不混入 Profile；Content 只负责文本与国际化。
 
 一对一约束落在“公共身份”层，而不是 Figma 内部节点数量：
 
@@ -31,7 +33,7 @@
 - 没有工程对象时固定记录 `ENGINEERING_GAP` 与 `developmentComponentId = null`，本轮不创建开发组件；
 - Figma 变量绑定证明的是“可追溯到 Token”，不自动证明组件 Token 覆盖完整，也不证明 Qt 运行时已经消费该 Token。
 
-机器可读事实源：[`component-traceability-manifest.json`](./component-traceability-manifest.json)。截至 2026-10-14，48/48 个融合输入身份均存在 Figma 节点并具有变量绑定；23 项具有源码可验证的工程身份，0 项为 `NAME_SYNC_REQUIRED`，25 项在当次组件工程审计中记为 `ENGINEERING_GAP`。其中 `Spacer`、`LayoutContainer`、`IconAsset`、`ImageAsset`、`ModelAsset` 不是 QWidget 组件，进入统一 Catalog 后应分别按 Layout Helper / Asset 的消费状态跟踪，不能继续用“是否注册组件类”判断完成度。
+追溯登记入口为 [`component-traceability-manifest.json`](./component-traceability-manifest.json)，设计模型以当前 Registry/Contract/Recipe/Binding 为准，工程状态还须核对当前源码、发布清单与消费测试。旧清单中的数量与状态不自动升级为当前验收结果。Spacer、LayoutContainer 与资产按各自类型验收，不用 QWidget Factory 判断其完成度。
 
 ## 3. Figma 文档结构与编号
 
@@ -78,58 +80,16 @@
 | 工程缺失 | Figma 项保留 `DESIGN_READY / ENGINEERING_GAP`，不得写成已实现 |
 | 证据不足 | 标记 `UNRESOLVED`，禁止自动合并 |
 
-## 5. 48 项标准名与处理建议
+## 5. 命名与身份的当前依据
 
-| # | 原名称 | 标准名 | 当前动作 |
-| ---: | --- | --- | --- |
-| 01 | Navigation | Navbar | 合并现有 Navbar |
-| 02 | SideNavigatior | Sidebar | 合并现有 Sidebar；公共组件集统一为 `ComponentLab/Sidebar` |
-| 03 | TabWidge | TabWidget | 合并现有 TabWidget |
-| 04 | TitleBan | TitleBar | 新增；归入 Window & System |
-| 05 | Link | Link | 新增；不与 CommandLinkButton 合并 |
-| 06 | Timeline | Timeline | 新增 |
-| 07 | Text | Label | 合并现有 Label |
-| 08 | Dividel | Divider | 合并现有 Divider |
-| 09 | Progressbar | ProgressBar | 合并现有 ProgressBar |
-| 10 | Scroll | ScrollBar | 合并现有 ScrollBar；不与 ScrollArea 合并 |
-| 11 | Badge | Badge | 新增 |
-| 12 | Message | Message | 合并现有 Message |
-| 13 | Lamp | StatusIndicator | 新增 |
-| 14 | ToolTip | Tooltip | 新增 |
-| 15 | Tag | Tag | 新增；不与可选择 Chip 合并；已建立 `Dismissible=True/False` 正式变体，删除事件与焦点回退仍待运行时验证 |
-| 16 | Spacing | Spacer | 新增布局辅助身份 |
-| 17 | Stepper | Stepper | 新增；表示流程步骤，不表示数值输入 |
-| 18 | DataDisplay | Statistic | 合并现有 Statistic；范围限定为一个带标注的格式化数值，不包含卡片、图表或数据集 |
-| 19 | PushButton | Button | 合并现有 Button |
-| 20 | DropDownButton | ToolButton | 合并现有 ToolButton；菜单能力由 `popupMode`、`QMenu` 与 `defaultAction` 承担 |
-| 21 | DropDownField | Select | 合并现有 Select；不自动并入 ComboBox |
-| 22 | PageHeadel | PageHeader | 新增 |
-| 23 | Fitel | Filter | 新增 |
-| 24 | Pagination | Pagination | 新增 |
-| 25 | Transter | Transfer | 新增 |
-| 26 | Upload | Upload | 新增 |
-| 27 | MoreButton | OverflowMenuButton | 新增；不得用含糊的 MoreButton |
-| 28 | LineEdit | LineEdit | 合并现有 LineEdit |
-| 29 | Search | SearchInput | 新增 |
-| 30 | Numberlnput | NumberInput | 新增语义组件；内部可适配 SpinBox/DoubleSpinBox |
-| 31 | Keyboard | NumericKeypad | 新增 |
-| 32 | Switch | Switch | 合并现有 Switch |
-| 33 | RadioButton | RadioButton | 合并现有 RadioButton |
-| 34 | CheckBox | Checkbox | 合并现有 Checkbox |
-| 35 | Slidel | Slider | 合并现有 Slider |
-| 36 | TimePicker | TimePicker | 合并现有 TimePicker |
-| 37 | ColorPicker | ColorPicker | 新增；不与 ColorDialog 合并 |
-| 38 | SegmentationButton | SegmentedControl | 新增 |
-| 39 | TableView | TableView | 合并现有 TableView |
-| 40 | Anchor | AnchorNavigation | 新增 |
-| 41 | Collapse | Collapse | 合并现有 Collapse |
-| 42 | TreeWidget | TreeWidget | 合并现有 TreeWidget |
-| 43 | Window | Dialog | 按“弹窗”语义合并现有 Dialog |
-| 44 | Drawel | Drawer | 现有组件覆盖 Overlay / Push；规范身份、SDK/Factory 键已同步为 `ComponentLab/Drawer` / `commonWidget::Z_Drawer`，旧类名仅作兼容入口 |
-| 45 | LayoutFrame | LayoutContainer | 新增；不强制映射到单一 QWidget |
-| 46 | ICONResource | IconAsset | 新增资产身份 |
-| 47 | Image | ImageAsset | 新增资产身份；不与 ImagePanel 合并 |
-| 48 | Model | ModelAsset | 新增 2D 原理图基础资产身份；仅包含 2D 模式下的各类原理图界面，供大型可视化组合使用 |
+旧 48 项手工命名对照和阶段合并数量已归档，不再作为现行公共名称或已完成状态表。当前名称查询 Component Registry、组件目录源与 Runtime Mapping；有冲突时记录差异并核对，不从旧表自动覆盖现行源。
+
+- 设计公共名采用 ComponentLab/<PascalCaseName>；Qt 类保留准确 API 拼写，置于实现字段。
+- 不把 Qt 基类当成已实现的项目组件。模型/项驱动、命令/导航、内容/视觉与资产/控件的边界分别保留。
+- Tag 应区分不可删除与可删除合同；Chip 的选择能力不与 Tag 合并。
+- ModelAsset 仅指 2D 模式下各类原理图界面组成的基础大型可视化资产，不代表 3D 模型或 QAbstractItemModel；缩放、命中和实时状态叠加属于上层实现合同。
+- 多库映射通过命名配置选择上下文。一个选定库内仍是一对一，不让一个设计公共身份同时解析成多个目标公共类。
+- analysis-system 的 planned 类只用于类名合同预览，不填充为本统一目录的 VERIFIED 工程实现。
 
 ## 6. 迁移与验收
 
@@ -154,10 +114,4 @@
 5. 重建顺序按依赖推进：基础显示与反馈 → 输入与操作 → 选择与导航 → 复合容器与数据交互。
 6. 每批必须同时完成标准 Component Contract 页、系统位置、公共身份、变体轴、组件属性、Token 绑定、审阅实例和截图检查，未完成工程映射时明确标记 Engineering Gap。
 
-第一批本地重建范围：`Badge`、`StatusIndicator`、`Link`、`Tag`、`Tooltip`。这些组件依赖少且语义边界明确；其中 `Badge` 与 `Tooltip` 复用已有 Component Token，其他组件复用现有 Semantic/Profile Token。
-
-截至 2026-10-14，48 项清单已完成融合判定：`23 MERGE + 25 BUILT + 0 REVIEW`。25 个 `ADD` 项已全部在同一 Figma 组件集中完成本地重建，所有重叠项复用或改名现有公共身份，没有复制成第二套组件。新增页均采用一个顶层 `<CanonicalName> · Component Contract`、一个 `ComponentLab/<CanonicalName>` 正式组件集，并按 `20.<Category>.<Item>` 排序。Figma 完成不等于工程完成：Qt 适配、Registry 映射、四 Profile 截图和运行时证据仍分别保持 `PENDING / OPEN`。
-
-本轮闭环四项：`SideNavigatior → Sidebar`、`DataDisplay → Statistic`、`DropDownButton → ToolButton`、`Drawel → Drawer`。其中 Sidebar、Statistic、ToolButton 保留原节点 ID 并补全能力边界；原 `ComponentLab/OverlayDrawer` 在 Figma 中原位改名为 `ComponentLab/Drawer`，节点 ID 仍为 `569:632`。工程目录和 Factory 现以 `commonWidget::Z_Drawer` 为规范入口；`commonWidget::Z_OverlayDrawer` 仅保留源码、二进制符号和旧 Factory 字符串兼容，不形成第二个公共身份。
-
-本轮新增资产：`TitleBar`、`Timeline`、`Spacer`、`Stepper`、`PageHeader`、`Filter`、`Pagination`、`Transfer`、`Upload`、`OverflowMenuButton`、`SearchInput`、`NumberInput`、`NumericKeypad`、`ColorPicker`、`SegmentedControl`、`AnchorNavigation`、`LayoutContainer`、`IconAsset`、`ImageAsset`、`ModelAsset`。`ModelAsset` 的范围已经明确：仅包含 2D 模式下的各类原理图界面，是大型可视化的基础资产层；它不代表 3D 模型、`QAbstractItemModel` 或完整交互画布。上层大型可视化负责场景组合、视口、缩放、命中检测和实时状态叠加，Qt 候选方向为 `QGraphicsScene/QGraphicsView` 或自定义 `QPainter` 渲染适配器，最终工程对象仍需从稳定项目核对。
+历史重建批次、节点操作与数量结论见 [原始说明归档](../../archive/2026-10-20-docs-refresh/docs/designRules/design-system/Figma统一组件融合规则.md)。本规范保留治理规则，不据历史批次宣称当前 Figma、开发组件和运行验收均已完成。

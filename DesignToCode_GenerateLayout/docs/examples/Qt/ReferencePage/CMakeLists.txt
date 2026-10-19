@@ -1,0 +1,47 @@
+cmake_minimum_required(VERSION 3.21)
+project(DesignToCodeReferencePage LANGUAGES CXX)
+find_package(Qt5 5.15 REQUIRED COMPONENTS Core Gui Widgets Svg)
+if(MSVC AND DEFINED BUTTON_MSVC_INCLUDE_PREFIX)
+    set(CMAKE_CL_SHOWINCLUDES_PREFIX "${BUTTON_MSVC_INCLUDE_PREFIX}")
+endif()
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTOUIC ON)
+set(CMAKE_AUTORCC ON)
+option(BUILD_TESTING "Build Reference Page tests" OFF)
+option(REFERENCE_BUILD_APP "Build standalone Reference Page executable" ON)
+include(CTest)
+include("${CMAKE_CURRENT_SOURCE_DIR}/../../../../Source/GeneratedComponentDependency.cmake")
+add_library(reference_page STATIC ReferencePage.h ReferencePage.cpp ReferencePage.ui)
+target_include_directories(reference_page PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}")
+target_link_libraries(reference_page PUBLIC GeneratedComponentSDK::Components)
+if(REFERENCE_BUILD_APP)
+    add_executable(reference_app main.cpp)
+    target_link_libraries(reference_app PRIVATE reference_page)
+    install(TARGETS reference_app RUNTIME DESTINATION ReferencePage)
+    install(DIRECTORY "${GENERATED_COMPONENT_SDK_ROOT}/licenses/" DESTINATION ReferencePage/licenses)
+endif()
+if(BUILD_TESTING)
+    find_package(Qt5 5.15 REQUIRED COMPONENTS Test)
+    find_package(Python3 REQUIRED COMPONENTS Interpreter)
+    set(TEST_OUTPUT_DIR "${CMAKE_BINARY_DIR}/evidence" CACHE PATH "Reference test evidence")
+    file(MAKE_DIRECTORY "${TEST_OUTPUT_DIR}")
+    add_test(NAME reference_contract COMMAND "${Python3_EXECUTABLE}" -B -m unittest discover -s "${CMAKE_CURRENT_SOURCE_DIR}/tests" -p test_reference_contract.py)
+    add_executable(reference_page_tests
+        tests/ReferencePageTests.cpp
+        )
+    target_link_libraries(reference_page_tests PRIVATE reference_page Qt5::Test)
+    foreach(PROFILE standard-light wide-light standard-dark wide-dark)
+        add_test(NAME reference_${PROFILE} COMMAND reference_page_tests
+            -o "${TEST_OUTPUT_DIR}/reference-${PROFILE}.txt,txt")
+        set_tests_properties(reference_${PROFILE} PROPERTIES
+            ENVIRONMENT "QT_QPA_PLATFORM=offscreen;REFERENCE_PROFILE=${PROFILE};REFERENCE_EVIDENCE=${TEST_OUTPUT_DIR}/reference-${PROFILE}"
+            TIMEOUT 60)
+    endforeach()
+    add_test(NAME reference_high_dpi COMMAND reference_page_tests
+        -o "${TEST_OUTPUT_DIR}/reference-high-dpi.txt,txt")
+    set_tests_properties(reference_high_dpi PROPERTIES
+        ENVIRONMENT "QT_QPA_PLATFORM=offscreen;QT_SCALE_FACTOR=1.5;REFERENCE_PROFILE=standard-light;REFERENCE_EVIDENCE=${TEST_OUTPUT_DIR}/reference-high-dpi"
+        TIMEOUT 60)
+endif()

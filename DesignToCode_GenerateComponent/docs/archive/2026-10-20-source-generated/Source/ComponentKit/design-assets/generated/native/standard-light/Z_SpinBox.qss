@@ -1,0 +1,19 @@
+/* Z_SpinBox <- QSpinBox; compiled from the active Token profile. */
+*[designSystemClass="commonWidget::Z_SpinBox"] {
+    color: #191919;
+    background-color: #FFFFFF;
+    font-size: 14px;
+}
+*[designSystemClass="commonWidget::Z_SpinBox"]:disabled {
+    color: #BBBBBB;
+    background-color: #EEEEEE;
+    border-color: #8A8A8A;
+}
+*[designSystemClass="commonWidget::Z_SpinBox"] {
+    min-height: 32px;
+    border: 1px solid #A7A7A7;
+    border-radius: 4px;
+    padding-left: 8px;
+    padding-right: 8px;
+}
+*[designSystemClass="commonWidget::Z_SpinBox"]:focus[focusIndicatorVisible="true"] { border-color: #6235F7; }

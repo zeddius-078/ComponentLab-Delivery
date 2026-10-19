@@ -2,128 +2,128 @@
   "radio": {
     "content": {
       "fontSize": {
-        "md": {"$type": "number", "$value": "{typography/fontSize/body}"}
+        "md": {"$type": "number","$value": "{typography/fontSize/body}"}
       },
       "fontWeight": {
-        "regular": {"$type": "number", "$value": "{typography/fontWeight/regular}"}
+        "regular": {"$type": "number","$value": "{typography/fontWeight/regular}"}
       },
       "lineHeight": {
-        "md": {"$type": "number", "$value": "{typography/lineHeight/body}"}
+        "md": {"$type": "number","$value": "{typography/lineHeight/body}"}
       }
     },
     "color": {
       "text": {
-        "default": {"$type": "color", "$value": "{color/text/primary}"},
-        "disabled": {"$type": "color", "$value": "{color/text/disabled}"}
+        "default": {"$type": "color","$value": "{color/text/primary}"},
+        "disabled": {"$type": "color","$value": "{color/text/disabled}"}
       },
       "on": {
-        "bgDefault": {"$type": "color", "$value": "{color/accent/default}"},
-        "bgDisable": {"$type": "color", "$value": "{color/accent/disabled}"},
-        "bgPressed": {"$type": "color", "$value": "{color/accent/pressed}"},
-        "bgHover": {"$type": "color", "$value": "{color/accent/hover}"},
-        "bgInvert": {"$type": "color", "$value": "{color/icon/invert}", "$description": "icon的反色"}
+        "bgDefault": {"$type": "color","$value": "{color/accent/default}"},
+        "bgDisable": {"$type": "color","$value": "{color/accent/disabled}"},
+        "bgPressed": {"$type": "color","$value": "{color/accent/pressed}"},
+        "bgHover": {"$type": "color","$value": "{color/accent/hover}"},
+        "bgInvert": {"$type": "color","$value": "{color/icon/invert}","$description": "icon的反色"}
       },
       "off": {
-        "bgDefault": {"$type": "color", "$value": "{color/bg/tertiary}"},
-        "bgDisable": {"$type": "color", "$value": "{color/bg/disabled}"},
-        "bgPressed": {"$type": "color", "$value": "{color/bg/pressed}"},
-        "bgHover": {"$type": "color", "$value": "{color/bg/disabled}"},
-        "Border": {"$type": "color", "$value": "{color/accent/default}"}
+        "bgDefault": {"$type": "color","$value": "{color/bg/tertiary}"},
+        "bgDisable": {"$type": "color","$value": "{color/bg/disabled}"},
+        "bgPressed": {"$type": "color","$value": "{color/bg/pressed}"},
+        "bgHover": {"$type": "color","$value": "{color/bg/disabled}"},
+        "Border": {"$type": "color","$value": "{color/accent/default}"}
       }
     },
     "size": {
-      "sm": {"$type": "number", "$value": "{size/height/sm}"},
-      "md": {"$type": "number", "$value": "{size/height/sm}"}
+      "sm": {"$type": "number","$value": "{size/height/sm}"},
+      "md": {"$type": "number","$value": "{size/height/sm}"}
     },
     "border": {
-      "default": {"$type": "number", "$value": "{borderWidth/hairline}"}
+      "default": {"$type": "number","$value": "{borderWidth/hairline}"}
     },
     "padding": {
-      "sm": {"$type": "number", "$value": "{size/padding/sm}"},
-      "md": {"$type": "number", "$value": "{size/padding/2xl}"}
+      "sm": {"$type": "number","$value": "{size/padding/sm}"},
+      "md": {"$type": "number","$value": "{size/padding/2xl}"}
     }
   },
   "semantic": {
     "typography": {
       "fontSize": {
-        "body": {"$type": "number", "$value": "{font/fontSize/p-14}", "$description": "用于：正文文本"}
+        "body": {"$type": "number","$value": "{font/fontSize/p-14}","$description": "用于：正文文本"}
       },
       "fontWeight": {
-        "regular": {"$type": "number", "$value": "{font/fontWeight/p-400}", "$description": "用于：常规正文"}
+        "regular": {"$type": "number","$value": "{font/fontWeight/p-400}","$description": "用于：常规正文"}
       },
       "lineHeight": {
-        "body": {"$type": "number", "$value": "{lineHeight/p-22}", "$description": "用于：正文文本"}
+        "body": {"$type": "number","$value": "{lineHeight/p-22}","$description": "用于：正文文本"}
       }
     },
     "color": {
       "text": {
-        "primary": {"$type": "color", "$value": "{color/neutral/p-10}", "$description": "用于：主要默认文本色"},
-        "disabled": {"$type": "color", "$value": "{color/neutral/p-73}", "$description": "用于：浅色背景/禁用文本色"}
+        "primary": {"$type": "color","$value": "{color/neutral/p-10}","$description": "用于：主要默认文本色"},
+        "disabled": {"$type": "color","$value": "{color/neutral/p-73}","$description": "用于：浅色背景/禁用文本色"}
       },
       "accent": {
-        "default": {"$type": "color", "$value": "{color/purple/p-59}", "$description": "默认强调状态色\n用于：状态强调，数值强调等"},
-        "disabled": {"$type": "color", "$value": "{color/purple/p-92}", "$description": "紫色禁用状态色\n用于：强调值禁用"},
-        "pressed": {"$type": "color", "$value": "{color/purple/p-59}", "$description": "紫色按下状态色\n用于：强调值按下"},
-        "hover": {"$type": "color", "$value": "{color/purple/p-65}", "$description": "紫色悬浮状态色\n用于：强调值悬浮色"}
+        "default": {"$type": "color","$value": "{color/purple/p-59}","$description": "默认强调状态色\n用于：状态强调，数值强调等"},
+        "disabled": {"$type": "color","$value": "{color/purple/p-92}","$description": "紫色禁用状态色\n用于：强调值禁用"},
+        "pressed": {"$type": "color","$value": "{color/purple/p-59}","$description": "紫色按下状态色\n用于：强调值按下"},
+        "hover": {"$type": "color","$value": "{color/purple/p-65}","$description": "紫色悬浮状态色\n用于：强调值悬浮色"}
       },
       "icon": {
-        "invert": {"$type": "color", "$value": "{color/neutral/p-100}", "$description": "用于反色图标"}
+        "invert": {"$type": "color","$value": "{color/neutral/p-100}","$description": "用于反色图标"}
       },
       "bg": {
-        "tertiary": {"$type": "color", "$value": "{color/neutral/p-96}", "$description": "三级容器背景色"},
-        "disabled": {"$type": "color", "$value": "{color/neutral/p-93}", "$description": "禁用背景色\n用于：按钮、输入框、表格、进度条背景、TAB的禁用状态背景、表格行悬浮等"},
-        "pressed": {"$type": "color", "$value": "{color/neutral/p-86}", "$description": "按下状态背景色"}
+        "tertiary": {"$type": "color","$value": "{color/neutral/p-96}","$description": "三级容器背景色"},
+        "disabled": {"$type": "color","$value": "{color/neutral/p-93}","$description": "禁用背景色\n用于：按钮、输入框、表格、进度条背景、TAB的禁用状态背景、表格行悬浮等"},
+        "pressed": {"$type": "color","$value": "{color/neutral/p-86}","$description": "按下状态背景色"}
       }
     },
     "size": {
       "height": {
-        "sm": {"$type": "number", "$value": "{size/p-16}", "$description": "用于：标签图标、页签删除图标"}
+        "sm": {"$type": "number","$value": "{size/p-16}","$description": "用于：标签图标、页签删除图标"}
       },
       "padding": {
-        "sm": {"$type": "number", "$value": "{spacing/p-2}"},
-        "2xl": {"$type": "number", "$value": "{spacing/p-8}"}
+        "sm": {"$type": "number","$value": "{spacing/p-2}"},
+        "2xl": {"$type": "number","$value": "{spacing/p-8}"}
       }
     },
     "borderWidth": {
-      "hairline": {"$type": "number", "$value": "{borderWidth/p-100}", "$description": "用于：输入框、页签底部、分割线等、16px图标"}
+      "hairline": {"$type": "number","$value": "{borderWidth/p-100}","$description": "用于：输入框、页签底部、分割线等、16px图标"}
     }
   },
   "primitive": {
     "font": {
       "fontSize": {
-        "p-14": {"$type": "number", "$value": 14, "$description": "小字号"}
+        "p-14": {"$type": "number","$value": 14,"$description": "小字号"}
       },
       "fontWeight": {
-        "p-400": {"$type": "number", "$value": 400, "$description": "Regular"}
+        "p-400": {"$type": "number","$value": 400,"$description": "Regular"}
       }
     },
     "lineHeight": {
-      "p-22": {"$type": "number", "$value": 22, "$description": "小字号行高"}
+      "p-22": {"$type": "number","$value": 22,"$description": "小字号行高"}
     },
     "color": {
       "neutral": {
-        "p-10": {"$type": "color", "$value": {"colorSpace": "srgb", "components": [0.09803921568627451, 0.09803921568627451, 0.09803921568627451], "alpha": 1, "hex": "#191919"}, "$description": "用于：文本、图标、页签选中下划线、输入框悬停描边、链接文本默认\n数值代表在HSL色值中的L明度值，仅用于色阶中相对明度的参考。"},
-        "p-73": {"$type": "color", "$value": {"colorSpace": "srgb", "components": [0.7333333333333333, 0.7333333333333333, 0.7333333333333333], "alpha": 1, "hex": "#BBBBBB"}, "$description": "用于：浅色背景、禁用文本色、禁用链接文本、滚动条两端按钮的箭头、滚动条的默认状态色\n数值代表在HSL色值中的L明度值，仅用于色阶中相对明度的参考。"},
-        "p-100": {"$type": "color", "$value": {"colorSpace": "srgb", "components": [1, 1, 1], "alpha": 1, "hex": "#FFFFFF"}, "$description": "标准白色\n用于：白色一级容器、气泡背景、反色文本、反色图标"},
-        "p-96": {"$type": "color", "$value": {"colorSpace": "srgb", "components": [0.9607843137254902, 0.9607843137254902, 0.9607843137254902], "alpha": 1, "hex": "#F5F5F5"}, "$description": "用于：次要按钮按下、输入框默认状态、\n数值代表在HSL色值中的L明度值，仅用于色阶中相对明度的参考。"},
-        "p-93": {"$type": "color", "$value": {"colorSpace": "srgb", "components": [0.9333333333333333, 0.9333333333333333, 0.9333333333333333], "alpha": 1, "hex": "#EEEEEE"}, "$description": "用于：禁用背景色、用于按钮、输入框、表格、进度条背景、次要分割线、滚动条两端的按钮背景色\n\n数值代表在HSL色值中的L明度值，仅用于色阶中相对明度的参考。"},
-        "p-86": {"$type": "color", "$value": {"colorSpace": "srgb", "components": [0.8627450980392157, 0.8588235294117647, 0.8588235294117647], "alpha": 1, "hex": "#DCDBDB"}, "$description": "用于：次要按钮按下内嵌阴影                        \n数值代表在HSL色值中的L明度值，仅用于色阶中相对明度的参考。"}
+        "p-10": {"$type": "color","$value": {"colorSpace": "srgb","components": [0.09803921568627451,0.09803921568627451,0.09803921568627451],"alpha": 1,"hex": "#191919"},"$description": "用于：文本、图标、页签选中下划线、输入框悬停描边、链接文本默认\n数值代表在HSL色值中的L明度值，仅用于色阶中相对明度的参考。"},
+        "p-73": {"$type": "color","$value": {"colorSpace": "srgb","components": [0.7333333333333333,0.7333333333333333,0.7333333333333333],"alpha": 1,"hex": "#BBBBBB"},"$description": "用于：浅色背景、禁用文本色、禁用链接文本、滚动条两端按钮的箭头、滚动条的默认状态色\n数值代表在HSL色值中的L明度值，仅用于色阶中相对明度的参考。"},
+        "p-100": {"$type": "color","$value": {"colorSpace": "srgb","components": [1,1,1],"alpha": 1,"hex": "#FFFFFF"},"$description": "标准白色\n用于：白色一级容器、气泡背景、反色文本、反色图标"},
+        "p-96": {"$type": "color","$value": {"colorSpace": "srgb","components": [0.9607843137254902,0.9607843137254902,0.9607843137254902],"alpha": 1,"hex": "#F5F5F5"},"$description": "用于：次要按钮按下、输入框默认状态、\n数值代表在HSL色值中的L明度值，仅用于色阶中相对明度的参考。"},
+        "p-93": {"$type": "color","$value": {"colorSpace": "srgb","components": [0.9333333333333333,0.9333333333333333,0.9333333333333333],"alpha": 1,"hex": "#EEEEEE"},"$description": "用于：禁用背景色、用于按钮、输入框、表格、进度条背景、次要分割线、滚动条两端的按钮背景色\n\n数值代表在HSL色值中的L明度值，仅用于色阶中相对明度的参考。"},
+        "p-86": {"$type": "color","$value": {"colorSpace": "srgb","components": [0.8627450980392157,0.8588235294117647,0.8588235294117647],"alpha": 1,"hex": "#DCDBDB"},"$description": "用于：次要按钮按下内嵌阴影                        \n数值代表在HSL色值中的L明度值，仅用于色阶中相对明度的参考。"}
       },
       "purple": {
-        "p-59": {"$type": "color", "$value": {"colorSpace": "srgb", "components": [0.3843137254901961, 0.20784313725490197, 0.9686274509803922], "alpha": 1, "hex": "#6235F7"}, "$description": "标准紫色\n常用于：按钮高亮按下、文本高亮色、气路管道内描边、接口外描边"},
-        "p-92": {"$type": "color", "$value": {"colorSpace": "srgb", "components": [0.8784313725490196, 0.8431372549019608, 0.9921568627450981], "alpha": 1, "hex": "#E0D7FD"}, "$description": "名称中数值表示以高亮色#6235F7为基准，在白色背景上透明度的数值对应色填充色。\n如“20”代表20%透明的#6235F7紫色。"},
-        "p-65": {"$type": "color", "$value": {"colorSpace": "srgb", "components": [0.4823529411764706, 0.37254901960784315, 0.9294117647058824], "alpha": 1, "hex": "#7B5FED"}, "$description": "用于：主要按钮悬停、按下描边色\n数值代表在HSL色值中的L明度值，数值50最接近标准色，数值越小越深、数值越大越浅"}
+        "p-59": {"$type": "color","$value": {"colorSpace": "srgb","components": [0.3843137254901961,0.20784313725490197,0.9686274509803922],"alpha": 1,"hex": "#6235F7"},"$description": "标准紫色\n常用于：按钮高亮按下、文本高亮色、气路管道内描边、接口外描边"},
+        "p-92": {"$type": "color","$value": {"colorSpace": "srgb","components": [0.8784313725490196,0.8431372549019608,0.9921568627450981],"alpha": 1,"hex": "#E0D7FD"},"$description": "名称中数值表示以高亮色#6235F7为基准，在白色背景上透明度的数值对应色填充色。\n如“20”代表20%透明的#6235F7紫色。"},
+        "p-65": {"$type": "color","$value": {"colorSpace": "srgb","components": [0.4823529411764706,0.37254901960784315,0.9294117647058824],"alpha": 1,"hex": "#7B5FED"},"$description": "用于：主要按钮悬停、按下描边色\n数值代表在HSL色值中的L明度值，数值50最接近标准色，数值越小越深、数值越大越浅"}
       }
     },
     "size": {
-      "p-16": {"$type": "number", "$value": 16, "$description": "最小尺寸"}
+      "p-16": {"$type": "number","$value": 16,"$description": "最小尺寸"}
     },
     "borderWidth": {
-      "p-100": {"$type": "number", "$value": 1, "$description": "内描边"}
+      "p-100": {"$type": "number","$value": 1,"$description": "内描边"}
     },
     "spacing": {
-      "p-2": {"$type": "number", "$value": 2, "$description": "wafer间距"},
-      "p-8": {"$type": "number", "$value": 8, "$description": "紧凑间距"}
+      "p-2": {"$type": "number","$value": 2,"$description": "wafer间距"},
+      "p-8": {"$type": "number","$value": 8,"$description": "紧凑间距"}
     }
   }
 }

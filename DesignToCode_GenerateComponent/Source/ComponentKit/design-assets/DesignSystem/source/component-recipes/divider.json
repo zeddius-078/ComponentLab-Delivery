@@ -1,0 +1,31 @@
+{
+  "$registry": {
+    "component": "divider",
+    "version": "2.0"
+  },
+  "$status": "active",
+  "base": {
+    "state": {
+      "default": {
+        "slot": {
+          "border": {
+            "color": {
+              "$type": "color",
+              "$value": "{semantic.color.border.secondary}",
+              "$description": "Recovered from legacy V2 layer component.divider.base.default.border.color",
+              "$sourceOwner": "old-tree-recovery"
+            },
+            "width": {
+              "$type": "borderWidth",
+              "$value": "{semantic.border-width.divider-default}",
+              "$description": "Recovered from legacy V2 layer component.divider.base.default.border.width",
+              "$sourceOwner": "old-tree-recovery",
+              "unit": "px"
+            }
+          }
+        }
+      }
+    }
+  },
+  "overrides": []
+}

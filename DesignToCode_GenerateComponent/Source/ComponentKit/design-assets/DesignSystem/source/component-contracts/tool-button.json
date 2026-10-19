@@ -1,0 +1,87 @@
+{
+  "$description": "Tool Button V2 Component Contract. It is an independent action-control contract and does not inherit Button Intent or Appearance axes.",
+  "component": "tool-button",
+  "version": "1.0",
+  "$status": "draft-v2",
+  "contractKind": "tool-action-control",
+  "registryBindings": {
+    "source": "source/component-registry.json#/components/tool-button",
+    "axes": ["presentation", "value", "state", "menu"],
+    "slots": ["border", "container", "icon", "label", "focus-ring", "action", "menu", "foreground", "divider"],
+    "authority": "component-registry"
+  },
+  "structure": ["container", "content", "icon", "label", "action", "menu", "border", "divider", "focus-ring"],
+  "runtimeModel": {
+    "presentation": {
+      "axis": "presentation",
+      "meaning": "standard or auto-raise visual interaction policy"
+    },
+    "value": {
+      "axis": "value",
+      "values": ["unchecked", "checked"],
+      "owner": "runtime-interaction",
+      "visualScope": "container-and-foreground"
+    },
+    "state": {
+      "axis": "state",
+      "priority": ["disabled", "pressed", "focused", "hover", "default"]
+    },
+    "menu": {
+      "axis": "menu",
+      "none": "single action",
+      "split": "primary action and secondary menu trigger",
+      "open": "runtime popup lifecycle; not a visual State"
+    },
+    "disabled": {
+      "preserveValue": true,
+      "lockInteraction": true
+    }
+  },
+  "stateLayers": {
+    "presentation": {
+      "registryAxis": "presentation",
+      "meaning": "surface policy; auto-raise is not an interaction State"
+    },
+    "value": {
+      "registryAxis": "value",
+      "meaning": "persistent checked value independent of hover, pressed and disabled"
+    },
+    "pointerInteraction": {
+      "registryAxis": "state",
+      "meaning": "default, hover and pressed express interaction visuals"
+    },
+    "focus": {
+      "registryAxis": "state",
+      "meaning": "focused expresses keyboard focus presentation"
+    },
+    "availability": {
+      "registryAxis": "state",
+      "meaning": "disabled locks the action while preserving value"
+    },
+    "menuLifecycle": {
+      "owner": "runtime-api",
+      "meaning": "open/close, menu population and trigger events"
+    }
+  },
+  "compositionRules": [
+    "Tool Button is an independent component family; Button Intent and Appearance are not inherited.",
+    "Presentation, Value, State and Menu are separate dimensions and are not encoded as compound State names.",
+    "checked-hover resolves as value=checked plus state=hover.",
+    "hover-pressed resolves as state=pressed with the active hover overlay; it is not a separate State.",
+    "auto-raise is presentation=auto-raise and may not be combined with menu=split.",
+    "open belongs to the runtime menu lifecycle and does not create a visual Token axis.",
+    "Split menu structure is represented by the menu Slot and runtime API; the divider and action width are sparse component visuals.",
+    "Label and icon are optional content properties, not additional visual axes."
+  ],
+  "contentModel": {
+    "labelText": "localized-content-key-or-runtime-label",
+    "icon": "instance-swap-or-runtime-icon",
+    "shortcutText": "runtime-owned",
+    "forbiddenResponsibilities": ["value", "state", "presentation", "menu", "action-identity", "event-dispatch"]
+  },
+  "tokenBoundary": {
+    "recipeOwns": ["surface policy visuals", "value palette", "interaction state visuals", "split divider and action width", "label and icon visual references"],
+    "runtimeOwns": ["checkable value mutation", "menu open/close", "action identity", "event dispatch", "keyboard navigation", "permission and disabled availability"],
+    "contractDoesNotOwn": ["resolved color and dimension values", "generated combination Token paths", "Figma variable values"]
+  }
+}

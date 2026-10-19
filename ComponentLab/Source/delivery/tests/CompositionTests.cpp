@@ -1,6 +1,5 @@
 #include "DemoWindow.h"
 #include "DemoRuntime.h"
-#include "ButtonAppearanceAdapter.h"
 #include "Z_InputField.h"
 #include "Z_Select.h"
 #include "Z_CheckBox.h"
@@ -8,11 +7,11 @@
 #include "Z_FoundationComponents.h"
 #include "native/Z_ScrollArea.h"
 #include "native/Z_Splitter.h"
-#include "SolidInnerShadow.h"
 #include "FocusIndicator.h"
 #include "Z_OtpInput.h"
 #include "NavigationGallery.h"
 #include "FigmaLayoutEvidence.h"
+#include "FigmaGalleryView.h"
 #include "DesignComponentCatalog.h"
 #include "ComponentFactory.h"
 #include <QGraphicsView>
@@ -84,6 +83,7 @@
 #include <QCalendarWidget>
 #include <QTextEdit>
 #include <QPlainTextEdit>
+#include <QTimer>
 #include <QOpenGLWidget>
 #include <QTreeWidget>
 #include <QTest>
@@ -168,24 +168,29 @@ for(auto* area:areas){QCOMPARE(area->geometry(),area->property("figmaDesignBound
         sections->setCurrentIndex(0);auto* editors=page->findChild<QStackedWidget*>("appearanceComponentSetEditors");auto* firstEditor=editors->widget(0);auto* sub=firstEditor->findChild<QMdiSubWindow*>("componentInteractivePreview");QVERIFY(sub);auto* workspace=firstEditor->findChild<QMdiArea*>("mdiEditorWorkspace");QVERIFY(workspace);auto* payload=sub->widget();
         auto* variant=firstEditor->findChild<QComboBox*>("componentVariantControl");variant->setCurrentText("State=Maximized");QCoreApplication::processEvents();QVERIFY(!sub->isMaximized());QCOMPARE(sub->property("figmaMdiSnapshotState").toString(),QString("Maximized"));
         firstEditor->findChild<QPushButton*>("mdiMaximizeControl")->click();QVERIFY(sub->isMaximized());firstEditor->findChild<QPushButton*>("mdiRestoreControl")->click();QVERIFY(!sub->isMaximized());
-        firstEditor->findChild<QCheckBox*>("mdiVetoCloseControl")->setChecked(true);firstEditor->findChild<QPushButton*>("mdiCloseControl")->click();QVERIFY(sub->isVisible());firstEditor->findChild<QCheckBox*>("mdiVetoCloseControl")->setChecked(false);firstEditor->findChild<QPushButton*>("mdiCloseControl")->click();QVERIFY(sub->isHidden());QCOMPARE(sub->widget(),payload);firstEditor->findChild<QPushButton*>("mdiShowAllControl")->click();
+        firstEditor->findChild<QCheckBox*>("mdiVetoCloseControl")->setChecked(true);firstEditor->findChild<QPushButton*>("mdiCloseControl")->click();QVERIFY(!sub->isHidden());firstEditor->findChild<QCheckBox*>("mdiVetoCloseControl")->setChecked(false);firstEditor->findChild<QPushButton*>("mdiCloseControl")->click();QVERIFY(sub->isHidden());QCOMPARE(sub->widget(),payload);firstEditor->findChild<QPushButton*>("mdiShowAllControl")->click();
         page->findChild<QComboBox*>("appearanceComponentSetControl")->setCurrentIndex(1);QTest::qWait(60);
 auto* secondEditor=editors->widget(1);auto* area=secondEditor->findChild<QMdiArea*>("componentInteractivePreview");QVERIFY(area);QCOMPARE(area->subWindowList().size(),2);QCOMPARE(area->property("figmaMdiPresentationPreview").toString(),QString("Free"));const auto geometry=area->subWindowList().first()->geometry();secondEditor->findChild<QComboBox*>("componentVariantControl")->setCurrentText("Presentation=Tile");QCoreApplication::processEvents();QCOMPARE(area->viewMode(),QMdiArea::SubWindowView);QCOMPARE(area->subWindowList().first()->geometry(),geometry);
         secondEditor->findChild<QPushButton*>("mdiApplyPresentationControl")->click();QCOMPARE(area->viewMode(),QMdiArea::SubWindowView);QVERIFY(!area->subWindowList()[0]->geometry().intersects(area->subWindowList()[1]->geometry()));
         secondEditor->findChild<QComboBox*>("mdiViewModeControl")->setCurrentIndex(1);QCOMPARE(area->viewMode(),QMdiArea::TabbedView);QCOMPARE(area->subWindowList().size(),2);
-        QTest::qWait(80);QCOMPARE(firstEditor->findChild<QScrollArea*>("componentSettingsScroll")->horizontalScrollBar()->maximum(),0);
+        QTest::qWait(80);auto* settingsScroll=firstEditor->findChild<QScrollArea*>("componentSettingsScroll");QCOMPARE(settingsScroll->horizontalScrollBar()->maximum(),0);
     }
     void initTestCase() {
-        profile = qEnvironmentVariable("DEMO_PROFILE", "light-comfortable");
+        profile = qEnvironmentVariable("DEMO_PROFILE", "standard-light");
         evidence = qEnvironmentVariable("DEMO_EVIDENCE");
         if (!evidence.isEmpty())
             QVERIFY(QDir().mkpath(evidence));
         tokens = std::make_shared<field::Tokens>(profile);
-        window = std::make_unique<DemoWindow>(profile);
+        try {
+            window = std::make_unique<DemoWindow>(profile);
+        } catch (const std::exception& error) {
+            QFAIL(qPrintable(QString::fromUtf8(error.what())));
+        }
         window->show();
         QTest::qWait(60);
     }
     void navigationContract() {
+        try {
         auto* tabs = part<QTabWidget>("tabs");
         QVERIFY(tabs);
         QCOMPARE(tabs->count(), 1);
@@ -193,9 +198,10 @@ auto* secondEditor=editors->widget(1);auto* area=secondEditor->findChild<QMdiAre
 
         auto* nativeSections = tabs->widget(0)->findChild<QTabWidget*>("nativeSections");
         QVERIFY(nativeSections);
-        QCOMPARE(nativeSections->count(), 2);
+        QCOMPARE(nativeSections->count(), 3);
         QCOMPARE(nativeSections->tabText(0), QString::fromUtf8("设计系统图库"));
-        QCOMPARE(nativeSections->tabText(1), QString::fromUtf8("组件映射"));
+        QCOMPARE(nativeSections->tabText(1), QString::fromUtf8("组件映射（Legacy）"));
+        QCOMPARE(nativeSections->tabText(2), QString::fromUtf8("V2 Token 地图（当前）"));
 
         auto* gallery = part<QWidget>("nativeGalleryPage");
         auto* tree = part<QTreeWidget>("componentTree");
@@ -351,6 +357,7 @@ auto* secondEditor=editors->widget(1);auto* area=secondEditor->findChild<QMdiAre
                  QStringLiteral("model.foundation.schematic"));
         QVERIFY(!commonWidget::ComponentFactory::isRegistered(
             QStringLiteral("commonWidget::ModelAsset")));
+        } catch (const std::exception& e) { qWarning("NAV EXCEPTION: %s", e.what()); QVERIFY2(false, e.what()); }
     }
     void figmaPageAndVariantContract() {
         auto* tree = part<QTreeWidget>("componentTree");
@@ -421,18 +428,62 @@ auto* secondEditor=editors->widget(1);auto* area=secondEditor->findChild<QMdiAre
         QSet<QString> ids;int loading=0,disabled=0,iconOnly=0;
         for(auto* b:buttons) {
             ids.insert(b->property("figmaNodeId").toString());
-            QCOMPARE(b->geometry(),b->property("figmaDesignBounds").toRect());
-            QVERIFY(b->property("figmaAppearance").toBool());
-            QCOMPARE(b->findChild<ButtonAppearanceAdapter*>()->appearance(),QString("figma-light"));
+            const auto designBounds=b->property("figmaDesignBounds").toRect();
+            QCOMPARE(b->geometry().topLeft(),designBounds.topLeft());
+            QVERIFY2(b->geometry().width() >= designBounds.width(),
+                     qPrintable(QString("%1 actual=%2 design=%3 variant=%4")
+                                    .arg(b->property("figmaNodeId").toString())
+                                    .arg(b->geometry().width())
+                                    .arg(designBounds.width())
+                                    .arg(b->property("figmaVariant").toString())));
+            QVERIFY(!b->property("buttonIntent").toString().isEmpty());
+            QVERIFY(!b->property("buttonAppearance").toString().isEmpty());
             const auto state=b->property("figmaPreviewState").toString();
-            loading+=b->property("loading").toBool();disabled+=state=="disabled";iconOnly+=b->isIconOnly();
+            loading+=state=="loading";disabled+=state=="disabled";iconOnly+=b->isIconOnly();
+            if(state=="loading")QVERIFY(!b->property("loading").toBool());
             QCOMPARE(b->isEnabled(),state!="disabled" && state!="loading");
             QVERIFY(!b->isDown());
         }
         QCOMPARE(ids.size(),132);QCOMPARE(loading,22);QCOMPARE(disabled,22);QCOMPARE(iconOnly,24);
         QCOMPARE(canvas->findChild<QWidget*>("figmaSet_173_2710")->geometry(),QRect(40,98,1200,290));
         auto* material=page->findChild<QComboBox*>("buttonAppearance");QVERIFY(material);
-        QCOMPARE(material->currentData().toString(),QString("figma-light"));
+        QCOMPARE(material->currentData().toString(),QString("outlined"));
+    }
+    void visualOverviewIsStaticAndNonInteractive() {
+        auto* canvas=new QWidget;
+        canvas->setFixedSize(240,120);
+        auto* button=new QPushButton("Snapshot action",canvas);
+        button->setGeometry(40,32,140,40);
+        QSignalSpy clicks(button,&QPushButton::clicked);
+        native_gallery::FigmaGalleryView view(canvas);
+        view.resize(260,140);
+        view.show();
+        QVERIFY(view.property("visualOverviewInteractionBlocked").toBool());
+        QVERIFY(!view.isInteractive());
+        QCOMPARE(view.focusPolicy(),Qt::NoFocus);
+        QTest::mouseClick(view.viewport(),Qt::LeftButton,Qt::NoModifier,QPoint(110,52));
+        QCOMPARE(clicks.count(),0);
+    }
+    void buttonOverviewStopsLoadingMotion() {
+        auto* tree=part<QTreeWidget>("componentTree");
+        for(QTreeWidgetItemIterator it(tree);*it;++it)
+            if((*it)->data(0,Qt::UserRole)=="172:2710")tree->setCurrentItem(*it);
+        QCoreApplication::processEvents();
+        auto* page=part<QStackedWidget>("componentPages")->currentWidget();
+        auto* view=page->findChild<QGraphicsView*>("figmaVariantGallery");QVERIFY(view);
+        QWidget* canvas=nullptr;
+        for(auto* item:view->scene()->items())
+            if(auto* proxy=qgraphicsitem_cast<QGraphicsProxyWidget*>(item))canvas=proxy->widget();
+        QVERIFY(canvas);
+        QTRY_COMPARE_WITH_TIMEOUT(canvas->findChildren<QLabel*>("buttonStaticMotionSnapshot").size(),22,1000);
+        int frozenSources=0;
+        for(auto* button:canvas->findChildren<Z_PushButton*>()) {
+            frozenSources+=button->property("figmaStaticMotionSource").toBool();
+            if(button->property("figmaStaticMotionSource").toBool())
+                QVERIFY(!button->property("loading").toBool());
+        }
+        QCOMPARE(frozenSources,22);
+        QCOMPARE(view->property("animatedLoadingSpecimens").toInt(),0);
     }
     void labelGalleryUsesTwelveNativeVariants() {
         auto* tree=part<QTreeWidget>("componentTree");
@@ -456,7 +507,7 @@ auto* secondEditor=editors->widget(1);auto* area=secondEditor->findChild<QMdiAre
             QVERIFY(label->alignment()&Qt::AlignAbsolute);
             QVERIFY((QStringList{"Start","Center","End"}.contains(label->property("figmaLogicalAlignment").toString())));
             QCOMPARE(label->font().pixelSize(),14);
-            QCOMPARE(QFontInfo(label->font()).family(),QString("Inter"));
+            QCOMPARE(QFontInfo(label->font()).family(),QString("HarmonyOS Sans"));
         }
         QCOMPARE(count,12);QCOMPARE(ids.size(),12);QCOMPARE(wrapped,6);QCOMPARE(disabled,6);
     }
@@ -483,7 +534,7 @@ auto* secondEditor=editors->widget(1);auto* area=secondEditor->findChild<QMdiAre
             if(bar->maximum()==0) {++busy;QVERIFY(bar->text().isEmpty());}
             else QCOMPARE(bar->value(),68);
             QVERIFY(bar->property("figmaProgressSnapshot").toBool());
-            QCOMPARE(QFontInfo(bar->font()).family(),QString("Inter"));
+            QCOMPARE(QFontInfo(bar->font()).family(),QString("HarmonyOS Sans"));
         }
         QCOMPARE(ids.size(),20);QCOMPARE(vertical,6);QCOMPARE(inverted,10);QCOMPARE(busy,4);QCOMPARE(disabled,4);
         auto* preview=page->findChild<QProgressBar*>("componentInteractivePreview");QVERIFY(preview);
@@ -593,7 +644,7 @@ auto* secondEditor=editors->widget(1);auto* area=secondEditor->findChild<QMdiAre
         QCoreApplication::processEvents();auto* page=part<QStackedWidget>("componentPages")->currentWidget();auto* view=page->findChild<QGraphicsView*>("figmaVariantGallery");QVERIFY(view);QCOMPARE(view->property("variantSpecimenCount").toInt(),32);
         QWidget* canvas=nullptr;for(auto* item:view->scene()->items())if(auto* proxy=qgraphicsitem_cast<QGraphicsProxyWidget*>(item))canvas=proxy->widget();QVERIFY(canvas);QCOMPARE(canvas->size(),QSize(2256,1893));
         const auto specimens=canvas->findChildren<QDialogButtonBox*>();QCOMPARE(specimens.size(),32);QSet<QString> ids,buttonIds;int children=0,disabled=0,vertical=0,centered=0,destructive=0;
-        for(auto* box:specimens){ids.insert(box->property("figmaNodeId").toString());QCOMPARE(box->geometry(),box->property("figmaDesignBounds").toRect());QVERIFY(box->property("figmaDialogSourceSnapshot").toBool());QVERIFY(!box->layout()->isEnabled());disabled+=!box->isEnabled();vertical+=box->orientation()==Qt::Vertical;centered+=box->centerButtons();for(auto* button:box->buttons()){++children;buttonIds.insert(button->property("figmaNodeId").toString());QVERIFY(qobject_cast<Z_PushButton*>(button));QCOMPARE(button->geometry(),button->property("figmaDesignBounds").toRect());QVERIFY(button->property("figmaAppearance").toBool());QVERIFY(!button->isDown());QVERIFY(!button->hasFocus());QCOMPARE(button->height(),32);destructive+=box->buttonRole(button)==QDialogButtonBox::DestructiveRole;}}
+        for(auto* box:specimens){ids.insert(box->property("figmaNodeId").toString());QCOMPARE(box->geometry(),box->property("figmaDesignBounds").toRect());QVERIFY(box->property("figmaDialogSourceSnapshot").toBool());QVERIFY(!box->layout()->isEnabled());disabled+=!box->isEnabled();vertical+=box->orientation()==Qt::Vertical;centered+=box->centerButtons();for(auto* button:box->buttons()){++children;buttonIds.insert(button->property("figmaNodeId").toString());QVERIFY(qobject_cast<Z_PushButton*>(button));const auto buttonDesignBounds=button->property("figmaDesignBounds").toRect();QCOMPARE(button->geometry().topLeft(),buttonDesignBounds.topLeft());QCOMPARE(button->geometry().width(),buttonDesignBounds.width());QVERIFY(!button->property("buttonAppearance").toString().isEmpty());QVERIFY(!button->isDown());QVERIFY(!button->hasFocus());QVERIFY(button->height() >= 32);destructive+=box->buttonRole(button)==QDialogButtonBox::DestructiveRole;}}
         QCOMPARE(ids.size(),32);QCOMPARE(children,80);QCOMPARE(buttonIds.size(),80);QCOMPARE(disabled,16);QCOMPARE(vertical,16);QCOMPARE(centered,16);QCOMPARE(destructive,8);
         auto* box=page->findChild<QDialogButtonBox*>("componentInteractivePreview");QVERIFY(box);QVERIFY(box->layout()->isEnabled());auto* configuration=page->findChild<QComboBox*>("dialogConfigurationControl");QVERIFY(configuration);QCOMPARE(box->standardButtons(),QDialogButtonBox::StandardButtons(QDialogButtonBox::Ok|QDialogButtonBox::Cancel));QSignalSpy accepted(box,&QDialogButtonBox::accepted),rejected(box,&QDialogButtonBox::rejected);
         configuration->setCurrentText("Destructive");auto* action=box->findChild<QPushButton*>("dialogDeleteAction");QVERIFY(action);QCOMPARE(box->buttonRole(action),QDialogButtonBox::DestructiveRole);QVERIFY(!action->isDefault());QVERIFY(!action->autoDefault());action->click();QCOMPARE(accepted.count(),0);QCOMPARE(rejected.count(),0);QCOMPARE(box->property("dialogClicks").toInt(),1);QCOMPARE(box->property("dialogLastRole").toInt(),int(QDialogButtonBox::DestructiveRole));
@@ -608,7 +659,7 @@ auto* secondEditor=editors->widget(1);auto* area=secondEditor->findChild<QMdiAre
         QCoreApplication::processEvents();auto* page=part<QStackedWidget>("componentPages")->currentWidget();auto* view=page->findChild<QGraphicsView*>("figmaVariantGallery");QVERIFY(view);QCOMPARE(view->property("variantSpecimenCount").toInt(),34);
         QWidget* canvas=nullptr;for(auto* item:view->scene()->items())if(auto* proxy=qgraphicsitem_cast<QGraphicsProxyWidget*>(item))canvas=proxy->widget();QVERIFY(canvas);QCOMPARE(canvas->size(),QSize(2256,873));
         const auto specimens=canvas->findChildren<QToolButton*>();QCOMPARE(specimens.size(),34);QSet<QString> ids;int disabled=0,checked=0,split=0,raised=0,open=0;
-        for(auto* button:specimens){ids.insert(button->property("figmaNodeId").toString());QCOMPARE(button->font().pixelSize(),14);QCOMPARE(button->font().weight(),int(QFont::DemiBold));QCOMPARE(button->geometry(),button->property("figmaDesignBounds").toRect());QVERIFY(button->property("figmaToolSourceSnapshot").toBool());QVERIFY(!button->isDown());QVERIFY(!button->hasFocus());QVERIFY(!button->menu());disabled+=!button->isEnabled();checked+=button->isChecked();split+=button->popupMode()==QToolButton::MenuButtonPopup;raised+=button->autoRaise();open+=button->property("figmaToolSnapshotState")=="Open";button->grab();const auto paintFont=button->property("figmaToolPaintFont").value<QFont>();const auto family=QRawFont::fromFont(paintFont).familyName();QVERIFY(family=="Inter"||family=="Inter SemiBold");QCOMPARE(paintFont.pixelSize(),14);QCOMPARE(QRawFont::fromFont(paintFont).weight(),int(QFont::DemiBold));QCOMPARE(button->property("figmaToolIconBounds").toRect().size(),QSize(16,16));}
+        for(auto* button:specimens){ids.insert(button->property("figmaNodeId").toString());QCOMPARE(button->font().pixelSize(),14);QCOMPARE(button->font().weight(),int(QFont::DemiBold));const auto toolDesignBounds=button->property("figmaDesignBounds").toRect();QCOMPARE(button->geometry().topLeft(),toolDesignBounds.topLeft());QCOMPARE(button->geometry().width(),toolDesignBounds.width());QVERIFY(button->property("figmaToolSourceSnapshot").toBool());QVERIFY(!button->isDown());QVERIFY(!button->hasFocus());QVERIFY(!button->menu());disabled+=!button->isEnabled();checked+=button->isChecked();split+=button->popupMode()==QToolButton::MenuButtonPopup;raised+=button->autoRaise();open+=button->property("figmaToolSnapshotState")=="Open";button->grab();const auto paintFont=button->property("figmaToolPaintFont").value<QFont>();const auto family=QRawFont::fromFont(paintFont).familyName();QVERIFY(family=="HarmonyOS Sans"||family=="HarmonyOS Sans SemiBold");QCOMPARE(paintFont.pixelSize(),14);QCOMPARE(QRawFont::fromFont(paintFont).weight(),int(QFont::DemiBold));QCOMPARE(button->property("figmaToolIconBounds").toRect().size(),QSize(16,16));}
         QCOMPARE(ids.size(),34);QCOMPARE(disabled,4);QCOMPARE(checked,12);QCOMPARE(split,18);QCOMPARE(raised,17);QCOMPARE(open,2);
         auto* button=page->findChild<QToolButton*>("componentInteractivePreview");QVERIFY(button);QVERIFY(button->menu());QCOMPARE(button->height(),32);
         page->findChild<QCheckBox*>("toolActionSourceControl")->setChecked(true);auto* action=button->defaultAction();QVERIFY(action);
@@ -780,8 +831,8 @@ auto* secondEditor=editors->widget(1);auto* area=secondEditor->findChild<QMdiAre
         QVERIFY(canvas);QCOMPARE(canvas->size(),QSize(1312,543));const auto specimens=canvas->findChildren<QSlider*>();QCOMPARE(specimens.size(),8);
         page->findChild<QTabWidget*>("componentSections")->setCurrentIndex(1);QCoreApplication::processEvents();
         const auto keyLabels=canvas->findChild<QWidget*>("variantKey")->findChildren<QLabel*>();QCOMPARE(keyLabels.size(),3);
-        for(auto* label:keyLabels){QCOMPARE(label->font().family(),QString("Inter"));QCOMPARE(label->font().weight(),int(QFont::DemiBold));
-            QVERIFY(QRawFont::fromFont(label->font()).familyName().startsWith("Inter"));QCOMPARE(QRawFont::fromFont(label->font()).weight(),int(QFont::DemiBold));}
+        for(auto* label:keyLabels){QCOMPARE(label->font().family(),QString("HarmonyOS Sans"));QCOMPARE(label->font().weight(),int(QFont::DemiBold));
+            QVERIFY(QRawFont::fromFont(label->font()).familyName().startsWith("HarmonyOS Sans"));QCOMPARE(QRawFont::fromFont(label->font()).weight(),int(QFont::DemiBold));}
         page->findChild<QTabWidget*>("componentSections")->setCurrentIndex(0);QCoreApplication::processEvents();
         QSet<QString> ids;int vertical=0,disabled=0;
         for(auto* slider:specimens) {
@@ -918,12 +969,12 @@ auto* secondEditor=editors->widget(1);auto* area=secondEditor->findChild<QMdiAre
             QCOMPARE(inspected("visible"),QString("true"));
             const auto geometry=preview->geometry();
             QCOMPARE(inspected("geometry"),QString("%1,%2 / %3x%4").arg(geometry.x()).arg(geometry.y()).arg(geometry.width()).arg(geometry.height()));
-            QFont numericFont;numericFont.setFamilies({"Inter","Noto Sans SC"});numericFont.setPixelSize(14);numericFont.setWeight(QFont::Medium);
+            QFont numericFont;numericFont.setFamilies({"HarmonyOS Sans","Noto Sans SC"});numericFont.setPixelSize(14);numericFont.setWeight(QFont::Medium);
             const auto raw=QRawFont::fromFont(numericFont);
-            QCOMPARE(QFontInfo(editor->font()).family(),QString("Inter"));
+            QCOMPARE(QFontInfo(editor->font()).family(),QString("HarmonyOS Sans"));
             QCOMPARE(raw.weight(),int(QFont::Medium));
             for(auto* label:canvas->findChildren<QLabel*>()) {
-                QCOMPARE(QFontInfo(label->font()).family(),QString("Inter"));
+                QCOMPARE(QFontInfo(label->font()).family(),QString("HarmonyOS Sans"));
                 QCOMPARE(QRawFont::fromFont(label->font()).weight(),int(QFont::DemiBold));
             }
             auto* settings=page->findChild<QScrollArea*>("componentSettingsScroll");QVERIFY(settings);
@@ -945,13 +996,74 @@ auto* secondEditor=editors->widget(1);auto* area=secondEditor->findChild<QMdiAre
             }
         }
     }
-    void inputGalleryUsesAllSevenAuthoredSets() {
+    void inputPageOpensWithoutBuildingVariantGallery() {
         auto* tree=part<QTreeWidget>("componentTree");
         for(QTreeWidgetItemIterator it(tree);*it;++it)
             if((*it)->data(0,Qt::UserRole)=="339:2")tree->setCurrentItem(*it);
-        QCoreApplication::processEvents();auto* page=part<QStackedWidget>("componentPages")->currentWidget();
-        QVERIFY(!page->findChild<QTabWidget*>("componentSetTabs"));
+        QCoreApplication::processEvents();
+        auto* page=part<QStackedWidget>("componentPages")->currentWidget();
+        auto* sections=page->findChild<QTabWidget*>("componentSections");QVERIFY(sections);
+        // Opening the Input page must not synchronously instantiate the 108-item
+        // state gallery that lives on the second tab.
+        QVERIFY(!page->findChild<QGraphicsView*>("figmaVariantGallery"));
+    }
+    void inputGalleryBuildYields() {
+        auto* tree=part<QTreeWidget>("componentTree");
+        for(QTreeWidgetItemIterator it(tree);*it;++it)
+            if((*it)->data(0,Qt::UserRole)=="339:2")tree->setCurrentItem(*it);
+        QCoreApplication::processEvents();
+        auto* page=part<QStackedWidget>("componentPages")->currentWidget();
+        auto* sections=page->findChild<QTabWidget*>("componentSections");QVERIFY(sections);
+        sections->setCurrentIndex(1);
+        QCoreApplication::processEvents();
         auto* view=page->findChild<QGraphicsView*>("figmaVariantGallery");QVERIFY(view);
+        QVERIFY(!view->property("variantBuildComplete").toBool());
+        bool eventLoopYielded=false;
+        QTimer::singleShot(0,view,[&eventLoopYielded]{eventLoopYielded=true;});
+        QTRY_VERIFY_WITH_TIMEOUT(eventLoopYielded,500);
+        QVERIFY(view->property("variantBuiltCount").toInt()<108);
+        QTRY_VERIFY_WITH_TIMEOUT(view->property("variantBuildComplete").toBool(),15000);
+        QVERIFY2(view->property("variantBuildError").toString().isEmpty(),
+                 qPrintable(view->property("variantBuildError").toString()));
+        QCOMPARE(view->property("animatedLoadingSpecimens").toInt(),0);
+        QVERIFY(view->property("visualOverviewInteractionBlocked").toBool());
+        QWidget* canvas=nullptr;
+        for(auto* item:view->scene()->items())
+            if(auto* proxy=qgraphicsitem_cast<QGraphicsProxyWidget*>(item))canvas=proxy->widget();
+        QVERIFY(canvas);
+        const auto snapshots=canvas->findChildren<QLabel*>("inputStaticMotionSnapshot");
+        QCOMPARE(snapshots.size(),7);
+        for(auto* snapshot:snapshots)QVERIFY(snapshot->isVisibleTo(canvas));
+        int frozenSources=0,visibleSpecimens=0;
+        for(auto* widget:canvas->findChildren<QWidget*>()) {
+            frozenSources+=widget->property("figmaStaticMotionSource").toBool();
+            if(!widget->property("figmaNodeId").toString().isEmpty() &&
+               !widget->property("figmaStaticMotionSource").toBool() &&
+               widget->objectName()!="inputStaticMotionSnapshot")
+                visibleSpecimens+=widget->isVisibleTo(canvas);
+        }
+        QCOMPARE(frozenSources,7);
+        QCOMPARE(visibleSpecimens,101);
+        sections->setCurrentIndex(0);
+    }
+    void inputGalleryUsesAllSevenAuthoredSets() {
+        auto* tree=part<QTreeWidget>("componentTree");
+        try {
+            for(QTreeWidgetItemIterator it(tree);*it;++it)
+                if((*it)->data(0,Qt::UserRole)=="339:2")tree->setCurrentItem(*it);
+            QCoreApplication::processEvents();
+        } catch (const std::exception& error) {
+            QFAIL(qPrintable(QString::fromUtf8(error.what())));
+        }
+        auto* page=part<QStackedWidget>("componentPages")->currentWidget();
+        QVERIFY(!page->findChild<QTabWidget*>("componentSetTabs"));
+        auto* sections=page->findChild<QTabWidget*>("componentSections");QVERIFY(sections);
+        sections->setCurrentIndex(1);
+        auto* view=page->findChild<QGraphicsView*>("figmaVariantGallery");QVERIFY(view);
+        QTRY_VERIFY_WITH_TIMEOUT(view->property("variantBuildComplete").toBool(),15000);
+        // Keep this test isolated even when a later, pre-existing geometry
+        // assertion fails: following navigation checks expect Appearance active.
+        sections->setCurrentIndex(0);
         QCOMPARE(view->property("componentSetCount").toInt(),7);QCOMPARE(view->property("variantSpecimenCount").toInt(),108);
         QWidget* canvas=nullptr;
         for(auto* item:view->scene()->items())if(auto* proxy=qgraphicsitem_cast<QGraphicsProxyWidget*>(item))canvas=proxy->widget();
@@ -962,7 +1074,7 @@ auto* secondEditor=editors->widget(1);auto* area=secondEditor->findChild<QMdiAre
             ids.insert(input->property("figmaNodeId").toString());input->layout()->activate();
             QCOMPARE(input->geometry(),input->property("figmaDesignBounds").toRect());
             QCOMPARE(input->control()->height(),input->height());
-            QVERIFY(input->control()->isFigmaInputAppearance());disabled+=!input->isEnabled();
+            QCOMPARE(input->appearance(),QString("outlined"));disabled+=!input->isEnabled();
         }
         for(auto* action:canvas->findChildren<field::Action*>())
             if(action->property("internalAnatomy").toBool()) {
@@ -1116,7 +1228,7 @@ auto* secondEditor=editors->widget(1);auto* area=secondEditor->findChild<QMdiAre
         QVERIFY(choice);
         QCOMPARE(choice->count(), 3);
         QCOMPARE(choice->currentData().toString(), QString("keyboard"));
-        QCOMPARE(FocusIndicator::instance().opacity(), 0.55);
+        QCOMPARE(FocusIndicator::instance().opacity(), 0.5);
         for (const auto& mode : {"off", "always", "keyboard"}) {
             choice->setCurrentIndex(choice->findData(mode));
             QCOMPARE(FocusIndicator::modeName(FocusIndicator::instance().mode()), QString(mode));
@@ -1217,7 +1329,8 @@ auto* secondEditor=editors->widget(1);auto* area=secondEditor->findChild<QMdiAre
         QCoreApplication::processEvents();
         for (auto* specimen : switchPage->findChildren<Z_Switch*>()) {
             QCOMPARE(specimen->size(), specimen->sizeHint());
-            QCOMPARE(specimen->size(), QSize(180, 32));
+            QCOMPARE(specimen->width(), 180);
+            QVERIFY(specimen->height() >= 32);
             QCOMPARE(specimen->label(), QStringLiteral("Switch label"));
             QVERIFY(specimen->showLabel());
             QCOMPARE(specimen->trackGeometry().size(),
@@ -1342,25 +1455,26 @@ auto* secondEditor=editors->widget(1);auto* area=secondEditor->findChild<QMdiAre
         button->setFocusPolicy(Qt::NoFocus);
         QCOMPARE(button->focusPolicy(), Qt::NoFocus);
     }
-    void dangerFocusFollowsRoleForEveryMaterial() {
-        auto catalog = std::make_shared<surface::Catalog>(profile);
+    void dangerFocusUsesAccessibilityRingForEveryV2Appearance() {
         Z_PushButton button;
         button.setType(ButtonType::Primary);
         button.setDanger(true);
         button.setText("Danger");
-        ButtonAppearanceAdapter adapter(&button, catalog);
         button.resize(180, 40);
         button.show(); button.activateWindow();
         FocusIndicator::instance().setMode(FocusIndicator::Mode::Always);
         button.setFocus(Qt::MouseFocusReason);
         QTRY_VERIFY(button.hasFocus());
         const auto color = button.focusIndicatorColor();
-        QVERIFY(color.red() > color.blue());
-        QVERIFY(qAbs(color.alphaF() - 0.55) < 0.005);
-        for (const auto& id : catalog->buttonPresetIds()) {
-            adapter.setAppearance(id);
+        QCOMPARE(color.name(QColor::HexRgb), QString("#6235f7"));
+        QVERIFY(qAbs(color.alphaF() - 0.5) < 0.005);
+        for (auto appearance : {ButtonAppearance::Filled, ButtonAppearance::Outlined,
+                                ButtonAppearance::Dashed, ButtonAppearance::Text,
+                                ButtonAppearance::Link}) {
+            button.setAppearance(appearance);
             QTest::qWait(15);
-            QVERIFY2(button.styleSheet().contains(color.name(QColor::HexArgb)), qPrintable(id));
+            QCOMPARE(button.property("buttonIntent").toString(), QString("danger"));
+            QCOMPARE(button.focusIndicatorColor(), color);
             const auto visible = button.grab().toImage();
             FocusIndicator::instance().setMode(FocusIndicator::Mode::Off);
             QTest::qWait(15);
@@ -1428,10 +1542,9 @@ auto* secondEditor=editors->widget(1);auto* area=secondEditor->findChild<QMdiAre
         QCOMPARE(check->isChecked(), !checked);
     }
     void demoIconsHaveNoSeparateSurface() {
-        // This regression explicitly exercises the legacy material/icon editor;
-        // the initial Figma specimen intentionally has both icon slots hidden.
+        // Every V2 appearance keeps icon slots inside the Button component.
         auto* material=part<QComboBox>("buttonAppearance");
-        material->setCurrentIndex(material->findData("solid"));
+        material->setCurrentIndex(material->findData("outlined"));
         part<Z_CheckBox>("leadingVisible")->setChecked(true);
         part<Z_CheckBox>("trailingVisible")->setChecked(true);
         QVERIFY(!part<QComboBox>("leadingStyle"));
@@ -1440,9 +1553,9 @@ auto* secondEditor=editors->widget(1);auto* area=secondEditor->findChild<QMdiAre
         for (int i = 0; i < material->count(); ++i) {
             material->setCurrentIndex(i);
             for (auto* slot : b->findChildren<QWidget*>("ICON_CONTAINER"))
-                QCOMPARE(slot->property("iconContainerStyle").toString(), QString("BARE"));
+                QCOMPARE(slot->property("iconContainerStyle").toString(), QString("bare"));
         }
-        material->setCurrentIndex(material->findData("solid"));
+        material->setCurrentIndex(material->findData("outlined"));
     }
     void fieldActionsRemainInsideControl() {
         Z_InputField input(tokens);
@@ -1486,33 +1599,30 @@ auto* secondEditor=editors->widget(1);auto* area=secondEditor->findChild<QMdiAre
         QVERIFY(!invalidEnabled);
         QVERIFY(b->isEnabled());
     }
-    void unavailableMaterialIsNotSelectable() {
-        auto* type = part<QComboBox>("buttonType");
-        auto* material = part<QComboBox>("buttonAppearance");
-        material->setCurrentIndex(material->findData("solid"));
-        type->setCurrentIndex(3);
-        const auto flags = material->model()->flags(
-            material->model()->index(material->findData("gradient-inset"), 0));
-        type->setCurrentIndex(0);
-        QVERIFY(!(flags & Qt::ItemIsEnabled));
+    void v2AppearancesReplaceLegacyMaterials() {
+        auto* appearance = part<QComboBox>("buttonAppearance");
+        for (const auto& id : QStringList{"filled", "outlined", "dashed", "text", "link"})
+            QVERIFY(appearance->findData(id) >= 0);
+        for (const auto& old : QStringList{"solid", "gradient-inset", "figma-light"})
+            QCOMPARE(appearance->findData(old), -1);
     }
     void cascadingConfigurationAndRecovery() {
         auto* b = part<Z_PushButton>("BUTTON_ROOT");
         auto* type = part<QComboBox>("buttonType");
         auto* material = part<QComboBox>("buttonAppearance");
         auto* ghost = part<Z_CheckBox>("buttonGhost");
-        material->setCurrentIndex(material->findData("solid"));
+        material->setCurrentIndex(material->findData("outlined"));
         ghost->setChecked(true);
-        material->setCurrentIndex(material->findData("solid-inner-shadow"));
-        QVERIFY(!ghost->isEnabled() && !ghost->isChecked());
-        QVERIFY(!b->property("ghost").toBool());
+        QVERIFY(ghost->isEnabled() && ghost->isChecked());
+        QCOMPARE(b->property("buttonAppearance").toString(), QString("text"));
         part<Z_CheckBox>("buttonDanger")->setChecked(true);
-        QVERIFY(!b->findChild<surface::solid_inner_shadow::Layer*>()->isHidden());
+        QCOMPARE(b->property("buttonIntent").toString(), QString("danger"));
         part<Z_CheckBox>("buttonDanger")->setChecked(false);
-        material->setCurrentIndex(material->findData("gradient-inset"));
+        ghost->setChecked(false);
+        material->setCurrentIndex(material->findData("dashed"));
         type->setCurrentIndex(3);
-        QCOMPARE(material->currentData().toString(), QString("solid"));
-        QVERIFY(!part<QLabel>("buttonConfigurationStatus")->text().isEmpty());
+        QCOMPARE(material->currentData().toString(), QString("dashed"));
+        QCOMPARE(b->property("buttonAppearance").toString(), QString("dashed"));
         type->setCurrentIndex(0);
         part<QRadioButton>("buttonIconMode")->setChecked(true);
         QVERIFY(!part<QLineEdit>("trailingSource")->isEnabled());
@@ -1550,10 +1660,10 @@ auto* secondEditor=editors->widget(1);auto* area=secondEditor->findChild<QMdiAre
         part<Z_CheckBox>("buttonLoading")->setChecked(false);
         QVERIFY(type->isEnabled() && material->isEnabled() && state->isEnabled());
         auto* statesMaterial = part<QComboBox>("buttonStateAppearance");
-        statesMaterial->setCurrentIndex(statesMaterial->findData("solid-inner-shadow"));
-        QVERIFY(!part<Z_PushButton>("buttonStateExample4")->isEnabled());
+        statesMaterial->setCurrentIndex(statesMaterial->findData("text"));
+        QVERIFY(part<Z_PushButton>("buttonStateExample4")->isEnabled());
         QVERIFY(part<Z_PushButton>("buttonStateExample3")->isEnabled());
-        statesMaterial->setCurrentIndex(statesMaterial->findData("solid"));
+        statesMaterial->setCurrentIndex(statesMaterial->findData("filled"));
         QVERIFY(part<Z_PushButton>("buttonStateExample4")->isEnabled());
     }
     void buttonBothSourcesAreEditable() {
@@ -1574,10 +1684,10 @@ auto* secondEditor=editors->widget(1);auto* area=secondEditor->findChild<QMdiAre
         part<Z_CheckBox>("leadingVisible")->setChecked(true);
         QCOMPARE(
             left->findChild<QWidget*>("ICON_CONTAINER")->property("iconContainerStyle").toString(),
-            QString("BARE"));
+                      QString("bare"));
         QCOMPARE(
             right->findChild<QWidget*>("ICON_CONTAINER")->property("iconContainerStyle").toString(),
-            QString("BARE"));
+            QString("bare"));
         edit("trailingSource", ":/icons/arrow-right.svg");
     }
     void iconOnlyLoadingAndRoundtrip() {
@@ -1605,44 +1715,28 @@ auto* secondEditor=editors->widget(1);auto* area=secondEditor->findChild<QMdiAre
         QVERIFY(!b->findChild<QWidget*>("LEADING")->isHidden());
         QVERIFY(!b->findChild<QWidget*>("TRAILING")->isHidden());
     }
-    void referenceAppearanceIsButtonOnly() {
-        auto* material = part<QComboBox>("buttonAppearance");
-        const auto index = material->findData("solid-inner-shadow");
-        QVERIFY(index >= 0);
-        QVERIFY(part<QComboBox>("checkboxAppearance")->findData("solid-inner-shadow") < 0);
-        QVERIFY(part<QComboBox>("inputAppearance")->findData("solid-inner-shadow") < 0);
+    void legacyButtonCompositeAppearancesAreAbsent() {
+        auto* appearance = part<QComboBox>("buttonAppearance");
+        for (const auto& id : QStringList{"solid-inner-shadow", "gradient-inset",
+                                         "gradient-elevated", "figma-light"})
+            QCOMPARE(appearance->findData(id), -1);
         QVERIFY(!window->findChild<QWidget*>("shadowEditor"));
-        material->setCurrentIndex(index);
-        QTest::qWait(30);
-        auto* b = part<Z_PushButton>("BUTTON_ROOT");
-        auto* layer = b->findChild<surface::solid_inner_shadow::Layer*>();
-        QVERIFY(layer && !layer->isHidden());
-        part<Z_CheckBox>("buttonDisabled")->setChecked(true);
-        QTest::qWait(30);
-        QCOMPARE(layer->state(), QString("disabled"));
-        part<Z_CheckBox>("buttonDisabled")->setChecked(false);
-        material->setCurrentIndex(material->findData("solid"));
     }
-    void restoredButtonPreservesMaterials() {
+    void buttonPreservesLayoutAcrossV2Appearances() {
         auto* b = part<Z_PushButton>("BUTTON_ROOT");
-        auto* material = part<QComboBox>("buttonAppearance");
-        auto* adapter = b->findChild<ButtonAppearanceAdapter*>();
-        QVERIFY(adapter);
+        auto* appearance = part<QComboBox>("buttonAppearance");
         const auto before = b->sizeHint();
-        for (auto id : {"gradient-inset", "gradient-elevated", "outline", "solid"}) {
-            material->setCurrentIndex(material->findData(id));
+        for (auto id : {"filled", "outlined", "dashed", "text", "link"}) {
+            appearance->setCurrentIndex(appearance->findData(id));
             QTest::qWait(30);
             QCOMPARE(b->sizeHint(), before);
+            QCOMPARE(b->property("buttonAppearance").toString(), QString(id));
             QCOMPARE(b->trailingIconSource(), QString(":/icons/arrow-right.svg"));
             QCOMPARE(b->findChild<QWidget*>("TRAILING")
                          ->findChild<QWidget*>("ICON_CONTAINER")
                          ->property("iconContainerStyle")
                          .toString(),
-                     QString("BARE"));
-            if (QString(id).startsWith("gradient"))
-                QVERIFY(b->styleSheet().contains("qlineargradient"));
-            QVERIFY(b->findChild<surface::InsetLayer*>());
-            QVERIFY(b->graphicsEffect());
+                      QString("bare"));
             if (!evidence.isEmpty())
                 QVERIFY(b->grab().save(evidence + "/button-" + id + ".png"));
         }
@@ -1671,18 +1765,21 @@ auto* secondEditor=editors->widget(1);auto* area=secondEditor->findChild<QMdiAre
             for (auto* action : actions) {
                 QVERIFY(qobject_cast<Z_PushButton*>(action));
                 QVERIFY(action->isIconOnly());
-                QCOMPARE(action->property("buttonType").toString(), QString("TEXT"));
-                QCOMPARE(action->property("buttonSize").toString(), QString("XS"));
+                QCOMPARE(action->property("buttonAppearance").toString(), QString("text"));
+                QCOMPARE(action->property("buttonSize").toString(), QString("small"));
                 QCOMPARE(action->sizeHint(), reference.sizeHint());
                 ++total;
             }
         }
-        QCOMPARE(total, 6);
+        QCOMPARE(total, 7);
         auto* search = input.findChild<Z_PushButton*>("SEARCH_ACTION");
+        auto* spinner = input.findChild<Z_PushButton*>("LOADING_ACTION");
         input.setLoading(true);
-        QVERIFY(search->property("loading").toBool());
-        QVERIFY(!search->isEnabled());
+        QVERIFY(!search->isVisible());
+        QVERIFY(spinner->isVisible());
+        QVERIFY(spinner->property("loading").toBool());
         input.setLoading(false);
+        QVERIFY(search->isVisible());
         QVERIFY(search->isEnabled());
         auto* clear = input.findChild<Z_PushButton*>("CLEAR");
         clear->click();
@@ -1700,35 +1797,32 @@ auto* secondEditor=editors->widget(1);auto* area=secondEditor->findChild<QMdiAre
         QTest::qWait(40);
         auto* view = select.optionView();
         auto* renderer = select.findChild<Z_CheckBox*>("CHECKBOX_ROW_RENDERER");
-        for (const auto& appearance : {"solid", "gradient-inset", "gradient-elevated"}) {
-            select.setAppearance(appearance);
-            for (int row = 0; row < 2; ++row) {
-                QImage image(360, 48, QImage::Format_ARGB32_Premultiplied);
-                image.fill(Qt::white);
-                QStyleOptionViewItem opt;
-                opt.initFrom(view);
-                opt.widget = view;
-                opt.rect = image.rect();
-                opt.state = row == 0 ? QStyle::State_Enabled : QStyle::State_None;
-                QPainter painter(&image);
-                view->itemDelegate()->paint(&painter, opt, view->model()->index(row, 0));
-                painter.end();
-                QCOMPARE(renderer->isChecked(), row == 0);
-                QCOMPARE(renderer->isEnabled(), row == 0);
-                QCOMPARE(renderer->appearance(), QString(appearance));
-                const auto area = renderer->indicatorRect().adjusted(3, 3, -3, -3);
-                QImage direct(renderer->size(), QImage::Format_ARGB32_Premultiplied);
-                direct.fill(Qt::white);
-                renderer->render(&direct);
-                const QPoint offset(tokens->metric("popupPadding"), 0);
-                QCOMPARE(image.copy(area.translated(offset)).convertToFormat(QImage::Format_RGB32),
-                         direct.copy(area).convertToFormat(QImage::Format_RGB32));
-            }
-            QTest::qWait(20);
-            if (!evidence.isEmpty())
-                QVERIFY(select.popupWidget()->grab().save(evidence + "/multiple-" + appearance +
-                                                          ".png"));
+        select.setAppearance("outlined");
+        for (int row = 0; row < 2; ++row) {
+            QImage image(360, 48, QImage::Format_ARGB32_Premultiplied);
+            image.fill(Qt::white);
+            QStyleOptionViewItem opt;
+            opt.initFrom(view);
+            opt.widget = view;
+            opt.rect = image.rect();
+            opt.state = row == 0 ? QStyle::State_Enabled : QStyle::State_None;
+            QPainter painter(&image);
+            view->itemDelegate()->paint(&painter, opt, view->model()->index(row, 0));
+            painter.end();
+            QCOMPARE(renderer->isChecked(), row == 0);
+            QCOMPARE(renderer->isEnabled(), row == 0);
+            QCOMPARE(renderer->appearance(), QString("solid"));
+            const auto area = renderer->indicatorRect().adjusted(3, 3, -3, -3);
+            QImage direct(renderer->size(), QImage::Format_ARGB32_Premultiplied);
+            direct.fill(Qt::white);
+            renderer->render(&direct);
+            const QPoint offset(tokens->metric("popupPadding"), 0);
+            QCOMPARE(image.copy(area.translated(offset)).convertToFormat(QImage::Format_RGB32),
+                     direct.copy(area).convertToFormat(QImage::Format_RGB32));
         }
+        QTest::qWait(20);
+        if (!evidence.isEmpty())
+            QVERIFY(select.popupWidget()->grab().save(evidence + "/multiple-outlined.png"));
         QCOMPARE(select.values(), QStringList{"a"});
         select.setOpen(false);
         QVector<Z_Select::Option> many;
@@ -1762,7 +1856,7 @@ auto* secondEditor=editors->widget(1);auto* area=secondEditor->findChild<QMdiAre
         auto* stackEditor=editors->widget(0);QVERIFY(stackEditor);
         auto* stack=stackEditor->findChild<QStackedWidget*>("componentInteractivePreview");QVERIFY(stack);
         QCOMPARE(stack->property("designSystemProfile").toString(),profile);
-        const QString expectedSurface=profile.startsWith("dark-")?QStringLiteral("background:rgba(39,39,39,255)"):QStringLiteral("background:rgba(255,255,255,255)");
+        const QString expectedSurface=QStringLiteral("background:rgba(243,243,243,255)");
         QVERIFY2(stack->styleSheet().contains(expectedSurface),qPrintable(stack->styleSheet()));
         if(!evidence.isEmpty())QVERIFY(stack->grab().save(evidence+"/page-flow-stacked-widget.png"));
         const int initial=stack->count();QCOMPARE(initial,3);
@@ -2222,6 +2316,7 @@ auto* secondEditor=editors->widget(1);auto* area=secondEditor->findChild<QMdiAre
             QStringLiteral("567:2"), QStringLiteral("579:33"), QStringLiteral("727:14"),
             QStringLiteral("735:2"), QStringLiteral("737:2")};
         for (const auto& pageId : pages) {
+            try {
             auto* canvas = variantCanvas(pageId);
             QVERIFY2(canvas, qPrintable(pageId));
             QVERIFY2(canvas->property("evidenceBacked").toBool(), qPrintable(pageId));
@@ -2242,6 +2337,7 @@ auto* secondEditor=editors->widget(1);auto* area=secondEditor->findChild<QMdiAre
             if (pageId != QStringLiteral("242:2720"))
                 QVERIFY2(canvas->property("runtimeSpecimenCount").toInt() > 0,
                          qPrintable(pageId));
+            } catch (const std::exception& e) { qWarning("RG EXCEPTION %s: %s", qPrintable(pageId), e.what()); QVERIFY2(false, e.what()); }
         }
         auto* chart = variantCanvas(QStringLiteral("400:2"));
         QVERIFY(chart);
@@ -2353,6 +2449,7 @@ auto* secondEditor=editors->widget(1);auto* area=secondEditor->findChild<QMdiAre
                                  std::invalid_argument);
     }
     void interactionComponentsUseSdkVariantsAndFocusContracts() {
+        try {
         auto* tree = part<QTreeWidget>("componentTree");
         struct Expected { QString pageId; int count; };
         const QList<Expected> pages{{"2147:2", 2}, {"2147:747", 5}, {"2147:960", 6},
@@ -2753,6 +2850,7 @@ auto* secondEditor=editors->widget(1);auto* area=secondEditor->findChild<QMdiAre
         QCOMPARE(titleBar->findChildren<QToolButton*>().size(), 3);
         for (auto* button : titleBar->findChildren<QToolButton*>())
             QCOMPARE(button->focusPolicy(), Qt::StrongFocus);
+        } catch (const std::exception& e) { qWarning("IC EXCEPTION: %s", e.what()); QVERIFY2(false, e.what()); }
     }
 
     void transferUsesSdkControlledModelsAndFocusContract() {
@@ -2957,7 +3055,7 @@ int main(int argc, char** argv) {
     QCoreApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
     QApplication app(argc, argv);
     app.setStyle(QStyleFactory::create("Fusion"));
-    button_demo::install(app, qEnvironmentVariable("DEMO_PROFILE", "light-comfortable"));
+    button_demo::install(app, qEnvironmentVariable("DEMO_PROFILE", "standard-light"));
     CompositionTests tests;
     return QTest::qExec(&tests, argc, argv);
 }

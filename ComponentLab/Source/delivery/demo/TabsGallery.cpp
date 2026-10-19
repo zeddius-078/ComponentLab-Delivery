@@ -26,12 +26,12 @@ QLabel* label(QWidget* parent, const QString& text, const QRect& rect, int size,
     result->setGeometry(rect);
     result->setWordWrap(true);
     result->setAlignment(Qt::AlignLeft | Qt::AlignTop);
-    QFont font("Inter");
+    QFont font("HarmonyOS Sans");
     font.setPixelSize(size);
     font.setWeight(weight);
     result->setFont(font);
     result->setStyleSheet(
-        QString("background:transparent;border:0;color:%1;font-family:'Inter';font-size:%2px;")
+        QString("background:transparent;border:0;color:%1;font-family:'HarmonyOS Sans';font-size:%2px;")
             .arg(color)
             .arg(size));
     return result;

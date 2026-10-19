@@ -1,0 +1,155 @@
+{
+  "$registry": {
+    "component": "side-menu",
+    "version": "2.0"
+  },
+  "$status": "active",
+  "base": {
+    "state": {
+      "default": {
+        "slot": {
+          "container": {
+            "background-color": {
+              "$type": "color",
+              "$value": "{semantic.color.background.surface}",
+              "$description": "Sidebar container background",
+              "$sourceOwner": "v2-component-contract"
+            },
+            "collapsed-width": {
+              "$type": "dimension",
+              "$value": 80,
+              "$description": "Runtime collapsed Sidebar width",
+              "$sourceOwner": "figma-audit-v2",
+              "unit": "px"
+            },
+            "min-width": {
+              "$type": "dimension",
+              "$value": "{semantic.interaction-size.prominent}",
+              "$description": "Minimum expanded Sidebar width",
+              "$sourceOwner": "v2-component-contract",
+              "unit": "px"
+            },
+            "radius": {
+              "$type": "borderRadius",
+              "$value": 32,
+              "$description": "Sidebar container radius",
+              "$sourceOwner": "figma-audit-v2",
+              "unit": "px"
+            },
+            "width": {
+              "$type": "dimension",
+              "$value": 280,
+              "$description": "Expanded Sidebar width",
+              "$sourceOwner": "figma-audit-v2",
+              "unit": "px"
+            },
+            "border-width": {
+              "$type": "borderWidth",
+              "$value": 1,
+              "$description": "Sidebar container border width",
+              "$sourceOwner": "v2-component-contract",
+              "unit": "px"
+            }
+          },
+          "brand-header": {
+            "height": {
+              "$type": "dimension",
+              "$value": 64,
+              "$description": "Sidebar brand header height",
+              "$sourceOwner": "v2-component-contract",
+              "unit": "px"
+            }
+          },
+          "account": {
+            "height": {
+              "$type": "dimension",
+              "$value": 72,
+              "$description": "Sidebar account block height",
+              "$sourceOwner": "v2-component-contract",
+              "unit": "px"
+            }
+          },
+          "nav-group": {
+            "gap": {
+              "$type": "spacing",
+              "$value": "{semantic.space.vertical.standard}",
+              "$description": "Gap between navigation groups",
+              "$sourceOwner": "v2-component-contract",
+              "unit": "px"
+            }
+          },
+          "item": {
+            "background-color": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [243, 243, 243]
+              },
+              "$description": "Active navigation item background",
+              "$sourceOwner": "figma-audit-v2"
+            },
+            "color": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [98, 53, 247]
+              },
+              "$description": "Active navigation item text color",
+              "$sourceOwner": "figma-audit-v2"
+            },
+            "height": {
+              "$type": "dimension",
+              "$value": 46,
+              "$description": "Navigation item height",
+              "$sourceOwner": "figma-audit-v2",
+              "unit": "px"
+            },
+            "radius": {
+              "$type": "borderRadius",
+              "$value": 4,
+              "$description": "Navigation item radius",
+              "$sourceOwner": "figma-audit-v2",
+              "unit": "px"
+            }
+          },
+          "icon": {
+            "size": {
+              "$type": "dimension",
+              "$value": "{semantic.visualization-size.md}",
+              "$description": "Sidebar navigation icon size",
+              "$sourceOwner": "v2-component-contract",
+              "unit": "px"
+            }
+          },
+          "indicator": {
+            "color": {
+              "$type": "color",
+              "$value": "{semantic.color.interactive.brand.default}",
+              "$description": "Active route indicator color",
+              "$sourceOwner": "v2-component-contract"
+            }
+          },
+          "submenu": {
+            "gap": {
+              "$type": "spacing",
+              "$value": "{semantic.space.vertical.compact}",
+              "$description": "Gap between nested navigation items",
+              "$sourceOwner": "v2-component-contract",
+              "unit": "px"
+            }
+          },
+          "footer": {
+            "height": {
+              "$type": "dimension",
+              "$value": 48,
+              "$description": "Sidebar footer action area height",
+              "$sourceOwner": "v2-component-contract",
+              "unit": "px"
+            }
+          }
+        }
+      }
+    }
+  },
+  "overrides": []
+}

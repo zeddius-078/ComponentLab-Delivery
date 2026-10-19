@@ -16,6 +16,7 @@
 #include <QAbstractTextDocumentLayout>
 #include <QTimer>
 #include <QVBoxLayout>
+#include <QtMath>
 #include <limits>
 #include <cmath>
 #include <stdexcept>
@@ -28,7 +29,7 @@ class InputDocumentLayout final : public QPlainTextDocumentLayout {
 public:
     explicit InputDocumentLayout(QTextDocument* document) : QPlainTextDocumentLayout(document) {}
 
-    void setCapturedLineHeight(int value) {
+    void setTokenLineHeight(int value) {
         if (lineHeight == value)
             return;
         lineHeight = value;
@@ -83,11 +84,11 @@ struct Z_InputField::Impl {
     QPlainTextEdit* area = nullptr;
     QLabel *label = nullptr, *hint = nullptr, *prefix = nullptr, *suffix = nullptr,
            *count = nullptr;
-    field::Action *clear = nullptr, *password = nullptr, *search = nullptr;
+    field::Action *clear = nullptr, *password = nullptr, *search = nullptr, *spinner = nullptr;
     QHBoxLayout* row = nullptr;
     QVBoxLayout* outer = nullptr;
     QWidget* footer = nullptr;
-    QString value, prefixText, suffixText, appearance = "solid";
+    QString value, prefixText, suffixText, appearance = "outlined";
     QIcon prefixIcon, suffixIcon;
     Kind kind = Kind::Text;
     bool controlled = false, clearAllowed = false, countVisible = false, readOnly = false;
@@ -128,11 +129,13 @@ Z_InputField::Z_InputField(std::shared_ptr<const field::Tokens> tokens, QWidget*
     d->area->viewport()->installEventFilter(this);
     d->clear = new field::Action(d->tokens, d->chrome);
     d->clear->setObjectName("CLEAR");
+    d->clear->setRole(field::Action::Role::Clear);
     d->clear->setIconSource(d->tokens->iconSource("clear"));
     d->clear->setToolTip(tr("Clear"));
     d->clear->setAccessibleName(tr("Clear input"));
     d->password = new field::Action(d->tokens, d->chrome);
     d->password->setObjectName("PASSWORD_TOGGLE");
+    d->password->setRole(field::Action::Role::PasswordToggle);
     d->password->setIconSource(d->tokens->iconSource("showPassword"));
     d->password->setCheckable(true);
     d->password->setToolTip(tr("Show password"));
@@ -142,6 +145,10 @@ Z_InputField::Z_InputField(std::shared_ptr<const field::Tokens> tokens, QWidget*
     d->search->setIconSource(d->tokens->iconSource("search"));
     d->search->setToolTip(tr("Search"));
     d->search->setAccessibleName(tr("Search"));
+    d->spinner = new field::Action(d->tokens, d->chrome);
+    d->spinner->setObjectName("LOADING_ACTION");
+    d->spinner->setAccessibleName(tr("Loading"));
+    d->spinner->setBusy(true);
     d->row->addWidget(d->prefix);
     d->row->addWidget(d->line, 1);
     d->row->addWidget(d->area, 1);
@@ -149,6 +156,7 @@ Z_InputField::Z_InputField(std::shared_ptr<const field::Tokens> tokens, QWidget*
     d->row->addWidget(d->clear);
     d->row->addWidget(d->password);
     d->row->addWidget(d->search);
+    d->row->addWidget(d->spinner);
     d->footer = new QWidget(this);
     d->footer->setObjectName("FOOTER");
     auto* foot = new QHBoxLayout(d->footer);
@@ -180,11 +188,7 @@ Z_InputField::Z_InputField(std::shared_ptr<const field::Tokens> tokens, QWidget*
             emit searchRequested(d->value, "input");
     });
     connect(d->clear, &QAbstractButton::clicked, this, [this] {
-        propose({});
-        (d->kind == Kind::TextArea ? static_cast<QWidget*>(d->area) : d->line)->setFocus();
-        emit cleared();
-        if (d->kind == Kind::Search)
-            emit searchRequested(d->value, "clear");
+        clear();
     });
     connect(d->password, &QAbstractButton::toggled, this, [this](bool on) {
         d->line->setEchoMode(d->kind != Kind::Password || on ? QLineEdit::Normal
@@ -193,6 +197,7 @@ Z_InputField::Z_InputField(std::shared_ptr<const field::Tokens> tokens, QWidget*
         d->password->setAccessibleName(d->password->toolTip());
         d->password->setIconSource(d->tokens->iconSource(on ? "hidePassword" : "showPassword"));
         sync();
+        emit passwordVisibilityChanged(on);
     });
     connect(d->password, &QAbstractButton::clicked, d->line, [this] {
         d->line->setFocus();
@@ -233,6 +238,22 @@ void Z_InputField::setPasswordVisible(bool value) {
     d->password->setChecked(value);
 }
 
+void Z_InputField::clear() {
+    if (!isEnabled() || d->readOnly || d->loading)
+        return;
+    propose({});
+    (d->kind == Kind::TextArea ? static_cast<QWidget*>(d->area) : d->line)->setFocus();
+    emit cleared();
+    if (d->kind == Kind::Search)
+        emit searchRequested(d->value, "clear");
+}
+
+void Z_InputField::togglePasswordVisibility() {
+    if (d->kind != Kind::Password || !isEnabled() || d->readOnly || d->loading)
+        return;
+    setPasswordVisible(!isPasswordVisible());
+}
+
 void Z_InputField::setSnapshotState(const QString& value) {
     d->chrome->setSnapshotState(value);
     setProperty("figmaInputSnapshotState", value);
@@ -248,6 +269,14 @@ QPlainTextEdit* Z_InputField::textArea() const {
 
 field::Chrome* Z_InputField::control() const {
     return d->chrome;
+}
+
+field::Action* Z_InputField::clearAction() const {
+    return d->clear;
+}
+
+field::Action* Z_InputField::passwordToggleAction() const {
+    return d->password;
 }
 
 QSize Z_InputField::sizeHint() const {
@@ -283,7 +312,7 @@ void Z_InputField::setValue(const QString& value) {
 void Z_InputField::propose(const QString& value) {
     if (d->syncing)
         return;
-    if (!isEnabled() || d->readOnly) {
+    if (!isEnabled() || d->readOnly || d->loading) {
         setValue(d->value);
         return;
     }
@@ -312,29 +341,11 @@ void Z_InputField::setControlSize(const QString& value) {
     sync();
 }
 
-void Z_InputField::setVariant(const QString& value) {
-    d->chrome->setVariant(value);
-}
-
 void Z_InputField::setAppearance(const QString& value) {
-    if (value == "figma-light") {
-        static const bool fontsLoaded = [] {
-            QFontDatabase::addApplicationFont(":/fonts/HarmonyOS_Sans_Regular.ttf");
-            QFontDatabase::addApplicationFont(":/fonts/HarmonyOS_Sans_Regular.ttf");
-            QFontDatabase::addApplicationFont(":/fonts/HarmonyOS_Sans_SC_Regular.ttf");
-            return true;
-        }();
-        Q_UNUSED(fontsLoaded);
-        d->chrome->setAppearance("solid");
-        d->appearance = value;
-        d->chrome->setFigmaInputAppearance(true);
-    } else {
-        // Validate first so an invalid choice cannot partially reset the active appearance.
-        d->tokens->recipe(value, "outlined", "default");
-        d->appearance = value;
-        d->chrome->setFigmaInputAppearance(false);
-        d->chrome->setAppearance(value);
-    }
+    // Validate first so an invalid choice cannot partially reset the active appearance.
+    d->tokens->recipe(field::Family::Input, value, "default");
+    d->appearance = value;
+    d->chrome->setAppearance(value);
 }
 
 void Z_InputField::setStatus(const QString& value) {
@@ -417,8 +428,8 @@ void Z_InputField::setCountLimit(int value) {
 
 void Z_InputField::setReadOnly(bool value) {
     d->readOnly = value;
-    d->line->setReadOnly(value);
-    d->area->setReadOnly(value);
+    d->line->setReadOnly(value || d->loading);
+    d->area->setReadOnly(value || d->loading);
     sync();
 }
 
@@ -428,7 +439,9 @@ void Z_InputField::setControlled(bool value) {
 
 void Z_InputField::setLoading(bool value) {
     d->loading = value;
-    d->search->setBusy(value);
+    d->line->setReadOnly(d->readOnly || value);
+    d->area->setReadOnly(d->readOnly || value);
+    d->chrome->setLoading(value);
     sync();
 }
 
@@ -452,7 +465,8 @@ void Z_InputField::changeEvent(QEvent* e) {
 }
 
 bool Z_InputField::eventFilter(QObject* target, QEvent* e) {
-    if (target == d->area->viewport() && e->type() == QEvent::Resize && !d->resizePending) {
+    if (d && d->area && target == d->area->viewport() && e->type() == QEvent::Resize &&
+        !d->resizePending) {
         d->resizePending = true;
         QTimer::singleShot(0, this, [this] {
             d->resizePending = false;
@@ -467,97 +481,56 @@ void Z_InputField::sync() {
         return;
     d->syncing = true;
     const auto& t = *d->tokens;
-    auto m = t.size(d->chrome->controlSize());
-    const bool captured = d->chrome->isFigmaInputAppearance();
-    const auto metrics = captured ? field::inputVisuals()["metrics"].toObject() : QJsonObject{};
-    const auto colors = captured ? field::inputVisuals()["colors"].toObject() : QJsonObject{};
-    const auto capturedSize = metrics["sizes"].toObject()[d->chrome->controlSize()].toObject();
-    const bool disabled = captured ? d->chrome->visualState() == "disabled" : !isEnabled();
-    const auto foreground = captured ? QColor(colors[disabled ? "disabledText" : "text"].toString())
-                                     : t.color(isEnabled() ? "text" : "disabledText");
-    QString css;
-    if (captured) {
-        m["paddingInline"] = capturedSize["paddingInline"];
-        m["paddingBlock"] = metrics["textAreaBlockPadding"];
-        m["lineHeight"] = metrics["textFrameHeight"];
-        css =
-            QString("QLineEdit[fieldPart=\"EDITOR\"], QPlainTextEdit[fieldPart=\"EDITOR\"] {"
-                    "background:transparent;border:0;padding:0;min-height:0;color:%1;"
-                    "font-family:'HarmonyOS Sans';font-size:14px;selection-background-color:#6235f7;"
-                    "selection-color:white;}"
-                    "QLabel "
-                    "{background:transparent;border:0;font-family:'HarmonyOS Sans';font-size:14px;color:%1;}"
-                    "QLabel[fieldPart=\"HINT\"],QLabel[fieldPart=\"COUNT\"] {color:%2;}"
-                    "QLabel[fieldPart=\"COUNT\"][countExceeded=\"true\"] {color:#e02128;}")
-                .arg(foreground.name())
-                .arg(colors[disabled ? "disabledText" : "placeholder"].toString());
-    } else
-        css = t.qss(t.recipe(d->chrome->property("surfacePreset").toString(),
-                             d->chrome->property("fieldVariant").toString(),
-                             d->chrome->visualState()),
-                    d->chrome->controlSize());
+    const auto m = t.size(d->chrome->controlSize(), field::Family::Input);
+    const auto recipe = t.recipe(field::Family::Input, d->appearance,
+                                 d->chrome->visualState());
+    const QString css = t.qss(recipe, d->chrome->controlSize(), field::Family::Input);
     if (styleSheet() != css)
         setStyleSheet(css);
-    const QString editorCss =
-        captured ? QString("background:transparent;border:0;padding:0;min-height:0;color:%1;"
-                           "font-family:'HarmonyOS Sans','HarmonyOS Sans SC';font-size:14px;"
-                           "lineedit-password-character:8226;lineedit-password-mask-delay:0;"
-                           "selection-background-color:#6235f7;selection-color:white;")
-                       .arg(foreground.name())
-                 : QString();
-    QFont editorFont(captured ? "HarmonyOS Sans" : t.family());
-    if (captured)
-        editorFont.setFamilies({"HarmonyOS Sans", "HarmonyOS Sans SC"});
-    editorFont.setPixelSize(captured ? 14 : m["fontSize"].toInt());
-    editorFont.setWeight(captured && !d->value.isEmpty() ? QFont::Medium : QFont::Normal);
-    // Chrome has its own QSS scope. Set editor typography locally, not via an ancestor selector.
+    // Keep the field surface on the same generated stylesheet as its editor
+    // children.  Chrome paints the frame itself, but retaining the compiled
+    // recipe on the surface keeps error/disabled/focus token evidence
+    // inspectable and prevents consumers from observing a stale parent-only
+    // stylesheet.
+    if (d->chrome->styleSheet() != css)
+        d->chrome->setStyleSheet(css);
+    QFont editorFont(t.family());
+    editorFont.setPixelSize(m["fontSize"].toInt());
     for (auto* editor : QList<QWidget*>{d->line, d->area}) {
-        if (editor->styleSheet() != editorCss)
-            editor->setStyleSheet(editorCss);
-        if (captured && editor->font() != editorFont)
+        if (editor->font() != editorFont)
             editor->setFont(editorFont);
-        else if (!captured && d->line->property("figmaInputAppearance").toBool())
-            editor->setFont(QFont()); // restore inherited legacy styling, not a new font override
     }
-    if (d->line->property("figmaInputAppearance").toBool() != captured) {
-        d->line->setProperty("figmaInputAppearance", captured);
-        QEvent styleChange(QEvent::StyleChange);
-        QApplication::sendEvent(d->line, &styleChange);
-    }
-    const int pad = m["paddingInline"].toInt() + (captured ? 1 : t.metric("borderWidth"));
+    const int border = qCeil(recipe.borderWidth);
+    const int pad = m["paddingInline"].toInt() + border;
     const bool area = d->kind == Kind::TextArea;
-    d->row->setSpacing(captured ? metrics["gap"].toInt() : t.metric("gap"));
-    d->outer->setSpacing(captured ? metrics["footerGap"].toInt() : t.metric("labelGap"));
-    d->row->setContentsMargins(pad, area ? m["paddingBlock"].toInt() + t.metric("borderWidth") : 0,
-                               pad, area ? m["paddingBlock"].toInt() + t.metric("borderWidth") : 0);
+    d->row->setSpacing(t.metric("gap"));
+    d->outer->setSpacing(t.metric("labelGap"));
+    d->row->setContentsMargins(pad, area ? m["paddingBlock"].toInt() + border : 0,
+                               pad, area ? m["paddingBlock"].toInt() + border : 0);
     d->line->setVisible(!area);
     d->area->setVisible(area);
     d->line->setFixedHeight(m["lineHeight"].toInt());
-    // Consumers may replace the exposed native QTextDocument; never cast their layout blindly.
     if (auto* layout = dynamic_cast<InputDocumentLayout*>(d->area->document()->documentLayout()))
-        layout->setCapturedLineHeight(
-            captured
-                ? metrics[d->value.isEmpty() ? "placeholderLineHeight" : "valueLineHeight"].toInt()
-                : 0);
+        layout->setTokenLineHeight(m["lineHeight"].toInt());
     d->label->setVisible(!d->label->text().isEmpty());
     d->hint->setVisible(!d->hint->text().isEmpty());
     d->count->setVisible(d->countVisible);
     d->footer->setVisible(!d->hint->text().isEmpty() || d->countVisible);
     QPalette p = d->line->palette();
-    p.setColor(QPalette::Text, foreground);
-    p.setColor(QPalette::Disabled, QPalette::Text, foreground);
+    p.setColor(QPalette::Text, recipe.foreground);
+    p.setColor(QPalette::Disabled, QPalette::Text, recipe.foreground);
     p.setColor(QPalette::PlaceholderText,
-               captured ? QColor(colors[disabled ? "disabledText" : "placeholder"].toString())
-                        : t.color(isEnabled() ? "placeholder" : "disabledText"));
+               t.color(isEnabled() && !d->loading ? "placeholder" : "disabledText"));
     p.setColor(QPalette::Disabled, QPalette::PlaceholderText, p.color(QPalette::PlaceholderText));
     d->line->setPalette(p);
     d->area->setPalette(p);
     for (auto* w : {d->label, d->hint, d->count}) {
-        QFont f(captured ? "HarmonyOS Sans" : t.family());
-        f.setPixelSize(captured ? 14 : t.metric(w == d->label ? "labelFontSize" : "hintFontSize"));
+        QFont f(t.family());
+        f.setPixelSize(t.metric(w == d->label ? "labelFontSize" : "hintFontSize"));
         w->setFont(f);
         auto pal = w->palette();
-        pal.setColor(QPalette::WindowText, w == d->label ? foreground : t.color("muted"));
+        pal.setColor(QPalette::WindowText,
+                     w == d->label ? recipe.foreground : t.color("muted"));
         w->setPalette(pal);
     }
     for (bool prefix : {true, false}) {
@@ -567,26 +540,20 @@ void Z_InputField::sync() {
         w->setVisible(!text.isEmpty() || !icon.isNull());
         if (!icon.isNull())
             w->setPixmap(
-                field::iconPixmap(icon, t.metric("iconSize"), devicePixelRatioF(), foreground));
+                field::iconPixmap(icon, t.metric("iconSize"), devicePixelRatioF(), recipe.glyph));
         else
             w->setText(text);
     }
-    d->clear->setVisible(d->clearAllowed && !d->value.isEmpty() && !d->readOnly && isEnabled());
-    d->password->setVisible(d->kind == Kind::Password);
-    d->search->setVisible(d->kind == Kind::Search);
-    d->search->setEnabled(!d->readOnly && !d->loading);
-    d->password->setEnabled(isEnabled());
-    const QString tone = disabled                              ? "Disabled"
-                         : d->chrome->visualState() == "focus" ? "Accent"
-                         : d->chrome->visualState() == "error" ? "Danger"
-                                                               : "Primary";
-    d->password->setFigmaGlyph(captured ? (d->password->isChecked() ? "EyeOff" : "Eye") + tone
-                                        : "");
-    d->clear->setFigmaGlyph(captured ? "ClosePrimary" : "");
-    d->search->setFigmaGlyph(captured ? (d->loading ? "LoadingPrimary"
-                                         : disabled ? "SearchDisabled"
-                                                    : "SearchPrimary")
-                                      : "");
+    const bool interactive = isEnabled() && !d->readOnly && !d->loading;
+    d->line->setReadOnly(d->readOnly || d->loading);
+    d->area->setReadOnly(d->readOnly || d->loading);
+    d->clear->setVisible(d->clearAllowed && !d->value.isEmpty());
+    d->password->setVisible(d->kind == Kind::Password && !d->loading);
+    d->search->setVisible(d->kind == Kind::Search && !d->loading);
+    d->spinner->setVisible(d->loading);
+    d->clear->setEnabled(interactive);
+    d->search->setEnabled(interactive);
+    d->password->setEnabled(interactive);
     const int count = characterCount(d->value),
               limit = d->countLimit >= 0 ? d->countLimit : d->maximum;
     d->count->setText(limit >= 0 ? QString("%1 / %2").arg(count).arg(limit)
@@ -606,9 +573,10 @@ void Z_InputField::sync() {
             document->documentLayout()->blockBoundingRect(block);
             // Fallback CJK fonts can be taller than the Latin Token line-height.
             // Native autoSize must fit real line boxes without changing the document.
-            const int limit = d->autoSize ? d->maxRows : d->minRows;
+            const int visibleLineLimit = d->autoSize ? d->maxRows : d->minRows;
             qreal visibleBlockHeight = 0;
-            for (int i = 0; i < block.layout()->lineCount() && visualLines + i < limit; ++i) {
+            for (int i = 0;
+                 i < block.layout()->lineCount() && visualLines + i < visibleLineLimit; ++i) {
                 const auto line = block.layout()->lineAt(i);
                 // Negative leading affects the next line's origin, not the last line's extent.
                 visibleBlockHeight = qMax(visibleBlockHeight, line.y() + line.height());
@@ -618,18 +586,18 @@ void Z_InputField::sync() {
         }
     }
     int rows = d->autoSize ? qBound(d->minRows, visualLines, d->maxRows) : d->minRows;
-    // QFrame's styled border insets are separate from the child layout's Token padding.
     const auto frameInsets = d->chrome->contentsMargins();
+    const int actionSafeHeight = !d->clear->isHidden()
+        ? d->clear->sizeHint().height() + 8 * border
+        : d->chrome->controlHeight();
     d->chrome->setControlHeight(
-        captured && area
-            ? capturedSize["textAreaHeight"].toInt() + qMax(0, rows - 2) * 22
-            :
-            // Qt 5.15.2 _q_adjustScrollbars reserves one viewport pixel below the last line.
-            area ? qMax(rows * m["lineHeight"].toInt(), int(std::ceil(measuredTextHeight)) + 1) +
-                       2 * (m["paddingBlock"].toInt() + t.metric("borderWidth")) +
-                       frameInsets.top() + frameInsets.bottom()
-                 : d->chrome->controlHeight());
-    setMinimumWidth(captured ? 0 : t.metric("fieldMinimumWidth"));
+        area ? qMax(rows * m["lineHeight"].toInt(), int(std::ceil(measuredTextHeight)) + 1) +
+                   2 * (m["paddingBlock"].toInt() + border) + frameInsets.top() +
+                   frameInsets.bottom()
+             : actionSafeHeight);
+    if (!area && !d->clear->isHidden())
+        d->chrome->setFixedHeight(qMax(d->chrome->height(), d->clear->height() + 8 * border));
+    setMinimumWidth(t.metric("fieldMinimumWidth"));
     d->syncing = false;
     updateGeometry();
 }

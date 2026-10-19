@@ -21,7 +21,6 @@ class Z_OtpInput : public QWidget {
     void setReadOnly(bool);
     void setControlSize(const QString&);
     void setStatus(const QString&);
-    void setVariant(const QString&);
     void setAppearance(const QString&);
   signals:
     void valueChanged(const QString&);

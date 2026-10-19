@@ -1,0 +1,21 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "component-recipe-schema.json",
+  "title": "ComponentLab V2 Component Recipe",
+  "type": "object",
+  "required": ["$registry", "$status", "base", "overrides"],
+  "properties": {
+    "$registry": {
+      "type": "object",
+      "required": ["component", "version"],
+      "properties": {
+        "component": { "type": "string" },
+        "version": { "type": "string" }
+      }
+    },
+    "$status": { "enum": ["draft-v2", "active", "candidate", "archived"] },
+    "base": { "type": "object" },
+    "overrides": { "type": "array", "items": { "type": "object" } }
+  },
+  "additionalProperties": true
+}

@@ -1,5 +1,4 @@
 #include "ComponentFactory.h"
-#include "ButtonAppearanceAdapter.h"
 #include "FocusIndicator.h"
 #include "native/NativeComponents.h"
 #include "native/NativeComponentRegistry.h"
@@ -22,6 +21,15 @@ namespace {
 
 QList<NativeComponentDescriptor> nativeDescriptors() {
     auto descriptors = nativeComponentDescriptors();
+    // V2 owns the public design identity. Qt implementation class names remain
+    // compatibility details and must not leak the pre-V2 Radio/Table identities.
+    for (auto& descriptor : descriptors) {
+        if (descriptor.sdkClass == QStringLiteral("commonWidget::Z_RadioButton"))
+            descriptor.designComponent = QStringLiteral("ComponentLab/Radio");
+        else if (descriptor.sdkClass == QStringLiteral("commonWidget::Z_TableView") ||
+                 descriptor.sdkClass == QStringLiteral("commonWidget::Z_TableWidget"))
+            descriptor.designComponent = QStringLiteral("ComponentLab/Table");
+    }
     descriptors.append({
         {QStringLiteral("semantic"), QStringLiteral("commonWidget::Z_InputField"), QStringLiteral("ComponentLab/Input"), QStringLiteral("semantic-component")},
         {QStringLiteral("semantic"), QStringLiteral("commonWidget::Z_Select"), QStringLiteral("ComponentLab/Select"), QStringLiteral("semantic-component")},
@@ -63,7 +71,7 @@ QList<NativeComponentDescriptor> nativeDescriptors() {
         {QStringLiteral("QWidget"), QStringLiteral("commonWidget::Z_Divider"), QStringLiteral("ComponentLab/Divider"), QStringLiteral("composite")},
         {QStringLiteral("QWidget"), QStringLiteral("commonWidget::Z_Collapse"), QStringLiteral("ComponentLab/Collapse"), QStringLiteral("composite")},
         {QStringLiteral("QWidget"), QStringLiteral("commonWidget::Z_Drawer"), QStringLiteral("ComponentLab/Drawer"), QStringLiteral("composite")},
-        {QStringLiteral("QTableWidget"), QStringLiteral("commonWidget::Z_DataTable"), QStringLiteral("ComponentLab/DataTable"), QStringLiteral("design-system")},
+        {QStringLiteral("QTableWidget"), QStringLiteral("commonWidget::Z_DataTable"), QStringLiteral("ComponentLab/Table"), QStringLiteral("design-system")},
         {QStringLiteral("QWidget"), QStringLiteral("commonWidget::Z_Alert"), QStringLiteral("ComponentLab/Alert"), QStringLiteral("composite")},
         {QStringLiteral("QWidget"), QStringLiteral("commonWidget::Z_Message"), QStringLiteral("ComponentLab/Message"), QStringLiteral("composite")},
         {QStringLiteral("QWidget"), QStringLiteral("commonWidget::Z_Notification"), QStringLiteral("ComponentLab/Notification"), QStringLiteral("composite")},
@@ -129,6 +137,7 @@ ComponentFactory::ComponentFactory(const QString& profile)
 QWidget* ComponentFactory::create(const QString& name, QWidget* parent) const {
     if (name == "commonWidget::Z_PushButton") return new Z_PushButton(parent);
     if (name == "commonWidget::Z_CheckBox") return new Z_CheckBox(catalog, {}, parent);
+    if (name == "commonWidget::Z_Radio") return new Z_RadioButton(parent);
     if (name == "commonWidget::Z_InputField") return new Z_InputField(fields, parent);
     if (name == "commonWidget::Z_Select") return new Z_Select(fields, parent);
     if (name == "commonWidget::Z_OtpInput") return new Z_OtpInput(fields, 6, parent);
@@ -170,6 +179,7 @@ QWidget* ComponentFactory::create(const QString& name, QWidget* parent) const {
     if (name == "commonWidget::Z_Collapse") return new Z_Collapse(parent);
     if (name == "commonWidget::Z_Drawer" || name == "commonWidget::Z_OverlayDrawer")
         return new Z_Drawer(parent);
+    if (name == "commonWidget::Z_Table") return new Z_DataTable(parent);
     if (name == "commonWidget::Z_DataTable") return new Z_DataTable(parent);
     if (name == "commonWidget::Z_Alert") return new Z_Alert(parent);
     if (name == "commonWidget::Z_Message") return new Z_Message(parent);
@@ -203,11 +213,17 @@ bool ComponentFactory::apply(QWidget* widget, const QString& api, const QJsonVal
         FocusIndicator::instance().setEnabledFor(widget, value.toBool());
         return true;
     }
-    if (api == "setType" && button) {
+    if (api == "setIntent" && button) {
+        const QMap<QString, ButtonIntent> values{{"primary", ButtonIntent::Primary}, {"secondary", ButtonIntent::Secondary}, {"operation", ButtonIntent::Operation}, {"danger", ButtonIntent::Danger}};
+        if (values.contains(text)) { button->setIntent(values[text]); return true; }
+    } else if (api == "setAppearance" && button) {
+        const QMap<QString, ButtonAppearance> values{{"filled", ButtonAppearance::Filled}, {"outlined", ButtonAppearance::Outlined}, {"dashed", ButtonAppearance::Dashed}, {"text", ButtonAppearance::Text}, {"link", ButtonAppearance::Link}};
+        if (values.contains(text)) { button->setAppearance(values[text]); return true; }
+    } else if (api == "setType" && button) {
         const QMap<QString, ButtonType> values{{"Primary", ButtonType::Primary}, {"Default", ButtonType::Default}, {"Dashed", ButtonType::Dashed}, {"Text", ButtonType::Text}, {"Link", ButtonType::Link}};
         if (values.contains(text)) { button->setType(values[text]); return true; }
     } else if (api == "setSize" && button) {
-        const QMap<QString, ButtonSize> values{{"XS", ButtonSize::XS}, {"S", ButtonSize::S}, {"M", ButtonSize::M}, {"L", ButtonSize::L}};
+        const QMap<QString, ButtonSize> values{{"small", ButtonSize::Small}, {"medium", ButtonSize::Medium}, {"large", ButtonSize::Large}, {"XS", ButtonSize::Small}, {"S", ButtonSize::Small}, {"M", ButtonSize::Medium}, {"L", ButtonSize::Large}};
         if (values.contains(text)) { button->setSize(values[text]); return true; }
     } else if (api == "setDanger" && button) { button->setDanger(value.toBool()); return true;
     } else if (api == "setGhost" && button) { button->setGhost(value.toBool()); return true;
@@ -223,10 +239,6 @@ bool ComponentFactory::apply(QWidget* widget, const QString& api, const QJsonVal
         button->setTrailingIconVisible(text == "Trailing" || text == "Dual");
         button->setIconOnly(text == "IconOnly");
         return true;
-    } else if (api == "ButtonAppearanceAdapter.setAppearance" && button) {
-        auto* adapter = new ButtonAppearanceAdapter(button, catalog);
-        adapter->setAppearance(text);
-        return true;
     } else if (api == "setControlSize" && check) { check->setControlSize(text); return true;
     } else if (api == "setAppearance" && check) { check->setAppearance(text); return true;
     } else if (api == "setCheckValue" && check) { check->setChecked(text == "checked"); check->setIndeterminate(text == "mixed"); return true;
@@ -234,7 +246,6 @@ bool ComponentFactory::apply(QWidget* widget, const QString& api, const QJsonVal
         const QMap<QString, Z_InputField::Kind> values{{"Text", Z_InputField::Kind::Text}, {"Password", Z_InputField::Kind::Password}, {"Search", Z_InputField::Kind::Search}, {"TextArea", Z_InputField::Kind::TextArea}};
         if (values.contains(text)) { input->setKind(values[text]); return true; }
     } else if (api == "setControlSize" && input) { input->setControlSize(text); return true;
-    } else if (api == "setVariant" && input) { input->setVariant(text); return true;
     } else if (api == "setAppearance" && input) { input->setAppearance(text); return true;
     } else if (api == "setStatus" && input) { input->setStatus(text); return true;
     } else if (api == "setLabel" && input) { input->setLabel(text); return true;
@@ -282,6 +293,8 @@ QStringList ComponentFactory::registeredClasses() {
 
 bool ComponentFactory::isRegistered(const QString& sdkClass) {
     return registeredClasses().contains(sdkClass) ||
+           sdkClass == QStringLiteral("commonWidget::Z_Radio") ||
+           sdkClass == QStringLiteral("commonWidget::Z_Table") ||
            sdkClass == QStringLiteral("commonWidget::Z_OverlayDrawer");
 }
 

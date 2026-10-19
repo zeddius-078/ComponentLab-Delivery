@@ -1,0 +1,170 @@
+{
+  "$schema": "../../schema/component-recipe-schema.json",
+  "$registry": {
+    "component": "input",
+    "version": "2.0"
+  },
+  "$status": "draft-v2",
+  "$description": "Input/LineEdit unified V2 sparse recipe. Mode controls structure and Slot eligibility; it does not create a second visual token family.",
+  "base": {
+    "size": {
+      "small": {
+        "slot/container/visual-height": "{primitive.dimension.32}",
+        "slot/container/padding-inline": "{semantic.layout.padding.inline.compact}"
+      },
+      "medium": {
+        "slot/container/visual-height": "{primitive.dimension.32}",
+        "slot/container/padding-inline": "{semantic.layout.padding.inline.small}"
+      },
+      "large": {
+        "slot/container/visual-height": "{primitive.dimension.40}",
+        "slot/container/padding-inline": "{semantic.layout.padding.inline.standard}"
+      }
+    },
+    "typography": {
+      "slot/content/typography": "{typography.body.body-1}"
+    },
+    "shared": {
+      "slot/container/radius": "{semantic.radius.control-default}",
+      "slot/content/gap": "{semantic.space.icon-text}",
+      "slot/content/letter-spacing": "{semantic.typography.letter-spacing.default}",
+      "slot/placeholder/typography": "{typography.body.body-1}",
+      "slot/clear/size": "{semantic.visualization-size.sm}",
+      "slot/clear/hit-target": "{semantic.interaction-size.default}",
+      "slot/clear/border-radius": "{semantic.radius.control-default}",
+      "slot/password-toggle/size": "{semantic.visualization-size.sm}",
+      "slot/password-toggle/hit-target": "{semantic.interaction-size.default}",
+      "slot/password-toggle/border-radius": "{semantic.radius.control-default}",
+      "slot/search-icon/size": "{semantic.visualization-size.sm}",
+      "slot/browse-action/size": "{semantic.interaction-size.default}",
+    "slot/spinner/size": "{semantic.visualization-size.sm}",
+    "slot/spinner/stroke-width": "{primitive.spinner.stroke-width}",
+    "slot/spinner/track-opacity": "{primitive.spinner.track-opacity}",
+    "slot/spinner/arc-start-angle": "{primitive.spinner.arc-start-angle}",
+    "slot/spinner/arc-sweep-angle": "{primitive.spinner.arc-sweep-angle}"
+    },
+    "appearance": {
+      "outlined": {
+        "slot/container/background-color": "{semantic.color.background.control-default}",
+        "slot/border/border-width": "{semantic.border-width.boundary-default}"
+      }
+    },
+    "state": {
+      "default": {
+        "slot/border/color": "{semantic.color.border.default}",
+        "slot/content/color": "{semantic.color.text.primary}",
+        "slot/placeholder/color": "{semantic.color.text.tertiary}",
+        "slot/clear/color": "{semantic.color.icon.secondary}",
+        "slot/password-toggle/color": "{semantic.color.icon.secondary}",
+        "slot/search-icon/color": "{semantic.color.icon.secondary}",
+        "slot/browse-action/color": "{semantic.color.icon.secondary}",
+        "slot/spinner/color": "{semantic.color.interactive.brand.default}"
+      },
+      "hover": {
+        "slot/border/color": "{semantic.color.border.hover}"
+      },
+      "focused": {
+        "slot/border/color": "{semantic.color.interactive.brand.default}",
+        "slot/focus-ring/color": "{semantic.color.interactive.brand.focus-ring}",
+        "slot/focus-ring/border-width": "{semantic.border-width.focus-ring}"
+      },
+      "error": {
+        "slot/container/background-color": "{semantic.color.status.danger.subtle}",
+        "slot/border/color": "{semantic.color.status.danger.default}"
+      },
+      "disabled": {
+        "slot/container/background-color": "{semantic.color.background.disabled}",
+        "slot/border/color": "{semantic.color.border.disabled}",
+        "slot/content/color": "{semantic.color.text.disabled}",
+        "slot/placeholder/color": "{semantic.color.text.disabled}",
+        "slot/clear/color": "{semantic.color.icon.disabled}",
+        "slot/password-toggle/color": "{semantic.color.icon.disabled}",
+        "slot/search-icon/color": "{semantic.color.icon.disabled}",
+        "slot/browse-action/color": "{semantic.color.icon.disabled}"
+      },
+      "loading": {
+        "slot/container/background-color": "{semantic.color.background.disabled}",
+        "slot/border/color": "{semantic.color.border.disabled}",
+        "slot/content/color": "{semantic.color.text.disabled}",
+        "slot/spinner/color": "{semantic.color.interactive.brand.default}"
+      }
+    }
+  },
+  "overrides": [],
+  "overlays": [
+    { "when": { "action": "clear", "action-state": "default" }, "slot": "clear", "property": "color", "value": "{semantic.color.icon.secondary}" },
+    { "when": { "action": "clear", "action-state": "default" }, "slot": "clear", "property": "background-color", "value": "{primitive.color.none}" },
+    { "when": { "action": "clear", "action-state": "hover" }, "slot": "clear", "property": "color", "value": "{semantic.color.icon.primary}" },
+    { "when": { "action": "clear", "action-state": "hover" }, "slot": "clear", "property": "background-color", "value": "{semantic.color.background.hover}" },
+    { "when": { "action": "clear", "action-state": "pressed" }, "slot": "clear", "property": "color", "value": "{semantic.color.icon.primary}" },
+    { "when": { "action": "clear", "action-state": "pressed" }, "slot": "clear", "property": "background-color", "value": "{semantic.color.background.pressed}" },
+    { "when": { "action": "clear", "action-state": "disabled" }, "slot": "clear", "property": "color", "value": "{semantic.color.icon.disabled}" },
+    { "when": { "action": "clear", "action-state": "disabled" }, "slot": "clear", "property": "background-color", "value": "{primitive.color.none}" },
+    { "when": { "action": "password-toggle", "action-state": "default" }, "slot": "password-toggle", "property": "color", "value": "{semantic.color.icon.secondary}" },
+    { "when": { "action": "password-toggle", "action-state": "default" }, "slot": "password-toggle", "property": "background-color", "value": "{primitive.color.none}" },
+    { "when": { "action": "password-toggle", "action-state": "hover" }, "slot": "password-toggle", "property": "color", "value": "{semantic.color.icon.primary}" },
+    { "when": { "action": "password-toggle", "action-state": "hover" }, "slot": "password-toggle", "property": "background-color", "value": "{semantic.color.background.hover}" },
+    { "when": { "action": "password-toggle", "action-state": "pressed" }, "slot": "password-toggle", "property": "color", "value": "{semantic.color.icon.primary}" },
+    { "when": { "action": "password-toggle", "action-state": "pressed" }, "slot": "password-toggle", "property": "background-color", "value": "{semantic.color.background.pressed}" },
+    { "when": { "action": "password-toggle", "action-state": "disabled" }, "slot": "password-toggle", "property": "color", "value": "{semantic.color.icon.disabled}" },
+    { "when": { "action": "password-toggle", "action-state": "disabled" }, "slot": "password-toggle", "property": "background-color", "value": "{primitive.color.none}" }
+  ],
+  "modeRules": {
+    "plain": {
+      "allowedSlots": ["clear", "prefix", "suffix"]
+    },
+    "password": {
+      "allowedSlots": ["clear", "password-toggle", "prefix", "suffix"]
+    },
+    "search": {
+      "allowedSlots": ["clear", "search-icon", "prefix", "suffix"]
+    },
+    "multiline": {
+      "allowedSlots": ["prefix", "suffix"],
+      "forbiddenSlots": ["clear", "password-toggle", "search-icon", "browse-action"],
+      "externalClearApi": true
+    },
+    "dropdown-search": {
+      "allowedSlots": ["clear", "search-icon", "prefix", "suffix"]
+    },
+    "file-browser": {
+      "allowedSlots": ["clear", "browse-action", "prefix", "suffix"]
+    }
+  },
+  "stateRules": {
+    "loading": {
+      "visualSourceState": "disabled",
+      "preserve": ["input-value", "clear-slot-position"],
+      "clear": "disabled",
+      "replaceTrailing": ["password-toggle", "search-icon", "browse-action"],
+      "trailing": "spinner",
+      "lockInteraction": true
+    },
+    "error": {
+      "borderPriority": "highest",
+      "visualSourceState": "disabled",
+      "lockInteraction": true
+    },
+    "focusRing": {
+      "enabled": false,
+      "reserved": true
+    },
+    "placeholder": {
+      "colorSource": "resolved-content-color",
+      "independentColorToken": false
+    }
+  },
+  "motion": {
+    "focus": "{motion.feedback.focus}",
+    "loading-start": "{motion.loading.spinner}",
+    "loading-stop": "{motion.feedback.focus}"
+  },
+  "diagnostics": [
+    {
+      "severity": "warning",
+      "code": "V2-DRAFT-OUTLINED-ONLY",
+      "message": "Outlined now has a complete buildable visual/state Token set; filled and dashed remain explicit structural placeholders pending design values.",
+      "source": "component-recipes/input.json"
+    }
+  ]
+}

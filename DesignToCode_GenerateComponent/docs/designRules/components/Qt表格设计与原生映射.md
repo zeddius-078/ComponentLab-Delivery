@@ -1,6 +1,5 @@
 # Qt 表格组件样式、Token 与应用合同
 
-更新日期：2026-10-03。
 
 **本文件属于 Gen_comp，回答“平台表格如何获得统一样式、状态和可公开配置的原生能力，并供业务使用”。它不负责读取设计页面、生成业务页面或定义交付目录。**
 
@@ -8,7 +7,7 @@
 
 配套文档由相邻仓库维护，路径为 `DesignToCode_GenerateLayout/docs/designRules/components/Qt表格设计与页面映射.md`。九类完整设计声明和交付转换规则在那里维护。本文件不再复制该清单，也不是其同步副本。这里记录归属与路径，不创建跨项目 Markdown 链接，避免本项目独立交付时产生越界依赖。
 
-## 0. 本轮组件试点验证合同
+## 0. 组件试点验证合同
 
 **本轮验证选定场景下的组件样式与接入方法，不预先承诺形成通用、稳定的表格产品。** 创新探索允许得出“方案尚不成立”或“只有部分条件可用”的结论，但输入、过程、失败证据和后续处理必须清楚。
 
@@ -16,9 +15,9 @@
 
 参照试点规划 v4.6：设计表格族标准化对应 M2-14，Token 与样式应用对应 M3-13，组件接入对应 M3-15。本文件只展开 C++ Qt 表格相关部分，不替代整个 PyQt/Vue2/C++ Qt 计划，也不另设承诺日期。
 
-该规划保留旧日期及部分历史规则。本轮采用用户最新确认的业务自由度：业务可以覆盖和手改自己接收的文件；平台默认样式和生成基线仍按 Source 维护。总规划版本同步尚待处理，本轮不据此宣称所有规划文本已经统一。
+该规划仅作范围背景；业务自由度按当前已确认原则执行：业务可以覆盖和手改自己接收的文件；平台默认样式和生成基线仍按 Source 维护。引用规划不代表其历史版本与当前实现完全同步。
 
-具体业务页面、设计版本、列、状态、Profile、数据规模与测试环境，统一引用上述 Gen_layout 文档第 0 节。Profile 已确定为 light-compact（亮色紧凑），其余范围信息仍待固定；可以先做组件探针，但不能将探针或 Demo 标为真实业务试点完成。
+具体业务页面、设计版本、列、状态、Profile、数据规模与测试环境，统一引用上述 Gen_layout 文档第 0 节。默认运行 Profile 为 `standard-light`；表格的 Compact/Comfortable 密度是组件属性，不再改写设备 Profile。其余范围信息仍待固定；可以先做组件探针，但不能将探针或 Demo 标为真实业务试点完成。
 
 ### 0.2 同一表格族的两种模式
 
@@ -43,17 +42,17 @@
 
 Gen_comp 维护可复用的表格类、Token 到样式的应用、原生配置能力及公开扩展点，并随组件 SDK 发布。业务使用平台工具和 SDK，平台不替业务逐页生成或发布页面。
 
-2026-10-02 只读核对得到以下事实：
+以下为核对入口，不作为当前构建或运行通过结论；历史只读核对结果保存在归档版本：
 
 | 已读文件 | 观察结果 | 不能据此宣称 |
 | --- | --- | --- |
-| [Z_TableView.h](../../../Source/ComponentKit/runtime/component/native/Z_TableView.h) | commonWidget::Z_TableView 继承 QTableView，类内仅声明构造函数 | 已有完整表格业务配置合同 |
-| [Z_TableView.cpp](../../../Source/ComponentKit/runtime/component/native/Z_TableView.cpp) | 构造时设置组件身份属性 | 已实现复杂表头、业务状态或特殊单元格 |
+| [Z_TableView.h](../../../build/work/Source/ComponentKit/runtime/component/native/Z_TableView.h) | commonWidget::Z_TableView 继承 QTableView，类内仅声明构造函数 | 已有完整表格业务配置合同 |
+| [Z_TableView.cpp](../../../build/work/Source/ComponentKit/runtime/component/native/Z_TableView.cpp) | 构造时设置组件身份属性 | 已实现复杂表头、业务状态或特殊单元格 |
 | [组件定义](../../../Source/ComponentKit/component-definitions/native-components.json) | TableView 登记为 data 类别、generated 实现 | 设计属性已经全部可映射 |
-| [样式模板](../../../Source/ComponentKit/design-assets/styles/native/Z_TableView.qss.in) | 定义基础文字、背景、字号、禁用色、边框和圆角 | 表头、选择态、交替行色等已经有完整专属样式 |
+| [生成的样式模板](../../../build/work/Source/ComponentKit/design-assets/styles/native/Z_TableView.qss.in) | 定义基础文字、背景、字号、禁用色、边框和圆角 | 表头、选择态、交替行色等已经有完整专属样式 |
 | [生成工具](../../../Source/ComponentKit/tools/generate_native_components.py) | 统一生成原生包装类、模板及 Profile QSS | 直接手改生成模板或包装类可以长期保留 |
 
-核对的 [light-comfortable QSS](../../../Source/ComponentKit/design-assets/generated/native/light-comfortable/Z_TableView.qss) 与 [dark-compact QSS](../../../Source/ComponentKit/design-assets/generated/native/dark-compact/Z_TableView.qss) 具有已解析色值。现有生成工具从公共 palette 与 nativeMetrics 取得值，不等于已经建立独立、完整的表格 Token 合同。
+生成的 [standard-light QSS](../../../build/work/Source/ComponentKit/design-assets/generated/native/standard-light/Z_TableView.qss) 与 [wide-dark QSS](../../../build/work/Source/ComponentKit/design-assets/generated/native/wide-dark/Z_TableView.qss) 具有已解析色值。现有生成工具从公共 palette 与 nativeMetrics 取得值，不等于已经建立独立、完整的表格 Token 合同。
 
 这里只说明已读文件，不宣称其他全局样式不存在，也未运行组件视觉测试。原生默认行为仍可继承，缺少专属样式合同不等于表格完全不能工作。
 
@@ -136,7 +135,7 @@ QSS 样式范围可以借助现有 designSystemClass 属性限定到 Z_TableView
 
 建议将业务状态通过语义或明确数据角色传入，由统一的样式/委托合同消费；避免平台、业务模型和委托分别维护三份不可追踪的视觉常量。业务仍保留显式覆盖自由，但覆盖后的效果由业务验收。
 
-本轮固定 light-compact，不要求运行时热切换。后续扩展 Profile 时，QSS、模型相关视觉值、委托参数及必要缓存应一致更新。是否支持热切换、如何刷新缓存尚需平台定义，不能因文件有四个版本就宣称已支持热切换。
+本轮默认使用 `standard-light`，不要求运行时热切换。Compact/Comfortable 只调整组件内部密度；切换 Profile 时，QSS、模型相关视觉值、委托参数及必要缓存应一致更新。是否支持热切换、如何刷新缓存尚需平台定义，不能因文件有四个版本就宣称已支持热切换。
 
 ## 6. 可配置原生能力与公开扩展
 
@@ -191,7 +190,7 @@ Gen_layout 负责把设计声明转换为实例配置，并在正确时序调用
 
 资源内部目录可以调整，公开路径不应随意变化。确需改变公开标识时，应提供迁移说明并记录兼容影响。业务可经公开接口或属性替换为自有资源，但不通过相同 QRC 路径争抢加载顺序；组件私有资源也不因此成为稳定公开 API。
 
-组件的默认图标、状态尺寸与显示规则应与同一 Profile 的 Token、QSS 和运行配置一致。QRC 解决文件可访问，不自动提供主题换色或状态切换；这些能力必须由组件样式或公开实现明确支持并验证。本轮只验证 light-compact，其他组合保留为扩展。
+组件的默认图标、状态尺寸与显示规则应与同一 Profile 的 Token、QSS 和运行配置一致。QRC 解决文件可访问，不自动提供主题换色或状态切换；这些能力必须由组件样式或公开实现明确支持并验证。当前生成上下文为 `standard-light`、`standard-dark`、`wide-light`、`wide-dark`，视觉结论仍按实际测试记录逐项成立。
 
 公共资产声明存在但实际缺失时，由平台与 UCD 处理发布或归属问题，Gen_layout 报依赖缺口，不在页面偷偷复制一份替代品。页面专属资源的导出与 QRC 归 Gen_layout，业务图片的运行时获取与权限归业务代码，不转交给组件生成器。
 
@@ -235,7 +234,7 @@ Gen_layout 负责把设计声明转换为实例配置，并在正确时序调用
 
 ### 复查方法与完成表述
 
-- 本轮固定 light-compact，并在确定样例后观察两种模式的最小路径；新增其他组合时逐项记录结果，不用单个组合代表四种 Profile 均可用。
+- 以 `standard-light` 为默认样例，并在确定样例后观察两种组件密度的最小路径；其他 Profile 逐项记录结果，不用单个组合代表四种 Profile 均可用。
 - 从固定 Source 重新生成并比较产物；对一个已绑定 Token 做受控修改与恢复，核对预期部件、状态和无关位置。失败要保留，不用手改输出掩盖。
 - 组件报告保留源版本、执行命令、结果、必要截图、失败原状和复查记录。性能场景与阈值未定时，只报告实际观察，不宣称性能达标。
 - 能说明验证条件、已支持范围、失败边界和下一步，意味着本轮探索有可交付结果；只有选定目标实际验证通过，才能报告该目标完成。
@@ -255,8 +254,7 @@ Gen_layout 负责把设计声明转换为实例配置，并在正确时序调用
 
 组件外观、Token 消费和公开能力在本文维护。设计读取与业务交付转换由上述 Gen_layout 配套文档维护。只检查接口边界一致，不再同步两份全文。
 
-2026-10-02 修订：根据用户纠正，将相同副本改为组件样式与应用专题；九类完整设计输入保留在 Gen_layout 文档。本轮仅更新两份文档，未修改源码、Token、SDK、QSS 或运行结果，未执行表格构建和视觉测试。
 
-2026-10-02 补充：明确浏览/编辑两种模式、选定范围内的样式验证、业务手改副本归属及复查方法。将探索结果与稳定产品质量区分，保留失败与待验证项；未新增平行规划，未修改总规划或执行运行验收。
 
-2026-10-03 补充：归档公共资产与组件私有资源的区别、UCD 内容维护与平台工程发布分工、SDK 公开资源合同及业务集成边界；对齐 light-compact 和 uic 正式接入约定。页面资源与生成规则仍由 Gen_layout 维护，不新增文档；本轮仅更新说明，未修改实现或执行构建和视觉测试。
+
+现行目录规则：原生组件生成源码和 QSS 在 build/work，Source 只维护生成输入与专用实现。表格统一设计身份与平台映射读取当前 Registry/Runtime Mapping；原生 Qt 表格类型仍各自保留其模型/项语义。历史修订与旧状态已归档，本次整理不执行组件开发。

@@ -1,0 +1,34 @@
+{
+  "$schema": "../../schema/component-recipe-schema.json",
+  "$registry": {"component": "badge", "version": "2.0"},
+  "$status": "draft-v2",
+  "$description": "Badge V2 sparse recipe. Kind and tone select visual roles; label remains runtime content.",
+  "base": {
+    "shared": {
+      "slot/container/border-radius": "{semantic.radius.container-full}",
+      "slot/label/typography": "{typography.label.label-1}"
+    }
+  },
+  "overrides": [
+    {"when": {"kind": "text", "tone": "neutral"}, "slot": "label", "property": "color", "value": "{semantic.color.text.primary}", "$type": "color"},
+    {"when": {"kind": "text", "tone": "info"}, "slot": "container", "property": "background-color", "value": "{semantic.color.interactive.brand.default}", "$type": "color"},
+    {"when": {"kind": "text", "tone": "info"}, "slot": "label", "property": "color", "value": "{semantic.color.text.invert}", "$type": "color"},
+    {"when": {"kind": "text", "tone": "success"}, "slot": "container", "property": "background-color", "value": "{semantic.color.status.success.default}", "$type": "color"},
+    {"when": {"kind": "text", "tone": "success"}, "slot": "label", "property": "color", "value": "{semantic.color.text.primary}", "$type": "color"},
+    {"when": {"kind": "text", "tone": "warning"}, "slot": "container", "property": "background-color", "value": "{semantic.color.status.warning.default}", "$type": "color"},
+    {"when": {"kind": "text", "tone": "warning"}, "slot": "label", "property": "color", "value": "{semantic.color.text.primary}", "$type": "color"},
+    {"when": {"kind": "text", "tone": "danger"}, "slot": "container", "property": "background-color", "value": "{semantic.color.status.danger.default}", "$type": "color"},
+    {"when": {"kind": "text", "tone": "danger"}, "slot": "label", "property": "color", "value": "{semantic.color.text.invert}", "$type": "color"},
+    {"when": {"kind": "dot"}, "slot": "container", "property": "visual-height", "value": "{primitive.dimension.8}", "$type": "dimension", "unit": "px"},
+    {"when": {"kind": "dot"}, "slot": "container", "property": "padding-inline", "value": "{primitive.dimension.0}", "$type": "dimension", "unit": "px"},
+    {"when": {"kind": "dot", "tone": "neutral"}, "slot": "container", "property": "background-color", "value": "{semantic.color.background.control-default}", "$type": "color"},
+    {"when": {"kind": "dot", "tone": "info"}, "slot": "container", "property": "background-color", "value": "{semantic.color.interactive.brand.default}", "$type": "color"},
+    {"when": {"kind": "dot", "tone": "success"}, "slot": "container", "property": "background-color", "value": "{semantic.color.status.success.default}", "$type": "color"},
+    {"when": {"kind": "dot", "tone": "warning"}, "slot": "container", "property": "background-color", "value": "{semantic.color.status.warning.default}", "$type": "color"},
+    {"when": {"kind": "dot", "tone": "danger"}, "slot": "container", "property": "background-color", "value": "{semantic.color.status.danger.default}", "$type": "color"},
+    {"when": {"kind": "text"}, "slot": "container", "property": "visual-height", "value": "{primitive.dimension.18}", "$type": "dimension", "unit": "px"},
+    {"when": {"kind": "text"}, "slot": "container", "property": "padding-inline", "value": "{primitive.dimension.4}", "$type": "dimension", "unit": "px"}
+  ],
+  "contentRules": {"text": {"label": "required runtime content"}, "dot": {"label": "not rendered"}},
+  "diagnostics": [{"severity": "warning", "code": "V2-DRAFT-BADGE-RUNTIME-GEOMETRY", "message": "Z_Badge still contains legacy hardcoded size and font values; migrate geometry and typography reads to compiled Badge tokens before release.", "source": "runtime/component/Z_FoundationComponents.cpp"}]
+}

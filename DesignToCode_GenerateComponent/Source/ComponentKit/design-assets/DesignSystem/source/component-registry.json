@@ -1,304 +1,2494 @@
 {
-  "$description": "ComponentLab V2 component registry. Registers every component family in the canonical component layer, its supported state matrix, slot vocabulary and private-material permissions. A missing state here means 'not supported', never 'free fallback'.",
-  "$version": 1,
-  "stateAxes": {
-    "availability": {"values": ["disabled"], "description": "Whether the control accepts input"},
-    "interaction": {"values": ["hover", "pressed", "hover-pressed", "dragging"], "description": "Pointer interaction states; hover-pressed is a registered merged state (shared surface for hover or pressed)"},
-    "focus": {"values": ["focused"], "description": "Keyboard/pointer focus; focus-ring visibility is a separate axis"},
-    "selection": {"values": ["selected", "checked", "checked-hover", "open"], "description": "Selection/value states"},
-    "validation": {"values": ["error"], "description": "Validation outcome; Filled (has value) is a separate contract, not a token state"},
-    "loading": {"values": ["loading"], "description": "Processing; Button loading pauses indicator and blocks input"},
-    "progress": {"values": ["paused", "in-progress", "completed"], "description": "ProgressBar process states; design-only until runtime support is verified"}
+  "$description": "ComponentLab V2 Component Registry — the authoritative source for component axes, legal combinations, slots and generation boundaries (《Component 层 Token 构建规范》). Recipes (source/component-recipes/) hold design values; generated/component.json is the downstream product. This file and the recipes are physically separate, independently versioned files.",
+  "$version": "2.0",
+  "$registryVersion": "2.0",
+  "axes": {
+    "$description": "Global axis vocabulary.",
+    "intent": {
+      "description": "操作意图",
+      "values": [
+        "primary",
+        "secondary",
+        "operation",
+        "danger"
+      ]
+    },
+    "appearance": {
+      "description": "表面/材质表现",
+      "values": [
+        "filled",
+        "outlined",
+        "dashed",
+        "filled-inner-shadow",
+        "text",
+        "link"
+      ]
+    },
+    "state": {
+      "description": "交互状态",
+      "values": [
+        "default",
+        "hover",
+        "pressed",
+        "focused",
+        "disabled",
+        "loading",
+        "error",
+        "open",
+        "selected",
+        "emphasis",
+        "none",
+        "zebra",
+        "invert",
+        "unit",
+        "strong",
+        "revise",
+        "alarm",
+        "alarm-hover",
+        "alarm-select",
+        "alarm-soft",
+        "alarm-soft-hover",
+        "alarm-soft-select",
+        "error-hover",
+        "error-select",
+        "error-soft",
+        "error-soft-hover",
+        "error-soft-select",
+        "warning-hover",
+        "warning-select",
+        "warning-soft",
+        "warning-soft-hover",
+        "warning-soft-select",
+        "paused",
+        "in-progress",
+        "completed",
+        "dragging",
+        "checked",
+        "checked-hover",
+        "hover-pressed",
+        "auto-raise",
+        "compact",
+        "success",
+        "camera",
+        "chart",
+        "horizontal",
+        "vertical"
+      ]
+    },
+    "content": {
+      "description": "内容结构",
+      "values": [
+        "icon-only",
+        "icon-left-text",
+        "text-icon-right",
+        "text-only",
+        "icon-left-text-icon-right"
+      ]
+    },
+    "size": {
+      "description": "尺寸档位",
+      "values": [
+        "small",
+        "medium",
+        "large"
+      ]
+    },
+    "mode": {
+      "description": "Input 类型轴（互斥）",
+      "values": [
+        "plain",
+        "password",
+        "search",
+        "multiline",
+        "dropdown-search",
+        "file-browser"
+      ]
+    },
+    "selection": {
+      "description": "Select 选择模型",
+      "values": [
+        "single",
+        "multiple"
+      ]
+    },
+    "searchable": {
+      "description": "Select 受治理搜索能力",
+      "values": [
+        "false",
+        "true"
+      ]
+    },
+    "open": {
+      "description": "Select 弹层展开条件，可与 focused 等视觉 State 并存",
+      "values": [
+        "false",
+        "true"
+      ]
+    }
+  },
+  "propertyVocabulary": {
+    "color": "Color",
+    "background-color": "Color",
+    "font-size": "Dimension",
+    "border-width": "Dimension",
+    "padding-inline": "Dimension/Spacing",
+    "padding-block": "Dimension/Spacing",
+    "gap": "Dimension/Spacing",
+    "asset": "Asset",
+    "gradient": "Gradient",
+    "opacity": "Number",
+    "font-family": "FontFamily",
+    "font-weight": "FontWeight",
+    "line-height": "Dimension",
+    "letter-spacing": "Dimension",
+    "border-radius": "Dimension",
+    "min-height": "Dimension",
+    "min-width": "Dimension",
+    "width": "Dimension",
+    "height": "Dimension",
+    "visual-width": "Dimension",
+    "visual-height": "Dimension",
+    "visual-thickness": "Dimension",
+    "visual-diameter": "Dimension",
+    "visual-size": "Dimension",
+    "size": "Dimension",
+    "inset": "Dimension",
+    "inner-shadow-color": "Color",
+    "gradient-stop-01": "Color",
+    "gradient-stop-02": "Color",
+    "gradient-stop-03": "Color",
+    "gradient-stop-04": "Color",
+    "gradient-stop-05": "Color",
+    "stroke-width": "Dimension",
+    "track-opacity": "Number",
+    "arc-start-angle": "Angle",
+    "arc-sweep-angle": "Angle",
+    "processing-height": "Dimension",
+    "hit-target": "Dimension"
+  },
+  "priority": [
+    "size",
+    "intent",
+    "appearance",
+    "presentation",
+    "value",
+    "state",
+    "menu",
+    "open",
+    "content"
+  ],
+  "propertyAliases": {
+    "$description": "历史属性名到规范属性词汇的迁移别名（按 slot 定位）：radius -> border-radius；border/width -> border-width；container/gap -> content/gap。由编译器在解析时统一归一化，输出只用规范属性名。",
+    "radius": "border-radius",
+    "width": "border-width",
+    "container+gap": "content+gap"
+  },
+  "stateRules": {
+    "button-loading": {
+      "content": "spinner",
+      "visualReuse": "pressed",
+      "locked": true
+    },
+    "input-loading": {
+      "visualReuse": "disabled",
+      "spinnerAt": "trailing-right",
+      "clear": "kept-disabled",
+      "password-toggle": "replaced-by-spinner",
+      "search-icon": "replaced-by-spinner",
+      "locked": true
+    },
+    "focus-ring": {
+      "enabled": false,
+      "slotRetained": true
+    }
   },
   "components": {
     "button": {
-      "figmaPage": "20.3.01", "figmaNode": "172:2710",
-      "qtClass": "commonWidget::Z_PushButton",
-      "userProvidedClassName": "X_pushbutton",
-      "classRegistration": "User-specified name X_pushbutton is not present in the audited source; the registered runtime class is commonWidget::Z_PushButton (runtime/component/Z_PushButton.h). Both identities are recorded; no source class was renamed.",
-      "variants": ["primary", "secondary", "danger", "production", "dark", "base"],
-      "sizes": ["small", "medium", "large"],
-      "states": {
-        "supported": ["default", "hover", "pressed", "disabled", "focused", "loading"],
-        "default": "default"
+      "axes": {
+        "intent": [
+          "primary",
+          "secondary",
+          "operation",
+          "danger"
+        ],
+        "appearance": [
+          "filled",
+          "outlined",
+          "dashed",
+          "filled-inner-shadow",
+          "text",
+          "link"
+        ],
+        "state": [
+          "default",
+          "hover",
+          "pressed",
+          "focused",
+          "disabled",
+          "loading"
+        ],
+        "content": [
+          "icon-only",
+          "icon-left-text",
+          "text-icon-right",
+          "text-only",
+          "icon-left-text-icon-right"
+        ],
+        "size": [
+          "small",
+          "medium",
+          "large"
+        ]
       },
-      "slots": ["container", "label", "icon", "border", "focus-ring", "spinner", "content"],
-      "privateMaterial": ["container.gradient-stop-01..05", "container.inner-shadow-color"]
+      "legalCombinations": "registry-driven",
+      "appearanceStatus": {
+        "filled": "complete",
+        "outlined": "complete",
+        "dashed": "complete",
+        "filled-inner-shadow": "structural-placeholder",
+        "text": "complete",
+        "link": "complete"
+      },
+      "matrix": {
+        "axes": ["intent", "appearance", "state", "size", "content"],
+        "logicalCombinationCount": 2700,
+        "materialization": "generator-only"
+      },
+      "loadingRule": "button-loading",
+      "motionHooks": ["press", "hover", "focus", "state-change", "loading-start", "loading-stop", "attention"],
+      "slots": {
+        "container": [
+          "background-color",
+          "border-radius",
+          "padding-inline",
+          "padding-block",
+          "min-height",
+          "min-width",
+          "gradient",
+          "shadow",
+          "opacity"
+        ],
+        "label": [
+          "typography",
+          "color",
+          "font-family",
+          "font-size",
+          "font-weight",
+          "line-height",
+          "letter-spacing"
+        ],
+        "icon": [
+          "color",
+          "size",
+          "asset"
+        ],
+        "border": [
+          "color",
+          "width",
+          "border-width"
+        ],
+        "focus-ring": [
+          "color",
+          "width",
+          "border-width"
+        ],
+        "spinner": [
+          "color",
+          "size",
+          "stroke-width",
+          "track-opacity",
+          "arc-start-angle",
+          "arc-sweep-angle"
+        ],
+        "content": [
+          "gap"
+        ]
+      },
+      "stateAliases": {
+        "active": "pressed",
+        "normal": "default",
+        "idle": "default"
+      },
+      "removedAxes": {
+        "dark": "surface context, not an intent"
+      },
+      "qtClass": "commonWidget::Z_PushButton",
+      "configuration": {
+        "contract": "source/component-contracts/button.json"
+      }
     },
     "input": {
-      "figmaPage": "20.4.01", "figmaNode": "339:2",
-      "qtClass": "commonWidget::Z_InputField",
-      "sizes": ["small", "medium", "large"],
-      "states": {"supported": ["default", "hover", "focused", "disabled", "error", "filled"], "default": "default"},
-      "slots": ["container", "content", "placeholder", "border", "focus-ring", "action"]
-    },
-    "line-edit": {
-      "figmaPage": "20.4.11", "figmaNode": "1116:2",
-      "qtClass": "commonWidget::Z_LineEdit",
-      "sizes": ["small", "medium", "large"],
-      "states": {"supported": ["default"], "default": "default"},
-      "slots": ["container"],
-      "sharedBase": "input",
-      "decision": "LineEdit and Input are separate registered components. Shared sizing comes from the canonical input size enum and semantic padding roles; LineEdit defines no duplicate private sizes."
+      "axes": {
+        "mode": [
+          "plain",
+          "password",
+          "search",
+          "multiline",
+          "dropdown-search",
+          "file-browser"
+        ],
+        "appearance": [
+          "outlined",
+          "filled",
+          "dashed"
+        ],
+        "state": [
+          "default",
+          "hover",
+          "focused",
+          "error",
+          "disabled",
+          "loading"
+        ],
+        "size": [
+          "small",
+          "medium",
+          "large"
+        ]
+      },
+      "legalCombinations": "registry-driven",
+      "matrix": {
+        "axes": ["mode", "appearance", "state", "size"],
+        "logicalCombinationCount": 324,
+        "materialization": "generator-only"
+      },
+      "appearanceStatus": {
+        "outlined": "complete",
+        "filled": "structural-placeholder",
+        "dashed": "structural-placeholder"
+      },
+      "unifiedIdentity": "Input 与 LineEdit 统一为公共 input 家族；line-edit 不再作为独立公共 Token 家族",
+      "loadingRule": "input-loading",
+      "motionHooks": ["focus", "state-change", "loading-start", "loading-stop"],
+      "focusRing": "globally-disabled",
+      "borderPriority": {
+        "error": 3,
+        "focused": 2,
+        "hover": 1,
+        "default": 0
+      },
+      "slots": {
+        "container": [
+          "background-color",
+          "border-radius",
+          "min-height",
+          "padding-inline",
+          "padding-block",
+          "visual-height"
+        ],
+        "content": [
+          "typography",
+          "color",
+          "font-family",
+          "font-size",
+          "font-weight",
+          "line-height",
+          "letter-spacing",
+          "gap"
+        ],
+        "placeholder": [
+        "typography",
+        "color",
+          "font-size"
+        ],
+        "border": [
+          "color",
+          "width"
+        ],
+        "focus-ring": [
+          "color",
+          "width",
+          "border-width"
+        ],
+        "clear": [
+          "color",
+          "size",
+          "hit-target",
+          "background-color",
+          "border-radius"
+        ],
+        "password-toggle": [
+          "color",
+          "size",
+          "hit-target",
+          "background-color",
+          "border-radius"
+        ],
+        "search-icon": [
+          "color",
+          "size"
+        ],
+        "browse-action": [
+          "color",
+          "size"
+        ],
+        "spinner": [
+          "color",
+          "size",
+          "stroke-width",
+          "track-opacity",
+          "arc-start-angle",
+          "arc-sweep-angle"
+        ]
+      },
+      "overlayDimensions": {
+        "action": [
+          "clear",
+          "password-toggle"
+        ],
+        "action-state": [
+          "default",
+          "hover",
+          "pressed",
+          "disabled"
+        ]
+      },
+      "qtClass": "commonWidget::Z_InputField / QLineEdit (platform implementation detail)",
+      "configuration": {
+        "contract": "source/component-contracts/input.json"
+      }
     },
     "select": {
-      "figmaPage": "20.5.02", "figmaNode": "242:2720",
+      "axes": {
+        "selection": [
+          "single",
+          "multiple"
+        ],
+        "searchable": [
+          "false",
+          "true"
+        ],
+        "appearance": [
+          "outlined",
+          "filled",
+          "dashed"
+        ],
+        "state": [
+          "default",
+          "hover",
+          "focused",
+          "error",
+          "disabled",
+          "loading"
+        ],
+        "open": [
+          "false",
+          "true"
+        ],
+        "size": [
+          "small",
+          "medium",
+          "large"
+        ]
+      },
+      "legalCombinations": {
+        "strategy": "registry-driven",
+        "constraints": [
+          {
+            "type": "forbid",
+            "when": {
+              "state": ["disabled", "loading"],
+              "open": ["true"]
+            },
+            "reason": "disabled/loading 时 popup 必须关闭且不得重新打开"
+          }
+        ]
+      },
+      "matrix": {
+        "axes": ["selection", "searchable", "appearance", "state", "open", "size"],
+        "logicalCombinationCount": 360,
+        "materialization": "generator-only",
+        "materializeAxes": ["appearance", "state", "open"]
+      },
+      "appearanceStatus": {
+        "outlined": "complete",
+        "filled": "structural-placeholder",
+        "dashed": "structural-placeholder"
+      },
+      "optionItemStates": [
+        "default",
+        "hover",
+        "focused",
+        "selected",
+        "disabled"
+      ],
+      "motionHooks": ["open", "close", "focus", "state-change", "loading-start", "loading-stop"],
+      "slots": {
+        "container": [
+          "background-color",
+          "border-radius",
+          "min-height",
+          "padding-inline"
+        ],
+        "content": [
+          "typography",
+          "color",
+          "font-size",
+          "font-weight",
+          "letter-spacing"
+        ],
+        "placeholder": [
+          "color"
+        ],
+        "border": [
+        "color",
+        "width"
+        ],
+        "focus-ring": [
+        "color",
+          "border-width"
+        ],
+        "dropdown-indicator": [
+          "color",
+          "size"
+        ],
+        "clear": [
+          "color",
+          "size"
+        ],
+        "spinner": [
+          "color",
+          "size",
+          "stroke-width",
+          "track-opacity",
+          "arc-start-angle",
+          "arc-sweep-angle"
+        ],
+        "popup": [
+          "background-color",
+          "border-color",
+          "radius",
+          "gap"
+        ],
+        "option-item": [
+          "typography",
+          "background-color",
+          "color",
+          "radius",
+          "font-weight",
+          "letter-spacing"
+        ],
+        "tag": [
+          "background-color",
+          "border-color",
+          "radius"
+        ],
+        "selected-indicator": [
+          "color"
+        ],
+        "popup-bulk-control": [
+          "background-color",
+          "color",
+          "font-weight",
+          "border-width"
+        ],
+        "empty-state": [
+          "color",
+          "asset",
+          "min-height"
+        ],
+        "label": [
+          "typography",
+          "font-weight",
+          "letter-spacing"
+        ]
+      },
       "qtClass": "commonWidget::Z_Select",
-      "sizes": ["small", "medium", "large"],
-      "states": {"supported": ["default", "hover", "focused", "disabled", "error"], "default": "default"},
-      "slots": ["container", "content", "placeholder", "border", "focus-ring", "option", "tag"],
-      "decision": "Select shared control surfaces re-point to the same semantic roles Input uses; no horizontal aliases between the two components remain."
+      "configuration": {
+        "contract": "source/component-contracts/select.json"
+      }
     },
     "checkbox": {
-      "figmaPage": "20.5.01", "figmaNode": "234:2717",
+      "axes": {
+        "value": [
+          "unchecked",
+          "checked",
+          "indeterminate"
+        ],
+        "state": [
+          "default",
+          "disabled",
+          "focused",
+          "hover",
+          "pressed"
+        ],
+        "content": [
+          "control-only",
+          "control-with-label"
+        ],
+        "size": [
+          "compact",
+          "small",
+          "medium",
+          "large"
+        ]
+      },
+      "legalCombinations": "registry-driven",
+      "matrix": {
+        "axes": ["value", "state", "content", "size"],
+        "logicalCombinationCount": 120,
+        "materialization": "generator-only"
+      },
+      "sizeMapping": {
+        "visual": {
+          "compact": "{profile.interaction-size.01}",
+          "small": "{profile.interaction-size.02}",
+          "medium": "{profile.interaction-size.03}",
+          "large": "{profile.interaction-size.04}"
+        },
+        "interaction": {
+          "compact": "{profile.interaction-size.02}",
+          "small": "{profile.interaction-size.03}",
+          "medium": "{profile.interaction-size.04}",
+          "large": "{profile.interaction-size.05}"
+        },
+        "step": "4px",
+        "relationship": "interaction-is-one-step-larger-than-visual"
+      },
+      "focusRingPolicy": {
+        "enabledFor": ["focused"],
+        "activation": "keyboard-only",
+        "visual": "border-only",
+        "mouseHover": false,
+        "mousePress": false
+      },
+      "valueVisuals": {
+        "unchecked": "empty-indicator",
+        "checked": "selected-indicator-with-checkmark",
+        "indeterminate": "partial-indicator-with-horizontal-bar",
+        "scope": "indicator-only"
+      },
+      "valueVisualGroups": {
+        "unchecked": {
+          "values": ["unchecked"],
+          "paletteGroup": "unchecked"
+        },
+        "selected": {
+          "values": ["checked", "indeterminate"],
+          "paletteGroup": "selected",
+          "structureVariesByValue": true
+        }
+      },
+      "overlayPolicy": {
+        "resolutionOrder": ["shared-base", "value-structure", "value-palette-group", "state-sparse-override", "focus-ring"],
+        "stateOverrideMode": "sparse-inherit-unmentioned",
+        "statePriority": ["disabled", "pressed", "focused", "hover", "default"],
+        "focusRingIndependentFromIndicatorBorder": true,
+        "disabledPreservesValueStructure": true
+      },
+      "disabledRule": {
+        "preserveValue": true,
+        "preserveValueVisualStructure": true,
+        "applyVisualState": "disabled",
+        "lockInteraction": true
+      },
+      "pressedRule": {
+        "preserveValueDuringPress": true,
+        "visualSource": "pressed",
+        "valueMutationOwner": "runtime-interaction",
+        "tokenDoesNotMutateValue": true
+      },
+      "statePriority": ["disabled", "pressed", "focused", "hover", "default"],
+      "valueTransitionPolicy": {
+        "genericCheckbox": "runtime-defined",
+        "tokenLayerDefinesTransition": false,
+        "selectPopupBulkControl": {
+          "unchecked": "checked",
+          "indeterminate": "checked",
+          "checked": "unchecked"
+        }
+      },
+      "interactionSurface": {
+        "parts": ["indicator", "label"],
+        "scope": "single-interaction-region",
+        "labelClick": "delegate-to-checkbox",
+        "keyboardFocusTarget": "checkbox-control",
+        "labelHasIndependentFocus": false
+      },
+      "contentRules": {
+        "control-only": {
+          "label": "not-applicable",
+          "interactionSurface": ["indicator"],
+          "interactionSizeScope": "whole-control"
+        },
+        "control-with-label": {
+          "label": "required-or-configured",
+          "interactionSurface": ["indicator", "label"],
+          "interactionSizeScope": "indicator-region"
+        }
+      },
+      "slots": {
+        "container": [
+          "interaction-size"
+        ],
+        "indicator": [
+          "background-color",
+          "border-color",
+          "border-width",
+          "color",
+          "radius",
+          "selected-border-color",
+          "visual-size",
+          "border-radius"
+        ],
+        "label": [
+          "typography",
+          "color",
+          "font-size",
+          "font-weight",
+          "letter-spacing",
+          "line-height"
+        ],
+        "content": [
+          "gap"
+        ],
+        "focus-ring": [
+          "color",
+          "width",
+          "border-width"
+        ]
+      },
       "qtClass": "commonWidget::Z_CheckBox",
-      "sizes": ["small", "large"],
-      "states": {"supported": ["unchecked", "selected", "hover", "pressed", "disabled", "focused"], "default": "unchecked"},
-      "slots": ["indicator", "label", "content", "focus-ring"]
+      "configuration": {
+        "contract": "source/component-contracts/checkbox.json"
+      }
     },
     "radio": {
-      "figmaPage": "20.5.03", "figmaNode": "341:2",
+      "axes": {
+        "value": [
+          "unselected",
+          "selected"
+        ],
+        "state": [
+          "default",
+          "disabled",
+          "focused",
+          "hover",
+          "pressed"
+        ],
+        "content": [
+          "control-only",
+          "control-with-label"
+        ],
+        "size": [
+          "compact",
+          "small",
+          "medium",
+          "large"
+        ]
+      },
+      "legalCombinations": "registry-driven",
+      "matrix": {
+        "axes": ["value", "state", "content", "size"],
+        "logicalCombinationCount": 80,
+        "materialization": "generator-only"
+      },
+      "valueVisuals": {
+        "unselected": "empty-circle",
+        "selected": "selected-ring-with-center-dot",
+        "scope": "indicator-only"
+      },
+      "valueTransitionPolicy": {
+        "owner": "radio-group-runtime",
+        "tokenLayerDefinesTransition": false,
+        "singleRadioMutatesValue": false,
+        "selectionEffect": "select-one-and-unselect-other-group-members"
+      },
+      "pressedRule": {
+        "preserveValueDuringPress": true,
+        "visualSource": "pressed",
+        "valueMutationOwner": "radio-group-runtime",
+        "tokenDoesNotMutateValue": true
+      },
+      "sizeMapping": {
+        "visual": {
+          "compact": "{profile.interaction-size.01}",
+          "small": "{profile.interaction-size.02}",
+          "medium": "{profile.interaction-size.03}",
+          "large": "{profile.interaction-size.04}"
+        },
+        "interaction": {
+          "compact": "{profile.interaction-size.02}",
+          "small": "{profile.interaction-size.03}",
+          "medium": "{profile.interaction-size.04}",
+          "large": "{profile.interaction-size.05}"
+        },
+        "step": "4px",
+        "relationship": "interaction-is-one-step-larger-than-visual"
+      },
+      "focusRingPolicy": {
+        "enabledFor": ["focused"],
+        "activation": "keyboard-only",
+        "visual": "border-only",
+        "mouseHover": false,
+        "mousePress": false
+      },
+      "disabledRule": {
+        "preserveValue": true,
+        "preserveValueVisualStructure": true,
+        "applyVisualState": "disabled",
+        "lockInteraction": true
+      },
+      "interactionSurface": {
+        "parts": ["indicator", "label"],
+        "scope": "single-interaction-region",
+        "labelClick": "delegate-to-radio",
+        "keyboardFocusTarget": "radio-control",
+        "labelHasIndependentFocus": false
+      },
+      "slots": {
+        "indicator": [
+          "background-color",
+          "border-color",
+          "border-width",
+          "color",
+          "visual-size"
+        ],
+        "label": [
+          "color",
+          "typography",
+          "font-family",
+          "font-size",
+          "font-weight",
+          "line-height",
+          "letter-spacing"
+        ],
+        "glyph": [
+          "color"
+        ],
+        "content": [
+          "typography",
+          "font-family",
+          "font-size",
+          "font-weight",
+          "line-height",
+          "letter-spacing"
+        ],
+        "container": [
+          "padding",
+          "interaction-size"
+        ]
+      },
       "qtClass": "QRadioButton (native Z_RadioButton)",
-      "source": "reference-import (DesignSystem/imports/reference/radio.json)",
-      "sizes": ["sm", "md"],
-      "states": {"supported": ["default", "hover", "pressed", "selected", "selected-hover", "selected-pressed", "disabled", "selected-disabled"], "default": "default"},
-      "slots": ["indicator", "label", "content", "glyph", "container"],
-      "referenceNote": "参考文件 radio.size.sm 与 radio.size.md 均解析为 16px 指示器尺寸；按参考值保留，未做结构推测。"
+      "configuration": {
+        "contract": "source/component-contracts/radio.json"
+      }
     },
     "menu": {
-      "figmaPage": "20.1.03", "figmaNode": "482:335",
+      "axes": {
+        "state": [
+          "default",
+          "hover",
+          "pressed",
+          "focused",
+          "disabled",
+          "loading"
+        ],
+        "size": [
+          "sm",
+          "md"
+        ]
+      },
+      "legalCombinations": "registry-driven",
+      "matrix": {
+        "axes": ["state", "size"],
+        "logicalCombinationCount": 12,
+        "materialization": "generator-only"
+      },
+      "gradientContract": {
+        "slots": [
+          "gradient-stop-01",
+          "gradient-stop-02"
+        ],
+        "direction": "vertical",
+        "positions": [
+          0,
+          1
+        ]
+      },
+      "slots": {
+        "container": [
+          "background-color",
+          "gradient-stop-01",
+          "gradient-stop-02",
+          "height",
+          "padding-2xl",
+          "padding-3xl",
+          "padding-lg",
+          "padding-md",
+          "radius",
+          "border-radius"
+        ],
+        "content": [
+          "color",
+          "font-size",
+          "font-weight",
+          "gap-md",
+          "gap-sm",
+          "line-height"
+        ],
+        "item": [
+          "background-color"
+        ],
+        "icon": [
+          "size"
+        ],
+        "shortcut": [
+          "color",
+          "font-size",
+          "font-weight",
+          "line-height"
+        ],
+        "indicator": [
+          "color",
+          "size"
+        ],
+        "submenu": [
+          "color",
+          "size"
+        ],
+        "separator": [
+          "color",
+          "height",
+          "inset"
+        ],
+        "border": [
+          "color",
+          "width",
+          "border-width"
+        ]
+      },
       "qtClass": "QMenu (native Z_Menu)",
-      "source": "reference-import (DesignSystem/imports/reference/menu.json)",
-      "variants": ["default", "emphasis", "none"],
-      "sizes": ["sm", "md"],
-      "states": {"supported": ["default", "hover", "pressed", "selected", "disabled"], "default": "default"},
-      "slots": ["container", "content", "item", "icon", "border"],
-      "gradientContract": {"slots": ["gradient-stop-01", "gradient-stop-02"], "direction": "vertical", "positions": [0, 1], "source": "参考文件 color/gradient/primary 位置值 0/100 以比例 0/1 登记"}
+      "configuration": {"contract": "source/component-contracts/menu.json"}
     },
     "tree": {
-      "figmaPage": "20.7.05", "figmaNode": "713:3",
+      "axes": {
+        "state": [
+          "default",
+          "hover",
+          "selected"
+        ]
+      },
+      "legalCombinations": "cartesian",
+      "slots": {
+        "container": [
+          "background-color",
+          "padding"
+        ],
+        "content": [
+          "color",
+          "font-size",
+          "font-weight",
+          "line-height"
+        ],
+        "item": [
+          "background-color",
+          "height"
+        ],
+        "icon": [
+          "size"
+        ],
+        "border": [
+          "color",
+          "width",
+          "border-width"
+        ]
+      },
       "qtClass": "QTreeWidget (native Z_TreeWidget)",
-      "source": "reference-import (DesignSystem/imports/reference/tree.json)",
-      "states": {"supported": ["default", "hover", "selected"], "default": "default"},
-      "slots": ["container", "content", "item", "icon", "border"],
-      "pending": "参考文件注明“待优化并补多icon多实例结构内容”；多图标/多实例的补充结构属设计侧待补项，本批次仅落地已提供的参数值。"
+      "configuration": {"contract": "source/component-contracts/tree.json"}
     },
     "table": {
-      "figmaPage": "20.7.09", "figmaNode": "1111:2",
-      "qtClass": "QTableWidget (native Z_TableWidget)",
-      "source": "reference-import (DesignSystem/imports/reference/table.json)",
-      "variants": ["base", "zebra", "emphasis", "strong"],
-      "sizes": ["sm", "md", "lg", "xl"],
-      "states": {
-        "supported": ["default", "hover", "pressed", "selected", "disabled",
-                      "alarm", "alarm-hover", "alarm-select", "alarm-soft", "alarm-soft-hover", "alarm-soft-select",
-                      "error", "error-hover", "error-select", "error-soft", "error-soft-hover", "error-soft-select",
-                      "warning", "warning-hover", "warning-select", "warning-soft", "warning-soft-hover", "warning-soft-select"],
-        "default": "default"
+      "$description": "Composite data-table contract. Visual axes are limited to density and striping; column, cell, editor and runtime semantics are kept in the separate Component Contract.",
+      "axes": {
+        "density": [
+          "compact",
+          "small",
+          "medium",
+          "large"
+        ],
+        "striping": [
+          "none",
+          "zebra"
+        ]
       },
-      "slots": ["container", "content", "item", "icon", "border", "header"],
-      "referenceNote": "参考文件内容高度 5xl 键名含尾随空格（结构问题），按值 48px 落地为 semantic.size.height.5xl。"
-    },
-    "selection-control": {
-      "figmaPage": "20.5", "figmaNode": null,
-      "qtClass": null,
-      "role": "shared-base",
-      "states": {"supported": ["default", "selected", "disabled", "focused"], "default": "default"},
-      "slots": ["indicator", "focus-ring"]
-    },
-    "switch": {
-      "figmaPage": "20.5.04", "figmaNode": "346:2",
-      "qtClass": "commonWidget (Z_DesignComponents switch)",
-      "sizes": ["small", "medium"],
-      "states": {"supported": ["off", "on", "disabled"], "default": "off"},
-      "slots": ["track", "knob"]
-    },
-    "chip": {
-      "figmaPage": "20.5.05", "figmaNode": "351:2",
-      "qtClass": "commonWidget (Z_DesignComponents chip)",
-      "states": {"supported": ["unselected", "selected", "hover", "disabled", "focused"], "default": "unselected"},
-      "slots": ["container", "label", "focus-ring"]
-    },
-    "progress-bar": {
-      "figmaPage": "20.2.04", "figmaNode": "410:13",
-      "qtClass": "QProgressBar (native Z_ProgressBar wrapper)",
-      "states": {
-        "supported": ["default", "disabled", "loading"],
-        "designOnly": ["paused", "error", "in-progress", "completed"],
-        "default": "default"
+      "configuration": {
+        "contract": "source/component-contracts/table.json",
+        "interactionPresets": [
+          "browse",
+          "row-operation",
+          "inline-edit",
+          "data-grid"
+        ],
+        "selectionModes": [
+          "none",
+          "single",
+          "multiple"
+        ],
+        "cellSelectionModes": [
+          "none",
+          "cell",
+          "range",
+          "multi-range"
+        ],
+        "selectAllScopes": [
+          "current-page",
+          "filtered-result",
+          "all-records"
+        ],
+        "headerModes": [
+          "flat",
+          "hierarchical"
+        ],
+        "headerNodeKinds": [
+          "group",
+          "leaf"
+        ],
+        "headerSpanPolicy": {
+          "colSpan": "derived-from-leaf-count",
+          "rowSpan": "derived-from-tree-depth"
+        },
+        "freeze": {
+          "rows": [
+            "none",
+            "header"
+          ],
+          "columns": [
+            "none",
+            "leading",
+            "trailing"
+          ],
+          "scope": "runtime-api"
+        },
+        "headerSelection": {
+          "enabledWhen": "rowSelectionMode=multiple",
+          "states": [
+            "unchecked",
+            "indeterminate",
+            "checked",
+            "disabled"
+          ],
+          "eligibleRows": "only-selectable-rows",
+          "scope": [
+            "current-page",
+            "filtered-result",
+            "all-records"
+          ],
+          "scopeOwner": "runtime-api"
+        },
+        "cellSpan": {
+          "mode": "runtime-declared",
+          "rowSpan": "optional",
+          "colSpan": "optional",
+          "scope": "cell-address",
+          "designControlled": false,
+          "scopeOwner": "runtime-api"
+        },
+        "cellComposition": {
+          "displayLayout": [
+            "single",
+            "primary-secondary",
+            "horizontal",
+            "vertical",
+            "composite-value"
+          ],
+          "editorGroup": {
+            "fields": "runtime-declared",
+            "layout": "runtime-declared",
+            "validationScope": "runtime-declared",
+            "commitScope": "runtime-declared"
+          },
+          "scope": "runtime-api",
+          "designControlled": false,
+          "scopeOwner": "runtime-api"
+        },
+        "dataLifecycle": {
+          "states": [
+            "ready",
+            "loading",
+            "empty",
+            "no-match",
+            "error"
+          ],
+          "scope": "table",
+          "transitionOwner": "runtime-api",
+          "retryOwner": "runtime-api"
+        },
+        "headerActions": {
+          "builtin": [
+            "sort",
+            "filter"
+          ],
+          "slots": [
+            "leading",
+            "label",
+            "sort-indicator",
+            "filter-trigger",
+            "action-group",
+            "trailing"
+          ],
+          "customRegistrationOwner": "runtime-api",
+          "customActionTargets": [
+            "header",
+            "column",
+            "table"
+          ]
+        },
+        "actions": {
+          "targets": [
+            "table",
+            "header",
+            "column",
+            "row",
+            "cell",
+            "selection"
+          ],
+          "slotMap": {
+            "table": "table-action-group",
+            "header": "header-action-group",
+            "column": "header-action-group",
+            "row": "row-action-group",
+            "cell": "cell-action",
+            "selection": "selection-action-group"
+          },
+          "owner": "runtime-api"
+        },
+        "actionAvailability": {
+          "visible": "runtime-evaluated",
+          "enabled": "runtime-evaluated",
+          "disabledReason": "optional",
+          "execution": [
+            "idle",
+            "pending",
+            "success",
+            "failed"
+          ],
+          "owner": "runtime-api"
+        },
+        "scrolling": {
+          "bars": [
+            "vertical",
+            "horizontal"
+          ],
+          "styleSource": "component.scroll-bar",
+          "visibilityPolicy": "runtime-api",
+          "owner": "runtime-api"
+        },
+        "columnLayout": {
+          "widthPolicy": [
+            "auto",
+            "fixed",
+            "minmax",
+            "flex"
+          ],
+          "resize": [
+            "disabled",
+            "runtime"
+          ],
+          "reorder": [
+            "disabled",
+            "runtime"
+          ],
+          "visibility": [
+            "visible",
+            "hidden"
+          ],
+          "scope": "runtime-api",
+          "designControlled": false,
+          "scopeOwner": "runtime-api"
+        },
+        "dataWindow": {
+          "pagination": [
+            "none",
+            "page",
+            "cursor"
+          ],
+          "virtualization": [
+            "none",
+            "rows"
+          ],
+          "owner": "runtime-api"
+        },
+        "dataRefresh": {
+          "mode": [
+            "manual",
+            "polling",
+            "push"
+          ],
+          "preserve": [
+            "scroll-position",
+            "selected-records",
+            "focused-record",
+            "drafts"
+          ],
+          "dirtyDraftPolicy": [
+            "preserve-and-mark-stale",
+            "reject-update"
+          ],
+          "owner": "runtime-api"
+        },
+        "editingCommit": {
+          "validationScope": [
+            "cell",
+            "edit-group",
+            "row",
+            "column",
+            "table"
+          ],
+          "commitScope": [
+            "cell",
+            "edit-group",
+            "row",
+            "column",
+            "table"
+          ],
+          "commitTrigger": [
+            "explicit",
+            "blur",
+            "enter",
+            "runtime"
+          ],
+          "owner": "runtime-api"
+        },
+        "keyboardInteraction": {
+          "mode": [
+            "tab-sequence",
+            "grid-navigation",
+            "native-editor"
+          ],
+          "focusOwner": "runtime-api",
+          "eventPriority": [
+            "opened-overlay",
+            "nested-editor",
+            "cell",
+            "row"
+          ],
+          "owner": "runtime-api"
+        },
+        "overflowPresentation": {
+          "trigger": [
+            "hover",
+            "focus",
+            "keyboard",
+            "explicit"
+          ],
+          "contentMode": [
+            "single-line",
+            "multi-line"
+          ],
+          "placement": [
+            "auto",
+            "top",
+            "right",
+            "bottom",
+            "left"
+          ],
+          "sizePolicy": [
+            "auto",
+            "constrained"
+          ],
+          "owner": "runtime-api",
+          "visualOwner": "shared-tooltip-popover"
+        },
+        "linkedHighlight": {
+          "pointerHoverTargets": [
+            "none",
+            "row",
+            "column",
+            "row-and-column"
+          ],
+          "cellSelection": [
+            "none",
+            "cell",
+            "range",
+            "multi-range"
+          ],
+          "composition": "independent-overlays",
+          "owner": "runtime-api"
+        },
+        "columnSchema": {
+          "required": [
+            "id",
+            "role"
+          ],
+          "optional": [
+            "field",
+            "display",
+            "editor",
+            "editable",
+            "required",
+            "formatter",
+            "slots"
+          ],
+          "identity": "stable-column-id",
+          "slots": {
+            "display": "cell-content",
+            "editor": "cell-editor",
+            "actions": "cell-action"
+          },
+          "owner": "runtime-api"
+        },
+        "queryCapabilities": {
+          "sorting": {
+            "mode": [
+              "none",
+              "single",
+              "multi"
+            ],
+            "target": "leaf-data-columns",
+            "compare": "underlying-value",
+            "owner": "runtime-api"
+          },
+          "filtering": {
+            "mode": [
+              "none",
+              "column",
+              "table"
+            ],
+            "target": "runtime-query",
+            "owner": "runtime-api"
+          }
+        },
+        "visualResolution": {
+          "structuralState": "body-replacement",
+          "background": [
+            "base",
+            "striping",
+            "row-interaction",
+            "column-interaction",
+            "row-selection",
+            "cell-selection",
+            "availability",
+            "data-status",
+            "status-presentation"
+          ],
+          "border": [
+            "base",
+            "focus",
+            "cell-selection",
+            "status-presentation",
+            "data-status"
+          ],
+          "priorityException": {
+            "data-status.error": "highest-semantic-priority"
+          }
+        }
       },
-      "slots": ["track", "indicator", "label"],
-      "runtimeGap": "paused/error/in-progress/completed indicator colors exist in the design; Qt runtime support is unverified (ProgressAppearance currently carries hard-coded colors). Registered as design-defined, runtime-unverified."
+      "overlayDimensions": {
+        "row-interaction": [
+          "default",
+          "hover",
+          "pressed",
+          "focused",
+          "disabled"
+        ],
+        "column-interaction": [
+          "hover"
+        ],
+        "row-selection": [
+          "selected"
+        ],
+        "cell-selection": [
+          "selected",
+          "range",
+          "range-boundary"
+        ],
+        "data-status": [
+          "warning",
+          "error",
+          "alarm"
+        ],
+        "status-presentation": [
+          "soft"
+        ],
+        "content-role": [
+          "emphasis",
+          "invert",
+          "revise",
+          "unit"
+        ],
+        "border-emphasis": [
+          "strong"
+        ],
+        "availability": [
+          "disabled"
+        ]
+      },
+      "overlayResolution": [
+        "availability",
+        "data-status",
+        "status-presentation",
+        "row-selection",
+        "row-interaction",
+        "column-interaction",
+        "cell-selection",
+        "content-role",
+        "border-emphasis"
+      ],
+      "legalCombinations": {
+        "constraints": []
+      },
+      "matrix": {
+        "axes": [
+          "density",
+          "striping"
+        ],
+        "logicalCombinationCount": 8,
+        "materializeAxes": [
+          "density",
+          "striping"
+        ]
+      },
+      "slots": {
+        "container": [
+          "background-color",
+          "padding-block",
+          "padding-inline"
+        ],
+        "header": [
+          "background-color",
+          "color",
+          "typography",
+          "padding-block",
+          "padding-inline",
+          "border-color",
+          "border-width",
+          "action-gap"
+        ],
+        "row": [
+          "background-color",
+          "min-height",
+          "border-color"
+        ],
+        "column": [
+          "background-color"
+        ],
+        "cell": [
+          "color",
+          "background-color",
+          "typography",
+          "gap",
+          "min-height",
+          "padding-block",
+          "padding-inline"
+        ],
+        "selection-control": [
+          "size",
+          "width"
+        ],
+        "sort-indicator": [
+          "size",
+          "color"
+        ],
+        "filter-trigger": [
+          "size",
+          "color"
+        ],
+        "status-indicator": [
+          "size",
+          "color"
+        ],
+        "empty-state": [
+          "color",
+          "typography",
+          "min-height"
+        ],
+        "loading-state": [
+          "color",
+          "typography",
+          "min-height"
+        ],
+        "no-match-state": [
+          "color",
+          "typography",
+          "min-height"
+        ],
+        "error-state": [
+          "color",
+          "typography",
+          "min-height"
+        ],
+        "border": [
+          "color",
+          "border-width"
+        ]
+      },
+      "qtClass": "QTableWidget (native Z_TableWidget)"
     },
-    "tool-button": {
-      "figmaPage": "20.3.02", "figmaNode": "443:2",
-      "qtClass": "QToolButton (native Z_ToolButton wrapper)",
-      "states": {"supported": ["default", "hover-pressed", "pressed", "disabled", "checked", "checked-hover", "open", "focused", "auto-raise"], "default": "default"},
-      "slots": ["container", "icon", "foreground", "border", "focus-ring", "label", "menu"]
+    "card": {
+      "axes": {
+        "surface": [
+          "card",
+          "modal",
+          "soft"
+        ],
+        "density": [
+          "comfortable",
+          "compact"
+        ]
+      },
+      "legalCombinations": "cartesian",
+      "slots": {
+        "container": [
+          "background-color",
+          "border-color",
+          "border-width",
+          "padding",
+          "radius",
+          "soft-background-color",
+          "border-radius"
+        ],
+        "content": [
+          "body-color",
+          "title-color"
+        ],
+        "header": [
+          "height"
+        ]
+      },
+      "qtClass": "QFrame (Z_Frame composite)"
     },
-    "scroll-bar": {
-      "figmaPage": "20.4.08", "figmaNode": "471:334",
-      "qtClass": "QScrollBar (native Z_ScrollBar wrapper)",
-      "states": {"supported": ["default", "hover", "dragging", "disabled"], "default": "default"},
-      "slots": ["track", "thumb", "line-button"]
-    },
-    "slider": {
-      "figmaPage": "20.4.07", "figmaNode": "467:2",
-      "qtClass": "QSlider (native Z_Slider wrapper)",
-      "states": {"supported": ["default", "dragging", "focused"], "default": "default"},
-      "slots": ["active-track", "rail", "handle", "focus-ring"]
-    },
-    "dial": {
-      "figmaPage": "20.4.09", "figmaNode": "478:337",
-      "qtClass": "QDial (native Z_Dial wrapper)",
-      "states": {"supported": ["default", "focused"], "default": "default"},
-      "slots": ["arc", "active-indicator", "hub", "notch", "focus-ring"]
-    },
-    "pagination": {
-      "figmaPage": "20.1.13", "figmaNode": "2148:342",
-      "qtClass": "commonWidget (Z_FoundationComponents pagination)",
-      "variants": ["default", "compact"],
-      "states": {"supported": ["default", "hover", "selected", "disabled", "focused"], "default": "default"},
-      "slots": ["container", "item", "navigation", "focus-ring"]
-    },
-    "badge": {
-      "figmaPage": "20.2.15", "figmaNode": "2131:2",
-      "qtClass": "commonWidget (Z_FoundationComponents badge)",
-      "states": {"supported": ["default"], "default": "default"},
-      "slots": ["container", "label"]
-    },
-    "tag": {
-      "figmaPage": "20.2.17", "figmaNode": "2131:4",
-      "qtClass": "commonWidget (Z_FoundationComponents tag)",
-      "states": {"supported": ["default", "selected"], "default": "default"},
-      "slots": ["container", "label", "border"]
-    },
-    "tooltip": {
-      "figmaPage": "20.8.05", "figmaNode": "2131:6",
-      "qtClass": "commonWidget (Z_FoundationComponents tooltip)",
-      "variants": ["base", "chart", "camera"],
-      "states": {"supported": ["default"], "default": "default"},
-      "slots": ["container", "content"]
-    },
-    "message": {
-      "figmaPage": "20.8.01", "figmaNode": "579:33",
-      "qtClass": "commonWidget",
-      "states": {"supported": ["default", "error", "warning", "success"], "default": "default"},
-      "slots": ["container", "border", "icon"]
-    },
-    "stepper": {
-      "figmaPage": "20.1.12", "figmaNode": "2147:454",
-      "qtClass": "commonWidget",
-      "states": {"supported": ["default", "selected"], "default": "default"},
-      "slots": ["container", "content", "indicator"]
+    "chart": {
+      "axes": {
+        "kind": [
+          "bar",
+          "line",
+          "status"
+        ],
+        "state": [
+          "data",
+          "default",
+          "empty"
+        ]
+      },
+      "legalCombinations": "cartesian",
+      "slots": {
+        "content": [
+          "grid",
+          "orders-canceled",
+          "orders-pending",
+          "orders-shipped",
+          "series-primary"
+        ],
+        "status": [
+          "height"
+        ]
+      },
+      "qtClass": "commonWidget::Z_Chart"
     },
     "navigation-bar": {
-      "figmaPage": "20.1.01", "figmaNode": "380:2",
-      "qtClass": "commonWidget (Z_DesignComponents navbar)",
-      "states": {"supported": ["default", "hover", "pressed"], "default": "default"},
-      "slots": ["container", "content", "icon"]
-    },
-    "desktop-bottom-navigation": {
-      "figmaPage": "20.1.09", "figmaNode": "1307:2",
-      "qtClass": "commonWidget",
-      "states": {"supported": ["default"], "default": "default"},
-      "slots": ["tier", "primary", "secondary"]
+      "axes": {
+        "state": [
+          "default",
+          "hover",
+          "pressed",
+          "focused",
+          "disabled"
+        ]
+      },
+      "legalCombinations": "state-applies-to-interactive-child-slots",
+      "slots": {
+        "container": [
+          "background-color",
+          "border-color"
+        ],
+        "utility-row": [
+          "height"
+        ],
+        "navigation-row": [
+          "height"
+        ],
+        "log-bar": [
+          "height",
+          "background-color"
+        ]
+      },
+      "qtClass": "commonWidget::Z_Navbar",
+      "configuration": {
+        "contract": "source/component-contracts/navigation-bar.json"
+      }
     },
     "side-menu": {
-      "figmaPage": "20.1.02", "figmaNode": "392:2",
-      "qtClass": "commonWidget (Z_DesignComponents sidebar)",
-      "states": {"supported": ["default", "selected"], "default": "default"},
-      "slots": ["container", "content", "icon", "indicator"]
+      "axes": {
+        "state": [
+          "default",
+          "hover",
+          "pressed",
+          "focused",
+          "disabled"
+        ]
+      },
+      "legalCombinations": "state-applies-to-nav-item",
+      "slots": {
+        "container": [
+          "background-color",
+          "collapsed-width",
+          "min-width",
+          "radius",
+          "width",
+          "border-width"
+        ],
+        "brand-header": [
+          "height"
+        ],
+        "account": [
+          "height"
+        ],
+        "nav-group": [
+          "gap"
+        ],
+        "item": [
+          "background-color",
+          "color",
+          "height",
+          "radius"
+        ],
+        "icon": [
+          "size"
+        ],
+        "indicator": [
+          "color"
+        ],
+        "submenu": [
+          "gap"
+        ],
+        "footer": [
+          "height"
+        ]
+      },
+      "qtClass": "commonWidget::Z_Sidebar",
+      "configuration": {
+        "contract": "source/component-contracts/side-menu.json"
+      }
     },
-    "menu-bar": {
-      "figmaPage": "20.1.04", "figmaNode": "486:10",
-      "qtClass": "QMenuBar (native Z_MenuBar wrapper)",
-      "states": {"supported": ["default"], "default": "default"},
-      "slots": ["container", "border"]
+    "switch": {
+      "axes": {
+        "value": [
+          "off",
+          "on"
+        ],
+        "state": ["default", "hover", "pressed", "focused", "disabled", "loading"],
+        "size": [
+          "small",
+          "medium"
+        ]
+      },
+      "legalCombinations": "value-size-state",
+      "slots": {
+        "track": [
+          "background-color",
+          "visual-height",
+          "visual-width"
+        ],
+        "knob": [
+          "background-color",
+          "inset",
+          "visual-size"
+        ],
+        "label": ["color", "typography"],
+        "focus-ring": ["color", "border-width"],
+        "loading-spinner": ["size", "color", "stroke-width", "arc-start-angle", "arc-sweep-angle"],
+        "content": [
+          "color"
+        ]
+      },
+      "qtClass": "commonWidget::Z_Switch",
+      "configuration": {"contract": "source/component-contracts/switch.json"}
     },
-    "menu-bar-item": {
-      "figmaPage": "20.1.04", "figmaNode": "486:10",
-      "qtClass": "QMenuBar item",
-      "states": {"supported": ["default", "hover", "disabled", "open", "focused"], "default": "default"},
-      "slots": ["label", "container", "focus-ring", "mnemonic"]
+    "badge": {
+      "axes": {
+        "kind": ["text", "dot"],
+        "tone": ["neutral", "info", "success", "warning", "danger"]
+      },
+      "slots": {
+        "container": [
+          "background-color",
+          "border-radius",
+          "visual-height",
+          "padding-inline"
+        ],
+        "label": [
+          "color",
+          "typography"
+        ]
+      },
+      "legalCombinations": "kind-tone",
+      "qtClass": "commonWidget::Z_Badge",
+      "configuration": {"contract": "source/component-contracts/badge.json"}
     },
-    "dialog-button-group": {
-      "figmaPage": "20.3.03", "figmaNode": "447:2",
-      "qtClass": "QDialogButtonBox (native Z_DialogButtonBox wrapper)",
-      "states": {"supported": ["default"], "default": "default"},
-      "slots": ["button-row", "container"]
-    },
-    "spin-box": {
-      "figmaPage": "20.4.02", "figmaNode": "458:2",
-      "qtClass": "QSpinBox (native Z_SpinBox wrapper)",
-      "states": {"supported": ["default"], "default": "default"},
-      "slots": ["container"]
-    },
-    "double-spin-box": {
-      "figmaPage": "20.4.03", "figmaNode": "460:2",
-      "qtClass": "QDoubleSpinBox (native Z_DoubleSpinBox wrapper)",
-      "states": {"supported": ["default"], "default": "default"},
-      "slots": ["container"]
-    },
-    "date-picker": {
-      "figmaPage": "20.4.05", "figmaNode": "464:2",
-      "qtClass": "QDateEdit (native Z_DateEdit wrapper)",
-      "states": {"supported": ["default"], "default": "default"},
-      "slots": ["container"]
-    },
-    "time-picker": {
-      "figmaPage": "20.4.06", "figmaNode": "465:2",
-      "qtClass": "QTimeEdit (native Z_TimeEdit wrapper)",
-      "states": {"supported": ["default"], "default": "default"},
-      "slots": ["container"]
-    },
-    "date-time-picker": {
-      "figmaPage": "20.4.04", "figmaNode": "463:2",
-      "qtClass": "QDateTimeEdit (native Z_DateTimeEdit wrapper)",
-      "states": {"supported": ["default"], "default": "default"},
-      "slots": ["container"]
-    },
-    "label": {
-      "figmaPage": "20.2.05", "figmaNode": "414:7",
-      "qtClass": "QLabel (native Z_Label wrapper)",
-      "states": {"supported": ["default", "disabled"], "default": "default"},
-      "slots": ["content"]
-    },
-    "lcd-number": {
-      "figmaPage": "20.2.06", "figmaNode": "418:11",
-      "qtClass": "QLCDNumber (native Z_LCDNumber wrapper)",
-      "states": {"supported": ["default", "disabled"], "default": "default"},
-      "slots": ["digit"]
-    },
-    "text-browser": {
-      "figmaPage": "20.2.07", "figmaNode": "420:13",
-      "qtClass": "QTextBrowser (native Z_TextBrowser wrapper)",
-      "states": {"supported": ["default", "disabled"], "default": "default"},
-      "slots": ["content"]
-    },
-    "data-display": {
-      "figmaPage": "20.2", "figmaNode": null,
-      "qtClass": "commonWidget",
-      "states": {"supported": ["default", "error"], "default": "default"},
-      "slots": ["content", "label"]
+    "chip": {
+      "axes": {
+        "orientation": ["horizontal", "vertical"],
+        "value": ["unselected", "selected"],
+        "state": [
+          "default",
+          "hover",
+          "pressed",
+          "focused",
+          "disabled"
+        ]
+      },
+      "slots": {
+        "label": [
+          "color",
+          "typography"
+        ],
+        "focus-ring": [
+          "color",
+          "border-width"
+        ],
+        "container": [
+          "background-color",
+          "border-color",
+          "border-width",
+          "visual-height",
+          "padding-inline",
+          "border-radius"
+        ]
+      },
+      "legalCombinations": "orientation-value-state",
+      "qtClass": "commonWidget::Z_Chip",
+      "configuration": {"contract": "source/component-contracts/chip.json"}
     },
     "container": {
-      "figmaPage": "20.6.01", "figmaNode": "359:2",
-      "qtClass": "QFrame (native Z_Frame wrapper)",
-      "states": {"supported": ["default"], "default": "default"},
-      "slots": ["container", "content"]
+      "publicComponent": false,
+      "compositionOnly": true,
+      "axes": {
+        "state": [
+          "default"
+        ]
+      },
+      "slots": {
+        "container": [
+          "background-color",
+          "padding-inline",
+          "radius",
+          "border-radius"
+        ],
+        "content": [
+          "gap"
+        ]
+      },
+      "legalCombinations": "internal-structure",
+      "source": "internal-structure-compatibility"
+    },
+    "data-display": {
+      "publicComponent": false,
+      "compositionOnly": true,
+      "axes": {
+        "state": [
+          "default",
+          "error"
+        ]
+      },
+      "slots": {
+        "content": [
+          "color",
+          "gap"
+        ],
+        "label": [
+          "color"
+        ]
+      },
+      "legalCombinations": "cartesian",
+      "source": "legacy-alias-to-statistic"
+    },
+    "statistic": {
+      "axes": {
+        "size": ["compact", "default"],
+        "state": ["default", "loading", "empty", "error"]
+      },
+      "slots": {
+        "container": ["background-color", "padding-inline", "padding-block", "gap", "border-radius"],
+        "title": ["color", "typography"],
+        "value": ["color", "typography"],
+        "prefix": ["color", "typography"],
+        "suffix": ["color", "typography"],
+        "loading-skeleton": ["color", "visual-height", "border-radius"],
+        "feedback": ["color", "typography"]
+      },
+      "legalCombinations": "recipe-defined",
+      "qtClass": "commonWidget::Z_Statistic",
+      "configuration": {"contract": "source/component-contracts/statistic.json"},
+      "source": "component-contract-and-recipe"
+    },
+    "date-picker": {
+      "publicComponent": false,
+      "compositionOnly": true,
+      "axes": {
+        "state": [
+          "default"
+        ]
+      },
+      "slots": {
+        "container": [
+          "radius",
+          "visual-height",
+          "border-radius"
+        ]
+      },
+      "legalCombinations": "cartesian",
+      "source": "legacy-alias-to-date-time-input"
+    },
+    "date-time-picker": {
+      "publicComponent": false,
+      "compositionOnly": true,
+      "axes": {
+        "state": [
+          "default"
+        ]
+      },
+      "slots": {
+        "container": [
+          "radius",
+          "visual-height",
+          "border-radius"
+        ]
+      },
+      "legalCombinations": "cartesian",
+      "source": "legacy-alias-to-date-time-input"
+    },
+    "date-time-input": {
+      "axes": {
+        "mode": ["date", "time", "datetime"],
+        "state": ["default", "hover", "focused", "disabled", "error", "loading"]
+      },
+      "slots": {
+        "container": ["background-color", "border-color", "border-width", "border-radius", "visual-height"],
+        "field": ["color", "typography", "padding-inline"],
+        "calendar-action": ["color", "visual-size", "hit-target"],
+        "spin-action": ["color", "visual-size", "hit-target"],
+        "divider": ["color", "border-width"],
+        "popup-surface": ["background-color", "border-color", "border-width", "border-radius", "shadow"],
+        "calendar-header": ["color", "typography", "padding-block", "padding-inline"],
+        "weekday-row": ["color", "typography", "padding-block"],
+        "day-grid": ["gap", "padding"],
+        "day-cell": ["visual-size", "color", "background-color", "border-radius", "range-background-color", "today-indicator-color"],
+        "nav-button": ["color", "background-color", "visual-size", "border-radius"],
+        "action-button": ["color", "background-color", "padding-inline", "visual-height"],
+        "range-overlay": ["background-color"],
+        "focus-ring": ["color", "border-width"],
+        "loading-spinner": ["size", "color", "stroke-width", "arc-start-angle", "arc-sweep-angle"]
+      },
+      "axisMetadata": {
+        "mode": {"owner": "runtime-capability", "materialize": false},
+        "state": {"owner": "component-visual-state", "materialize": true}
+      },
+      "legalCombinations": "recipe-defined",
+      "qtClass": "commonWidget::Z_DateTimeInput (custom composite; Qt temporal adapters inside)",
+      "configuration": {"contract": "source/component-contracts/date-time-input.json"},
+      "source": "component-contract-and-recipe"
+    },
+    "desktop-bottom-navigation": {
+      "axes": {
+        "state": [
+          "default"
+        ]
+      },
+      "slots": {
+        "tier": [
+          "gap"
+        ],
+        "primary": [
+          "item-gap"
+        ],
+        "secondary": [
+          "item-gap",
+          "padding-block"
+        ]
+      },
+      "legalCombinations": "cartesian",
+      "source": "registry-supplemented-by-recipe-conversion"
+    },
+    "dial": {
+      "axes": {
+        "state": [
+          "default",
+          "focused"
+        ]
+      },
+      "slots": {
+        "active-indicator": [
+          "color"
+        ],
+        "arc": [
+          "visual-diameter"
+        ],
+        "hub": [
+          "visual-diameter"
+        ],
+        "notch": [
+          "visual-height",
+          "visual-width"
+        ],
+        "focus-ring": [
+          "color",
+          "visual-diameter"
+        ]
+      },
+      "legalCombinations": "cartesian",
+      "source": "registry-supplemented-by-recipe-conversion"
+    },
+    "dialog-button-group": {
+      "axes": {
+        "state": [
+          "default"
+        ]
+      },
+      "slots": {
+        "button-row": [
+          "gap",
+          "min-height"
+        ],
+        "container": [
+          "padding-block",
+          "padding-inline"
+        ]
+      },
+      "legalCombinations": "cartesian",
+      "source": "registry-supplemented-by-recipe-conversion"
     },
     "divider": {
-      "figmaPage": "20.6.07", "figmaNode": "542:2",
-      "qtClass": "QFrame",
-      "states": {"supported": ["default"], "default": "default"},
-      "slots": ["border"]
+      "axes": {
+        "state": [
+          "default"
+        ]
+      },
+      "slots": {
+        "border": [
+          "color",
+          "width",
+          "border-width"
+        ]
+      },
+      "legalCombinations": "cartesian",
+      "source": "registry-supplemented-by-recipe-conversion"
+    },
+    "double-spin-box": {
+      "axes": {
+        "state": [
+          "default"
+        ]
+      },
+      "slots": {
+        "container": [
+          "radius",
+          "visual-height",
+          "border-radius"
+        ]
+      },
+      "legalCombinations": "cartesian",
+      "source": "registry-supplemented-by-recipe-conversion"
+    },
+    "number-input": {
+      "axes": {
+        "type": ["integer", "decimal"],
+        "controls": ["plus-minus", "up-down", "split-plus-minus", "none"],
+        "state": ["default", "hover", "pressed", "focused", "disabled", "error", "loading"]
+      },
+      "slots": {
+        "container": ["background-color", "border-color", "border-width", "border-radius", "visual-height"],
+        "field": ["color", "typography", "padding-inline"],
+        "stepper": ["background-color", "visual-width"],
+        "increment": ["background-color", "color", "visual-width"],
+        "decrement": ["background-color", "color", "visual-width"],
+        "divider": ["color", "border-width"],
+        "icon": ["color", "visual-size"],
+        "focus-ring": ["color", "border-width"],
+        "loading-spinner": ["size", "color", "stroke-width", "arc-start-angle", "arc-sweep-angle"]
+      },
+      "axisMetadata": {
+        "type": {"owner": "runtime-capability", "materialize": false},
+        "controls": {"owner": "component-visual-structure", "materialize": true},
+        "state": {"owner": "component-visual-state", "materialize": true}
+      },
+      "legalCombinations": "recipe-defined",
+      "qtClass": "commonWidget::Z_NumberInput",
+      "configuration": {"contract": "source/component-contracts/number-input.json"},
+      "source": "component-contract-and-recipe"
     },
     "frame": {
-      "figmaPage": "20.6.06", "figmaNode": "537:2",
-      "qtClass": "QFrame",
-      "states": {"supported": ["default"], "default": "default"},
-      "slots": ["shape"]
+      "axes": {
+        "state": [
+          "default"
+        ]
+      },
+      "slots": {
+        "line": [
+          "visual-thickness"
+        ]
+      },
+      "legalCombinations": "cartesian",
+      "source": "registry-supplemented-by-recipe-conversion"
+    },
+    "label": {
+      "axes": {
+        "state": [
+          "default",
+          "disabled"
+        ]
+      },
+      "slots": {
+        "content": [
+          "color",
+          "font-size"
+        ]
+      },
+      "legalCombinations": "cartesian",
+      "source": "registry-supplemented-by-recipe-conversion"
+    },
+    "lcd-number": {
+      "axes": {
+        "state": [
+          "default",
+          "disabled"
+        ]
+      },
+      "slots": {
+        "digit": [
+          "color"
+        ]
+      },
+      "legalCombinations": "cartesian",
+      "source": "registry-supplemented-by-recipe-conversion"
+    },
+    "line-edit": {
+      "axes": {
+        "state": [
+          "default"
+        ],
+        "size": [
+          "small",
+          "medium",
+          "large"
+        ]
+      },
+      "slots": {
+        "container": [
+          "padding-inline"
+        ]
+      },
+      "legalCombinations": "cartesian",
+      "source": "registry-supplemented-by-recipe-conversion"
+    },
+    "menu-bar": {
+      "axes": {
+        "state": [
+          "default"
+        ]
+      },
+      "slots": {
+        "border": [
+          "color"
+        ],
+        "container": [
+          "color"
+        ]
+      },
+      "legalCombinations": "cartesian",
+      "source": "registry-supplemented-by-recipe-conversion"
+    },
+    "menu-bar-item": {
+      "axes": {
+        "state": [
+          "default",
+          "disabled",
+          "focused",
+          "hover",
+          "open"
+        ]
+      },
+      "slots": {
+        "label": [
+          "color"
+        ],
+        "focus-ring": [
+          "color"
+        ],
+        "container": [
+          "color"
+        ],
+        "mnemonic": [
+          "color"
+        ]
+      },
+      "legalCombinations": "cartesian",
+      "source": "registry-supplemented-by-recipe-conversion"
+    },
+    "message": {
+      "axes": {
+        "state": [
+          "default",
+          "error",
+          "success",
+          "warning"
+        ]
+      },
+      "slots": {
+        "border": [
+          "color"
+        ],
+        "container": [
+          "background-color"
+        ],
+        "icon": [
+          "color"
+        ]
+      },
+      "legalCombinations": "cartesian",
+      "source": "registry-supplemented-by-recipe-conversion"
+    },
+    "pagination": {
+      "axes": {
+        "state": [
+          "default",
+          "compact",
+          "disabled",
+          "focused",
+          "hover",
+          "selected"
+        ]
+      },
+      "slots": {
+        "container": [
+          "gap",
+          "padding-block",
+          "padding-inline"
+        ],
+        "item": [
+          "background-color",
+          "label-color",
+          "radius",
+          "visual-height",
+          "visual-width",
+          "border-radius"
+        ],
+        "navigation": [
+          "background-color",
+          "border-color",
+          "icon-color",
+          "radius",
+          "border-radius",
+          "border-width"
+        ],
+        "focus-ring": [
+          "color"
+        ],
+        "content": [
+          "gap"
+        ]
+      },
+      "legalCombinations": "cartesian",
+      "source": "registry-supplemented-by-recipe-conversion"
+    },
+    "progress-bar": {
+      "axes": {
+        "state": [
+          "default",
+          "disabled",
+          "loading",
+          "paused",
+          "error",
+          "in-progress",
+          "completed"
+        ]
+      },
+      "slots": {
+        "indicator": [
+          "color"
+        ],
+        "label": [
+          "color"
+        ],
+        "track": [
+          "color",
+          "height"
+        ]
+      },
+      "legalCombinations": "cartesian",
+      "source": "registry-supplemented-by-recipe-conversion"
+    },
+    "scroll-bar": {
+      "axes": {
+        "state": [
+          "default",
+          "dragging",
+          "hover"
+        ]
+      },
+      "slots": {
+        "line-button": [
+          "visual-size"
+        ],
+        "thumb": [
+          "color",
+          "visual-thickness"
+        ],
+        "track": [
+          "color",
+          "visual-thickness"
+        ]
+      },
+      "legalCombinations": "cartesian",
+      "source": "registry-supplemented-by-recipe-conversion"
+    },
+    "selection-control": {
+      "axes": {
+        "state": [
+          "default",
+          "disabled",
+          "focused",
+          "selected"
+        ]
+      },
+      "slots": {
+        "indicator": [
+          "color",
+          "size"
+        ],
+        "focus-ring": [
+          "width",
+          "border-width"
+        ]
+      },
+      "legalCombinations": "cartesian",
+      "source": "registry-supplemented-by-recipe-conversion"
+    },
+    "slider": {
+      "axes": {
+        "state": [
+          "default",
+          "dragging",
+          "focused"
+        ]
+      },
+      "slots": {
+        "active-track": [
+          "color"
+        ],
+        "handle": [
+          "border-color",
+          "visual-diameter"
+        ],
+        "rail": [
+          "visual-thickness"
+        ],
+        "focus-ring": [
+          "color",
+          "stroke-width",
+          "visual-diameter"
+        ]
+      },
+      "legalCombinations": "cartesian",
+      "source": "registry-supplemented-by-recipe-conversion"
+    },
+    "spin-box": {
+      "axes": {
+        "state": [
+          "default"
+        ]
+      },
+      "slots": {
+        "container": [
+          "radius",
+          "visual-height",
+          "border-radius"
+        ]
+      },
+      "legalCombinations": "cartesian",
+      "source": "registry-supplemented-by-recipe-conversion"
+    },
+    "stepper": {
+      "axes": {
+        "state": [
+          "default",
+          "selected"
+        ]
+      },
+      "slots": {
+        "container": [
+          "min-height"
+        ],
+        "content": [
+          "gap"
+        ],
+        "indicator": [
+          "color"
+        ]
+      },
+      "legalCombinations": "cartesian",
+      "source": "registry-supplemented-by-recipe-conversion"
+    },
+    "tag": {
+      "axes": {
+        "state": [
+          "default",
+          "selected"
+        ]
+      },
+      "slots": {
+        "border": [
+          "color"
+        ],
+        "container": [
+          "background-color"
+        ],
+        "label": [
+          "color"
+        ]
+      },
+      "legalCombinations": "cartesian",
+      "source": "registry-supplemented-by-recipe-conversion"
+    },
+    "text-browser": {
+      "axes": {
+        "state": [
+          "default",
+          "disabled"
+        ]
+      },
+      "slots": {
+        "content": [
+          "color"
+        ]
+      },
+      "legalCombinations": "cartesian",
+      "source": "registry-supplemented-by-recipe-conversion"
+    },
+    "time-picker": {
+      "publicComponent": false,
+      "compositionOnly": true,
+      "axes": {
+        "state": [
+          "default"
+        ]
+      },
+      "slots": {
+        "container": [
+          "radius",
+          "visual-height",
+          "border-radius"
+        ]
+      },
+      "legalCombinations": "cartesian",
+      "source": "legacy-alias-to-date-time-input"
+    },
+    "tool-button": {
+      "axes": {
+        "presentation": ["standard", "auto-raise"],
+        "value": ["unchecked", "checked"],
+        "state": ["default", "hover", "pressed", "focused", "disabled"],
+        "menu": ["none", "split"]
+      },
+      "slots": {
+        "border": [
+          "color"
+        ],
+        "container": [
+          "background-color",
+          "radius",
+          "visual-height",
+          "border-radius"
+        ],
+        "icon": [
+          "size"
+        ],
+        "label": [
+          "font-size",
+          "font-weight",
+          "letter-spacing"
+        ],
+        "focus-ring": [
+          "color"
+        ],
+        "action": [
+          "visual-width"
+        ],
+        "menu": [
+          "split"
+        ],
+        "foreground": [
+          "color"
+        ],
+        "divider": [
+          "color"
+        ]
+      },
+      "legalCombinations": {
+        "constraints": [
+          {
+            "type": "forbid",
+            "when": {"presentation": "auto-raise", "menu": "split"}
+          }
+        ]
+      },
+      "matrix": {
+        "axes": ["presentation", "value", "state", "menu"],
+        "logicalCombinationCount": 30,
+        "materialization": "generator-only"
+      },
+      "configuration": {
+        "contract": "source/component-contracts/tool-button.json",
+        "recipe": "source/component-recipes/tool-button.json",
+        "figmaBindingManifest": "source/figma-bindings/tool-button.json"
+      },
+      "source": "v2-rebuilt-independent-model"
+    },
+    "tooltip": {
+      "axes": {
+        "state": [
+          "default",
+          "camera",
+          "chart"
+        ]
+      },
+      "slots": {
+        "container": [
+          "background-color",
+          "opacity",
+          "padding-inline",
+          "radius",
+          "border-radius"
+        ],
+        "content": [
+          "color"
+        ]
+      },
+      "legalCombinations": "cartesian",
+      "source": "registry-supplemented-by-recipe-conversion"
     }
+  },
+  "otherFamilies": {
+    "$description": "其余组件家族（tool-button、pagination、tooltip、badge、tag、progress-bar、slider、scroll-bar、dial、stepper、menu-bar、menu-bar-item、desktop-bottom-navigation、dialog-button-group、spin-box、double-spin-box、date-picker、time-picker、date-time-picker、label、lcd-number、text-browser、data-display、container、divider、frame、chip、selection-control、message、navigation-bar 等）按各自 Recipe 登记的 state/size/variant 轴与 Slot 生成；Registry 登记其 states 与 slots（见各家族条目）。未在此登记轴值的家族在 Recipe 中不得引入新轴。",
+    "families": [
+      "badge",
+      "chip",
+      "container",
+      "data-display",
+      "date-picker",
+      "date-time-picker",
+      "desktop-bottom-navigation",
+      "dial",
+      "dialog-button-group",
+      "divider",
+      "double-spin-box",
+      "frame",
+      "label",
+      "lcd-number",
+      "menu-bar",
+      "menu-bar-item",
+      "message",
+      "pagination",
+      "progress-bar",
+      "scroll-bar",
+      "selection-control",
+      "slider",
+      "spin-box",
+      "stepper",
+      "tag",
+      "text-browser",
+      "time-picker",
+      "tool-button",
+      "tooltip"
+    ]
   }
 }

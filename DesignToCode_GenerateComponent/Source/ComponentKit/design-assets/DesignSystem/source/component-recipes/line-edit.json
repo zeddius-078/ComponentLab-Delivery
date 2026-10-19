@@ -1,0 +1,51 @@
+{
+  "$registry": {
+    "component": "line-edit",
+    "version": "2.0"
+  },
+  "$status": "active",
+  "base": {
+    "size": {
+      "large": {
+        "slot": {
+          "container": {
+            "padding-inline": {
+              "$type": "spacing",
+              "$value": "{semantic.layout.padding.inline.standard}",
+              "$description": "Recovered from legacy V2 layer component.line-edit.size.large.container.padding-inline",
+              "$sourceOwner": "old-tree-recovery",
+              "unit": "px"
+            }
+          }
+        }
+      },
+      "medium": {
+        "slot": {
+          "container": {
+            "padding-inline": {
+              "$type": "spacing",
+              "$value": "{semantic.layout.padding.inline.small}",
+              "$description": "Recovered from legacy V2 layer component.line-edit.size.medium.container.padding-inline",
+              "$sourceOwner": "old-tree-recovery",
+              "unit": "px"
+            }
+          }
+        }
+      },
+      "small": {
+        "slot": {
+          "container": {
+            "padding-inline": {
+              "$type": "spacing",
+              "$value": "{semantic.layout.padding.inline.compact}",
+              "$description": "Recovered from legacy V2 layer component.line-edit.size.small.container.padding-inline",
+              "$sourceOwner": "old-tree-recovery",
+              "unit": "px"
+            }
+          }
+        }
+      }
+    }
+  },
+  "overrides": []
+}

@@ -4,19 +4,21 @@ const path = require('path');
 const crypto = require('crypto');
 const {pathToFileURL} = require('url');
 const {chromium} = require('playwright');
+const {outputPath} = require('./output_paths.cjs');
 
 async function main() {
   // 调用方指定并清理临时输出目录；报告可通过 --report-dir 单独保存。
   const root = path.resolve(__dirname, '..');
   const args=process.argv.slice(2);
   const option=name=>args.includes(name)?args[args.indexOf(name)+1]:null;
-  const raw = path.resolve(option('--raw-dir')||path.join(root, 'inputs/node-12-382'));
+  if(!option('--raw-dir'))throw Error('RAW_DIRECTORY_REQUIRED');
+  const raw = path.resolve(option('--raw-dir'));
   const dslOption = option('--dsl');
   if(!dslOption)throw Error('DSL_INPUT_REQUIRED');
   // 临时文件位置由调用方提供，以便构建结束后统一清理，而不会散落在来源目录。
   if(!option('--output-dir'))throw Error('OUTPUT_DIRECTORY_REQUIRED: caller owns temporary output cleanup');
-  const out = path.resolve(option('--output-dir'));
-  const reportDir = path.resolve(option('--report-dir')||path.join(out, 'validation'));
+  const out = outputPath(option('--output-dir'));
+  const reportDir = outputPath(option('--report-dir')||path.join(out, 'validation'));
   fs.mkdirSync(out, {recursive:true}); fs.mkdirSync(reportDir, {recursive:true});
   const original = fs.readFileSync(path.join(raw, 'page-0-0.html'), 'utf8');
   const assets = JSON.parse(fs.readFileSync(path.join(raw,'resource-map.json'),'utf8'));
@@ -26,7 +28,8 @@ async function main() {
   for(const [url,destination,sourceRelative] of assets) {
     const source=path.resolve(raw,sourceRelative||path.join('assets',path.basename(destination)));
     const font=/\.(ttf|otf|woff2?)$/i.test(source);
-    const target=font?source:path.join(out,destination);
+    const target=font?source:outputPath(path.join(out,destination));
+    if(!font && (path.relative(out,target).startsWith('..') || path.isAbsolute(path.relative(out,target))))throw Error('RESOURCE_OUTPUT_ESCAPE');
     // 图片按导出的相对路径复制到预览目录；字体直接引用已保存文件，减少大文件重复复制。
     if(!font) {
       fs.mkdirSync(path.dirname(target),{recursive:true});

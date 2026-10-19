@@ -1,0 +1,45 @@
+{
+  "$schema": "../../schema/component-recipe-schema.json",
+  "$registry": {"component": "number-input", "version": "2.0"},
+  "$status": "draft-v2",
+  "$description": "NumberInput V2 sparse recipe. Shared geometry is resolved once; control structure and interaction overlays are sparse overrides.",
+  "base": {
+    "shared": {
+      "slot/container/background-color": "{semantic.color.background.control-default}",
+      "slot/container/border-color": "{semantic.color.border.default}",
+      "slot/container/border-width": "{semantic.border-width.boundary-default}",
+      "slot/container/border-radius": "{primitive.radius.md-4}",
+      "slot/container/visual-height": "{profile.interaction-size.04}",
+      "slot/field/color": "{semantic.color.text.primary}",
+      "slot/field/typography": "{typography.body.body-1}",
+      "slot/field/padding-inline": "{primitive.dimension.12}",
+      "slot/stepper/visual-width": "{primitive.dimension.44}",
+      "slot/increment/visual-width": "{primitive.dimension.44}",
+      "slot/decrement/visual-width": "{primitive.dimension.44}",
+      "slot/divider/color": "{semantic.color.border.secondary}",
+      "slot/divider/border-width": "{semantic.border-width.divider-default}",
+      "slot/icon/visual-size": "{primitive.dimension.16}",
+      "slot/icon/color": "{semantic.color.icon.primary}"
+    }
+  },
+  "overrides": [
+    {"when": {"controls": "plus-minus"}, "slot": "stepper", "property": "visual-width", "value": "{primitive.dimension.44}", "$type": "dimension", "unit": "px"},
+    {"when": {"controls": "up-down"}, "slot": "stepper", "property": "visual-width", "value": "{primitive.dimension.44}", "$type": "dimension", "unit": "px"},
+    {"when": {"controls": "split-plus-minus"}, "slot": "increment", "property": "visual-width", "value": "{primitive.dimension.32}", "$type": "dimension", "unit": "px"},
+    {"when": {"controls": "split-plus-minus"}, "slot": "decrement", "property": "visual-width", "value": "{primitive.dimension.32}", "$type": "dimension", "unit": "px"},
+    {"when": {"controls": "none"}, "slot": "stepper", "property": "visual-width", "value": "{primitive.dimension.0}", "$type": "dimension", "unit": "px"},
+    {"when": {"controls": "none"}, "slot": "increment", "property": "visual-width", "value": "{primitive.dimension.0}", "$type": "dimension", "unit": "px"},
+    {"when": {"controls": "none"}, "slot": "decrement", "property": "visual-width", "value": "{primitive.dimension.0}", "$type": "dimension", "unit": "px"}
+  ],
+  "stateOverrides": {
+    "default": {"tokens": {}},
+    "hover": {"tokens": {"slot/increment/background-color": "{semantic.color.background.hover}", "slot/decrement/background-color": "{semantic.color.background.hover}"}},
+    "pressed": {"tokens": {"slot/increment/background-color": "{semantic.color.background.pressed}", "slot/decrement/background-color": "{semantic.color.background.pressed}"}},
+    "focused": {"tokens": {"slot/focus-ring/color": "{semantic.color.interactive.brand.focus-ring}", "slot/focus-ring/border-width": "{semantic.border-width.focus-ring}"}},
+    "disabled": {"tokens": {"slot/container/background-color": "{semantic.color.background.disabled}", "slot/container/border-color": "{semantic.color.border.disabled}", "slot/field/color": "{semantic.color.text.disabled}", "slot/icon/color": "{semantic.color.icon.disabled}"}},
+    "error": {"tokens": {"slot/container/background-color": "{semantic.color.background.disabled}", "slot/container/border-color": "{semantic.color.status.danger.default}", "slot/field/color": "{semantic.color.text.disabled}", "slot/icon/color": "{semantic.color.icon.disabled}"}},
+    "loading": {"tokens": {"slot/container/background-color": "{semantic.color.background.disabled}", "slot/container/border-color": "{semantic.color.border.disabled}", "slot/field/color": "{semantic.color.text.disabled}", "slot/loading-spinner/size": "{profile.visualization-size.01}", "slot/loading-spinner/color": "{semantic.color.interactive.brand.default}", "slot/loading-spinner/stroke-width": "{primitive.spinner.stroke-width}", "slot/loading-spinner/arc-start-angle": "{primitive.spinner.arc-start-angle}", "slot/loading-spinner/arc-sweep-angle": "{primitive.spinner.arc-sweep-angle}"}}
+  },
+  "overlayPolicy": {"resolutionOrder": ["shared-base", "control-sparse-override", "state-sparse-override", "focus-ring"], "stateOverrideMode": "sparse-inherit-unmentioned", "readOnlyVisualAlias": "disabled"},
+  "diagnostics": [{"severity": "warning", "code": "V2-DRAFT-NUMBER-INPUT-RUNTIME-PALETTE", "message": "SpinBoxAppearance must consume the compiled NumberInput visual slots instead of retaining literal geometry and palette values before release.", "source": "runtime/component/SpinBoxAppearance.cpp"}]
+}

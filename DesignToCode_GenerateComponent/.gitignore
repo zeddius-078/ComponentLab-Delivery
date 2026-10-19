@@ -1,0 +1,4 @@
+/build/
+/待删除-*/
+__pycache__/
+*.pyc

@@ -1,0 +1,69 @@
+{
+  "$schema": "../../schema/component-recipe-schema.json",
+  "$registry": {"component": "date-time-input", "version": "2.0"},
+  "$status": "draft-v2",
+  "$description": "DateTimeInput V2 sparse recipe. The field and calendar popup are project-owned visual surfaces; Qt temporal editors remain runtime adapters.",
+  "base": {
+    "state": {
+      "default": {
+        "slot/container/visual-height": "{profile.interaction-size.04}"
+      }
+    },
+    "shared": {
+      "slot/container/background-color": "{semantic.color.background.control-default}",
+      "slot/container/border-color": "{semantic.color.border.default}",
+      "slot/container/border-width": "{semantic.border-width.boundary-default}",
+      "slot/container/border-radius": "{primitive.radius.md-4}",
+      "slot/container/visual-height": "{profile.interaction-size.04}",
+      "slot/field/color": "{semantic.color.text.primary}",
+      "slot/field/typography": "{typography.body.body-1}",
+      "slot/field/padding-inline": "{primitive.dimension.12}",
+      "slot/calendar-action/color": "{semantic.color.icon.primary}",
+      "slot/calendar-action/visual-size": "{primitive.dimension.16}",
+      "slot/calendar-action/hit-target": "{profile.interaction-size.04}",
+      "slot/spin-action/color": "{semantic.color.icon.primary}",
+      "slot/spin-action/visual-size": "{primitive.dimension.16}",
+      "slot/spin-action/hit-target": "{profile.interaction-size.04}",
+      "slot/divider/color": "{semantic.color.border.secondary}",
+      "slot/divider/border-width": "{semantic.border-width.divider-default}",
+      "slot/popup-surface/background-color": "{semantic.color.background.surface-raised}",
+      "slot/popup-surface/border-color": "{semantic.color.border.default}",
+      "slot/popup-surface/border-width": "{semantic.border-width.boundary-default}",
+      "slot/popup-surface/border-radius": "{primitive.radius.md-4}",
+      "slot/calendar-header/color": "{semantic.color.text.primary}",
+      "slot/calendar-header/typography": "{typography.body.body-1}",
+      "slot/calendar-header/padding-block": "{primitive.dimension.12}",
+      "slot/calendar-header/padding-inline": "{primitive.dimension.16}",
+      "slot/weekday-row/color": "{semantic.color.text.secondary}",
+      "slot/weekday-row/typography": "{typography.body.body-1}",
+      "slot/weekday-row/padding-block": "{primitive.dimension.8}",
+      "slot/day-grid/gap": "{primitive.dimension.4}",
+      "slot/day-grid/padding": "{primitive.dimension.12}",
+      "slot/day-cell/visual-size": "{profile.interaction-size.04}",
+      "slot/day-cell/color": "{semantic.color.text.primary}",
+      "slot/day-cell/background-color": "{semantic.color.background.control-default}",
+      "slot/day-cell/border-radius": "{primitive.radius.md-4}",
+      "slot/day-cell/range-background-color": "{semantic.color.interactive.brand.subtle}",
+      "slot/day-cell/today-indicator-color": "{semantic.color.interactive.brand.default}",
+      "slot/nav-button/color": "{semantic.color.icon.primary}",
+      "slot/nav-button/background-color": "{semantic.color.background.control-default}",
+      "slot/nav-button/visual-size": "{profile.interaction-size.04}",
+      "slot/nav-button/border-radius": "{primitive.radius.full}",
+      "slot/action-button/color": "{semantic.color.interactive.brand.default}",
+      "slot/action-button/background-color": "{semantic.color.background.control-default}",
+      "slot/action-button/padding-inline": "{primitive.dimension.12}",
+      "slot/action-button/visual-height": "{profile.interaction-size.04}",
+      "slot/range-overlay/background-color": "{semantic.color.interactive.brand.subtle}"
+    }
+  },
+  "stateOverrides": {
+    "default": {"tokens": {}},
+    "hover": {"tokens": {"slot/calendar-action/color": "{semantic.color.icon.primary}", "slot/spin-action/color": "{semantic.color.icon.primary}"}},
+    "focused": {"tokens": {"slot/focus-ring/color": "{semantic.color.interactive.brand.focus-ring}", "slot/focus-ring/border-width": "{semantic.border-width.focus-ring}"}},
+    "disabled": {"tokens": {"slot/container/background-color": "{semantic.color.background.disabled}", "slot/container/border-color": "{semantic.color.border.disabled}", "slot/field/color": "{semantic.color.text.disabled}", "slot/calendar-action/color": "{semantic.color.icon.disabled}", "slot/spin-action/color": "{semantic.color.icon.disabled}"}},
+    "error": {"tokens": {"slot/container/background-color": "{semantic.color.background.disabled}", "slot/container/border-color": "{semantic.color.status.danger.default}", "slot/field/color": "{semantic.color.text.disabled}", "slot/calendar-action/color": "{semantic.color.icon.disabled}", "slot/spin-action/color": "{semantic.color.icon.disabled}"}},
+    "loading": {"tokens": {"slot/container/background-color": "{semantic.color.background.disabled}", "slot/container/border-color": "{semantic.color.border.disabled}", "slot/field/color": "{semantic.color.text.disabled}", "slot/loading-spinner/size": "{profile.visualization-size.01}", "slot/loading-spinner/color": "{semantic.color.interactive.brand.default}", "slot/loading-spinner/stroke-width": "{primitive.spinner.stroke-width}", "slot/loading-spinner/arc-start-angle": "{primitive.spinner.arc-start-angle}", "slot/loading-spinner/arc-sweep-angle": "{primitive.spinner.arc-sweep-angle}"}}
+  },
+  "overlayPolicy": {"resolutionOrder": ["shared-base", "state-sparse-override", "focus-ring"], "stateOverrideMode": "sparse-inherit-unmentioned", "readOnlyVisualAlias": "disabled"},
+  "diagnostics": [{"severity": "warning", "code": "V2-DRAFT-DATETIME-RUNTIME-PAINT", "message": "DateTimeAppearance still contains runtime literal geometry and palette values; migrate reads to compiled DateTimeInput tokens before release.", "source": "runtime/component/DateTimeAppearance.cpp"}]
+}

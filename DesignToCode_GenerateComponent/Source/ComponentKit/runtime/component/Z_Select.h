@@ -37,7 +37,6 @@ class Z_Select : public QWidget {
     void setMode(Mode);
     void setControlled(bool);
     void setControlSize(const QString&);
-    void setVariant(const QString&);
     void setAppearance(const QString&);
     void setStatus(const QString&);
     void setLabel(const QString&);
@@ -76,5 +75,6 @@ class Z_Select : public QWidget {
     void activateCurrent();
     void moveCurrent(int direction, bool end = false);
     void positionPopup();
+    void syncOpenCondition();
 };
 } // namespace commonWidget

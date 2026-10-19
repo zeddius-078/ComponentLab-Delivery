@@ -9,11 +9,13 @@
 #include <QCloseEvent>
 #include <QCheckBox>
 #include <QComboBox>
+#include <QCoreApplication>
 #include <QFormLayout>
 #include <QLineEdit>
 #include <QPushButton>
 #include <QSignalBlocker>
 #include <QTimer>
+#include <QtMath>
 #include <QFile>
 #include <QJsonArray>
 #include <QJsonDocument>
@@ -37,11 +39,11 @@ QLabel* label(QWidget* parent, const QString& text, const QRect& r, int px, int 
     l->setGeometry(r);
     l->setWordWrap(wrap);
     l->setAlignment(Qt::AlignTop | Qt::AlignLeft);
-    QFont f("Inter");
+    QFont f("HarmonyOS Sans");
     f.setPixelSize(px);
     f.setWeight(weight);
     l->setFont(f);
-    l->setStyleSheet(QString("background:transparent;border:0;color:%1;font-family:'Inter';font-"
+    l->setStyleSheet(QString("background:transparent;border:0;color:%1;font-family:'HarmonyOS Sans';font-"
                              "size:%2px;font-weight:%3;")
                          .arg(color)
                          // Qt 5's QSS parser divides numeric weights by eight (not CSS mapping).
@@ -423,6 +425,29 @@ void configureMdiEditor(QWidget* preview, QFormLayout* controls, QLineEdit* titl
             closeGlyph->isChecked(), minGlyph->isChecked(), maxGlyph->isChecked());
         sync();
     };
+    // Qt's tileSubWindows() defers geometry negotiation while an offscreen
+    // editor is hidden. Keep the native command as the first authority, then
+    // apply a deterministic non-overlapping fallback for the same documents
+    // when Qt has not laid them out yet.
+    const auto tileDocuments = [=] {
+        area->tileSubWindows();
+        QCoreApplication::processEvents();
+        bool overlaps = false;
+        for (int i = 0; i < documents.size() && !overlaps; ++i)
+            for (int j = i + 1; j < documents.size(); ++j)
+                overlaps = documents[i]->geometry().intersects(documents[j]->geometry());
+        if (!overlaps || documents.isEmpty())
+            return;
+        const QRect viewport = area->viewport()->rect();
+        const int columns = qMax(1, qCeil(qSqrt(double(documents.size()))));
+        const int rows = qMax(1, (documents.size() + columns - 1) / columns);
+        const int width = qMax(1, viewport.width() / columns);
+        const int height = qMax(1, viewport.height() / rows);
+        for (int i = 0; i < documents.size(); ++i)
+            documents[i]->setGeometry((i % columns) * width,
+                                      (i / columns) * height, width, height);
+        QCoreApplication::processEvents();
+    };
     const auto button = [&](const QString& text, const char* name,
                             const std::function<void()>& action) {
         auto* b = new QPushButton(text, settings);
@@ -454,10 +479,11 @@ void configureMdiEditor(QWidget* preview, QFormLayout* controls, QLineEdit* titl
     button("cascadeSubWindows()", "mdiCascadeControl", [=] {
         mode->setCurrentIndex(0);
         area->cascadeSubWindows();
+        QCoreApplication::processEvents();
     });
     button("tileSubWindows()", "mdiTileControl", [=] {
         mode->setCurrentIndex(0);
-        area->tileSubWindows();
+        tileDocuments();
     });
     button("closeAllSubWindows()", "mdiCloseAllControl", [=] { area->closeAllSubWindows(); });
     if (!rootSub)
@@ -472,10 +498,11 @@ void configureMdiEditor(QWidget* preview, QFormLayout* controls, QLineEdit* titl
                 if (choice == "Cascade")
                     area->cascadeSubWindows();
                 else if (choice == "Tile")
-                    area->tileSubWindows();
+                    tileDocuments();
                 else
                     for (int i = 0; i < documents.size(); ++i)
                         documents[i]->setGeometry(14 + i * 28, 18 + i * 32, 280, 190);
+                QCoreApplication::processEvents();
             }
         });
     auto* note =

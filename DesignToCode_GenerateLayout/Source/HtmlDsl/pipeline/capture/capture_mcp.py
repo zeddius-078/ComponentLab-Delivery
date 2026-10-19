@@ -96,6 +96,8 @@ def main():
     args = parser.parse_args()
     # --arguments 是工具参数的 JSON 字符串；格式错误时在创建输出目录前停止。
     arguments = json.loads(args.arguments)
+    from output_paths import output_path
+    args.output = output_path(args.output)
     # 每次采集使用新目录，已有目录会报错，防止覆盖之前保存的来源文件。
     args.output.mkdir(parents=True, exist_ok=False)
     recorder = Recorder(args.endpoint, args.output)

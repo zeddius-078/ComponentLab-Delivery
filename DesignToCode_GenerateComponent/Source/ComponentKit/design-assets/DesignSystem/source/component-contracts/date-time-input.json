@@ -1,0 +1,36 @@
+{
+  "$description": "DateTimeInput V2 Component Contract. One public temporal-input identity with a custom field and calendar popup shell; Qt native temporal types remain value and parsing adapters only.",
+  "component": "date-time-input",
+  "version": "1.0",
+  "$status": "draft-v2",
+  "contractKind": "temporal-input-control",
+  "registryBindings": {"source": "source/component-registry.json#/components/date-time-input", "axes": ["mode", "state"], "slots": ["container", "field", "calendar-action", "spin-action", "divider", "popup-surface", "calendar-header", "weekday-row", "day-grid", "day-cell", "nav-button", "action-button", "range-overlay", "focus-ring", "loading-spinner"], "authority": "component-registry"},
+  "structure": ["container", "field", "calendar-action", "spin-action", "divider", "popup-surface", "calendar-header", "weekday-row", "day-grid", "day-cell", "nav-button", "action-button", "range-overlay", "focus-ring", "loading-spinner"],
+  "stateLayers": {"mode": "date, time or datetime editor capability", "pointerInteraction": "field and popup controls", "focus": "keyboard-only border focus ring; popup cells use their own focus indication", "availability": "disabled, error and loading lock interaction", "content": "runtime date/time value and locale-formatted sections", "calendarSelection": "single or range selection is runtime behavior, not a DateTimeInput visual axis"},
+  "figmaEvidence": {"fileKey": "auvffqeZhijyE5UbhLlB6K", "nodes": ["195:935", "194:606", "193:361", "193:614"], "confirmedStructure": ["DateField", "RangeFields", "CalendarSurface", "DayCell", "NavButton", "ActionButton"], "note": "The Figma source demonstrates a custom calendar grid, range segments, month navigation and popup actions; native Qt editor visuals are not the design source."},
+  "internalAnatomy": {
+    "publicComponent": false,
+    "calendarSurface": {"role": "private composition anatomy", "structure": ["calendar-header", "weekday-row", "day-grid", "day-cell", "nav-button", "action-button", "range-overlay"]},
+    "dayCellStates": ["default", "hover", "pressed", "focused", "selected", "selected-start", "selected-middle", "selected-end", "today", "disabled", "out-of-month", "in-range", "hover-preview-range"],
+    "navButtonStates": ["default", "hover", "pressed", "disabled"],
+    "actionButtonKinds": ["primary", "secondary", "text"],
+    "rangeFields": ["start", "end", "start-only", "complete"]
+  },
+  "runtimeModel": {
+    "mode": {"registryAxis": "mode", "values": ["date", "time", "datetime"], "owner": "runtime-capability", "qtValueAdapters": ["QDate", "QTime", "QDateTime"], "qtEditorAdapters": ["QDateEdit", "QTimeEdit", "QDateTimeEdit"], "visualShell": "custom"},
+    "state": {"registryAxis": "state", "priority": ["error", "disabled", "loading", "focused", "hover", "default"], "owner": "runtime-interaction"},
+    "value": {"owner": "runtime-api", "fields": ["date", "time", "dateTime", "displayFormat", "locale", "calendar", "minimum", "maximum"]},
+    "popup": {"owner": "runtime-api", "open": "not-a-design-token-axis", "calendarSurface": "custom-private-composition", "selectionMode": ["single", "range"], "monthNavigation": true, "rangePreview": true},
+    "availability": {"readOnlyVisualAlias": "disabled", "lockInteraction": true}
+  },
+  "contentModel": {"placeholder": {"kind": "localized-content-key-or-runtime-text", "optional": true, "visualToken": false}, "format": {"kind": "runtime-locale-format", "visualToken": false}},
+  "compositionRules": [
+    "DateTimeInput is the public semantic identity; DatePicker, TimePicker and DateTimePicker are legacy aliases, not parallel public visual components.",
+    "Qt QDate/QTime/QDateTime and the native editor classes provide temporal values, parsing, formatting and keyboard stepping only; they do not define the final visual shell.",
+    "Date mode may expose a calendar action; time and datetime modes may expose spin sections. The field shell and popup shell remain project-owned and share one Token contract.",
+    "The calendar popup is a private composition of header, weekday row, day grid, range overlay, navigation buttons and action buttons. It is not a second public component identity in this slice.",
+    "Popup open/close, calendar selection, locale, range constraints, seconds and AM/PM display are Runtime API behavior, not Component Token axes.",
+    "Focused uses a border-only focus ring. ReadOnly uses the disabled visual and locks editing. Error and Loading also lock interaction; Loading uses the shared Spinner."
+  ],
+  "tokenBoundary": {"recipeOwns": ["field and popup geometry", "field typography and color", "calendar header and weekday visuals", "day-cell state visuals", "range segment visuals", "navigation and action button visuals", "calendar/spin action visuals", "divider", "focus ring", "loading spinner references"], "runtimeOwns": ["temporal value", "mode adapter selection", "locale and format", "popup lifecycle", "range validation", "keyboard and pointer handling", "month/day dataset"], "contractDoesNotOwn": ["resolved colors and dimensions", "calendar business rules", "locale data", "popup dataset"]}
+}

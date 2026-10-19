@@ -24,7 +24,7 @@ struct NativeComponentDescriptor {
 // request registered classes; they do not duplicate constructors or setter maps.
 class ComponentFactory {
   public:
-    explicit ComponentFactory(const QString& profile = "light-comfortable");
+    explicit ComponentFactory(const QString& profile = "standard-light");
     QWidget* create(const QString& sdkClass, QWidget* parent = nullptr) const;
     void applyCalls(QWidget* widget, const QJsonArray& calls) const;
     bool apply(QWidget* widget, const QString& api, const QJsonValue& value,

@@ -1,7 +1,6 @@
 #include "TokenResources.h"
 #include <QDir>
 #include <QFile>
-#include <QRegularExpression>
 #include <stdexcept>
 
 namespace token_resources {
@@ -19,21 +18,14 @@ QString generatedDirectory() {
 QByteArray read(const QString& resource) {
     QString path = resource;
     if (!generatedRoot.isEmpty()) {
-        if (resource == ":/button/manifest.json")
-            path = generatedRoot + "/button/manifest.json";
-        else if (resource.startsWith(":/checkbox/") || resource.startsWith(":/forms/"))
+        if (resource.startsWith(":/checkbox/"))
             path = generatedRoot + '/' + resource.mid(2);
         else if (resource == ":/tokens/tokens_qt.json")
             path = QDir(generatedRoot).absoluteFilePath(
                 "../DesignSystem/generated/runtime/tokens_qt.json");
-        else {
-            auto m =
-                QRegularExpression("^:/button/(light|dark)-(comfortable|compact)(-demo)?\\.qss$")
-                    .match(resource);
-            if (m.hasMatch())
-                path = generatedRoot + "/button/" + m.captured(1) + '-' + m.captured(2) +
-                       (m.captured(3).isEmpty() ? "/Z_PushButton.qss" : "/demo.qss");
-        }
+        else if (resource == ":/composites/qt.json")
+            path = QDir(generatedRoot).absoluteFilePath(
+                "../DesignSystem/generated/composites/qt.json");
     }
     QFile f(path);
     if (!f.open(QIODevice::ReadOnly))

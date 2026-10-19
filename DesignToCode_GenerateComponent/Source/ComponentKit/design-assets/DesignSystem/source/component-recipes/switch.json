@@ -1,0 +1,45 @@
+{
+  "$schema": "../../schema/component-recipe-schema.json",
+  "$registry": {"component": "switch", "version": "2.0"},
+  "$status": "draft-v2",
+  "$description": "Switch V2 sparse recipe. Runtime resolves value and interaction state; design source stores shared geometry and sparse visual references.",
+  "base": {
+    "size": {
+      "small": {"slot/knob/visual-size": "{primitive.dimension.12}", "slot/track/visual-height": "{primitive.dimension.16}", "slot/track/visual-width": "{primitive.dimension.28}"},
+      "medium": {"slot/knob/visual-size": "{primitive.dimension.16}", "slot/track/visual-height": "{primitive.dimension.20}", "slot/track/visual-width": "{primitive.dimension.36}"}
+    },
+    "shared": {
+      "slot/knob/inset": "{primitive.dimension.2}",
+      "slot/knob/background-color": "{semantic.color.icon.invert}",
+      "slot/label/color": "{semantic.color.text.primary}",
+      "slot/label/typography": "{typography.body.body-1}",
+      "slot/content/color": "{semantic.color.text.primary}"
+    },
+    "state": {
+      "focused": {"slot/focus-ring/color": "{semantic.color.interactive.brand.focus-ring}", "slot/focus-ring/border-width": "{semantic.border-width.focus-ring}"}
+    }
+  },
+  "valueGroups": {
+    "off": {"slot/track/background-color": "{semantic.color.background.control-default}"},
+    "on": {"slot/track/background-color": "{semantic.color.interactive.brand.default}"}
+  },
+  "stateOverrides": {
+    "default": {},
+    "hover": {"valueGroups": {"off": {"slot/track/background-color": "{semantic.color.background.hover}"}, "on": {"slot/track/background-color": "{semantic.color.interactive.brand.hover}"}}},
+    "pressed": {"valueGroups": {"off": {"slot/track/background-color": "{semantic.color.background.pressed}"}, "on": {"slot/track/background-color": "{semantic.color.interactive.brand.pressed}"}}},
+    "focused": {"tokens": {"slot/focus-ring/color": "{semantic.color.interactive.brand.focus-ring}", "slot/focus-ring/border-width": "{semantic.border-width.focus-ring}"}},
+    "disabled": {"tokens": {"slot/track/background-color": "{semantic.color.background.disabled}", "slot/label/color": "{semantic.color.text.disabled}"}},
+    "loading": {"tokens": {"slot/loading-spinner/size": "{semantic.visualization-size.sm}", "slot/loading-spinner/color": "{semantic.color.interactive.brand.focus-ring}", "slot/loading-spinner/stroke-width": "{primitive.spinner.stroke-width}", "slot/loading-spinner/arc-start-angle": "{primitive.spinner.arc-start-angle}", "slot/loading-spinner/arc-sweep-angle": "{primitive.spinner.arc-sweep-angle}"}}
+  },
+  "overlayPolicy": {"resolutionOrder": ["shared-base", "size", "value-group", "state-sparse-override", "focus-ring"], "stateOverrideMode": "sparse-inherit-unmentioned", "disabledPreservesValue": true, "loadingPreservesValue": true},
+  "stateRules": {
+    "default": {"interaction": "available"},
+    "hover": {"interaction": "available"},
+    "pressed": {"interaction": "activation-in-progress", "valueMutationOwner": "runtime-interaction"},
+    "focused": {"interaction": "keyboard-focus", "focusRing": {"enabled": true, "visual": "border-only", "activation": "keyboard-only"}},
+    "disabled": {"interaction": "locked", "preserveValue": true},
+    "loading": {"interaction": "locked", "preserveValue": true, "spinnerPlaybackOwner": "runtime"}
+  },
+  "contentRules": {"label": {"optional": true, "interactionSurface": "shared-with-switch", "keyboardFocusTarget": "switch-control"}},
+  "diagnostics": [{"severity": "warning", "code": "V2-DRAFT-SWITCH-LEGACY-HARDCODED-VISUALS", "message": "Runtime Switch still contains legacy literal hover/pressed colors and arc geometry; migrate those reads to compiled Switch and Spinner tokens before release.", "source": "runtime/component/Z_DesignComponents.cpp"}]
+}

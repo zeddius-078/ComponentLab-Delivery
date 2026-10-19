@@ -1,0 +1,24 @@
+{
+  "schemaVersion": "capture-manifest.v1",
+  "manifestType": "preview-fixture",
+  "generatedAtUtc": "2026-10-13T18:23:22.211878+00:00",
+  "expectedRootId": "21:436",
+  "fileKey": "4S0Ktm81WnvzuJmZHvRuOg",
+  "sourceHtml": "page.html",
+  "sourceDsl": "../../design-inputs/result-page/canonical.raw.json",
+  "fontFamily": "HarmonyOS Sans SC-Regular",
+  "resources": [
+    {
+      "url": "http://localhost:3667/assets/1790355461100/HarmonyOS_Sans_SC_Regular.ttf",
+      "local": "../../../../examples/resources/HarmonyOS_Sans_SC_Regular.ttf"
+    },
+    {
+      "url": "http://localhost:3667/assets/1790355461100/GLYPHarrowleft.svg",
+      "local": "arrow-left.svg"
+    }
+  ],
+  "sourceHashes": {
+    "htmlSha256": "86c4772ed7edaf33f282aef363fa9d5c0a68960d96bb26bf609f4f1beff0c455",
+    "dslSha256": "bd4ccd9b4267bd7bb419eb5d825c2501b4e062d7dd4454190e9ac872bff808c8"
+  }
+}

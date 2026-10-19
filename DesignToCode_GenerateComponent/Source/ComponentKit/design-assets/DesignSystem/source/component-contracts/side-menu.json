@@ -1,0 +1,76 @@
+{
+  "$description": "side-menu V2 Component Contract. A page navigation shell with expanded and collapsed runtime layouts.",
+  "component": "side-menu",
+  "version": "2.0",
+  "$status": "draft-v2",
+  "contractKind": "side-menu",
+  "registryBindings": {
+    "source": "source/component-registry.json#/components/side-menu",
+    "axes": ["state"],
+    "slots": ["container", "brand-header", "account", "nav-group", "item", "icon", "indicator", "submenu", "footer"],
+    "authority": "component-registry"
+  },
+  "structure": ["container", "brand-header", "account", "nav-group", "item", "submenu", "footer"],
+  "contentStructure": {
+    "brand-header": ["brand-logo", "collapse-action"],
+    "account": ["avatar", "account-name", "account-meta", "account-action"],
+    "nav-group": ["section-label", "nav-item", "submenu"],
+    "nav-item": ["icon", "label", "expand-indicator", "badge"],
+    "footer": ["footer-actions"]
+  },
+  "childComponentBoundary": {
+    "brand-logo": ["Icon", "Label"],
+    "collapse-action": ["ToolButton"],
+    "account": ["Avatar", "Label", "Menu"],
+    "nav-item": ["Sidebar/NavItem private anatomy"],
+    "submenu": ["Sidebar/NavItem private anatomy", "Menu/Popover runtime overlay"],
+    "badge": ["Badge"],
+    "footer-actions": ["Button", "ToolButton"]
+  },
+  "runtimeLayoutModes": {
+    "expanded": {
+      "navItemContent": "icon-and-label",
+      "submenu": "inline-under-group"
+    },
+    "collapsed": {
+      "navItemContent": "icon-only",
+      "submenu": "popover-on-hover-or-focus",
+      "labelAccess": "tooltip"
+    }
+  },
+  "stateLayers": {
+    "navItemInteraction": {
+      "owner": "runtime-api",
+      "appliesTo": "nav-item",
+      "states": ["default", "hover", "pressed", "focused", "disabled"]
+    },
+    "activeRoute": {
+      "owner": "runtime-api",
+      "appliesTo": "nav-item",
+      "visualOverlay": true,
+      "notPublicStateAxis": true
+    },
+    "groupExpansion": {
+      "owner": "runtime-api",
+      "appliesTo": "nav-group",
+      "notPublicStateAxis": true
+    }
+  },
+  "compositionRules": [
+    "Sidebar is one public parent component; Sidebar/NavItem is private anatomy.",
+    "MenuItem is not reused as the Sidebar navigation item identity.",
+    "Expanded and collapsed are runtime layout modes, not design State values.",
+    "Submenus are inline in expanded mode and use shared Overlay/Menu in collapsed mode.",
+    "Route identity, active route, permissions and navigation events are runtime-owned.",
+    "Account, labels, badges and footer actions are child components or instance content."
+  ],
+  "tokenBoundary": {
+    "recipeOwns": [
+      "container background, border, radius, width, min-width and collapsed-width",
+      "brand-header, account, nav-group, submenu and footer structural heights/gaps",
+      "nav-item background, color, height, radius, icon size and active indicator color"
+    ],
+    "sharedTokenOwners": ["Profile spacing", "Typography Composite", "Icon", "Avatar", "Button", "ToolButton", "Badge", "Menu", "Tooltip", "Popover"],
+    "runtimeOwns": ["route IDs", "route labels", "active route", "permissions", "collapsed mode", "group expansion", "submenu overlay lifecycle", "route events"]
+  }
+}

@@ -1,0 +1,75 @@
+{
+  "$description": "Tree V2 Figma binding and exact value evidence manifest.",
+  "component": "tree",
+  "version": "2.0",
+  "architectureAuthority": "V2 component-registry, component-contracts, and component-recipes; the reference JSON is value-only evidence and must not define Figma variable names.",
+  "valueAuthority": "source/component-value-evidence/tree.json",
+  "publicComponentSet": "ComponentLab/Tree",
+  "legacyIdentities": [
+    "ComponentLab/TreeView",
+    "ComponentLab/TreeWidget"
+  ],
+  "figmaPages": [
+    "712:8",
+    "713:2"
+  ],
+  "figmaComponentSet": "2256:15923",
+  "legacyFigmaComponentSets": [
+    "712:27",
+    "713:21"
+  ],
+  "variantAxes": {
+    "density": [
+      "compact",
+      "comfortable"
+    ],
+    "state": [
+      "default",
+      "hover",
+      "selected",
+      "disabled",
+      "selected-hover",
+      "focus-visible"
+    ]
+  },
+  "contentProperties": {
+    "nodeLabelText": {
+      "kind": "localized-content-key-or-runtime-label",
+      "source": "tree-node-content-slot",
+      "defaultLocale": "en-US",
+      "fallbackLocale": "en-US"
+    },
+    "nodeAuxiliaryText": {
+      "kind": "runtime-instance-content",
+      "source": "optional-node-metadata-slot"
+    },
+    "emptyStateText": {
+      "kind": "localized-content-key",
+      "source": "tree-empty-state-slot",
+      "defaultLocale": "en-US",
+      "fallbackLocale": "en-US"
+    }
+  },
+  "variableNamespace": {
+    "collection": "DSM/Component",
+    "prefix": "tree/",
+    "evidence": "source/component-value-evidence/tree.json"
+  },
+  "bindingRules": [
+    {
+      "figmaSlot": "Tree/Container",
+      "canonicalPattern": "component.tree.base.state.default.slot.container.*",
+      "valueEvidence": "tree/color/bg/*,tree/padding/default"
+    },
+    {
+      "figmaSlot": "Tree/Item",
+      "canonicalPattern": "component.tree.base.state.*.slot.item.*",
+      "valueEvidence": "tree/color/bg/*,tree/content/height/md"
+    },
+    {
+      "figmaSlot": "Tree/Content",
+      "canonicalPattern": "component.tree.base.state.default.slot.content.*",
+      "valueEvidence": "tree/content/*,tree/color/text/*"
+    }
+  ]
+}

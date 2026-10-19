@@ -158,7 +158,8 @@ def relative_path(target, base):
 
 
 def create(args):
-    output = Path(args.output).resolve()
+    from output_paths import output_path
+    output = output_path(args.output)
     output.parent.mkdir(parents=True, exist_ok=True)
     html = Path(args.html).resolve()
     dsl = Path(args.dsl).resolve()

@@ -56,17 +56,14 @@ void configureSelectSpecimen(commonWidget::Z_Select* select,
     const QString size = figmaAxisValue(item.variant, QStringLiteral("Size")).toLower();
     const QString state = figmaAxisValue(item.variant, QStringLiteral("State"));
     const QString setName = item.componentSetName.toLower();
-    step("appearance", [&] { select->setAppearance(QStringLiteral("figma-light")); });
+    step("appearance", [&] { select->setAppearance(QStringLiteral("outlined")); });
     step("size", [&] { select->setControlSize(
         size == QStringLiteral("small") ? QStringLiteral("sm") :
         size == QStringLiteral("large") ? QStringLiteral("lg") : QStringLiteral("md")); });
-    for (const auto& appearance : {QStringLiteral("outlined"), QStringLiteral("filled"),
-                                   QStringLiteral("borderless"), QStringLiteral("underlined")})
-        if (setName.contains(appearance))
-            step("variant", [&] { select->setVariant(appearance); });
+    if (!setName.contains(QStringLiteral("outlined")))
+        select->setProperty("v2AppearanceFallback", true);
     step("status", [&] { select->setStatus(
-        setName.contains(QStringLiteral("error")) ? QStringLiteral("error") :
-        setName.contains(QStringLiteral("warning")) ? QStringLiteral("warning") : QString()); });
+        setName.contains(QStringLiteral("error")) ? QStringLiteral("error") : QString()); });
     step("placeholder", [&] { select->setPlaceholder(QStringLiteral("Select an option")); });
     step("options", [&] { select->setOptions(
         {{QStringLiteral("etch-01"), QStringLiteral("ETCH-01"), {}, false},

@@ -1,8 +1,8 @@
 #include "DemoWindow.h"
 #include "ui_ComponentLab.h"
-#include "ButtonAppearanceAdapter.h"
 #include "IconSource.h"
 #include "Z_CheckBox.h"
+#include "Z_PushButton.h"
 #include <QApplication>
 #include <QButtonGroup>
 #include <QComboBox>
@@ -20,7 +20,6 @@
 #include <QScrollArea>
 #include <QSignalBlocker>
 #include <QSplitter>
-#include <QStandardItemModel>
 #include <QTreeWidget>
 #include <QTabWidget>
 
@@ -72,10 +71,10 @@ void DemoWindow::buttonPage() {
         return w;
     };
     c->danger = check("buttonDanger", "Danger");
-    c->material = choices(form, QString::fromUtf8("材质"), "buttonAppearance", {});
-    c->material->addItem(QString::fromUtf8("Figma 当前画廊 / Light"),"figma-light");
-    for (const auto& id : catalog->buttonPresetIds())
-        c->material->addItem(catalog->label(id), id);
+    c->material = choices(form, QString::fromUtf8("V2 外观"), "buttonAppearance", {});
+    for (const auto& id : QStringList{"filled", "outlined", "dashed", "text", "link"})
+        c->material->addItem(id, id);
+    c->material->setCurrentIndex(1);
     c->ghost = check("buttonGhost", "Ghost");
     c->size = choices(form, "Size", "buttonSize", {"XS", "S", "M", "L"});
     c->size->setCurrentIndex(2);
@@ -122,9 +121,9 @@ void DemoWindow::buttonPage() {
         });
         return input;
     };
-    c->leadingVisible = check("leadingVisible", "Leading visible", false);
+    c->leadingVisible = check("leadingVisible", "Leading visible", true);
     c->leading = source("leading", ":/icons/arrow-left.svg");
-    c->trailingVisible = check("trailingVisible", "Trailing visible", false);
+    c->trailingVisible = check("trailingVisible", "Trailing visible", true);
     c->trailing = source("trailing", ":/icons/arrow-right.svg");
     c->disabled = check("buttonDisabled", "Disabled");
     c->parentDisabled = check("buttonParentDisabled", "Parent disabled");
@@ -159,10 +158,9 @@ void DemoWindow::buttonPage() {
     events->setMaximumBlockCount(60);
     events->setMaximumHeight(160);
     events->setObjectName("buttonEvents");
-    auto* appearance = new ButtonAppearanceAdapter(buttonPreview, catalog);
     layout->addWidget(events);
     layout->addStretch();
-    const auto apply = [this, c, appearance, host, error, status, applyButton] {
+    const auto apply = [this, c, host, error, status, applyButton] {
         if (c->applying)
             return;
         QScopedValueRollback<bool> guard(c->applying, true);
@@ -172,31 +170,7 @@ void DemoWindow::buttonPage() {
             QSignalBlocker block(w);
             w->setChecked(value);
         };
-        const auto reasonText = [](const QString& reason) {
-            return reason == "material-requires-container"
-                       ? QString::fromUtf8(
-                             "该材质需要实体容器；Text / Link 可用纯色或实色几何内阴影")
-                       : QString::fromUtf8("Ghost 透明底面与当前材质冲突");
-        };
-        const auto type = c->type->currentText().toUpper();
-        auto* materialModel = qobject_cast<QStandardItemModel*>(c->material->model());
-        for (int i = 0; i < c->material->count(); ++i) {
-            const auto reason =
-                catalog->buttonUnsupportedReason(c->material->itemData(i).toString(), type, false);
-            materialModel->item(i)->setEnabled(reason.isEmpty());
-            materialModel->item(i)->setToolTip(reason.isEmpty() ? QString() : reasonText(reason));
-        }
-        if (!materialModel->item(c->material->currentIndex())->isEnabled()) {
-            QSignalBlocker block(c->material);
-            c->material->setCurrentIndex(c->material->findData("solid"));
-            changes << QString::fromUtf8("已切回纯色：上游类型不支持原材质");
-        }
-        const auto material = c->material->currentData().toString();
-        const auto ghostReason = catalog->buttonUnsupportedReason(material, type, true);
-        if (!ghostReason.isEmpty() && c->ghost->isChecked()) {
-            setCheck(c->ghost, false);
-            changes << QString::fromUtf8("已取消 Ghost：当前材质提供实体底面");
-        }
+        const auto appearanceId = c->material->currentData().toString();
         const bool iconOnly = c->iconMode->isChecked();
         if (iconOnly != c->wasIconMode) {
             if (iconOnly) {
@@ -243,16 +217,29 @@ void DemoWindow::buttonPage() {
                 if (b->isIconOnly())
                     b->setIconOnly(false);
                 b->setType(ButtonType(c->type->currentIndex()));
-                b->setSize(ButtonSize(c->size->currentIndex()));
-                b->setDanger(c->danger->isChecked());
-                b->setGhost(c->ghost->isChecked());
+                const QVector<ButtonSize> sizes{ButtonSize::XS, ButtonSize::S,
+                                                ButtonSize::M, ButtonSize::L};
+                b->setSize(sizes.at(c->size->currentIndex()));
+                if (c->danger->isChecked())
+                    b->setDanger(true);
+                const QMap<QString, ButtonAppearance> appearances{
+                    {"filled", ButtonAppearance::Filled},
+                    {"outlined", ButtonAppearance::Outlined},
+                    {"dashed", ButtonAppearance::Dashed},
+                    {"text", ButtonAppearance::Text},
+                    {"link", ButtonAppearance::Link}};
+                b->setAppearance(appearances.value(appearanceId));
+                if (c->ghost->isChecked())
+                    b->setGhost(true);
                 b->setText(c->text->text());
                 b->setAccessibleName(c->name->text());
                 b->setToolTip(c->name->text());
-                if (left)
-                    b->setLeadingIconSource(c->leading->text());
-                if (right)
-                    b->setTrailingIconSource(c->trailing->text());
+                // Keep both authored source slots on the runtime instance
+                // even when a slot is currently hidden.  Visibility is an
+                // independent content axis; dropping the hidden source made
+                // later icon-mode round trips lose the Figma asset identity.
+                b->setLeadingIconSource(c->leading->text());
+                b->setTrailingIconSource(c->trailing->text());
                 b->setLeadingIconVisible(left);
                 b->setTrailingIconVisible(right);
                 b->setLeadingIconStyle(IconContainerStyle::Bare);
@@ -262,9 +249,6 @@ void DemoWindow::buttonPage() {
             host->setEnabled(!c->parentDisabled->isChecked());
             b->setEnabled(!c->disabled->isChecked());
             b->setLoading(loading);
-            appearance->setAppearance(material);
-            if(material=="figma-light" && c->danger->isChecked() && type!="PRIMARY")
-                changes << QString::fromUtf8("当前 Figma 未定义此 Danger 组合；使用既有 SDK 外观，不计入画廊一致性。");
             error->clear();
             status->setText(changes.join('\n'));
             valid = true;
@@ -280,8 +264,8 @@ void DemoWindow::buttonPage() {
         for (auto* w : QList<QWidget*>{c->type, c->danger, c->material, c->size, c->textMode,
                                        c->iconMode, c->name})
             w->setEnabled(!loading);
-        c->ghost->setEnabled(!loading && ghostReason.isEmpty());
-        c->ghost->setToolTip(ghostReason.isEmpty() ? QString() : reasonText(ghostReason));
+        c->ghost->setEnabled(!loading);
+        c->ghost->setToolTip(QString::fromUtf8("Ghost 使用 V2 text 外观"));
         c->iconSide->setEnabled(iconOnly && !loading);
         c->text->setEnabled(!iconOnly && !loading);
         c->leadingVisible->setEnabled(!iconOnly && !loading);
@@ -307,7 +291,6 @@ void DemoWindow::buttonPage() {
             if (valid && !loading && !policyDisabled && c->state->currentIndex() == 4)
                 b->setFocus(Qt::TabFocusReason);
         }
-        appearance->refresh();
         const QStringList previewStates{"","default","hover","active","focus-visible"};
         b->setProperty("figmaPreviewState",valid && !loading && !policyDisabled?
                        previewStates.value(c->state->currentIndex()):QString());
@@ -344,18 +327,18 @@ void DemoWindow::buttonStatesPage() {
     auto* body = new QWidget;
     scroll->setWidget(body);
     auto* outer = new QVBoxLayout(body);
-    auto* material = new QComboBox;
-    material->setObjectName("buttonStateAppearance");
-    for (const auto& id : catalog->buttonPresetIds())
-        material->addItem(catalog->label(id), id);
-    outer->addWidget(material, 0, Qt::AlignLeft);
+    auto* appearance = new QComboBox;
+    appearance->setObjectName("buttonStateAppearance");
+    for (const auto& id : QStringList{"filled", "outlined", "dashed", "text", "link"})
+        appearance->addItem(id, id);
+    outer->addWidget(appearance, 0, Qt::AlignLeft);
     auto* grid = new QGridLayout;
     grid->setHorizontalSpacing(28);
     grid->setVerticalSpacing(18);
     outer->addLayout(grid);
     const QStringList types{"Primary", "Default", "Dashed", "Text", "Link"},
         sizes{"XS", "S", "M", "L"};
-    QVector<ButtonAppearanceAdapter*> adapters;
+    QVector<Z_PushButton*> buttons;
     for (int col = 0; col < 4; ++col)
         grid->addWidget(new QLabel(sizes[col]), 0, col + 1);
     for (int row = 0; row < 5; ++row) {
@@ -364,8 +347,10 @@ void DemoWindow::buttonStatesPage() {
             auto* b = new Z_PushButton;
             b->setText(QString::fromUtf8("执行任务"));
             b->setType(ButtonType(row));
-            b->setSize(ButtonSize(col));
-            adapters << new ButtonAppearanceAdapter(b, catalog);
+            const QVector<ButtonSize> buttonSizes{ButtonSize::XS, ButtonSize::S,
+                                                  ButtonSize::M, ButtonSize::L};
+            b->setSize(buttonSizes.at(col));
+            buttons << b;
             grid->addWidget(b, row + 1, col + 1, Qt::AlignLeft);
         }
     }
@@ -408,24 +393,22 @@ void DemoWindow::buttonStatesPage() {
             b->setLoading(true);
         if (i == 11)
             host->setEnabled(false);
-        adapters << new ButtonAppearanceAdapter(b, catalog);
+        buttons << b;
         layout->addWidget(b, 0, Qt::AlignLeft);
         states->addWidget(host, row + 1, col);
     }
-    connect(material, qOverload<int>(&QComboBox::currentIndexChanged), this,
-            [this, material, adapters] {
-                const auto id = material->currentData().toString();
-                for (auto* a : adapters) {
-                    auto* b = qobject_cast<Z_PushButton*>(a->parent());
-                    const auto reason = catalog->buttonUnsupportedReason(
-                        id, b->property("buttonType").toString(), b->property("ghost").toBool());
-                    b->setProperty("requestedAppearance", id);
-                    b->setProperty("appearanceSupported", reason.isEmpty());
-                    b->setToolTip(reason.isEmpty()
-                                      ? QString()
-                                      : QString::fromUtf8("此组合不可用：材质与透明结构冲突"));
-                    b->setEnabled(reason.isEmpty() && !b->property("sampleDisabled").toBool());
-                    a->setAppearance(reason.isEmpty() ? id : "solid");
+    connect(appearance, qOverload<int>(&QComboBox::currentIndexChanged), this,
+            [appearance, buttons] {
+                const QMap<QString, ButtonAppearance> values{
+                    {"filled", ButtonAppearance::Filled},
+                    {"outlined", ButtonAppearance::Outlined},
+                    {"dashed", ButtonAppearance::Dashed},
+                    {"text", ButtonAppearance::Text},
+                    {"link", ButtonAppearance::Link}};
+                const auto id = appearance->currentData().toString();
+                for (auto* b : buttons) {
+                    b->setAppearance(values.value(id));
+                    b->setEnabled(!b->property("sampleDisabled").toBool());
                 }
             });
     outer->addStretch();

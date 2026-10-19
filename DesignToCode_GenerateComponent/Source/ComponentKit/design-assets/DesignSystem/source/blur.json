@@ -1,0 +1,25 @@
+{
+  "$schema": "../schema/composite-token-schema.json",
+  "$description": "Blur Composite reserved package. No active public blur token has been promoted in this pass.",
+  "$version": "2.0",
+  "$status": "reserved",
+  "layer": "composite",
+  "kind": "blur",
+  "tokens": {},
+  "contract": {
+    "radius": "Primitive/Profile dimension reference",
+    "scope": "visual-effect-only",
+    "sourcePolicy": "active-source-only"
+  },
+  "migrationSources": [
+    "component contracts and demos containing blur-like parameters"
+  ],
+  "diagnostics": [
+    {
+      "severity": "warning",
+      "code": "BLUR-NO-ACTIVE-SOURCE",
+      "message": "No authoritative active Blur Token source was found; demo values are not promoted to the public design system.",
+      "source": "source/blur.json"
+    }
+  ]
+}

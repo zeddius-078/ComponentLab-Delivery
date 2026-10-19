@@ -62,7 +62,7 @@ struct FlowTokens {
         return surface::color(value);
     }
     QString qss(const char* key) const {return qssColor(color(key));}
-    QString subtleBrand() const {auto value=color("base.stoken.color.interactive.brand.default");value.setAlpha(20);return qssColor(value);}
+    QString subtleBrand() const {auto value=color("semantic.color.interactive.brand.default");value.setAlpha(20);return qssColor(value);}
 };
 void inheritProfile(QWidget* child,const QWidget* parent) {
     const auto profile=parent->property("designSystemProfile");
@@ -77,18 +77,18 @@ public:
     void refresh() {
         const FlowTokens tokens(profileFor(wizard));
         const auto surface=tokens.qss("semantic.color.background.surface");
-        const auto hover=tokens.qss("semantic.color.background.interactive-hover");
-        const auto pressed=tokens.qss("semantic.color.background.interactive-active");
+        const auto hover=tokens.qss("semantic.color.background.hover");
+        const auto pressed=tokens.qss("semantic.color.background.pressed");
         const auto text=tokens.qss("semantic.color.text.primary");
         const auto disabledSurface=tokens.qss("semantic.color.background.disabled");
-        const auto disabledText=tokens.qss("base.stoken.button.base.disabled.label.color");
-        const auto control=tokens.qss("semantic.color.border.control");
-        const auto subtle=tokens.qss("semantic.color.border.subtle");
-        const auto brand=tokens.qss("base.stoken.color.interactive.brand.default");
-        const auto brandHover=tokens.qss("base.stoken.color.interactive.brand.hover");
-        const auto brandPressed=tokens.qss("base.stoken.color.interactive.brand.pressed");
-        const auto onBrand=tokens.qss("semantic.color.text.onBrand");
-        const auto focus=tokens.qss("semantic.color.border.focus");
+        const auto disabledText=tokens.qss("component.button.base.state.disabled.slot.label.color");
+        const auto control=tokens.qss("semantic.color.border.default");
+        const auto subtle=tokens.qss("semantic.color.border.secondary");
+        const auto brand=tokens.qss("semantic.color.interactive.brand.default");
+        const auto brandHover=tokens.qss("semantic.color.interactive.brand.hover");
+        const auto brandPressed=tokens.qss("semantic.color.interactive.brand.pressed");
+        const auto onBrand=tokens.qss("semantic.color.text.invert");
+        const auto focus=tokens.qss("semantic.color.interactive.brand.focus-ring");
         // Do not replace custom buttons: Qt keeps each role's exact object and connection.
         for(int n=QWizard::BackButton;n<=QWizard::CustomButton3;++n) {
             auto* b=wizard->button(QWizard::WizardButton(n));
@@ -203,8 +203,8 @@ void applyFigmaStackedWidgetAppearance(QStackedWidget* stack) {
                                  "%1 QLabel#flowStackPageTitle,%1 QLabel#flowStackPageBody{background:transparent;border:0;color:%4;}"
                                  "%1:disabled{background:%5;border-color:%3;color:%6;}"
                                  "%1:disabled QLabel#flowStackPageTitle,%1:disabled QLabel#flowStackPageBody{color:%6;}")
-        .arg(root,tokens.qss("semantic.color.background.surface"),tokens.qss("semantic.color.border.subtle"),
-             tokens.qss("semantic.color.text.primary"),tokens.qss("semantic.color.text.disabled"),
+        .arg(root,tokens.qss("semantic.color.background.surface"),tokens.qss("semantic.color.border.secondary"),
+             tokens.qss("semantic.color.text.primary"),tokens.qss("semantic.color.background.disabled"),
              tokens.qss("semantic.color.text.disabled")));
 }
 void applyFigmaWizardPageAppearance(QWizardPage* page) {
@@ -215,7 +215,7 @@ void applyFigmaWizardPageAppearance(QWizardPage* page) {
         const bool complete=preview=="Complete" || (preview.isEmpty()&&page->isComplete());
         const FlowTokens tokens(profileFor(page));
         page->setProperty("figmaFlowStatusIconColor",
-            complete?tokens.color("base.stoken.color.interactive.brand.default"):
+            complete?tokens.color("semantic.color.interactive.brand.default"):
                      tokens.color("semantic.color.text.primary"));
         const auto root=QStringLiteral("QWizardPage[designSystemStyleOwner=\"figma-pageflow-captured\"]");
         const QString css=QString("%1{background:%2;color:%3;border:1px solid %4;border-radius:8px;}"
@@ -223,9 +223,9 @@ void applyFigmaWizardPageAppearance(QWizardPage* page) {
                                   "%1 QLabel#flowPageSubtitle{background:transparent;border:0;color:%5;}"
                                   "%1 QLabel#flowCompletionStatus{background:%6;border:0;color:%7;padding:8px;font-family:'HarmonyOS Sans';font-size:12px;font-weight:504;}")
             .arg(root,tokens.qss("semantic.color.background.surface"),tokens.qss("semantic.color.text.primary"),
-                 complete?tokens.qss("semantic.color.border.focus"):tokens.qss("semantic.color.border.subtle"),
+                 complete?tokens.qss("semantic.color.interactive.brand.focus-ring"):tokens.qss("semantic.color.border.secondary"),
                  tokens.qss("semantic.color.text.secondary"),complete?tokens.subtleBrand():tokens.qss("semantic.color.background.surface"),
-                 complete?tokens.qss("base.stoken.color.interactive.brand.default"):tokens.qss("semantic.color.text.primary"));
+                 complete?tokens.qss("semantic.color.interactive.brand.default"):tokens.qss("semantic.color.text.primary"));
         if(page->styleSheet()!=css)page->setStyleSheet(css);
     };
     if(!page->property("figmaWizardPageBound").toBool()) {
@@ -239,7 +239,7 @@ void applyFigmaWizardAppearance(QWizard* wizard) {
     wizard->setProperty("designSystemStyleOwner","figma-pageflow-captured");
     const FlowTokens tokens(profileFor(wizard));
     const QString css=QString("QWizard[designSystemStyleOwner=\"figma-pageflow-captured\"]{background:%1;color:%2;border:1px solid %3;border-radius:10px;}")
-        .arg(tokens.qss("semantic.color.background.surface"),tokens.qss("semantic.color.text.primary"),tokens.qss("semantic.color.border.subtle"));
+        .arg(tokens.qss("semantic.color.background.surface"),tokens.qss("semantic.color.text.primary"),tokens.qss("semantic.color.border.secondary"));
     if(wizard->styleSheet()!=css)wizard->setStyleSheet(css);
     auto* binding=static_cast<WizardBinding*>(wizard->findChild<QObject*>("figmaWizardBinding",Qt::FindDirectChildrenOnly));
     if(!binding)binding=new WizardBinding(wizard);

@@ -1,18 +1,23 @@
 # GenerateComponent 文档
 
-| 分区 | 内容 | 入口 |
+现行文档只描述当前规则和入口；历史版本、过程记录及过去的测试结论统一见 [归档索引](archive/README.md)。归档不是当前验收报告。
+
+| 分区 | 用途 | 入口 |
 | --- | --- | --- |
-| `tutorial` | 环境、SDK 发布、验证和开发者接入 | [组件 SDK 上手指南](tutorial/组件SDK上手指南.md) |
-| `mainSkill` | AI 处理设计证据、映射、Token、组件源码和 SDK 时使用的完整流程 | [GenerateComponent Skill](mainSkill/generate-component-pipeline/SKILL.md) |
-| `designRules` | 技术分层、映射原则、设计系统基线和组件规则 | [Qt 功能分层](designRules/architecture/Qt功能分层.md) |
+| tutorial | 操作与验证 | [上手指南](tutorial/组件SDK上手指南.md) |
+| mainSkill | AI 执行边界与流程 | [Main Skill](mainSkill/generate-component-pipeline/SKILL.md) |
+| designRules | 当前规范 | [Qt 功能分层](designRules/architecture/Qt功能分层.md) |
+| archive | 历史记录，只读追溯 | [历史归档](archive/README.md) |
 
-## 参考入口
+遵循工作区 AGENTS.md：不自主安装或升级已有环境。Source 保存维护源码和工具，docs 保存规范、固定输入、示例及验证源码，build 保存可再生成果。构建不回写 Source/docs；永久证据不只留在可删除的 build。
 
+## 专项规范
+
+- [Component 层 Token 构建规范](designRules/design-system/Component层Token构建规范.md)
+- [Figma 统一组件融合规则](designRules/design-system/Figma统一组件融合规则.md)
 - [设计组件映射指南](mainSkill/generate-component-pipeline/references/设计组件映射指南.md)
 - [Qt 组件类与主属性参考](mainSkill/generate-component-pipeline/references/Qt组件类与主属性参考.md)
-- [DesignEvidence 结构与职责](mainSkill/generate-component-pipeline/references/design-evidence/DesignEvidence结构与职责.md)
-- [组件完成度与 Ant 对照](designRules/mapping/组件完成度与Ant对照.md)
-- [Figma 与 sToken 状态基线](designRules/design-system/Figma-sToken状态账本基线.md)
-- [Component 层 Token 构建规范](designRules/design-system/Component层Token构建规范.md)
 
-阶段性审计、交接、迁移和排期记录集中在 `build/reports`。当前规则以本目录和实际源码、生成物、测试结果为准。
+Token 源位于 Source/ComponentKit/design-assets/DesignSystem/source。PrepareBuild 在 build/work 准备副本后生成；--copy-only 才是只复制输入。SDK 消费测试位于 docs/validation/SDKConsumerTest，映射工作台位于 docs/examples/MappingWorkbench。
+
+导航栏 container.height 消费契约问题仍挂起。Python 3.9 是兼容目标；test_python39_writes.py 的接口检查不能替代真实 3.9 实测。当前文档不宣称全量组件验收通过。

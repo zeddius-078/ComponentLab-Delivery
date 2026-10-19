@@ -21,12 +21,22 @@ def normalize_for_boundary_check(content):
 
 
 def check():
-    result = {"project": PROJECT.name, "localLinks": 0, "resourceFiles": 0}
+    result = {"project": PROJECT.name, "localLinks": 0, "optionalBuildLinks": 0, "resourceFiles": 0}
+    result["pendingDeletion"] = []
+    for directory in PROJECT.iterdir():
+        if not directory.is_dir():
+            continue
+        if directory.name.startswith("待删除-"):
+            result["pendingDeletion"].append(directory.name)
+            continue
+        assert directory.name in {"Source", "docs", "build"}, (directory, "unexpected maintained directory")
+    allowed = {".cpp", ".h", ".ps1", ".py", ".cjs", ".cmake"}
     # Directory junctions would silently restore a shared dependency after a physical split.
     for file in SOURCE.rglob("*"):
         assert not file.is_symlink() and not getattr(file, "is_junction", lambda: False)(), file
         if not file.is_file() or file == Path(__file__):
             continue
+        assert file.suffix in allowed or file.name in {"CMakeLists.txt", "README.md", ".clang-format"}, (file, "non-tool file in Source")
         if file.suffix in {".cpp", ".h", ".ps1", ".py", ".cjs", ".cmd", ".qrc"} or file.name == "CMakeLists.txt":
             code = normalize_for_boundary_check(
                 file.read_text(encoding="utf-8-sig").replace("\\", "/")
@@ -43,6 +53,8 @@ def check():
             result["resourceFiles"] += 1
     # Navigation must remain usable after copying just this project.
     for file in [PROJECT / "README.md", *(PROJECT / "docs").rglob("*.md"), *SOURCE.rglob("*.md")]:
+        if file.is_relative_to(PROJECT / "docs/archive"):
+            continue  # Frozen evidence preserves historical paths, not active navigation.
         content = file.read_text(encoding="utf-8-sig")
         assert len(re.findall(r"^\x60\x60\x60", content, re.M)) % 2 == 0, file
         for link in re.findall(r"\]\(([^)]+)\)", content):
@@ -50,6 +62,9 @@ def check():
             if not link or re.match(r"^https?://", link):
                 continue
             target = (file.parent / link).resolve()
+            if target.is_relative_to(PROJECT / "build"):
+                result["optionalBuildLinks"] += 1
+                continue  # Generated examples are absent after deleting build, by design.
             assert target.is_relative_to(PROJECT) and target.exists(), (file, link)
             result["localLinks"] += 1
     # Inspect only active build descriptions; before-project-split stores explicitly retired caches.

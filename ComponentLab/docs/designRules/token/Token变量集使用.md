@@ -4,7 +4,7 @@ ComponentLab 消费 GenerateComponent 已编译的 Token 结果，用于比较 P
 
 | 能力 | 输入 | 运行方式 | 验收 |
 | --- | --- | --- | --- |
-| Profile 切换 | SDK 内嵌的 `light/dark × comfortable/compact` | 界面右上角选择 | 页面重启后四类组件使用同一 Profile |
+| Profile 切换 | SDK 内嵌的 `standard/wide × light/dark` | 界面右上角选择 | 重新加载后组件使用同一运行上下文；是否满足视觉合同需逐项检查 |
 | 外部变量集 | GenerateComponent 输出的完整 generated 目录 | `component_lab.exe --token-dir <目录> --profile <名称>` | manifest、QSS、catalog 均可读取 |
 | 状态检查 | Figma 组件集与 Variant 轴；可映射项调用组件 API | 各规范页“分组与状态”矩阵 | 组件集、轴和值与 Figma 一致；不可强制的运行态明确保留设计契约，不伪造验证 |
 | 焦点反馈 | SDK 的焦点配置与运行参数 | `--focus-indicator off|keyboard|always` | 模式与组件颜色状态可同时辨识 |

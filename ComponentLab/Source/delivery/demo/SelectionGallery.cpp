@@ -100,13 +100,13 @@ QWidget* createRadioGallery(const std::shared_ptr<commonWidget::ComponentFactory
             for (const auto& entry : node[7].toArray()) {
                 const auto key = entry.toArray();
                 auto* label = new QLabel(key[7].toString(), group);
-                QFont font("Inter");
+                QFont font("HarmonyOS Sans");
                 font.setPixelSize(12);
                 font.setWeight(QFont::DemiBold);
                 label->setFont(font);
                 label->setGeometry(bounds(key));
                 label->setStyleSheet("background:transparent;border:0;color:#505868;"
-                                     "font-family:'Inter';font-size:12px;font-weight:600;");
+                                     "font-family:'HarmonyOS Sans';font-size:12px;font-weight:600;");
             }
             continue;
         }

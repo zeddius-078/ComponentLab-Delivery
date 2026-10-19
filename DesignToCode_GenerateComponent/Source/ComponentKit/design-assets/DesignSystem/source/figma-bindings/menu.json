@@ -1,0 +1,147 @@
+{
+  "$description": "Menu V2 Figma structure and variable binding manifest. Specification only; it does not write or mutate the Figma file.",
+  "component": "menu",
+  "version": "2.0",
+  "architectureAuthority": "V2 component-registry, component-contracts, and component-recipes; the reference JSON is value-only evidence and never defines Figma variable names.",
+  "valueAuthority": "source/component-value-evidence/menu.json",
+  "$status": "draft-v2",
+  "writePolicy": "specification-only",
+  "valueEvidence": "source/component-value-evidence/menu.json",
+  "publicComponentSet": "ComponentLab/Menu",
+  "figmaComponentSet": "2256:145",
+  "figmaVariantCount": null,
+  "figmaVariantCountStatus": "unverified",
+  "variantAxes": {
+    "state": [
+      "default",
+      "hover",
+      "pressed",
+      "focused",
+      "disabled",
+      "loading"
+    ],
+    "size": ["sm", "md"]
+  },
+  "materialization": {
+    "mode": "generator-managed",
+    "logicalCombinationCount": 12,
+    "manualVariantAuthoring": false,
+    "runtimeOnlyAxes": ["state=loading"]
+  },
+  "nestedStructure": {
+    "menu": ["container", "item", "separator", "border"],
+    "menuItem": [
+      "decorationArea",
+      "icon",
+      "content",
+      "shortcut",
+      "indicator",
+      "submenu"
+    ],
+    "decorationArea": ["icon", "indicator", "submenu"]
+  },
+  "componentProperties": {
+    "itemContent": "instance-swap",
+    "showIcon": "boolean",
+    "showShortcut": "boolean",
+    "showIndicator": "boolean",
+    "showSubmenu": "boolean",
+    "showSeparator": "boolean"
+  },
+  "contentProperties": {
+    "itemText": {
+      "kind": "localized-content-key-or-runtime-label",
+      "source": "menu-item-content-slot",
+      "defaultLocale": "en-US",
+      "fallbackLocale": "en-US"
+    },
+    "shortcutText": {
+      "kind": "runtime-shortcut-display",
+      "source": "qaction-shortcut"
+    },
+    "separator": {
+      "kind": "structure-only",
+      "content": "not-applicable"
+    }
+  },
+  "variableNamespace": {
+    "collection": "DSM/Component",
+    "prefix": "menu/",
+    "canonicalPrefix": "component.menu."
+  },
+  "bindingRules": [
+    {
+      "figmaSlot": "Menu/Container",
+      "figmaProperty": "fill-gradient-padding-radius",
+      "canonicalPattern": "component.menu.base.state.default.slot.container.*",
+      "source": "component-recipes/menu.json#/base/state/default/slot/container"
+    },
+    {
+      "figmaSlot": "Menu/Border",
+      "figmaProperty": "stroke-stroke-weight",
+      "canonicalPattern": "component.menu.base.state.default.slot.border.*",
+      "source": "component-recipes/menu.json#/base/state/default/slot/border"
+    },
+    {
+      "figmaSlot": "Menu/MenuItem",
+      "figmaProperty": "height-background",
+      "canonicalPattern": "component.menu.base.state.{default|hover|pressed|disabled}.slot.item.*",
+      "source": "component-recipes/menu.json#/base/state"
+    },
+    {
+      "figmaSlot": "Menu/MenuItem/Content",
+      "figmaProperty": "fill-text-typography-spacing",
+      "canonicalPattern": "component.menu.base.state.default.slot.content.*",
+      "source": "component-recipes/menu.json#/base/state/default/slot/content"
+    },
+    {
+      "figmaSlot": "Menu/MenuItem/Icon",
+      "figmaProperty": "size-color",
+      "canonicalPattern": "component.menu.base.size.{sm|md}.slot.icon.*",
+      "source": "component-recipes/menu.json#/base/size"
+    },
+    {
+      "figmaSlot": "Menu/MenuItem/Shortcut",
+      "figmaProperty": "fill-typography",
+      "canonicalPattern": "component.menu.*.slot.shortcut.*",
+      "source": "component-recipes/menu.json#/base+overrides"
+    },
+    {
+      "figmaSlot": "Menu/MenuItem/Indicator",
+      "figmaProperty": "size-color",
+      "canonicalPattern": "component.menu.*.slot.indicator.*",
+      "sharedComponent": "component.checkbox|component.radio",
+      "source": "component-recipes/menu.json#/base+overrides"
+    },
+    {
+      "figmaSlot": "Menu/MenuItem/Submenu",
+      "figmaProperty": "size-color",
+      "canonicalPattern": "component.menu.*.slot.submenu.*",
+      "sharedComponent": "component.icon.chevron",
+      "source": "component-recipes/menu.json#/base+overrides"
+    },
+    {
+      "figmaSlot": "Menu/Separator",
+      "figmaProperty": "color-height-inset",
+      "canonicalPattern": "component.menu.base.slot.separator.*",
+      "source": "component-recipes/menu.json#/base"
+    }
+  ],
+  "sharedComponentBindings": {
+    "typography": "composite.typography",
+    "icons": "component.icon",
+    "indicator": "component.checkbox|component.radio"
+  },
+  "runtimeOnly": [
+    "QMenu::title",
+    "action-identity",
+    "enabled-visible-checkable-checked",
+    "shortcut-resolution",
+    "submenu-hierarchy",
+    "popup-direction",
+    "popup-lifecycle",
+    "keyboard-navigation",
+    "trigger-events",
+    "loading-lifecycle"
+  ]
+}

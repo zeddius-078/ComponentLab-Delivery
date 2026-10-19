@@ -1,0 +1,123 @@
+{
+  "$description": "Input V2 Figma structure and variable binding manifest. Specification only; it does not write or mutate the Figma file.",
+  "component": "input",
+  "version": "2.0",
+  "architectureAuthority": "V2 component-registry, component-contracts, and component-recipes; any reference JSON supplies values only and never defines Figma variable names.",
+  "$status": "draft-v2",
+  "writePolicy": "specification-only",
+  "publicComponentSet": "ComponentLab/Input",
+  "figmaComponentSet": "2258:16387",
+  "figmaComponentSetStatus": "verified",
+  "figmaVariantCount": 60,
+  "figmaVariantCountStatus": "verified",
+  "legacyFigmaComponentSets": ["339:111", "1161:16084", "1164:643", "1171:16329"],
+  "variantAxes": {
+    "mode": ["plain", "password", "search", "multiline", "dropdown-search", "file-browser"],
+    "appearance": ["outlined", "filled", "dashed"],
+    "state": ["default", "hover", "focused", "error", "disabled", "loading"],
+    "size": ["small", "medium", "large"]
+  },
+  "materialization": {
+    "mode": "generator-managed",
+    "logicalCombinationCount": 270,
+    "manualVariantAuthoring": false,
+    "runtimeOnlyAxes": []
+  },
+  "nestedStructure": {
+    "input": ["container", "content", "placeholder", "border", "focus-ring", "spinner"],
+    "actions": ["clear", "password-toggle", "search-icon", "browse-action"]
+  },
+  "componentProperties": {
+    "valueText": "text",
+    "placeholderText": "text",
+    "clearVisible": "boolean",
+    "passwordToggleVisible": "boolean",
+    "searchIconVisible": "boolean",
+    "browseActionVisible": "boolean"
+  },
+  "contentProperties": {
+    "valueText": {
+      "kind": "instance-content",
+      "source": "runtime-value-or-content-key",
+      "locale": "runtime-or-content-catalog"
+    },
+    "placeholderText": {
+      "kind": "localized-content-key",
+      "defaultLocale": "en-US",
+      "fallbackLocale": "en-US"
+    },
+    "actionVisibility": {
+      "kind": "mode-qualified-structure",
+      "source": "component-contracts/input.json#/contentModel/actionVisibility"
+    }
+  },
+  "variableNamespace": {
+    "collection": "DSM/Component",
+    "prefix": "input/",
+    "canonicalPrefix": "component.input."
+  },
+  "bindingRules": [
+    {
+      "figmaSlot": "Input/Container",
+      "figmaProperty": "fill-radius-padding-size",
+      "canonicalPattern": "component.input.base.{size|shared}.slot.container.*",
+      "source": "component-recipes/input.json#/base"
+    },
+    {
+      "figmaSlot": "Input/Content",
+      "figmaProperty": "text-style-fill-gap",
+      "canonicalPattern": "component.input.base.{shared|appearance|state}.slot.content.*",
+      "source": "component-recipes/input.json#/base"
+    },
+    {
+      "figmaSlot": "Input/Placeholder",
+      "figmaProperty": "text-fill",
+      "canonicalPattern": "component.input.*.slot.placeholder.*",
+      "source": "component-recipes/input.json#/base+overlays"
+    },
+    {
+      "figmaSlot": "Input/Border",
+      "figmaProperty": "stroke-stroke-weight",
+      "canonicalPattern": "component.input.*.slot.border.*",
+      "source": "component-recipes/input.json#/base+overlays"
+    },
+    {
+      "figmaSlot": "Input/FocusRing",
+      "figmaProperty": "stroke-stroke-weight",
+      "canonicalPattern": "component.input.*.state.focused.*.slot.focus-ring.*",
+      "source": "component-recipes/input.json#/overlays"
+    },
+    {
+      "figmaSlot": "Input/Actions",
+      "figmaProperty": "icon-fill-size-hit-target",
+      "canonicalPattern": "component.input.base.shared.slot.{clear|password-toggle|search-icon|browse-action}.*",
+      "source": "component-recipes/input.json#/base"
+    },
+    {
+      "figmaSlot": "Input/ActionState",
+      "figmaProperty": "icon-fill-background",
+      "canonicalPattern": "component.input.overlay.action.*.action-state.*.slot.*.*",
+      "source": "component-recipes/input.json#/overlays"
+    },
+    {
+      "figmaSlot": "Input/Spinner",
+      "figmaProperty": "stroke-size-opacity-arc",
+      "canonicalPattern": "component.input.*.state.loading.*.slot.spinner.*",
+      "source": "component-recipes/input.json#/overlays"
+    }
+  ],
+  "sharedComponentBindings": {
+    "typography": "composite.typography",
+    "spinner": "component.spinner",
+    "icons": "component.icon"
+  },
+  "runtimeOnly": [
+    "text-value",
+    "caret-and-ime",
+    "readonly-capability",
+    "loading-lifecycle",
+    "multiline-height-and-line-count",
+    "resource-browser-overlay",
+    "business-validation"
+  ]
+}

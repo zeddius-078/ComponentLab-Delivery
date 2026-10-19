@@ -1,0 +1,48 @@
+{
+  "$registry": {
+    "component": "container",
+    "version": "2.0"
+  },
+  "$status": "internal-structure",
+  "$description": "Container is an internal composition capability. Its visual values remain available for parent component Slots; it is not a public SDK component.",
+  "base": {
+    "state": {
+      "default": {
+        "slot": {
+          "container": {
+            "background-color": {
+              "$type": "color",
+              "$value": "{semantic.color.background.surface}",
+              "$description": "Recovered from legacy V2 layer component.container.base.default.container.background-color",
+              "$sourceOwner": "old-tree-recovery"
+            },
+            "padding-inline": {
+              "$type": "spacing",
+              "$value": "{semantic.layout.padding.inline.standard}",
+              "$description": "Recovered from legacy V2 layer component.container.base.default.container.padding-inline",
+              "$sourceOwner": "old-tree-recovery",
+              "unit": "px"
+            },
+            "radius": {
+              "$type": "borderRadius",
+              "$value": "{semantic.radius.container-md}",
+              "$description": "Recovered from legacy V2 layer component.container.base.default.container.radius",
+              "$sourceOwner": "old-tree-recovery",
+              "unit": "px"
+            }
+          },
+          "content": {
+            "gap": {
+              "$type": "spacing",
+              "$value": "{semantic.layout.content-gap}",
+              "$description": "Recovered from legacy V2 layer component.container.base.default.content.gap",
+              "$sourceOwner": "old-tree-recovery",
+              "unit": "px"
+            }
+          }
+        }
+      }
+    }
+  },
+  "overrides": []
+}

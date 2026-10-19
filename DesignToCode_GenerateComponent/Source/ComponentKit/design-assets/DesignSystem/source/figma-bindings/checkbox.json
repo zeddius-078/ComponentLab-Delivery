@@ -1,0 +1,93 @@
+{
+  "$description": "Checkbox V2 Figma structure and variable binding manifest. Specification only; it does not write or mutate the Figma file.",
+  "component": "checkbox",
+  "version": "2.0",
+  "architectureAuthority": "V2 component-registry, component-contracts, and component-recipes; any reference JSON supplies values only and never defines Figma variable names.",
+  "$status": "draft-v2",
+  "writePolicy": "specification-only",
+  "publicComponentSet": "ComponentLab/Checkbox",
+  "figmaComponentSet": "2258:16082",
+  "figmaComponentSetStatus": "verified",
+  "figmaVariantCount": 40,
+  "figmaVariantCountStatus": "verified",
+  "legacyFigmaComponentSets": ["235:2710"],
+  "variantAxes": {
+    "value": ["unchecked", "checked", "indeterminate"],
+    "state": ["default", "disabled", "focused", "hover", "pressed"],
+    "content": ["control-only", "control-with-label"],
+    "size": ["compact", "small", "medium", "large"]
+  },
+  "materialization": {
+    "mode": "generator-managed",
+    "logicalCombinationCount": 120,
+    "manualVariantAuthoring": false,
+    "runtimeOnlyAxes": []
+  },
+  "nestedStructure": {
+    "checkbox": ["container", "indicator", "label", "content", "focus-ring"]
+  },
+  "componentProperties": {
+    "labelText": "text",
+    "labelVisible": "boolean"
+  },
+  "contentProperties": {
+    "labelText": {
+      "kind": "localized-content-key",
+      "defaultLocale": "en-US",
+      "fallbackLocale": "en-US",
+      "requiredWhen": "content=control-with-label"
+    },
+    "labelVisible": {
+      "kind": "content-structure-switch",
+      "mapsTo": "content"
+    }
+  },
+  "variableNamespace": {
+    "collection": "DSM/Component",
+    "prefix": "checkbox/",
+    "canonicalPrefix": "component.checkbox."
+  },
+  "bindingRules": [
+    {
+      "figmaSlot": "Checkbox/Container",
+      "figmaProperty": "interaction-size",
+      "canonicalPattern": "component.checkbox.base.{shared|size}.slot.container.*",
+      "source": "component-recipes/checkbox.json#/base"
+    },
+    {
+      "figmaSlot": "Checkbox/Indicator",
+      "figmaProperty": "fill-stroke-radius-size",
+      "canonicalPattern": "component.checkbox.*.slot.indicator.*",
+      "source": "component-recipes/checkbox.json#/base+overrides"
+    },
+    {
+      "figmaSlot": "Checkbox/Label",
+      "figmaProperty": "text-style-fill",
+      "canonicalPattern": "component.checkbox.base.shared.slot.label.*",
+      "source": "component-recipes/checkbox.json#/base/shared"
+    },
+    {
+      "figmaSlot": "Checkbox/Content",
+      "figmaProperty": "gap",
+      "canonicalPattern": "component.checkbox.base.shared.slot.content.*",
+      "source": "component-recipes/checkbox.json#/base/shared"
+    },
+    {
+      "figmaSlot": "Checkbox/FocusRing",
+      "figmaProperty": "stroke-stroke-weight",
+      "canonicalPattern": "component.checkbox.*.state.focused.*.slot.focus-ring.*",
+      "source": "component-recipes/checkbox.json#/stateOverrides"
+    }
+  ],
+  "sharedComponentBindings": {
+    "typography": "composite.typography",
+    "checkmark": "component.icon.check",
+    "indeterminateMark": "component.icon.minus"
+  },
+  "runtimeOnly": [
+    "value-mutation",
+    "indeterminate-calculation",
+    "parent-selection-reconciliation",
+    "keyboard-focus-activation"
+  ]
+}

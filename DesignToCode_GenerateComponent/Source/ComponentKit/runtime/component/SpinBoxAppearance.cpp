@@ -15,6 +15,7 @@
 #include <QSvgRenderer>
 #include <QTimer>
 #include <QVariant>
+#include <cmath>
 #include <stdexcept>
 
 namespace commonWidget {
@@ -31,35 +32,47 @@ bool focused(const QAbstractSpinBox* spin) {
     if (!spin->isEnabled() || spin->isReadOnly())
         return false;
     const auto state = spin->property("figmaSpinSnapshotState").toString();
-    return state.isEmpty() ? spin->hasFocus() : state == "Focus";
+    return state.isEmpty() ? spin->hasFocus() : (state == "Focus" || state == "Focused");
 }
 
 QRectF fieldRect(const QAbstractSpinBox* spin) {
     const auto mode = controlsFor(spin);
     const int border = focused(spin) ? 2 : 1;
     QRectF rect;
+    // All sub-control rectangles are partitions of the same interior rectangle.
+    // The previous geometry used independent constants (33/66/45), leaving a
+    // one-pixel gap between the painted button and its hit region.
+    const QRectF interior = QRectF(border, border, spin->width() - 2 * border,
+                                   spin->height() - 2 * border);
     if (mode == "SplitPlusMinus")
-        rect = QRectF(border + 33, 0, spin->width() - 2 * border - 66, spin->height());
+        rect = QRectF(interior.left() + 32, interior.top(),
+                      interior.width() - 64, interior.height());
+    else if (mode == "None")
+        rect = interior;
     else
-        rect = QRectF(border, 0, spin->width() - (mode == "None" ? 2 : 45), spin->height());
+        rect = QRectF(interior.left(), interior.top(),
+                      interior.width() - 43, interior.height());
     if (spin->layoutDirection() == Qt::RightToLeft)
         rect.moveLeft(spin->width() - rect.right());
     return rect;
 }
 
 QRectF stepRect(const QAbstractSpinBox* spin, bool up, bool visual) {
+    Q_UNUSED(visual);
     const auto mode = controlsFor(spin);
     const int border = focused(spin) ? 2 : 1;
     if (mode == "None")
         return {};
+    const QRectF interior = QRectF(border, border, spin->width() - 2 * border,
+                                   spin->height() - 2 * border);
     QRectF rect;
-    if (mode == "SplitPlusMinus")
-        rect = QRectF(up ? spin->width() - border - 32 : border, 0, 32, spin->height());
-    else {
-        const qreal half = (spin->height() - 1) / 2.0;
-        rect =
-            QRectF(spin->width() - 45 + border, up ? 0 : (visual ? half + 1 : spin->height() / 2.0),
-                   43, visual ? half : spin->height() / 2.0);
+    if (mode == "SplitPlusMinus") {
+        rect = QRectF(up ? interior.right() - 32 : interior.left(), interior.top(),
+                      32, interior.height());
+    } else {
+        const qreal half = std::floor(interior.height() / 2.0);
+        rect = QRectF(interior.right() - 43, up ? interior.top() : interior.top() + half,
+                      43, up ? half : interior.height() - half);
     }
     if (spin->layoutDirection() == Qt::RightToLeft)
         rect.moveLeft(spin->width() - rect.right());
@@ -120,14 +133,31 @@ public:
         QPainterPath clip;
         clip.addRoundedRect(root, 4, 4);
         p->setClipPath(clip);
-        p->fillPath(clip, QColor(!spin->isEnabled() || spin->isReadOnly() ? "#f3f3f3" : "#ffffff"));
+        const QString snapshot = spin->property("figmaSpinSnapshotState").toString();
+        const bool disabledLike = !spin->isEnabled() || spin->isReadOnly() ||
+                                   snapshot == "Disabled" || snapshot == "Error" ||
+                                   snapshot == "Loading" || snapshot == "ReadOnly";
+        const bool forceHover = snapshot == "Hover";
+        const bool forcePressed = snapshot == "Pressed";
+        p->fillPath(clip, QColor(disabledLike ? "#eeeeee" : "#ffffff"));
         const auto mode = controlsFor(spin);
         for (const bool up : {true, false}) {
             const auto slot = stepRect(spin, up, true);
             if (slot.isEmpty())
                 continue;
-            p->fillRect(slot, QColor("#f3f3f3"));
-            const bool available = spin->isEnabled() && !spin->isReadOnly() &&
+            const auto sub = up ? SC_SpinBoxUp : SC_SpinBoxDown;
+            const bool hovered = forceHover || (opt->activeSubControls & sub);
+            const bool pressed = forcePressed && hovered ||
+                                 (hovered && (opt->state & QStyle::State_Sunken));
+            const QColor buttonSurface = disabledLike
+                                             ? QColor("#eeeeee")
+                                             : pressed ? QColor("#dcdbdb")
+                                                       : hovered ? QColor("#f5f5f5")
+                                                                 : QColor("#f3f3f3");
+            // The button is a complete hit/paint slot. Only the shared divider
+            // is painted later; no partial per-button border is introduced.
+            p->fillRect(slot, buttonSurface);
+            const bool available = !disabledLike &&
                                    (opt->stepEnabled & (up ? QAbstractSpinBox::StepUpEnabled
                                                            : QAbstractSpinBox::StepDownEnabled));
             const auto glyph = (mode == "UpDown" ? (up ? QString("Up") : QString("Down"))
@@ -143,10 +173,10 @@ public:
             p->fillRect(QRectF(field.right(), 0, 1, spin->height()), QColor("#d0d0d0"));
         } else if (mode != "None") {
             const auto slot = stepRect(spin, true, true);
-            p->fillRect(QRectF(slot.left(), (spin->height() - 1) / 2.0, 43, 1), QColor("#d0d0d0"));
+            p->fillRect(QRectF(slot.left(), slot.bottom(), slot.width(), 1), QColor("#d0d0d0"));
         }
         const qreal border = focused(spin) ? 2 : 1;
-        p->setPen(QPen(QColor(!spin->isEnabled() ? "#d0d0d0"
+        p->setPen(QPen(QColor(disabledLike ? "#d0d0d0"
                               : focused(spin)    ? "#6235f7"
                                                  : "#a7a7a7"),
                        border));
@@ -272,7 +302,7 @@ void applyFigmaSpinBoxAppearance(QAbstractSpinBox* spin, const QString& controls
                                  const QString& snapshotState) {
     if ((!qobject_cast<QSpinBox*>(spin) && !qobject_cast<QDoubleSpinBox*>(spin)) ||
         !QStringList{"UpDown", "PlusMinus", "SplitPlusMinus", "None"}.contains(controls) ||
-        !QStringList{"", "Default", "Focus"}.contains(snapshotState))
+        !QStringList{"", "Default", "Hover", "Pressed", "Focus", "Focused", "Disabled", "Error", "Loading", "ReadOnly"}.contains(snapshotState))
         throw std::invalid_argument(
             "Captured SpinBox requires a native numeric spin box and source-backed controls/state");
     static const bool fonts = [] {

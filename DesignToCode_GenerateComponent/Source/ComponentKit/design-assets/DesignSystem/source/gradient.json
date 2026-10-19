@@ -1,0 +1,31 @@
+{
+  "$schema": "../schema/composite-token-schema.json",
+  "$description": "Gradient Composite package. Geometry is normalized; stops must reference Color Tokens.",
+  "$version": "2.0",
+  "$status": "draft",
+  "layer": "composite",
+  "kind": "gradient",
+  "contracts": {
+    "linear": {
+      "start": { "x": 0, "y": 0 },
+      "end": { "x": 1, "y": 0 },
+      "stops": [],
+      "stopCount": { "min": 2, "max": 16 }
+    },
+    "reserved": ["radial", "conic"]
+  },
+  "tokens": {},
+  "migrationSources": [
+    "source/component-recipes/button.json legacy gradient-stop-* fields",
+    "source/dictionary.json gradient stop vocabulary",
+    "source/component-registry.json historical gradient fields"
+  ],
+  "diagnostics": [
+    {
+      "severity": "warning",
+      "code": "GRADIENT-LEGACY-MIGRATION-PENDING",
+      "message": "Legacy gradient-stop fields are recorded as migration sources but are not promoted until each supported Appearance/State receives a complete Color-Token-only Gradient Composite.",
+      "source": "source/gradient.json"
+    }
+  ]
+}

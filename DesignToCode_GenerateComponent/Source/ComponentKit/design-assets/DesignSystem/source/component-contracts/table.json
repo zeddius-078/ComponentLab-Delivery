@@ -1,0 +1,499 @@
+{
+  "$description": "Table V2 Component Contract. This file defines structure, capabilities and runtime semantics; it is not a Token Recipe.",
+  "component": "table",
+  "version": "1.0",
+  "$status": "draft-v2",
+  "contractKind": "data-table",
+  "registryBindings": {
+    "source": "source/component-registry.json#/components/table",
+    "axes": ["density", "striping"],
+    "slots": ["container", "header", "row", "column", "cell", "selection-control", "sort-indicator", "filter-trigger", "status-indicator", "empty-state", "loading-state", "no-match-state", "error-state", "border"],
+    "authority": "component-registry"
+  },
+  "designSource": {
+    "legacyVisualBaseline": "docs/archive/design-system-history/history/pre-v2-recovery-20261018/table.json",
+    "legacyArchitecture": "not-reused",
+    "migrationPolicy": "preserve-equivalent-visual-values-rebuild-contract"
+  },
+  "sharedBindings": {
+    "size": "shared.size",
+    "spacing": "shared.spacing",
+    "padding": "shared.padding",
+    "interactionSize": "shared.interaction-size",
+    "rule": "Table maps shared dimensions; it does not duplicate primitive values."
+  },
+  "structure": [
+    "container",
+    "header",
+    "header-row",
+    "header-group",
+    "header-leaf",
+    "header-divider",
+    "header-action-group",
+    "header-action",
+    "table-action-group",
+    "selection-action-group",
+    "row-action-group",
+    "cell-action",
+    "cell-content",
+    "cell-editor",
+    "body",
+    "row",
+    "cell",
+    "footer",
+    "empty-state",
+    "loading-state",
+    "no-match-state",
+    "error-state"
+  ],
+  "headerModel": {
+    "mode": ["flat", "hierarchical"],
+    "nodeKinds": ["group", "leaf"],
+    "sortTarget": "leaf-only",
+    "filterTarget": "leaf-only",
+    "spanPolicy": {
+      "colSpan": "derived-from-leaf-count",
+      "rowSpan": "derived-from-tree-depth"
+    },
+    "rules": [
+      "each leaf header binds exactly one unique columnId",
+      "each data column appears exactly once in the header tree",
+      "a group header contains only group or leaf children",
+      "header column order matches body column order",
+      "group headers do not receive sort or filter interactions by default",
+      "colSpan is derived from the number of leaf columns in the subtree",
+      "rowSpan is derived from the maximum header tree depth",
+      "row-selection, row-index, row-actions and other utility columns are represented as header leaves"
+    ]
+  },
+  "columnRoles": [
+    "data",
+    "row-selection",
+    "row-index",
+    "row-actions",
+    "row-expand",
+    "row-drag",
+    "row-indicator"
+  ],
+  "columnSchema": {
+    "required": ["id", "role"],
+    "optional": [
+      "field",
+      "display",
+      "editor",
+      "editable",
+      "required",
+      "formatter",
+      "slots"
+    ],
+    "identity": "stable-column-id",
+    "display": {
+      "type": "contentDisplayTypes",
+      "contentLayout": [
+        "single",
+        "primary-secondary",
+        "horizontal",
+        "vertical",
+        "composite-value"
+      ]
+    },
+    "editor": {
+      "type": "editorTypes",
+      "editable": "runtime-declared"
+    },
+    "slots": {
+      "display": "cell-content",
+      "editor": "cell-editor",
+      "actions": "cell-action"
+    },
+    "owner": "runtime-api"
+  },
+  "contentDisplayTypes": [
+    "text",
+    "long-text",
+    "identifier",
+    "number",
+    "number-with-unit",
+    "percentage",
+    "date-time",
+    "boolean",
+    "enum",
+    "status",
+    "multi-value",
+    "entity",
+    "link",
+    "icon-text",
+    "primary-secondary",
+    "image-attachment",
+    "progress",
+    "composite-value",
+    "structured-content"
+  ],
+  "editorTypes": [
+    "none",
+    "text",
+    "textarea",
+    "number",
+    "select",
+    "multi-select",
+    "autocomplete",
+    "cascader",
+    "tree-select",
+    "date",
+    "time",
+    "datetime",
+    "checkbox",
+    "switch",
+    "radio-group",
+    "lookup",
+    "composite",
+    "custom"
+  ],
+  "valueMetadata": [
+    "value-source",
+    "content-protection"
+  ],
+  "interactionPresets": [
+    "browse",
+    "row-operation",
+    "inline-edit",
+    "data-grid"
+  ],
+  "configuration": {
+    "rowSelectionMode": ["none", "single", "multiple"],
+    "cellSelectionMode": ["none", "cell", "range", "multi-range"],
+    "selectAllScope": ["current-page", "filtered-result", "all-records"],
+    "rowClickAction": ["none", "select-row", "focus-row", "open-detail"],
+    "freeze": {
+      "rows": ["none", "header"],
+      "columns": ["none", "leading", "trailing"],
+      "scope": "runtime-api"
+    },
+    "headerSelection": {
+      "enabledWhen": "rowSelectionMode=multiple",
+      "states": ["unchecked", "indeterminate", "checked", "disabled"],
+      "eligibleRows": "only-selectable-rows",
+      "scope": ["current-page", "filtered-result", "all-records"]
+    },
+    "cellSpan": {
+      "mode": "runtime-declared",
+      "rowSpan": "optional",
+      "colSpan": "optional",
+      "scope": "cell-address",
+      "designControlled": false
+    },
+    "cellComposition": {
+      "displayLayout": [
+        "single",
+        "primary-secondary",
+        "horizontal",
+        "vertical",
+        "composite-value"
+      ],
+      "editorGroup": {
+        "fields": "runtime-declared",
+        "layout": "runtime-declared",
+        "validationScope": "runtime-declared",
+        "commitScope": "runtime-declared"
+      },
+      "scope": "runtime-api",
+      "designControlled": false
+    },
+    "dataLifecycle": {
+      "states": ["ready", "loading", "empty", "no-match", "error"],
+      "scope": "table",
+      "transitionOwner": "runtime-api",
+      "retryOwner": "runtime-api",
+      "bodySlots": {
+        "ready": "body",
+        "loading": "loading-state",
+        "empty": "empty-state",
+        "no-match": "no-match-state",
+        "error": "error-state"
+      },
+      "headerPolicy": "preserve-when-column-schema-known",
+      "footerOwner": "runtime-api"
+    },
+    "headerActions": {
+      "builtin": ["sort", "filter"],
+      "slots": [
+        "leading",
+        "label",
+        "sort-indicator",
+        "filter-trigger",
+        "action-group",
+        "trailing"
+      ],
+      "customRegistration": {
+        "owner": "runtime-api",
+        "requiredFields": [
+          "actionId",
+          "target",
+          "slot",
+          "enabled",
+          "visible",
+          "event"
+        ],
+        "target": ["header", "column", "table"]
+      }
+    },
+    "actions": {
+      "targets": ["table", "header", "column", "row", "cell", "selection"],
+      "slotMap": {
+        "table": "table-action-group",
+        "header": "header-action-group",
+        "column": "header-action-group",
+        "row": "row-action-group",
+        "cell": "cell-action",
+        "selection": "selection-action-group"
+      },
+      "owner": "runtime-api"
+    },
+    "actionAvailability": {
+      "visible": "runtime-evaluated",
+      "enabled": "runtime-evaluated",
+      "disabledReason": "optional",
+      "execution": ["idle", "pending", "success", "failed"],
+      "owner": "runtime-api"
+    },
+    "scrolling": {
+      "bars": ["vertical", "horizontal"],
+      "styleSource": "component.scroll-bar",
+      "visibilityPolicy": "runtime-api",
+      "owner": "runtime-api"
+    },
+    "columnLayout": {
+      "widthPolicy": ["auto", "fixed", "minmax", "flex"],
+      "resize": ["disabled", "runtime"],
+      "reorder": ["disabled", "runtime"],
+      "visibility": ["visible", "hidden"],
+      "scope": "runtime-api",
+      "designControlled": false
+    },
+    "dataWindow": {
+      "pagination": ["none", "page", "cursor"],
+      "virtualization": ["none", "rows"],
+      "owner": "runtime-api"
+    },
+    "dataRefresh": {
+      "mode": ["manual", "polling", "push"],
+      "preserve": [
+        "scroll-position",
+        "selected-records",
+        "focused-record",
+        "drafts"
+      ],
+      "dirtyDraftPolicy": ["preserve-and-mark-stale", "reject-update"],
+      "owner": "runtime-api"
+    },
+    "editingCommit": {
+      "validationScope": ["cell", "edit-group", "row", "column", "table"],
+      "commitScope": ["cell", "edit-group", "row", "column", "table"],
+      "commitTrigger": ["explicit", "blur", "enter", "runtime"],
+      "owner": "runtime-api"
+    },
+    "keyboardInteraction": {
+      "mode": ["tab-sequence", "grid-navigation", "native-editor"],
+      "focusOwner": "runtime-api",
+      "eventPriority": [
+        "opened-overlay",
+        "nested-editor",
+        "cell",
+        "row"
+      ]
+    },
+    "overflowPresentation": {
+      "trigger": ["hover", "focus", "keyboard", "explicit"],
+      "contentMode": ["single-line", "multi-line"],
+      "placement": ["auto", "top", "right", "bottom", "left"],
+      "sizePolicy": ["auto", "constrained"],
+      "owner": "runtime-api",
+      "visualOwner": "shared-tooltip-popover"
+    },
+    "linkedHighlight": {
+      "pointerHoverTargets": ["none", "row", "column", "row-and-column"],
+      "cellSelection": ["none", "cell", "range", "multi-range"],
+      "composition": "independent-overlays",
+      "owner": "runtime-api"
+    },
+    "queryCapabilities": {
+      "sorting": {
+        "mode": ["none", "single", "multi"],
+        "target": "leaf-data-columns",
+        "compare": "underlying-value",
+        "owner": "runtime-api"
+      },
+      "filtering": {
+        "mode": ["none", "column", "table"],
+        "target": "runtime-query",
+        "owner": "runtime-api"
+      }
+    },
+    "visualResolution": {
+      "structuralState": "body-replacement",
+      "background": [
+        "base",
+        "striping",
+        "row-interaction",
+        "column-interaction",
+        "row-selection",
+        "cell-selection",
+        "availability",
+        "data-status",
+        "status-presentation"
+      ],
+      "border": [
+        "base",
+        "focus",
+        "cell-selection",
+        "status-presentation",
+        "data-status"
+      ],
+      "priorityException": {
+        "data-status.error": "highest-semantic-priority"
+      }
+    }
+  },
+  "stateLayers": {
+    "pointerInteraction": ["default", "hover", "pressed"],
+    "focus": ["unfocused", "focused"],
+    "rowSelection": ["unselected", "selected"],
+    "cellSelection": ["none", "cell", "range", "multi-range", "range-boundary"],
+    "editing": ["view", "editing"],
+    "validation": ["none", "warning", "error", "invalid"],
+    "availability": ["editable", "readonly", "disabled"],
+    "persistence": ["clean", "dirty", "saving", "saved", "failed"],
+    "dataQuality": ["normal", "stale", "unavailable", "unknown"]
+  },
+  "compositionRules": [
+    "display type and editor type are independent and may coexist",
+    "row-selection checkbox is distinct from a business boolean editor",
+    "header selection control and row selection control share Checkbox visuals but have different semantics",
+      "header select-all is rendered only for multiple row selection",
+      "header select-all state is calculated from eligible rows within the declared scope",
+      "ineligible rows are excluded from select-all counts and do not become selected",
+      "header select-all changes the row selection set only and never edits business fields",
+      "body cell spans are explicitly declared by Runtime API and are not inferred from content type",
+      "a spanned body region has one owner cell and occupied cells are not independently rendered",
+      "body cell spans require compatibility validation with sorting filtering pagination virtualization and editing",
+      "a composite cell is an internal cell structure and does not imply rowSpan or colSpan",
+      "display layout and editor group remain independent",
+      "composite editor fields, group validation and group commit are declared by Runtime API",
+      "table owns cell layout spacing and slots while nested editors retain their own component Tokens",
+      "table data lifecycle states are distinct from row-level business data status",
+      "loading empty no-match and error are structural table states",
+      "data lifecycle transitions retry and data-source errors are Runtime API owned",
+      "loading empty no-match and error replace the body region through dedicated structural slots",
+      "header remains visible when the column schema is known unless Runtime explicitly overrides it",
+      "sort and filter are header actions with dedicated slots",
+      "header action extensions are registered by Runtime API and do not require new Table visual axes",
+      "custom header actions must declare target slot availability and event behavior",
+      "column width policy resize reorder and visibility are Runtime API owned",
+      "column layout changes preserve header body frozen-column and editor alignment",
+      "utility columns may use fixed widths while data columns may use auto minmax or flex",
+      "pagination and virtualization are data-window capabilities owned by Runtime API",
+      "selection focus and draft state are keyed by stable recordId rather than row index",
+      "data-window changes must preserve the table visual contract for header columns frozen columns and editors",
+      "data refresh may be manual polling or push-driven and is Runtime API owned",
+      "refresh reconciliation keys selection focus and drafts by stable recordId",
+      "external data refresh must not silently overwrite uncommitted drafts",
+      "validation scope and commit scope are independent",
+      "row scope validates or commits the declared fields of one record",
+      "column scope validates or commits one field across an explicitly declared record set",
+      "cell edit-group row column and table scopes are Runtime API capabilities",
+      "keyboard focus and navigation are Runtime API owned",
+      "opened overlays receive keyboard events before nested editors cells and rows",
+      "nested editors receive keyboard events before cell and row handlers",
+      "tab-sequence and grid-navigation are distinct interaction modes",
+      "IME candidate confirmation must not trigger table commit",
+      "overflow presentation reuses the shared Tooltip or Popover component",
+      "overflow content is provided by the Table cell through a content slot",
+      "single-line and multi-line overflow presentation share the complete source content",
+      "overflow placement and size constraints are Runtime API owned and do not change row height",
+      "row hover column hover and cell selection are independent overlays",
+      "hovering a cell may activate row and column overlays simultaneously",
+      "cell selection is not cleared by pointer hover",
+      "hover overlays provide visual feedback and do not directly execute business actions",
+      "actions declare an explicit target scope and slot",
+      "column actions are carried by header action slots and do not arise from column hover",
+      "row actions target one stable record while selection actions target the selected record set",
+      "column schema identity is a stable column id",
+      "column field binding display editor formatter and slots are Runtime API owned",
+      "display type editor type and content layout are independent column properties",
+      "cell content cell editor and cell action are separate structural slots",
+      "action visibility and enabled state are runtime evaluated independently",
+      "disabled actions may expose a disabled reason without becoming interactive",
+      "action execution states are idle pending success and failed",
+      "pending locks the declared action target and failed preserves data and drafts",
+      "table scrollbars reuse the shared scroll-bar component and never duplicate scrollbar Tokens",
+      "scrollbar visibility policy and content scroll ownership are Runtime API owned",
+      "sorting and filtering are independent header actions",
+      "sorting targets leaf data columns and compares underlying values",
+      "table filtering and editor candidate search are independent query scopes",
+      "structural lifecycle states replace the body before ordinary overlays are resolved",
+      "data-status.error has highest semantic visual priority over availability selection hover and base",
+      "background and border overlays use property-specific resolution order",
+    "table selection, cell selection, keyboard focus and editing session are independent records",
+    "opened overlay receives the event before nested control, cell, and row handlers",
+    "sorting and filtering operate on underlying values rather than formatted display strings",
+    "drafts are keyed by stable record id and field or edit-group id",
+    "loading and empty are structural states and do not become row interaction states"
+  ],
+  "contentModel": {
+    "headerText": {
+      "kind": "localized-content-key",
+      "source": "column-schema-header",
+      "defaultLocale": "en-US",
+      "fallbackLocale": "en-US",
+      "visualToken": false
+    },
+    "cellDisplayText": {
+      "kind": "instance-content",
+      "source": "runtime-record-display-or-content-key",
+      "visualToken": false,
+      "overflow": "shared-tooltip-or-popover-content-slot"
+    },
+    "cellEditorText": {
+      "kind": "instance-content",
+      "source": "nested-editor-value-or-content-key",
+      "visualToken": false
+    },
+    "lifecycleText": {
+      "kind": "localized-content-key",
+      "states": ["loading", "empty", "no-match", "error"],
+      "defaultLocale": "en-US",
+      "fallbackLocale": "en-US"
+    },
+    "actionText": {
+      "kind": "localized-content-key-or-runtime-label",
+      "source": "header-row-cell-selection-action-slots",
+      "defaultLocale": "en-US",
+      "fallbackLocale": "en-US"
+    },
+    "forbiddenContentResponsibilities": [
+      "column-schema", "field-binding", "record-value", "editor-type",
+      "selection-state", "sort-filter-state", "pagination", "business-rule", "visual-token"
+    ]
+  },
+  "tokenBoundary": {
+    "recipeOwns": [
+      "container and header visuals",
+      "row and cell visuals",
+      "density mappings",
+      "striping visuals",
+      "border and focus visuals",
+      "shared component references"
+    ],
+    "runtimeOwns": [
+      "column field binding",
+      "data source and formatter",
+      "editor lifecycle",
+      "selection and focus records",
+      "validation and commit rules",
+      "permissions and action availability",
+      "sorting filtering pagination and virtualization",
+      "freeze rows and columns, including scroll synchronization and frozen-boundary rendering",
+      "body cell span declarations and their compatibility validation"
+    ]
+  }
+}

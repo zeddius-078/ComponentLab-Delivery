@@ -1,0 +1,51 @@
+{
+  "$registry": {
+    "component": "data-display",
+    "version": "2.0"
+  },
+  "$status": "active",
+  "base": {
+    "state": {
+      "default": {
+        "slot": {
+          "content": {
+            "color": {
+              "$type": "color",
+              "$value": "{semantic.color.text.primary}",
+              "$description": "Recovered from legacy V2 layer component.data-display.base.default.content.color",
+              "$sourceOwner": "old-tree-recovery"
+            },
+            "gap": {
+              "$type": "spacing",
+              "$value": "{semantic.space.vertical.micro}",
+              "$description": "Recovered from legacy V2 layer component.data-display.base.default.content.gap",
+              "$sourceOwner": "old-tree-recovery",
+              "unit": "px"
+            }
+          },
+          "label": {
+            "color": {
+              "$type": "color",
+              "$value": "{semantic.color.text.secondary}",
+              "$description": "Recovered from legacy V2 layer component.data-display.base.default.label.color",
+              "$sourceOwner": "old-tree-recovery"
+            }
+          }
+        }
+      },
+      "error": {
+        "slot": {
+          "content": {
+            "color": {
+              "$type": "color",
+              "$value": "{semantic.color.status.danger.default}",
+              "$description": "Recovered from legacy V2 layer component.data-display.base.error.content.color",
+              "$sourceOwner": "old-tree-recovery"
+            }
+          }
+        }
+      }
+    }
+  },
+  "overrides": []
+}

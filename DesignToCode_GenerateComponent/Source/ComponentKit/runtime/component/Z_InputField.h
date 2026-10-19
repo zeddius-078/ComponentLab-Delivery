@@ -11,7 +11,7 @@ class Z_InputField : public QWidget {
     Q_PROPERTY(QString value READ value WRITE setValue NOTIFY valueChanged)
     Q_PROPERTY(bool controlled READ isControlled WRITE setControlled)
     Q_PROPERTY(QString appearance READ appearance WRITE setAppearance)
-    Q_PROPERTY(bool passwordVisible READ isPasswordVisible WRITE setPasswordVisible)
+    Q_PROPERTY(bool passwordVisible READ isPasswordVisible WRITE setPasswordVisible NOTIFY passwordVisibilityChanged)
   public:
     enum class Kind { Text, Password, Search, TextArea };
     Q_ENUM(Kind)
@@ -24,13 +24,14 @@ class Z_InputField : public QWidget {
     QLineEdit* lineEdit() const;
     QPlainTextEdit* textArea() const;
     field::Chrome* control() const;
+    field::Action* clearAction() const;
+    field::Action* passwordToggleAction() const;
     QSize sizeHint() const override;
     static int characterCount(const QString&);
   public slots:
     void setValue(const QString&);
     void setKind(Kind);
     void setControlSize(const QString&);
-    void setVariant(const QString&);
     void setAppearance(const QString&);
     void setSnapshotState(const QString&);
     void setPasswordVisible(bool);
@@ -50,12 +51,15 @@ class Z_InputField : public QWidget {
     void setControlled(bool);
     void setLoading(bool);
     void setAutoSize(bool enabled, int minRows = 0, int maxRows = 0);
+    void clear();
+    void togglePasswordVisibility();
   signals:
     void valueChanged(const QString&);
     void valueChangeRequested(const QString&);
     void submitted(const QString&);
     void searchRequested(const QString&, const QString& source);
     void cleared();
+    void passwordVisibilityChanged(bool visible);
 
   protected:
     void changeEvent(QEvent*) override;

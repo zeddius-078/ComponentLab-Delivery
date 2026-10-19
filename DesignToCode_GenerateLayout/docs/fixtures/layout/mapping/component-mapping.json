@@ -1,0 +1,912 @@
+{
+  "version": 1,
+  "identity": "mainStateGroup component-set or mainComponent standalone public identity -> exact name and key",
+  "unknownComponent": "UNMAPPED_COMPONENT",
+  "profile": "standard-light",
+  "runtimeProfiles": ["standard-light", "wide-light", "standard-dark", "wide-dark"],
+  "profileAliases": {
+    "light-comfortable": {
+      "runtimeProfile": "standard-light",
+      "theme": "light",
+      "density": "comfortable",
+      "reason": "Legacy design-side name mapped to the canonical SDK context"
+    },
+    "light-compact": {
+      "runtimeProfile": "wide-light",
+      "theme": "light",
+      "density": "compact",
+      "reason": "Current design-side name mapped to the canonical SDK context"
+    }
+  },
+  "designProfiles": ["light-comfortable", "light-compact"],
+  "designProfilesPolicy": "An instance Profile must equal the canonical profile or resolve through profileAliases; aliases are explicit design-to-SDK mappings and never become runtime Token contexts",
+  "publicAssetMappings": {
+    "policy": "stable semantic ID -> GenerateComponent SDK public asset catalog",
+    "entries": {
+      "image.foundation.geometric-preview": {
+        "ownership": "shared",
+        "assetId": "image.foundation.geometric-preview",
+        "designIdentity": "ComponentLab/ImageAsset",
+        "defaultState": "Loaded",
+        "fit": ["Contain", "Cover"]
+      },
+      "model.foundation.schematic": {
+        "ownership": "shared",
+        "assetId": "model.foundation.schematic",
+        "designIdentity": "ComponentLab/ModelAsset",
+        "defaultState": "Ready",
+        "fit": ["Contain"]
+      }
+    },
+    "missing": "UNMAPPED_RESOURCE"
+  },
+  "rules": [
+    {
+      "designComponentName": "ComponentLab/Button",
+      "designComponentKey": "ac579859d36e1aaa878e788b32a322b28abcb09e",
+      "designComponentSet": "ComponentLab/Button",
+      "qtClass": "commonWidget::Z_PushButton",
+      "propertyMappings": {
+        "type": {"api": "setType", "values": {"PRIMARY":"Primary","DEFAULT":"Default","DASHED":"Dashed","TEXT":"Text","LINK":"Link"}},
+        "size": {"api":"setSize", "values":{"XS":"XS","S":"S","M":"M","L":"L"}},
+        "danger": {"api":"setDanger", "values":{"false":false,"true":true}},
+        "ghost": {"api":"setGhost", "values":{"false":false,"true":true}},
+        "appearance": {"api":"setAppearance", "values":{"solid":"filled","outline":"outlined","filled":"filled","outlined":"outlined","dashed":"dashed","text":"text","link":"link"}},
+        "iconStyle": {"api":"setIconStyles", "values":{"Bare":"Bare","Filled":"Filled","Outlined":"Outlined"}},
+        "content": {"api":"setContentMode", "values":{"Text":"Text","Dual":"Dual","Leading":"Leading","Trailing":"Trailing","IconOnly":"IconOnly"}}
+      },
+      "stateMappings": {"default":[],"disabled":[{"api":"setEnabled","value":false}],"loading":[{"api":"setLoading","value":true}]},
+      "slotMappings": [{"name":"LABEL","api":"setText","field":"nodeText","when":{"content":["Text","Leading","Trailing","Dual"]}}],
+      "resourceMappings": {
+        "policy":"named design glyph -> explicit QRC/local asset",
+        "glyphPrefix":"GLYPH / ",
+        "contentSlots":{"Text":[],"Leading":["leading"],"Trailing":["trailing"],"Dual":["leading","trailing"],"IconOnly":["leading"]},
+        "entries":{
+          "GLYPH / arrow-left":{"ownership":"shared","assetId":"icon.action.previous","accessibleName":"返回"},
+          "GLYPH / arrow-right":{"ownership":"shared","assetId":"icon.action.next","accessibleName":"前进"},
+          "GLYPH / search":{"ownership":"shared","assetId":"icon.action.search","accessibleName":"搜索"}
+        },
+        "missing":"UNMAPPED_RESOURCE"
+      },
+      "fallback":"error",
+      "status":"V2 runtime: legacy solid/outline source values translate explicitly to filled/outlined; removed material values fail closed"
+    },
+    {
+      "designComponentName":"ComponentLab/Checkbox",
+      "designComponentKey":"77657535de6dc1212386afaa18cf2e4dc5db587f",
+      "designComponentSet":"ComponentLab/Checkbox",
+      "qtClass":"commonWidget::Z_CheckBox",
+      "propertyMappings": {
+        "value":{"api":"setCheckValue","values":{"unchecked":"unchecked","checked":"checked","mixed":"mixed"}},
+        "size":{"api":"setControlSize","values":{"sm":"sm","lg":"lg"}},
+        "appearance":{"api":"setAppearance","values":{"solid":"solid","gradient":"gradient","inset":"inset","gradient-inset":"gradient-inset","outline":"outline","elevated":"elevated","gradient-elevated":"gradient-elevated"}}
+      },
+      "stateMappings":{"default":[],"disabled":[{"api":"setEnabled","value":false}]},
+      "slotMappings":[{"name":"LABEL","api":"setText","field":"nodeText"}],
+      "resourceMappings":{"policy":"check/mixed glyph supplied by existing Token catalog"},
+      "fallback":"error",
+      "status":"V1: default and disabled; transient states supplied by native events"
+    },
+    {
+      "designComponentName":"ComponentLab/Input",
+      "designComponentKey":"c99aef2324e1a9ee292a501e5ad635a2e28ce0f1",
+      "designComponentSet":"ComponentLab/Input",
+      "qtClass":"commonWidget::Z_InputField",
+      "propertyMappings": {
+        "kind":{"api":"setKind","values":{"text":"Text","password":"Password","search":"Search","textarea":"TextArea"}},
+        "size":{"api":"setControlSize","values":{"sm":"sm","md":"md","lg":"lg"}},
+        "variant":{"api":"setAppearance","values":{"outlined":"outlined"}},
+        "appearance":{"api":"setAppearance","values":{"solid":"outlined","outlined":"outlined"}},
+        "allowClear":{"api":"setAllowClear","values":{"false":false,"true":true}},
+        "content":{"api":"editorTextMode","values":{"empty":"setPlaceholder","value":"setValue"}},
+        "prefix":{"api":"prefixPolicy","values":{"false":"none"}}
+      },
+      "stateMappings":{"default":[],"disabled":[{"api":"setEnabled","value":false}],"readOnly":[{"api":"setReadOnly","value":true}],"loading":[{"api":"setLoading","value":true}],"error":[{"api":"setStatus","value":"error"}]},
+      "slotMappings":[{"name":"LABEL","api":"setLabel","field":"nodeText"},{"name":"HELP","api":"setHint","field":"nodeText"},{"name":"EDITOR","api":"editorText","field":"nodeText"}],
+      "resourceMappings":{"policy":"password eye and search supplied by existing native component"},
+      "fallback":"error",
+      "status":"V2 runtime: outlined only; legacy solid source value translates explicitly to outlined; prefix=true awaits resource mapping"
+    },
+    {
+      "designComponentName":"ComponentLab/Label",
+      "designComponentSetId":"414:39",
+      "designComponentSet":"ComponentLab/Label",
+      "qtClass":"commonWidget::Z_Label",
+      "compositionApi":"display.configureLabel",
+      "propertyMappings":{
+        "Alignment":{"api":"display.configureLabel","values":{"Start":"Start","Center":"Center","End":"End"}},
+        "Wrap":{"api":"display.configureLabel","values":{"False":"False","True":"True"}},
+        "State":{"api":"display.configureLabel","values":{"Default":"Default","Disabled":"Disabled"}}
+      },
+      "stateMappings":{},
+      "slotMappings":[{"name":"Content / text","api":"setText","field":"nodeText"}],
+      "resourceMappings":{"policy":"QLabel owns text, wrapping, interaction and accessibility; logical Start/End is resolved by the GenerateComponent SDK against layout direction"},
+      "fallback":"error",
+      "status":"Figma 414:39; 12 Alignment x Wrap x State variants; presentation-only and Qt::NoFocus"
+    },
+    {
+      "designComponentName":"ComponentLab/LineEdit",
+      "designComponentSetId":"1116:18",
+      "designComponentSet":"ComponentLab/LineEdit",
+      "qtClass":"commonWidget::Z_LineEdit",
+      "compositionApi":"input.configureLineEdit",
+      "propertyMappings":{
+        "Size":{"api":"input.configureLineEdit","values":{"Small":"Small","Medium":"Medium","Large":"Large"}},
+        "State":{"api":"input.configureLineEdit","values":{"Default":"Default","Hover":"Hover","Focus":"Focus","Filled":"Filled","Error":"Error","Disabled":"Disabled"}}
+      },
+      "stateMappings":{},
+      "slotMappings":[],
+      "resourceMappings":{"policy":"Text, placeholder, validator, inputMask, IME, selection, clear control and QAction slots remain native QLineEdit or host-owned inputs; Filled does not synthesize content and Error is an explicit visual contract"},
+      "fallback":"error",
+      "status":"Figma 1116:18; 18 Size x State variants; optional prefix, suffix and clear controls remain native SDK composition preferences"
+    },
+    {
+      "designComponentName":"ComponentLab/Slider",
+      "designComponentSetId":"467:195",
+      "designComponentSet":"ComponentLab/Slider",
+      "qtClass":"commonWidget::Z_Slider",
+      "compositionApi":"input.configureSlider",
+      "propertyMappings":{
+        "Orientation":{"api":"input.configureSlider","values":{"Horizontal":"Horizontal","Vertical":"Vertical"}},
+        "State":{"api":"input.configureSlider","values":{"Default":"Default","Focus":"Focus","Dragging":"Dragging","Disabled":"Disabled"}}
+      },
+      "stateMappings":{},
+      "slotMappings":[],
+      "resourceMappings":{"policy":"QAbstractSlider owns value, position, range, steps, tracking, inversion and signals; Figma value text is a presentation layer and never determines the native value"},
+      "fallback":"error",
+      "status":"Figma 467:195; eight Orientation x State variants; Focus and Dragging are visual snapshots rather than persisted sliderDown"
+    },
+    {
+      "designComponentName":"ComponentLab/ScrollBar",
+      "designComponentSetId":"471:477",
+      "designComponentSet":"ComponentLab/ScrollBar",
+      "qtClass":"commonWidget::Z_ScrollBar",
+      "compositionApi":"input.configureScrollBar",
+      "propertyMappings":{
+        "Orientation":{"api":"input.configureScrollBar","values":{"Horizontal":"Horizontal","Vertical":"Vertical"}},
+        "State":{"api":"input.configureScrollBar","values":{"Default":"Default","Hover":"Hover","Dragging":"Dragging","Disabled":"Disabled"}}
+      },
+      "stateMappings":{},
+      "slotMappings":[],
+      "resourceMappings":{"policy":"The host viewport and QStyle own range, pageStep, thumb proportion, hit testing and line-button behavior; Hover and Dragging remain transient visual evidence"},
+      "fallback":"error",
+      "status":"Figma 471:477; eight Orientation x State variants; native NoFocus remains unchanged unless a host explicitly opts into keyboard focus"
+    },
+    {
+      "designComponentName":"ComponentLab/TimePicker",
+      "designComponentSetId":"465:189",
+      "designComponentSet":"ComponentLab/TimePicker",
+      "qtClass":"commonWidget::Z_TimeEdit",
+      "compositionApi":"input.configureTimePicker",
+      "propertyMappings":{
+        "Format":{"api":"input.configureTimePicker","values":{"24h":"24h","12h":"12h"}},
+        "State":{"api":"input.configureTimePicker","values":{"Default":"Default","Focus":"Focus","ReadOnly":"ReadOnly","Disabled":"Disabled"}}
+      },
+      "stateMappings":{},
+      "slotMappings":[],
+      "resourceMappings":{"policy":"QTime, ordered range, parsing, locale, current section, wrapping and keyboard stepping remain native; 12h and 24h map only to displayFormat while preserving the value"},
+      "fallback":"error",
+      "status":"Figma 465:189; eight Format x State variants; wall-clock time never implies a date, time zone or instant"
+    },
+    {
+      "designComponentName":"ComponentLab/ToolButton",
+      "designComponentSetId":"443:222",
+      "designComponentSet":"ComponentLab/ToolButton",
+      "qtClass":"commonWidget::Z_ToolButton",
+      "compositionApi":"actions.configureToolButton",
+      "propertyMappings":{
+        "Surface":{"api":"actions.configureToolButton","values":{"Framed":"Framed","AutoRaise":"AutoRaise"}},
+        "Menu":{"api":"actions.configureToolButton","values":{"None":"None","Split":"Split"}},
+        "State":{"api":"actions.configureToolButton","values":{"Default":"Default","Hover":"Hover","Pressed":"Pressed","Focus":"Focus","Disabled":"Disabled","Checked":"Checked","CheckedHover":"CheckedHover","CheckedFocus":"CheckedFocus","Open":"Open"}},
+        "Show label":{"api":"actions.configureToolButton","values":{"False":"False","True":"True"}}
+      },
+      "stateMappings":{},
+      "slotMappings":[{"name":"Label","api":"setText","field":"nodeText"}],
+      "resourceMappings":{"policy":"The Figma Icon instance-swap remains a stable semantic asset input; QAction, QMenu, popup timing, activation and focus return remain native runtime authority"},
+      "fallback":"error",
+      "status":"Figma 443:222; 34 valid variants; Open is rejected unless Menu=Split"
+    },
+    {
+      "designComponentName":"ComponentLab/DialogButtonGroup",
+      "designComponentSetId":"447:593",
+      "designComponentSet":"ComponentLab/DialogButtonGroup",
+      "qtClass":"commonWidget::Z_DialogButtonBox",
+      "compositionApi":"actions.configureDialogButtonGroup",
+      "propertyMappings":{
+        "Orientation":{"api":"actions.configureDialogButtonGroup","values":{"Horizontal":"Horizontal","Vertical":"Vertical"}},
+        "Centered":{"api":"actions.configureDialogButtonGroup","values":{"False":"False","True":"True"}},
+        "Configuration":{"api":"actions.configureDialogButtonGroup","values":{"Confirm":"Confirm","Apply":"Apply","Help":"Help","Destructive":"Destructive"}},
+        "State":{"api":"actions.configureDialogButtonGroup","values":{"Default":"Default","Disabled":"Disabled"}}
+      },
+      "stateMappings":{},
+      "slotMappings":[],
+      "resourceMappings":{"policy":"The SDK creates native StandardButtons and ButtonRole assignments; platform QStyle retains ordering and accepted, rejected, helpRequested and clicked semantics"},
+      "fallback":"error",
+      "status":"Figma 447:593; 32 Orientation x Centered x Configuration x State variants"
+    },
+    {
+      "designComponentName":"ComponentLab/CommandLinkButton",
+      "designComponentSetId":"450:102",
+      "designComponentSet":"ComponentLab/CommandLinkButton",
+      "qtClass":"commonWidget::Z_CommandLinkButton",
+      "compositionApi":"actions.configureCommandLinkButton",
+      "propertyMappings":{
+        "Surface":{"api":"actions.configureCommandLinkButton","values":{"Raised":"Raised","Flat":"Flat"}},
+        "State":{"api":"actions.configureCommandLinkButton","values":{"Default":"Default","Hover":"Hover","Pressed":"Pressed","Focus":"Focus","Disabled":"Disabled","Checked":"Checked","CheckedHover":"CheckedHover","CheckedFocus":"CheckedFocus"}},
+        "Show description":{"api":"actions.configureCommandLinkButton","values":{"False":"False","True":"True"}},
+        "Show icon":{"api":"actions.configureCommandLinkButton","values":{"False":"False","True":"True"}}
+      },
+      "stateMappings":{},
+      "slotMappings":[
+        {"name":"Title","api":"setText","field":"nodeText"},
+        {"name":"Description","api":"setDescription","field":"nodeText"}
+      ],
+      "resourceMappings":{"policy":"The Icon instance-swap remains a stable semantic asset input; choice-group exclusivity and flow navigation belong to the host controller"},
+      "fallback":"error",
+      "status":"Figma 450:102; 16 Surface x State variants with explicit content visibility"
+    },
+    {
+      "designComponentName":"ComponentLab/MetricCard",
+      "designComponentSetId":"397:39",
+      "designComponentSet":"ComponentLab/MetricCard",
+      "qtClass":"commonWidget::Z_MetricCard",
+      "compositionApi":"display.configureMetricCard",
+      "propertyMappings":{
+        "State":{"api":"display.configureMetricCard","values":{"Default":"Default","Loading":"Loading","Empty":"Empty","Error":"Error"}}
+      },
+      "stateMappings":{},
+      "slotMappings":[
+        {"name":"Title","api":"setTitleText","field":"nodeText"},
+        {"name":"Content/Value","api":"setValueText","field":"nodeText","when":{"State":["Default"]}},
+        {"name":"Content/Detail","api":"setDetailText","field":"nodeText","when":{"State":["Default"]}}
+      ],
+      "resourceMappings":{"policy":"MetricCard owns the card surface and comparison or meta copy; numeric parsing and locale formatting remain outside this presentation shell"},
+      "fallback":"error",
+      "status":"Figma 397:39; four State variants and exact TitleText, ValueText and DetailText slots"
+    },
+    {
+      "designComponentName":"ComponentLab/Statistic",
+      "designComponentSetId":"436:79",
+      "designComponentSet":"ComponentLab/Statistic",
+      "qtClass":"commonWidget::Z_Statistic",
+      "compositionApi":"display.configureStatistic",
+      "propertyMappings":{
+        "Size":{"api":"display.configureStatistic","values":{"Compact":"Compact","Default":"Default"}},
+        "State":{"api":"display.configureStatistic","values":{"Default":"Default","Loading":"Loading","Empty":"Empty","Error":"Error"}},
+        "Show title":{"api":"display.configureStatistic","values":{"False":"False","True":"True"}},
+        "Show prefix":{"api":"display.configureStatistic","values":{"False":"False","True":"True"}},
+        "Show suffix":{"api":"display.configureStatistic","values":{"False":"False","True":"True"}}
+      },
+      "stateMappings":{},
+      "slotMappings":[
+        {"name":"Title","api":"setTitleText","field":"nodeText"},
+        {"name":"Prefix","api":"setPrefix","field":"nodeText","when":{"State":["Default"]}},
+        {"name":"Value","api":"setValueText","field":"nodeText","when":{"State":["Default"]}},
+        {"name":"Suffix","api":"setSuffix","field":"nodeText","when":{"State":["Default"]}}
+      ],
+      "resourceMappings":{"policy":"The generated design literal initializes display text; runtime hosts may instead provide numericValue plus localeName, precision and useGrouping through the SDK without collapsing Empty or Error into zero"},
+      "fallback":"error",
+      "status":"Figma 436:79; eight Size x State variants with explicit visibility and formatter ownership boundaries"
+    },
+    {
+      "designComponentName":"ComponentLab/ProgressBar",
+      "designComponentSetId":"410:57",
+      "designComponentSet":"ComponentLab/ProgressBar",
+      "qtClass":"commonWidget::Z_ProgressBar",
+      "compositionApi":"display.configureProgressBar",
+      "propertyMappings":{
+        "Orientation":{"api":"display.configureProgressBar","values":{"Horizontal":"Horizontal","Vertical":"Vertical"}},
+        "State":{"api":"display.configureProgressBar","values":{"Determinate":"Determinate","Indeterminate":"Indeterminate","Disabled":"Disabled","Paused":"Paused","Error":"Error","In-progress":"In-progress","Completed":"Completed"}},
+        "Inverted":{"api":"display.configureProgressBar","values":{"False":"False","True":"True"}},
+        "Show label":{"api":"display.configureProgressBar","values":{"False":"False","True":"True"}}
+      },
+      "stateMappings":{},
+      "slotMappings":[{"name":"Indicator / label","api":"setFormat","field":"nodeText"}],
+      "resourceMappings":{"policy":"QProgressBar owns range, value and busy runtime behavior; the SDK adapter separates mode, enabled state and horizontal-only semantic status visuals"},
+      "fallback":"error",
+      "status":"Figma 410:57; 20 valid variants; vertical semantic-status combinations reject instead of inventing unsupported design states"
+    },
+    {
+      "designComponentName":"ComponentLab/Menu",
+      "designIdentityId":"482:491",
+      "designComponentSet":"ComponentLab/Menu",
+      "qtClass":"commonWidget::Z_Menu",
+      "compositionApi":"navigation.populateMenu",
+      "propertyMappings":{},
+      "stateMappings":{},
+      "slotMappings":[],
+      "resourceMappings":{"policy":"QAction identity, shortcut, checked, enabled and submenu ownership remain native SDK composition data; MenuItem component set 482:490 is internal anatomy"},
+      "fallback":"error",
+      "status":"Figma public component 482:491; 20 MenuItem variants from internal set 482:490 remain runtime/native item states"
+    },
+    {
+      "designComponentName":"ComponentLab/MenuBar",
+      "designIdentityId":"487:23",
+      "designComponentSet":"ComponentLab/MenuBar",
+      "qtClass":"commonWidget::Z_MenuBar",
+      "compositionApi":"navigation.populateMenuBar",
+      "propertyMappings":{
+        "Show corner":{"api":"navigation.setMenuBarCornerVisible","values":{"True":true,"False":false}}
+      },
+      "stateMappings":{},
+      "slotMappings":[],
+      "resourceMappings":{"policy":"QAction and ComponentLab/Menu remain shared SDK runtime authorities; MenuBarItem component set 487:22 is internal anatomy"},
+      "fallback":"error",
+      "status":"Figma public component 487:23; Show corner is generated data while hover/open/keyboard/disabled remain native transient states"
+    },
+    {
+      "designComponentName":"ComponentLab/ToolBar",
+      "designComponentSetId":"494:370",
+      "designComponentSet":"ComponentLab/ToolBar",
+      "qtClass":"commonWidget::Z_ToolBar",
+      "compositionApi":"navigation.configureToolBar",
+      "propertyMappings":{
+        "Orientation":{"api":"navigation.configureToolBar","values":{"Horizontal":"Horizontal","Vertical":"Vertical"}},
+        "Placement":{"api":"navigation.configureToolBar","values":{"Docked":"Docked","Floating":"Floating"}},
+        "Capacity":{"api":"navigation.configureToolBar","values":{"Fit":"Fit","Overflow":"Overflow"}},
+        "Presentation":{"api":"navigation.configureToolBar","values":{"IconOnly":"IconOnly","TextBesideIcon":"TextBesideIcon"}},
+        "Show handle":{"api":"navigation.configureToolBar","values":{"True":"true","False":"false"}}
+      },
+      "stateMappings":{},
+      "slotMappings":[],
+      "resourceMappings":{"policy":"QAction, ComponentLab/ToolButton and ComponentLab/Menu are composed by the SDK; GenerateLayout supplies only governed toolbar properties"},
+      "fallback":"error",
+      "status":"Figma 494:370; 16 Orientation x Placement x Capacity x Presentation variants plus Show handle boolean"
+    },
+    {
+      "designComponentName":"ComponentLab/TabWidget",
+      "designIdentityId":"500:849",
+      "designComponentSet":"ComponentLab/TabWidget",
+      "qtClass":"commonWidget::Z_TabWidget",
+      "compositionApi":"tabs.populateTabWidget",
+      "propertyMappings":{},
+      "stateMappings":{},
+      "slotMappings":[],
+      "resourceMappings":{"policy":"the public four-page composition is SDK-owned; TabItem set 500:847 remains internal runtime anatomy and per-item state evidence"},
+      "fallback":"error",
+      "status":"Figma public component 500:849; Position x State variants in internal TabItem set 500:847 remain native QTabBar states"
+    },
+    {
+      "designComponentName":"ComponentLab/ToolBox",
+      "designIdentityId":"505:555",
+      "designComponentSet":"ComponentLab/ToolBox",
+      "qtClass":"commonWidget::Z_ToolBox",
+      "compositionApi":"toolbox.populateToolBox",
+      "propertyMappings":{},
+      "stateMappings":{},
+      "slotMappings":[],
+      "resourceMappings":{"policy":"the public three-page composition is SDK-owned; ToolBoxItem set 505:553 remains internal runtime anatomy and state evidence"},
+      "fallback":"error",
+      "status":"Figma public component 505:555; five ToolBoxItem states in internal set 505:553 remain native QToolBox item states"
+    },
+    {
+      "designComponentName":"ComponentLab/DockWidget",
+      "designComponentSetId":"507:443",
+      "designComponentSet":"ComponentLab/DockWidget",
+      "qtClass":"commonWidget::Z_DockWidget",
+      "compositionApi":"dock.configureDockWidget",
+      "propertyMappings":{
+        "Area":{"api":"dock.configureDockWidget","values":{"Left":"Left","Right":"Right","Top":"Top","Bottom":"Bottom"}},
+        "Placement":{"api":"dock.configureDockWidget","values":{"Docked":"Docked","Floating":"Floating"}}
+      },
+      "stateMappings":{},
+      "slotMappings":[],
+      "resourceMappings":{"policy":"SDK owns the child composition and title-bar assets; Area and Placement are deterministic appearance specimens only and never mutate QMainWindow docking, floating, allowedAreas or QDockWidget feature flags"},
+      "fallback":"error",
+      "status":"Figma 507:443; eight Area x Placement variants; Closable and Floatable glyph visibility is not mapped to native feature flags"
+    },
+    {
+      "designComponentName":"ComponentLab/MdiSubWindow",
+      "designComponentSetId":"511:124",
+      "designComponentSet":"ComponentLab/MdiSubWindow",
+      "qtClass":"commonWidget::Z_MdiSubWindow",
+      "stateProperty":"State",
+      "compositionApi":"mdi.configureSubWindow",
+      "propertyMappings":{
+        "State":{"api":"mdi.configureSubWindow","values":{"Inactive":"Inactive","Active":"Active","Maximized":"Maximized","Minimized":"Minimized","Shaded":"Shaded","Disabled":"Disabled"}}
+      },
+      "stateMappings":{},
+      "slotMappings":[],
+      "resourceMappings":{"policy":"State is a deterministic paint specimen and never executes activation, QWidget window-state, enabled or WindowFlags changes; native lifecycle and commands remain runtime-owned"},
+      "fallback":"error",
+      "status":"Figma 511:124; six State previews; Closable, Minimizable and Maximizable remain glyph-visibility properties rather than native command flags"
+    },
+    {
+      "designComponentName":"ComponentLab/MdiArea",
+      "designComponentSetId":"511:280",
+      "designComponentSet":"ComponentLab/MdiArea",
+      "qtClass":"commonWidget::Z_MdiArea",
+      "compositionApi":"mdi.configureArea",
+      "propertyMappings":{
+        "Presentation":{"api":"mdi.configureArea","values":{"Free":"Free","Cascade":"Cascade","Tile":"Tile","Tabbed":"Tabbed"}}
+      },
+      "stateMappings":{},
+      "slotMappings":[],
+      "resourceMappings":{"policy":"SDK owns the initial managed-window composition; Free, Cascade and Tile use authored preview geometry without invoking arrangement commands, while Tabbed maps to QMdiArea::TabbedView"},
+      "fallback":"error",
+      "status":"Figma 511:280; four Presentation previews over one QMdiArea document model"
+    },
+    {
+      "designComponentName":"ComponentLab/StackedWidget",
+      "designComponentSetId":"516:62",
+      "designComponentSet":"ComponentLab/StackedWidget",
+      "qtClass":"commonWidget::Z_StackedWidget",
+      "stateProperty":"State",
+      "compositionApi":"pageflow.configureStack",
+      "propertyMappings":{"State":{"api":"pageflow.configureStack","values":{"Empty":"Empty","Content":"Content","Disabled":"Disabled"}}},
+      "stateMappings":{},
+      "slotMappings":[],
+      "resourceMappings":{"policy":"SDK owns the initial page specimen; QStackedWidget remains a selector-free page owner and route/history stay generated-page responsibilities"},
+      "fallback":"error",
+      "status":"Figma 516:62; Empty, Content and Disabled states map to native count/currentWidget/enabled semantics"
+    },
+    {
+      "designComponentName":"ComponentLab/WizardPage",
+      "designComponentSetId":"516:113",
+      "designComponentSet":"ComponentLab/WizardPage",
+      "qtClass":"commonWidget::Z_WizardPage",
+      "compositionApi":"pageflow.configureWizardPage",
+      "propertyMappings":{
+        "Kind":{"api":"pageflow.configureWizardPage","values":{"Standard":"Standard","Commit":"Commit","Final":"Final"}},
+        "Completion":{"api":"pageflow.configureWizardPage","values":{"Incomplete":"Incomplete","Complete":"Complete"}}
+      },
+      "stateMappings":{},
+      "slotMappings":[],
+      "resourceMappings":{"policy":"Kind maps to setCommitPage/setFinalPage; Completion remains preview metadata and never replaces isComplete, mandatory fields or validatePage"},
+      "fallback":"error",
+      "status":"Figma 516:113; six Kind x Completion specimens over one native QWizardPage contract"
+    },
+    {
+      "designComponentName":"ComponentLab/Wizard",
+      "designComponentSetId":"516:669",
+      "designComponentSet":"ComponentLab/Wizard",
+      "qtClass":"commonWidget::Z_Wizard",
+      "compositionApi":"pageflow.configureWizard",
+      "propertyMappings":{
+        "Style":{"api":"pageflow.configureWizard","values":{"Classic":"Classic","Modern":"Modern","Mac":"Mac","Aero":"Aero"}},
+        "Phase":{"api":"pageflow.configureWizard","values":{"Start":"Start","Middle":"Middle","Commit":"Commit","Finish":"Finish"}}
+      },
+      "stateMappings":{},
+      "slotMappings":[],
+      "resourceMappings":{"policy":"SDK owns a four-page native flow; Style maps to wizardStyle while Phase remains preview metadata and never writes read-only currentId or visitedIds"},
+      "fallback":"error",
+      "status":"Figma 516:669; sixteen Style x Phase specimens with native page graph, button roles and lifecycle preserved"
+    },
+    {
+      "designComponentName":"ComponentLab/Badge",
+      "designComponentSetId":"2132:21",
+      "designComponentSet":"ComponentLab/Badge",
+      "qtClass":"commonWidget::Z_Badge",
+      "propertyMappings":{
+        "Kind":{"api":"setKind","values":{"Text":"Text","Dot":"Dot"}},
+        "Tone":{"api":"setTone","values":{"Neutral":"Neutral","Info":"Info","Success":"Success","Warning":"Warning","Danger":"Danger"}}
+      },
+      "stateMappings":{},
+      "slotMappings":[{"name":"Label","api":"setLabel","field":"nodeText"}],
+      "resourceMappings":{"policy":"non-interactive count or presence content is rendered by the SDK component; runtime count text is generated page data"},
+      "fallback":"error",
+      "status":"Figma 2132:21; Display component with Kind x Tone variants and no interaction state"
+    },
+    {
+      "designComponentName":"ComponentLab/StatusIndicator",
+      "designComponentSetId":"2132:69",
+      "designComponentSet":"ComponentLab/StatusIndicator",
+      "qtClass":"commonWidget::Z_StatusIndicator",
+      "propertyMappings":{
+        "Size":{"api":"setSize","values":{"Small":"Small","Medium":"Medium"}},
+        "Tone":{"api":"setTone","values":{"Neutral":"Neutral","Process":"Process","Success":"Success","Warning":"Warning","Danger":"Danger"}}
+      },
+      "stateMappings":{},
+      "slotMappings":[{"name":"Label","api":"setLabel","field":"nodeText"}],
+      "resourceMappings":{"policy":"continuous status value and optional label visibility are generated page data; the SDK component remains non-interactive"},
+      "fallback":"error",
+      "status":"Figma 2132:69; Display component with Size x Tone variants and no switch or progress behavior"
+    },
+    {
+      "designComponentName":"ComponentLab/Link",
+      "designComponentSetId":"2132:102",
+      "designComponentSet":"ComponentLab/Link",
+      "qtClass":"commonWidget::Z_Link",
+      "stateProperty":"State",
+      "propertyMappings":{},
+      "stateMappings":{
+        "Default":[{"api":"setSnapshotState","value":"Default"}],
+        "Hover":[{"api":"setSnapshotState","value":"Hover"}],
+        "Pressed":[{"api":"setSnapshotState","value":"Pressed"}],
+        "Focus-visible":[{"api":"setSnapshotState","value":"Focus-visible"}],
+        "Disabled":[{"api":"setSnapshotState","value":"Disabled"}]
+      },
+      "slotMappings":[{"name":"Label","api":"setText","field":"nodeText"}],
+      "resourceMappings":{"policy":"target URL and navigation handling are generated page data; empty snapshotState restores native hover, press and keyboard-focus behavior"},
+      "fallback":"error",
+      "status":"Figma 2132:102; navigation action uses SDK activation signal and optional deterministic design-state evidence"
+    },
+    {
+      "designComponentName":"ComponentLab/Tag",
+      "designComponentSetId":"2132:150",
+      "designComponentSet":"ComponentLab/Tag",
+      "qtClass":"commonWidget::Z_Tag",
+      "propertyMappings":{
+        "Size":{"api":"setSize","values":{"Small":"Small","Medium":"Medium"}},
+        "Tone":{"api":"setTone","values":{"Neutral":"Neutral","Info":"Info","Success":"Success","Warning":"Warning","Danger":"Danger"}},
+        "Dismissible":{"api":"setDismissible","values":{"False":false,"True":true}}
+      },
+      "stateMappings":{},
+      "slotMappings":[{"name":"Label","api":"setLabel","field":"nodeText"}],
+      "resourceMappings":{"policy":"dismissal intent is emitted by the SDK child action; removal, persistence and undo remain generated page responsibilities"},
+      "fallback":"error",
+      "status":"Figma 2132:150; Size x Tone x Dismissible variants map to one SDK composite"
+    },
+    {
+      "designComponentName":"ComponentLab/Tooltip",
+      "designComponentSetId":"2132:189",
+      "designComponentSet":"ComponentLab/Tooltip",
+      "qtClass":"commonWidget::Z_Tooltip",
+      "propertyMappings":{
+        "Placement":{"api":"setPlacement","values":{"Top":"Top","Bottom":"Bottom","Left":"Left","Right":"Right"}}
+      },
+      "stateMappings":{},
+      "slotMappings":[{"name":"Content","api":"setContent","field":"nodeText"}],
+      "resourceMappings":{"policy":"target resolution and attachTo wiring are generated page responsibilities; hover, keyboard focus and Escape behavior are owned by the SDK tooltip"},
+      "fallback":"error",
+      "status":"Figma 2132:189; Placement variants map to one target-owned SDK tooltip"
+    },
+    {
+      "designComponentName":"ComponentLab/SearchInput",
+      "designComponentSetId":"2147:768",
+      "designComponentSet":"ComponentLab/SearchInput",
+      "qtClass":"commonWidget::Z_SearchInput",
+      "stateProperty":"State",
+      "propertyMappings":{},
+      "stateMappings":{
+        "Default":[{"api":"setSnapshotState","value":"Default"}],
+        "Focus":[{"api":"setSnapshotState","value":"Focus"}],
+        "Filled":[{"api":"setSnapshotState","value":"Filled"}],
+        "Disabled":[{"api":"setSnapshotState","value":"Disabled"}],
+        "Error":[{"api":"setSnapshotState","value":"Error"}]
+      },
+      "slotMappings":[],
+      "resourceMappings":{"policy":"search and clear affordances are owned by the SDK component"},
+      "fallback":"error",
+      "status":"Figma 2147:768; runtime query text and shortcut are supplied by generated page data"
+    },
+    {
+      "designComponentName":"ComponentLab/NumberInput",
+      "designComponentSetId":"2147:985",
+      "designComponentSet":"ComponentLab/NumberInput",
+      "qtClass":"commonWidget::Z_NumberInput",
+      "stateProperty":"State",
+      "propertyMappings":{
+        "Type":{"api":"setType","values":{"Integer":"Integer","Decimal":"Decimal"}}
+      },
+      "stateMappings":{
+        "Default":[{"api":"setSnapshotState","value":"Default"}],
+        "Focus":[{"api":"setSnapshotState","value":"Focus"}],
+        "Disabled":[{"api":"setSnapshotState","value":"Disabled"}]
+      },
+      "slotMappings":[],
+      "resourceMappings":{"policy":"native SpinBox/DoubleSpinBox controls are owned by the SDK component"},
+      "fallback":"error",
+      "status":"Figma 2147:985; value, range, precision and step remain generated page data"
+    },
+    {
+      "designComponentName":"ComponentLab/ColorPicker",
+      "designComponentSetId":"2147:1390",
+      "designComponentSet":"ComponentLab/ColorPicker",
+      "qtClass":"commonWidget::Z_ColorPicker",
+      "stateProperty":"State",
+      "propertyMappings":{},
+      "stateMappings":{
+        "Default":[{"api":"setSnapshotState","value":"Default"}],
+        "Focus":[{"api":"setSnapshotState","value":"Focus"}],
+        "Disabled":[{"api":"setSnapshotState","value":"Disabled"}]
+      },
+      "slotMappings":[],
+      "resourceMappings":{"policy":"current QColor and display format are supplied by generated page data; pickerRequested is handled by the page color-selection controller"},
+      "fallback":"error",
+      "status":"Figma 2147:1390; field adapter stays distinct from ColorDialog and does not own preview, commit, cancel, alpha policy or recent colors"
+    },
+    {
+      "designComponentName":"ComponentLab/Transfer",
+      "designComponentSetId":"2148:640",
+      "designComponentSet":"ComponentLab/Transfer",
+      "qtClass":"commonWidget::Z_Transfer",
+      "stateProperty":"State",
+      "propertyMappings":{},
+      "stateMappings":{
+        "Default":[{"api":"setSnapshotState","value":"Default"}],
+        "Disabled":[{"api":"setSnapshotState","value":"Disabled"}],
+        "Loading":[{"api":"setSnapshotState","value":"Loading"}]
+      },
+      "slotMappings":[],
+      "resourceMappings":{"policy":"available and selected QAbstractItemModel instances, ordering, permissions and mutations are supplied by the generated page selection controller; move request signals never mutate either model inside the SDK component"},
+      "fallback":"error",
+      "status":"Figma 2148:640; one controlled dual-list selection contract, not two independent ListView implementations"
+    },
+    {
+      "designComponentName":"ComponentLab/Upload",
+      "designComponentSetId":"2148:818",
+      "designComponentSet":"ComponentLab/Upload",
+      "qtClass":"commonWidget::Z_Upload",
+      "stateProperty":"State",
+      "propertyMappings":{},
+      "stateMappings":{
+        "Default":[{"api":"setSnapshotState","value":"Default"}],
+        "Hover":[{"api":"setSnapshotState","value":"Hover"}],
+        "Uploading":[{"api":"setSnapshotState","value":"Uploading"}],
+        "Success":[{"api":"setSnapshotState","value":"Success"}],
+        "Error":[{"api":"setSnapshotState","value":"Error"}]
+      },
+      "slotMappings":[],
+      "resourceMappings":{"policy":"file name, helper text and progress are supplied by generated page data; browseRequested and filesDropped are handled by the page upload controller; validation, transport, cancellation, retry and authentication remain upload-service responsibilities"},
+      "fallback":"error",
+      "status":"Figma 2148:818; controlled acquisition/lifecycle surface stays distinct from FileDialog and never owns network upload work"
+    },
+    {
+      "designComponentName":"ComponentLab/NumericKeypad",
+      "designComponentSetId":"2148:1018",
+      "designComponentSet":"ComponentLab/NumericKeypad",
+      "qtClass":"commonWidget::Z_NumericKeypad",
+      "propertyMappings":{
+        "Density":{"api":"setDensity","values":{"Comfortable":"Comfortable","Compact":"Compact"}}
+      },
+      "stateMappings":{},
+      "slotMappings":[],
+      "resourceMappings":{"policy":"key layout, allowed keys, decimal separator, target field, value constraints and commit policy are supplied by the generated page input controller"},
+      "fallback":"error",
+      "status":"Figma 2148:1018; controlled keypad emits semantic key intentions without owning the target numeric value"
+    },
+    {
+      "designComponentName":"ComponentLab/OverflowMenuButton",
+      "designComponentSetId":"2147:1192",
+      "designComponentSet":"ComponentLab/OverflowMenuButton",
+      "qtClass":"commonWidget::Z_OverflowMenuButton",
+      "stateProperty":"State",
+      "propertyMappings":{},
+      "stateMappings":{
+        "Default":[{"api":"setSnapshotState","value":"Default"}],
+        "Hover":[{"api":"setSnapshotState","value":"Hover"}],
+        "Pressed":[{"api":"setSnapshotState","value":"Pressed"}],
+        "Focus":[{"api":"setSnapshotState","value":"Focus"}],
+        "Disabled":[{"api":"setSnapshotState","value":"Disabled"}]
+      },
+      "slotMappings":[],
+      "resourceMappings":{"policy":"overflow glyph is owned by the SDK; actions are supplied by generated page data"},
+      "fallback":"error",
+      "status":"Figma 2147:1192; menu actions are intentionally external to the design variant"
+    },
+    {
+      "designComponentName":"ComponentLab/SegmentedControl",
+      "designComponentSetId":"2148:1240",
+      "designComponentSet":"ComponentLab/SegmentedControl",
+      "qtClass":"commonWidget::Z_SegmentedControl",
+      "stateProperty":"State",
+      "propertyMappings":{
+        "Segments":{"api":"setSegmentCount","values":{"2":2,"3":3,"4":4}}
+      },
+      "stateMappings":{
+        "Default":[{"api":"setEnabled","value":true}],
+        "Disabled":[{"api":"setEnabled","value":false}]
+      },
+      "slotMappings":[],
+      "resourceMappings":{"policy":"segment labels and domain values are supplied by generated page data"},
+      "fallback":"error",
+      "status":"Figma 2148:1240; one SDK identity supports 2 to 4 external mutually-exclusive items"
+    },
+    {
+      "designComponentName":"ComponentLab/Timeline",
+      "designComponentSetId":"2147:35",
+      "designComponentSet":"ComponentLab/Timeline",
+      "qtClass":"commonWidget::Z_Timeline",
+      "propertyMappings":{
+        "Density":{"api":"setDensity","values":{"Comfortable":"Comfortable","Compact":"Compact"}}
+      },
+      "stateMappings":{},
+      "slotMappings":[],
+      "resourceMappings":{"policy":"timeline event content is supplied by generated page data; status markers are SDK-owned component resources"},
+      "fallback":"error",
+      "status":"Figma 2147:35; display-only event history, not workflow navigation"
+    },
+    {
+      "designComponentName":"ComponentLab/AnchorNavigation",
+      "designComponentSetId":"2150:82",
+      "designComponentSet":"ComponentLab/AnchorNavigation",
+      "qtClass":"commonWidget::Z_AnchorNavigation",
+      "stateProperty":"State",
+      "propertyMappings":{
+        "Orientation":{"api":"setOrientation","values":{"Vertical":"Vertical","Horizontal":"Horizontal"}}
+      },
+      "stateMappings":{
+        "Default":[{"api":"setSnapshotState","value":"Default"}],
+        "Scrolled":[{"api":"setSnapshotState","value":"Scrolled"}]
+      },
+      "slotMappings":[],
+      "resourceMappings":{"policy":"anchor labels and target bindings are supplied by generated page data; scrolling remains page-owned"},
+      "fallback":"error",
+      "status":"Figma 2150:82; controlled navigation emits activation requests and receives observed section through currentIndex"
+    },
+    {
+      "designComponentName":"ComponentLab/Filter",
+      "designComponentSetId":"2148:244",
+      "designComponentSet":"ComponentLab/Filter",
+      "qtClass":"commonWidget::Z_Filter",
+      "stateProperty":"State",
+      "propertyMappings":{
+        "Layout":{"api":"setLayoutMode","values":{"Inline":"Inline","Panel":"Panel"}}
+      },
+      "stateMappings":{
+        "Default":[{"api":"setSnapshotState","value":"Default"}],
+        "Applied":[{"api":"setSnapshotState","value":"Applied"}]
+      },
+      "slotMappings":[],
+      "resourceMappings":{"policy":"criterion labels, values, validation, clear, persistence and state transitions are supplied by the generated page filter controller"},
+      "fallback":"error",
+      "status":"Figma 2148:244; controlled filter presentation emits criterion and apply requests without owning the domain model"
+    },
+    {
+      "designComponentName":"ComponentLab/Stepper",
+      "designComponentSetId":"2147:515",
+      "designComponentSet":"ComponentLab/Stepper",
+      "qtClass":"commonWidget::Z_Stepper",
+      "stateProperty":"State",
+      "propertyMappings":{},
+      "stateMappings":{
+        "Default":[{"api":"setSnapshotState","value":"Default"}],
+        "Active":[{"api":"setSnapshotState","value":"Active"}],
+        "Completed":[{"api":"setSnapshotState","value":"Completed"}],
+        "Error":[{"api":"setSnapshotState","value":"Error"}]
+      },
+      "slotMappings":[],
+      "resourceMappings":{"policy":"step labels and workflow position are supplied by generated page data"},
+      "fallback":"error",
+      "status":"Figma 2147:515; presentation-only progress component with external workflow ownership"
+    },
+    {
+      "designComponentName":"ComponentLab/Pagination",
+      "designComponentSetId":"2148:438",
+      "designComponentSet":"ComponentLab/Pagination",
+      "qtClass":"commonWidget::Z_Pagination",
+      "stateProperty":"State",
+      "propertyMappings":{
+        "Density":{"api":"setDensity","values":{"Default":"Default","Compact":"Compact"}}
+      },
+      "stateMappings":{
+        "Default":[{"api":"setSnapshotState","value":"Default"}],
+        "Disabled":[{"api":"setSnapshotState","value":"Disabled"}]
+      },
+      "slotMappings":[],
+      "resourceMappings":{"policy":"page count and current page are supplied by generated page data"},
+      "fallback":"error",
+      "status":"Figma 2148:438; visible page range is computed by the SDK from runtime page data"
+    },
+    {
+      "designComponentName":"ComponentLab/PageHeader",
+      "designComponentSetId":"2148:74",
+      "designComponentSet":"ComponentLab/PageHeader",
+      "qtClass":"commonWidget::Z_PageHeader",
+      "propertyMappings":{
+        "Density":{"api":"setDensity","values":{"Comfortable":"Comfortable","Compact":"Compact"}},
+        "Actions":{"api":"setActionsVisible","values":{"On":true,"Off":false}}
+      },
+      "stateMappings":{},
+      "slotMappings":[],
+      "resourceMappings":{"policy":"title, context and action command are supplied by generated page data"},
+      "fallback":"error",
+      "status":"Figma 2148:74; optional child action owns keyboard focus"
+    },
+    {
+      "designComponentName":"ComponentLab/TitleBar",
+      "designComponentSetId":"2150:436",
+      "designComponentSet":"ComponentLab/TitleBar",
+      "qtClass":"commonWidget::Z_TitleBar",
+      "stateProperty":"State",
+      "propertyMappings":{},
+      "stateMappings":{
+        "Default":[{"api":"setSnapshotState","value":"Default"}],
+        "Maximized":[{"api":"setSnapshotState","value":"Maximized"}]
+      },
+      "slotMappings":[],
+      "resourceMappings":{"policy":"application title and host window actions remain runtime-owned"},
+      "fallback":"error",
+      "status":"Figma 2150:436; SDK emits host action and drag signals without directly controlling a window"
+    },
+    {
+      "designComponentName":"ComponentLab/Navbar",
+      "designComponentSetId":"380:113",
+      "designComponentSet":"ComponentLab/Navbar",
+      "qtClass":"commonWidget::Z_Navbar",
+      "propertyMappings":{
+        "Density":{"api":"setDensity","values":{"Comfortable":"Comfortable","Compact":"Compact"}}
+      },
+      "stateMappings":{},
+      "slotMappings":[
+        {"name":"ProfileName","api":"setProfileName","field":"nodeText"}
+      ],
+      "resourceMappings":{"policy":"brand, search anatomy and action glyphs are SDK-owned; search query, notifications and profile-menu behavior remain generated-page controller responsibilities"},
+      "fallback":"error",
+      "status":"Figma 380:113; NoFocus composition root with canonical Input search and child notification/profile actions"
+    },
+    {
+      "designComponentName":"ComponentLab/Sidebar",
+      "designComponentSetId":"392:216",
+      "designComponentSet":"ComponentLab/Sidebar",
+      "qtClass":"commonWidget::Z_Sidebar",
+      "propertyMappings":{
+        "Density":{"api":"setDensity","values":{"Comfortable":"Comfortable","Compact":"Compact"}},
+        "Collapsed":{"api":"setCollapsed","values":{"False":false,"True":true}}
+      },
+      "stateMappings":{},
+      "slotMappings":[],
+      "resourceMappings":{"policy":"route IDs, labels, permissions, activeRoute and route/page synchronization are generated-page data and controller responsibilities; internal NavItem variants remain SDK anatomy"},
+      "fallback":"error",
+      "status":"Figma 392:216; controlled public Sidebar emits route and collapse requests without owning application routing"
+    },
+    {
+      "designComponentName":"ComponentLab/Splitter",
+      "designComponentSetId":"520:120",
+      "designComponentSet":"ComponentLab/Splitter",
+      "qtClass":"commonWidget::Z_Splitter",
+      "stateProperty":"State",
+      "propertyMappings":{
+        "Orientation":{"api":"setOrientation","values":{"Horizontal":"Horizontal","Vertical":"Vertical"}}
+      },
+      "stateMappings":{
+        "Default":[],
+        "Hover":[],
+        "Dragging":[],
+        "Collapsed":[],
+        "Disabled":[{"api":"setEnabled","value":false}]
+      },
+      "slotMappings":[],
+      "resourceMappings":{"policy":"pane widgets, legal ranges, collapsibility, persistence and splitterMoved handling remain generated-page responsibilities; Show grip is an SDK visual preference"},
+      "fallback":"error",
+      "status":"Figma 520:120; fixed 12 px handle with optional grip, transient preview states do not become persisted application state"
+    },
+    {
+      "designComponentName":"ComponentLab/ScrollArea",
+      "designComponentSetId":"531:912",
+      "designComponentSet":"ComponentLab/ScrollArea",
+      "qtClass":"commonWidget::Z_ScrollArea",
+      "propertyMappings":{
+        "Bars":{"api":"setBars","values":{"None":"None","Vertical":"Vertical","Horizontal":"Horizontal","Both":"Both"}},
+        "Resize":{"api":"setResizeMode","values":{"Fixed":"Fixed","Resizable":"Resizable"}},
+        "State":{"api":"setSnapshotState","values":{"Default":"Default","Focus":"Focus","Disabled":"Disabled"}}
+      },
+      "stateMappings":{},
+      "slotMappings":[],
+      "resourceMappings":{"policy":"content widget ownership, size hints and scroll position remain generated-page responsibilities; SDK owns bars, resize mode and Token styling"},
+      "fallback":"error",
+      "status":"Figma 531:912; 24 Bars x Resize x State variants map to the published Z_ScrollArea contract"
+    },
+    {
+      "designComponentName":"ComponentLab/Calendar",
+      "designComponentSetId":"423:859",
+      "designComponentSet":"ComponentLab/Calendar",
+      "qtClass":"commonWidget::Z_CalendarWidget",
+      "propertyMappings":{
+        "WeekStart":{"api":"setWeekStart","values":{"Monday":"Monday","Sunday":"Sunday"}},
+        "Grid":{"api":"setGrid","values":{"True":true,"False":false}},
+        "State":{"api":"setSnapshotState","values":{"Default":"Default","Disabled":"Disabled"}}
+      },
+      "stateMappings":{},
+      "slotMappings":[],
+      "resourceMappings":{"policy":"selected date, page month, date range, locale and date activation remain generated-page data and controller responsibilities"},
+      "fallback":"error",
+      "status":"Figma 423:859; eight WeekStart x Grid x State variants map to the Token-backed native calendar"
+    },
+    {
+      "designComponentName":"ComponentLab/DesktopBottomNavigation",
+      "designComponentSetId":"1312:96",
+      "designComponentSet":"ComponentLab/DesktopBottomNavigation",
+      "qtClass":"commonWidget::Z_DesktopBottomNavigation",
+      "propertyMappings":{
+        "IconPlacement":{"api":"setIconPlacement","values":{"Top":"Top","Start":"Start"}}
+      },
+      "stateMappings":{},
+      "slotMappings":[],
+      "resourceMappings":{"policy":"primary and secondary labels, stable destinations and selected indices are generated-page data; internal item state sets remain SDK anatomy"},
+      "fallback":"error",
+      "status":"Figma 1312:96; child actions own focus and emit activation requests while destination changes remain page-owned"
+    }
+  ]
+}

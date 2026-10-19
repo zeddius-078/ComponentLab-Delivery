@@ -1,0 +1,676 @@
+{
+  "component": "table",
+  "version": "2.0",
+  "authority": "value-evidence-only",
+  "entries": [
+    {
+      "path": "color/bg/header",
+      "type": "color",
+      "value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.9333333333333333,
+          0.9333333333333333,
+          0.9333333333333333
+        ],
+        "alpha": 1,
+        "hex": "#EEEEEE"
+      },
+      "source": "imports/reference/table.json"
+    },
+    {
+      "path": "color/bg/default",
+      "type": "color",
+      "value": {
+        "colorSpace": "srgb",
+        "components": [
+          1,
+          1,
+          1
+        ],
+        "alpha": 1,
+        "hex": "#FFFFFF"
+      },
+      "source": "imports/reference/table.json"
+    },
+    {
+      "path": "color/bg/zebraPrint",
+      "type": "color",
+      "value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.9803921568627451,
+          0.9803921568627451,
+          0.9803921568627451
+        ],
+        "alpha": 1,
+        "hex": "#FAFAFA"
+      },
+      "source": "imports/reference/table.json"
+    },
+    {
+      "path": "color/bg/Hover",
+      "type": "color",
+      "value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.9607843137254902,
+          0.9607843137254902,
+          0.9607843137254902
+        ],
+        "alpha": 1,
+        "hex": "#F5F5F5"
+      },
+      "source": "imports/reference/table.json"
+    },
+    {
+      "path": "color/bg/disable",
+      "type": "color",
+      "value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.9333333333333333,
+          0.9333333333333333,
+          0.9333333333333333
+        ],
+        "alpha": 1,
+        "hex": "#EEEEEE"
+      },
+      "source": "imports/reference/table.json"
+    },
+    {
+      "path": "color/bg/pressed",
+      "type": "color",
+      "value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.9372549019607843,
+          0.9176470588235294,
+          0.996078431372549
+        ],
+        "alpha": 1,
+        "hex": "#EFEAFE"
+      },
+      "source": "imports/reference/table.json"
+    },
+    {
+      "path": "color/bg/alarm",
+      "type": "color",
+      "value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.8784313725490196,
+          0.12941176470588237,
+          0.1568627450980392
+        ],
+        "alpha": 1,
+        "hex": "#E02128"
+      },
+      "source": "imports/reference/table.json"
+    },
+    {
+      "path": "color/bg/alarmHover",
+      "type": "color",
+      "value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.9137254901960784,
+          0.38823529411764707,
+          0.40784313725490196
+        ],
+        "alpha": 1,
+        "hex": "#E96368"
+      },
+      "source": "imports/reference/table.json"
+    },
+    {
+      "path": "color/bg/alarmSelect",
+      "type": "color",
+      "value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.7490196078431373,
+          0.10980392156862745,
+          0.13333333333333333
+        ],
+        "alpha": 1,
+        "hex": "#BF1C22"
+      },
+      "source": "imports/reference/table.json"
+    },
+    {
+      "path": "color/bg/alarmSoft",
+      "type": "color",
+      "value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.9803921568627451,
+          0.8705882352941177,
+          0.8745098039215686
+        ],
+        "alpha": 1,
+        "hex": "#FADEDF"
+      },
+      "source": "imports/reference/table.json"
+    },
+    {
+      "path": "color/bg/alarmSoftHover",
+      "type": "color",
+      "value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.9882352941176471,
+          0.9098039215686274,
+          0.9137254901960784
+        ],
+        "alpha": 1,
+        "hex": "#FCE8E9"
+      },
+      "source": "imports/reference/table.json"
+    },
+    {
+      "path": "color/bg/alarmSoftSelect",
+      "type": "color",
+      "value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.8352941176470589,
+          0.7411764705882353,
+          0.7450980392156863
+        ],
+        "alpha": 1,
+        "hex": "#D5BDBE"
+      },
+      "source": "imports/reference/table.json"
+    },
+    {
+      "path": "color/bg/error",
+      "type": "color",
+      "value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.9019607843137255,
+          0.43529411764705883,
+          0.11764705882352941
+        ],
+        "alpha": 1,
+        "hex": "#E66F1E"
+      },
+      "source": "imports/reference/table.json"
+    },
+    {
+      "path": "color/bg/errorHover",
+      "type": "color",
+      "value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.9294117647058824,
+          0.6039215686274509,
+          0.3803921568627451
+        ],
+        "alpha": 1,
+        "hex": "#ED9A61"
+      },
+      "source": "imports/reference/table.json"
+    },
+    {
+      "path": "color/bg/errorSelect",
+      "type": "color",
+      "value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.7686274509803922,
+          0.3686274509803922,
+          0.10196078431372549
+        ],
+        "alpha": 1,
+        "hex": "#C45E1A"
+      },
+      "source": "imports/reference/table.json"
+    },
+    {
+      "path": "color/bg/errorSoft",
+      "type": "color",
+      "value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.984313725490196,
+          0.9176470588235294,
+          0.8666666666666667
+        ],
+        "alpha": 1,
+        "hex": "#FBEADD"
+      },
+      "source": "imports/reference/table.json"
+    },
+    {
+      "path": "color/bg/errorSoftHover",
+      "type": "color",
+      "value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.984313725490196,
+          0.9176470588235294,
+          0.8666666666666667
+        ],
+        "alpha": 1,
+        "hex": "#FBEADD"
+      },
+      "source": "imports/reference/table.json"
+    },
+    {
+      "path": "color/bg/errorSoftSelect",
+      "type": "color",
+      "value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.8392156862745098,
+          0.7803921568627451,
+          0.7372549019607844
+        ],
+        "alpha": 1,
+        "hex": "#D6C7BC"
+      },
+      "source": "imports/reference/table.json"
+    },
+    {
+      "path": "color/bg/warning",
+      "type": "color",
+      "value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.9019607843137255,
+          0.6862745098039216,
+          0.09803921568627451
+        ],
+        "alpha": 1,
+        "hex": "#E6AF19"
+      },
+      "source": "imports/reference/table.json"
+    },
+    {
+      "path": "color/bg/warningHover",
+      "type": "color",
+      "value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.9294117647058824,
+          0.7803921568627451,
+          0.3686274509803922
+        ],
+        "alpha": 1,
+        "hex": "#EDC75E"
+      },
+      "source": "imports/reference/table.json"
+    },
+    {
+      "path": "color/bg/warningSelect",
+      "type": "color",
+      "value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.7686274509803922,
+          0.5843137254901961,
+          0.08235294117647059
+        ],
+        "alpha": 1,
+        "hex": "#C49515"
+      },
+      "source": "imports/reference/table.json"
+    },
+    {
+      "path": "color/bg/warningSoft",
+      "type": "color",
+      "value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.9647058823529412,
+          0.9372549019607843,
+          0.8627450980392157
+        ],
+        "alpha": 1,
+        "hex": "#F6EFDC"
+      },
+      "source": "imports/reference/table.json"
+    },
+    {
+      "path": "color/bg/warningSoftHover",
+      "type": "color",
+      "value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.9882352941176471,
+          0.9647058823529412,
+          0.9058823529411765
+        ],
+        "alpha": 1,
+        "hex": "#FCF6E7"
+      },
+      "source": "imports/reference/table.json"
+    },
+    {
+      "path": "color/bg/warningSoftSelect",
+      "type": "color",
+      "value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.8392156862745098,
+          0.8117647058823529,
+          0.7372549019607844
+        ],
+        "alpha": 1,
+        "hex": "#D6CFBC"
+      },
+      "source": "imports/reference/table.json"
+    },
+    {
+      "path": "color/border/default",
+      "type": "color",
+      "value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.8745098039215686,
+          0.8745098039215686,
+          0.8745098039215686
+        ],
+        "alpha": 1,
+        "hex": "#DFDFDF"
+      },
+      "source": "imports/reference/table.json"
+    },
+    {
+      "path": "color/border/select",
+      "type": "color",
+      "value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.3843137254901961,
+          0.20784313725490197,
+          0.9686274509803922
+        ],
+        "alpha": 1,
+        "hex": "#6235F7"
+      },
+      "source": "imports/reference/table.json"
+    },
+    {
+      "path": "color/border/alarm",
+      "type": "color",
+      "value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.8784313725490196,
+          0.12941176470588237,
+          0.1568627450980392
+        ],
+        "alpha": 1,
+        "hex": "#E02128"
+      },
+      "source": "imports/reference/table.json"
+    },
+    {
+      "path": "color/border/warning",
+      "type": "color",
+      "value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.9019607843137255,
+          0.6862745098039216,
+          0.09803921568627451
+        ],
+        "alpha": 1,
+        "hex": "#E6AF19"
+      },
+      "source": "imports/reference/table.json"
+    },
+    {
+      "path": "color/text/default",
+      "type": "color",
+      "value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.09803921568627451,
+          0.09803921568627451,
+          0.09803921568627451
+        ],
+        "alpha": 1,
+        "hex": "#191919"
+      },
+      "source": "imports/reference/table.json"
+    },
+    {
+      "path": "color/text/invert",
+      "type": "color",
+      "value": {
+        "colorSpace": "srgb",
+        "components": [
+          1,
+          1,
+          1
+        ],
+        "alpha": 1,
+        "hex": "#FFFFFF"
+      },
+      "source": "imports/reference/table.json"
+    },
+    {
+      "path": "color/text/disable",
+      "type": "color",
+      "value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.7333333333333333,
+          0.7333333333333333,
+          0.7333333333333333
+        ],
+        "alpha": 1,
+        "hex": "#BBBBBB"
+      },
+      "source": "imports/reference/table.json"
+    },
+    {
+      "path": "color/text/alarm",
+      "type": "color",
+      "value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.8784313725490196,
+          0.12941176470588237,
+          0.1568627450980392
+        ],
+        "alpha": 1,
+        "hex": "#E02128"
+      },
+      "source": "imports/reference/table.json"
+    },
+    {
+      "path": "color/text/warning",
+      "type": "color",
+      "value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.9019607843137255,
+          0.6862745098039216,
+          0.09803921568627451
+        ],
+        "alpha": 1,
+        "hex": "#E6AF19"
+      },
+      "source": "imports/reference/table.json"
+    },
+    {
+      "path": "color/text/error",
+      "type": "color",
+      "value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.9019607843137255,
+          0.43529411764705883,
+          0.11764705882352941
+        ],
+        "alpha": 1,
+        "hex": "#E66F1E"
+      },
+      "source": "imports/reference/table.json"
+    },
+    {
+      "path": "color/text/revise",
+      "type": "color",
+      "value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.3843137254901961,
+          0.20784313725490197,
+          0.9686274509803922
+        ],
+        "alpha": 1,
+        "hex": "#6235F7"
+      },
+      "source": "imports/reference/table.json"
+    },
+    {
+      "path": "color/text/disabled",
+      "type": "color",
+      "value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.7333333333333333,
+          0.7333333333333333,
+          0.7333333333333333
+        ],
+        "alpha": 1,
+        "hex": "#BBBBBB"
+      },
+      "source": "imports/reference/table.json"
+    },
+    {
+      "path": "color/text/unit",
+      "type": "color",
+      "value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.3058823529411765,
+          0.3058823529411765,
+          0.3058823529411765
+        ],
+        "alpha": 1,
+        "hex": "#4E4E4E"
+      },
+      "source": "imports/reference/table.json"
+    },
+    {
+      "path": "content/height/sm",
+      "type": "number",
+      "value": 20,
+      "source": "imports/reference/table.json"
+    },
+    {
+      "path": "content/height/md",
+      "type": "number",
+      "value": 24,
+      "source": "imports/reference/table.json"
+    },
+    {
+      "path": "content/height/lg",
+      "type": "number",
+      "value": 44,
+      "source": "imports/reference/table.json"
+    },
+    {
+      "path": "content/height/xl",
+      "type": "number",
+      "value": "{size/height/5xl }",
+      "source": "imports/reference/table.json"
+    },
+    {
+      "path": "content/iconSize/sm",
+      "type": "number",
+      "value": 20,
+      "source": "imports/reference/table.json"
+    },
+    {
+      "path": "content/fontSize/md",
+      "type": "number",
+      "value": 14,
+      "source": "imports/reference/table.json"
+    },
+    {
+      "path": "content/fontWeight/md",
+      "type": "number",
+      "value": 400,
+      "source": "imports/reference/table.json"
+    },
+    {
+      "path": "content/fontWeight/lg",
+      "type": "number",
+      "value": 700,
+      "source": "imports/reference/table.json"
+    },
+    {
+      "path": "content/lineHeight/xs",
+      "type": "number",
+      "value": 16,
+      "source": "imports/reference/table.json"
+    },
+    {
+      "path": "content/lineHeight/sm",
+      "type": "number",
+      "value": 20,
+      "source": "imports/reference/table.json"
+    },
+    {
+      "path": "content/lineHeight/md",
+      "type": "number",
+      "value": 24,
+      "source": "imports/reference/table.json"
+    },
+    {
+      "path": "padding/horizontal",
+      "type": "number",
+      "value": 8,
+      "source": "imports/reference/table.json"
+    },
+    {
+      "path": "padding/vertical",
+      "type": "number",
+      "value": 4,
+      "source": "imports/reference/table.json"
+    },
+    {
+      "path": "size/sm",
+      "type": "number",
+      "value": 28,
+      "source": "imports/reference/table.json"
+    },
+    {
+      "path": "size/md",
+      "type": "number",
+      "value": 32,
+      "source": "imports/reference/table.json"
+    },
+    {
+      "path": "size/lg",
+      "type": "number",
+      "value": 56,
+      "source": "imports/reference/table.json"
+    },
+    {
+      "path": "spacing/default",
+      "type": "number",
+      "value": 4,
+      "source": "imports/reference/table.json"
+    },
+    {
+      "path": "borderWidth/md",
+      "type": "number",
+      "value": 1,
+      "source": "imports/reference/table.json"
+    },
+    {
+      "path": "borderWidth/lg",
+      "type": "number",
+      "value": 2,
+      "source": "imports/reference/table.json"
+    }
+  ]
+}

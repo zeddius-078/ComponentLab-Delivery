@@ -1,0 +1,38 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "content-catalog-schema.json",
+  "title": "ComponentLab V2 Content Catalog",
+  "type": "object",
+  "required": ["$version", "layer", "kind", "defaultLocale", "fallbackLocale", "supportedLocales", "entries"],
+  "properties": {
+    "$version": { "type": "string" },
+    "layer": { "const": "content" },
+    "kind": { "const": "content-catalog" },
+    "defaultLocale": { "type": "string", "minLength": 2 },
+    "fallbackLocale": { "type": "string", "minLength": 2 },
+    "supportedLocales": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 2 },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "entries": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["values"],
+        "properties": {
+          "values": {
+            "type": "object",
+            "minProperties": 1,
+            "additionalProperties": { "type": "string" }
+          },
+          "fallbackKey": { "type": "string" },
+          "description": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

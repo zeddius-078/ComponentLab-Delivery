@@ -35,20 +35,10 @@ QStringList Catalog::presetIds() const {
     return r;
 }
 QString Catalog::label(const QString& preset) const {
-    const auto solid = data["buttonInnerShadow"].toObject();
-    if (solid["id"] == preset)
-        return solid["label"].toString();
     for (auto v : data["presets"].toArray())
         if (v.toObject()["id"] == preset)
             return v.toObject()["label"].toString();
     throw std::invalid_argument("Unknown preset");
-}
-QStringList Catalog::buttonPresetIds() const {
-    auto ids = presetIds();
-    const auto id = data["buttonInnerShadow"].toObject()["id"].toString();
-    if (!id.isEmpty())
-        ids << id;
-    return ids;
 }
 Recipe Catalog::recipe(const QString& key) const {
     auto recipes = data["recipes"].toObject();
@@ -66,49 +56,6 @@ Recipe Catalog::recipe(const QString& key) const {
 }
 Recipe Catalog::checkbox(const QString& preset, bool selected, const QString& state) const {
     return recipe("checkbox/" + preset + '/' + (selected ? "selected" : "unchecked") + '/' + state);
-}
-QString Catalog::buttonUnsupportedReason(const QString& preset, const QString& type,
-                                         bool ghost) const {
-    if(preset=="figma-light") return ghost?"ghost-not-in-captured-figma":QString();
-    const auto capabilities = data["buttonCapabilities"].toObject()[preset].toObject();
-    if (capabilities.isEmpty())
-        return "missing-material-capability";
-    if (!capabilities["types"].toArray().contains(type))
-        return "material-requires-container";
-    if (ghost && !capabilities["ghost"].toBool())
-        return "ghost-conflicts-with-material";
-    return {};
-}
-Recipe Catalog::button(const QString& preset, const QString& type, bool danger, bool ghost,
-                       const QString& state, const QString& size) const {
-    const auto solid = data["buttonInnerShadow"].toObject();
-    if (solid["id"] == preset) {
-        auto result = button("solid", type, danger, ghost, state, size);
-        if (!ghost) {
-            const auto role = danger                                ? "danger"
-                              : type == "PRIMARY" || type == "LINK" ? "primary"
-                                                                    : "secondary";
-            auto visual = solid["roleStates"].toObject()[role].toObject()[state].toObject();
-            if (visual.isEmpty())
-                throw std::invalid_argument("Missing solid inner-shadow state");
-            visual["borderStyle"] = type == "DASHED" ? "dashed" : "solid";
-            result.solidInnerShadow = {
-                {"geometry", solid["geometry"]}, {"visual", visual}, {"role", role}};
-            result.foreground = color(visual["textColor"].toString());
-            result.glyph = result.foreground;
-            result.shadows = {};
-            result.borderWidth = 0;
-            result.qss = "background:transparent; border:none;";
-        }
-        return result;
-    }
-    auto result = recipe(QString("button/%1/%2/%3/%4/%5")
-                             .arg(preset, type, danger ? "1" : "0", ghost ? "1" : "0", state));
-    auto widths = data["buttonBorderWidths"].toObject();
-    if (!widths.contains(size))
-        throw std::invalid_argument("Missing compiled button border width");
-    result.borderWidth = widths[size].toDouble();
-    return result;
 }
 QJsonObject Catalog::checkboxMetrics(const QString& size) const {
     auto r = data["sizes"].toObject()[size].toObject();

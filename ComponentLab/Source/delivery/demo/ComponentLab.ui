@@ -22,7 +22,7 @@
 <widget class="QWidget" name="selectTab"><attribute name="title"><string>Select</string></attribute><layout class="QVBoxLayout" name="selectTabLayout"><item><widget class="QTabWidget" name="selectSections"><widget class="QWidget" name="selectAppearanceTab"><attribute name="title"><string>外观</string></attribute><layout class="QVBoxLayout" name="selectAppearanceLayout"/></widget><widget class="QWidget" name="selectStatesTab"><attribute name="title"><string>分组与状态</string></attribute><layout class="QVBoxLayout" name="selectStatesLayout"/></widget></widget></item></layout></widget>
 <widget class="QWidget" name="nativeTab"><attribute name="title"><string>Z-DesignSystem</string></attribute><layout class="QVBoxLayout" name="nativeTabLayout"><item><widget class="QTabWidget" name="nativeSections"><widget class="QWidget" name="nativeGalleryTab"><attribute name="title"><string>设计系统图库</string></attribute><layout class="QVBoxLayout" name="nativeGalleryLayout"/></widget><widget class="QWidget" name="nativeRegistryTab"><attribute name="title"><string>组件映射</string></attribute><layout class="QVBoxLayout" name="nativeRegistryLayout"/></widget></widget></item></layout></widget>
     </widget></item>
-    <item><widget class="QLabel" name="statusLabel"><property name="text"><string>COMPONENT-LAB R4-sToken</string></property><property name="wordWrap"><bool>true</bool></property></widget></item>
+    <item><widget class="QLabel" name="statusLabel"><property name="text"><string>COMPONENT-LAB V2 Token Architecture</string></property><property name="wordWrap"><bool>true</bool></property></widget></item>
    </layout>
   </widget>
  </widget>

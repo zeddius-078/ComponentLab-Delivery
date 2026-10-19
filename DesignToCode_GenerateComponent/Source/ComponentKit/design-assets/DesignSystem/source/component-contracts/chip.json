@@ -1,0 +1,28 @@
+{
+  "$description": "Chip V2 Component Contract. Selectable QAbstractButton-based component with independent orientation, value and interaction state.",
+  "component": "chip",
+  "version": "1.0",
+  "$status": "draft-v2",
+  "contractKind": "selectable-control",
+  "registryBindings": {"source": "source/component-registry.json#/components/chip", "axes": ["orientation", "value", "state"], "slots": ["label", "focus-ring", "container"], "authority": "component-registry"},
+  "structure": ["container", "label", "focus-ring"],
+  "stateLayers": {"orientation": "horizontal or vertical presentation", "value": "persistent selected value", "pointerInteraction": "hover and pressed visuals", "focus": "keyboard-only focus ring", "availability": "disabled interaction lock", "content": "runtime label"},
+  "runtimeModel": {
+    "orientation": {"registryAxis": "orientation", "values": ["horizontal", "vertical"], "owner": "component-configuration"},
+    "value": {"registryAxis": "value", "values": ["unselected", "selected"], "owner": "runtime-interaction"},
+    "state": {"registryAxis": "state", "priority": ["disabled", "pressed", "focused", "hover", "default"]},
+    "focus": {"state": "focused", "activation": "keyboard-only", "visual": "border-only", "mouseHover": false, "mousePress": false},
+    "disabled": {"preserveValue": true, "lockInteraction": true}
+  },
+  "contentModel": {"label": {"kind": "localized-content-key-or-runtime-text", "defaultLocale": "en-US", "fallbackLocale": "en-US", "required": true, "visualToken": false}},
+  "compositionRules": [
+    "Chip is a selectable control, distinct from non-interactive Badge and dismissible Tag.",
+    "Orientation controls layout presentation and is not an interaction State.",
+    "Value controls selected/unselected presentation and is not an interaction State.",
+    "Disabled preserves the selected value and locks interaction.",
+    "Focused is keyboard-only and uses an independent border-only Focus Ring.",
+    "Chip does not add a loading or dismissible axis unless a separate runtime capability is approved.",
+    "Label is runtime content and does not create label-specific design Tokens."
+  ],
+  "tokenBoundary": {"recipeOwns": ["orientation geometry", "selected/unselected surface roles", "interaction state overlays", "label color and typography", "focus-ring visual reference"], "runtimeOwns": ["value mutation", "keyboard and pointer events", "disabled permission", "label content and accessibility name"], "contractDoesNotOwn": ["resolved color or dimension values", "group selection policy", "dismiss action", "business semantics"]}
+}

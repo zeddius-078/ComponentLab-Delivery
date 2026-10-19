@@ -1,0 +1,54 @@
+{
+  "$registry": {
+    "component": "stepper",
+    "version": "2.0"
+  },
+  "$status": "active",
+  "base": {
+    "state": {
+      "default": {
+        "slot": {
+          "container": {
+            "min-height": {
+              "$type": "dimension",
+              "$value": "{semantic.interaction-size.default}",
+              "$description": "Recovered from legacy V2 layer component.stepper.base.default.container.min-height",
+              "$sourceOwner": "old-tree-recovery",
+              "unit": "px"
+            }
+          },
+          "content": {
+            "gap": {
+              "$type": "spacing",
+              "$value": "{semantic.space.horizontal.compact}",
+              "$description": "Recovered from legacy V2 layer component.stepper.base.default.content.gap",
+              "$sourceOwner": "old-tree-recovery",
+              "unit": "px"
+            }
+          },
+          "indicator": {
+            "color": {
+              "$type": "color",
+              "$value": "{semantic.color.border.secondary}",
+              "$description": "Recovered from legacy V2 layer component.stepper.base.default.indicator.color",
+              "$sourceOwner": "old-tree-recovery"
+            }
+          }
+        }
+      },
+      "selected": {
+        "slot": {
+          "indicator": {
+            "color": {
+              "$type": "color",
+              "$value": "{semantic.color.interactive.brand.default}",
+              "$description": "Recovered from legacy V2 layer component.stepper.base.selected.indicator.color",
+              "$sourceOwner": "old-tree-recovery"
+            }
+          }
+        }
+      }
+    }
+  },
+  "overrides": []
+}

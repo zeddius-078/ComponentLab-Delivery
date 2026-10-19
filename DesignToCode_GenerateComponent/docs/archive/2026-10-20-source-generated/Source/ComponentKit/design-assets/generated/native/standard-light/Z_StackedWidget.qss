@@ -1,0 +1,15 @@
+/* Z_StackedWidget <- QStackedWidget; compiled from the active Token profile. */
+*[designSystemClass="commonWidget::Z_StackedWidget"] {
+    color: #191919;
+    background-color: #FFFFFF;
+    font-size: 14px;
+}
+*[designSystemClass="commonWidget::Z_StackedWidget"]:disabled {
+    color: #BBBBBB;
+    background-color: #EEEEEE;
+    border-color: #8A8A8A;
+}
+*[designSystemClass="commonWidget::Z_StackedWidget"] {
+    border: 1px solid #A7A7A7;
+    border-radius: 4px;
+}

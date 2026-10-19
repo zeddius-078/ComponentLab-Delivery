@@ -1,0 +1,160 @@
+{
+  "$schema": "../schema/composite-token-schema.json",
+  "$description": "V2 Composite Token Registry. It defines type contracts and adapters; package files contain instances only.",
+  "$version": "2.0",
+  "types": {
+    "typography": {
+      "package": "typography.json",
+      "kind": "visual-composite",
+      "members": ["fontFamily", "fontSize", "fontWeight", "lineHeight", "letterSpacing"],
+      "referencePolicy": "primitive-or-profile-reference-only",
+      "figmaStrategy": "local-style-and-variable-coordination",
+      "figmaMapping": {
+        "variableCollection": "DSM/Typography",
+        "textStylePattern": "DSM/Typography/{role}/{preset}",
+        "textStyleIsApplicationEntry": true,
+        "variableNamePatterns": {
+          "fontFamily": "font-family/harmony-os-sans",
+          "fontSize": "font-size/{role}/{preset}",
+          "fontWeight": "font-weight/{role}/{preset}",
+          "lineHeight": "line-height/{role}/{preset}",
+          "letterSpacing": "letter-spacing/{role}/{preset}"
+        },
+        "modePolicy": {
+          "modes": ["standard", "wide"],
+          "defaultMode": "standard",
+          "source": "source/profile.json#$modeOverrides",
+          "modeApplication": "one-text-style-switches-by-collection-mode",
+          "styleDuplicationAllowed": false
+        },
+        "variableBindings": {
+          "fontFamily": { "type": "string", "figmaResolvedType": "STRING", "scope": "FONT_FAMILY", "bindingField": "fontFamily", "valuePolicy": "single-font-name", "source": "semantic.typography.font-family.harmony-os-sans" },
+          "fontWeight": { "type": "number", "figmaResolvedType": "FLOAT", "scope": "TEXT_PROPERTY", "bindingField": "fontWeight", "valuePolicy": "semantic-font-weight" },
+          "fontSize": { "type": "number", "figmaResolvedType": "FLOAT", "scope": "TEXT_PROPERTY", "bindingField": "fontSize", "valuePolicy": "semantic-or-profile-reference" },
+          "lineHeight": { "type": "number", "figmaResolvedType": "FLOAT", "scope": "TEXT_PROPERTY", "bindingField": "lineHeight", "valuePolicy": "semantic-or-profile-reference" },
+          "letterSpacing": { "type": "number", "figmaResolvedType": "FLOAT", "scope": "TEXT_PROPERTY", "bindingField": "letterSpacing", "valuePolicy": "semantic-or-profile-reference" }
+        },
+        "fallbackHandling": "composite-metadata-and-platform-adapter",
+        "fallbackVariableAllowed": false,
+        "figmaSyncPolicy": {
+          "preflightFonts": ["HarmonyOS Sans", "HarmonyOS Sans SC"],
+          "writeOrder": [
+            "preflight-fonts",
+            "create-variable-collection",
+            "create-modes",
+            "create-variables",
+            "create-and-bind-text-styles",
+            "validate-structure-and-provenance"
+          ],
+          "targetCollection": "DSM/Typography",
+          "targetModes": ["standard", "wide"],
+          "legacyAction": "leave-untouched",
+          "requiredValidation": [
+            "collection-name",
+            "mode-names-and-default",
+            "variable-name-and-type",
+            "variable-scope-and-binding-field",
+            "text-style-count-and-name",
+            "text-style-variable-bindings",
+            "sourceRef-sourceVersion-compositeType"
+          ],
+          "partialWritePolicy": "abort-before-write-on-preflight-or-compile-error",
+          "rerunPolicy": {
+            "missingTarget": "create",
+            "matchingTarget": "idempotent-update-managed-resources",
+            "mismatchedTarget": "abort-and-report",
+            "managedScope": "DSM/Typography-created-resources-only",
+            "unmanagedResources": "leave-untouched",
+            "legacyResources": "leave-untouched"
+          }
+        },
+        "provenancePolicy": {
+          "figmaDescriptionFields": ["sourceRef", "sourceVersion", "compositeType"],
+          "variableDescription": "compact-json",
+          "textStyleDescription": "compact-json",
+          "manifest": "generated/composites/typography-figma.json",
+          "manifestRole": "complete-binding-migration-and-version-record",
+          "sourceOfTruth": "DesignSystem/source/typography.json"
+        },
+        "syncDiagnostics": {
+          "report": "generated/reports/typography-figma-sync-diagnostics.json",
+          "defaultSeverity": "error",
+          "blocking": true,
+          "requiredFields": [
+            "severity",
+            "code",
+            "phase",
+            "target",
+            "sourceRef",
+            "sourceVersion",
+            "location",
+            "message",
+            "blocking"
+          ],
+          "categories": [
+            { "code": "FIGMA-FONT-PREFLIGHT", "phase": "preflight" },
+            { "code": "FIGMA-COMPILE-BLOCKED", "phase": "compile" },
+            { "code": "FIGMA-TARGET-STRUCTURE-MISMATCH", "phase": "target-audit" },
+            { "code": "FIGMA-VARIABLE-CONTRACT-MISMATCH", "phase": "target-audit" },
+            { "code": "FIGMA-TEXT-STYLE-CONTRACT-MISMATCH", "phase": "target-audit" }
+          ]
+        },
+        "migrationAsset": "source/migrations/token-aliases.json",
+        "legacyPolicy": "retain-legacy-read-only-during-parallel-rebuild",
+        "sourceMetadata": ["sourceRef", "sourceVersion", "compositeType"]
+      },
+      "runtimeStrategies": ["vue-resolved-style", "qt-resolved-font"],
+      "requiredMembers": ["fontFamily", "fontSize", "fontWeight", "lineHeight", "letterSpacing"]
+    },
+    "gradient": {
+      "package": "gradient.json",
+      "kind": "visual-composite",
+      "supportedKinds": ["linear"],
+      "reservedKinds": ["radial", "conic"],
+      "stopCount": { "min": 2, "max": 16 },
+      "geometry": "normalized-0-to-1",
+      "stopPolicy": "color-token-reference-only",
+      "figmaStrategy": "paint-style-plus-variable-stops",
+      "runtimeStrategies": ["vue-css-gradient", "qt-paint-adapter"]
+    },
+    "shadow": {
+      "package": "shadow.json",
+      "kind": "visual-composite",
+      "layerCount": { "min": 0, "max": 8 },
+      "requiredLayerMembers": ["inset", "offsetX", "offsetY", "blur", "spread", "color"],
+      "figmaStrategy": "effect-style-plus-variable-parameters",
+      "runtimeStrategies": ["vue-box-shadow", "qt-paint-adapter"]
+    },
+    "blur": {
+      "package": "blur.json",
+      "kind": "visual-composite",
+      "status": "reserved",
+      "referencePolicy": "active-source-only",
+      "figmaStrategy": "effect-style-plus-variable-parameters",
+      "runtimeStrategies": ["vue-filter-adapter", "qt-paint-adapter"]
+    },
+    "motion": {
+      "package": "motion.json",
+      "kind": "behavioral-composite",
+      "coreProperties": ["position", "scale", "rotation", "opacity"],
+      "extendedProperties": ["size", "width", "height", "color", "background", "shadow"],
+      "positionSpaces": ["logical-px", "relative"],
+      "timing": ["duration", "delay", "easing"],
+      "repeatDirections": ["normal", "reverse", "alternate", "alternate-reverse"],
+      "staggerDirections": ["forward", "reverse"],
+      "metadataPurposes": ["feedback", "transition", "state-change", "loading", "enter", "exit", "attention"],
+      "figmaStrategy": "prototype-smart-animate-plus-variable-metadata",
+      "runtimeStrategies": ["vue-motion-adapter", "qt-property-animation-adapter"],
+      "staticFallback": "qss-static-only",
+      "releaseUnit": "token-slice",
+      "releasedSlices": ["loading.spinner"],
+      "candidateSlicesRemainBlocked": true
+    }
+  },
+  "validation": {
+    "blockOn": ["unknown-type", "missing-reference", "unsupported-kind", "invalid-domain", "invalid-combination"],
+    "warnOn": ["candidate-value", "compatible-platform-downgrade", "reserved-type", "unmapped-hook"],
+    "sourceOfTruth": "registry-and-package",
+    "generatedOutputs": ["generated/composites/vue.json", "generated/composites/qt.json"]
+  }
+}

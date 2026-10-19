@@ -227,18 +227,18 @@
         "background": {
           "control-default": {
             "$type": "color",
-            "$value": "{primitive.color.neutral.gray.0}",
+            "$value": "{theme.color.background.control-default}",
             "$description": "Migrated from legacy sToken --color/background/control-default"
           },
           "disabled": {
             "$type": "color",
-            "$value": "{primitive.color.reference.neutral.p-93}",
+            "$value": "{theme.color.background.disabled}",
             "$description": "Migrated from legacy sToken --color/background/disabled | 参考文件修正：禁用背景 #F3F3F3 -> #EEEEEE",
             "$sourceOwner": "reference-import"
           },
           "hover": {
             "$type": "color",
-            "$value": "{primitive.color.reference.neutral.p-96}",
+            "$value": "{theme.color.background.hover}",
             "$description": "Migrated from legacy sToken --color/background/hover | 参考文件修正：悬停背景 #F3F3F3 -> #F5F5F5",
             "$sourceOwner": "reference-import"
           },
@@ -260,7 +260,7 @@
           },
           "surface-raised": {
             "$type": "color",
-            "$value": "{primitive.color.neutral.gray.5}",
+            "$value": "{theme.color.background.surface-raised}",
             "$description": "Migrated from legacy sToken --color/background/surface-raised"
           },
           "surface-tertiary": {
@@ -284,7 +284,7 @@
         "border": {
           "default": {
             "$type": "color",
-            "$value": "{primitive.color.neutral.gray.35}",
+            "$value": "{theme.color.border.default}",
             "$description": "Migrated from legacy sToken --color/border/default"
           },
           "disabled": {
@@ -304,7 +304,7 @@
           },
           "secondary": {
             "$type": "color",
-            "$value": "{primitive.color.neutral.gray.20}",
+            "$value": "{theme.color.border.secondary}",
             "$description": "Migrated from legacy sToken --color/border/secondary"
           },
           "tertiary": {
@@ -578,7 +578,7 @@
         "text": {
           "disabled": {
             "$type": "color",
-            "$value": "{primitive.color.neutral.gray.30}",
+            "$value": "{theme.color.text.disabled}",
             "$description": "Migrated from legacy sToken --color/text/disabled | 参考文件修正：禁用文本 #8A8A8A -> #BBBBBB",
             "$sourceOwner": "reference-import"
           },
@@ -594,12 +594,12 @@
           },
           "muted": {
             "$type": "color",
-            "$value": "{primitive.color.neutral.gray.65}",
+            "$value": "{theme.color.text.muted}",
             "$description": "Migrated from legacy sToken --color/text/muted"
           },
           "primary": {
             "$type": "color",
-            "$value": "{primitive.color.neutral.gray.90}",
+            "$value": "{theme.color.text.primary}",
             "$description": "Migrated from legacy sToken --color/text/primary"
           },
           "secondary": {
@@ -1956,46 +1956,6 @@
             "$sourceOwner": "reference-import",
             "unit": "px"
           }
-        }
-      }
-    },
-    "$modeOverrides": {
-      "dark": {
-        "semantic.color.background.control-default": {
-          "$value": "{primitive.color.neutral.gray.80}",
-          "$description": "Design Dark override from --color/background/control-default"
-        },
-        "semantic.color.background.disabled": {
-          "$value": "{primitive.color.neutral.gray.75}",
-          "$description": "Design Dark override from --color/background/disabled"
-        },
-        "semantic.color.background.hover": {
-          "$value": "{primitive.color.neutral.gray.85}",
-          "$description": "Design Dark override from --color/background/hover"
-        },
-        "semantic.color.background.surface-raised": {
-          "$value": "{primitive.color.neutral.gray.75}",
-          "$description": "Design Dark override from --color/background/surface-raised"
-        },
-        "semantic.color.border.default": {
-          "$value": "{primitive.color.neutral.gray.55}",
-          "$description": "Design Dark override from --color/border/default"
-        },
-        "semantic.color.border.secondary": {
-          "$value": "{primitive.color.neutral.gray.65}",
-          "$description": "Design Dark override from --color/border/secondary"
-        },
-        "semantic.color.text.disabled": {
-          "$value": "{primitive.color.neutral.gray.45}",
-          "$description": "Design Dark override from --color/text/disabled"
-        },
-        "semantic.color.text.muted": {
-          "$value": "{primitive.color.neutral.gray.25}",
-          "$description": "Design Dark override from --color/text/muted"
-        },
-        "semantic.color.text.primary": {
-          "$value": "{primitive.color.neutral.gray.5}",
-          "$description": "Design Dark override from --color/text/primary"
         }
       }
     }

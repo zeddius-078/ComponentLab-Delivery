@@ -1,0 +1,115 @@
+{
+  "$registry": {
+    "component": "card",
+    "version": "2.0"
+  },
+  "$status": "active",
+  "base": {
+    "surface": {
+      "card": {
+        "slot": {
+          "container": {
+            "background-color": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  255,
+                  255,
+                  255
+                ]
+              },
+              "$description": "卡片背景色",
+              "$sourceOwner": "figma-audit-v2"
+            },
+            "border-color": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  208,
+                  208,
+                  208
+                ]
+              },
+              "$description": "卡片边框色",
+              "$sourceOwner": "figma-audit-v2"
+            },
+            "border-width": {
+              "$type": "borderWidth",
+              "$value": 1,
+              "$description": "卡片边框宽（审计值）",
+              "$sourceOwner": "figma-audit-v2",
+              "unit": "px"
+            },
+            "padding": {
+              "$type": "spacing",
+              "$value": 24,
+              "$description": "卡片内边距（审计值）",
+              "$sourceOwner": "figma-audit-v2",
+              "unit": "px"
+            },
+            "radius": {
+              "$type": "borderRadius",
+              "$value": 32,
+              "$description": "卡片圆角（审计值）",
+              "$sourceOwner": "figma-audit-v2",
+              "unit": "px"
+            },
+            "soft-background-color": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  243,
+                  243,
+                  243
+                ]
+              },
+              "$description": "柔和卡片背景（审计值）",
+              "$sourceOwner": "figma-audit-v2"
+            }
+          },
+          "content": {
+            "body-color": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  68,
+                  68,
+                  68
+                ]
+              },
+              "$description": "卡片正文色",
+              "$sourceOwner": "figma-audit-v2"
+            },
+            "title-color": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  25,
+                  25,
+                  25
+                ]
+              },
+              "$description": "卡片标题色",
+              "$sourceOwner": "figma-audit-v2"
+            }
+          },
+          "header": {
+            "height": {
+              "$type": "dimension",
+              "$value": 56,
+              "$description": "卡片头高度（审计值）",
+              "$sourceOwner": "figma-audit-v2",
+              "unit": "px"
+            }
+          }
+        }
+      }
+    }
+  },
+  "overrides": []
+}

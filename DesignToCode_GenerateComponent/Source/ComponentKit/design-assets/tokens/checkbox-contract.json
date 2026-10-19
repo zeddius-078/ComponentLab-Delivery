@@ -1,5 +1,5 @@
 {
-  "id": "CHECKBOX-SURFACE-R4-STOKEN",
+  "id": "CHECKBOX-SURFACE-R5-V2-ONLY",
   "status": "ISOLATED-DEMO-NOT-DESIGN-APPROVED",
   "units": "Qt logical px; font px; shadow blur = Qt QGraphicsBlurEffect radius; alpha 0..1",
   "fontFamily": "{semantic.typography.font-family.harmony-os-sans}",
@@ -22,37 +22,37 @@
     }
   },
   "checkbox": {
-    "radius": "{component.checkbox.base.default.indicator.radius}",
-    "borderWidth": "{component.checkbox.base.default.indicator.border-width}",
-    "focusWidth": "{component.checkbox.base.focused.focus-ring.width}",
+    "radius": "{component.checkbox.base.shared.slot.indicator.border-radius}",
+    "borderWidth": "{semantic.border-width.boundary-default}",
+    "focusWidth": "{semantic.border-width.focus-ring}",
     "focusGap": 2,
     "sizes": {
       "sm": {
-        "indicator": "{component.checkbox.size.small.indicator.size}",
+        "indicator": "{component.checkbox.base.size.small.slot.indicator.visual-size}",
         "hitTarget": "{adapter.qt.checkbox.hitTarget.sm}",
-        "fontSize": "{component.checkbox.base.default.label.font-size}",
-        "spacing": "{component.checkbox.base.default.content.gap}"
+        "fontSize": "{component.checkbox.base.shared.slot.label.font-size}",
+        "spacing": "{component.checkbox.base.shared.slot.content.gap}"
       },
       "lg": {
-        "indicator": "{component.checkbox.size.large.indicator.size}",
+        "indicator": "{component.checkbox.base.size.large.slot.indicator.visual-size}",
         "hitTarget": "{adapter.qt.checkbox.hitTarget.lg}",
-        "fontSize": "{component.checkbox.base.default.label.font-size}",
-        "spacing": "{component.checkbox.base.default.content.gap}"
+        "fontSize": "{component.checkbox.base.shared.slot.label.font-size}",
+        "spacing": "{component.checkbox.base.shared.slot.content.gap}"
       }
     },
     "palette": {
-      "text": "{component.basic.checkbox.text}",
-      "disabledText": "{component.basic.checkbox.disabledText}",
-      "focus": "{component.basic.checkbox.focus.border}",
+      "text": "{semantic.color.text.primary}",
+      "disabledText": "{semantic.color.text.disabled}",
+      "focus": "{semantic.color.interactive.brand.focus-ring}",
       "onAccent": "{semantic.color.text.invert}",
-      "unchecked": "{component.basic.checkbox.state.unchecked.background}",
-      "uncheckedHover": "{component.basic.checkbox.state.unchecked.hoverBackground}",
-      "uncheckedPressed": "{component.basic.checkbox.state.unchecked.pressedBackground}",
-      "uncheckedDisabled": "{component.basic.checkbox.state.unchecked.disabledBackground}",
+      "unchecked": "{semantic.color.background.control-default}",
+      "uncheckedHover": "{semantic.color.background.hover}",
+      "uncheckedPressed": "{semantic.color.background.pressed}",
+      "uncheckedDisabled": "{semantic.color.background.disabled}",
       "border": "{semantic.color.icon.secondary}",
-      "borderHover": "{component.basic.checkbox.state.unchecked.hoverBorder}",
-      "borderPressed": "{component.basic.checkbox.state.unchecked.pressedBorder}",
-      "borderDisabled": "{component.basic.checkbox.state.unchecked.disabledBorder}",
+      "borderHover": "{semantic.color.border.hover}",
+      "borderPressed": "{semantic.color.border.primary}",
+      "borderDisabled": "{semantic.color.border.disabled}",
       "accent": "{semantic.color.interactive.brand.default}",
       "accentHover": "{semantic.color.interactive.brand.hover}",
       "accentPressed": "{semantic.color.interactive.brand.pressed}",
@@ -219,6 +219,6 @@
     "C07": "high/background/low are palette bindings resolved per component, profile and state. A stop also accepts a source alias or sRGB color.",
     "C08": "Disabled removes decorative soft shadows. Checkbox uses solid disabled fill; Button preserves explicit supplied disabled gradient stops. Button Text/Link/Ghost preserve transparent semantics for shared presets; geometry material has its own capability policy.",
     "C09": "Preset IDs are open data keys, not an enum. Multiple inset/outer shadows are supported, maximum eight for bounded cache/memory cost.",
-    "STOKEN": "Checkbox uses sToken selection-control + shared semantic mappings; no checkbox-specific full source state set. Existing material geometry retained."
+    "V2": "Checkbox uses the canonical component/selection-control recipes plus shared semantic mappings. Existing material geometry is retained in the V2 contract."
   }
 }

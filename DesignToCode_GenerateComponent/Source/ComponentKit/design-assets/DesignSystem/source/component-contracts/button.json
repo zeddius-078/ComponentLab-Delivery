@@ -1,0 +1,108 @@
+{
+  "$description": "Button V2 Component Contract. Registry owns axes, legal combinations and Slot properties; this file owns structure, runtime semantics and composition rules.",
+  "component": "button",
+  "version": "1.0",
+  "$status": "draft-v2",
+  "contractKind": "action",
+  "registryBindings": {
+    "source": "source/component-registry.json#/components/button",
+    "axes": ["intent", "appearance", "state", "content", "size"],
+    "slots": ["container", "label", "icon", "border", "focus-ring", "spinner", "content"],
+    "authority": "component-registry"
+  },
+  "structure": [
+    "container",
+    "content",
+    "icon",
+    "label",
+    "border",
+    "focus-ring",
+    "spinner"
+  ],
+  "runtimeModel": {
+    "activation": {
+      "owner": "runtime-api",
+      "action": "activate",
+      "target": "button"
+    },
+    "content": {
+      "axis": "content",
+      "slotQualification": {
+        "icon-only": ["icon"],
+        "icon-left-text": ["icon", "label"],
+        "text-icon-right": ["label", "icon"],
+        "text-only": ["label"],
+        "icon-left-text-icon-right": ["icon", "label", "icon"]
+      },
+      "contentGapOwner": "component.button"
+    },
+    "loading": {
+      "state": "loading",
+      "visualOwner": "button",
+      "contentPolicy": "replace-with-spinner",
+      "interactionPolicy": "locked",
+      "motionHook": "loading-start/loading-stop"
+    },
+    "focus": {
+      "state": "focused",
+      "focusRing": "keyboard-eligible",
+      "mouseHoverDoesNotActivateRing": true
+    },
+    "disabled": {
+      "state": "disabled",
+      "interactionPolicy": "locked",
+      "preserveContent": true
+    }
+  },
+  "stateLayers": {
+    "pointerInteraction": {
+      "registryAxis": "state",
+      "meaning": "default, hover and pressed express pointer interaction visuals"
+    },
+    "focus": {
+      "registryAxis": "state",
+      "meaning": "focused expresses keyboard focus presentation"
+    },
+    "availability": {
+      "registryAxis": "state",
+      "meaning": "disabled and loading lock activation; loading additionally changes content"
+    },
+    "intent": {
+      "registryAxis": "intent",
+      "meaning": "primary, secondary, operation, danger and dark are the five published Button intents; dark uses the dark-surface treatment while remaining an explicit Figma/runtime intent"
+    },
+    "appearance": {
+      "registryAxis": "appearance",
+      "meaning": "filled, outlined, dashed, filled-inner-shadow, text and link express surface treatment"
+    }
+  },
+  "compositionRules": [
+    "Intent and Appearance are independent axes and may combine when Registry declares the combination legal.",
+    "Default is the initial interaction state and is not an Intent.",
+    "Size is shared by the component family; Interaction Size is derived from the shared size contract and is not a new visual axis.",
+    "Icon-only has an independent square structure but reuses the Button Size axis.",
+    "Loading is a state-owned content replacement and does not add a second loading content axis.",
+    "Disabled locks interaction and does not clear or replace the declared semantic content unless loading is active.",
+    "Focus Ring is a separate Slot and is resolved by keyboard interaction policy.",
+    "Motion hooks are runtime execution points; the Recipe stores only approved motion references."
+  ],
+  "tokenBoundary": {
+    "recipeOwns": [
+      "container, label, icon, border, focus-ring, spinner and content visual references",
+      "shared size, padding and spacing bindings",
+      "sparse Intent, Appearance and State visual overrides"
+    ],
+    "runtimeOwns": [
+      "activation and event dispatch",
+      "keyboard and pointer interaction",
+      "loading lifecycle and content replacement",
+      "disabled permission and action availability",
+      "motion playback"
+    ],
+    "contractDoesNotOwn": [
+      "resolved color, dimension or typography values",
+      "generated combination Token paths",
+      "Figma variable values"
+    ]
+  }
+}

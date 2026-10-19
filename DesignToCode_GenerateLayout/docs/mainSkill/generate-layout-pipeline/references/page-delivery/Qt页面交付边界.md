@@ -1,6 +1,8 @@
 # Qt 页面交付现状与边界
 
-## 当前实现
+## 维护样例与当前正式链
+
+ReferencePage、V1 和旧 DSL 运行器是维护样例/回归入口，不是并列正式生成路线；正式链只维护 HTML+DSL。
 
 | 页面类型 | 结构来源 | 组件来源 | 运行时职责 |
 | --- | --- | --- | --- |
@@ -21,4 +23,4 @@
 | 页面 QSS | 页面壳与局部布局视觉；通过页面 QRC 注册并在页面构造函数中加载，组件自身样式由 SDK 提供 |
 | 页面 QRC | 注册页面 QSS，并在存在页面专属静态资源时登记这些资源；业务 CMake 将其编译进页面目标 |
 
-页面构造按照 `setupUi → ComponentFactory::apply → Q_INIT_RESOURCE → 页面 QSS` 顺序执行。页面链遇到未映射组件时停止并记录节点身份。组件实现和 Token 更新在 GenerateComponent 完成，发布 SDK 后再导入本项目。
+SDK 页面构造按 `setupUi → 创建工厂 → 注册页面 QRC → 应用组件属性 → 页面 QSS` 顺序执行；public-qt 路径使用 QWidget 与公开 Qt API，不使用 SDK ThemeHost/ComponentFactory。页面链遇到未映射组件时停止并记录节点身份。组件实现和 Token 更新在 GenerateComponent 完成，发布后在本项目校验并直接引用。独立 contract-only 类名合同只做预览，不作为可运行页面交付。目标库切换规则见 [组件库配置](../../../../designRules/library-profiles.md)。

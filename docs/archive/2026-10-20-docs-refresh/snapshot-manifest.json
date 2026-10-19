@@ -1,0 +1,397 @@
+{
+  "purpose": "Historical document snapshots; not active build inputs",
+  "date": "2026-10-20",
+  "pathBase": "workspace-root",
+  "files": [
+    {
+      "originalPath": "docs/README.md",
+      "archivePath": "docs/archive/2026-10-20-docs-refresh/docs/README.md",
+      "bytes": 1508,
+      "sha256": "b22141b86a27a4eec256594c3ad00ab5fbd42237b3b327dc217395c1f1d89279"
+    },
+    {
+      "originalPath": "docs/tutorial/三项目上手指南.md",
+      "archivePath": "docs/archive/2026-10-20-docs-refresh/docs/tutorial/三项目上手指南.md",
+      "bytes": 1951,
+      "sha256": "e39010d3bcacc821779e4c92ad96de97e69b7a5b53fe94d26bd856fb1920047f"
+    },
+    {
+      "originalPath": "docs/mainSkill/design-to-qt-workspace/SKILL.md",
+      "archivePath": "docs/archive/2026-10-20-docs-refresh/docs/mainSkill/design-to-qt-workspace/SKILL.md",
+      "bytes": 4719,
+      "sha256": "64c49d2a6f535756ec5eef2608eb6210701fc415a3aa59cf021e4eef59f9394a"
+    },
+    {
+      "originalPath": "docs/designRules/architecture/项目总体架构.md",
+      "archivePath": "docs/archive/2026-10-20-docs-refresh/docs/designRules/architecture/项目总体架构.md",
+      "bytes": 16599,
+      "sha256": "a0eda5d8461e41b2ab84a3b452ab6a8858c4130203ccc216f9dec4dc4c4734cd"
+    },
+    {
+      "originalPath": "docs/designRules/architecture/项目总体架构.png",
+      "archivePath": "docs/archive/2026-10-20-docs-refresh/docs/designRules/architecture/项目总体架构.png",
+      "bytes": 283608,
+      "sha256": "48f9cd537a09545c9628abfaada2446bb737b1a0361816d8941f95cd60e1bd2f"
+    },
+    {
+      "originalPath": "docs/designRules/architecture/项目总体架构.svg",
+      "archivePath": "docs/archive/2026-10-20-docs-refresh/docs/designRules/architecture/项目总体架构.svg",
+      "bytes": 13860,
+      "sha256": "2612ad31c8ee922bfe2047d6e996c70eb30e9182d7b160346b2e62eb2c69ccd5"
+    },
+    {
+      "originalPath": "ComponentLab/README.md",
+      "archivePath": "ComponentLab/docs/archive/2026-10-20-docs-refresh/README.md",
+      "bytes": 14624,
+      "sha256": "0bf70bd11bad73f2227f52b902d38150819f32d2183bc21af3bc243756901323"
+    },
+    {
+      "originalPath": "ComponentLab/docs/README.md",
+      "archivePath": "ComponentLab/docs/archive/2026-10-20-docs-refresh/docs/README.md",
+      "bytes": 960,
+      "sha256": "2429b5e7a9706139bed83178e7989d5ffb4afd39806983bfba09b050872294df"
+    },
+    {
+      "originalPath": "ComponentLab/docs/tutorial/组件展示上手指南.md",
+      "archivePath": "ComponentLab/docs/archive/2026-10-20-docs-refresh/docs/tutorial/组件展示上手指南.md",
+      "bytes": 1283,
+      "sha256": "ed55b3aa41cc0d3d940ff26cdb4743e3fad8f52e9f2e7dcd50fe92de5a931b71"
+    },
+    {
+      "originalPath": "ComponentLab/docs/mainSkill/componentlab-gallery/SKILL.md",
+      "archivePath": "ComponentLab/docs/archive/2026-10-20-docs-refresh/docs/mainSkill/componentlab-gallery/SKILL.md",
+      "bytes": 3028,
+      "sha256": "9ce272497cacae1a29d587bab40edfb21ef6c0ed54734e3506d43ee38b4b121b"
+    },
+    {
+      "originalPath": "ComponentLab/docs/designRules/token/Token变量集使用.md",
+      "archivePath": "ComponentLab/docs/archive/2026-10-20-docs-refresh/docs/designRules/token/Token变量集使用.md",
+      "bytes": 1120,
+      "sha256": "4c642737f368c528977dc78a1b190a36766626296e54fd367567b5cba8c9ecd5"
+    },
+    {
+      "originalPath": "ComponentLab/docs/designRules/visual-assets/ButtonMaterialDemo.png",
+      "archivePath": "ComponentLab/docs/archive/2026-10-20-docs-refresh/docs/designRules/visual-assets/ButtonMaterialDemo.png",
+      "bytes": 102376,
+      "sha256": "2e3baffa8694cc67c5e31c7c296302b723ca223bdcb4ed97b9fb775467295ca3"
+    },
+    {
+      "originalPath": "ComponentLab/docs/designRules/visual-assets/SolidInnerShadowDemo.png",
+      "archivePath": "ComponentLab/docs/archive/2026-10-20-docs-refresh/docs/designRules/visual-assets/SolidInnerShadowDemo.png",
+      "bytes": 143697,
+      "sha256": "3548b6151b4202bd9ecff6b101aa470b97d96ed70d8429cc63422fdadd614b99"
+    },
+    {
+      "originalPath": "ComponentLab/Source/README.md",
+      "archivePath": "ComponentLab/docs/archive/2026-10-20-docs-refresh/Source/README.md",
+      "bytes": 802,
+      "sha256": "3096a8f5213ac6d62b19261b49f1660d0386b4c7ca505b90de8d6a1acf5edd90"
+    },
+    {
+      "originalPath": "DesignToCode_GenerateComponent/README.md",
+      "archivePath": "DesignToCode_GenerateComponent/docs/archive/2026-10-20-docs-refresh/README.md",
+      "bytes": 10526,
+      "sha256": "6c68c31fdb136827a624ac5d32777fce1a21e8ab62d9c65b3cf79f3d47772a59"
+    },
+    {
+      "originalPath": "DesignToCode_GenerateComponent/docs/README.md",
+      "archivePath": "DesignToCode_GenerateComponent/docs/archive/2026-10-20-docs-refresh/docs/README.md",
+      "bytes": 3499,
+      "sha256": "515bcf2743cbd87a2699d704a51166fbd2d0fb1f70cc3ec6e649302ea505a691"
+    },
+    {
+      "originalPath": "DesignToCode_GenerateComponent/docs/tutorial/组件SDK上手指南.md",
+      "archivePath": "DesignToCode_GenerateComponent/docs/archive/2026-10-20-docs-refresh/docs/tutorial/组件SDK上手指南.md",
+      "bytes": 1230,
+      "sha256": "4a0aa4548bfb525fa4da3613feb5fdfb7504bdd7ed94eb35058842713ab41cb9"
+    },
+    {
+      "originalPath": "DesignToCode_GenerateComponent/docs/mainSkill/generate-component-pipeline/SKILL.md",
+      "archivePath": "DesignToCode_GenerateComponent/docs/archive/2026-10-20-docs-refresh/docs/mainSkill/generate-component-pipeline/SKILL.md",
+      "bytes": 6907,
+      "sha256": "3dc1173e078a8b46a1e0ae955158547f23c5458542f9fc3fe5e8ba6ba7b0ee90"
+    },
+    {
+      "originalPath": "DesignToCode_GenerateComponent/docs/mainSkill/generate-component-pipeline/references/设计组件映射指南.md",
+      "archivePath": "DesignToCode_GenerateComponent/docs/archive/2026-10-20-docs-refresh/docs/mainSkill/generate-component-pipeline/references/设计组件映射指南.md",
+      "bytes": 9065,
+      "sha256": "486b0f126dc71f2cf2fb49181ab2925dcc6f683efd0fe965ac280dd54f05431f"
+    },
+    {
+      "originalPath": "DesignToCode_GenerateComponent/docs/mainSkill/generate-component-pipeline/references/Qt组件类与主属性参考.md",
+      "archivePath": "DesignToCode_GenerateComponent/docs/archive/2026-10-20-docs-refresh/docs/mainSkill/generate-component-pipeline/references/Qt组件类与主属性参考.md",
+      "bytes": 31189,
+      "sha256": "9bc36a7e5c8b77c376bc0d0166547b069b1bf134d53f5cafc42b0755e28b8106"
+    },
+    {
+      "originalPath": "DesignToCode_GenerateComponent/docs/designRules/architecture/Qt功能分层.md",
+      "archivePath": "DesignToCode_GenerateComponent/docs/archive/2026-10-20-docs-refresh/docs/designRules/architecture/Qt功能分层.md",
+      "bytes": 8205,
+      "sha256": "139c7c842c3d9709bd8635cd9a2f7137ba9a9b9abf967aa3903fd8f7553ad348"
+    },
+    {
+      "originalPath": "DesignToCode_GenerateComponent/docs/designRules/mapping/组件基线与原生组合映射原则.md",
+      "archivePath": "DesignToCode_GenerateComponent/docs/archive/2026-10-20-docs-refresh/docs/designRules/mapping/组件基线与原生组合映射原则.md",
+      "bytes": 18940,
+      "sha256": "0560801377404abab3c3e49d5c34f06d9f20ada0f8dc9d8e7472585990c374c4"
+    },
+    {
+      "originalPath": "DesignToCode_GenerateComponent/docs/designRules/components/Qt表格设计与原生映射.md",
+      "archivePath": "DesignToCode_GenerateComponent/docs/archive/2026-10-20-docs-refresh/docs/designRules/components/Qt表格设计与原生映射.md",
+      "bytes": 25104,
+      "sha256": "e1446f702f97923f158b921798664ad53378e62966e14365b1f248ded23cbeb4"
+    },
+    {
+      "originalPath": "DesignToCode_GenerateComponent/docs/designRules/design-system/Component层Token构建规范.md",
+      "archivePath": "DesignToCode_GenerateComponent/docs/archive/2026-10-20-docs-refresh/docs/designRules/design-system/Component层Token构建规范.md",
+      "bytes": 206172,
+      "sha256": "6129fb4dc75a00782f4984f67885686dbfbfb3114e4c41bf1c48c717ee742525"
+    },
+    {
+      "originalPath": "DesignToCode_GenerateComponent/docs/designRules/design-system/Figma统一组件融合规则.md",
+      "archivePath": "DesignToCode_GenerateComponent/docs/archive/2026-10-20-docs-refresh/docs/designRules/design-system/Figma统一组件融合规则.md",
+      "bytes": 12972,
+      "sha256": "bd121f517a169994a23290be67e6cc29ffb7089520bf73762a093423178b67a6"
+    },
+    {
+      "originalPath": "DesignToCode_GenerateComponent/docs/designRules/design-system/evidence/menubar-acceptance-486-257-2026-10-11.png",
+      "archivePath": "DesignToCode_GenerateComponent/docs/archive/2026-10-20-docs-refresh/docs/designRules/design-system/evidence/menubar-acceptance-486-257-2026-10-11.png",
+      "bytes": 31759,
+      "sha256": "59c35b7f4b1e7fcb1e76fadb898b63250359f6999e11d915e4d8bccdab0ce3aa"
+    },
+    {
+      "originalPath": "DesignToCode_GenerateComponent/docs/designRules/design-system/evidence/menubar-acceptance-range-approved-486-257-2026-10-11.png",
+      "archivePath": "DesignToCode_GenerateComponent/docs/archive/2026-10-20-docs-refresh/docs/designRules/design-system/evidence/menubar-acceptance-range-approved-486-257-2026-10-11.png",
+      "bytes": 26532,
+      "sha256": "91314ed5a7f303fe4fa40844d69e26974cdf0c5c4e56afa9b063cd2adf036406"
+    },
+    {
+      "originalPath": "DesignToCode_GenerateComponent/docs/designRules/design-system/evidence/menubar-color-decision-approved-1953-407-2026-10-11.png",
+      "archivePath": "DesignToCode_GenerateComponent/docs/archive/2026-10-20-docs-refresh/docs/designRules/design-system/evidence/menubar-color-decision-approved-1953-407-2026-10-11.png",
+      "bytes": 20919,
+      "sha256": "f36e8f340cf82ac97a67146d9e7172107a6ffffbf6ed302a39008ada41c76cc9"
+    },
+    {
+      "originalPath": "DesignToCode_GenerateComponent/docs/designRules/design-system/evidence/menubar-dsm-color-qa-1923-293-2026-10-11.png",
+      "archivePath": "DesignToCode_GenerateComponent/docs/archive/2026-10-20-docs-refresh/docs/designRules/design-system/evidence/menubar-dsm-color-qa-1923-293-2026-10-11.png",
+      "bytes": 47724,
+      "sha256": "e12e6e0c8fb855423e582875605d84ce50177fd0713f425a0d641cb4107693d0"
+    },
+    {
+      "originalPath": "DesignToCode_GenerateComponent/docs/designRules/design-system/evidence/menubar-public-authoring-range-1960-17-2026-10-11.png",
+      "archivePath": "DesignToCode_GenerateComponent/docs/archive/2026-10-20-docs-refresh/docs/designRules/design-system/evidence/menubar-public-authoring-range-1960-17-2026-10-11.png",
+      "bytes": 37599,
+      "sha256": "185a1bb7b3ecced665975a77c9673e0595fef6563d13245e677ebd819e70df74"
+    },
+    {
+      "originalPath": "DesignToCode_GenerateComponent/docs/designRules/design-system/evidence/menubar-public-authoring-range-approved-1960-17-2026-10-11.png",
+      "archivePath": "DesignToCode_GenerateComponent/docs/archive/2026-10-20-docs-refresh/docs/designRules/design-system/evidence/menubar-public-authoring-range-approved-1960-17-2026-10-11.png",
+      "bytes": 32282,
+      "sha256": "c41850b4d5338080dd0adb7ba1ac7deebf629af9c7c100e6a8f49a91620768aa"
+    },
+    {
+      "originalPath": "DesignToCode_GenerateComponent/docs/designRules/design-system/evidence/tokens-counts-menubar-color-321-4556-2026-10-11.png",
+      "archivePath": "DesignToCode_GenerateComponent/docs/archive/2026-10-20-docs-refresh/docs/designRules/design-system/evidence/tokens-counts-menubar-color-321-4556-2026-10-11.png",
+      "bytes": 20965,
+      "sha256": "72d8b200f53af741019fcc0ab06b0ecb4c2e5953c737c47bdc36476852021a87"
+    },
+    {
+      "originalPath": "DesignToCode_GenerateComponent/docs/designRules/design-system/evidence/tokens-profiles-source-parity-321-4550-2026-10-11.png",
+      "archivePath": "DesignToCode_GenerateComponent/docs/archive/2026-10-20-docs-refresh/docs/designRules/design-system/evidence/tokens-profiles-source-parity-321-4550-2026-10-11.png",
+      "bytes": 201407,
+      "sha256": "4753fe35dbecda1ef144ba7b8c915f914d1de6fbe6221b469939097adffac2b0"
+    },
+    {
+      "originalPath": "DesignToCode_GenerateComponent/docs/designRules/design-system/evidence/typography-existing-style-consumer-census-1414-29-2026-10-11.png",
+      "archivePath": "DesignToCode_GenerateComponent/docs/archive/2026-10-20-docs-refresh/docs/designRules/design-system/evidence/typography-existing-style-consumer-census-1414-29-2026-10-11.png",
+      "bytes": 277917,
+      "sha256": "d83f677e4725f154efd9caf9f4abf0c9dcbb5902a9827851203156891d22c636"
+    },
+    {
+      "originalPath": "DesignToCode_GenerateComponent/docs/designRules/design-system/evidence/typography-general-style-entry-audit-1414-29-2026-10-11.png",
+      "archivePath": "DesignToCode_GenerateComponent/docs/archive/2026-10-20-docs-refresh/docs/designRules/design-system/evidence/typography-general-style-entry-audit-1414-29-2026-10-11.png",
+      "bytes": 245820,
+      "sha256": "639f274d1e7b71c7a3ca4610d59639da96c94911c2997fed7544612aafbab7d7"
+    },
+    {
+      "originalPath": "DesignToCode_GenerateComponent/docs/designRules/design-system/evidence/typography-text-style-binding-capability-1414-29-2026-10-11.png",
+      "archivePath": "DesignToCode_GenerateComponent/docs/archive/2026-10-20-docs-refresh/docs/designRules/design-system/evidence/typography-text-style-binding-capability-1414-29-2026-10-11.png",
+      "bytes": 313524,
+      "sha256": "90b3f457220753e22dc5d2e162631dd7cf9c26f0f4a0101ca61424d6e7e602bc"
+    },
+    {
+      "originalPath": "DesignToCode_GenerateComponent/docs/examples/MappingWorkbench/mapping/generated/README.md",
+      "archivePath": "DesignToCode_GenerateComponent/docs/archive/2026-10-20-docs-refresh/docs/examples/MappingWorkbench/mapping/generated/README.md",
+      "bytes": 928,
+      "sha256": "462b6edb44db008f39d3944d5f376a67448385a6a324db2018a2a8cd1bd9a77d"
+    },
+    {
+      "originalPath": "DesignToCode_GenerateLayout/README.md",
+      "archivePath": "DesignToCode_GenerateLayout/docs/archive/2026-10-20-docs-refresh/README.md",
+      "bytes": 11251,
+      "sha256": "3cdf77a0b4ee0f3a37368d462a3b18c8bcc69eecb199c06fb9c505659f5cf749"
+    },
+    {
+      "originalPath": "DesignToCode_GenerateLayout/docs/README.md",
+      "archivePath": "DesignToCode_GenerateLayout/docs/archive/2026-10-20-docs-refresh/docs/README.md",
+      "bytes": 2837,
+      "sha256": "7b8dd6957f2ed551019e0931d82747832904a2210d9a2d3df87666a13035693e"
+    },
+    {
+      "originalPath": "DesignToCode_GenerateLayout/docs/tutorial/布局生成上手指南.md",
+      "archivePath": "DesignToCode_GenerateLayout/docs/archive/2026-10-20-docs-refresh/docs/tutorial/布局生成上手指南.md",
+      "bytes": 2868,
+      "sha256": "77732a91cd64c5f0cc74eb68a4724ebbe1bdd4ba9b9dba517f7a52dab71d728a"
+    },
+    {
+      "originalPath": "DesignToCode_GenerateLayout/docs/mainSkill/generate-layout-pipeline/SKILL.md",
+      "archivePath": "DesignToCode_GenerateLayout/docs/archive/2026-10-20-docs-refresh/docs/mainSkill/generate-layout-pipeline/SKILL.md",
+      "bytes": 9441,
+      "sha256": "a164861580e1a0f6270ee292e9b6ff65d95b3b8a0c727605495d5da4125c6bb4"
+    },
+    {
+      "originalPath": "DesignToCode_GenerateLayout/docs/mainSkill/generate-layout-pipeline/references/设计到布局生成说明.md",
+      "archivePath": "DesignToCode_GenerateLayout/docs/archive/2026-10-20-docs-refresh/docs/mainSkill/generate-layout-pipeline/references/设计到布局生成说明.md",
+      "bytes": 25122,
+      "sha256": "367fbdf50f17ba292e26cb905a6fe7f7190ef5602cff6579611c907c71a5dee8"
+    },
+    {
+      "originalPath": "DesignToCode_GenerateLayout/docs/mainSkill/generate-layout-pipeline/references/page-delivery/生成器与SDK协作参考.md",
+      "archivePath": "DesignToCode_GenerateLayout/docs/archive/2026-10-20-docs-refresh/docs/mainSkill/generate-layout-pipeline/references/page-delivery/生成器与SDK协作参考.md",
+      "bytes": 1779,
+      "sha256": "6a5ef8e2bb2e7a6c90a998b28946636637ddc3ab628a7fde3730a9b11cb3335e"
+    },
+    {
+      "originalPath": "DesignToCode_GenerateLayout/docs/mainSkill/generate-layout-pipeline/references/page-delivery/Qt页面交付边界.md",
+      "archivePath": "DesignToCode_GenerateLayout/docs/archive/2026-10-20-docs-refresh/docs/mainSkill/generate-layout-pipeline/references/page-delivery/Qt页面交付边界.md",
+      "bytes": 1616,
+      "sha256": "e08cddeb4fcc42ef72b8533c3d70e9dc687ae7dacab4a4de505a5bd7f44232c6"
+    },
+    {
+      "originalPath": "DesignToCode_GenerateLayout/docs/mainSkill/generate-layout-pipeline/references/page-delivery/reference-page.png",
+      "archivePath": "DesignToCode_GenerateLayout/docs/archive/2026-10-20-docs-refresh/docs/mainSkill/generate-layout-pipeline/references/page-delivery/reference-page.png",
+      "bytes": 13080,
+      "sha256": "c296021b316986d13ae7a092313b8e4d202134c17b95280a1aed2e519c7e0343"
+    },
+    {
+      "originalPath": "DesignToCode_GenerateLayout/docs/mainSkill/generate-layout-pipeline/references/page-delivery/ReferencePage实施参考.md",
+      "archivePath": "DesignToCode_GenerateLayout/docs/archive/2026-10-20-docs-refresh/docs/mainSkill/generate-layout-pipeline/references/page-delivery/ReferencePage实施参考.md",
+      "bytes": 1395,
+      "sha256": "21424577e50f8bd4b050d560c1636f8efa14cff36767bce9d6c9bc3ff396fe4c"
+    },
+    {
+      "originalPath": "DesignToCode_GenerateLayout/docs/designRules/library-profiles.md",
+      "archivePath": "DesignToCode_GenerateLayout/docs/archive/2026-10-20-docs-refresh/docs/designRules/library-profiles.md",
+      "bytes": 13988,
+      "sha256": "08d8e92f04b2e51365192155c736921f7f15cf9d8197fafa6bf20af8fe0d7af5"
+    },
+    {
+      "originalPath": "DesignToCode_GenerateLayout/docs/designRules/architecture/Qt功能分层.md",
+      "archivePath": "DesignToCode_GenerateLayout/docs/archive/2026-10-20-docs-refresh/docs/designRules/architecture/Qt功能分层.md",
+      "bytes": 6725,
+      "sha256": "d9f3463415d4cbe485da41b91388059be8c9babaf84f1fb8973ac1f464ae2158"
+    },
+    {
+      "originalPath": "DesignToCode_GenerateLayout/docs/designRules/layout/布局转换器通用化规范.md",
+      "archivePath": "DesignToCode_GenerateLayout/docs/archive/2026-10-20-docs-refresh/docs/designRules/layout/布局转换器通用化规范.md",
+      "bytes": 7000,
+      "sha256": "7e320740bdbdfdfd0d8242a82a54aae8aa14ae996fcfe2d0beca4984540e92f6"
+    },
+    {
+      "originalPath": "DesignToCode_GenerateLayout/docs/designRules/layout/Qt-UI布局规则.md",
+      "archivePath": "DesignToCode_GenerateLayout/docs/archive/2026-10-20-docs-refresh/docs/designRules/layout/Qt-UI布局规则.md",
+      "bytes": 16584,
+      "sha256": "9c7b3fdb5e2cd55e9dcb2ef8475a5088e573b19298061a0b47664d41f39fa732"
+    },
+    {
+      "originalPath": "DesignToCode_GenerateLayout/docs/designRules/layout/Qt基础布局.md",
+      "archivePath": "DesignToCode_GenerateLayout/docs/archive/2026-10-20-docs-refresh/docs/designRules/layout/Qt基础布局.md",
+      "bytes": 10253,
+      "sha256": "707de177fdc88465ad769de453693816f18d670c35be2c990b5c155990c635b4"
+    },
+    {
+      "originalPath": "DesignToCode_GenerateLayout/docs/designRules/components/Qt表格设计与页面映射.md",
+      "archivePath": "DesignToCode_GenerateLayout/docs/archive/2026-10-20-docs-refresh/docs/designRules/components/Qt表格设计与页面映射.md",
+      "bytes": 2611,
+      "sha256": "7795e676c7127f08ded6f2ca2f698dd413b0658196b37392c6c9e916b421eb46"
+    },
+    {
+      "originalPath": "DesignToCode_GenerateLayout/docs/designRules/workflow/布局生成执行与验收规则.md",
+      "archivePath": "DesignToCode_GenerateLayout/docs/archive/2026-10-20-docs-refresh/docs/designRules/workflow/布局生成执行与验收规则.md",
+      "bytes": 3450,
+      "sha256": "383e122b2ef452cbdad59eb83376af727629c4c2e8a1feb9448967e9bce1cd50"
+    },
+    {
+      "originalPath": "DesignToCode_GenerateLayout/docs/examples/README.md",
+      "archivePath": "DesignToCode_GenerateLayout/docs/archive/2026-10-20-docs-refresh/docs/examples/README.md",
+      "bytes": 692,
+      "sha256": "ef9dfa0b63865524e359c518da80679519d998b0e8dc5f69b058290719caf93f"
+    },
+    {
+      "originalPath": "DesignToCode_GenerateLayout/docs/validation/formal/fixtures/page-marker.svg",
+      "archivePath": "DesignToCode_GenerateLayout/docs/archive/2026-10-20-docs-refresh/docs/validation/formal/fixtures/page-marker.svg",
+      "bytes": 137,
+      "sha256": "357cb88ca63811db7e2bbf8adaf4eb6bfe5fb7b1c18b5236989ab6f8a932dc15"
+    },
+    {
+      "originalPath": "DesignToCode_GenerateLayout/docs/fixtures/layout/README.md",
+      "archivePath": "DesignToCode_GenerateLayout/docs/archive/2026-10-20-docs-refresh/docs/fixtures/layout/README.md",
+      "bytes": 509,
+      "sha256": "d686c2c44b99ea6ca77931cb39f0465f1846a90ee76a3a30e72c82d0ae801144"
+    },
+    {
+      "originalPath": "DesignToCode_GenerateLayout/docs/fixtures/layout/html-dsl/node-12-382/assets/GLYPHeye.svg",
+      "archivePath": "DesignToCode_GenerateLayout/docs/archive/2026-10-20-docs-refresh/docs/fixtures/layout/html-dsl/node-12-382/assets/GLYPHeye.svg",
+      "bytes": 1091,
+      "sha256": "ea246aba13869009d896d47bb1ccb2e4ada07a86974ce09475e25892ff9cdefc"
+    },
+    {
+      "originalPath": "DesignToCode_GenerateLayout/docs/fixtures/layout/html-dsl/holdout-19-45/assets/GLYPHcheckboxcheck.svg",
+      "archivePath": "DesignToCode_GenerateLayout/docs/archive/2026-10-20-docs-refresh/docs/fixtures/layout/html-dsl/holdout-19-45/assets/GLYPHcheckboxcheck.svg",
+      "bytes": 458,
+      "sha256": "0b0b5c2ea2ee282539ccf6c259301b292da7dc180773cf91164f834bcad00494"
+    },
+    {
+      "originalPath": "DesignToCode_GenerateLayout/docs/fixtures/layout/html-dsl/result-page/arrow-left.svg",
+      "archivePath": "DesignToCode_GenerateLayout/docs/archive/2026-10-20-docs-refresh/docs/fixtures/layout/html-dsl/result-page/arrow-left.svg",
+      "bytes": 565,
+      "sha256": "37c9374182d3bc284a2fd898118bc31728e808d706c4181430aa051a1a647744"
+    },
+    {
+      "originalPath": "DesignToCode_GenerateLayout/docs/fixtures/layout/html-dsl/horizontal-27-450/assets/GLYPHarrowleft.svg",
+      "archivePath": "DesignToCode_GenerateLayout/docs/archive/2026-10-20-docs-refresh/docs/fixtures/layout/html-dsl/horizontal-27-450/assets/GLYPHarrowleft.svg",
+      "bytes": 565,
+      "sha256": "2a1161c1a2436b83f337ca485e5b06dae6e057b208efbe45c27dae99127c346c"
+    },
+    {
+      "originalPath": "DesignToCode_GenerateLayout/docs/fixtures/layout/design-inputs/node-12-382-full/design.png",
+      "archivePath": "DesignToCode_GenerateLayout/docs/archive/2026-10-20-docs-refresh/docs/fixtures/layout/design-inputs/node-12-382-full/design.png",
+      "bytes": 34372,
+      "sha256": "13564d6dbcdce21c24e7e8129a5859162efc4b647d95e1c45463079467019340"
+    },
+    {
+      "originalPath": "DesignToCode_GenerateLayout/docs/fixtures/layout/design-inputs/result-page/design.png",
+      "archivePath": "DesignToCode_GenerateLayout/docs/archive/2026-10-20-docs-refresh/docs/fixtures/layout/design-inputs/result-page/design.png",
+      "bytes": 33261,
+      "sha256": "e85b8b434b5cfe62217b9bf7613588e3d826e5510bb502d7abbd4de8a8730197"
+    },
+    {
+      "originalPath": "DesignToCode_GenerateLayout/docs/fixtures/layout/Case-27-450/pixso.png",
+      "archivePath": "DesignToCode_GenerateLayout/docs/archive/2026-10-20-docs-refresh/docs/fixtures/layout/Case-27-450/pixso.png",
+      "bytes": 36889,
+      "sha256": "c3cbb961332fd9afa41ea11f29b67d9abedfd66d738dea52f4a52605e3ea344a"
+    },
+    {
+      "originalPath": "DesignToCode_GenerateLayout/docs/fixtures/layout/Case-27-450/assets/GLYPHarrowleft.svg",
+      "archivePath": "DesignToCode_GenerateLayout/docs/archive/2026-10-20-docs-refresh/docs/fixtures/layout/Case-27-450/assets/GLYPHarrowleft.svg",
+      "bytes": 565,
+      "sha256": "37c9374182d3bc284a2fd898118bc31728e808d706c4181430aa051a1a647744"
+    },
+    {
+      "originalPath": "DesignToCode_GenerateLayout/Source/README.md",
+      "archivePath": "DesignToCode_GenerateLayout/docs/archive/2026-10-20-docs-refresh/Source/README.md",
+      "bytes": 979,
+      "sha256": "37f464525dcefc0dcaa98516cefd53518d3a7fe265a25584d273540a5a48aa40"
+    }
+  ]
+}

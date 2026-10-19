@@ -14,7 +14,6 @@ COMPONENT_DIR = ROOT / "runtime/component/native"
 STYLE_DIR = ROOT / "design-assets/styles/native"
 GENERATED_STYLE_DIR = ROOT / "design-assets/generated/native"
 SOURCE_MAP = ROOT / "component-definitions/generated-component-source-map.json"
-BUTTON_MANIFEST = ROOT / "design-assets/generated/button/manifest.json"
 RUNTIME_TOKENS = ROOT / "design-assets/DesignSystem/generated/runtime/tokens_qt.json"
 CAPTURED_STYLE_CLASSES = {"QDateTimeEdit", "QDateEdit", "QTimeEdit", "QSlider", "QScrollBar", "QDial", "QLineEdit", "QKeySequenceEdit", "QComboBox", "QFontComboBox", "QCommandLinkButton", "QToolButton", "QDialogButtonBox", "QTabWidget", "QToolBox", "QDockWidget", "QMdiArea", "QMdiSubWindow", "QCalendarWidget"}
 
@@ -31,11 +30,30 @@ def load_inputs():
         expected = "Z_" + item["qtClass"][1:]
         assert item["sdkClass"] == expected, (item["sdkClass"], expected)
         assert item["implementation"] in {"generated", "specialized"}
-    token_manifest = json.loads(BUTTON_MANIFEST.read_text(encoding="utf-8"))
-    profiles = {item["profile"]: item for item in token_manifest["profiles"]}
     runtime_tokens = json.loads(RUNTIME_TOKENS.read_text(encoding="utf-8"))
+    profiles = {}
+    palette_paths = {
+        "foreground": "semantic.color.text.primary",
+        "surface": "semantic.color.background.control-default",
+        "primary": "semantic.color.interactive.brand.default",
+        "primarySoft": "semantic.color.interactive.brand.subtle",
+        "neutralHover": "semantic.color.background.hover",
+        "onBrand": "semantic.color.text.invert",
+        "border": "semantic.color.border.default",
+        "disabled": "semantic.color.background.disabled",
+        "disabledText": "semantic.color.text.disabled",
+        "disabledBorder": "semantic.color.border.disabled",
+        "focus": "semantic.color.interactive.brand.focus-ring",
+    }
+    for name, values in runtime_tokens["profiles"].items():
+        colors = values["color"]
+        profiles[name] = {
+            "profile": name,
+            "palette": {key: colors[path] for key, path in palette_paths.items()},
+            "values": values,
+        }
     assert set(profiles) == {
-        "light-comfortable", "light-compact", "dark-comfortable", "dark-compact"
+        "standard-light", "wide-light", "standard-dark", "wide-dark"
     }
     for name, profile in profiles.items():
         values = runtime_tokens["profiles"][name]
@@ -48,6 +66,46 @@ def load_inputs():
 
 
 def header_text(item):
+    if item["qtClass"] == "QTableView":
+        return '''#pragma once
+
+#include <QJsonObject>
+#include <QTableView>
+
+class QApplication;
+
+namespace commonWidget {
+
+namespace table_detail {
+struct Runtime {
+    QJsonObject values;
+};
+void installTableRuntime(QApplication& app, const Runtime& runtime);
+}
+
+// Token-backed Table identity. Density and striping are the public visual
+// axes; data, selection semantics, sorting and editing remain native Qt APIs.
+class Z_TableView : public QTableView {
+    Q_OBJECT
+    Q_PROPERTY(QString density READ density WRITE setDensity NOTIFY densityChanged)
+    Q_PROPERTY(QString striping READ striping WRITE setStriping NOTIFY stripingChanged)
+  public:
+    explicit Z_TableView(QWidget* parent = nullptr);
+    QString density() const { return densityValue; }
+    QString striping() const { return stripingValue; }
+    void setDensity(const QString& value);
+    void setStriping(const QString& value);
+  signals:
+    void densityChanged(const QString& value);
+    void stripingChanged(const QString& value);
+  private:
+    void refreshContract();
+    QString densityValue = QStringLiteral("compact");
+    QString stripingValue = QStringLiteral("none");
+};
+
+} // namespace commonWidget
+'''
     if item["qtClass"] == "QCalendarWidget":
         return '''#pragma once
 
@@ -183,6 +241,119 @@ class {item["sdkClass"]} : public {item["qtClass"]} {{
 def source_text(item):
     style_owner = ('    setProperty("designSystemStyleOwner", "tokens");\n'
                    if item["qtClass"] in CAPTURED_STYLE_CLASSES else "")
+    if item["qtClass"] == "QTableView":
+        return '''#include "Z_TableView.h"
+#include "FocusIndicator.h"
+#include <QApplication>
+#include <QHeaderView>
+#include <QJsonValue>
+#include <QStyle>
+#include <QStringList>
+#include <QtMath>
+#include <memory>
+#include <stdexcept>
+
+namespace commonWidget {
+namespace {
+std::shared_ptr<const table_detail::Runtime> tableRuntime;
+
+const table_detail::Runtime& runtime() {
+    if (!tableRuntime)
+        throw std::logic_error("Install Table runtime first");
+    return *tableRuntime;
+}
+
+QJsonValue token(const QString& path) {
+    for (const auto& category : {"color", "layout", "number", "font", "boolean", "string", "asset"}) {
+        const auto values = runtime().values[category].toObject();
+        if (values.contains(path))
+            return values[path];
+    }
+    throw std::invalid_argument(("Missing V2 Table token: " + path).toStdString());
+}
+
+int numberToken(const QString& path) {
+    const auto value = token(path);
+    if (!value.isDouble())
+        throw std::invalid_argument(("Non-numeric V2 Table token: " + path).toStdString());
+    return qRound(value.toDouble());
+}
+}
+
+namespace table_detail {
+void installTableRuntime(QApplication& app, const Runtime& input) {
+    if (tableRuntime)
+        throw std::logic_error("Table runtime is install-once");
+    if (input.values.isEmpty())
+        throw std::invalid_argument("Incomplete Table adapter");
+    tableRuntime = std::make_shared<Runtime>(input);
+    Q_UNUSED(app)
+}
+}
+
+Z_TableView::Z_TableView(QWidget* parent) : QTableView(parent) {
+    setProperty("designSystemNative", true);
+    setProperty("designSystemClass", "commonWidget::Z_TableView");
+    setProperty("nativeQtClass", "QTableView");
+    setProperty("designSystemStyleOwner", "tokens");
+    setMouseTracking(true);
+    viewport()->setMouseTracking(true);
+    setShowGrid(true);
+    verticalHeader()->setVisible(false);
+    horizontalHeader()->setDefaultAlignment(Qt::AlignLeft | Qt::AlignVCenter);
+    setFocusPolicy(Qt::StrongFocus);
+    FocusIndicator::instance().watch(this);
+    refreshContract();
+}
+
+void Z_TableView::setDensity(const QString& value) {
+    const QString normalized = value.trimmed().toLower();
+    if (!QStringList{"compact", "small", "medium", "large"}.contains(normalized))
+        throw std::invalid_argument("Table.density must be compact, small, medium or large");
+    if (densityValue == normalized)
+        return;
+    densityValue = normalized;
+    refreshContract();
+    emit densityChanged(densityValue);
+}
+
+void Z_TableView::setStriping(const QString& value) {
+    const QString normalized = value.trimmed().toLower();
+    if (!QStringList{"none", "zebra"}.contains(normalized))
+        throw std::invalid_argument("Table.striping must be none or zebra");
+    if (stripingValue == normalized)
+        return;
+    stripingValue = normalized;
+    refreshContract();
+    emit stripingChanged(stripingValue);
+}
+
+void Z_TableView::refreshContract() {
+    const QString densityPrefix = "component.table.base.density." + densityValue + ".slot.";
+    const int rowHeight = numberToken(densityPrefix + "row.min-height");
+    const int cellHeight = numberToken(densityPrefix + "cell.min-height");
+    const int headerHeight =
+        numberToken("component.table.base.shared.slot.header.line-height") +
+        2 * numberToken("component.table.base.shared.slot.header.padding-block");
+    if (rowHeight < cellHeight || cellHeight <= 0 || headerHeight <= 0)
+        throw std::logic_error("Invalid generated Table geometry");
+
+    verticalHeader()->setMinimumSectionSize(cellHeight);
+    verticalHeader()->setDefaultSectionSize(rowHeight);
+    horizontalHeader()->setMinimumHeight(headerHeight);
+    setAlternatingRowColors(stripingValue == QStringLiteral("zebra"));
+    setProperty("tableDensity", densityValue);
+    setProperty("tableStriping", stripingValue);
+    style()->unpolish(this);
+    style()->polish(this);
+    viewport()->style()->unpolish(viewport());
+    viewport()->style()->polish(viewport());
+    updateGeometry();
+    viewport()->update();
+}
+
+} // namespace commonWidget
+'''
     if item["qtClass"] == "QCalendarWidget":
         return '''#include "Z_CalendarWidget.h"
 #include "FocusIndicator.h"
@@ -356,7 +527,7 @@ void Z_CalendarWidget::refreshLayout() {
             const int id = QFontDatabase::addApplicationFont(
                 QStringLiteral(":/fonts/HarmonyOS_Sans_SC_Regular.ttf"));
             const QStringList families = QFontDatabase::applicationFontFamilies(id);
-            return families.isEmpty() ? QStringLiteral("Noto Sans SC") : families.first();
+            return families.isEmpty() ? QStringLiteral("HarmonyOS Sans SC") : families.first();
         }();
         QFont viewFont = view->font();
         // QCalendarWidget's private weekday row does not reliably traverse a
@@ -773,6 +944,67 @@ def qss_template(item):
     if item["implementation"] == "specialized":
         return (f'/* {item["sdkClass"]} uses its specialized Token compiler output. '
                 'This file records its native mapping without overriding that style. */\n')
+    if item["qtClass"] == "QTableView":
+        return f'''/* {item["sdkClass"]} <- QTableView; compiled from component.table.*. */
+{selector} {{
+    color: @TABLE_CELL_COLOR@;
+    background-color: @TABLE_CONTAINER_BACKGROUND@;
+    alternate-background-color: @TABLE_ROW_BACKGROUND@;
+    selection-background-color: @TABLE_SELECTED_BACKGROUND@;
+    selection-color: @TABLE_CELL_COLOR@;
+    gridline-color: @TABLE_BORDER_COLOR@;
+    border: @TABLE_BORDER_WIDTH@px solid @TABLE_BORDER_COLOR@;
+    border-radius: 0;
+    font-family: "@TABLE_CELL_FONT_FAMILY@";
+    font-size: @TABLE_CELL_FONT_SIZE@px;
+    font-weight: @TABLE_CELL_FONT_WEIGHT@;
+    outline: 0;
+}}
+{selector}[tableStriping="zebra"] {{
+    alternate-background-color: @TABLE_ZEBRA_BACKGROUND@;
+}}
+{selector}::item {{
+    padding: @TABLE_CELL_PADDING_BLOCK@px @TABLE_CELL_PADDING_INLINE@px;
+    border: 0;
+}}
+{selector}::item:hover {{
+    background-color: @TABLE_HOVER_BACKGROUND@;
+}}
+{selector}::item:selected,
+{selector}::item:selected:hover {{
+    color: @TABLE_CELL_COLOR@;
+    background-color: @TABLE_SELECTED_BACKGROUND@;
+}}
+{selector}:disabled {{
+    color: @TABLE_DISABLED_TEXT@;
+    background-color: @TABLE_DISABLED_BACKGROUND@;
+    alternate-background-color: @TABLE_DISABLED_BACKGROUND@;
+    selection-color: @TABLE_DISABLED_TEXT@;
+    selection-background-color: @TABLE_DISABLED_BACKGROUND@;
+    border-color: @TABLE_BORDER_COLOR@;
+}}
+{selector} QHeaderView::section {{
+    color: @TABLE_HEADER_COLOR@;
+    background-color: @TABLE_HEADER_BACKGROUND@;
+    padding: @TABLE_HEADER_PADDING_BLOCK@px @TABLE_HEADER_PADDING_INLINE@px;
+    border: 0;
+    border-right: @TABLE_BORDER_WIDTH@px solid @TABLE_BORDER_COLOR@;
+    border-bottom: @TABLE_BORDER_WIDTH@px solid @TABLE_BORDER_COLOR@;
+    font-family: "@TABLE_HEADER_FONT_FAMILY@";
+    font-size: @TABLE_HEADER_FONT_SIZE@px;
+    font-weight: @TABLE_HEADER_FONT_WEIGHT@;
+}}
+{selector} QHeaderView::section:disabled {{
+    color: @TABLE_DISABLED_TEXT@;
+    background-color: @TABLE_DISABLED_BACKGROUND@;
+}}
+{selector} QTableCornerButton::section {{
+    background-color: @TABLE_HEADER_BACKGROUND@;
+    border: 0;
+    border-right: @TABLE_BORDER_WIDTH@px solid @TABLE_BORDER_COLOR@;
+    border-bottom: @TABLE_BORDER_WIDTH@px solid @TABLE_BORDER_COLOR@;
+}}
+'''
     if item["category"] == "input":
         common += f'''{selector} {{
     min-height: @HEIGHT@px;
@@ -915,6 +1147,15 @@ def qss_template(item):
 def render_qss(template, profile):
     palette = profile["palette"]
     metrics = profile["nativeMetrics"]
+    profile_values = profile["values"]
+
+    def token(path):
+        for category in ("color", "layout", "number", "font", "boolean", "string", "asset"):
+            category_values = profile_values[category]
+            if path in category_values:
+                return category_values[path]
+        raise KeyError(path)
+
     values = {
         "FOREGROUND": palette["foreground"],
         "SURFACE": palette["surface"],
@@ -930,6 +1171,28 @@ def render_qss(template, profile):
         "HEIGHT": str(metrics["height"]),
         "FONT_SIZE": str(metrics["fontSize"]),
         "RADIUS": str(metrics["radius"]),
+        "TABLE_CONTAINER_BACKGROUND": token("component.table.base.shared.slot.container.background-color"),
+        "TABLE_HEADER_BACKGROUND": token("component.table.base.shared.slot.header.background-color"),
+        "TABLE_HEADER_COLOR": token("component.table.base.shared.slot.header.color"),
+        "TABLE_ROW_BACKGROUND": token("component.table.base.striping.none.slot.row.background-color"),
+        "TABLE_ZEBRA_BACKGROUND": token("component.table.base.striping.zebra.slot.row.background-color"),
+        "TABLE_HOVER_BACKGROUND": token("component.table.overlay.row-interaction.hover.slot.row.background-color"),
+        "TABLE_SELECTED_BACKGROUND": token("component.table.overlay.cell-selection.selected.slot.cell.background-color"),
+        "TABLE_DISABLED_BACKGROUND": token("component.table.overlay.availability.disabled.slot.container.background-color"),
+        "TABLE_CELL_COLOR": token("component.table.base.shared.slot.cell.color"),
+        "TABLE_DISABLED_TEXT": token("component.table.overlay.availability.disabled.slot.cell.color"),
+        "TABLE_BORDER_COLOR": token("component.table.base.shared.slot.border.color"),
+        "TABLE_BORDER_WIDTH": str(token("component.table.base.shared.slot.border.border-width")),
+        "TABLE_CELL_PADDING_BLOCK": str(token("component.table.base.shared.slot.cell.padding-block")),
+        "TABLE_CELL_PADDING_INLINE": str(token("component.table.base.shared.slot.cell.padding-inline")),
+        "TABLE_HEADER_PADDING_BLOCK": str(token("component.table.base.shared.slot.header.padding-block")),
+        "TABLE_HEADER_PADDING_INLINE": str(token("component.table.base.shared.slot.header.padding-inline")),
+        "TABLE_CELL_FONT_FAMILY": token("component.table.base.shared.slot.cell.font-family"),
+        "TABLE_CELL_FONT_SIZE": str(token("component.table.base.shared.slot.cell.font-size")),
+        "TABLE_CELL_FONT_WEIGHT": str(token("component.table.base.shared.slot.cell.font-weight")),
+        "TABLE_HEADER_FONT_FAMILY": token("component.table.base.shared.slot.header.font-family"),
+        "TABLE_HEADER_FONT_SIZE": str(token("component.table.base.shared.slot.header.font-size")),
+        "TABLE_HEADER_FONT_WEIGHT": str(token("component.table.base.shared.slot.header.font-weight")),
     }
     for name, value in values.items():
         template = template.replace(f"@{name}@", value)
@@ -1002,6 +1265,8 @@ def expected_outputs(components, profiles):
 
 
 def main():
+    from output_guard import require_build_workspace
+    require_build_workspace(ROOT)
     parser = argparse.ArgumentParser()
     parser.add_argument("--check", action="store_true")
     args = parser.parse_args()
@@ -1016,7 +1281,7 @@ def main():
         if path.is_file() and path.read_text(encoding="utf-8") == content:
             continue
         path.parent.mkdir(parents=True, exist_ok=True)
-        path.write_text(content, encoding="utf-8", newline="\n")
+        path.write_bytes(content.encode("utf-8"))  # Python 3.9; preserve existing LF bytes.
     if drift:
         raise SystemExit("Generated native component drift:\n" + "\n".join(drift))
     print(json.dumps({"components": len(components), "outputs": len(outputs),

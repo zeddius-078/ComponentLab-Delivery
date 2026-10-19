@@ -1,4 +1,33 @@
 cmake_minimum_required(VERSION 3.21)
+# Maintained inputs are never a generation destination. Build a disposable
+# prepared workspace so relative C++ includes and resource aliases stay stable.
+get_filename_component(_input_project "${CMAKE_CURRENT_SOURCE_DIR}/../.." ABSOLUTE)
+if(EXISTS "${_input_project}/Source/Publish-ComponentSDK.ps1")
+    file(REAL_PATH "${_input_project}/build" _allowed_build)
+    file(REAL_PATH "${CMAKE_BINARY_DIR}" _requested_build)
+    cmake_path(IS_PREFIX _allowed_build "${_requested_build}" NORMALIZE _safe_build)
+    if(NOT _safe_build)
+        message(FATAL_ERROR "OUTPUT_MUST_BE_IN_BUILD")
+    endif()
+    find_package(Python3 REQUIRED COMPONENTS Interpreter)
+    execute_process(COMMAND "${Python3_EXECUTABLE}" -B "${_input_project}/Source/PrepareBuild.py"
+        RESULT_VARIABLE _prepared)
+    if(NOT _prepared EQUAL 0)
+        message(FATAL_ERROR "Component build preparation failed")
+    endif()
+    add_subdirectory("${_input_project}/build/work/Source/ComponentKit" "${CMAKE_CURRENT_BINARY_DIR}/prepared")
+    return()
+endif()
+get_filename_component(COMPONENT_PROJECT_ROOT "${CMAKE_CURRENT_SOURCE_DIR}/../../../.." ABSOLUTE)
+if(NOT EXISTS "${COMPONENT_PROJECT_ROOT}/Source/Publish-ComponentSDK.ps1")
+    message(FATAL_ERROR "Build ComponentKit through Source/Publish-ComponentSDK.ps1")
+endif()
+file(REAL_PATH "${COMPONENT_PROJECT_ROOT}/build" _allowed_build)
+file(REAL_PATH "${CMAKE_BINARY_DIR}" _requested_build)
+cmake_path(IS_PREFIX _allowed_build "${_requested_build}" NORMALIZE _safe_build)
+if(NOT _safe_build)
+    message(FATAL_ERROR "OUTPUT_MUST_BE_IN_BUILD")
+endif()
 project(DesignToCodeComponentKit LANGUAGES CXX)
 if(MSVC AND DEFINED BUTTON_MSVC_INCLUDE_PREFIX)
     set(CMAKE_CL_SHOWINCLUDES_PREFIX "${BUTTON_MSVC_INCLUDE_PREFIX}")
@@ -10,7 +39,10 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 find_package(Qt5 5.15 REQUIRED COMPONENTS Core Gui Widgets Svg)
 option(D2C_BUILD_TOKEN_TOOLS "Build the private DesignToCode Token pipeline" OFF)
+set(D2C_BUILD_TOKEN_TOOLS ON)
 option(GENERATED_COMPONENT_SDK_INSTALL "Install the productized component SDK" ON)
+option(COMPONENTLAB_SOURCE_SDK
+    "Stage the standalone ComponentLab Source SDK package (source delivery)" OFF)
 file(GLOB GENERATED_NATIVE_COMPONENT_SOURCES CONFIGURE_DEPENDS
     runtime/component/native/Z_*.cpp runtime/component/native/Z_*.h)
 set(NATIVE_COMPONENT_REGISTRY_SOURCES
@@ -55,7 +87,6 @@ add_library(d2c_components STATIC
     runtime/component/FocusIndicator.cpp runtime/component/FocusIndicator.h
     runtime/surface/Surface.cpp runtime/surface/Surface.h
     runtime/surface/FieldChrome.cpp runtime/surface/FieldChrome.h
-    runtime/surface/SolidInnerShadow.cpp runtime/surface/SolidInnerShadow.h
     runtime/surface/ProfileContext.cpp runtime/surface/ProfileContext.h
     runtime/surface/Typography.cpp runtime/surface/Typography.h
     runtime/surface/TokenResources.cpp runtime/surface/TokenResources.h)
@@ -110,13 +141,11 @@ set(GENERATED_COMPONENT_SOURCES
     runtime/component/FocusIndicator.cpp runtime/component/FocusIndicator.h
     runtime/surface/Surface.cpp runtime/surface/Surface.h
     runtime/surface/FieldChrome.cpp runtime/surface/FieldChrome.h
-    runtime/surface/SolidInnerShadow.cpp runtime/surface/SolidInnerShadow.h
     runtime/surface/ProfileContext.cpp runtime/surface/ProfileContext.h
     runtime/surface/Typography.cpp runtime/surface/Typography.h
     runtime/surface/TokenResources.cpp runtime/surface/TokenResources.h
     runtime/theme/ComponentTheme.cpp runtime/theme/ComponentTheme.h
     runtime/designer/DesignerWidgets.cpp runtime/designer/DesignerWidgets.h
-    runtime/adapter/ButtonAppearanceAdapter.cpp runtime/adapter/ButtonAppearanceAdapter.h
     runtime/component-resources.qrc)
 add_library(generated_component_sdk STATIC ${GENERATED_COMPONENT_SOURCES})
 set_target_properties(generated_component_sdk PROPERTIES
@@ -135,7 +164,7 @@ if(GENERATED_COMPONENT_SDK_INSTALL)
     install(TARGETS generated_component_sdk ARCHIVE DESTINATION lib)
     install(DIRECTORY runtime/component/ runtime/surface/ runtime/theme/ runtime/designer/
         DESTINATION include/MyDesignSystem FILES_MATCHING PATTERN "*.h")
-    install(FILES runtime/adapter/ButtonAppearanceAdapter.h MyDesignSystem.h qt5152_msvc_compat.h
+    install(FILES MyDesignSystem.h qt5152_msvc_compat.h
         DESTINATION include/MyDesignSystem)
     install(DIRECTORY licenses/ DESTINATION licenses)
     install(FILES runtime/assets/fonts/HarmonyOSSans/LICENSE.txt
@@ -148,17 +177,14 @@ add_library(d2c_designer_widgets STATIC runtime/designer/DesignerWidgets.cpp run
 target_include_directories(d2c_designer_widgets PUBLIC runtime/designer)
 target_link_libraries(d2c_designer_widgets PUBLIC d2c_theme)
 add_library(d2c_appearance STATIC
-    runtime/adapter/ButtonAppearanceAdapter.cpp runtime/adapter/ButtonAppearanceAdapter.h
     runtime/component/ComponentFactory.cpp runtime/component/ComponentFactory.h)
 target_include_directories(d2c_appearance PUBLIC runtime/adapter runtime/component)
 target_link_libraries(d2c_appearance PUBLIC d2c_components)
 
 if(D2C_BUILD_TOKEN_TOOLS)
     find_package(Python3 REQUIRED COMPONENTS Interpreter)
-    add_executable(d2c_button_token_compiler design-assets/tools/token_compiler.cpp)
     add_executable(d2c_checkbox_token_compiler design-assets/tools/checkbox_token_compiler.cpp)
-    add_executable(d2c_forms_token_compiler design-assets/tools/forms_token_compiler.cpp)
-    foreach(COMPONENT button checkbox forms)
+    foreach(COMPONENT checkbox)
         target_link_libraries(d2c_${COMPONENT}_token_compiler PRIVATE Qt5::Core Qt5::Gui)
         if(MSVC)
             target_compile_options(d2c_${COMPONENT}_token_compiler PRIVATE /utf-8)
@@ -170,17 +196,13 @@ if(D2C_BUILD_TOKEN_TOOLS)
     # 明确调用此目标才刷新私有 Token 产物；GUI 构建默认消费现有快照。
     add_custom_target(d2c_generate_tokens
         COMMAND "${Python3_EXECUTABLE}" -B "${CMAKE_CURRENT_SOURCE_DIR}/design-assets/tools/export_tokens.py"
-        COMMAND d2c_button_token_compiler "${CMAKE_CURRENT_SOURCE_DIR}/design-assets" "${CMAKE_CURRENT_SOURCE_DIR}/design-assets/generated/button"
         COMMAND d2c_checkbox_token_compiler "${CMAKE_CURRENT_SOURCE_DIR}/design-assets" "${CMAKE_CURRENT_SOURCE_DIR}/design-assets/generated/checkbox"
-        COMMAND d2c_forms_token_compiler "${CMAKE_CURRENT_SOURCE_DIR}/design-assets" "${CMAKE_CURRENT_SOURCE_DIR}/design-assets/generated/forms"
-        DEPENDS d2c_button_token_compiler d2c_checkbox_token_compiler d2c_forms_token_compiler
+        DEPENDS d2c_checkbox_token_compiler
         COMMENT "Generate DesignToCode private Token outputs" VERBATIM)
     add_custom_target(d2c_check_tokens
         COMMAND "${Python3_EXECUTABLE}" -B "${CMAKE_CURRENT_SOURCE_DIR}/design-assets/tools/export_tokens.py" --check
-        COMMAND d2c_button_token_compiler "${CMAKE_CURRENT_SOURCE_DIR}/design-assets" "${CMAKE_CURRENT_SOURCE_DIR}/design-assets/generated/button" --check
         COMMAND d2c_checkbox_token_compiler "${CMAKE_CURRENT_SOURCE_DIR}/design-assets" "${CMAKE_CURRENT_SOURCE_DIR}/design-assets/generated/checkbox" --check
-        COMMAND d2c_forms_token_compiler "${CMAKE_CURRENT_SOURCE_DIR}/design-assets" "${CMAKE_CURRENT_SOURCE_DIR}/design-assets/generated/forms" --check
-        DEPENDS d2c_button_token_compiler d2c_checkbox_token_compiler d2c_forms_token_compiler
+        DEPENDS d2c_checkbox_token_compiler
         COMMENT "Check DesignToCode private Token outputs" VERBATIM)
     add_custom_target(d2c_generate_native_components
         COMMAND "${Python3_EXECUTABLE}" -B "${CMAKE_CURRENT_SOURCE_DIR}/tools/generate_native_components.py"
@@ -190,6 +212,7 @@ if(D2C_BUILD_TOKEN_TOOLS)
         COMMAND "${Python3_EXECUTABLE}" -B "${CMAKE_CURRENT_SOURCE_DIR}/tools/generate_design_component_catalog.py"
         COMMENT "Generate the Figma public component catalog" VERBATIM)
     add_custom_target(d2c_check_native_components
+        COMMAND "${Python3_EXECUTABLE}" -B "${CMAKE_CURRENT_SOURCE_DIR}/tools/test_native_component_generation.py"
         COMMAND "${Python3_EXECUTABLE}" -B "${CMAKE_CURRENT_SOURCE_DIR}/tools/generate_native_components.py" --check
         DEPENDS d2c_generate_native_components
         COMMENT "Check generated Z_* source and QSS contracts" VERBATIM)
@@ -199,4 +222,22 @@ if(D2C_BUILD_TOKEN_TOOLS)
         COMMENT "Check the Figma public component catalog" VERBATIM)
     add_dependencies(generated_component_sdk d2c_check_native_components
         d2c_check_design_component_catalog)
+    add_dependencies(d2c_components d2c_check_native_components d2c_check_design_component_catalog)
+endif()
+
+# Source SDK (source delivery branch). Opt-in, not part of ALL, does not
+# touch the binary SDK targets, install rules or the publish script.
+if(COMPONENTLAB_SOURCE_SDK)
+    add_custom_target(package_componentlab_source
+        COMMAND "${CMAKE_COMMAND}"
+            "-DSDK_SOURCE_DIR=${CMAKE_CURRENT_SOURCE_DIR}"
+            "-DSDK_OUTPUT_DIR=${COMPONENT_PROJECT_ROOT}/build/resource/ComponentLabSourceSDK"
+            "-DSDK_TEMPLATE_DIR=${CMAKE_CURRENT_SOURCE_DIR}/source-sdk"
+            -P "${CMAKE_CURRENT_SOURCE_DIR}/source-sdk/stage_source_sdk.cmake"
+        COMMENT "Stage the self-contained ComponentLab Source SDK package"
+        VERBATIM)
+    if(D2C_BUILD_TOKEN_TOOLS)
+        add_dependencies(package_componentlab_source
+            d2c_check_tokens d2c_check_native_components)
+    endif()
 endif()

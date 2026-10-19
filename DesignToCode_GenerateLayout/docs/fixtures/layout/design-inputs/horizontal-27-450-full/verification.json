@@ -1,0 +1,23 @@
+{
+  "status": "PASS",
+  "directory": "horizontal-27-450-full",
+  "arguments": {
+    "guid": "27:450",
+    "simplify": false,
+    "isDetachInstance": false
+  },
+  "receivedAtUtc": "2026-10-19T15:11:03.511744+00:00",
+  "rawBytes": 1583428,
+  "rawSha256": "f5bf2fbfba76f82ab9b48df03fa14fa61d4d4aa1d3cacf68ddc6234f80e5ccd4",
+  "responseSha256": "d789980b5f00e1147aca8c853a8829e2fc34a1ff04958ee15b2a90c973012b1a",
+  "verbatimText": true,
+  "topLevelFields": [
+    "pixTreeNodes",
+    "svgGuidInfo",
+    "pixComponentTreeDslNodes",
+    "variableMap",
+    "variableSetMap",
+    "localStyleMap",
+    "isContainFixed"
+  ]
+}

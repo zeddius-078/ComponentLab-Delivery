@@ -78,12 +78,16 @@ QJsonObject profileColors(const QString& profile) {
 }
 
 QString hexColor(const QJsonObject& colors, const QString& key) {
-    const QString rgba = colors[key].toString();
-    const auto start = rgba.indexOf('(');
-    const auto end = rgba.indexOf(')');
+    const QString value = colors[key].toString();
+    if (value.isEmpty())
+        fail("MISSING_ASSET_TOKEN", key);
+    if (!value.contains('('))
+        return value;
+    const auto start = value.indexOf('(');
+    const auto end = value.indexOf(')');
     if (start < 0 || end <= start)
         fail("MISSING_ASSET_TOKEN", key);
-    const auto channels = rgba.mid(start + 1, end - start - 1).split(',');
+    const auto channels = value.mid(start + 1, end - start - 1).split(',');
     if (channels.size() < 3)
         fail("INVALID_ASSET_TOKEN", key);
     return QColor(channels[0].trimmed().toInt(), channels[1].trimmed().toInt(),
@@ -97,11 +101,11 @@ QByteArray profiledSvg(const QString& path, const QString& profile) {
     QString svg = QString::fromUtf8(file.readAll());
     const auto colors = profileColors(profile);
     const QList<QPair<QString, QString>> replacements{
-        {QStringLiteral("#6235f7"), hexColor(colors, QStringLiteral("base.stoken.color.interactive.brand.default"))},
-        {QStringLiteral("#f3efff"), hexColor(colors, QStringLiteral("base.stoken.color.interactive.brand.subtle"))},
-        {QStringLiteral("#d0d0d0"), hexColor(colors, QStringLiteral("base.stoken.color.border.secondary"))},
-        {QStringLiteral("#f3f3f3"), hexColor(colors, QStringLiteral("base.stoken.color.background.surface"))},
-        {QStringLiteral("#e02128"), hexColor(colors, QStringLiteral("base.stoken.color.status.danger.default"))},
+        {QStringLiteral("#6235f7"), hexColor(colors, QStringLiteral("semantic.color.interactive.brand.default"))},
+        {QStringLiteral("#f3efff"), hexColor(colors, QStringLiteral("semantic.color.interactive.brand.subtle"))},
+        {QStringLiteral("#d0d0d0"), hexColor(colors, QStringLiteral("semantic.color.border.secondary"))},
+        {QStringLiteral("#f3f3f3"), hexColor(colors, QStringLiteral("semantic.color.background.surface"))},
+        {QStringLiteral("#e02128"), hexColor(colors, QStringLiteral("semantic.color.status.danger.default"))},
     };
     for (const auto& replacement : replacements)
         svg.replace(replacement.first, replacement.second, Qt::CaseInsensitive);

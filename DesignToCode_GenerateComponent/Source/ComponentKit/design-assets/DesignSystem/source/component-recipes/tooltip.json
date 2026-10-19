@@ -1,0 +1,72 @@
+{
+  "$registry": {
+    "component": "tooltip",
+    "version": "2.0"
+  },
+  "$status": "active",
+  "base": {
+    "state": {
+      "camera": {
+        "slot": {
+          "container": {
+            "opacity": {
+              "$type": "opacity",
+              "$value": "{primitive.opacity.80}",
+              "$description": "Recovered from legacy V2 layer component.tooltip.camera.default.container.opacity",
+              "$sourceOwner": "old-tree-recovery",
+              "unit": "%"
+            }
+          }
+        }
+      },
+      "chart": {
+        "slot": {
+          "container": {
+            "opacity": {
+              "$type": "opacity",
+              "$value": "{primitive.opacity.90}",
+              "$description": "Recovered from legacy V2 layer component.tooltip.chart.default.container.opacity",
+              "$sourceOwner": "old-tree-recovery",
+              "unit": "%"
+            }
+          }
+        }
+      },
+      "default": {
+        "slot": {
+          "container": {
+            "background-color": {
+              "$type": "color",
+              "$value": "{semantic.color.background.surface-raised}",
+              "$description": "Recovered from legacy V2 layer component.tooltip.base.default.container.background-color",
+              "$sourceOwner": "old-tree-recovery"
+            },
+            "padding-inline": {
+              "$type": "spacing",
+              "$value": "{semantic.layout.padding.inline.compact}",
+              "$description": "Recovered from legacy V2 layer component.tooltip.base.default.container.padding-inline",
+              "$sourceOwner": "old-tree-recovery",
+              "unit": "px"
+            },
+            "radius": {
+              "$type": "borderRadius",
+              "$value": "{semantic.radius.control-default}",
+              "$description": "Recovered from legacy V2 layer component.tooltip.base.default.container.radius",
+              "$sourceOwner": "old-tree-recovery",
+              "unit": "px"
+            }
+          },
+          "content": {
+            "color": {
+              "$type": "color",
+              "$value": "{semantic.color.text.primary}",
+              "$description": "Recovered from legacy V2 layer component.tooltip.base.default.content.color",
+              "$sourceOwner": "old-tree-recovery"
+            }
+          }
+        }
+      }
+    }
+  },
+  "overrides": []
+}

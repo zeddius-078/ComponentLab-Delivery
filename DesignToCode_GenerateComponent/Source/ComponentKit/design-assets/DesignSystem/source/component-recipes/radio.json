@@ -1,0 +1,94 @@
+{
+  "$schema": "../../schema/component-recipe-schema.json",
+  "$registry": {
+    "component": "radio",
+    "version": "2.0"
+  },
+  "$status": "draft-v2",
+  "$description": "Radio V2 sparse recipe. Value and interaction state are independent axes; selected-* state names are not active V2 states.",
+  "$valueEvidence": "source/component-value-evidence/radio.json",
+  "base": {
+    "size": {
+      "compact": {
+        "slot/indicator/visual-size": "{profile.interaction-size.01}",
+        "slot/container/interaction-size": "{profile.interaction-size.02}"
+      },
+      "small": {
+        "slot/indicator/visual-size": "{profile.interaction-size.02}",
+        "slot/container/interaction-size": "{profile.interaction-size.03}"
+      },
+      "medium": {
+        "slot/indicator/visual-size": "{profile.interaction-size.03}",
+        "slot/container/interaction-size": "{profile.interaction-size.04}"
+      },
+      "large": {
+        "slot/indicator/visual-size": "{profile.interaction-size.04}",
+        "slot/container/interaction-size": "{profile.interaction-size.05}"
+      }
+    },
+    "shared": {
+      "slot/content/typography": "{typography.body.body-1}",
+      "slot/label/typography": "{typography.body.body-1}"
+    }
+  },
+  "overrides": [],
+  "valueRules": {
+    "unselected": {
+      "meaning": "not selected",
+      "stateIndependent": true,
+      "indicator": "empty-circle"
+    },
+    "selected": {
+      "meaning": "selected",
+      "stateIndependent": true,
+      "indicator": "selected-ring-with-center-dot"
+    }
+  },
+  "valueTransitionPolicy": {
+    "owner": "radio-group-runtime",
+    "tokenDefinesTransition": false,
+    "singleRadioMutatesValue": false,
+    "selectionEffect": "select-one-and-unselect-other-group-members"
+  },
+  "pressedRule": {
+    "preserveValueDuringPress": true,
+    "valueMutationOwner": "radio-group-runtime",
+    "tokenDoesNotMutateValue": true
+  },
+  "stateRules": {
+    "default": { "interaction": "available" },
+    "hover": { "interaction": "available" },
+    "focused": {
+      "interaction": "keyboard-focus",
+      "focusRing": {
+        "enabled": true,
+        "visual": "border-only",
+        "activation": "keyboard-only",
+        "mouseHover": false,
+        "mousePress": false
+      }
+    },
+    "pressed": { "interaction": "activation-in-progress" },
+    "disabled": {
+      "interaction": "locked",
+      "preserveValue": true,
+      "preserveIndicatorStructure": true,
+      "visualSource": "disabled"
+    }
+  },
+  "interactionSurface": {
+    "parts": ["indicator", "label"],
+    "scope": "single-interaction-region",
+    "labelClick": "delegate-to-radio",
+    "keyboardFocusTarget": "radio-control",
+    "labelHasIndependentFocus": false
+  },
+  "diagnostics": [
+    {
+      "severity": "warning",
+      "code": "V2-DRAFT-RADIO-VISUALS-PENDING",
+      "message": "Value/state separation is confirmed; complete Radio visual overrides and size vocabulary remain pending.",
+      "source": "source/component-recipes/radio.json"
+    }
+  ]
+}

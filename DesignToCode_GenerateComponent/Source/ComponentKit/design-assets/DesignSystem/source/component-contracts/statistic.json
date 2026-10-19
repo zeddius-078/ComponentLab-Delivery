@@ -1,0 +1,25 @@
+{
+  "$description": "Statistic V2 Component Contract. Compact data-display presentation with runtime value formatting and lifecycle feedback states.",
+  "component": "statistic",
+  "version": "1.0",
+  "$status": "draft-v2",
+  "contractKind": "data-display-value",
+  "registryBindings": {"source": "source/component-registry.json#/components/statistic", "axes": ["size", "state"], "slots": ["container", "title", "value", "prefix", "suffix", "loading-skeleton", "feedback"], "authority": "component-registry"},
+  "structure": ["container", "title", "value", "prefix", "suffix", "loading-skeleton", "feedback"],
+  "stateLayers": {"size": "compact or default presentation density", "state": "default, loading, empty or error lifecycle presentation", "content": "runtime title, numeric value and affixes"},
+  "runtimeModel": {
+    "size": {"registryAxis": "size", "values": ["compact", "default"], "owner": "component-configuration"},
+    "state": {"registryAxis": "state", "priority": ["error", "loading", "empty", "default"], "owner": "runtime-lifecycle"},
+    "value": {"owner": "runtime-api", "fields": ["numericValue", "localeName", "precision", "useGrouping"]},
+    "feedback": {"owner": "runtime-lifecycle", "emptyText": "—", "errorText": "Unavailable"}
+  },
+  "contentModel": {"title": {"kind": "localized-content-key-or-runtime-text", "optional": true, "visualToken": false}, "prefix": {"kind": "localized-content-key-or-runtime-text", "optional": true, "visualToken": false}, "suffix": {"kind": "localized-content-key-or-runtime-text", "optional": true, "visualToken": false}},
+  "compositionRules": [
+    "Statistic is the canonical public identity for this data-display pattern; DataDisplay is a historical alias and is not a competing public component.",
+    "Statistic presents one value with optional title, prefix and suffix. It is not a Card, Chart, Table, dataset container, sorting control or filtering control.",
+    "Size changes presentation density; it does not create a separate value or content family.",
+    "Loading, Empty and Error are runtime lifecycle states. Loading uses the shared dynamic skeleton/spinner treatment; Empty and Error replace the value presentation without changing the component identity.",
+    "Numeric formatting, locale, precision, grouping and the underlying value are runtime data/configuration, not Tokens."
+  ],
+  "tokenBoundary": {"recipeOwns": ["container spacing and surface", "title/value/affix typography and colors", "loading skeleton", "feedback typography and color"], "runtimeOwns": ["numeric value", "formatting", "locale", "lifecycle state", "accessibility text"], "contractDoesNotOwn": ["resolved visual values", "dataset schema", "chart rendering", "business aggregation"]}
+}

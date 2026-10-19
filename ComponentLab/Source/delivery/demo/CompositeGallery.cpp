@@ -21,7 +21,7 @@ const QColor kKeyBg(0xf7, 0xf9, 0xfc);
 const QColor kKeyText(0x50, 0x58, 0x68);
 
 QFont inter(int px, QFont::Weight weight) {
-    QFont font(QStringLiteral("Inter"));
+    QFont font(QStringLiteral("HarmonyOS Sans"));
     font.setPixelSize(px);
     font.setWeight(weight);
     return font;
@@ -199,6 +199,7 @@ QWidget* createCompositeGallery(const QString& pageId,
         comfortable->setProperty("figmaDesignBounds", QRect(68, 125, 1200, 63));
         compact->setObjectName(QStringLiteral("figmaNavbarCompact"));
         compact->setVariantTuple(QStringLiteral("Density=Compact"));
+        compact->setDensity(QStringLiteral("Compact"));
         compact->setGeometry(1308, 125, 1200, 56);
         compact->setProperty("figmaNodeId", QStringLiteral("380:73"));
         compact->setProperty("figmaDesignBounds", QRect(1308, 125, 1200, 56));

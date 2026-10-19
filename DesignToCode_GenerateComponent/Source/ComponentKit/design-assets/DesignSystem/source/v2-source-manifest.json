@@ -1,0 +1,518 @@
+{
+  "$description": "V2 source landing manifest for incremental ComponentLab migration.",
+  "$version": "2.0",
+  "status": "draft-v2",
+  "architectureBaseline": {
+    "current": "reports/2026-10-19-seven-layer-architecture-refresh.md",
+    "previous": "reports/archive/2026-10-18/2026-10-18-change-report.md",
+    "changeType": "major-architecture-refresh",
+    "supersedes": [
+      "pre-seven-layer-token-organization",
+      "component-only-layer-assumption",
+      "legacy-compound-state-models-in-confirmed-components"
+    ],
+    "sourceOfTruthPolicy": "Only the current Registry, Contract, Recipe, Composite and Content sources participate in generation; reports and history are evidence only."
+  },
+  "authority": {
+    "tokenArchitecture": {
+      "version": "7-layer-v1",
+      "dependencyOrder": [
+        "primitive",
+        "profile",
+        "theme",
+        "semantic",
+        "composite",
+        "component",
+        "content"
+      ],
+      "layers": [
+        {
+          "id": "01.primitive",
+          "key": "primitive",
+          "path": "source/primitive.json",
+          "role": "atomic-values",
+          "status": "active"
+        },
+        {
+          "id": "02.profile",
+          "key": "profile",
+          "path": "source/profile.json",
+          "role": "platform-resolution-density",
+          "status": "active"
+        },
+        {
+          "id": "03.theme",
+          "key": "theme",
+          "path": "source/theme.json",
+          "role": "surface-and-theme-context",
+          "status": "active"
+        },
+        {
+          "id": "04.semantic",
+          "key": "semantic",
+          "path": "source/semantic.json",
+          "role": "cross-component-semantic-roles",
+          "status": "active"
+        },
+        {
+          "id": "05.composite",
+          "key": "composite",
+          "path": "source/{typography,gradient,shadow,blur,motion}.json",
+          "role": "reusable-visual-composites",
+          "status": "package-backed"
+        },
+        {
+          "id": "06.component",
+          "key": "component",
+          "path": "source/component-recipes/*.json",
+          "role": "component-owned-visual-contract",
+          "status": "active-source"
+        },
+        {
+          "id": "07.content",
+          "key": "content",
+          "path": "source/content/*.json",
+          "role": "terminology-and-localized-instance-content",
+          "status": "active"
+        }
+      ],
+      "compatibility": {
+        "loaderLayers": ["primitive", "profile", "theme", "semantic", "component"],
+        "themeModeOwner": "theme.$modeOverrides",
+        "themeMigrationTarget": "source/theme.json",
+        "themeMigrationStatus": "completed-first-slice",
+        "compositePackagesRemainPhysicallySeparate": true,
+        "contentIsNotAVisualTokenLayer": true,
+        "contentScope": ["terminology", "localized-copy", "instance-text", "locale-adaptation"],
+        "contentExcludes": ["slot-structure", "runtime-state", "data-source", "events", "business-rules"],
+        "contentGovernance": {
+          "status": "approved",
+          "defaultLocale": "en-US",
+          "fallbackLocale": "en-US",
+          "keyLanguage": "en",
+          "defaultPolicy": "all-components-inherit-english-content-policy",
+          "componentSpecificRefinement": "allowed-only-in-component-contract; cannot change locale or add visual/runtime ownership",
+          "uncontractedComponents": "inherit-global-policy"
+        },
+        "generatedOutputsAreNotSourceLayers": true
+      }
+    },
+    "componentRegistry": "source/component-registry.json",
+    "componentRecipes": "source/component-recipes/*.json",
+    "runtimeMappings": "source/component-runtime-mappings.json",
+    "compositeRegistry": "source/composite-registry.json",
+    "atomicPrimitive": "source/primitive.json",
+    "compositePackages": "source/{typography,gradient,shadow,blur,motion}.json",
+    "migrationAliases": "source/migrations/token-aliases.json"
+    ,"componentValueEvidence": "source/component-value-evidence/*.json"
+    ,"figmaVariableArchitecture": "DSM/Component is generated from V2 bindings; imports/reference/*.json is value-only evidence and never a variable-name source"
+    ,"figmaStructureAudit": "../../../../../reports/figma-v2-structure-audit.json"
+    ,"materializationPolicy": {
+      "design": {
+        "mode": "sparse",
+        "consumers": ["Figma", "Pixso"],
+        "includes": [
+          "primitive-and-semantic-references",
+          "component-base-values",
+          "component-sparse-overrides",
+          "composite-references",
+          "approved-structure-and-slot-bindings"
+        ],
+        "excludes": [
+          "generated/component.json",
+          "generated/component-combinations.json",
+          "runtime-expanded-legal-combinations",
+          "business-data-and-runtime-state"
+        ],
+        "logicalCombinationsAreNotDesignVariables": true,
+        "numericProjectTarget": false,
+        "governance": "model-governed; do not back-propagate external Figma counts into V2 source",
+        "figmaCollectionBudget": {
+          "platformHardMaxVariablesPerCollection": 5000,
+          "source": "https://help.figma.com/hc/en-us/articles/15145852043927-Create-and-manage-variables-and-collections"
+        },
+        "pixsoCollectionBudget": {
+          "hardMaxVariablesPerCollection": null,
+          "validation": "adapter-measured",
+          "reason": "No fixed public limit is treated as a project fact; sync must measure the target workspace before publication."
+        },
+        "partitioning": "only-after-curation; never split the generated Cartesian product into design collections"
+      },
+      "runtime": {
+        "mode": "expanded",
+        "consumers": ["Qt", "Vue", "CSS"],
+        "sources": [
+          "source/component-registry.json",
+          "source/component-contracts/*.json",
+          "source/component-recipes/*.json",
+          "source/composite-registry.json"
+        ],
+        "outputs": [
+          "generated/component.json",
+          "generated/component-combinations.json",
+          "generated/composites/*"
+        ],
+        "designImportForbidden": true
+      }
+    }
+    ,"figmaPublicComponentSets": {
+      "checkbox": "2258:16082",
+      "radio": "2256:56",
+      "table": "2256:16548",
+      "select": "2258:17336",
+      "input": "2258:16387"
+    },
+    "figmaCandidateComponentSets": {
+      "button": "2258:15827"
+    },
+    "codeConnect": {
+      "status": "out-of-scope",
+      "scope": "five verified V2 public ComponentLab sets; Button remains a candidate rebuild",
+      "reason": "This iteration accepts direct Figma Component Set and Variable edits without Code Connect persistence. The account plan limitation remains recorded for a future integration task and does not block V2 design or SDK validation."
+    }
+  },
+  "componentLayerBindings": {
+    "$description": "Per-component participation in the seven logical Token layers. This is dependency metadata, not a second value source.",
+    "authority": "source/v2-source-manifest.json",
+    "resolvedComponentLayer": "06.component",
+    "components": {
+      "button": {
+        "status": "adapted",
+        "upstream": ["primitive", "profile", "theme", "semantic", "composite", "content"],
+        "themePath": "semantic aliases theme roles; component does not own theme values",
+        "profilePath": "shared size, padding and interaction-size references",
+        "compositePath": ["typography", "motion", "spinner-motion"],
+        "contentPath": "Contract/Figma content properties reference source/content/catalog.json keys",
+        "runtimeBoundary": "loading, focus, activation and motion playback remain Runtime-owned"
+      },
+      "input": {
+        "status": "adapted",
+        "upstream": ["primitive", "profile", "theme", "semantic", "composite", "content"],
+        "themePath": "semantic aliases theme roles; component does not own theme values",
+        "profilePath": "size and interaction-size references",
+        "compositePath": ["typography", "motion", "spinner-motion"],
+        "contentPath": "Contract/Figma placeholder and value content properties reference the global English fallback policy",
+        "runtimeBoundary": "mode, value, loading, clear and trailing action lifecycle remain Runtime-owned"
+      },
+      "select": {
+        "status": "adapted",
+        "upstream": ["primitive", "profile", "theme", "semantic", "composite", "content"],
+        "themePath": "semantic aliases theme roles; component does not own theme values",
+        "profilePath": "size and interaction-size references",
+        "compositePath": ["typography", "motion", "spinner-motion"],
+        "contentPath": "Contract/Figma placeholder, option, tag, bulk-control and empty-state content properties",
+        "runtimeBoundary": "selection, popup, search, option validity and tag projection remain Runtime-owned"
+      },
+      "table": {
+        "status": "adapted",
+        "upstream": ["primitive", "profile", "theme", "semantic", "composite", "content"],
+        "themePath": "semantic aliases theme roles; component does not own theme values",
+        "profilePath": "density, row sizing and spacing references",
+        "compositePath": ["typography", "motion"],
+        "contentPath": "Contract/Figma header, cell, lifecycle and action text slots",
+        "runtimeBoundary": "schema, data window, selection, sorting, filtering, editing and validation remain Runtime-owned"
+      },
+      "checkbox": {
+        "status": "adapted",
+        "upstream": ["primitive", "profile", "theme", "semantic", "composite", "content"],
+        "themePath": "semantic aliases theme roles; component does not own theme values",
+        "profilePath": "compact/small/medium/large visual and interaction sizes",
+        "compositePath": ["typography", "motion"],
+        "contentPath": "Contract/Figma label content uses the global English fallback policy",
+        "runtimeBoundary": "value mutation, indeterminate calculation and parent selection remain Runtime-owned"
+      },
+      "radio": {
+        "status": "adapted",
+        "upstream": ["primitive", "profile", "theme", "semantic", "composite", "content"],
+        "themePath": "semantic aliases theme roles; component does not own theme values",
+        "profilePath": "compact/small/medium/large visual and interaction sizes",
+        "compositePath": ["typography", "motion"],
+        "contentPath": "Contract/Figma label content uses the global English fallback policy",
+        "runtimeBoundary": "group selection and value transitions remain Runtime-owned"
+      },
+      "menu": {
+        "status": "adapted",
+        "upstream": ["primitive", "profile", "theme", "semantic", "composite", "content"],
+        "themePath": "semantic aliases theme roles; surface and item roles remain separate",
+        "profilePath": "menu density, padding and typography references",
+        "compositePath": ["typography", "motion"],
+        "contentPath": "Contract/Figma item text and shortcut display properties",
+        "runtimeBoundary": "QAction identity, checked state, submenu and lifecycle remain Runtime-owned"
+      },
+      "tool-button": {
+        "status": "adapted",
+        "upstream": ["primitive", "profile", "theme", "semantic", "composite", "content"],
+        "themePath": "semantic aliases theme roles; component does not own theme values",
+        "profilePath": "shared control height and interaction-size policy",
+        "compositePath": ["typography", "motion"],
+        "contentPath": "Contract/Figma label content uses the global English fallback policy",
+        "runtimeBoundary": "checkable value, menu lifecycle and action dispatch remain Runtime-owned"
+      }
+    }
+  },
+  "components": {
+      "tool-button": {
+        "registry": "source/component-registry.json#/components/tool-button",
+        "contract": "source/component-contracts/tool-button.json",
+        "recipe": "source/component-recipes/tool-button.json",
+        "figmaBindingManifest": "source/figma-bindings/tool-button.json",
+        "status": "draft-v2",
+        "history": "docs/archive/design-system-history/history/pre-v2-recovery-20261018/tool-button.json",
+        "confirmed": [
+          "independent-tool-button-contract",
+          "presentation-value-state-menu-axes-separated",
+          "legacy-compound-states-replaced",
+          "menu-open-is-runtime-only"
+        ]
+      },
+    "button": {
+      "registry": "source/component-registry.json#/components/button",
+      "contract": "source/component-contracts/button.json",
+      "recipe": "source/component-recipes/button.json",
+      "figmaBindingManifest": "source/figma-bindings/button.json",
+      "status": "draft-v2",
+      "history": "docs/archive/design-system-history/history/pre-v2-recovery-20261018/button.json"
+    },
+    "input": {
+      "registry": "source/component-registry.json#/components/input",
+      "contract": "source/component-contracts/input.json",
+      "recipe": "source/component-recipes/input.json",
+      "figmaBindingManifest": "source/figma-bindings/input.json",
+      "status": "draft-v2",
+      "history": "docs/archive/design-system-history/history/pre-v2-recovery-20261018/input.json"
+    },
+    "select": {
+      "registry": "source/component-registry.json#/components/select",
+      "contract": "source/component-contracts/select.json",
+      "recipe": "source/component-recipes/select.json",
+      "figmaBindingManifest": "source/figma-bindings/select.json",
+      "status": "draft-v2",
+      "history": "docs/archive/design-system-history/history/pre-v2-recovery-20261018/select.json"
+    },
+    "table": {
+      "registry": "source/component-registry.json#/components/table",
+      "contract": "source/component-contracts/table.json",
+      "recipe": "source/component-recipes/table.json",
+      "figmaBindingManifest": "source/figma-bindings/table.json",
+      "valueEvidence": "source/component-value-evidence/table.json",
+      "status": "draft-v2",
+      "history": "docs/archive/design-system-history/history/pre-v2-recovery-20261018/table.json",
+      "confirmed": [
+        "composite-data-table-contract",
+        "shared-size-spacing-padding-bindings",
+        "column-cell-editor-dimensions-are-independent",
+        "visual-axes-limited-to-density-and-striping",
+        "runtime-state-layers-are-not-a-single-mutually-exclusive-state-axis",
+        "legacy-visual-values-migrate-without-legacy-architecture",
+        "header-supports-flat-and-hierarchical-tree-models",
+        "header-spans-are-derived-not-authored",
+        "group-header-is-non-interactive-by-default",
+        "figma-header-group-and-leaf-are-nested-structure-components",
+        "freeze-is-runtime-api-owned-not-design-controlled",
+        "header-select-all-is-multiple-only-four-state-and-scope-explicit",
+        "body-cell-span-is-runtime-api-owned-not-design-controlled",
+        "composite-cell-display-and-editor-group-are-runtime-owned",
+        "table-data-lifecycle-is-separate-from-row-business-status",
+        "header-actions-have-dedicated-slots-and-runtime-extensible-registration",
+        "column-layout-is-runtime-api-owned-not-design-controlled",
+        "pagination-and-virtualization-are-runtime-data-window-capabilities",
+        "data-refresh-is-runtime-owned-and-does-not-silently-overwrite-drafts",
+        "editing-validation-and-commit-support-cell-group-row-column-and-table-scopes",
+        "keyboard-navigation-and-event-priority-are-runtime-owned",
+        "overflow-uses-shared-tooltip-popover-not-table-tokens",
+        "row-column-hover-and-cell-selection-are-independent-runtime-overlays",
+        "actions-use-explicit-table-header-column-row-cell-and-selection-targets",
+        "sorting-and-filtering-are-independent-leaf-header-runtime-actions",
+        "column-schema-display-editor-and-cell-slots-are-independent-runtime-contracts",
+        "table-lifecycle-states-use-dedicated-body-slots",
+        "overlay-resolution-is-property-specific-with-error-priority",
+        "action-availability-and-execution-state-are-runtime-owned",
+        "table-reuses-shared-scroll-bar-component-and-does-not-duplicate-tokens",
+        "figma-table-structure-and-token-binding-manifest-is-specification-only"
+      ]
+    },
+    "checkbox": {
+      "registry": "source/component-registry.json#/components/checkbox",
+      "contract": "source/component-contracts/checkbox.json",
+      "recipe": "source/component-recipes/checkbox.json",
+      "figmaBindingManifest": "source/figma-bindings/checkbox.json",
+      "status": "draft-v2",
+      "history": "docs/archive/design-system-history/history/pre-v2-recovery-20261018/checkbox.json",
+      "confirmed": ["value-and-state-are-independent-axes", "keyboard-only-border-focus-ring", "value-specific-indicator-visuals", "disabled-preserves-value-and-locks-interaction", "pressed-is-visual-only", "state-priority-locked", "indeterminate-transition-is-runtime-owned", "indicator-and-label-share-interaction-surface", "content-control-only-or-control-with-label", "size-compact-small-medium-large-mapped-to-20-24-28-32", "interaction-size-is-one-4px-step-larger", "interaction-size-scope-depends-on-content"]
+    },
+    "radio": {
+      "registry": "source/component-registry.json#/components/radio",
+      "contract": "source/component-contracts/radio.json",
+      "recipe": "source/component-recipes/radio.json",
+      "figmaBindingManifest": "source/figma-bindings/radio.json",
+      "valueEvidence": "source/component-value-evidence/radio.json",
+      "status": "draft-v2",
+      "history": "docs/archive/design-system-history/history/pre-v2-recovery-20261018/radio.json",
+      "confirmed": ["value-and-state-are-independent-axes", "keyboard-only-border-focus-ring", "disabled-preserves-value-and-locks-interaction", "indicator-and-label-share-interaction-surface", "size-compact-small-medium-large-with-visual-and-interaction-mapping", "value-specific-indicator-visuals", "value-transition-is-radio-group-runtime-owned", "pressed-is-visual-only"]
+    },
+    "menu": {
+      "registry": "source/component-registry.json#/components/menu",
+      "contract": "source/component-contracts/menu.json",
+      "recipe": "source/component-recipes/menu.json",
+      "figmaBindingManifest": "source/figma-bindings/menu.json",
+      "valueEvidence": "source/component-value-evidence/menu.json",
+      "status": "draft-v2",
+      "confirmed": [
+        "surface-atom-runtime-action-three-layer",
+        "menu-header-not-established",
+        "separator-retained-as-action-group-boundary",
+        "qmenu-title-is-runtime-identity-data",
+        "decoration-area-is-stable-and-reserved",
+        "indicator-and-submenu-are-mutually-exclusive",
+        "shortcut-uses-fixed-right-aligned-column",
+        "item-interaction-backgrounds-are-not-surface-backgrounds",
+        "figma-binding-is-specification-only"
+      ]
+    },
+    "tree": {
+      "registry": "source/component-registry.json#/components/tree",
+      "recipe": "source/component-recipes/tree.json",
+      "figmaBindingManifest": "source/figma-bindings/tree.json",
+      "valueEvidence": "source/component-value-evidence/tree.json",
+      "status": "draft-v2"
+    },
+    "navigation-bar": {
+      "registry": "source/component-registry.json#/components/navigation-bar",
+      "contract": "source/component-contracts/navigation-bar.json",
+      "recipe": "source/component-recipes/navigation-bar.json",
+      "status": "draft-v2",
+      "confirmed": [
+        "fixed-two-row-structure",
+        "utility-row-and-navigation-row",
+        "log-bar-is-child-of-navigation-row",
+        "log-bar-single-line-with-tooltip-overflow",
+        "log-types-info-warning-error-alarm",
+        "tabs-reuses-tab-widget-tab-bar"
+      ]
+    },
+    "side-menu": {
+      "registry": "source/component-registry.json#/components/side-menu",
+      "contract": "source/component-contracts/side-menu.json",
+      "recipe": "source/component-recipes/side-menu.json",
+      "status": "draft-v2",
+      "confirmed": [
+        "sidebar-brand-header-account-navigation-footer-structure",
+        "sidebar-nav-item-is-private-anatomy",
+        "expanded-and-collapsed-are-runtime-layout-modes",
+        "submenu-inline-expanded-and-overlay-collapsed",
+        "container-width-min-width-collapsed-width-owned-by-sidebar"
+      ]
+    },
+    "switch": {
+      "registry": "source/component-registry.json#/components/switch",
+      "contract": "source/component-contracts/switch.json",
+      "recipe": "source/component-recipes/switch.json",
+      "status": "draft-v2",
+      "confirmed": [
+        "binary-setting-control-is-distinct-from-checkbox",
+        "value-and-state-are-independent-axes",
+        "disabled-and-loading-preserve-value-and-lock-interaction",
+        "optional-label-shares-switch-interaction-surface",
+        "loading-uses-shared-dynamic-spinner"
+      ]
+    },
+    "badge": {
+      "registry": "source/component-registry.json#/components/badge",
+      "contract": "source/component-contracts/badge.json",
+      "recipe": "source/component-recipes/badge.json",
+      "status": "draft-v2",
+      "confirmed": [
+        "non-interactive-status-marker",
+        "kind-text-or-dot",
+        "tone-neutral-info-success-warning-danger",
+        "runtime-label-is-content-not-token",
+        "no-interaction-state-axis"
+      ]
+    },
+    "chip": {
+      "registry": "source/component-registry.json#/components/chip",
+      "contract": "source/component-contracts/chip.json",
+      "recipe": "source/component-recipes/chip.json",
+      "status": "draft-v2",
+      "confirmed": [
+        "selectable-control-is-distinct-from-badge",
+        "orientation-is-not-state",
+        "value-and-state-are-independent-axes",
+        "qabstractbutton-checkable-behavior-is-reused",
+        "dismiss-action-is-not-added-without-runtime-contract"
+      ]
+    },
+    "number-input": {
+      "registry": "source/component-registry.json#/components/number-input",
+      "contract": "source/component-contracts/number-input.json",
+      "recipe": "source/component-recipes/number-input.json",
+      "status": "draft-v2",
+      "confirmed": [
+        "one-public-number-input-identity",
+        "integer-and-decimal-are-runtime-types-not-visual-token-families",
+        "controls-define-stepper-structure",
+        "container-border-is-continuous-and-button-slots-have-complete-hit-regions",
+        "readonly-error-loading-use-disabled-like-visual-lock"
+      ]
+    },
+    "statistic": {
+      "registry": "source/component-registry.json#/components/statistic",
+      "contract": "source/component-contracts/statistic.json",
+      "recipe": "source/component-recipes/statistic.json",
+      "status": "draft-v2",
+      "confirmed": [
+        "statistic-is-canonical-data-display-identity",
+        "size-and-lifecycle-state-are-independent",
+        "title-value-prefix-suffix-are-content-slots",
+        "numeric-formatting-and-value-are-runtime-owned",
+        "not-a-card-chart-table-or-dataset-container"
+      ]
+    },
+    "date-time-input": {
+      "registry": "source/component-registry.json#/components/date-time-input",
+      "contract": "source/component-contracts/date-time-input.json",
+      "recipe": "source/component-recipes/date-time-input.json",
+      "status": "draft-v2",
+      "confirmed": [
+        "one-public-date-time-input-identity",
+        "date-time-and-datetime-are-runtime-editor-modes",
+        "custom-calendar-popup-and-range-surface-are-required",
+        "popup-and-format-are-runtime-owned",
+        "readonly-error-loading-use-disabled-like-visual-lock",
+        "qt-temporal-types-remain-value-and-parsing-adapters-only",
+        "calendar-day-cell-navigation-and-range-anatomy-come-from-figma-evidence"
+      ]
+    }
+  },
+  "composites": {
+  "typography": {
+    "package": "source/typography.json",
+    "status": "active",
+    "releaseBlocked": false,
+    "releaseScope": "full",
+    "releasedSlices": ["font-family-and-fallback"],
+      "candidateSlicesRemainBlocked": false,
+      "figmaMigration": {
+        "policy": "parallel-rebuild",
+        "targetCollection": "DSM/Typography",
+        "targetModes": ["standard", "wide"],
+        "defaultMode": "standard",
+        "legacyStyles": "retained-read-only",
+        "migrationAliases": "source/migrations/token-aliases.json"
+      }
+  },
+    "gradient": { "package": "source/gradient.json", "status": "draft", "activeTokens": 0 },
+    "shadow": { "package": "source/shadow.json", "status": "draft", "activeTokens": 0 },
+    "blur": { "package": "source/blur.json", "status": "reserved", "activeTokens": 0 },
+    "motion": {
+      "package": "source/motion.json",
+      "status": "candidate",
+      "releaseBlocked": false,
+      "releaseScope": "partial",
+      "releasedSlices": ["loading.spinner"],
+      "candidateSlicesRemainBlocked": true
+    }
+  },
+  "notYetGenerated": [],
+  "nextGate": "maintain registry-driven compiler and validation before publishing generated outputs"
+}

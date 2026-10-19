@@ -1,0 +1,117 @@
+{
+  "$registry": {
+    "component": "tree",
+    "version": "2.0"
+  },
+  "$valueEvidence": "source/component-value-evidence/tree.json",
+  "$status": "active",
+  "base": {
+    "state": {
+      "default": {
+        "slot": {
+          "border": {
+            "color": {
+              "$type": "color",
+              "$value": "{semantic.color.border.primary}",
+              "$description": "Recovered from legacy V2 layer component.tree.base.default.border.color",
+              "$sourceOwner": "old-tree-recovery"
+            },
+            "width": {
+              "$type": "borderWidth",
+              "$value": "{semantic.border-width.hairline}",
+              "$description": "Recovered from legacy V2 layer component.tree.base.default.border.width",
+              "$sourceOwner": "old-tree-recovery",
+              "unit": "px"
+            }
+          },
+          "container": {
+            "background-color": {
+              "$type": "color",
+              "$value": "{semantic.color.background.page}",
+              "$description": "Recovered from legacy V2 layer component.tree.base.default.container.background-color",
+              "$sourceOwner": "old-tree-recovery"
+            },
+            "padding": {
+              "$type": "spacing",
+              "$value": "{semantic.size.padding.md}",
+              "$description": "Recovered from legacy V2 layer component.tree.base.default.container.padding",
+              "$sourceOwner": "old-tree-recovery",
+              "unit": "px"
+            }
+          },
+          "content": {
+            "color": {
+              "$type": "color",
+              "$value": "{semantic.color.text.primary}",
+              "$description": "Recovered from legacy V2 layer component.tree.base.default.content.color",
+              "$sourceOwner": "old-tree-recovery"
+            },
+            "font-size": {
+              "$type": "fontSize",
+              "$value": "{semantic.typography.body.default.font-size}",
+              "$description": "Recovered from legacy V2 layer component.tree.base.default.content.font-size",
+              "$sourceOwner": "old-tree-recovery",
+              "unit": "px"
+            },
+            "font-weight": {
+              "$type": "fontWeight",
+              "$value": "{semantic.typography.font-weight.body}",
+              "$description": "Recovered from legacy V2 layer component.tree.base.default.content.font-weight",
+              "$sourceOwner": "old-tree-recovery"
+            },
+            "line-height": {
+              "$type": "lineHeight",
+              "$value": "{semantic.typography.body.default.line-height}",
+              "$description": "Recovered from legacy V2 layer component.tree.base.default.content.line-height",
+              "$sourceOwner": "old-tree-recovery",
+              "unit": "px"
+            }
+          },
+          "icon": {
+            "size": {
+              "$type": "dimension",
+              "$value": "{semantic.size.height.md}",
+              "$description": "Recovered from legacy V2 layer component.tree.base.default.icon.size",
+              "$sourceOwner": "old-tree-recovery",
+              "unit": "px"
+            }
+          },
+          "item": {
+            "height": {
+              "$type": "dimension",
+              "$value": "{semantic.size.height.2xl}",
+              "$description": "Recovered from legacy V2 layer component.tree.base.default.item.height",
+              "$sourceOwner": "old-tree-recovery",
+              "unit": "px"
+            }
+          }
+        }
+      },
+      "hover": {
+        "slot": {
+          "item": {
+            "background-color": {
+              "$type": "color",
+              "$value": "{semantic.color.background.hover}",
+              "$description": "Recovered from legacy V2 layer component.tree.base.hover.item.background-color",
+              "$sourceOwner": "old-tree-recovery"
+            }
+          }
+        }
+      },
+      "selected": {
+        "slot": {
+          "item": {
+            "background-color": {
+              "$type": "color",
+              "$value": "{semantic.color.interactive.brand.soft}",
+              "$description": "Recovered from legacy V2 layer component.tree.base.selected.item.background-color",
+              "$sourceOwner": "old-tree-recovery"
+            }
+          }
+        }
+      }
+    }
+  },
+  "overrides": []
+}

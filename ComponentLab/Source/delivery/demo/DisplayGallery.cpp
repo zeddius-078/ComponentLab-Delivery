@@ -91,8 +91,8 @@ QWidget* createDisplayGallery(const QString& pageId,
                 auto* label = new QLabel(key[7].toString(), group);
                 label->setGeometry(bounds(key));
                 label->setStyleSheet("background:transparent;border:0;color:#505868;"
-                                     "font-family:'Inter';font-size:12px;");
-                QFont keyFont("Inter");
+                                     "font-family:'HarmonyOS Sans';font-size:12px;");
+                QFont keyFont("HarmonyOS Sans");
                 keyFont.setPixelSize(12);
                 keyFont.setWeight(QFont::DemiBold);
                 label->setFont(keyFont);

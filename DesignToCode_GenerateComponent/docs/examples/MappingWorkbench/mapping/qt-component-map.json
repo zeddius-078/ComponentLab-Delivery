@@ -1,0 +1,385 @@
+{
+  "schemaVersion": 1,
+  "id": "component-lab-qt-mapping-v1",
+  "status": "ADAPTED_LOCAL_CONTRACT",
+  "designBinding": "PENDING_DESIGN_COMPONENT_IDENTITIES",
+  "components": {
+    "Button": {
+      "factory": "button",
+      "class": "commonWidget::Z_PushButton",
+      "header": "runtime/component/Z_PushButton.h",
+      "implementation": "runtime/component/Z_PushButton.cpp",
+      "tokenContract": "design-assets/DesignSystem/source/component-recipes/button.json",
+      "style": "design-assets/DesignSystem/generated/runtime/tokens_qt.json",
+      "properties": {
+        "text": {
+          "type": "string",
+          "default": "Button",
+          "api": "setText"
+        },
+        "intent": {
+          "type": "enum",
+          "values": [
+            "primary",
+            "secondary",
+            "operation",
+            "danger"
+          ],
+          "default": "secondary",
+          "api": "setIntent"
+        },
+        "controlSize": {
+          "type": "enum",
+          "values": [
+            "xs",
+            "sm",
+            "md",
+            "lg"
+          ],
+          "default": "sm",
+          "api": "setSize",
+          "qtValues": [
+            "XS",
+            "S",
+            "M",
+            "L"
+          ],
+          "tokenValues": {
+            "xs": "small",
+            "sm": "small",
+            "md": "medium",
+            "lg": "large"
+          }
+        },
+        "loading": {
+          "type": "bool",
+          "default": false,
+          "api": "setLoading"
+        },
+        "disabled": {
+          "type": "bool",
+          "default": false,
+          "api": "setEnabled(!value)"
+        },
+        "appearance": {
+          "type": "enum",
+          "values": [
+            "filled",
+            "outlined",
+            "dashed",
+            "text",
+            "link"
+          ],
+          "default": "outlined",
+          "api": "setAppearance"
+        },
+        "leadingIcon": {
+          "type": "asset",
+          "default": "",
+          "api": "setLeadingIconSource"
+        },
+        "trailingIcon": {
+          "type": "asset",
+          "default": "",
+          "api": "setTrailingIconSource"
+        },
+        "accessibleName": {
+          "type": "string",
+          "default": "",
+          "api": "setAccessibleName"
+        }
+      },
+      "tokenRefs": [
+        "component.button.base.size.medium.slot.container.min-height",
+        "semantic.typography.label.default.font-size"
+      ]
+    },
+    "IconButton": {
+      "extends": "Button",
+      "iconOnly": true
+    },
+    "Checkbox": {
+      "factory": "checkbox",
+      "class": "commonWidget::Z_CheckBox",
+      "header": "runtime/component/Z_CheckBox.h",
+      "implementation": "runtime/component/Z_CheckBox.cpp",
+      "tokenContract": "design-assets/tokens/checkbox-contract.json",
+      "style": "generated/checkbox/<profile>/Z_CheckBox.qss",
+      "properties": {
+        "text": {
+          "type": "string",
+          "default": "Checkbox",
+          "api": "setText"
+        },
+        "controlSize": {
+          "type": "enum",
+          "values": [
+            "sm",
+            "lg"
+          ],
+          "default": "lg",
+          "api": "setControlSize",
+          "tokenValues": {
+            "sm": "small",
+            "lg": "large"
+          }
+        },
+        "checked": {
+          "type": "bool",
+          "default": false,
+          "api": "setChecked"
+        },
+        "indeterminate": {
+          "type": "bool",
+          "default": false,
+          "api": "setIndeterminate"
+        },
+        "disabled": {
+          "type": "bool",
+          "default": false,
+          "api": "setEnabled(!value)"
+        },
+        "appearance": {
+          "type": "material",
+          "default": "solid",
+          "api": "setAppearance"
+        }
+      },
+      "tokenRefs": [
+        "component.checkbox.base.state.default.slot.indicator.border-radius",
+        "component.checkbox.base.size.small.slot.indicator.size"
+      ]
+    },
+    "Input": {
+      "factory": "input",
+      "class": "commonWidget::Z_InputField",
+      "header": "runtime/component/Z_InputField.h",
+      "implementation": "runtime/component/Z_InputField.cpp",
+      "tokenContract": "design-assets/DesignSystem/source/component-recipes/input.json",
+      "style": "design-assets/DesignSystem/generated/runtime/tokens_qt.json",
+      "properties": {
+        "label": {
+          "type": "string",
+          "default": "",
+          "api": "setLabel"
+        },
+        "value": {
+          "type": "string",
+          "default": "",
+          "api": "setValue"
+        },
+        "placeholder": {
+          "type": "string",
+          "default": "",
+          "api": "setPlaceholder"
+        },
+        "hint": {
+          "type": "string",
+          "default": "",
+          "api": "setHint"
+        },
+        "kind": {
+          "type": "enum",
+          "values": [
+            "text",
+            "password",
+            "search",
+            "textarea"
+          ],
+          "default": "text",
+          "api": "setKind"
+        },
+        "passwordVisible": {
+          "type": "bool",
+          "default": false,
+          "api": "setPasswordVisible"
+        },
+        "controlSize": {
+          "type": "enum",
+          "values": [
+            "sm",
+            "md",
+            "lg"
+          ],
+          "default": "sm",
+          "api": "setControlSize",
+          "tokenValues": {
+            "sm": "small",
+            "md": "medium",
+            "lg": "large"
+          }
+        },
+        "status": {
+          "type": "enum",
+          "values": [
+            "none",
+            "error"
+          ],
+          "default": "none",
+          "api": "setStatus"
+        },
+        "readOnly": {
+          "type": "bool",
+          "default": false,
+          "api": "setReadOnly"
+        },
+        "disabled": {
+          "type": "bool",
+          "default": false,
+          "api": "setEnabled(!value)"
+        },
+        "allowClear": {
+          "type": "bool",
+          "default": false,
+          "api": "setAllowClear"
+        },
+        "loading": {
+          "type": "bool",
+          "default": false,
+          "api": "setLoading"
+        },
+        "appearance": {
+          "type": "enum",
+          "values": [
+            "outlined"
+          ],
+          "default": "outlined",
+          "api": "setAppearance"
+        }
+      },
+      "tokenRefs": [
+        "component.input.base.size.medium.slot.container.visual-height",
+        "semantic.color.background.control-default"
+      ]
+    },
+    "Select": {
+      "factory": "select",
+      "class": "commonWidget::Z_Select",
+      "header": "runtime/component/Z_Select.h",
+      "implementation": "runtime/component/Z_Select.cpp",
+      "tokenContract": "design-assets/DesignSystem/source/component-recipes/select.json",
+      "style": "design-assets/DesignSystem/generated/runtime/tokens_qt.json",
+      "properties": {
+        "label": {
+          "type": "string",
+          "default": "",
+          "api": "setLabel"
+        },
+        "placeholder": {
+          "type": "string",
+          "default": "",
+          "api": "setPlaceholder"
+        },
+        "hint": {
+          "type": "string",
+          "default": "",
+          "api": "setHint"
+        },
+        "mode": {
+          "type": "enum",
+          "values": [
+            "single",
+            "multiple",
+            "tags"
+          ],
+          "default": "single",
+          "api": "setMode"
+        },
+        "controlSize": {
+          "type": "enum",
+          "values": [
+            "sm",
+            "md",
+            "lg"
+          ],
+          "default": "sm",
+          "api": "setControlSize",
+          "tokenValues": {
+            "sm": "small",
+            "md": "medium",
+            "lg": "large"
+          }
+        },
+        "status": {
+          "type": "enum",
+          "values": [
+            "none",
+            "error"
+          ],
+          "default": "none",
+          "api": "setStatus"
+        },
+        "readOnly": {
+          "type": "bool",
+          "default": false,
+          "api": "setReadOnly"
+        },
+        "disabled": {
+          "type": "bool",
+          "default": false,
+          "api": "setEnabled(!value)"
+        },
+        "allowClear": {
+          "type": "bool",
+          "default": false,
+          "api": "setAllowClear"
+        },
+        "searchable": {
+          "type": "bool",
+          "default": true,
+          "api": "setSearchEnabled"
+        },
+        "loading": {
+          "type": "bool",
+          "default": false,
+          "api": "setLoading"
+        },
+        "appearance": {
+          "type": "enum",
+          "values": [
+            "outlined"
+          ],
+          "default": "outlined",
+          "api": "setAppearance"
+        },
+        "options": {
+          "type": "options",
+          "default": [],
+          "api": "setOptions"
+        },
+        "values": {
+          "type": "strings",
+          "default": [],
+          "api": "setValues"
+        }
+      },
+      "tokenRefs": [
+        "component.input.base.size.medium.slot.container.visual-height",
+        "component.input.base.shared.slot.container.border-radius"
+      ]
+    }
+  },
+  "assets": {
+    "arrow-left": "icon.action.previous",
+    "arrow-right": "icon.action.next",
+    "search": "icon.action.search",
+    "clear": "icon.action.close"
+  },
+  "layoutMetrics": {
+    "spacing": {
+      "runtimeMetric": "labelGap",
+      "token": "semantic.space.vertical.standard"
+    },
+    "margin": {
+      "runtimeMetric": "tagPadding",
+      "token": "semantic.layout.padding.inline.compact"
+    }
+  },
+  "layoutTokenOwner": "design-assets/DesignSystem/source/dictionary.json",
+  "limits": {
+    "nodes": 64,
+    "depth": 8,
+    "textLength": 2048,
+    "options": 64
+  }
+}

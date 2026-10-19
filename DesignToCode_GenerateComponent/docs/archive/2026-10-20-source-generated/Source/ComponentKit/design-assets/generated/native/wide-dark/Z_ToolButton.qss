@@ -1,0 +1,19 @@
+/* Z_ToolButton <- QToolButton; compiled from the active Token profile. */
+*[designSystemClass="commonWidget::Z_ToolButton"][designSystemStyleOwner="tokens"] {
+    color: #F3F3F3;
+    background-color: #272727;
+    font-size: 18px;
+}
+*[designSystemClass="commonWidget::Z_ToolButton"][designSystemStyleOwner="tokens"]:disabled {
+    color: #8A8A8A;
+    background-color: #303030;
+    border-color: #8A8A8A;
+}
+*[designSystemClass="commonWidget::Z_ToolButton"][designSystemStyleOwner="tokens"] {
+    min-height: 40px;
+    border: 1px solid #676767;
+    border-radius: 4px;
+    padding: 0 12px;
+}
+*[designSystemClass="commonWidget::Z_ToolButton"][designSystemStyleOwner="tokens"]:hover { background-color: #F3EFFF; }
+*[designSystemClass="commonWidget::Z_ToolButton"][designSystemStyleOwner="tokens"]:pressed { border-color: #6235F7; }

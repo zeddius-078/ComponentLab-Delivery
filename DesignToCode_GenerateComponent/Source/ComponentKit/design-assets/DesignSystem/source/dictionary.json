@@ -2,14 +2,6 @@
   "$description": "ComponentLab V2 token vocabulary. Only names registered here (or valid enum steps per group) may enter the canonical source. The compiler rejects unregistered words in enumerated positions. This file is the naming authority; it deliberately has no synonyms for the same concept.",
   "$version": 1,
   "roots": ["primitive", "profile", "semantic", "component", "product"],
-  "legacyRootNames": {
-    "$description": "Legacy root names kept only in the legacy map; they are never parallel V2 roots.",
-    "Foundation": "primitive",
-    "Base": "primitive",
-    "sys": "primitive",
-    "comp": "component",
-    "base": "registered only as a component branch (component.base.*), not a Primitive alias"
-  },
   "layers": {
     "primitive": {
       "duty": "Raw color values, scales, fonts, weights. No component state intent.",
@@ -18,7 +10,7 @@
           "families": ["none", "highlight", "functional", "neutral", "cosmic", "reference"],
           "step": "registered enum",
           "reference": {
-            "$description": "The reference palette family carries the L-indexed p-* steps from the design reference files (DesignSystem/imports/reference). p-87/p-93/p-96/p-98 are light-background steps; the family is kept separate from the reverse-indexed gray/purple scales so values never collide by name.",
+            "$description": "The reference palette family carries the approved L-indexed p-* steps. p-87/p-93/p-96/p-98 are light-background steps; the family is kept separate from the reverse-indexed gray/purple scales so values never collide by name.",
             "families": ["neutral", "purple", "red", "orange", "yellow"]
           }
         },
@@ -111,7 +103,7 @@
         "size": "registered size branch",
         "state": "registered state branch"
       },
-      "sizeEnum": {"canonical": ["small", "medium", "large"], "legacyInput": {"sm": "small", "md": "medium", "lg": "large"}},
+      "sizeEnum": {"canonical": ["small", "medium", "large"]},
       "stateAxes": {
         "availability": ["disabled"],
         "interaction": ["hover", "pressed", "hover-pressed", "dragging"],
@@ -132,7 +124,7 @@
       },
       "propertyVocabulary": {
         "$description": "Fixed property vocabulary; border_width/borderWidth/bw are mapped to border-width only when identified as the same concept.",
-        "registered": ["color", "background-color", "background", "border-color", "border-width", "radius", "width", "height", "min-width", "min-height", "visual-width", "visual-height", "visual-thickness", "visual-diameter", "visual-size", "size", "gap", "gap-sm", "gap-md", "padding", "padding-md", "padding-lg", "padding-2xl", "padding-3xl", "padding-inline", "padding-block", "opacity", "inset", "font-size", "font-weight", "line-height", "line-height-xs", "line-height-sm", "line-height-md", "letter-spacing", "font-family", "inner-shadow-color", "gradient-stop-01", "gradient-stop-02", "gradient-stop-03", "gradient-stop-04", "gradient-stop-05", "stroke-width", "processing-height", "hit-target"],
+        "registered": ["color", "background-color", "background", "border-color", "border-width", "radius", "width", "height", "min-width", "min-height", "visual-width", "visual-height", "visual-thickness", "visual-diameter", "visual-size", "size", "gap", "gap-sm", "gap-md", "padding", "padding-md", "padding-lg", "padding-2xl", "padding-3xl", "padding-inline", "padding-block", "opacity", "track-opacity", "inset", "font-size", "font-weight", "line-height", "line-height-xs", "line-height-sm", "line-height-md", "letter-spacing", "font-family", "inner-shadow-color", "gradient-stop-01", "gradient-stop-02", "gradient-stop-03", "gradient-stop-04", "gradient-stop-05", "stroke-width", "arc-start-angle", "arc-sweep-angle", "processing-height", "hit-target"],
         "background": "kept only for true multi-layer backgrounds; a plain color background must use background-color"
       },
       "gradient": {

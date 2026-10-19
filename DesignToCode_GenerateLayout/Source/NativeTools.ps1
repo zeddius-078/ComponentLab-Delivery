@@ -2,6 +2,22 @@
 $D2CSourceRoot = $PSScriptRoot
 $D2CProjectRoot = Split-Path $D2CSourceRoot -Parent
 $D2CWorkspaceRoot = Split-Path $D2CProjectRoot -Parent
+function Assert-BuildOutput {
+    param([Parameter(Mandatory)][string]$Path)
+    $resolved = [IO.Path]::GetFullPath($Path)
+    $buildRoot = [IO.Path]::GetFullPath("$D2CProjectRoot/build")
+    if (-not $resolved.StartsWith($buildRoot + [IO.Path]::DirectorySeparatorChar, [StringComparison]::OrdinalIgnoreCase)) {
+        throw 'OUTPUT_MUST_BE_IN_BUILD'
+    }
+    $cursor = $resolved
+    while ($cursor -and $cursor.StartsWith($buildRoot, [StringComparison]::OrdinalIgnoreCase)) {
+        if ((Test-Path -LiteralPath $cursor) -and ((Get-Item -LiteralPath $cursor -Force).Attributes -band [IO.FileAttributes]::ReparsePoint)) {
+            throw 'OUTPUT_PATH_IS_LINK'
+        }
+        $cursor = Split-Path $cursor -Parent
+    }
+    return $resolved
+}
 $GeneratedComponentSDKRoot = if ($env:GENERATED_COMPONENT_SDK_ROOT) {
     [IO.Path]::GetFullPath($env:GENERATED_COMPONENT_SDK_ROOT)
 } else {

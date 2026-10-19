@@ -60,6 +60,8 @@ def css_value(resolved: Resolved) -> str:
         return f"{value}px"
     if resolved.type == "opacity":
         return f"{float(value) / 100.0:g}"
+    if resolved.type == "number" and resolved.unit in ("ms", "deg"):
+        return f"{value}{resolved.unit}"
     return str(value)
 
 

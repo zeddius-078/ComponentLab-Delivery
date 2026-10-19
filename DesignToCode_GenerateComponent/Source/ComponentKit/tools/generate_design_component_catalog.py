@@ -1,8 +1,8 @@
-"""Generate the public Figma component catalog consumed by both demo applications.
+"""Generate the public component catalog consumed by both demo applications.
 
-The current Figma ledger is the design evidence source. Native Qt construction remains
-owned by native-components.json; this catalog must not turn a Figma-only contract into a
-runtime implementation claim.
+The current catalog source owns public identities and mapping kinds. Live Figma inventory,
+traceability evidence and native-components.json remain independent verification inputs;
+the generator must not turn a design-only contract into a runtime implementation claim.
 """
 
 from __future__ import annotations
@@ -14,7 +14,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 PROJECT = ROOT.parents[1]
-LEDGER = PROJECT / "docs/designRules/design-system/figma-core-rebuild-state.json"
+CATALOG_SOURCE = ROOT / "component-definitions/component-catalog-source.json"
 NATIVE_DEFINITIONS = ROOT / "component-definitions/native-components.json"
 OUTPUT_JSON = ROOT / "component-definitions/generated-design-component-catalog.json"
 OUTPUT_HEADER = ROOT / "runtime/component/DesignComponentCatalog.h"
@@ -659,8 +659,8 @@ def merge_current_library(legacy: list[dict], inventory: dict) -> list[dict]:
                 visual_verification_evidence,
             )
             assert set(visual_verification_evidence["profiles"]) == {
-                "light-comfortable", "light-compact",
-                "dark-comfortable", "dark-compact",
+                "standard-light", "wide-light",
+                "standard-dark", "wide-dark",
             }, (design_id, visual_verification_evidence)
             assert set(visual_verification_evidence["runtimeGallerySha256"]) == set(
                 visual_verification_evidence["profiles"]
@@ -681,7 +681,9 @@ def merge_current_library(legacy: list[dict], inventory: dict) -> list[dict]:
 
 
 def build_catalog() -> list[dict]:
-    ledger = json.loads(LEDGER.read_text(encoding="utf-8"))
+    source = json.loads(CATALOG_SOURCE.read_text(encoding="utf-8"))
+    assert source["schemaVersion"] == 1
+    assert source["fileKey"] == FIGMA_FILE_KEY
     traceability = load_traceability_manifest()
     public_identity_nodes = traceability["componentSetPolicy"].get(
         "publicIdentityNodes", {}
@@ -692,7 +694,7 @@ def build_catalog() -> list[dict]:
         for item in native_contract["components"]
     }
     result = []
-    for key, record in ledger["entities"]["componentPages"].items():
+    for key, record in source["entries"].items():
         if record.get("recordKind") == "component-specimen":
             continue
         if record.get("assetClassifications"):
@@ -761,7 +763,6 @@ def build_catalog() -> list[dict]:
         assert ids and all(node_id in sets for node_id in ids), item
         item["variantCount"] = sum(len(sets[node_id]["variants"]) for node_id in ids)
 
-    legacy_count = len(result)
     expected_design_ids = {
         "ComponentLab/Drawer" if item["designComponent"] == "ComponentLab/OverlayDrawer"
         else item["designComponent"]
@@ -829,7 +830,7 @@ def header_text() -> str:
 
 namespace commonWidget {
 
-// Public design inventory generated from the current Figma component ledger.
+// Public design inventory generated from the current component catalog source.
 // instantiable=false means the design contract exists but no runtime class is claimed.
 struct DesignComponentDescriptor {
     QString designComponent;
@@ -1094,6 +1095,8 @@ def expected_outputs() -> dict[Path, str]:
 
 
 def main() -> None:
+    from output_guard import require_build_workspace
+    require_build_workspace(ROOT)
     parser = argparse.ArgumentParser()
     parser.add_argument("--check", action="store_true")
     args = parser.parse_args()
@@ -1107,7 +1110,7 @@ def main() -> None:
         if path.is_file() and path.read_text(encoding="utf-8") == content:
             continue
         path.parent.mkdir(parents=True, exist_ok=True)
-        path.write_text(content, encoding="utf-8", newline="\n")
+        path.write_bytes(content.encode("utf-8"))  # Python 3.9; preserve existing LF bytes.
     if drift:
         raise SystemExit("Generated Figma component catalog drift:\n" + "\n".join(drift))
     catalog = json.loads(outputs[OUTPUT_JSON])

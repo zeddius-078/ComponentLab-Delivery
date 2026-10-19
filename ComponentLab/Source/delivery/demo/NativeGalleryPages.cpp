@@ -55,6 +55,7 @@
 #include <QGroupBox>
 #include <QHeaderView>
 #include <QInputDialog>
+#include <QItemSelectionModel>
 #include <QKeySequenceEdit>
 #include <QLabel>
 #include <QLCDNumber>
@@ -390,7 +391,15 @@ void appendObjectTree(QTreeWidgetItem* parent, QWidget* widget) {
         const int index = meta->indexOfProperty(name);
         if (index >= 0) {
             const auto value = meta->property(index).read(widget);
-            new QTreeWidgetItem(item, {QString::fromLatin1(name), value.toString()});
+            // `isVisible` includes every ancestor.  A Figma specimen can be
+            // inspected while its stacked page is not the active tab, so the
+            // effective value would falsely claim that the component itself
+            // is hidden.  Report the widget's explicit visibility state.
+            const QString text = QString::fromLatin1(name) == QStringLiteral("visible")
+                                     ? (widget->isHidden() ? QStringLiteral("false")
+                                                           : QStringLiteral("true"))
+                                     : value.toString();
+            new QTreeWidgetItem(item, {QString::fromLatin1(name), text});
         }
     }
     for (const auto& property : widget->dynamicPropertyNames()) {
@@ -493,9 +502,13 @@ QWidget* createNativeAppearance(const DesignComponentDescriptor& descriptor,
     settingsScroll->setObjectName("componentSettingsScroll");
     settingsScroll->setWidgetResizable(true);
     settingsScroll->setFrameShape(QFrame::NoFrame);
+    settingsScroll->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    settingsScroll->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
     settingsScroll->setMinimumWidth(230);
     settingsScroll->setMaximumWidth(340);
     auto* settings = new QWidget(settingsScroll);
+    settings->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Preferred);
+    settings->setMinimumWidth(0);
     settings->setObjectName("componentSettings");
     auto* controls = new QFormLayout(settings);
     controls->setRowWrapPolicy(QFormLayout::WrapLongRows);
@@ -890,7 +903,7 @@ QWidget* createNativeAppearance(const DesignComponentDescriptor& descriptor,
         auto* readout=new QLabel(settings);readout->setObjectName("toolNativeReadout");readout->setWordWrap(true);readout->setSizePolicy(QSizePolicy::Ignored,QSizePolicy::Preferred);controls->addRow(readout);
         auto* note=new QLabel(QString::fromUtf8("Menu=None 仅表示无分割槽，不禁止 QMenu；DelayedPopup 保留原生长按，InstantPopup 不触发主命令。Open 仅适用于 Split，固定预览不真正打开菜单。绑定 defaultAction 后，文本、启用和勾选统一修改 QAction；Low priority 可由 Qt 隐藏并排文本。Show label 对应编辑原生显示模式，不是新的 Qt 属性。源稿图标槽实际 18px，原始 SVG 16px；旧说明的 20px 未覆盖图层事实。其余原生显示模式不冒充新增 Figma 变体。"),settings);note->setWordWrap(true);controls->addRow(note);
         const auto sync=[=]{const QSignalBlocker a(content),b(enabled),c(autoRaise),d(checkable),e(checked),f(popup),g(style),h(state);content->setText(tool->text());enabled->setChecked(tool->isEnabled());autoRaise->setChecked(tool->autoRaise());checkable->setChecked(tool->isCheckable());checked->setChecked(tool->isChecked());checked->setEnabled(tool->isCheckable());popup->setCurrentIndex(popup->findData(tool->popupMode()));style->setCurrentIndex(style->findData(tool->toolButtonStyle()));state->setCurrentIndex(state->findData(tool->property("figmaToolSnapshotState").toString()));priority->setEnabled(tool->defaultAction());open->setEnabled(tool->isEnabled()&&menuAttached->isChecked());readout->setText(QString("source=%1\nchecked=%2 / down=%3\nclicks=%4 / triggered=%5\nlast action:\n%6").arg(tool->defaultAction()?"QAction":"QToolButton").arg(tool->isChecked()).arg(tool->isDown()).arg(tool->property("toolClicks").toInt()).arg(tool->property("toolTriggers").toInt()).arg(tool->property("toolLastAction").toString()));};
-        const auto appearance=[=]{auto fixed=state->currentData().toString();if(fixed=="Open"&&tool->popupMode()!=QToolButton::MenuButtonPopup)fixed="";commonWidget::applyFigmaToolButtonAppearance(tool,fixed);tool->setMinimumSize(0,0);sync();};
+        const auto appearance=[=]{auto fixed=state->currentData().toString();if(fixed=="Open"&&tool->popupMode()!=QToolButton::MenuButtonPopup)fixed="";commonWidget::applyFigmaToolButtonAppearance(tool,fixed);tool->setMinimumSize(0,0);tool->setFixedHeight(32);sync();};
         QObject::connect(content,&QLineEdit::textChanged,tool,[=](const QString& text){if(tool->defaultAction()){action->setText(text);action->setIconText(text);}else tool->setText(text);});
         QObject::connect(enabled,&QCheckBox::toggled,tool,[=](bool on){if(tool->defaultAction())action->setEnabled(on);else tool->setEnabled(on);sync();});
         QObject::connect(actionSource,&QCheckBox::toggled,tool,[=](bool on){if(on){action->setText(tool->text());action->setIconText(tool->text());action->setIcon(tool->icon());action->setEnabled(tool->isEnabled());action->setCheckable(tool->isCheckable());action->setChecked(tool->isChecked());tool->setDefaultAction(action);}else{tool->setDefaultAction(nullptr);tool->removeAction(action);}appearance();});
@@ -1491,7 +1504,6 @@ QWidget* createNativeAppearance(const DesignComponentDescriptor& descriptor,
         QObject::connect(variant,&QComboBox::currentTextChanged,page,[=]{QTimer::singleShot(0,page,sync);});
         sync();
     }
-    watchObjectTree(page, objectTree, preview);
     auto apply=[=] {
         if(!variant->currentText().isEmpty())applyVariant(preview,componentSet,variant->currentText());
         const QSignalBlocker block(enabled);
@@ -1499,6 +1511,10 @@ QWidget* createNativeAppearance(const DesignComponentDescriptor& descriptor,
     };
     QObject::connect(variant,&QComboBox::currentTextChanged,page,[=]{apply();});
     apply();
+    // Build the inspector after the initial Figma variant has been applied;
+    // otherwise the first sizeHint is captured before the component's
+    // authored geometry is restored.
+    watchObjectTree(page, objectTree, preview);
     return page;
 }
 
@@ -1514,8 +1530,10 @@ QWidget* createRadioGroupAppearance(const DesignComponentSet& componentSet,
     auto* viewport = new QScrollArea(page);viewport->setWidgetResizable(true);
     auto* splitter = new QSplitter(viewport);viewport->setWidget(splitter);layout->addWidget(viewport,1);
     auto* settingsScroll = new QScrollArea(splitter);settingsScroll->setWidgetResizable(true);
+    settingsScroll->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    settingsScroll->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
     settingsScroll->setMinimumWidth(230);settingsScroll->setMaximumWidth(340);
-    auto* settings = new QWidget(settingsScroll);settingsScroll->setWidget(settings);
+    auto* settings = new QWidget(settingsScroll);settings->setSizePolicy(QSizePolicy::Ignored,QSizePolicy::Preferred);settings->setMinimumWidth(0);settingsScroll->setWidget(settings);
     auto* form = new QFormLayout(settings);form->setRowWrapPolicy(QFormLayout::WrapLongRows);
     auto* variant = new QComboBox(settings);variant->setObjectName("radioGroupVariantControl");
     variant->addItems(componentSet.variants);variant->setMinimumContentsLength(15);
@@ -1799,12 +1817,10 @@ void applyVariant(QWidget* widget, const DesignComponentSet& componentSet,
         else if (componentSet.name.contains("TextArea", Qt::CaseInsensitive))
             input->setKind(commonWidget::Z_InputField::Kind::TextArea);
         const QString lowerName = componentSet.name.toLower();
-        for (const auto& appearance : {"outlined", "filled", "borderless", "underlined"}) {
-            if (lowerName.contains(appearance))
-                input->setVariant(appearance);
-        }
-        input->setStatus(lowerName.contains("error") || state == "error" ? "error" :
-                         lowerName.contains("warning") ? "warning" : QString());
+        if (!lowerName.contains("outlined"))
+            input->setProperty("v2AppearanceFallback", true);
+        input->setAppearance("outlined");
+        input->setStatus(lowerName.contains("error") || state == "error" ? "error" : QString());
         input->setReadOnly(state == "readonly");
         input->setLoading(state == "loading");
         if (state == "filled")
@@ -1814,16 +1830,37 @@ void applyVariant(QWidget* widget, const DesignComponentSet& componentSet,
         const QString size = properties.value("Size").toLower();
         select->setControlSize(size == "small" ? "sm" : size == "large" ? "lg" : "md");
         const QString lowerName = componentSet.name.toLower();
-        for (const auto& appearance : {"outlined", "filled", "borderless", "underlined"}) {
-            if (lowerName.contains(appearance))
-                select->setVariant(appearance);
-        }
-        select->setStatus(lowerName.contains("error") ? "error" :
-                          lowerName.contains("warning") ? "warning" : QString());
+        if (!lowerName.contains("outlined"))
+            select->setProperty("v2AppearanceFallback", true);
+        select->setAppearance("outlined");
+        select->setStatus(lowerName.contains("error") ? "error" : QString());
         select->setOptions({{"etch-01", "ETCH-01", {}, false},
                             {"cvd-02", "CVD-02", {}, false},
                             {"cmp-03", "CMP-03", {}, false}});
         select->setValues({"etch-01"});
+    }
+    if (auto* table = qobject_cast<commonWidget::Z_TableView*>(widget)) {
+        QString density = properties.value("Density").toLower();
+        if (density.isEmpty()) {
+            const QString legacySize = properties.value("Size").toLower();
+            density = legacySize == QStringLiteral("small") ? QStringLiteral("compact")
+                    : legacySize == QStringLiteral("medium") ? QStringLiteral("small")
+                    : legacySize == QStringLiteral("large") ? QStringLiteral("medium")
+                                                               : QStringLiteral("compact");
+        }
+        const QString striping = properties.value("Striping").toLower();
+        table->setDensity(density);
+        table->setStriping(striping.isEmpty() ? QStringLiteral("none") : striping);
+        if (table->selectionModel()) {
+            table->clearSelection();
+            if ((state == QStringLiteral("selected") ||
+                 state == QStringLiteral("selected-hover")) && table->model() &&
+                table->model()->rowCount() > 1 && table->model()->columnCount() > 1) {
+                const QModelIndex selected = table->model()->index(1, 1);
+                table->selectionModel()->select(selected, QItemSelectionModel::ClearAndSelect);
+                table->setCurrentIndex(selected);
+            }
+        }
     }
     if (auto* badge = qobject_cast<commonWidget::Z_Badge*>(widget)) {
         badge->setKind(properties.value("Kind"));
@@ -2613,14 +2650,18 @@ QWidget* createFigmaPage(const DesignComponentPage& figmaPage,
     setChoice->setObjectName("appearanceComponentSetControl");
     auto* editors=new QStackedWidget(appearance);
     editors->setObjectName("appearanceComponentSetEditors");
+    int defaultSetIndex = -1;
     for(const auto& componentSet:figmaPage.componentSets) {
         setChoice->addItem(componentSet.name,componentSet.id);
         bool found=false;
         const auto descriptor=descriptorForSet(componentSet,descriptors,&found);
         if(componentSet.id=="341:118")
             editors->addWidget(createRadioGroupAppearance(componentSet,factory,editors));
-        else if(found && descriptor.instantiable)
+        else if(found && descriptor.instantiable) {
+            if (defaultSetIndex < 0)
+                defaultSetIndex = editors->count();
             editors->addWidget(createNativeAppearance(descriptor,componentSet,factory,editors));
+        }
         else if(found)
             editors->addWidget(createContractPage(descriptor,editors));
         else {
@@ -2632,6 +2673,10 @@ QWidget* createFigmaPage(const DesignComponentPage& figmaPage,
     appearanceLayout->addWidget(setChoice);
     appearanceLayout->addWidget(editors,1);
     QObject::connect(setChoice,qOverload<int>(&QComboBox::currentIndexChanged),editors,&QStackedWidget::setCurrentIndex);
+    if (defaultSetIndex >= 0) {
+        setChoice->setCurrentIndex(defaultSetIndex);
+        editors->setCurrentIndex(defaultSetIndex);
+    }
     }
     sections->addTab(appearance, QString::fromUtf8("外观"));
 
@@ -2726,8 +2771,24 @@ QWidget* createFigmaPage(const DesignComponentPage& figmaPage,
         return page;
     }
     if(figmaPage.id=="339:2") {
-        variantsLayout->addWidget(createInputGallery(factory,variants));
+        auto* pending = new QLabel(QString::fromUtf8(
+            "首次打开“分组与状态”时加载 108 个 Input 设计状态；加载期间仍可切换页面。"),
+            variants);
+        pending->setObjectName("inputGalleryPendingNotice");
+        pending->setWordWrap(true);
+        pending->setAlignment(Qt::AlignCenter);
+        variantsLayout->addWidget(pending, 1);
         sections->addTab(variants,QString::fromUtf8("分组与状态"));
+        QObject::connect(sections,&QTabWidget::currentChanged,variants,
+            [sections,variants,variantsLayout,pending,factory](int index) {
+                if (sections->widget(index)!=variants ||
+                    variants->property("inputGalleryLoaded").toBool())
+                    return;
+                variants->setProperty("inputGalleryLoaded",true);
+                variantsLayout->removeWidget(pending);
+                pending->deleteLater();
+                variantsLayout->addWidget(createInputGallery(factory,variants));
+            });
         return page;
     }
     if(figmaPage.id=="414:7" || figmaPage.id=="410:13" || figmaPage.id=="458:2" || figmaPage.id=="460:2" ||
@@ -2893,6 +2954,12 @@ QWidget* createGallery(const QString& profile, const QMap<QString, QWidget*>& de
             pageById->insert(pageId, page);
         }
         pages->setCurrentWidget(page);
+        // A page can be created while the Figma gallery tab is hidden.  Qt
+        // preserves the explicit hidden state of the stacked page in that
+        // case, so re-assert visibility when navigation selects it; otherwise
+        // the native inspector reports `visible=false` for the live specimen.
+        pages->show();
+        page->show();
         root->setProperty("activePageId", pageId);
         root->setProperty("visibleDescriptorCount", 1);
     });

@@ -1,8 +1,11 @@
 """ComponentLab V2 canonical token model and validation.
 
-Loads the four layer files + product packages, validates them against the
-registered vocabulary and schema, flattens them into token records, and applies
-mode overrides (profile standard/wide, semantic light/dark, product modes).
+The canonical architecture is seven logical layers.  The loader currently
+keeps a compatibility projection while Theme is migrated without breaking
+generated output. Composite packages remain separately validated, and Content
+is reserved for terminology and localized instance copy rather than visual or
+runtime state. The model validates the registered vocabulary and schema,
+flattens token records, and applies mode overrides.
 
 This module has no runtime dependencies beyond the standard library.
 """
@@ -15,7 +18,20 @@ from copy import copy
 from pathlib import Path
 from typing import Any
 
-LAYERS = ("primitive", "profile", "semantic", "component")
+LOGICAL_LAYERS = (
+    "primitive", "profile", "theme", "semantic", "composite", "component", "content"
+)
+# The generated component file remains a compatibility projection, but Theme
+# is now physically loaded as its own source layer.  Composite and Content
+# remain package-backed; Content is intentionally not loaded as visual tokens.
+LAYERS = ("primitive", "profile", "theme", "semantic", "component")
+# Dependency direction is intentionally one-way.  A higher layer may consume
+# lower-layer values, but a shared token must never reach back into a
+# component/product layer.  Keeping this invariant in the model prevents
+# reverse dependencies and cycles from reappearing through a new recipe.
+LAYER_ORDER = {"primitive": 0, "profile": 1, "theme": 2,
+               "semantic": 3, "composite": 4, "component": 5,
+               "content": 6, "product": 7}
 TYPES = {
     "color", "dimension", "number", "fontFamily", "fontWeight", "fontSize",
     "lineHeight", "letterSpacing", "spacing", "borderRadius", "borderWidth",
@@ -85,10 +101,23 @@ class TokenModel:
         self.product: dict[str, TokenRecord] = {}
         self.product_meta: dict[str, Any] = {}
         for layer in LAYERS:
-            doc = load_json(source_dir / f"{layer}.json")
+            doc = self._layer_doc(source_dir, layer)
             self._load_layer(layer, doc)
         self._load_product_packages()
         self._validate_references()
+
+    @staticmethod
+    def _layer_doc(source_dir: Path, layer: str) -> dict:
+        """component is a generated product (generated/component.json) of the
+        recipe compiler; all other layers live in source/."""
+        if layer == "component":
+            generated = source_dir.parent / "generated/component.json"
+            if not generated.exists():
+                raise ValidationError(
+                    "generated/component.json is missing; run the V2 recipe "
+                    "compiler (component_compile.py) first.")
+            return load_json(generated)
+        return load_json(source_dir / f"{layer}.json")
 
     # ------------------------------------------------------------------ load
 
@@ -121,7 +150,7 @@ class TokenModel:
                 records[path].modes[mode] = leaf["$value"]
         if layer == "profile":
             self.modes["profile"] = {"standard": "standard", "wide": "wide"}
-        if layer == "semantic":
+        if layer == "theme":
             self.modes["theme"] = {"light": "light", "dark": "dark"}
         self.layers[layer] = records
 
@@ -181,7 +210,7 @@ class TokenModel:
         unit = leaf.get("unit")
         if type_ in UNIT_REQUIRED and not unit:
             raise ValidationError(f"Token {path} of type {type_} requires an explicit unit")
-        if unit and unit not in ("px", "%"):
+        if unit and unit not in ("px", "%", "ms", "deg"):
             raise ValidationError(f"Invalid unit {unit!r} at {path}")
         if type_ == "opacity" and unit != "%":
             raise ValidationError(f"Opacity token {path} must declare unit '%'")
@@ -217,10 +246,12 @@ class TokenModel:
     def _validate_references(self) -> None:
         all_paths: set[str] = set(self.product)
         type_of: dict[str, str] = {}
+        layer_of: dict[str, str] = {path: "product" for path in self.product}
         for layer in LAYERS:
             for path, record in self.layers[layer].items():
                 all_paths.add(path)
                 type_of[path] = record.type
+                layer_of[path] = layer
         for path, record in self.product.items():
             type_of[path] = record.type
         for layer in LAYERS:
@@ -232,9 +263,31 @@ class TokenModel:
                 target = m.group(1)
                 if target not in all_paths:
                     raise ValidationError(f"Missing alias target {target} from {path}")
+                source_layer = layer
+                target_layer = layer_of[target]
+                # Product packages are runtime/application values and are not
+                # allowed to depend on generated component tokens.  Component
+                # tokens themselves may only consume shared lower layers.
+                if (source_layer == "component" and target_layer in {"component", "product"}) \
+                        or (source_layer == "product" and target_layer in {"component", "product"}):
+                    raise ValidationError(
+                        f"Forbidden reverse token dependency: {source_layer} {path} -> "
+                        f"{target_layer} {target}")
                 if not alias_types_compatible(record.type, type_of[target]):
                     raise ValidationError(
                         f"Alias type mismatch: {path} ({record.type}) -> {target} ({type_of[target]})")
+        for path, record in self.product.items():
+            value = record.value
+            m = ALIAS.fullmatch(str(value))
+            if not m:
+                continue
+            target = m.group(1)
+            if target not in all_paths:
+                raise ValidationError(f"Missing alias target {target} from {path}")
+            if layer_of[target] in {"component", "product"}:
+                raise ValidationError(
+                    f"Forbidden reverse token dependency: product {path} -> "
+                    f"{layer_of[target]} {target}")
 
     # ----------------------------------------------------------------- access
 
@@ -245,10 +298,12 @@ class TokenModel:
         """
         records: dict[str, TokenRecord] = {}
         for source in (self.product, self.layers["primitive"], self.layers["profile"],
-                       self.layers["semantic"], self.layers["component"]):
+                       self.layers["theme"], self.layers["semantic"],
+                       self.layers["component"]):
             for path, record in source.items():
                 records[path] = copy(record)
         self._apply(records, self.layers["profile"], profile_mode)
+        self._apply(records, self.layers["theme"], theme_mode)
         self._apply(records, self.layers["semantic"], theme_mode)
         self._apply(records, self.product, profile_mode)
         return records
@@ -262,11 +317,16 @@ class TokenModel:
 
     def source_revision(self) -> str:
         digest = hashlib.sha256()
-        for name in ("primitive.json", "profile.json", "semantic.json",
-                     "component.json", "dictionary.json", "component-registry.json"):
+        for name in ("primitive.json", "profile.json", "theme.json", "semantic.json",
+                     "dictionary.json", "component-registry.json"):
             path = self.source_dir / name
             digest.update(name.encode())
             if path.exists():
+                digest.update(path.read_bytes())
+        recipe_dir = self.source_dir / "component-recipes"
+        if recipe_dir.is_dir():
+            for path in sorted(recipe_dir.glob("*.json")):
+                digest.update(path.name.encode())
                 digest.update(path.read_bytes())
         product_dir = self.source_dir / "product"
         if product_dir.is_dir():

@@ -12,7 +12,6 @@
 #include "ToolBoxAppearance.h"
 #include "Z_DesignComponents.h"
 #include "Z_PushButton.h"
-#include "ButtonAppearanceAdapter.h"
 #include "CommandLinkAppearance.h"
 #include "DialogButtonBoxAppearance.h"
 #include "ToolButtonAppearance.h"
@@ -43,11 +42,176 @@
 #include <QTabWidget>
 #include <QToolBox>
 #include <QSet>
+#include <QComboBox>
+#include <QSpinBox>
+#include <QDoubleSpinBox>
+#include <QCheckBox>
+#include <QPushButton>
+#include <QTextBrowser>
+#include <QGroupBox>
+#include <QScrollArea>
+#include <QSplitter>
+#include <QCalendarWidget>
+#include <QTextEdit>
+#include <QPlainTextEdit>
+#include <QListView>
+#include <QLCDNumber>
+#include <QGraphicsView>
+#include <QFrame>
+#include <QDial>
+#include <QStatusBar>
 #include <stdexcept>
 #include <functional>
+#include "ComponentLibrary.h"
+#include <QRadioButton>
+#include <QColumnView>
+#include <QUndoView>
+#include <QTreeView>
+#include <QTableView>
+#include <QListWidget>
+#include <QTreeWidget>
+#include <QTableWidget>
+#include <QFontComboBox>
+#include <QDateEdit>
+#include <QDateTimeEdit>
+#include <QKeySequenceEdit>
+#include <QOpenGLWidget>
 
 namespace d2c {
 namespace {
+// 可切换组件库配置：把设计契约类名按 profile 的批量改名与逐组件覆盖解析为最终类名。
+QString resolveClass(const QJsonObject& rule, const QJsonObject& profile) {
+    QString cls = rule["qtClass"].toString();
+    if (profile.isEmpty())
+        return cls;
+    const auto overrides = profile["componentOverrides"].toObject();
+    const auto override = overrides[rule["designComponentName"].toString()].toObject();
+    if (override.contains("qtClass"))
+        cls = override["qtClass"].toString();
+    for (const auto& entry : profile["classRenames"].toArray()) {
+        const auto rename = entry.toObject();
+        cls = cls.replace(QRegularExpression(rename["pattern"].toString()),
+                          rename["replacement"].toString());
+    }
+    return cls;
+}
+
+// qt-native 配置下的公开 Qt 类创建表：只接受白名单类名，其余失败关闭。
+QWidget* createQtBuiltin(const QString& cls, QWidget* parent) {
+    if (cls == "QRadioButton") return new QRadioButton(parent);
+    if (cls == "QColumnView") return new QColumnView(parent);
+    if (cls == "QUndoView") return new QUndoView(parent);
+    if (cls == "QTreeView") return new QTreeView(parent);
+    if (cls == "QTableView") return new QTableView(parent);
+    if (cls == "QListWidget") return new QListWidget(parent);
+    if (cls == "QTreeWidget") return new QTreeWidget(parent);
+    if (cls == "QTableWidget") return new QTableWidget(parent);
+    if (cls == "QFontComboBox") return new QFontComboBox(parent);
+    if (cls == "QDateEdit") return new QDateEdit(parent);
+    if (cls == "QDateTimeEdit") return new QDateTimeEdit(parent);
+    if (cls == "QKeySequenceEdit") return new QKeySequenceEdit(parent);
+    if (cls == "QOpenGLWidget") return new QOpenGLWidget(parent);
+    if (cls == "QDockWidget") return new QDockWidget(parent);
+    if (cls == "QMdiArea") return new QMdiArea(parent);
+    if (cls == "QPushButton") return new QPushButton(parent);
+    if (cls == "QCheckBox") return new QCheckBox(parent);
+    if (cls == "QLineEdit") return new QLineEdit(parent);
+    if (cls == "QLabel") return new QLabel(parent);
+    if (cls == "QSlider") return new QSlider(parent);
+    if (cls == "QScrollBar") return new QScrollBar(parent);
+    if (cls == "QTimeEdit") return new QTimeEdit(parent);
+    if (cls == "QToolButton") return new QToolButton(parent);
+    if (cls == "QDialogButtonBox") return new QDialogButtonBox(parent);
+    if (cls == "QCommandLinkButton") return new QCommandLinkButton(parent);
+    if (cls == "QSplitter") return new QSplitter(parent);
+    if (cls == "QScrollArea") return new QScrollArea(parent);
+    if (cls == "QCalendarWidget") return new QCalendarWidget(parent);
+    if (cls == "QTextBrowser") return new QTextBrowser(parent);
+    if (cls == "QTextEdit") return new QTextEdit(parent);
+    if (cls == "QPlainTextEdit") return new QPlainTextEdit(parent);
+    if (cls == "QListView") return new QListView(parent);
+    if (cls == "QLCDNumber") return new QLCDNumber(parent);
+    if (cls == "QGraphicsView") return new QGraphicsView(parent);
+    if (cls == "QFrame") return new QFrame(parent);
+    if (cls == "QDial") return new QDial(parent);
+    if (cls == "QStatusBar") return new QStatusBar(parent);
+    if (cls == "QGroupBox") return new QGroupBox(parent);
+    if (cls == "QTabWidget") return new QTabWidget(parent);
+    if (cls == "QStackedWidget") return new QStackedWidget(parent);
+    if (cls == "QToolBox") return new QToolBox(parent);
+    if (cls == "QProgressBar") return new QProgressBar(parent);
+    if (cls == "QSpinBox") return new QSpinBox(parent);
+    if (cls == "QDoubleSpinBox") return new QDoubleSpinBox(parent);
+    if (cls == "QComboBox") return new QComboBox(parent);
+    if (cls == "QWidget") return new QWidget(parent);
+    throw std::runtime_error(("UNSUPPORTED_QT_NATIVE_CLASS: " + cls).toStdString());
+}
+
+// public-qt 策略下的公开 Qt API 直接应用；返回 false 表示该 API 不适用于当前控件类型。
+bool applyQtApi(QWidget* w, const QString& api, const QJsonValue& value) {
+    if (api == "setText") {
+        if (auto* label = qobject_cast<QLabel*>(w)) label->setText(value.toString());
+        else if (auto* button = qobject_cast<QAbstractButton*>(w)) button->setText(value.toString());
+        else if (auto* edit = qobject_cast<QTextEdit*>(w)) edit->setPlainText(value.toString());
+        else if (auto* browser = qobject_cast<QTextBrowser*>(w)) browser->setPlainText(value.toString());
+        else return false;
+        return true;
+    }
+    if (api == "setEnabled") { w->setEnabled(value.toBool()); return true; }
+    if (api == "setReadOnly") {
+        if (auto* edit = qobject_cast<QLineEdit*>(w)) edit->setReadOnly(value.toBool());
+        else if (auto* text = qobject_cast<QTextEdit*>(w)) text->setReadOnly(value.toBool());
+        else return false;
+        return true;
+    }
+    if (api == "setChecked") {
+        if (auto* button = qobject_cast<QAbstractButton*>(w)) button->setChecked(value.toBool());
+        else return false;
+        return true;
+    }
+    if (api == "setPlaceholderText" || api == "setPlaceholder") {
+        if (auto* edit = qobject_cast<QLineEdit*>(w)) edit->setPlaceholderText(value.toString());
+        else return false;
+        return true;
+    }
+    if (api == "setCurrentIndex") {
+        if (auto* tabs = qobject_cast<QTabWidget*>(w)) tabs->setCurrentIndex(value.toInt());
+        else if (auto* stack = qobject_cast<QStackedWidget*>(w)) stack->setCurrentIndex(value.toInt());
+        else if (auto* combo = qobject_cast<QComboBox*>(w)) combo->setCurrentIndex(value.toInt());
+        else return false;
+        return true;
+    }
+    if (api == "setValue") {
+        if (auto* slider = qobject_cast<QAbstractSlider*>(w)) slider->setValue(value.toInt());
+        else if (auto* spin = qobject_cast<QSpinBox*>(w)) spin->setValue(value.toInt());
+        else if (auto* progress = qobject_cast<QProgressBar*>(w)) progress->setValue(value.toInt());
+        else if (auto* edit = qobject_cast<QLineEdit*>(w)) edit->setText(value.toString());
+        else return false;
+        return true;
+    }
+    if (api == "setRange") {
+        if (auto* progress = qobject_cast<QProgressBar*>(w)) progress->setRange(0, value.toInt());
+        else return false;
+        return true;
+    }
+    if (api == "setFormat") {
+        if (auto* progress = qobject_cast<QProgressBar*>(w)) progress->setFormat(value.toString());
+        else return false;
+        return true;
+    }
+    if (api == "setTitle") {
+        if (auto* group = qobject_cast<QGroupBox*>(w)) group->setTitle(value.toString());
+        else return false;
+        return true;
+    }
+    if (api == "setGrid") {
+        if (auto* calendar = qobject_cast<QCalendarWidget*>(w)) calendar->setGridVisible(value.toBool());
+        else return false;
+        return true;
+    }
+    return false;
+}
+
 // 异常保留设计节点与可用属性，便于定位规则缺项；失败时不猜测替代控件。
 [[noreturn]] void fail(const QString& code, const QJsonObject& node, const QString& component,
                        const QString& detail) {
@@ -103,9 +267,10 @@ void collectGlyphs(const QJsonObject& node, const QString& prefix, QJsonArray& g
 }
 }
 
-ComponentConverter::ComponentConverter(QJsonObject input, QJsonObject rules)
+ComponentConverter::ComponentConverter(QJsonObject input, QJsonObject rules,
+                                       QJsonObject libraryProfile)
     : raw(std::move(input)), mapping(std::move(rules)),
-      catalog(std::make_shared<surface::Catalog>(mapping["profile"].toString())),
+      profile(std::move(libraryProfile)),
       componentFactory(std::make_unique<commonWidget::ComponentFactory>(
           mapping["profile"].toString())) {}
 
@@ -164,12 +329,31 @@ QWidget* ComponentConverter::convert(const QJsonObject& n, QWidget* parent) {
             fail("DUPLICATE_PROPERTY", n, name);
         props[name] = o["value"].toString();
     }
-    // 限定设计 Profile 与当前 catalog 一致，避免混用主题的尺寸和材质。
-    if (props.contains("Profile") && props.value("Profile") != mapping["profile"].toString())
+    // 限定设计 Profile 与当前运行时 profile 一致，避免混用主题 Token。
+    // 设计侧别名必须在 profileAliases 中声明，并且目标必须等于当前映射使用的 SDK 上下文。
+    bool profileAccepted = false;
+    if (!props.contains("Profile"))
+        profileAccepted = true;
+    else if (props.value("Profile") == mapping["profile"].toString())
+        profileAccepted = true;
+    else {
+        const auto designProfile = props.value("Profile");
+        const auto alias = mapping["profileAliases"].toObject()[designProfile].toObject();
+        // 只有别名明确指向当前 SDK 上下文时才允许转换，禁止单纯靠字符串白名单放行。
+        profileAccepted = !alias.isEmpty() &&
+            alias["runtimeProfile"].toString() == mapping["profile"].toString();
+    }
+    if (!profileAccepted)
         fail("PROFILE_MISMATCH", n, props.value("Profile"));
     const QString stateProperty = rule["stateProperty"].toString(
         QStringLiteral("state"));
     const QString compositionApi = rule["compositionApi"].toString();
+    // public-qt 策略不使用 SDK 组合 API；组合属性和调用在下方按公开 API 白名单过滤。
+    const bool publicQt = profile["apiPolicy"].toString() == QStringLiteral("public-qt");
+    QSet<QString> allowedQtApis;
+    for (const auto& entry : profile["publicQtApis"].toArray())
+        allowedQtApis.insert(entry.toString());
+    QJsonArray skippedCalls;
     const auto propertyRules = rule["propertyMappings"].toObject();
     // 逐项核对契约必填属性，缺少数据时在创建 QWidget 前终止。
     for (const auto& required : propertyRules.keys())
@@ -191,7 +375,7 @@ QWidget* ComponentConverter::convert(const QJsonObject& n, QWidget* parent) {
             fail("UNMAPPED_PROPERTY", n, it.key() + "=" + it.value());
         const auto api = spec["api"].toString();
         const auto mapped = domain[it.value()];
-        if (!compositionApi.isEmpty() && api == compositionApi) {
+        if (!publicQt && !compositionApi.isEmpty() && api == compositionApi) {
             if (!mapped.isString())
                 fail("INVALID_API_VALUE_TYPE", n, api + ":" + it.key());
             compositionProperties[it.key()] = mapped.toString();
@@ -203,22 +387,31 @@ QWidget* ComponentConverter::convert(const QJsonObject& n, QWidget* parent) {
     // 只有明确映射的初始状态可以生成，未知状态不降级为 default。
     if (!states.isEmpty() && !states.contains(props.value(stateProperty)))
         fail("UNMAPPED_STATE", n, props.value(stateProperty));
-    const auto cls = rule["qtClass"].toString();
+    // sdkCls 是构建期实测控件使用的 SDK 类；cls 是按 profile 解析后写入交付的最终类名。
+    const auto sdkCls = rule["qtClass"].toString();
+    const auto contract = library::resolve(rule, profile);
+    const auto cls = contract.isEmpty() ? resolveClass(rule, profile) : contract["className"].toString();
+    const auto measurementClass = contract.isEmpty() ? cls : contract["qtBase"].toString();
     // 转换期间由 unique_ptr 托管，后续任何 setter 失败都会释放本次控件。
     std::unique_ptr<QWidget> owned;
     using namespace commonWidget;
     Z_PushButton* button = nullptr;
-    // 组件创建只通过 GenerateComponent 发布的 SDK Factory；GenerateLayout 不再维护平行类白名单。
-    if (!commonWidget::ComponentFactory::isRegistered(cls))
-        fail("UNREGISTERED_QT_CLASS", n, cls);
-    owned.reset(componentFactory->create(cls, parent));
-    button = qobject_cast<Z_PushButton*>(owned.get());
+    // public-qt 直接用公开 Qt 白名单表创建并测量；sdk-composition（含自用库）仍以 SDK 控件实测，
+    // 交付类名由 renames/overrides 决定，调用契约要求目标库提供同名的 apply 适配。
+    if (publicQt) {
+        owned.reset(createQtBuiltin(measurementClass, parent));
+    } else {
+        if (!commonWidget::ComponentFactory::isRegistered(sdkCls))
+            fail("UNREGISTERED_QT_CLASS", n, sdkCls);
+        owned.reset(componentFactory->create(sdkCls, parent));
+        button = qobject_cast<Z_PushButton*>(owned.get());
+    }
     auto* w = owned.get();
     w->setObjectName("node_" + n["guid"].toString().replace(':', '_'));
     w->setProperty("designNodeId", n["guid"].toString());
     w->setProperty("designComponent", family["name"].toString());
     QJsonArray calls;
-    if (!compositionApi.isEmpty()) {
+    if (!publicQt && !compositionApi.isEmpty()) {
         if (compositionApi == QStringLiteral("navigation.populateMenu")) {
             auto* menu = qobject_cast<QMenu*>(w);
             if (!menu)
@@ -421,6 +614,17 @@ QWidget* ComponentConverter::convert(const QJsonObject& n, QWidget* parent) {
             (!flexibleValueApi && !booleanApis.contains(api) &&
              !numericApis.contains(api) && !value.isString()))
             fail("INVALID_API_VALUE_TYPE", n, api);
+        // public-qt：不在白名单内的 SDK 专属 API 被跳过并记录，保持渐进式适配透明。
+        if (publicQt) {
+            if (!allowedQtApis.contains(api)) {
+                skippedCalls.append(QJsonObject{{"api", api}, {"value", value}});
+                return;
+            }
+            if (!applyQtApi(w, api, value))
+                fail("INVALID_QT_API_TARGET", n, api);
+            calls.append(QJsonObject{{"api", api}, {"value", value}});
+            return;
+        }
         QString error;
         if (api == QStringLiteral("navigation.setMenuBarCornerVisible")) {
             auto* menuBar = qobject_cast<QMenuBar*>(w);
@@ -432,10 +636,9 @@ QWidget* ComponentConverter::convert(const QJsonObject& n, QWidget* parent) {
         }
         calls.append(QJsonObject{{"api", api}, {"value", value}});
     };
-    // 先应用普通属性；材质适配推迟到文字和状态设置之后，保持刷新顺序确定。
+    // 先应用普通属性；外观最后应用，避免兼容 setter 覆盖 V2 appearance 轴。
     for (auto it = values.begin(); it != values.end(); ++it)
-        // 外观适配另有固定执行时机；这里先应用其他属性，避免随后设置属性覆盖材质效果。
-        if (it.key() != "ButtonAppearanceAdapter.setAppearance")
+        if (it.key() != QStringLiteral("setAppearance"))
             invoke(it.key(), it.value());
     // 文字按“母版默认值 → 实例 props 覆盖”求值；when 控制当前内容模式使用哪些槽。
     QMap<QString, QJsonObject> textSlots;
@@ -471,29 +674,25 @@ QWidget* ComponentConverter::convert(const QJsonObject& n, QWidget* parent) {
             api = values["editorTextMode"].toString();
         invoke(api, value);
     }
-    // 普通属性和文字就绪后应用状态；材质适配最后执行并核对组合支持范围。
+    // 普通属性和文字就绪后应用状态。
     // 按规则顺序应用初始状态，使禁用和 loading 覆盖普通属性初始化。
     for (const auto& s : states[props.value(stateProperty)].toArray())
         invoke(s.toObject()["api"].toString(), s.toObject()["value"]);
-    // 按钮材质在所有属性就绪后应用，先核对 type、ghost 与材质组合是否受支持。
-    if (button) {
-        if (!values["ButtonAppearanceAdapter.setAppearance"].isString())
-            fail("INVALID_API_VALUE_TYPE", n, "ButtonAppearanceAdapter.setAppearance");
-        const auto appearance = values["ButtonAppearanceAdapter.setAppearance"].toString();
-        const auto reason = catalog->buttonUnsupportedReason(appearance, props.value("type"),
-                                                             props.value("ghost") == "true");
-        // 不支持的组合在适配前终止，保留 catalog 提供的具体原因。
-        if (!reason.isEmpty())
-            fail("UNSUPPORTED_COMBINATION", n, reason);
-        auto* adapter = new ButtonAppearanceAdapter(button, catalog);
-        adapter->setAppearance(appearance);
-        calls.append(
-            QJsonObject{{"api", "ButtonAppearanceAdapter.setAppearance"}, {"value", appearance}});
+    // 直接调用 SDK 的 V2 appearance 轴；不再创建私有材质适配器或读取旧 Catalog。
+    if (values.contains(QStringLiteral("setAppearance")))
+        invoke(QStringLiteral("setAppearance"), values[QStringLiteral("setAppearance")]);
+    QJsonObject record{{"nodeId", n["guid"]},
+                        {"componentName", family["name"]},
+                        {"qtClass", cls},
+                        {"calls", calls}};
+    if (!skippedCalls.isEmpty())
+        record["skippedCalls"] = skippedCalls;
+    if (!contract.isEmpty()) {
+        record["libraryComponentId"] = contract["id"];
+        record["measurementQtClass"] = measurementClass;
+        record["implementationStatus"] = "planned";
     }
-    records.append(QJsonObject{{"nodeId", n["guid"]},
-                               {"componentName", family["name"]},
-                               {"qtClass", cls},
-                               {"calls", calls}});
+    records.append(record);
     return owned.release();
 }
 }

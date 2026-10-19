@@ -97,9 +97,9 @@ QString color(QJsonValue value, const Tokens& tokens) {
                                   .arg(c.alpha());
 }
 Tokens profileTokens(Tokens t, const QJsonObject& profiles, const QString& theme,
-                     const QString& density) {
+                     const QString& profileMode) {
     Q_UNUSED(t);
-    return token_input::profile(profiles, theme + '-' + density);
+    return token_input::profile(profiles, profileMode + '-' + theme);
 }
 QMap<QString, QString> palette(const QJsonObject& input, const Tokens& t) {
     QMap<QString, QString> p;
@@ -199,90 +199,6 @@ void output(const QString& path, const QByteArray& bytes, bool check) {
     require(f.open(QIODevice::WriteOnly), "Cannot write " + path);
     require(f.write(bytes) == bytes.size() && f.commit(), "Cannot commit " + path);
 }
-QJsonObject solidInnerShadow(const QJsonObject& button, const Tokens& t) {
-    const auto source = button["solidInnerShadow"].toObject();
-    require(source["id"] == "solid-inner-shadow", "Missing solid inner-shadow contract");
-    auto geometry = resolve(source["geometry"], t).toObject();
-    for (const char* key :
-         {"width", "cornerRadius", "fadeStartRatio", "buttonRadius", "borderWidth"})
-        number(geometry[key], {}, key, -8192, 8192);
-    require(geometry["matchButtonRadiusToInnerShadow"].isBool(),
-            "Inner-shadow match switch is boolean");
-    const auto states = source["states"].toObject(), defaults = states["default"].toObject();
-    QJsonObject resolved;
-    QJsonArray fallbacks;
-    for (QString state : {"default", "hover", "pressed", "disabled"}) {
-        QJsonObject visual;
-        for (const char* field : {"shadowColor", "borderColor", "textColor", "bgTop", "bgMid",
-                                  "bgBottom", "bgMidStop"}) {
-            QJsonValue input = states[state].toObject()[field];
-            const auto alias = input.toString();
-            const bool missingAlias = alias.startsWith('{') && alias.endsWith('}') &&
-                                      !t.contains(alias.mid(1, alias.size() - 2));
-            if (state != "default" && (input.isUndefined() || input.isNull() || missingAlias)) {
-                input = defaults[field];
-                fallbacks.append(state + '.' + field);
-            }
-            visual[field] = QString(field) == "bgMidStop"
-                                ? QJsonValue(number(input, t, field, -8192, 8192))
-                                : QJsonValue(color(input, t));
-        }
-        resolved[state] = visual;
-    }
-    const auto policy = resolve(source["colorPolicy"], t).toObject();
-    require(color(policy["black"], {}) == "#000000", "Inner shadow requires pure black");
-    require(policy["baseSelection"] == "darkest-qgray-of-state-stops" &&
-                policy["transparentTypes"] == "material-supplies-face" &&
-                policy["surfaceSamples"].toArray() == QJsonArray{0, 0.25, 0.5, 0.75, 1} &&
-                policy["ghost"] == false,
-            "Unsupported geometric shadow color policy");
-    QJsonObject roles;
-    for (const auto& role : {QString("primary"), QString("secondary"), QString("danger")}) {
-        const double alpha = number(policy["blackMix"].toObject()[role], {}, "black mix", 0, 1);
-        QJsonObject roleStates;
-        for (const auto& state :
-             {QString("default"), QString("hover"), QString("pressed"), QString("disabled")}) {
-            const auto supplied =
-                resolve(button["materialStates"].toObject()[role].toObject()[state], t).toObject();
-            const auto stops = supplied["stops"].toArray();
-            require(stops.size() == 5, "Expected five supplied Button state gradient stops");
-            QJsonArray candidates, backgroundStops;
-            for (int i = 0; i < stops.size(); ++i) {
-                const auto stop = stops[i].toObject();
-                require(number(stop["at"], {}, "stop", 0, 1) == i * .25,
-                        "Button state stops must be 0/.25/.5/.75/1");
-                const auto normalized = color(stop["color"], t);
-                candidates.append(normalized);
-                backgroundStops.append(QJsonObject{{"at", i * .25}, {"color", normalized}});
-            }
-            QColor darkest;
-            for (const auto& candidate : candidates) {
-                const QColor current(candidate.toString());
-                require(current.isValid() && current.alpha() == 255,
-                        "Geometric Button face colors must be opaque");
-                if (!darkest.isValid() || qGray(current.rgb()) < qGray(darkest.rgb()))
-                    darkest = current;
-            }
-            const QColor shadow(qRound(darkest.red() * (1 - alpha)),
-                                qRound(darkest.green() * (1 - alpha)),
-                                qRound(darkest.blue() * (1 - alpha)));
-            roleStates[state] = QJsonObject{{"bgTop", candidates[0]},
-                                            {"bgMid", candidates[2]},
-                                            {"bgBottom", candidates[4]},
-                                            {"bgMidStop", .5},
-                                            {"backgroundStops", backgroundStops},
-                                            {"textColor", color(supplied["foreground"], t)},
-                                            {"borderColor", color(supplied["border"], t)},
-                                            {"shadowColor", shadow.name()},
-                                            {"shadowBaseColor", darkest.name()},
-                                            {"blackMix", alpha}};
-        }
-        roles[role] = roleStates;
-    }
-    return {{"id", source["id"]},    {"label", source["label"]}, {"geometry", geometry},
-            {"states", resolved},    {"roleStates", roles},      {"colorPolicy", policy},
-            {"fallbacks", fallbacks}};
-}
 } // namespace
 int main(int argc, char** argv) {
     QCoreApplication app(argc, argv);
@@ -291,9 +207,14 @@ int main(int argc, char** argv) {
         require(a.size() == 3 || (a.size() == 4 && a[3] == "--check"),
                 "Usage: checkbox_token_compiler SOURCE OUTPUT [--check]");
         QString root = QDir(a[1]).absolutePath(), out = QDir(a[2]).absolutePath();
+        QDir project(QCoreApplication::applicationDirPath());
+        while (!project.exists("Source/Publish-ComponentSDK.ps1"))
+            require(project.cdUp(), "COMPONENT_PROJECT_NOT_FOUND");
+        const QString buildRoot = project.filePath("build") + '/';
+        require(QDir::cleanPath(out).startsWith(buildRoot, Qt::CaseInsensitive),
+                "OUTPUT_MUST_BE_IN_BUILD");
         bool check = a.size() == 4;
         auto contract = json(root + "/tokens/checkbox-contract.json"),
-             button = json(root + "/tokens/button-contract.json"),
              profiles = json(root + "/DesignSystem/generated/runtime/tokens_qt.json");
         Tokens base = token_input::profile(
             profiles, profiles["$meta"].toObject()["defaultProfile"].toString());
@@ -301,7 +222,7 @@ int main(int argc, char** argv) {
         QJsonObject inputHashes;
         for (auto path :
              {"DesignSystem/generated/runtime/tokens_qt.json", "tokens/checkbox-contract.json",
-              "tokens/button-contract.json", "styles/Z_CheckBox.qss.in",
+              "styles/Z_CheckBox.qss.in",
               "tools/checkbox_token_compiler.cpp", "tools/token_inputs.h"}) {
             auto bytes = read(root + '/' + path);
             hash.addData(path);
@@ -321,12 +242,11 @@ int main(int argc, char** argv) {
         require(ids.contains("solid"), "Default solid preset required");
         QJsonObject allOutputs;
         for (QString theme : {"light", "dark"})
-            for (QString density : {"comfortable", "compact"}) {
-                QString profile = theme + '-' + density;
-                auto t = profileTokens(base, profiles, theme, density);
+            for (QString profileMode : {"standard", "wide"}) {
+                QString profile = profileMode + '-' + theme;
+                auto t = profileTokens(base, profiles, theme, profileMode);
                 auto cb = contract["checkbox"].toObject();
-                auto cp = palette(cb["palette"].toObject(), t),
-                     bp = palette(button["palette"].toObject(), t);
+                auto cp = palette(cb["palette"].toObject(), t);
                 double radius = number(cb["radius"], t, "radius", 0, 8),
                        width = number(cb["borderWidth"], t, "border", 0.5, 4);
                 auto sizes = cb["sizes"].toObject();
@@ -344,19 +264,12 @@ int main(int argc, char** argv) {
                     require(radius <= s["indicator"].toDouble() / 2, "Radius exceeds indicator");
                     sizes[i.key()] = s;
                 }
-                QJsonObject recipes, capabilities;
+                QJsonObject recipes;
                 QString qss = QString::fromUtf8(read(root + "/styles/Z_CheckBox.qss.in"));
                 for (auto pv : presets) {
                     auto preset = resolve(pv, t).toObject();
                     validatePreset(preset, t);
                     QString id = preset["id"].toString();
-                    const bool decorated =
-                        preset["fill"] != "solid" || !preset["shadows"].toArray().isEmpty();
-                    capabilities[id] =
-                        QJsonObject{{"types", decorated ? QJsonArray{"PRIMARY", "DEFAULT", "DASHED"}
-                                                        : QJsonArray{"PRIMARY", "DEFAULT", "DASHED",
-                                                                     "TEXT", "LINK"}},
-                                    {"ghost", !decorated}};
                     for (QString state : {"default", "hover", "pressed", "disabled"}) {
                         bool disabled = state == "disabled";
                         QString suffix =
@@ -387,117 +300,7 @@ int main(int argc, char** argv) {
                                        .arg(id, selected ? "selected" : "unchecked", state,
                                             r["qss"].toString(), n(width));
                         }
-                        for (QString type : {"PRIMARY", "DEFAULT", "DASHED", "TEXT", "LINK"})
-                            for (bool danger : {false, true})
-                                for (bool ghost : {false, true}) {
-                                    QString role = danger ? "danger" : "primary",
-                                            accent = bp[role + (disabled ? QString() : suffix)];
-                                    QString bg = "transparent",
-                                            fg = (type == "DEFAULT" || type == "DASHED" ||
-                                                  type == "TEXT") &&
-                                                         state == "default" && !danger
-                                                     ? bp["foreground"]
-                                                     : accent;
-                                    QString border = "transparent";
-                                    bool face =
-                                        type == "PRIMARY" || type == "DEFAULT" || type == "DASHED";
-                                    if (type == "PRIMARY") {
-                                        bg = accent;
-                                        fg = bp[danger ? "onBrand" : "primaryText"];
-                                        border = accent;
-                                    } else if (face) {
-                                        bg = bp["surface"];
-                                        border =
-                                            state == "default" && !danger ? bp["border"] : accent;
-                                    } else if (state == "hover" || state == "pressed")
-                                        bg = bp[role + "Soft"];
-                                    if (ghost) {
-                                        bg = "transparent";
-                                        fg = danger ? accent : bp["onBrand"];
-                                        border = face ? fg : "transparent";
-                                    }
-                                    if (disabled) {
-                                        bg = face && !ghost ? bp["disabled"] : "transparent";
-                                        fg = bp["disabledText"];
-                                        border = face ? bp["disabledBorder"] : "transparent";
-                                    }
-                                    auto gradientColor = [&](const char* which) {
-                                        auto bound = boundSuffix(which);
-                                        if (disabled)
-                                            return bg;
-                                        return type == "PRIMARY" ? bp[role + bound]
-                                               : bound.isEmpty() ? bp["surface"]
-                                                                 : bp["neutral" + bound];
-                                    };
-                                    auto material = preset;
-                                    auto states = button["materialStates"].toObject();
-                                    if (!states.isEmpty() && face && !ghost) {
-                                        const auto roleName = danger              ? "danger"
-                                                              : type == "PRIMARY" ? "primary"
-                                                                                  : "secondary";
-                                        const auto supplied =
-                                            resolve(states[roleName].toObject()[state], t)
-                                                .toObject();
-                                        require(!supplied.isEmpty(),
-                                                "Missing supplied Button material state");
-                                        border = color(supplied["border"], t);
-                                        fg = color(supplied["foreground"], t);
-                                        if (type != "PRIMARY" || disabled)
-                                            bg = color(supplied["stops"]
-                                                           .toArray()
-                                                           .first()
-                                                           .toObject()["color"],
-                                                       t);
-                                        if (material["fill"] == "linearGradient") {
-                                            material["stops"] = supplied["stops"];
-                                            material["stateGradient"] = true;
-                                        }
-                                        QJsonArray shadows;
-                                        for (auto value : material["shadows"].toArray()) {
-                                            auto shadow = value.toObject();
-                                            if (shadow["kind"] == "inset") {
-                                                shadow["color"] = supplied["innerShadow"];
-                                                const auto soft =
-                                                    button["softInnerShadow"].toObject();
-                                                require(!soft.isEmpty(),
-                                                        "Missing Button soft inset contract");
-                                                for (const char* key : {"alpha", "y", "blur"})
-                                                    shadow[key] = resolve(soft[key], t);
-                                            }
-                                            shadows.append(shadow);
-                                        }
-                                        material["shadows"] = shadows;
-                                        validatePreset(material, t);
-                                    }
-                                    auto r = recipe(material, t, bg, fg, border,
-                                                    gradientColor("high"), gradientColor("low"),
-                                                    disabled ? bp["disabledText"] : accent,
-                                                    number(button["shape"].toObject()["radius"], t,
-                                                           "button radius", 0, 8),
-                                                    0, disabled, face && !ghost,
-                                                    type == "DASHED" ? "dashed" : "solid");
-                                    r["iconFilledForeground"] =
-                                        disabled || type == "PRIMARY" || ghost
-                                            ? r["foreground"]
-                                            : QJsonValue(bp[danger ? "onBrand" : "primaryText"]);
-                                    recipes[QString("button/%1/%2/%3/%4/%5")
-                                                .arg(id, type, danger ? "1" : "0",
-                                                     ghost ? "1" : "0", state)] = r;
-                                }
                     }
-                }
-                QJsonObject buttonWidths;
-                capabilities["solid-inner-shadow"] = QJsonObject{
-                    {"types", QJsonArray{"PRIMARY", "DEFAULT", "DASHED", "TEXT", "LINK"}},
-                    {"ghost", false}};
-                for (auto value : button["metrics"].toArray()) {
-                    auto m = value.toObject();
-                    auto size = m["name"].toString();
-                    auto v = m["borderWidth"];
-                    auto overrides = button["compact"].toObject()[size].toObject();
-                    if (density == "compact" && overrides.contains("borderWidth"))
-                        v = overrides["borderWidth"];
-                    buttonWidths[size] = number(v, t, "button borderWidth", 0.5, 4);
                 }
                 QJsonObject data{{"profile", profile},
                                  {"sourceHash", sourceHash},
@@ -505,9 +308,6 @@ int main(int argc, char** argv) {
                                  {"presets", presets},
                                  {"sizes", sizes},
                                  {"recipes", recipes},
-                                 {"buttonBorderWidths", buttonWidths},
-                                 {"buttonCapabilities", capabilities},
-                                 {"buttonInnerShadow", solidInnerShadow(button, t)},
                                  {"fontFamily", resolve(contract["fontFamily"], t)},
                                  {"focusColor", cp["focus"]},
                                  {"focusWidth", number(cb["focusWidth"], t, "focus", 1, 4)},

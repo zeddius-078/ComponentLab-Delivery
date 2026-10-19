@@ -1,0 +1,272 @@
+{
+  "$schema": "../../schema/component-recipe-schema.json",
+  "$registry": {
+    "component": "table",
+    "version": "2.0"
+  },
+  "$valueEvidence": "source/component-value-evidence/table.json",
+  "$status": "draft-v2",
+  "$description": "Table V2 visual recipe. Structure, column roles, content, editors and runtime semantics are defined by component-contracts/table.json; this file only maps visual Slots to shared or semantic Tokens.",
+  "$migration": {
+    "visualBaseline": "docs/archive/design-system-history/history/pre-v2-recovery-20261018/table.json",
+    "preserveVisualValues": true,
+    "legacyStateNames": "not-active",
+    "missingBaselineValues": [
+      "legacy size.xl item.height had no source value; large row height is a provisional semantic mapping pending visual review"
+    ]
+  },
+  "base": {
+    "shared": {
+      "slot/container/background-color": "{semantic.color.background.page}",
+      "slot/container/padding-block": "{semantic.size.padding.md}",
+      "slot/container/padding-inline": "{semantic.size.padding.2xl}",
+      "slot/header/background-color": "{semantic.color.background.disabled}",
+      "slot/header/color": "{semantic.color.text.primary}",
+      "slot/header/typography": "{typography.label.label-1}",
+      "slot/header/padding-block": "{semantic.size.padding.md}",
+      "slot/header/padding-inline": "{semantic.size.padding.2xl}",
+      "slot/header/action-gap": "{semantic.size.padding.md}",
+      "slot/cell/color": "{semantic.color.text.primary}",
+      "slot/cell/typography": "{typography.body.body-1}",
+      "slot/cell/gap": "{semantic.size.padding.md}",
+      "slot/cell/padding-block": "{semantic.size.padding.md}",
+      "slot/cell/padding-inline": "{semantic.size.padding.2xl}",
+      "slot/selection-control/size": "{semantic.visualization-size.sm}",
+      "slot/selection-control/width": "{semantic.visualization-size.md}",
+      "slot/sort-indicator/size": "{semantic.visualization-size.sm}",
+      "slot/sort-indicator/color": "{semantic.color.icon.secondary}",
+      "slot/filter-trigger/size": "{semantic.visualization-size.sm}",
+      "slot/filter-trigger/color": "{semantic.color.icon.secondary}",
+      "slot/status-indicator/size": "{semantic.visualization-size.sm}",
+      "slot/status-indicator/color": "{semantic.color.icon.secondary}",
+      "slot/empty-state/color": "{semantic.color.text.tertiary}",
+      "slot/empty-state/typography": "{typography.body.body-1}",
+      "slot/empty-state/min-height": "{semantic.size.height.4xl}",
+      "slot/loading-state/color": "{semantic.color.interactive.brand.default}",
+      "slot/loading-state/typography": "{typography.body.body-1}",
+      "slot/loading-state/min-height": "{semantic.size.height.4xl}",
+      "slot/no-match-state/color": "{semantic.color.text.tertiary}",
+      "slot/no-match-state/typography": "{typography.body.body-1}",
+      "slot/no-match-state/min-height": "{semantic.size.height.4xl}",
+      "slot/error-state/color": "{semantic.color.status.error.default}",
+      "slot/error-state/typography": "{typography.body.body-1}",
+      "slot/error-state/min-height": "{semantic.size.height.4xl}",
+      "slot/border/color": "{semantic.color.border.tertiary}",
+      "slot/border/border-width": "{semantic.border-width.hairline}"
+    },
+    "density": {
+      "compact": {
+        "slot/row/min-height": "{semantic.size.height.xl}",
+        "slot/cell/min-height": "{semantic.size.height.md}"
+      },
+      "small": {
+        "slot/row/min-height": "{semantic.size.height.2xl}",
+        "slot/cell/min-height": "{semantic.size.height.lg}"
+      },
+      "medium": {
+        "slot/row/min-height": "{semantic.size.height.6xl}",
+        "slot/cell/min-height": "{semantic.size.height.4xl}"
+      },
+      "large": {
+        "slot/row/min-height": "{semantic.size.height.6xl}",
+        "slot/cell/min-height": "{semantic.size.height.5xl}"
+      }
+    },
+    "striping": {
+      "none": {
+        "slot/row/background-color": "{semantic.color.background.page}"
+      },
+      "zebra": {
+        "slot/row/background-color": "{semantic.color.background.secondary}"
+      }
+    }
+  },
+  "overlays": [
+    {
+      "when": {"row-interaction": "hover"},
+      "slot": "row",
+      "property": "background-color",
+      "value": "{semantic.color.background.hover}"
+    },
+    {
+      "when": {"row-interaction": "pressed"},
+      "slot": "row",
+      "property": "background-color",
+      "value": "{semantic.color.interactive.brand.soft}"
+    },
+    {
+      "when": {"column-interaction": "hover"},
+      "slot": "column",
+      "property": "background-color",
+      "value": "{semantic.color.background.hover}"
+    },
+    {
+      "when": {"cell-selection": "selected"},
+      "slot": "cell",
+      "property": "background-color",
+      "value": "{semantic.color.interactive.brand.soft}"
+    },
+    {
+      "when": {"cell-selection": "range"},
+      "slot": "cell",
+      "property": "background-color",
+      "value": "{semantic.color.background.secondary}"
+    },
+    {
+      "when": {"cell-selection": "range-boundary"},
+      "slot": "border",
+      "property": "color",
+      "value": "{semantic.color.interactive.brand.default}"
+    },
+    {
+      "when": {"row-selection": "selected"},
+      "slot": "border",
+      "property": "color",
+      "value": "{semantic.color.interactive.brand.default}"
+    },
+    {
+      "when": {"availability": "disabled"},
+      "slot": "container",
+      "property": "background-color",
+      "value": "{semantic.color.background.disabled}"
+    },
+    {
+      "when": {"availability": "disabled"},
+      "slot": "cell",
+      "property": "color",
+      "value": "{semantic.color.text.disabled}"
+    },
+    {
+      "when": {"data-status": "warning"},
+      "slot": "row",
+      "property": "background-color",
+      "value": "{semantic.color.status.warning.default}"
+    },
+    {
+      "when": {"data-status": "warning"},
+      "slot": "cell",
+      "property": "color",
+      "value": "{semantic.color.status.warning.default}"
+    },
+    {
+      "when": {"data-status": "warning"},
+      "slot": "border",
+      "property": "color",
+      "value": "{semantic.color.status.warning.default}"
+    },
+    {
+      "when": {"data-status": "error"},
+      "slot": "row",
+      "property": "background-color",
+      "value": "{semantic.color.status.error.default}"
+    },
+    {
+      "when": {"data-status": "error"},
+      "slot": "cell",
+      "property": "color",
+      "value": "{semantic.color.status.error.default}"
+    },
+    {
+      "when": {"data-status": "alarm"},
+      "slot": "row",
+      "property": "background-color",
+      "value": "{semantic.color.status.alarm.default}"
+    },
+    {
+      "when": {"data-status": "alarm"},
+      "slot": "cell",
+      "property": "color",
+      "value": "{semantic.color.status.alarm.default}"
+    },
+    {
+      "when": {"data-status": "alarm"},
+      "slot": "border",
+      "property": "color",
+      "value": "{semantic.color.status.alarm.default}"
+    },
+    {
+      "when": {"data-status": "error", "status-presentation": "soft"},
+      "slot": "row",
+      "property": "background-color",
+      "value": "{semantic.color.status.error.soft}"
+    },
+    {
+      "when": {"data-status": "warning", "status-presentation": "soft"},
+      "slot": "row",
+      "property": "background-color",
+      "value": "{semantic.color.status.warning.soft}"
+    },
+    {
+      "when": {"data-status": "alarm", "status-presentation": "soft"},
+      "slot": "row",
+      "property": "background-color",
+      "value": "{semantic.color.status.alarm.soft}"
+    },
+    {
+      "when": {"data-status": "warning", "row-interaction": "hover"},
+      "slot": "row",
+      "property": "background-color",
+      "value": "{semantic.color.status.warning.hover}"
+    },
+    {
+      "when": {"data-status": "error", "row-interaction": "hover"},
+      "slot": "row",
+      "property": "background-color",
+      "value": "{semantic.color.status.error.hover}"
+    },
+    {
+      "when": {"data-status": "alarm", "row-interaction": "hover"},
+      "slot": "row",
+      "property": "background-color",
+      "value": "{semantic.color.status.alarm.hover}"
+    },
+    {
+      "when": {"data-status": "warning", "row-selection": "selected"},
+      "slot": "row",
+      "property": "background-color",
+      "value": "{semantic.color.status.warning.select}"
+    },
+    {
+      "when": {"data-status": "error", "row-selection": "selected"},
+      "slot": "row",
+      "property": "background-color",
+      "value": "{semantic.color.status.error.select}"
+    },
+    {
+      "when": {"data-status": "alarm", "row-selection": "selected"},
+      "slot": "row",
+      "property": "background-color",
+      "value": "{semantic.color.status.alarm.select}"
+    },
+    {
+      "when": {"content-role": "emphasis"},
+      "slot": "cell",
+      "property": "typography",
+      "value": "{typography.body.body-emphasis}"
+    },
+    {
+      "when": {"content-role": "invert"},
+      "slot": "cell",
+      "property": "color",
+      "value": "{semantic.color.text.invert}"
+    },
+    {
+      "when": {"content-role": "revise"},
+      "slot": "cell",
+      "property": "color",
+      "value": "{semantic.color.interactive.brand.default}"
+    },
+    {
+      "when": {"content-role": "unit"},
+      "slot": "cell",
+      "property": "color",
+      "value": "{semantic.color.text.unit}"
+    },
+    {
+      "when": {"border-emphasis": "strong"},
+      "slot": "border",
+      "property": "border-width",
+      "value": "{semantic.border-width.thick}"
+    }
+  ]
+}

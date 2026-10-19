@@ -32,3 +32,8 @@ cmake_install.cmake
 *.pdb
 *.ilk
 *.exp
+
+# The workspace root is not a fourth build project. Re-include an accidental
+# root-level build tree so `git status` exposes the architecture violation.
+!/build/
+!/build/**

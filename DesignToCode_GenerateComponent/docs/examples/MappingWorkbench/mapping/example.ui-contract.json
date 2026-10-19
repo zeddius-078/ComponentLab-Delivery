@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "mappingId": "component-lab-qt-mapping-v1",
+  "source": {"kind":"localFixture", "documentUrl":"", "nodeId":"", "rawSha256":"", "reviewed":false},
+  "page": {
+    "id":"MappingExample", "component":"Column",
+    "layout":{"spacing":"semantic.space.vertical.standard","margin":"semantic.layout.padding.inline.compact"},
+    "children":[
+      {"id":"lotInput","component":"Input","properties":{"label":"批次编号","value":"LOT-2026-0917","placeholder":"输入批次编号","allowClear":true,"controlSize":"md"},"tokenRefs":["component.input.base.size.medium.slot.container.visual-height","semantic.color.background.control-default"]},
+      {"id":"chamberSelect","component":"Select","properties":{"label":"目标腔体","options":[{"value":"etch-01","label":"刻蚀腔体 ETCH-01","disabled":false},{"value":"etch-02","label":"刻蚀腔体 ETCH-02","disabled":false},{"value":"etch-03","label":"维护中 ETCH-03","disabled":true}],"values":["etch-01"],"hint":"维护中的腔体不可选择","controlSize":"md"},"tokenRefs":["component.input.base.size.medium.slot.container.visual-height","component.input.base.shared.slot.container.border-radius"]},
+      {"id":"qualityCheck","component":"Checkbox","properties":{"text":"启用质量检查","checked":true,"controlSize":"sm"},"tokenRefs":["component.checkbox.base.state.default.slot.indicator.border-radius"]},
+      {"id":"actions","component":"Row","layout":{"spacing":"semantic.space.vertical.standard","margin":"semantic.layout.padding.inline.compact"},"children":[
+        {"id":"submitButton","component":"Button","properties":{"text":"确认操作","intent":"primary","appearance":"filled","controlSize":"md","trailingIcon":"arrow-right"},"tokenRefs":["component.button.base.size.medium.slot.container.min-height"]},
+        {"id":"searchButton","component":"IconButton","properties":{"intent":"secondary","appearance":"outlined","leadingIcon":"search","accessibleName":"查询批次","controlSize":"md"},"tokenRefs":["component.button.base.size.medium.slot.container.min-height"]}
+      ]}
+    ]
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "$schema": "../../schema/component-recipe-schema.json",
+  "$registry": {"component": "chip", "version": "2.0"},
+  "$status": "draft-v2",
+  "$description": "Chip V2 sparse recipe. Orientation, value and interaction state resolve independently.",
+  "base": {"shared": {"slot/container/background-color": "{semantic.color.background.surface}", "slot/container/border-color": "{semantic.color.border.default}", "slot/container/border-width": "{semantic.border-width.boundary-default}", "slot/container/border-radius": "{semantic.radius.container-full}", "slot/label/color": "{semantic.color.text.primary}", "slot/label/typography": "{typography.label.label-1}", "slot/focus-ring/color": "{semantic.color.interactive.brand.focus-ring}", "slot/focus-ring/border-width": "{semantic.border-width.focus-ring}"}},
+  "valueStructure": {"unselected": {"palette-group": "unselected"}, "selected": {"palette-group": "selected"}},
+  "paletteGroups": {
+    "unselected": {"slot/container/background-color": "{semantic.color.background.surface}", "slot/container/border-color": "{semantic.color.border.default}", "slot/label/color": "{semantic.color.text.primary}"},
+    "selected": {"slot/container/background-color": "{semantic.color.interactive.brand.subtle}", "slot/container/border-color": "{semantic.color.interactive.brand.default}", "slot/label/color": "{semantic.color.interactive.brand.default}"}
+  },
+  "stateOverrides": {
+    "default": {},
+    "hover": {"paletteGroups": {"unselected": {"slot/container/background-color": "{semantic.color.background.hover}"}, "selected": {"slot/container/background-color": "{semantic.color.interactive.brand.subtle}"}}},
+    "pressed": {"paletteGroups": {"unselected": {"slot/container/background-color": "{semantic.color.background.pressed}"}, "selected": {"slot/container/background-color": "{semantic.color.interactive.brand.pressed}", "slot/label/color": "{semantic.color.text.invert}"}}},
+    "focused": {"tokens": {"slot/focus-ring/color": "{semantic.color.interactive.brand.focus-ring}", "slot/focus-ring/border-width": "{semantic.border-width.focus-ring}"}},
+    "disabled": {"paletteGroups": {"unselected": {"slot/container/background-color": "{semantic.color.background.disabled}", "slot/container/border-color": "{semantic.color.border.disabled}", "slot/label/color": "{semantic.color.text.disabled}"}, "selected": {"slot/container/background-color": "{semantic.color.background.disabled}", "slot/container/border-color": "{semantic.color.border.disabled}", "slot/label/color": "{semantic.color.text.disabled}"}}}
+  },
+  "overrides": [
+    {"when": {"orientation": "horizontal"}, "slot": "container", "property": "visual-height", "value": "{primitive.dimension.32}", "$type": "dimension", "unit": "px"},
+    {"when": {"orientation": "horizontal"}, "slot": "container", "property": "padding-inline", "value": "{semantic.layout.padding.inline.comfortable}", "$type": "spacing", "unit": "px"},
+    {"when": {"orientation": "vertical"}, "slot": "container", "property": "visual-height", "value": "{primitive.dimension.64}", "$type": "dimension", "unit": "px"},
+    {"when": {"orientation": "vertical"}, "slot": "container", "property": "padding-inline", "value": "{semantic.layout.padding.inline.comfortable}", "$type": "spacing", "unit": "px"},
+    {"when": {"orientation": "vertical"}, "slot": "container", "property": "border-radius", "value": "{semantic.radius.container-lg}", "$type": "borderRadius", "unit": "px"}
+  ],
+  "overlayPolicy": {"resolutionOrder": ["shared-base", "orientation", "value-palette-group", "state-sparse-override", "focus-ring"], "stateOverrideMode": "sparse-inherit-unmentioned", "disabledPreservesValue": true},
+  "stateRules": {"default": {"interaction": "available"}, "hover": {"interaction": "available"}, "pressed": {"interaction": "activation-in-progress", "valueMutationOwner": "runtime-interaction"}, "focused": {"interaction": "keyboard-focus", "focusRing": {"enabled": true, "visual": "border-only", "activation": "keyboard-only"}}, "disabled": {"interaction": "locked", "preserveValue": true}},
+  "contentRules": {"label": {"required": true, "source": "runtime-content"}},
+  "diagnostics": [{"severity": "warning", "code": "V2-DRAFT-CHIP-LEGACY-RUNTIME-VISUALS", "message": "Z_Chip still contains legacy palette and geometry reads; migrate hardcoded palette/geometry and Focus-visible naming to compiled Chip tokens before release.", "source": "runtime/component/Z_DesignComponents.cpp"}]
+}

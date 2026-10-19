@@ -1,0 +1,29 @@
+{
+  "$description": "NumberInput V2 Component Contract. One public numeric-input identity adapts integer and decimal Qt spin editors.",
+  "component": "number-input",
+  "version": "1.0",
+  "$status": "draft-v2",
+  "contractKind": "numeric-input-control",
+  "registryBindings": {"source": "source/component-registry.json#/components/number-input", "axes": ["type", "controls", "state"], "slots": ["container", "field", "stepper", "increment", "decrement", "divider", "icon", "focus-ring", "loading-spinner"], "authority": "component-registry"},
+  "structure": ["container", "field", "stepper", "increment", "decrement", "divider", "icon", "focus-ring", "loading-spinner"],
+  "stateLayers": {"type": "integer or decimal editor capability", "controls": "stepper structure", "pointerInteraction": "hover and pressed overlays on the active button slot", "focus": "keyboard-only container focus ring", "availability": "disabled, error and loading lock interaction", "content": "runtime numeric value and affixes"},
+  "runtimeModel": {
+    "type": {"registryAxis": "type", "values": ["integer", "decimal"], "owner": "runtime-capability", "qtEditors": ["QSpinBox", "QDoubleSpinBox"]},
+    "controls": {"registryAxis": "controls", "values": ["plus-minus", "up-down", "split-plus-minus", "none"], "owner": "component-configuration"},
+    "state": {"registryAxis": "state", "priority": ["error", "disabled", "loading", "pressed", "focused", "hover", "default"]},
+    "value": {"owner": "runtime-api", "fields": ["value", "minimum", "maximum", "singleStep", "precision", "locale", "grouping"]},
+    "availability": {"disabledLike": ["disabled", "error", "loading"], "readOnlyVisualAlias": "disabled", "lockInteraction": true},
+    "focus": {"state": "focused", "activation": "keyboard-only", "visual": "border-only"}
+  },
+  "contentModel": {"value": {"kind": "runtime-numeric-value", "visualToken": false}, "prefix": {"kind": "localized-content-or-runtime-text", "optional": true, "visualToken": false}, "suffix": {"kind": "localized-content-or-runtime-text", "optional": true, "visualToken": false}},
+  "compositionRules": [
+    "NumberInput is the public semantic component; SpinBox and DoubleSpinBox are Qt editor adapters, not competing public design identities.",
+    "Type selects the runtime editor and does not duplicate visual tokens.",
+    "Controls selects the visible stepper structure. SplitPlusMinus paints two complete side slots separated from the field; PlusMinus and UpDown paint an exact stacked control region.",
+    "The container border is continuous. Button slots own their surface and hit region; the divider is shared and is not a second outer border.",
+    "Hover and pressed overlays are clipped to the active increment/decrement sub-control and never spill into the field or the other button.",
+    "ReadOnly uses the disabled visual and locks interaction. Error and Loading also lock editing; Loading adds the shared dynamic Spinner.",
+    "Value range, step, precision, locale and grouping are runtime APIs, not design axes or Token combinations."
+  ],
+  "tokenBoundary": {"recipeOwns": ["container geometry and border", "field typography and color", "stepper/increment/decrement surfaces", "divider", "icons", "focus ring", "loading spinner references"], "runtimeOwns": ["numeric value and constraints", "editor selection", "step behavior", "keyboard and pointer handling", "read-only/error/loading locks"], "contractDoesNotOwn": ["resolved colors and dimensions", "business validation messages", "locale data"]}
+}

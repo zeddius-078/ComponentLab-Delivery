@@ -218,8 +218,18 @@
     ]
   },
   "tokenAuthority": {
-    "source": "DesignToCode_GenerateComponent/Source/ComponentKit/design-assets/DesignSystem/imports/stoken.json",
-    "chain": "01.primitive -> 02.profile -> 03.semantic -> 04.component -> Figma bound properties",
+    "sourceRoot": "DesignToCode_GenerateComponent/Source/ComponentKit/design-assets/DesignSystem/source",
+    "sources": [
+      "primitive.json",
+      "profile.json",
+      "semantic.json",
+      "component-recipes/",
+      "component-registry.json",
+      "product/application-layout.json"
+    ],
+    "chain": "primitive -> profile -> semantic -> component recipes/registry -> generated component -> Figma V2 mapping",
+    "generatedComponent": "DesignToCode_GenerateComponent/Source/ComponentKit/design-assets/DesignSystem/generated/component.json",
+    "figmaMapping": "DesignToCode_GenerateComponent/Source/ComponentKit/design-assets/DesignSystem/config/figma-component-map-v2.json",
     "liveFigmaAudit": {
       "publicIdentities": 48,
       "nodeIdentityMissing": 0,
@@ -805,12 +815,12 @@
       "status": "VERIFIED",
       "figmaNodeId": "400:106",
       "figmaScreenshotSha256": "A1522D9C5D44005C7CF26F826B408723DB32A4375C865B81B7DF75ADA1AA36CD",
-      "profiles": ["light-comfortable", "light-compact", "dark-comfortable", "dark-compact"],
+      "profiles": ["standard-light", "wide-light", "standard-dark", "wide-dark"],
       "runtimeGallerySha256": {
-        "light-comfortable": "DBA08D8EAF8394B569C943359BEC7CDDD6360CDDBA0554CC16CB1D592BD5A9F5",
-        "light-compact": "DBA08D8EAF8394B569C943359BEC7CDDD6360CDDBA0554CC16CB1D592BD5A9F5",
-        "dark-comfortable": "583D993BE1F409C24A24AA3448A80799233208C79E013FE4DB3C99B0A7540FB7",
-        "dark-compact": "583D993BE1F409C24A24AA3448A80799233208C79E013FE4DB3C99B0A7540FB7"
+        "standard-light": "DBA08D8EAF8394B569C943359BEC7CDDD6360CDDBA0554CC16CB1D592BD5A9F5",
+        "wide-light": "DBA08D8EAF8394B569C943359BEC7CDDD6360CDDBA0554CC16CB1D592BD5A9F5",
+        "standard-dark": "583D993BE1F409C24A24AA3448A80799233208C79E013FE4DB3C99B0A7540FB7",
+        "wide-dark": "583D993BE1F409C24A24AA3448A80799233208C79E013FE4DB3C99B0A7540FB7"
       },
       "scope": "Six Kind=Bar|Line|Status by State=Data|Empty variants; root card, header, plot, grid, series, status segments, legend, empty region and default text properties.",
       "limitations": "Line reference SVG is the governed visual specimen; arbitrary line-series serialization, domains, axes, labels, animation, keyboard exploration and accessible text equivalents remain host-owned engineering work. Formal designer and governance approval remain open.",
@@ -826,12 +836,12 @@
       "status": "VERIFIED",
       "figmaNodeId": "392:216",
       "figmaScreenshotSha256": "0D86348DF70723A7050CB6923A89701ABC2DE94C8DFF7DF9F6BA6005F8DA850D",
-      "profiles": ["light-comfortable", "light-compact", "dark-comfortable", "dark-compact"],
+      "profiles": ["standard-light", "wide-light", "standard-dark", "wide-dark"],
       "runtimeGallerySha256": {
-        "light-comfortable": "61964E2CE70E67BD59CAA0E6BD2B050A2EB30C103A32B5202BEF28FCF215FD07",
-        "light-compact": "61964E2CE70E67BD59CAA0E6BD2B050A2EB30C103A32B5202BEF28FCF215FD07",
-        "dark-comfortable": "6ABC4651E7B82CABB35F93CD80AEDDB1AB4E650BE714FDF1078B56DD597A287D",
-        "dark-compact": "6ABC4651E7B82CABB35F93CD80AEDDB1AB4E650BE714FDF1078B56DD597A287D"
+        "standard-light": "61964E2CE70E67BD59CAA0E6BD2B050A2EB30C103A32B5202BEF28FCF215FD07",
+        "wide-light": "61964E2CE70E67BD59CAA0E6BD2B050A2EB30C103A32B5202BEF28FCF215FD07",
+        "standard-dark": "6ABC4651E7B82CABB35F93CD80AEDDB1AB4E650BE714FDF1078B56DD597A287D",
+        "wide-dark": "6ABC4651E7B82CABB35F93CD80AEDDB1AB4E650BE714FDF1078B56DD597A287D"
       },
       "scope": "Four Density=Comfortable|Compact by Collapsed=False|True public variants; header, logo, collapse action, route list, active route, settings action, spacing, radius and theme surface.",
       "limitations": "The 16 DSM/Sidebar/NavItem states remain private anatomy rather than a second SDK identity. Route permissions, navigation resolution and page switching remain host-owned. Formal designer and governance approval remain open.",
@@ -846,12 +856,12 @@
       "status": "VERIFIED",
       "figmaNodeId": "423:859",
       "figmaScreenshotSha256": "3CFD1C2ACE1A073D352FCEC5C9F95F3B4F9C329E4531B1B5769203BA975BBE68",
-      "profiles": ["light-comfortable", "light-compact", "dark-comfortable", "dark-compact"],
+      "profiles": ["standard-light", "wide-light", "standard-dark", "wide-dark"],
       "runtimeGallerySha256": {
-        "light-comfortable": "684A638E841A3E39785AC62B99D576150A6CADFD7CA46AC3D5435786B12444E4",
-        "light-compact": "684A638E841A3E39785AC62B99D576150A6CADFD7CA46AC3D5435786B12444E4",
-        "dark-comfortable": "BDC6CC773C235784B922E2A746598D657488CD50A5273569DD33A9471A88513A",
-        "dark-compact": "BDC6CC773C235784B922E2A746598D657488CD50A5273569DD33A9471A88513A"
+        "standard-light": "684A638E841A3E39785AC62B99D576150A6CADFD7CA46AC3D5435786B12444E4",
+        "wide-light": "684A638E841A3E39785AC62B99D576150A6CADFD7CA46AC3D5435786B12444E4",
+        "standard-dark": "BDC6CC773C235784B922E2A746598D657488CD50A5273569DD33A9471A88513A",
+        "wide-dark": "BDC6CC773C235784B922E2A746598D657488CD50A5273569DD33A9471A88513A"
       },
       "scope": "Eight WeekStart=Monday|Sunday by Grid=True|False by State=Default|Disabled variants; 440 by 360 frame, month header, navigation arrows, weekday order, zero-padded dates, reference date 15 and selected date 23.",
       "limitations": "The evidence fixes the September 2026 design specimen. Date range, locale overrides, business-day rules, initial page and host-owned selected date remain runtime concerns. Formal designer and governance approval remain open.",
@@ -867,12 +877,12 @@
       "status": "VERIFIED",
       "figmaNodeId": "520:120",
       "figmaScreenshotSha256": "8853CBEABF7425AB934F78A6B6F74C960310DDA8FCC127E379DD26A0F667A4A8",
-      "profiles": ["light-comfortable", "light-compact", "dark-comfortable", "dark-compact"],
+      "profiles": ["standard-light", "wide-light", "standard-dark", "wide-dark"],
       "runtimeGallerySha256": {
-        "light-comfortable": "EE65BC962EAC1F9FE8CD5D6EB337AD4D81161E4D62787D9D7A1BCB919C911EC8",
-        "light-compact": "EE65BC962EAC1F9FE8CD5D6EB337AD4D81161E4D62787D9D7A1BCB919C911EC8",
-        "dark-comfortable": "57EFA497B6D81064C1E822970102D321F1D27FFE2A082A423B997A7A445D9F4F",
-        "dark-compact": "57EFA497B6D81064C1E822970102D321F1D27FFE2A082A423B997A7A445D9F4F"
+        "standard-light": "EE65BC962EAC1F9FE8CD5D6EB337AD4D81161E4D62787D9D7A1BCB919C911EC8",
+        "wide-light": "EE65BC962EAC1F9FE8CD5D6EB337AD4D81161E4D62787D9D7A1BCB919C911EC8",
+        "standard-dark": "57EFA497B6D81064C1E822970102D321F1D27FFE2A082A423B997A7A445D9F4F",
+        "wide-dark": "57EFA497B6D81064C1E822970102D321F1D27FFE2A082A423B997A7A445D9F4F"
       },
       "scope": "Ten Orientation=Horizontal|Vertical by State=Default|Hover|Dragging|Collapsed|Disabled variants; 12 px handle, 4 by 32 or 32 by 4 grip, collapsed first pane and 2 px dragging-position evidence.",
       "limitations": "Pane content, legal ranges, collapse policy and saved sizes remain host-owned; the Dragging state is a deterministic review specimen while live movement remains native QSplitter behavior. Formal designer and governance approval remain open.",
@@ -888,12 +898,12 @@
       "status": "VERIFIED",
       "figmaNodeId": "531:912",
       "figmaScreenshotSha256": "DF36B47A7FDBE57485B6961C1BABDDFE029B396A70A61B5C195CFC0F1AB16E9D",
-      "profiles": ["light-comfortable", "light-compact", "dark-comfortable", "dark-compact"],
+      "profiles": ["standard-light", "wide-light", "standard-dark", "wide-dark"],
       "runtimeGallerySha256": {
-        "light-comfortable": "6819351D9664D25BBFCFB1E06CB2037EA7F31A3CFA9E254C427BB28CCC950029",
-        "light-compact": "6819351D9664D25BBFCFB1E06CB2037EA7F31A3CFA9E254C427BB28CCC950029",
-        "dark-comfortable": "F812A09AFDFFDF78584F04F82300DF3AF2D1465BA2FB0A635368BA9EB0D6B888",
-        "dark-compact": "F812A09AFDFFDF78584F04F82300DF3AF2D1465BA2FB0A635368BA9EB0D6B888"
+        "standard-light": "6819351D9664D25BBFCFB1E06CB2037EA7F31A3CFA9E254C427BB28CCC950029",
+        "wide-light": "6819351D9664D25BBFCFB1E06CB2037EA7F31A3CFA9E254C427BB28CCC950029",
+        "standard-dark": "F812A09AFDFFDF78584F04F82300DF3AF2D1465BA2FB0A635368BA9EB0D6B888",
+        "wide-dark": "F812A09AFDFFDF78584F04F82300DF3AF2D1465BA2FB0A635368BA9EB0D6B888"
       },
       "scope": "Twenty-four Bars=None|Vertical|Horizontal|Both by Resize=Fixed|Resizable by State=Default|Focus|Disabled variants; token-backed viewport, sample content, skeleton rows, focus target, native scrollbars and fixed versus resizable content behavior.",
       "limitations": "Bars is visible-outcome metadata rather than a scroll-policy enum. The host retains QAbstractScrollArea policy, content geometry, ownership, scroll position and ensureVisible behavior; the ComponentLab evidence uses ScrollBarAsNeeded plus deterministic content minimums. Formal designer and governance approval remain open.",
@@ -910,18 +920,18 @@
       "status": "VERIFIED",
       "figmaNodeId": "1312:96",
       "figmaScreenshotSha256": "26F60249BDBF0934827805904021B4736CEEEAA595215A5946993E6F114A1573",
-      "profiles": ["light-comfortable", "light-compact", "dark-comfortable", "dark-compact"],
+      "profiles": ["standard-light", "wide-light", "standard-dark", "wide-dark"],
       "runtimeGallerySha256": {
-        "light-comfortable": "BF60FB8153F5E4D399F7FC1250D7AC8E4BE9D70062C0FE2573381B2A8193935E",
-        "light-compact": "2AA350BE16D89748C414CB842C3E2237956C0551B0F7FCB44201522E63D64F91",
-        "dark-comfortable": "D47B732524B241196D7DE41A660E498F174EF4B48805961FCB79E809688533BA",
-        "dark-compact": "18E7AFB9C2067BA6C43E44BFC9E02F396B6AC8A04BC69E8ECB35F45B5FEE336D"
+        "standard-light": "BF60FB8153F5E4D399F7FC1250D7AC8E4BE9D70062C0FE2573381B2A8193935E",
+        "wide-light": "2AA350BE16D89748C414CB842C3E2237956C0551B0F7FCB44201522E63D64F91",
+        "standard-dark": "D47B732524B241196D7DE41A660E498F174EF4B48805961FCB79E809688533BA",
+        "wide-dark": "18E7AFB9C2067BA6C43E44BFC9E02F396B6AC8A04BC69E8ECB35F45B5FEE336D"
       },
       "runtimeStateGallerySha256": {
-        "light-comfortable": "9F946A0007E521B6227206BDB3DEF4A19EF3177F81360F75E74749E99BCBEDA1",
-        "light-compact": "687FDC905B5F37882D7A15B40D6E34AC3772AE7EA058B0C53186B8BD6F2F8C62",
-        "dark-comfortable": "3FBA6E02D76ADBE9C0D7E8E704450815A3FBCC54E07A015743C376F00ED8EAA7",
-        "dark-compact": "E17E89BCB6724CD2C81573FF9A4677222CE168829157F8E1DCB4F725AA1F7007"
+        "standard-light": "9F946A0007E521B6227206BDB3DEF4A19EF3177F81360F75E74749E99BCBEDA1",
+        "wide-light": "687FDC905B5F37882D7A15B40D6E34AC3772AE7EA058B0C53186B8BD6F2F8C62",
+        "standard-dark": "3FBA6E02D76ADBE9C0D7E8E704450815A3FBCC54E07A015743C376F00ED8EAA7",
+        "wide-dark": "E17E89BCB6724CD2C81573FF9A4677222CE168829157F8E1DCB4F725AA1F7007"
       },
       "scope": "Two public IconPlacement=Top|Start variants; 840 px composite width, muted secondary tier, three sample secondary actions, three icon-and-label primary actions, 8 px governed tier and item gaps, selected state, real child-action activation and optional focus indicator.",
       "limitations": "SubItem, MainItem and Separator remain private anatomy rather than independent SDK components. Stable destination data, permissions, route resolution and page switching remain host-owned. The component set currently has no Code Connect mapping; none was invented without an approved public repository source. Formal designer and governance approval remain open.",
@@ -937,12 +947,12 @@
       "status": "VERIFIED",
       "figmaNodeId": "244:2769",
       "figmaScreenshotSha256": "2D2E0E8CC8C4BDD8CCDE2470B67241A395071D28EA948818E9E0311F8852D031",
-      "profiles": ["light-comfortable", "light-compact", "dark-comfortable", "dark-compact"],
+      "profiles": ["standard-light", "wide-light", "standard-dark", "wide-dark"],
       "runtimeGallerySha256": {
-        "light-comfortable": "287795D900A053D9CBCBCCF6D5683A0E1456450973ACA2C243AE5BA2B7140977",
-        "light-compact": "287795D900A053D9CBCBCCF6D5683A0E1456450973ACA2C243AE5BA2B7140977",
-        "dark-comfortable": "76A6408D804771A4B04AE8A0272C640CD88B366A3DE5A36DEF204A55670D8825",
-        "dark-compact": "76A6408D804771A4B04AE8A0272C640CD88B366A3DE5A36DEF204A55670D8825"
+        "standard-light": "287795D900A053D9CBCBCCF6D5683A0E1456450973ACA2C243AE5BA2B7140977",
+        "wide-light": "287795D900A053D9CBCBCCF6D5683A0E1456450973ACA2C243AE5BA2B7140977",
+        "standard-dark": "76A6408D804771A4B04AE8A0272C640CD88B366A3DE5A36DEF204A55670D8825",
+        "wide-dark": "76A6408D804771A4B04AE8A0272C640CD88B366A3DE5A36DEF204A55670D8825"
       },
       "scope": "Public outlined Select variants across Small, Middle and Large sizes and Default, Hover, Focus and Disabled states; fixed 240 px field width, captured heights, text, chevron, outline and profile presentation.",
       "limitations": "The larger page also contains internal anatomy and other governed Select families. Only the canonical public outlined set is the direct live-Figma comparison target; popup data, filtering, keyboard selection and validation controllers remain host-owned. Formal designer and governance approval remain open.",
@@ -958,12 +968,12 @@
       "status": "VERIFIED",
       "figmaNodeId": "341:53",
       "figmaScreenshotSha256": "7B4AF5F10065C3D5C29430F5DF10D40E4A48C73310878B86E3784A1579B2AA58",
-      "profiles": ["light-comfortable", "light-compact", "dark-comfortable", "dark-compact"],
+      "profiles": ["standard-light", "wide-light", "standard-dark", "wide-dark"],
       "runtimeGallerySha256": {
-        "light-comfortable": "B0B7395180333846ECAC39FF79B754317854BE23274FB3A6C30D93B65A47F113",
-        "light-compact": "B0B7395180333846ECAC39FF79B754317854BE23274FB3A6C30D93B65A47F113",
-        "dark-comfortable": "B0B7395180333846ECAC39FF79B754317854BE23274FB3A6C30D93B65A47F113",
-        "dark-compact": "B0B7395180333846ECAC39FF79B754317854BE23274FB3A6C30D93B65A47F113"
+        "standard-light": "B0B7395180333846ECAC39FF79B754317854BE23274FB3A6C30D93B65A47F113",
+        "wide-light": "B0B7395180333846ECAC39FF79B754317854BE23274FB3A6C30D93B65A47F113",
+        "standard-dark": "B0B7395180333846ECAC39FF79B754317854BE23274FB3A6C30D93B65A47F113",
+        "wide-dark": "B0B7395180333846ECAC39FF79B754317854BE23274FB3A6C30D93B65A47F113"
       },
       "scope": "Ten Value=Off|On by State=Default|Hover|Focus|Pressed|Disabled variants; 18 px indicator, centered selected dot, label baseline, grouped horizontal and vertical examples and disabled evidence.",
       "limitations": "Mutual exclusion, data binding and group validation remain native QButtonGroup or host-controller concerns. Formal designer and governance approval remain open.",
@@ -979,12 +989,12 @@
       "status": "VERIFIED",
       "figmaNodeId": "346:19",
       "figmaScreenshotSha256": "7BD678AACC3E4BC206DE753CB1CC783BBAD0ECC282C4599942AA264F1CB3EED9",
-      "profiles": ["light-comfortable", "light-compact", "dark-comfortable", "dark-compact"],
+      "profiles": ["standard-light", "wide-light", "standard-dark", "wide-dark"],
       "runtimeGallerySha256": {
-        "light-comfortable": "199DB0F862FFF5ACDEC0FDFA4DA331B556F77189BA3B3A337ACEC3AD5E0CE770",
-        "light-compact": "199DB0F862FFF5ACDEC0FDFA4DA331B556F77189BA3B3A337ACEC3AD5E0CE770",
-        "dark-comfortable": "94096AAD00961BD737101161AA63BE8B511970685415F62EFD3918E2871BDE12",
-        "dark-compact": "94096AAD00961BD737101161AA63BE8B511970685415F62EFD3918E2871BDE12"
+        "standard-light": "199DB0F862FFF5ACDEC0FDFA4DA331B556F77189BA3B3A337ACEC3AD5E0CE770",
+        "wide-light": "199DB0F862FFF5ACDEC0FDFA4DA331B556F77189BA3B3A337ACEC3AD5E0CE770",
+        "standard-dark": "94096AAD00961BD737101161AA63BE8B511970685415F62EFD3918E2871BDE12",
+        "wide-dark": "94096AAD00961BD737101161AA63BE8B511970685415F62EFD3918E2871BDE12"
       },
       "scope": "Twenty-four Size=Medium|Small by Value=Off|On by State=Default|Hover|Pressed|Focus-visible|Loading|Disabled variants; 180 by 32 root, optional label, non-stretching 36 by 20 or 28 by 16 track, 2 px inset, knob and loading indicator.",
       "limitations": "Loading blocks duplicate input while preserving the binary Value. Async lifecycle, persistence and business confirmation remain host-owned. Formal designer and governance approval remain open.",
@@ -1000,12 +1010,12 @@
       "status": "VERIFIED",
       "figmaNodeId": "2132:189",
       "figmaScreenshotSha256": "0CA0091BC599FB0B64D7899A2A856F781896C5C19074E508CF1D1396F3B6BE35",
-      "profiles": ["light-comfortable", "light-compact", "dark-comfortable", "dark-compact"],
+      "profiles": ["standard-light", "wide-light", "standard-dark", "wide-dark"],
       "runtimeGallerySha256": {
-        "light-comfortable": "30F82357C4234AAD5CB1D80EA7DE46613FD695A6E27B6B952A4BBC563FFAACF6",
-        "light-compact": "01703104B550D04D915C57E5CCF1D31A019A70604C8A0F80BCFB2D42BDA68497",
-        "dark-comfortable": "1D9458FF36C141543B83819A3F49C181641149C701F188264C9937401FD5140C",
-        "dark-compact": "13FEED5D64626F87885973E3F4BC1A8A68A680ECF56A26476C923FCBBBCBA0CD"
+        "standard-light": "30F82357C4234AAD5CB1D80EA7DE46613FD695A6E27B6B952A4BBC563FFAACF6",
+        "wide-light": "01703104B550D04D915C57E5CCF1D31A019A70604C8A0F80BCFB2D42BDA68497",
+        "standard-dark": "1D9458FF36C141543B83819A3F49C181641149C701F188264C9937401FD5140C",
+        "wide-dark": "13FEED5D64626F87885973E3F4BC1A8A68A680ECF56A26476C923FCBBBCBA0CD"
       },
       "scope": "Twelve Placement=TopLeft|Top|TopRight|RightTop|Right|RightBottom|BottomRight|Bottom|BottomLeft|LeftBottom|Left|LeftTop variants; Helpful context default, token-driven surface and content, placement-specific arrows, four runtime profiles and explicit multiline sizing evidence.",
       "limitations": "The component-set screenshot proves the twelve authored placements while the separate review frame and runtime test prove multiline content. Window-edge collision avoidance still requires a visible host-level interaction pass. Formal designer and governance approval remain open.",
@@ -1020,12 +1030,12 @@
       "status": "VERIFIED",
       "figmaNodeId": "2148:640",
       "figmaScreenshotSha256": "638ACD27D609A430095DD20AF86E2885790858E9EAE74A5DE9C662EE2F17DBAF",
-      "profiles": ["light-comfortable", "light-compact", "dark-comfortable", "dark-compact"],
+      "profiles": ["standard-light", "wide-light", "standard-dark", "wide-dark"],
       "runtimeGallerySha256": {
-        "light-comfortable": "2E874201A2D53A33BBF33FE9F1720854EFF352DC4613A5A398549BBAECAF82BE",
-        "light-compact": "DFAFA7F13CA819E161C7C1FCE3E9CDEB42F5B4D8AF2288CB2D4DEBA2B2D71445",
-        "dark-comfortable": "A769417562965A1E83DA10D5147E3E0333A94D86F0248A5B78807D2C9C7B81EC",
-        "dark-compact": "8898F80A76342A7EC82C0A705EB47C22056FEA6620002752580E51E4EE60CD3F"
+        "standard-light": "2E874201A2D53A33BBF33FE9F1720854EFF352DC4613A5A398549BBAECAF82BE",
+        "wide-light": "DFAFA7F13CA819E161C7C1FCE3E9CDEB42F5B4D8AF2288CB2D4DEBA2B2D71445",
+        "standard-dark": "A769417562965A1E83DA10D5147E3E0333A94D86F0248A5B78807D2C9C7B81EC",
+        "wide-dark": "8898F80A76342A7EC82C0A705EB47C22056FEA6620002752580E51E4EE60CD3F"
       },
       "scope": "Three State=Default|Disabled|Loading variants; fixed 520 by 210 root, 205 by 180 panels, 44 by 36 direction buttons, token-backed checkbox markers, Available and Selected counts, loading copy and four-profile presentation.",
       "limitations": "The SDK emits move requests and renders external QAbstractItemModel data; collection queries, ordering, permissions, persistence and error recovery remain controller-owned. ComponentLab supplies only a demonstration controller. Formal designer and governance approval remain open.",
@@ -1041,12 +1051,12 @@
       "status": "VERIFIED",
       "figmaNodeId": "511:124",
       "figmaScreenshotSha256": "3ED07F120A2EAD7F4E88F4EB5A7FCBB6E696CCBE9F44FE02E116C413817FC55E",
-      "profiles": ["light-comfortable", "light-compact", "dark-comfortable", "dark-compact"],
+      "profiles": ["standard-light", "wide-light", "standard-dark", "wide-dark"],
       "runtimeGallerySha256": {
-        "light-comfortable": "6528DCE4A590A29E6AEAA7A5B636B22E2BC0EE252DA91AD18E5D53F06D4D3F07",
-        "light-compact": "6528DCE4A590A29E6AEAA7A5B636B22E2BC0EE252DA91AD18E5D53F06D4D3F07",
-        "dark-comfortable": "E97406C3A84087A6C39330125ED87B3EFEBF1EB58197CC1FF65F14972F3EEF6B",
-        "dark-compact": "E97406C3A84087A6C39330125ED87B3EFEBF1EB58197CC1FF65F14972F3EEF6B"
+        "standard-light": "6528DCE4A590A29E6AEAA7A5B636B22E2BC0EE252DA91AD18E5D53F06D4D3F07",
+        "wide-light": "6528DCE4A590A29E6AEAA7A5B636B22E2BC0EE252DA91AD18E5D53F06D4D3F07",
+        "standard-dark": "E97406C3A84087A6C39330125ED87B3EFEBF1EB58197CC1FF65F14972F3EEF6B",
+        "wide-dark": "E97406C3A84087A6C39330125ED87B3EFEBF1EB58197CC1FF65F14972F3EEF6B"
       },
       "scope": "Six State=Inactive|Active|Maximized|Minimized|Shaded|Disabled variants; authored 280 by 170 or 280 by 72 geometry, title bar, document icon, native window controls, active outline, disabled presentation and document-content slot.",
       "limitations": "State is deterministic paint metadata rather than a direct QMdiSubWindow state enum. Activation, native window-state transitions, WindowFlags, move and resize, system menu and close-event veto remain Qt or host-controller responsibilities. Formal designer and governance approval remain open.",
@@ -1063,12 +1073,12 @@
       "status": "VERIFIED",
       "figmaNodeId": "511:280",
       "figmaScreenshotSha256": "EA982BFD707537C92B90851B93B961A8E108FEC087E8399D104022A7C0FF767C",
-      "profiles": ["light-comfortable", "light-compact", "dark-comfortable", "dark-compact"],
+      "profiles": ["standard-light", "wide-light", "standard-dark", "wide-dark"],
       "runtimeGallerySha256": {
-        "light-comfortable": "6528DCE4A590A29E6AEAA7A5B636B22E2BC0EE252DA91AD18E5D53F06D4D3F07",
-        "light-compact": "6528DCE4A590A29E6AEAA7A5B636B22E2BC0EE252DA91AD18E5D53F06D4D3F07",
-        "dark-comfortable": "E97406C3A84087A6C39330125ED87B3EFEBF1EB58197CC1FF65F14972F3EEF6B",
-        "dark-compact": "E97406C3A84087A6C39330125ED87B3EFEBF1EB58197CC1FF65F14972F3EEF6B"
+        "standard-light": "6528DCE4A590A29E6AEAA7A5B636B22E2BC0EE252DA91AD18E5D53F06D4D3F07",
+        "wide-light": "6528DCE4A590A29E6AEAA7A5B636B22E2BC0EE252DA91AD18E5D53F06D4D3F07",
+        "standard-dark": "E97406C3A84087A6C39330125ED87B3EFEBF1EB58197CC1FF65F14972F3EEF6B",
+        "wide-dark": "E97406C3A84087A6C39330125ED87B3EFEBF1EB58197CC1FF65F14972F3EEF6B"
       },
       "scope": "Four Presentation=Free|Cascade|Tile|Tabbed variants; authored workspace frame, active and inactive managed subwindows, cascade and tile geometry, TabbedView tab bar, active document content and activation-order label.",
       "limitations": "Free, Cascade and Tile are authored review geometries while Tabbed maps to QMdiArea::TabbedView. Document creation, activation order, arrangement commands, persistence and lifecycle remain host-owned; Card and Tabs remain construction references rather than MDI equivalents. Formal designer and governance approval remain open.",
@@ -1085,12 +1095,12 @@
       "status": "VERIFIED",
       "figmaNodeId": "516:62",
       "figmaScreenshotSha256": "EF42C471CD76FB00AD4019759CD5F0CB0D6232EE9C46C44DB270CC86FF26963F",
-      "profiles": ["light-comfortable", "light-compact", "dark-comfortable", "dark-compact"],
+      "profiles": ["standard-light", "wide-light", "standard-dark", "wide-dark"],
       "runtimeGallerySha256": {
-        "light-comfortable": "98C6AA37754CFDD3E98CA6DA47B1AAEDF23C2D606B5CE8DD12196E870DEA8355",
-        "light-compact": "98C6AA37754CFDD3E98CA6DA47B1AAEDF23C2D606B5CE8DD12196E870DEA8355",
-        "dark-comfortable": "0C08F33C09470D37A67285E025912E0FE86520416C9BB13316BD8E0FEAD1D1B8",
-        "dark-compact": "0C08F33C09470D37A67285E025912E0FE86520416C9BB13316BD8E0FEAD1D1B8"
+        "standard-light": "98C6AA37754CFDD3E98CA6DA47B1AAEDF23C2D606B5CE8DD12196E870DEA8355",
+        "wide-light": "98C6AA37754CFDD3E98CA6DA47B1AAEDF23C2D606B5CE8DD12196E870DEA8355",
+        "standard-dark": "0C08F33C09470D37A67285E025912E0FE86520416C9BB13316BD8E0FEAD1D1B8",
+        "wide-dark": "0C08F33C09470D37A67285E025912E0FE86520416C9BB13316BD8E0FEAD1D1B8"
       },
       "scope": "Three State=Empty|Content|Disabled variants; deterministic zero- or one-page initialization, 300 by 190 authored frame, Profile-token surface, border, primary text and disabled presentation across all four runtime profiles.",
       "limitations": "Route history, page identity, transitions and persistence remain host-owned. The live Figma Content and Disabled specimens contain overlapping source text; the frozen source view preserves that fact while the runtime preview remains readable. Formal designer and governance approval remain open.",
@@ -1107,12 +1117,12 @@
       "status": "VERIFIED",
       "figmaNodeId": "516:113",
       "figmaScreenshotSha256": "D7CBF94871E5DEC438AD7FC4190EDAC23417CE2F31DE7149C38E75E2583C5FA8",
-      "profiles": ["light-comfortable", "light-compact", "dark-comfortable", "dark-compact"],
+      "profiles": ["standard-light", "wide-light", "standard-dark", "wide-dark"],
       "runtimeGallerySha256": {
-        "light-comfortable": "17DA202E481407700D31361C3821E8C1CD0ABE6E5822EF2B8329E4508539D5D5",
-        "light-compact": "17DA202E481407700D31361C3821E8C1CD0ABE6E5822EF2B8329E4508539D5D5",
-        "dark-comfortable": "ED234D31904D6D354507C448A79E6BDB46D7486AB6E505870AFAA48E4604A907",
-        "dark-compact": "ED234D31904D6D354507C448A79E6BDB46D7486AB6E505870AFAA48E4604A907"
+        "standard-light": "17DA202E481407700D31361C3821E8C1CD0ABE6E5822EF2B8329E4508539D5D5",
+        "wide-light": "17DA202E481407700D31361C3821E8C1CD0ABE6E5822EF2B8329E4508539D5D5",
+        "standard-dark": "ED234D31904D6D354507C448A79E6BDB46D7486AB6E505870AFAA48E4604A907",
+        "wide-dark": "ED234D31904D6D354507C448A79E6BDB46D7486AB6E505870AFAA48E4604A907"
       },
       "scope": "Six Kind=Standard|Commit|Final by Completion=Incomplete|Complete variants; native QWizardPage semantics, required-field completion, token-backed surface, copy, accent border, status strip and status icon across all four runtime profiles.",
       "limitations": "Completion is preview metadata unless derived from the real required-field state; the adapter does not override QWizardPage::isComplete(). Validation rules, asynchronous checks and navigation policy remain host-owned. Formal designer and governance approval remain open.",
@@ -1129,12 +1139,12 @@
       "status": "VERIFIED",
       "figmaNodeId": "516:669",
       "figmaScreenshotSha256": "FF54A917697A738D4411D8316A8DED0CDF014EA470AE403245AB8BA99293245A",
-      "profiles": ["light-comfortable", "light-compact", "dark-comfortable", "dark-compact"],
+      "profiles": ["standard-light", "wide-light", "standard-dark", "wide-dark"],
       "runtimeGallerySha256": {
-        "light-comfortable": "E5A5B70C5ED6B71F6AC235D195132B522F091F5A2AE4C1B3CF9AB60A3EFDB713",
-        "light-compact": "E5A5B70C5ED6B71F6AC235D195132B522F091F5A2AE4C1B3CF9AB60A3EFDB713",
-        "dark-comfortable": "FFE6284C2E6FABDDC189834E18E6BF85613BB01CE3CA815A57C93093909AD298",
-        "dark-compact": "FFE6284C2E6FABDDC189834E18E6BF85613BB01CE3CA815A57C93093909AD298"
+        "standard-light": "E5A5B70C5ED6B71F6AC235D195132B522F091F5A2AE4C1B3CF9AB60A3EFDB713",
+        "wide-light": "E5A5B70C5ED6B71F6AC235D195132B522F091F5A2AE4C1B3CF9AB60A3EFDB713",
+        "standard-dark": "FFE6284C2E6FABDDC189834E18E6BF85613BB01CE3CA815A57C93093909AD298",
+        "wide-dark": "FFE6284C2E6FABDDC189834E18E6BF85613BB01CE3CA815A57C93093909AD298"
       },
       "scope": "Sixteen Style=Classic|Modern|Mac|Aero by Phase=Start|Middle|Commit|Finish variants; native QWizard style mapping, four real pages, phase preview, Profile-token frame and native-role button states across all four runtime profiles.",
       "limitations": "Phase remains deterministic preview metadata rather than forced QWizard navigation state. Branching, validation, asynchronous work, cancellation policy, persistence and application routing remain host-owned. Formal designer and governance approval remain open.",
@@ -1151,12 +1161,12 @@
       "status": "VERIFIED",
       "figmaNodeId": "2147:515",
       "figmaScreenshotSha256": "9EB0B4CD5F292EDDDDB9F11D9BCB07E673250F6B9836DF50AD42CB0901D58C88",
-      "profiles": ["light-comfortable", "light-compact", "dark-comfortable", "dark-compact"],
+      "profiles": ["standard-light", "wide-light", "standard-dark", "wide-dark"],
       "runtimeGallerySha256": {
-        "light-comfortable": "801AB3DB64BCA195456211E95F6FD390771A68CFFF61C9FF318FD272543C9E57",
-        "light-compact": "801AB3DB64BCA195456211E95F6FD390771A68CFFF61C9FF318FD272543C9E57",
-        "dark-comfortable": "7049C807DE1AFE7EF95898B1D2428FCF5C4D89E6E1FCD95CA003ADAEA3952601",
-        "dark-compact": "7049C807DE1AFE7EF95898B1D2428FCF5C4D89E6E1FCD95CA003ADAEA3952601"
+        "standard-light": "801AB3DB64BCA195456211E95F6FD390771A68CFFF61C9FF318FD272543C9E57",
+        "wide-light": "801AB3DB64BCA195456211E95F6FD390771A68CFFF61C9FF318FD272543C9E57",
+        "standard-dark": "7049C807DE1AFE7EF95898B1D2428FCF5C4D89E6E1FCD95CA003ADAEA3952601",
+        "wide-dark": "7049C807DE1AFE7EF95898B1D2428FCF5C4D89E6E1FCD95CA003ADAEA3952601"
       },
       "scope": "Four State=Default|Active|Completed|Error variants; fixed workflow anatomy, variable-width labels, aligned indicator and connector geometry, readable error index and token-driven light/dark presentation.",
       "limitations": "The component presents controlled workflow progress and does not own route changes, validation, branching or persistence. Formal designer and governance approval remain open.",
@@ -1171,12 +1181,12 @@
       "status": "VERIFIED",
       "figmaNodeId": "2148:438",
       "figmaScreenshotSha256": "2A750EF7C944E46CAE75AC12FECD41CC1B93EDCEF124DAB0952B836B58005BFD",
-      "profiles": ["light-comfortable", "light-compact", "dark-comfortable", "dark-compact"],
+      "profiles": ["standard-light", "wide-light", "standard-dark", "wide-dark"],
       "runtimeGallerySha256": {
-        "light-comfortable": "383B6F8AF07FDFAB9D2B5409F97AA1D07A8E90C1C0303260F55774DD96D76A23",
-        "light-compact": "383B6F8AF07FDFAB9D2B5409F97AA1D07A8E90C1C0303260F55774DD96D76A23",
-        "dark-comfortable": "6EBF7C4680CF9C8669BA7E2B0AD87CD1308892123B5EDB826BCD52C8879F10ED",
-        "dark-compact": "6EBF7C4680CF9C8669BA7E2B0AD87CD1308892123B5EDB826BCD52C8879F10ED"
+        "standard-light": "383B6F8AF07FDFAB9D2B5409F97AA1D07A8E90C1C0303260F55774DD96D76A23",
+        "wide-light": "383B6F8AF07FDFAB9D2B5409F97AA1D07A8E90C1C0303260F55774DD96D76A23",
+        "standard-dark": "6EBF7C4680CF9C8669BA7E2B0AD87CD1308892123B5EDB826BCD52C8879F10ED",
+        "wide-dark": "6EBF7C4680CF9C8669BA7E2B0AD87CD1308892123B5EDB826BCD52C8879F10ED"
       },
       "scope": "Four Density=Default|Compact by State=Default|Disabled variants; 384 by 52 or 316 by 44 authored geometry, outlined previous/next actions, borderless page numbers, solid selected page and first/last plus current-neighbour sequence with ellipses.",
       "limitations": "Current page, page count, data loading, result bounds and route synchronization remain host-controller responsibilities. Hover and keyboard-focus tokens are runtime interaction roles and are not separate static Figma variants. Formal designer and governance approval remain open.",

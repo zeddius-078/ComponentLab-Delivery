@@ -1,0 +1,64 @@
+{
+  "version": 1,
+  "defaultProfile": "token-sdk",
+  "profiles": {
+    "analysis-system": {
+      "description": "独立 Analysis 组件集；只声明目标类，不生成实现。Qt 基类仅用于构建期几何测量。",
+      "componentLibrary": "component-libraries/analysis-system.json",
+      "apiPolicy": "public-qt",
+      "widgetSource": "qt-builtin-map",
+      "headerPolicy": "component-library",
+      "publicQtApis": ["setText", "setEnabled", "setReadOnly", "setChecked", "setPlaceholderText", "setPlaceholder", "setCurrentIndex", "setValue", "setRange", "setFormat", "setTitle", "setGrid"]
+    },
+    "token-sdk": {
+      "description": "默认配置：直接使用 GenerateComponent SDK 的 commonWidget::Z_* 类与组合 API（factory.apply + compositionApi）。",
+      "libraryKind": "token-sdk",
+      "classRenames": [],
+      "componentOverrides": {},
+      "apiPolicy": "sdk-composition",
+      "widgetSource": "sdk-factory",
+      "headerPolicy": "sdk-default"
+    },
+    "qt-native": {
+      "description": "开源 Qt 组件库：commonWidget::Z_* 批量改名为 Q*（如 Z_PushButton -> QPushButton），designer_widgets::* 与 v2::* 去掉命名空间；只保留公开 Qt API 调用（直接方法调用，不使用 ComponentFactory），组合 API 与 SDK 专属 setter 被跳过并记录在清单里。",
+      "libraryKind": "qt-native",
+      "classRenames": [
+        {"pattern": "^commonWidget::Z_(.+)$", "replacement": "Q\\1"},
+        {"pattern": "^designer_widgets::(.+)$", "replacement": "\\1"},
+        {"pattern": "^v2::(.+)$", "replacement": "\\1"}
+      ],
+      "componentOverrides": {
+        "ComponentLab/Input": {"qtClass": "QLineEdit"},
+        "ComponentLab/Select": {"qtClass": "QComboBox"}
+      },
+      "apiPolicy": "public-qt",
+      "widgetSource": "qt-builtin-map",
+      "headerPolicy": "qt-builtin",
+      "selectOptionGroup": {
+        "qtClass": "QListWidget",
+        "policy": "A frame whose children are all registered SelectOption instances aggregates into one QListWidget; each option becomes a disabled item carrying the resolved label. Ungrouped SelectOption instances fail closed with SELECT_OPTION_REQUIRES_TOKEN_SDK."
+      },
+      "publicQtApis": [
+        "setText", "setEnabled", "setReadOnly", "setChecked",
+        "setPlaceholderText", "setPlaceholder", "setCurrentIndex", "setValue", "setRange",
+        "setFormat", "setTitle", "setGrid"
+      ]
+    },
+    "custom-library": {
+      "description": "自用组件库示例（开发侧 token 化适配库或私有库）：classRenames 批量把 commonWidget::Z_* 改名成 MyOrg::*；componentOverrides 可只覆盖个别组件，实现渐进式适配升级（例如先只切 Button）。apiPolicy 沿用 sdk-composition 表示目标库提供等价的 apply 适配器；headerMap 说明生成的 customwidget 声明如何取头文件。",
+      "libraryKind": "custom",
+      "classRenames": [
+        {"pattern": "^commonWidget::Z_(.+)$", "replacement": "MyOrg::\\1"}
+      ],
+      "componentOverrides": {
+        "ComponentLab/Button": {"qtClass": "MyOrg::PushButton"}
+      },
+      "apiPolicy": "sdk-composition",
+      "widgetSource": "sdk-factory",
+      "headerPolicy": "custom-header-map",
+      "headerMap": [
+        {"classPattern": "^MyOrg::", "extends": "QWidget", "header": "MyOrg/Components.h"}
+      ]
+    }
+  }
+}

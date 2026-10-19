@@ -1,0 +1,102 @@
+{
+  "$schema": "../schema/v2-token-schema.json",
+  "$description": "ComponentLab V2 Theme layer: theme and surface context values.",
+  "layer": "theme",
+  "root": {
+    "theme": {
+      "color": {
+        "background": {
+          "control-default": {
+            "$type": "color",
+            "$value": "{primitive.color.neutral.gray.0}",
+            "$description": "Light theme control surface"
+          },
+          "disabled": {
+            "$type": "color",
+            "$value": "{primitive.color.reference.neutral.p-93}",
+            "$description": "Light theme disabled surface"
+          },
+          "hover": {
+            "$type": "color",
+            "$value": "{primitive.color.reference.neutral.p-96}",
+            "$description": "Light theme hover surface"
+          },
+          "surface-raised": {
+            "$type": "color",
+            "$value": "{primitive.color.neutral.gray.5}",
+            "$description": "Light theme raised surface"
+          }
+        },
+        "border": {
+          "default": {
+            "$type": "color",
+            "$value": "{primitive.color.neutral.gray.35}",
+            "$description": "Light theme default border"
+          },
+          "secondary": {
+            "$type": "color",
+            "$value": "{primitive.color.neutral.gray.20}",
+            "$description": "Light theme secondary border"
+          }
+        },
+        "text": {
+          "disabled": {
+            "$type": "color",
+            "$value": "{primitive.color.neutral.gray.30}",
+            "$description": "Light theme disabled text"
+          },
+          "muted": {
+            "$type": "color",
+            "$value": "{primitive.color.neutral.gray.65}",
+            "$description": "Light theme muted text"
+          },
+          "primary": {
+            "$type": "color",
+            "$value": "{primitive.color.neutral.gray.90}",
+            "$description": "Light theme primary text"
+          }
+        }
+      }
+    },
+    "$modeOverrides": {
+      "dark": {
+        "theme.color.background.control-default": {
+          "$value": "{primitive.color.neutral.gray.80}",
+          "$description": "Dark theme control surface"
+        },
+        "theme.color.background.disabled": {
+          "$value": "{primitive.color.neutral.gray.75}",
+          "$description": "Dark theme disabled surface"
+        },
+        "theme.color.background.hover": {
+          "$value": "{primitive.color.neutral.gray.85}",
+          "$description": "Dark theme hover surface"
+        },
+        "theme.color.background.surface-raised": {
+          "$value": "{primitive.color.neutral.gray.75}",
+          "$description": "Dark theme raised surface"
+        },
+        "theme.color.border.default": {
+          "$value": "{primitive.color.neutral.gray.55}",
+          "$description": "Dark theme default border"
+        },
+        "theme.color.border.secondary": {
+          "$value": "{primitive.color.neutral.gray.65}",
+          "$description": "Dark theme secondary border"
+        },
+        "theme.color.text.disabled": {
+          "$value": "{primitive.color.neutral.gray.45}",
+          "$description": "Dark theme disabled text"
+        },
+        "theme.color.text.muted": {
+          "$value": "{primitive.color.neutral.gray.25}",
+          "$description": "Dark theme muted text"
+        },
+        "theme.color.text.primary": {
+          "$value": "{primitive.color.neutral.gray.5}",
+          "$description": "Dark theme primary text"
+        }
+      }
+    }
+  }
+}

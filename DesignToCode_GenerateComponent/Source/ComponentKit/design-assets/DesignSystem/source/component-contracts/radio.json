@@ -1,0 +1,87 @@
+{
+  "$description": "radio V2 Component Contract. Structure and runtime semantics are independent from value evidence.",
+  "component": "radio",
+  "version": "2.0",
+  "$status": "draft-v2",
+  "contractKind": "selection-control",
+  "registryBindings": {
+    "source": "source/component-registry.json#/components/radio",
+    "axes": [
+      "value",
+      "state",
+      "content",
+      "size"
+    ],
+    "slots": [
+      "indicator",
+      "label",
+      "glyph",
+      "content",
+      "container"
+    ],
+    "authority": "component-registry"
+  },
+  "structure": [
+    "container",
+    "indicator",
+    "label",
+    "glyph"
+  ],
+  "stateLayers": {
+    "value": {
+      "owner": "runtime-api",
+      "states": [
+        "unselected",
+        "selected"
+      ]
+    },
+    "interaction": {
+      "owner": "runtime-api",
+      "states": [
+        "default",
+        "hover",
+        "pressed",
+        "focused",
+        "disabled"
+      ]
+    }
+  },
+  "compositionRules": [
+    "Value and interaction state are independent axes.",
+    "Label and indicator share one interaction surface.",
+    "Group exclusivity and selection migration are runtime-owned.",
+    "Focus ring is keyboard-only and is not a value axis."
+  ],
+  "contentModel": {
+    "labelText": {
+      "kind": "localized-content-key",
+      "defaultLocale": "en-US",
+      "fallbackLocale": "en-US",
+      "requiredWhen": "content=control-with-label",
+      "visualToken": false
+    },
+    "controlOnly": { "kind": "content-structure", "meaning": "indicator-only", "label": "not-applicable" },
+    "controlWithLabel": { "kind": "content-structure", "meaning": "indicator-plus-label", "label": "localized-content-key" },
+    "forbiddenContentResponsibilities": [
+      "value", "state", "size", "interaction-size", "radio-group-selection", "visual-token"
+    ]
+  },
+  "tokenBoundary": {
+    "recipeOwns": [
+      "indicator, label, glyph and container visual values",
+      "size and typography bindings"
+    ],
+    "runtimeOwns": [
+      "group membership",
+      "exclusive selection",
+      "keyboard and pointer events",
+      "disabled transition",
+      "focus ownership"
+    ],
+    "contractDoesNotOwn": [
+      "resolved token values",
+      "Figma variable values",
+      "generated combinations"
+    ]
+  }
+}

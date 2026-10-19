@@ -14,6 +14,8 @@
 | --- | --- | --- |
 | [DesignToCode_GenerateComponent](../DesignToCode_GenerateComponent/README.md) | 设计身份、属性、状态和 Token 到 `Z_*` Qt 组件的映射与构建 | 唯一权威 `build/sdk` |
 | [ComponentLab](../ComponentLab/README.md) | 校验并展示已发布组件，检查外观、状态、Profile 和对象树 | `build/demo/component_gallery`；不发布 SDK |
-| [DesignToCode_GenerateLayout](../DesignToCode_GenerateLayout/README.md) | 合并同版本 HTML + DSL，引用 SDK 组件并生成 Qt 页面 | 布局生成工具链与 `.ui/.h/.cpp/.qss` 页面包 |
+| [DesignToCode_GenerateLayout](../DesignToCode_GenerateLayout/README.md) | 合并同版本 HTML + DSL，按所选组件库合同映射并生成 Qt 页面 | 布局生成工具链与 `.ui/.h/.cpp/.qss/.qrc` 页面包 |
 
-详细规则只在所属项目的 `docs` 中维护。阶段报告和迁移记录位于所属项目的 `build/reports`，不作为当前使用说明。
+详细规则只在所属项目的 `docs` 中维护。所有历史记录、阶段报告和已替代说明统一进入所属项目的 `docs/archive`；`build/reports` 仅存当次可再生结果。需要长期保留的结果先归档再清理 build。工作区旧版说明见 [归档索引](archive/README.md)。
+
+执行遵循工作区 AGENTS.md 的固定环境原则。独立组件库可声明未实现类，但 contract-only/planned 不等于已发布组件；当前多库与前缀能力见 GenerateLayout 文档。

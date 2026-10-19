@@ -1,0 +1,77 @@
+{
+  "$registry": {
+    "component": "dial",
+    "version": "2.0"
+  },
+  "$status": "active",
+  "base": {
+    "state": {
+      "default": {
+        "slot": {
+          "active-indicator": {
+            "color": {
+              "$type": "color",
+              "$value": "{semantic.color.interactive.brand.default}",
+              "$description": "Recovered from legacy V2 layer component.dial.base.default.active-indicator.color",
+              "$sourceOwner": "old-tree-recovery"
+            }
+          },
+          "arc": {
+            "visual-diameter": {
+              "$type": "dimension",
+              "$value": "{primitive.dimension.120}",
+              "$description": "Recovered from legacy V2 layer component.dial.base.default.arc.visual-diameter",
+              "$sourceOwner": "old-tree-recovery",
+              "unit": "px"
+            }
+          },
+          "hub": {
+            "visual-diameter": {
+              "$type": "dimension",
+              "$value": "{primitive.dimension.16}",
+              "$description": "Recovered from legacy V2 layer component.dial.base.default.hub.visual-diameter",
+              "$sourceOwner": "old-tree-recovery",
+              "unit": "px"
+            }
+          },
+          "notch": {
+            "visual-height": {
+              "$type": "dimension",
+              "$value": "{primitive.dimension.7}",
+              "$description": "Recovered from legacy V2 layer component.dial.base.default.notch.visual-height",
+              "$sourceOwner": "old-tree-recovery",
+              "unit": "px"
+            },
+            "visual-width": {
+              "$type": "dimension",
+              "$value": "{primitive.dimension.2}",
+              "$description": "Recovered from legacy V2 layer component.dial.base.default.notch.visual-width",
+              "$sourceOwner": "old-tree-recovery",
+              "unit": "px"
+            }
+          }
+        }
+      },
+      "focused": {
+        "slot": {
+          "focus-ring": {
+            "color": {
+              "$type": "color",
+              "$value": "{semantic.color.interactive.brand.focus-ring}",
+              "$description": "Recovered from legacy V2 layer component.dial.base.focused.focus-ring.color",
+              "$sourceOwner": "old-tree-recovery"
+            },
+            "visual-diameter": {
+              "$type": "dimension",
+              "$value": "{primitive.dimension.140}",
+              "$description": "Recovered from legacy V2 layer component.dial.base.focused.focus-ring.visual-diameter",
+              "$sourceOwner": "old-tree-recovery",
+              "unit": "px"
+            }
+          }
+        }
+      }
+    }
+  },
+  "overrides": []
+}

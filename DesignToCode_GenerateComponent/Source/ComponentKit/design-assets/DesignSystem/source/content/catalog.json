@@ -1,0 +1,12 @@
+{
+  "$schema": "../../schema/content-catalog-schema.json",
+  "$description": "ComponentLab V2 Content layer. Terminology and localized instance copy only; no visual or runtime data.",
+  "$version": "1.0",
+  "$status": "active",
+  "layer": "content",
+  "kind": "content-catalog",
+  "defaultLocale": "en-US",
+  "fallbackLocale": "en-US",
+  "supportedLocales": ["en-US", "zh-CN"],
+  "entries": {}
+}

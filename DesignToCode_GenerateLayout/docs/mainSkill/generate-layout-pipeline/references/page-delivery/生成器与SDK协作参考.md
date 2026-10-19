@@ -4,7 +4,8 @@
 
 | 能力 | GenerateComponent | GenerateLayout |
 | --- | --- | --- |
-| 定义设计组件身份和属性值域 | 负责 | 读取 |
+| 定义已实现设计组件身份和属性值域 | 负责 | 读取 |
+| 独立目标组件集类名合同 | 不生成假实现 | 通过命名配置解析，planned 仅预览 |
 | 编译 Token、QSS、catalog | 负责 | 无生成入口 |
 | 实现 QWidget、自绘和状态 | 负责 | 无组件源码 |
 | 发布组件 SDK 与映射 | 负责 | 直接引用并校验 |
@@ -18,7 +19,8 @@ GenerateComponent 运行 `Source/Publish-ComponentSDK.ps1`，输出：
 
 - `lib/GeneratedComponentSDK.lib`
 - `include/*.h`
-- `resources/mappings/design-component-map.json`
+- `resources/mappings/figma-component-map-v2.json`
+- `resources/mappings/component-source-map.json`
 - `resources/mappings/qt-component-map.json`
 - `manifest/component-sdk.json`
 - `licenses/*.txt`
@@ -35,3 +37,9 @@ GenerateLayout 运行 `Source/Verify-GeneratedComponentSDK.ps1`。脚本校验�
 6. 页面测试验证 XML、组件调用和运行态。
 
 这个顺序保证布局生成器只做解析与装配，组件能力始终来自同一发布源。
+
+## 可替换目标库
+
+组件生成与目标库声明分离：library-profiles.json 选择配置，componentLibrary 指向独立 JSON；classPrefix 只改变目标类和自动头文件名，默认 SDK 保持不变。contract-only/planned 不需要为测试而生成实现，也不能用于正式发布。解析器构建当前仍需要原 SDK；解耦目标映射不等于已消除所有构建依赖。
+
+历史日志归 docs/archive，当前输出归 build。环境不可自主安装或更新，执行前遵循工作区 AGENTS.md。

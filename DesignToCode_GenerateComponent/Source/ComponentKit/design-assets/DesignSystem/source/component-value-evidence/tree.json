@@ -1,0 +1,124 @@
+{
+  "component": "tree",
+  "version": "2.0",
+  "authority": "value-evidence-only",
+  "entries": [
+    {
+      "path": "color/bg/primary",
+      "type": "color",
+      "value": {
+        "colorSpace": "srgb",
+        "components": [
+          1,
+          1,
+          1
+        ],
+        "alpha": 1,
+        "hex": "#FFFFFF"
+      },
+      "source": "imports/reference/tree.json"
+    },
+    {
+      "path": "color/bg/hover",
+      "type": "color",
+      "value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.9607843137254902,
+          0.9607843137254902,
+          0.9607843137254902
+        ],
+        "alpha": 1,
+        "hex": "#F5F5F5"
+      },
+      "source": "imports/reference/tree.json"
+    },
+    {
+      "path": "color/bg/select",
+      "type": "color",
+      "value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.9372549019607843,
+          0.9176470588235294,
+          0.996078431372549
+        ],
+        "alpha": 1,
+        "hex": "#EFEAFE"
+      },
+      "source": "imports/reference/tree.json"
+    },
+    {
+      "path": "color/Border/default",
+      "type": "color",
+      "value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.7333333333333333,
+          0.7333333333333333,
+          0.7333333333333333
+        ],
+        "alpha": 1,
+        "hex": "#BBBBBB"
+      },
+      "source": "imports/reference/tree.json"
+    },
+    {
+      "path": "color/text/default",
+      "type": "color",
+      "value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.09803921568627451,
+          0.09803921568627451,
+          0.09803921568627451
+        ],
+        "alpha": 1,
+        "hex": "#191919"
+      },
+      "source": "imports/reference/tree.json"
+    },
+    {
+      "path": "content/fontSize/text",
+      "type": "number",
+      "value": 14,
+      "source": "imports/reference/tree.json"
+    },
+    {
+      "path": "content/fontWeight/regular",
+      "type": "number",
+      "value": 400,
+      "source": "imports/reference/tree.json"
+    },
+    {
+      "path": "content/lineHeight/md",
+      "type": "number",
+      "value": 22,
+      "source": "imports/reference/tree.json"
+    },
+    {
+      "path": "content/iconSize/default",
+      "type": "number",
+      "value": 20,
+      "source": "imports/reference/tree.json"
+    },
+    {
+      "path": "content/height/md",
+      "type": "number",
+      "value": 32,
+      "source": "imports/reference/tree.json"
+    },
+    {
+      "path": "padding/default",
+      "type": "number",
+      "value": 4,
+      "source": "imports/reference/tree.json"
+    },
+    {
+      "path": "border/default",
+      "type": "number",
+      "value": 1,
+      "source": "imports/reference/tree.json"
+    }
+  ]
+}

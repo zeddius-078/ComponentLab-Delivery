@@ -1,7 +1,6 @@
 #pragma once
 
 // Single public entry point for the generated Qt design-system components.
-#include "ButtonAppearanceAdapter.h"
 #include "ComponentFactory.h"
 #include "DesignComponentCatalog.h"
 #include "DateTimeAppearance.h"

@@ -51,7 +51,7 @@
         },
         "$value": {},
         "unit": {
-          "enum": ["px", "%"]
+          "enum": ["px", "%", "ms", "deg"]
         },
         "$description": {"type": "string"},
         "$extensions": {"type": "object"},

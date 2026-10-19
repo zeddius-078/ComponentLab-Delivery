@@ -14,7 +14,7 @@ QString activeProfile();
 // Resolves the nearest explicit object/ancestor override, then the process
 // profile. The fallback only applies before a theme has been installed.
 QString resolve(const QObject* object,
-                const QString& fallback = QStringLiteral("light-comfortable"));
+                const QString& fallback = QStringLiteral("standard-light"));
 
 // Called by ComponentTheme only after the requested profile has been validated
 // and installed successfully.

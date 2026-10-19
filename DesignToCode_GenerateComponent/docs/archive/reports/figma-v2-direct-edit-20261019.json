@@ -1,0 +1,95 @@
+{
+  "fileKey": "w92BKW1EcutKmTXkwzNHbf",
+  "updatedAt": "2026-10-19",
+  "scope": "Button, Checkbox, Radio, Table, Select, Input",
+  "nodeId": "2258:15827;2258:16082;2256:56;2256:16548;2258:17336;2258:16387",
+  "mode": "direct-figma-edit-without-code-connect-persistence",
+  "changes": {
+    "v2VariablesCreatedOrUpdated": {
+      "Button": 101,
+      "Checkbox": 32,
+      "Radio": 8,
+      "Table": 70,
+      "Select": 55,
+      "Input": 66
+    },
+    "componentVariants": {
+      "Button": 132,
+      "Checkbox": 40,
+      "Radio": 24,
+      "Table": 8,
+      "Select": 48,
+      "Input": 60
+    },
+    "visualBindings": {
+      "Button": "131 fills + 131 strokes + 131 label colors + 21 focus rings",
+      "Checkbox": "88 indicator colors + 80 indicator dimensions + 8 focus rings",
+      "Radio": "48 indicator dimensions",
+      "Table": "72 container/header/row colors",
+      "Select": "144 colors + 48 container heights",
+      "Input": "124 colors + 60 container heights"
+    },
+    "buttonOverlayCorrection": "primary/danger/secondary/operation hover and pressed fills now use sparse override variables; outlined/dashed/text/link labels use intent overrides",
+    "legacyTypographyBindings": "preserved; not part of this color-token slice",
+    "legacySetsDeleted": false
+  },
+  "acceptance": {
+    "componentSetPreserved": true,
+    "v2VariableNamespace": "button/base/* and button/overrides/*",
+    "concreteV2VariablesPresentInFigma": "332/332",
+    "targetComponentSetsAudited": "6/6",
+    "figmaBindingStatus": {
+      "button": "verified",
+      "checkbox": "verified",
+      "radio": "verified",
+      "table": "verified",
+      "select": "verified",
+      "input": "verified"
+    },
+    "developmentFontChain": "HarmonyOS Sans -> HarmonyOS Sans SC fallback; repository assets and Qt registration verified",
+    "figmaFontAvailability": "HarmonyOS families unavailable to current Figma execution context; text font bindings remain preserved for a separate design-side font availability pass",
+    "codeConnectPersistenceRequired": false
+  },
+  "verification": {
+    "v2UnitTests": "32/32",
+    "componentProjectCheck": "PASS",
+    "componentLabProjectCheck": "PASS",
+    "generateLayoutProjectCheck": "PASS",
+    "qtRuntimeTests": "checkbox/forms/composition/solid-inner-shadow passed",
+    "formalGeneratorTests": "30/37 passed; 7 resource-contract tests require missing build/cache/formal-inputs/result/hybrid-result.json fixture",
+    "buttonMapRegression": "PASS: schemaVersion 2.0; Button figmaVariantCount=132 with intent axes primary/secondary/operation/danger/dark; primary canonical path/value = component.button.base.intent.primary.slot.container.background-color / #6235F7; source, SDK and ComponentLab demo map SHA-256 match 8AF2A7F4CBDE7CD42A4107563FB2B21CE077DABB0977DCF7FFBFBA5082CDBAE8",
+    "typographyComposite": "PASS: packageStatus active; releaseBlocked false; HarmonyOS Sans global family with HarmonyOS Sans SC Simplified-Chinese fallback",
+    "figmaVariableReadback": {
+      "status": "PASS",
+      "fileKey": "w92BKW1EcutKmTXkwzNHbf",
+      "componentSets": {
+        "button": {"nodeId": "2258:15827", "readbackVariableCount": 421, "primaryBackground": "#6235f7"},
+        "checkbox": {"nodeId": "2258:16082", "readbackVariableCount": 181, "compactIndicatorSize": "20"},
+        "radio": {"nodeId": "2256:56", "readbackVariableCount": 12, "compactIndicatorSize": "20"},
+        "table": {"nodeId": "2256:16548", "readbackVariableCount": 12, "zebraRowBackground": "#fafafa"},
+        "select": {"nodeId": "2258:17336", "readbackVariableCount": 278, "focusedBorder": "#6235f7"},
+        "input": {"nodeId": "2258:16387", "readbackVariableCount": 326, "focusedBorder": "#6235f7"}
+      },
+      "comparisonPolicy": "Figma values are compared case-insensitively for colors and numerically for dimensions; canonical names remain owned by local V2 manifests."
+    },
+    "figmaStructureReadback": {
+      "status": "PASS",
+      "componentSets": {
+        "button": {"nodeId": "2258:15827", "name": "ComponentLab/Button", "variantNaming": "Intent/Appearance/Content/Size/State"},
+        "checkbox": {"nodeId": "2258:16082", "name": "ComponentLab/Checkbox", "variantNaming": "Value/State/Content/Size"},
+        "radio": {"nodeId": "2256:56", "name": "ComponentLab/Radio", "variantNaming": "Value/State/Content/Size"},
+        "table": {"nodeId": "2256:16548", "name": "ComponentLab/Table", "variantNaming": "Density/Striping"},
+        "select": {"nodeId": "2258:17336", "name": "ComponentLab/Select", "variantNaming": "Selection/Searchable/Appearance/State/Open/Size"},
+        "input": {"nodeId": "2258:16387", "name": "ComponentLab/Input", "variantNaming": "Mode/Appearance/State/Size"}
+      },
+      "source": "Figma metadata readback for six public Component Sets"
+    },
+    "verificationEnvironment": {
+      "componentV2Compiler": "PASS",
+      "componentV2UnitTests": "32/32 PASS",
+      "generateLayoutCMakeProbe": "BLOCKED: Qt5 5.15 development package (Qt5Config.cmake/headers) is not installed in the current environment; this is not a source or test-gate bypass",
+      "qtRuntimeProbe": "BLOCKED: matching Qt5Test runtime is unavailable for the cached test executables"
+    },
+    "codeConnectScope": "OUT_OF_SCOPE: direct Figma edits and read-back evidence are the acceptance path"
+  }
+}

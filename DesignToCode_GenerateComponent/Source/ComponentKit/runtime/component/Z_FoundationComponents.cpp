@@ -56,7 +56,7 @@ struct Tokens {
     QColor c(const char* key) const {
         const auto value = color[QString::fromLatin1(key)].toString();
         if (value.isEmpty())
-            throw std::runtime_error("Missing foundation component color token");
+            throw std::runtime_error(("Missing foundation component color token: " + QString::fromLatin1(key)).toStdString());
         const auto rgba = QRegularExpression(
                               QStringLiteral("^rgba\\((\\d+),\\s*(\\d+),\\s*(\\d+),\\s*([0-9.]+)\\)$"))
                               .match(value);
@@ -71,7 +71,7 @@ struct Tokens {
     int n(const char* key) const {
         const auto value = layout[QString::fromLatin1(key)];
         if (!value.isDouble())
-            throw std::runtime_error("Missing foundation component layout token");
+            throw std::runtime_error(("Missing foundation component layout token: " + QString::fromLatin1(key)).toStdString());
         return value.toInt();
     }
 };
@@ -93,15 +93,14 @@ public:
     explicit TransferItemDelegate(const QString& profile, QObject* parent)
         : QStyledItemDelegate(parent) {
         const Tokens tokens(profile);
-        const bool dark = profile.startsWith(QStringLiteral("dark-"));
-        text = tokens.c(dark ? "semantic.color.text.secondary"
-                             : "base.stoken.color.text.secondary");
-        disabled = tokens.c("base.stoken.color.text.disabled");
+        const bool dark = profile.endsWith(QStringLiteral("-dark"));
+        text = tokens.c("semantic.color.text.secondary");
+        disabled = tokens.c("semantic.color.text.disabled");
         border = tokens.c(dark ? "semantic.color.border.default"
-                               : "base.stoken.color.border.secondary");
-        brand = tokens.c("base.stoken.color.interactive.brand.default");
-        inverse = tokens.c("base.stoken.color.text.invert");
-        selected = tokens.c("base.stoken.color.interactive.brand.subtle");
+                               : "semantic.color.border.secondary");
+        brand = tokens.c("semantic.color.interactive.brand.default");
+        inverse = tokens.c("semantic.color.text.invert");
+        selected = tokens.c("semantic.color.interactive.brand.subtle");
     }
 
     void paint(QPainter* painter, const QStyleOptionViewItem& option,
@@ -185,23 +184,23 @@ private:
 
 QColor toneColor(const Tokens& tokens, const QString& tone, bool neutralBadge = false) {
     if (tone == "Neutral")
-        return tokens.c(neutralBadge ? "base.stoken.badge.base.default.container.background"
-                                     : "base.stoken.tag.base.default.container.background");
+        return tokens.c(neutralBadge ? "component.badge.base.state.default.slot.container.background-color"
+                                     : "component.tag.base.state.default.slot.container.background-color");
     if (tone == "Info" || tone == "Process")
-        return tokens.c("base.stoken.color.interactive.brand.default");
+        return tokens.c("semantic.color.interactive.brand.default");
     if (tone == "Success")
-        return tokens.c("base.stoken.color.status.success.default");
+        return tokens.c("semantic.color.status.success.default");
     if (tone == "Warning")
-        return tokens.c("base.stoken.color.status.warning.default");
+        return tokens.c("semantic.color.status.warning.default");
     if (tone == "Danger")
-        return tokens.c("base.stoken.color.status.danger.default");
+        return tokens.c("semantic.color.status.danger.default");
     throw std::invalid_argument("Unsupported tone");
 }
 
 QColor toneText(const Tokens& tokens, const QString& tone) {
     return tone == "Info" || tone == "Process" || tone == "Danger"
-               ? tokens.c("base.stoken.color.text.invert")
-               : tokens.c("base.stoken.color.text.primary");
+               ? tokens.c("semantic.color.text.invert")
+               : tokens.c("semantic.color.text.primary");
 }
 
 QFont componentFont(int pixelSize) {
@@ -250,7 +249,7 @@ void Z_Badge::paintEvent(QPaintEvent*) {
     painter.drawRoundedRect(rect(), height() / 2.0, height() / 2.0);
     if (kindValue == "Text") {
         painter.setFont(componentFont(12));
-        painter.setPen(toneValue == "Neutral" ? tokens.c("base.stoken.badge.base.default.label.color")
+        painter.setPen(toneValue == "Neutral" ? tokens.c("component.badge.base.state.default.slot.label.color")
                                               : toneText(tokens, toneValue));
         painter.drawText(rect(), Qt::AlignCenter, labelValue);
     }
@@ -293,11 +292,11 @@ void Z_StatusIndicator::paintEvent(QPaintEvent*) {
     const int dot = sizeValue == "Small" ? 8 : 10;
     QPainter painter(this); painter.setRenderHint(QPainter::Antialiasing);
     painter.setPen(Qt::NoPen);
-    painter.setBrush(toneValue == "Neutral" ? tokens.c("base.stoken.color.text.secondary") : toneColor(tokens, toneValue));
+    painter.setBrush(toneValue == "Neutral" ? tokens.c("semantic.color.text.secondary") : toneColor(tokens, toneValue));
     painter.drawEllipse(QRectF(0, (height() - dot) / 2.0, dot, dot));
     if (showLabelValue) {
         painter.setFont(componentFont(sizeValue == "Small" ? 12 : 14));
-        painter.setPen(tokens.c("base.stoken.color.text.primary"));
+        painter.setPen(tokens.c("semantic.color.text.primary"));
         const int x = dot + (sizeValue == "Small" ? 6 : 8);
         painter.drawText(QRect(x, 0, width() - x, height()), Qt::AlignVCenter | Qt::AlignLeft, labelValue);
     }
@@ -344,13 +343,13 @@ void Z_Link::paintEvent(QPaintEvent*) {
         else if (FocusIndicator::instance().visibleFor(this)) state = "Focus-visible";
         else state = "Default";
     }
-    QColor color = tokens.c("base.stoken.color.interactive.brand.default");
-    if (state == "Hover") color = tokens.c("base.stoken.color.interactive.brand.hover");
-    else if (state == "Pressed") color = tokens.c("base.stoken.color.interactive.brand.pressed");
-    else if (state == "Disabled") color = tokens.c("base.stoken.color.interactive.brand.disabled");
+    QColor color = tokens.c("semantic.color.interactive.brand.default");
+    if (state == "Hover") color = tokens.c("semantic.color.interactive.brand.hover");
+    else if (state == "Pressed") color = tokens.c("semantic.color.interactive.brand.pressed");
+    else if (state == "Disabled") color = tokens.c("semantic.color.interactive.brand.disabled");
     QPainter painter(this); painter.setRenderHint(QPainter::Antialiasing);
     if (state == "Focus-visible" && FocusIndicator::instance().enabledFor(this)) {
-        QPen ring(FocusIndicator::instance().color(tokens.c("base.stoken.color.interactive.brand.focus-ring")), 2);
+        QPen ring(FocusIndicator::instance().color(tokens.c("semantic.color.interactive.brand.focus-ring")), 2);
         painter.setPen(ring); painter.setBrush(Qt::NoBrush);
         painter.drawRoundedRect(rect().adjusted(1, 1, -1, -1), 4, 4);
     }
@@ -418,8 +417,8 @@ void Z_Tag::paintEvent(QPaintEvent*) {
     QColor foreground = toneText(tokens, toneValue);
     QPen pen(Qt::NoPen);
     if (toneValue == "Neutral") {
-        pen = QPen(tokens.c("base.stoken.tag.base.default.border.color"), 1);
-        foreground = tokens.c("base.stoken.tag.base.default.label.color");
+        pen = QPen(tokens.c("component.tag.base.state.default.slot.border.color"), 1);
+        foreground = tokens.c("component.tag.base.state.default.slot.label.color");
     }
     painter.setPen(pen); painter.setBrush(background);
     painter.drawRoundedRect(rect().adjusted(0, 0, -1, -1), height() / 2.0, height() / 2.0);
@@ -530,10 +529,10 @@ void Z_Tooltip::paintEvent(QPaintEvent*) {
     else if (bottom) bubble.adjust(0, arrow, 0, 0);
     else if (left) bubble.adjust(0, 0, -arrow, 0);
     else bubble.adjust(arrow, 0, 0, 0);
-    const QColor background = tokens.c("base.stoken.tooltip.base.default.container.background");
+    const QColor background = tokens.c("component.tooltip.base.state.default.slot.container.background-color");
     QPainter painter(this); painter.setRenderHint(QPainter::Antialiasing);
     painter.setPen(Qt::NoPen); painter.setBrush(background);
-    painter.drawRoundedRect(bubble.adjusted(0, 0, -1, -1), tokens.n("base.stoken.tooltip.base.default.container.radius"), tokens.n("base.stoken.tooltip.base.default.container.radius"));
+    painter.drawRoundedRect(bubble.adjusted(0, 0, -1, -1), tokens.n("component.tooltip.base.state.default.slot.container.border-radius"), tokens.n("component.tooltip.base.state.default.slot.container.border-radius"));
     if (showArrowValue) {
         QPainterPath path;
         qreal anchorX = width() / 2.0;
@@ -548,7 +547,7 @@ void Z_Tooltip::paintEvent(QPaintEvent*) {
         else { path.moveTo(bubble.left(), anchorY-5); path.lineTo(0, anchorY); path.lineTo(bubble.left(), anchorY+5); }
         path.closeSubpath(); painter.drawPath(path);
     }
-    painter.setFont(componentFont(12)); painter.setPen(tokens.c("base.stoken.tooltip.base.default.content.color"));
+    painter.setFont(componentFont(12)); painter.setPen(tokens.c("component.tooltip.base.state.default.slot.content.color"));
     painter.drawText(bubble.adjusted(8, 6, -8, -6),
                      Qt::AlignLeft | Qt::AlignVCenter | Qt::TextWordWrap, contentValue);
 }
@@ -558,7 +557,7 @@ Z_SearchInput::Z_SearchInput(const QString& profile, QWidget* parent)
     identify(this, "ComponentLab/SearchInput", "commonWidget::Z_SearchInput");
     setKind(Kind::Search);
     setControlSize(QStringLiteral("md"));
-    setVariant(QStringLiteral("outlined"));
+    setAppearance(QStringLiteral("outlined"));
     setPlaceholder(QStringLiteral("Search"));
     setSuffix(shortcutValue);
     setAllowClear(true);
@@ -576,14 +575,14 @@ void Z_SearchInput::setShortcutText(const QString& value) {
     emit shortcutTextChanged(value);
 }
 void Z_SearchInput::setSnapshotState(const QString& value) {
-    requireOneOf(value, {"Default", "Focus", "Filled", "Disabled", "Error"},
+    requireOneOf(value, {"Default", "Hover", "Focus", "Focused", "Filled", "Disabled", "Error"},
                  "SearchInput.snapshotState");
     if (snapshotStateValue == value) return;
     snapshotStateValue = value;
     setEnabled(value != "Disabled");
     setStatus(value == "Error" ? QStringLiteral("error") : QString());
-    // FieldChrome validates the Figma-facing title-case state and normalizes it internally.
-    Z_InputField::setSnapshotState(value);
+    // Filled is a Figma content specimen, not a visual Token state. Its chrome is Default.
+    Z_InputField::setSnapshotState(value == "Filled" ? QStringLiteral("Default") : value);
     emit snapshotStateChanged(value);
 }
 QSize Z_SearchInput::sizeHint() const { return {360, 40}; }
@@ -735,23 +734,18 @@ void Z_ColorPicker::paintEvent(QPaintEvent*) {
     const bool disabled = !isEnabled() || snapshotStateValue == QStringLiteral("Disabled");
     const bool focused = snapshotStateValue == QStringLiteral("Focus") ||
                          property("focusIndicatorVisible").toBool();
-    const bool darkProfile = profileValue.startsWith(QStringLiteral("dark-"));
     const QColor background = tokens.c(disabled
-        ? (darkProfile ? "semantic.color.background.surface-muted"
-                       : "base.stoken.color.background.surface-tertiary")
-        : (darkProfile ? "semantic.color.background.surface"
-                       : "base.stoken.color.background.surface"));
+        ? "semantic.color.background.surface-tertiary"
+        : "semantic.color.background.surface");
     const QColor border = tokens.c(disabled
-        ? "base.stoken.color.border.disabled"
-        : focused ? "base.stoken.color.interactive.brand.focus-ring"
-                  : (darkProfile ? "semantic.color.border.default"
-                                 : "base.stoken.color.border.default"));
+        ? "semantic.color.border.disabled"
+        : focused ? "semantic.color.interactive.brand.focus-ring"
+                  : "semantic.color.border.default");
     const QColor text = tokens.c(disabled ? "semantic.color.text.disabled"
-                                          : (darkProfile ? "semantic.color.text.primary"
-                                                         : "base.stoken.color.text.primary"));
-    const QColor action = tokens.c(disabled ? "base.stoken.color.text.disabled"
-                                            : "base.stoken.color.interactive.brand.default");
-    const QColor swatch = disabled ? tokens.c("base.stoken.color.border.disabled") : colorValue;
+                                          : "semantic.color.text.primary");
+    const QColor action = tokens.c(disabled ? "semantic.color.text.disabled"
+                                            : "semantic.color.interactive.brand.default");
+    const QColor swatch = disabled ? tokens.c("semantic.color.border.disabled") : colorValue;
 
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
@@ -1005,26 +999,15 @@ void Z_Transfer::refreshContent() {
 
 void Z_Transfer::refreshStyle() {
     const Tokens tokens(profileValue);
-    const bool darkProfile = profileValue.startsWith(QStringLiteral("dark-"));
-    const QColor panel = tokens.c(darkProfile
-        ? "semantic.color.background.surface-muted"
-        : "base.stoken.color.background.surface-tertiary");
-    const QColor surface = tokens.c(darkProfile
-        ? "semantic.color.background.surface"
-        : "base.stoken.color.background.surface");
-    const QColor panelBorder = tokens.c(darkProfile
-        ? "semantic.color.border.subtle"
-        : "base.stoken.color.border.secondary");
-    const QColor primary = tokens.c(darkProfile
-        ? "semantic.color.text.primary"
-        : "base.stoken.color.text.primary");
-    const QColor secondary = tokens.c(darkProfile
-        ? "semantic.color.text.secondary"
-        : "base.stoken.color.text.secondary");
-    const QColor disabled = tokens.c("base.stoken.color.text.disabled");
-    const QColor disabledBorder = tokens.c("base.stoken.color.border.disabled");
-    const QColor brand = tokens.c("base.stoken.color.interactive.brand.default");
-    const QColor subtle = tokens.c("base.stoken.color.interactive.brand.subtle");
+    const QColor panel = tokens.c("semantic.color.background.surface-tertiary");
+    const QColor surface = tokens.c("semantic.color.background.surface");
+    const QColor panelBorder = tokens.c("semantic.color.border.secondary");
+    const QColor primary = tokens.c("semantic.color.text.primary");
+    const QColor secondary = tokens.c("semantic.color.text.secondary");
+    const QColor disabled = tokens.c("semantic.color.text.disabled");
+    const QColor disabledBorder = tokens.c("semantic.color.border.disabled");
+    const QColor brand = tokens.c("semantic.color.interactive.brand.default");
+    const QColor subtle = tokens.c("semantic.color.interactive.brand.subtle");
     const QString panelStyle = QStringLiteral(
         "QFrame { background:%1; border:1px solid %2; border-radius:8px; }"
         "QLabel { background:transparent; border:0; color:%3; font-weight:600; }"
@@ -1065,14 +1048,10 @@ QSize Z_Transfer::sizeHint() const { return {520, 210}; }
 
 void Z_Transfer::paintEvent(QPaintEvent*) {
     const Tokens tokens(profileValue);
-    const bool darkProfile = profileValue.startsWith(QStringLiteral("dark-"));
-    const QColor background = tokens.c(darkProfile
-        ? "semantic.color.background.surface"
-        : "base.stoken.color.background.surface");
+    const QColor background = tokens.c("semantic.color.background.surface");
     const QColor border = tokens.c(!isEnabled()
-        ? "base.stoken.color.border.disabled"
-        : (darkProfile ? "semantic.color.border.default"
-                       : "base.stoken.color.border.default"));
+        ? "semantic.color.border.disabled"
+        : "semantic.color.border.default");
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
     painter.setPen(QPen(border, 1));
@@ -1169,30 +1148,21 @@ void Z_Upload::refreshAccessibility() {
 
 void Z_Upload::paintEvent(QPaintEvent*) {
     const Tokens tokens(profileValue);
-    const bool darkProfile = profileValue.startsWith(QStringLiteral("dark-"));
     const bool error = snapshotStateValue == QStringLiteral("Error");
     const bool uploading = snapshotStateValue == QStringLiteral("Uploading");
     const bool success = snapshotStateValue == QStringLiteral("Success");
     const bool highlighted = snapshotStateValue == QStringLiteral("Hover") ||
                              dragActive || underMouse() || isDown() ||
                              FocusIndicator::instance().visibleFor(this);
-    const QColor background = tokens.c(darkProfile
-        ? "semantic.color.background.surface"
-        : "base.stoken.color.background.surface");
-    const QColor normalBorder = tokens.c(darkProfile
-        ? "semantic.color.border.default"
-        : "base.stoken.color.border.default");
-    const QColor brand = tokens.c("base.stoken.color.interactive.brand.default");
-    const QColor danger = tokens.c("base.stoken.color.status.danger.default");
+    const QColor background = tokens.c("semantic.color.background.surface");
+    const QColor normalBorder = tokens.c("semantic.color.border.default");
+    const QColor brand = tokens.c("semantic.color.interactive.brand.default");
+    const QColor danger = tokens.c("semantic.color.status.danger.default");
     // Figma currently binds the Success glyph to the near-white success-bg
     // value. Use the semantic success foreground so the state remains legible.
-    const QColor successForeground = tokens.c("semantic.color.status.success");
-    const QColor primary = tokens.c(darkProfile
-        ? "semantic.color.text.primary"
-        : "base.stoken.color.text.primary");
-    const QColor secondary = tokens.c(darkProfile
-        ? "semantic.color.text.secondary"
-        : "base.stoken.color.text.secondary");
+    const QColor successForeground = tokens.c("semantic.color.status.success.default");
+    const QColor primary = tokens.c("semantic.color.text.primary");
+    const QColor secondary = tokens.c("semantic.color.text.secondary");
     const QColor border = error ? danger : highlighted ? brand : normalBorder;
     const qreal borderWidth = error || highlighted ? 2.0 : 1.0;
     const QColor glyph = error ? danger : success ? successForeground : brand;
@@ -1407,9 +1377,9 @@ void Z_NumericKeypad::paintEvent(QPaintEvent*) {
     const Tokens tokens(profileValue);
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
-    painter.setPen(QPen(tokens.c(isEnabled() ? "base.stoken.color.border.default"
-                                             : "base.stoken.color.border.disabled"), 1));
-    painter.setBrush(tokens.c("base.stoken.color.background.surface"));
+    painter.setPen(QPen(tokens.c(isEnabled() ? "semantic.color.border.default"
+                                             : "semantic.color.border.disabled"), 1));
+    painter.setBrush(tokens.c("semantic.color.background.surface"));
     painter.drawRoundedRect(rect().adjusted(0, 0, -1, -1), 10, 10);
 }
 void Z_NumericKeypad::changeEvent(QEvent* event) {
@@ -1439,15 +1409,15 @@ void Z_NumericKeypad::refreshGeometry() {
 }
 void Z_NumericKeypad::refreshStyle() {
     const Tokens tokens(profileValue);
-    const QString surface = tokens.c("base.stoken.color.background.surface").name(QColor::HexArgb);
-    const QString border = tokens.c("base.stoken.color.border.default").name(QColor::HexArgb);
-    const QString primary = tokens.c("base.stoken.color.text.primary").name(QColor::HexArgb);
-    const QString disabled = tokens.c("base.stoken.color.text.disabled").name(QColor::HexArgb);
-    const QString borderDisabled = tokens.c("base.stoken.color.border.disabled").name(QColor::HexArgb);
-    const QString brand = tokens.c("base.stoken.color.interactive.brand.default").name(QColor::HexArgb);
-    const QString subtle = tokens.c("base.stoken.color.interactive.brand.subtle").name(QColor::HexArgb);
+    const QString surface = tokens.c("semantic.color.background.surface").name(QColor::HexArgb);
+    const QString border = tokens.c("semantic.color.border.default").name(QColor::HexArgb);
+    const QString primary = tokens.c("semantic.color.text.primary").name(QColor::HexArgb);
+    const QString disabled = tokens.c("semantic.color.text.disabled").name(QColor::HexArgb);
+    const QString borderDisabled = tokens.c("semantic.color.border.disabled").name(QColor::HexArgb);
+    const QString brand = tokens.c("semantic.color.interactive.brand.default").name(QColor::HexArgb);
+    const QString subtle = tokens.c("semantic.color.interactive.brand.subtle").name(QColor::HexArgb);
     const QString focus = FocusIndicator::instance().color(
-        tokens.c("base.stoken.color.interactive.brand.default")).name(QColor::HexArgb);
+        tokens.c("semantic.color.interactive.brand.default")).name(QColor::HexArgb);
     const int keyContentHeight = densityValue == QStringLiteral("Compact") ? 40 : 48;
     for (int index = 0; index < keyButtons.size(); ++index) {
         auto* button = keyButtons[index].data();
@@ -1515,19 +1485,19 @@ void Z_OverflowMenuButton::paintEvent(QPaintEvent*) {
         else if (FocusIndicator::instance().visibleFor(this)) state = "Focus";
         else state = "Default";
     }
-    QColor background = tokens.c("base.stoken.color.background.surface");
+    QColor background = tokens.c("semantic.color.background.surface");
     if (state == "Hover" || state == "Disabled")
-        background = tokens.c("base.stoken.color.background.surface-tertiary");
+        background = tokens.c("semantic.color.background.surface-tertiary");
     else if (state == "Pressed")
-        background = tokens.c("base.stoken.color.background.pressed");
+        background = tokens.c("semantic.color.background.pressed");
     const QColor border = state == "Disabled"
-        ? tokens.c("base.stoken.color.border.disabled")
+        ? tokens.c("semantic.color.border.disabled")
         : state == "Focus"
-        ? tokens.c("base.stoken.color.interactive.brand.focus-ring")
-        : tokens.c("base.stoken.color.border.default");
+        ? tokens.c("semantic.color.interactive.brand.focus-ring")
+        : tokens.c("semantic.color.border.default");
     const QColor foreground = state == "Disabled"
-        ? tokens.c("base.stoken.color.text.disabled")
-        : tokens.c("base.stoken.color.text.primary");
+        ? tokens.c("semantic.color.text.disabled")
+        : tokens.c("semantic.color.text.primary");
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
     painter.setPen(QPen(border, state == "Focus" ? 2 : 1));
@@ -1609,9 +1579,9 @@ void Z_SegmentedControl::paintEvent(QPaintEvent*) {
     const Tokens tokens(profileValue);
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
-    painter.setPen(QPen(tokens.c(isEnabled() ? "base.stoken.color.border.default"
-                                             : "base.stoken.color.border.disabled"), 1));
-    painter.setBrush(tokens.c("base.stoken.color.background.surface"));
+    painter.setPen(QPen(tokens.c(isEnabled() ? "semantic.color.border.default"
+                                             : "semantic.color.border.disabled"), 1));
+    painter.setBrush(tokens.c("semantic.color.background.surface"));
     painter.drawRoundedRect(rect().adjusted(0, 0, -1, -1), 10, 10);
 }
 void Z_SegmentedControl::changeEvent(QEvent* event) {
@@ -1645,13 +1615,13 @@ void Z_SegmentedControl::rebuild() {
 void Z_SegmentedControl::refreshStyle() {
     if (!group) return;
     const Tokens tokens(profileValue);
-    const QString disabled = tokens.c("base.stoken.color.text.disabled").name(QColor::HexArgb);
-    const QString borderDisabled = tokens.c("base.stoken.color.border.disabled").name(QColor::HexArgb);
-    const QString surface = tokens.c("base.stoken.color.background.surface").name(QColor::HexArgb);
-    const QString border = tokens.c("base.stoken.color.border.default").name(QColor::HexArgb);
-    const QString primary = tokens.c("base.stoken.color.text.primary").name(QColor::HexArgb);
-    const QString brand = tokens.c("base.stoken.color.interactive.brand.default").name(QColor::HexArgb);
-    const QString subtle = tokens.c("base.stoken.color.interactive.brand.subtle").name(QColor::HexArgb);
+    const QString disabled = tokens.c("semantic.color.text.disabled").name(QColor::HexArgb);
+    const QString borderDisabled = tokens.c("semantic.color.border.disabled").name(QColor::HexArgb);
+    const QString surface = tokens.c("semantic.color.background.surface").name(QColor::HexArgb);
+    const QString border = tokens.c("semantic.color.border.default").name(QColor::HexArgb);
+    const QString primary = tokens.c("semantic.color.text.primary").name(QColor::HexArgb);
+    const QString brand = tokens.c("semantic.color.interactive.brand.default").name(QColor::HexArgb);
+    const QString subtle = tokens.c("semantic.color.interactive.brand.subtle").name(QColor::HexArgb);
     for (auto* abstract : group->buttons()) {
         auto* button = qobject_cast<QToolButton*>(abstract);
         const bool selected = group->id(button) == currentIndexValue;
@@ -1721,14 +1691,14 @@ void Z_Stepper::paintEvent(QPaintEvent*) {
     }
     total += (itemValues.size() - 1) * (connectorWidth + gap * 2);
     int x = (width() - total) / 2;
-    const QColor surface = tokens.c("base.stoken.color.background.surface");
-    const QColor border = tokens.c("base.stoken.color.border.default");
-    const QColor borderSecondary = tokens.c("base.stoken.color.border.secondary");
-    const QColor primary = tokens.c("base.stoken.color.text.primary");
-    const QColor brand = tokens.c("base.stoken.color.interactive.brand.default");
-    const QColor subtle = tokens.c("base.stoken.color.interactive.brand.subtle");
-    const QColor danger = tokens.c("base.stoken.color.status.danger.default");
-    const QColor success = tokens.c("base.stoken.color.status.success.default");
+    const QColor surface = tokens.c("semantic.color.background.surface");
+    const QColor border = tokens.c("semantic.color.border.default");
+    const QColor borderSecondary = tokens.c("semantic.color.border.secondary");
+    const QColor primary = tokens.c("semantic.color.text.primary");
+    const QColor brand = tokens.c("semantic.color.interactive.brand.default");
+    const QColor subtle = tokens.c("semantic.color.interactive.brand.subtle");
+    const QColor danger = tokens.c("semantic.color.status.danger.default");
+    const QColor success = tokens.c("semantic.color.status.success.default");
     painter.setFont(labelFont);
     for (int index = 0; index < itemValues.size(); ++index) {
         const int itemWidth = itemWidths[index];
@@ -1809,8 +1779,8 @@ void Z_Timeline::paintEvent(QPaintEvent*) {
     const Tokens tokens(profileValue);
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
-    painter.setPen(QPen(tokens.c("base.stoken.color.border.default"), 1));
-    painter.setBrush(tokens.c("base.stoken.color.background.surface"));
+    painter.setPen(QPen(tokens.c("semantic.color.border.default"), 1));
+    painter.setBrush(tokens.c("semantic.color.background.surface"));
     painter.drawRoundedRect(rect().adjusted(0, 0, -1, -1), 4, 4);
 
     QFont titleFont(QStringLiteral("HarmonyOS Sans"));
@@ -1839,15 +1809,15 @@ void Z_Timeline::paintEvent(QPaintEvent*) {
         if (eventStateValues[index] == QStringLiteral("Brand")) {
             markerPath = QStringLiteral(":/figma/timeline/created.svg");
             sourceColor = QStringLiteral("#6235F7");
-            targetColor = tokens.c("base.stoken.color.interactive.brand.default");
+            targetColor = tokens.c("semantic.color.interactive.brand.default");
         } else if (eventStateValues[index] == QStringLiteral("Process")) {
             markerPath = QStringLiteral(":/figma/timeline/processing.svg");
             sourceColor = QStringLiteral("#C6C6C6");
-            targetColor = tokens.c("base.stoken.color.status.process");
+            targetColor = tokens.c("semantic.color.status.process");
         } else {
             markerPath = QStringLiteral(":/figma/timeline/completed.svg");
             sourceColor = QStringLiteral("#F3FAF6");
-            targetColor = tokens.c("base.stoken.color.status.success.default");
+            targetColor = tokens.c("semantic.color.status.success.default");
         }
         QFile markerFile(markerPath);
         if (!markerFile.open(QIODevice::ReadOnly)) return;
@@ -1857,11 +1827,11 @@ void Z_Timeline::paintEvent(QPaintEvent*) {
         if (!renderer.isValid()) return;
         renderer.render(&painter, markerRect);
 
-        painter.setPen(tokens.c("base.stoken.color.text.primary"));
+        painter.setPen(tokens.c("semantic.color.text.primary"));
         painter.setFont(titleFont);
         painter.drawText(QRect(x + 24, y, textWidth, titleMetrics.height()),
                          Qt::AlignLeft | Qt::AlignVCenter, eventLabelValues[index]);
-        painter.setPen(tokens.c("base.stoken.color.text.secondary"));
+        painter.setPen(tokens.c("semantic.color.text.secondary"));
         painter.setFont(timeFont);
         painter.drawText(QRect(x + 24, y + titleMetrics.height() + 3, textWidth,
                                timeMetrics.height()),
@@ -1978,9 +1948,9 @@ void Z_AnchorNavigation::paintEvent(QPaintEvent*) {
     const Tokens tokens(profileValue);
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
-    painter.setPen(QPen(tokens.c(isEnabled() ? "base.stoken.color.border.default"
-                                             : "base.stoken.color.border.disabled"), 1));
-    painter.setBrush(tokens.c("base.stoken.color.background.surface"));
+    painter.setPen(QPen(tokens.c(isEnabled() ? "semantic.color.border.default"
+                                             : "semantic.color.border.disabled"), 1));
+    painter.setBrush(tokens.c("semantic.color.background.surface"));
     painter.drawRoundedRect(rect().adjusted(0, 0, -1, -1), 10, 10);
 }
 void Z_AnchorNavigation::changeEvent(QEvent* event) {
@@ -2026,15 +1996,15 @@ void Z_AnchorNavigation::rebuild() {
 void Z_AnchorNavigation::refreshStyle() {
     if (!group) return;
     const Tokens tokens(profileValue);
-    const QString disabled = tokens.c("base.stoken.color.text.disabled").name(QColor::HexArgb);
-    const QString borderDisabled = tokens.c("base.stoken.color.border.disabled").name(QColor::HexArgb);
-    const QString surface = tokens.c("base.stoken.color.background.surface").name(QColor::HexArgb);
-    const QString border = tokens.c("base.stoken.color.border.default").name(QColor::HexArgb);
-    const QString primary = tokens.c("base.stoken.color.text.primary").name(QColor::HexArgb);
-    const QString brand = tokens.c("base.stoken.color.interactive.brand.default").name(QColor::HexArgb);
-    const QString subtle = tokens.c("base.stoken.color.interactive.brand.subtle").name(QColor::HexArgb);
+    const QString disabled = tokens.c("semantic.color.text.disabled").name(QColor::HexArgb);
+    const QString borderDisabled = tokens.c("semantic.color.border.disabled").name(QColor::HexArgb);
+    const QString surface = tokens.c("semantic.color.background.surface").name(QColor::HexArgb);
+    const QString border = tokens.c("semantic.color.border.default").name(QColor::HexArgb);
+    const QString primary = tokens.c("semantic.color.text.primary").name(QColor::HexArgb);
+    const QString brand = tokens.c("semantic.color.interactive.brand.default").name(QColor::HexArgb);
+    const QString subtle = tokens.c("semantic.color.interactive.brand.subtle").name(QColor::HexArgb);
     const QString focus = FocusIndicator::instance().color(
-        tokens.c("base.stoken.color.interactive.brand.default")).name(QColor::HexArgb);
+        tokens.c("semantic.color.interactive.brand.default")).name(QColor::HexArgb);
     for (auto* abstract : group->buttons()) {
         auto* button = qobject_cast<QToolButton*>(abstract);
         const bool selected = group->id(button) == currentIndexValue;
@@ -2161,9 +2131,9 @@ void Z_Filter::paintEvent(QPaintEvent*) {
     const Tokens tokens(profileValue);
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
-    painter.setPen(QPen(tokens.c(isEnabled() ? "base.stoken.color.border.default"
-                                             : "base.stoken.color.border.disabled"), 1));
-    painter.setBrush(tokens.c("base.stoken.color.background.surface"));
+    painter.setPen(QPen(tokens.c(isEnabled() ? "semantic.color.border.default"
+                                             : "semantic.color.border.disabled"), 1));
+    painter.setBrush(tokens.c("semantic.color.background.surface"));
     painter.drawRoundedRect(rect().adjusted(0, 0, -1, -1), 10, 10);
 }
 void Z_Filter::resizeEvent(QResizeEvent* event) {
@@ -2194,15 +2164,15 @@ void Z_Filter::layoutChildren() {
 void Z_Filter::refreshStyle() {
     if (criterionButtons.size() != 2 || !applyButtonValue) return;
     const Tokens tokens(profileValue);
-    const QString disabled = tokens.c("base.stoken.color.text.disabled").name(QColor::HexArgb);
-    const QString borderDisabled = tokens.c("base.stoken.color.border.disabled").name(QColor::HexArgb);
-    const QString surface = tokens.c("base.stoken.color.background.surface").name(QColor::HexArgb);
-    const QString border = tokens.c("base.stoken.color.border.default").name(QColor::HexArgb);
-    const QString primary = tokens.c("base.stoken.color.text.primary").name(QColor::HexArgb);
-    const QString brand = tokens.c("base.stoken.color.interactive.brand.default").name(QColor::HexArgb);
-    const QString subtle = tokens.c("base.stoken.color.interactive.brand.subtle").name(QColor::HexArgb);
+    const QString disabled = tokens.c("semantic.color.text.disabled").name(QColor::HexArgb);
+    const QString borderDisabled = tokens.c("semantic.color.border.disabled").name(QColor::HexArgb);
+    const QString surface = tokens.c("semantic.color.background.surface").name(QColor::HexArgb);
+    const QString border = tokens.c("semantic.color.border.default").name(QColor::HexArgb);
+    const QString primary = tokens.c("semantic.color.text.primary").name(QColor::HexArgb);
+    const QString brand = tokens.c("semantic.color.interactive.brand.default").name(QColor::HexArgb);
+    const QString subtle = tokens.c("semantic.color.interactive.brand.subtle").name(QColor::HexArgb);
     const QString focus = FocusIndicator::instance().color(
-        tokens.c("base.stoken.color.interactive.brand.default")).name(QColor::HexArgb);
+        tokens.c("semantic.color.interactive.brand.default")).name(QColor::HexArgb);
     QList<QToolButton*> allButtons{criterionButtons[0], criterionButtons[1], applyButtonValue};
     for (int index = 0; index < allButtons.size(); ++index) {
         auto* button = allButtons[index];
@@ -2295,13 +2265,13 @@ QList<int> Z_Pagination::displayPages() const {
 QSize Z_Pagination::sizeHint() const {
     const Tokens tokens(profileValue);
     const bool compact = densityValue == QStringLiteral("Compact");
-    const QByteArray prefix = compact ? "base.stoken.pagination.base.compact"
-                                      : "base.stoken.pagination.base.default";
+    const QByteArray prefix = compact ? "component.pagination.base.state.compact.slot"
+                                      : "component.pagination.base.state.default.slot";
     const int itemWidth = tokens.n((prefix + ".item.visual-width").constData());
     const int itemHeight = tokens.n((prefix + ".item.visual-height").constData());
     const int paddingInline = tokens.n((prefix + ".container.padding-inline").constData());
     const int paddingBlock = tokens.n((prefix + ".container.padding-block").constData());
-    const int gap = tokens.n((prefix + ".container.gap").constData());
+    const int gap = tokens.n((prefix + ".content.gap").constData());
     const auto pages = displayPages();
     const int ellipses = std::count(pages.cbegin(), pages.cend(), -1);
     const int controls = pages.size() + 2;
@@ -2325,14 +2295,14 @@ void Z_Pagination::rebuild() {
     ellipsisLabels.clear();
     const Tokens tokens(profileValue);
     const bool compact = densityValue == QStringLiteral("Compact");
-    const QByteArray prefix = compact ? "base.stoken.pagination.base.compact"
-                                      : "base.stoken.pagination.base.default";
+    const QByteArray prefix = compact ? "component.pagination.base.state.compact.slot"
+                                      : "component.pagination.base.state.default.slot";
     const int itemWidth = tokens.n((prefix + ".item.visual-width").constData());
     const int itemHeight = tokens.n((prefix + ".item.visual-height").constData());
     const int paddingInline = tokens.n((prefix + ".container.padding-inline").constData());
     const int paddingBlock = tokens.n((prefix + ".container.padding-block").constData());
     pageLayout->setContentsMargins(paddingInline, paddingBlock, paddingInline, paddingBlock);
-    pageLayout->setSpacing(tokens.n((prefix + ".container.gap").constData()));
+    pageLayout->setSpacing(tokens.n((prefix + ".content.gap").constData()));
     const auto add = [this](const QString& text, int page, const QString& objectName) {
         auto* button = new QToolButton(this);
         button->setObjectName(objectName);
@@ -2371,21 +2341,21 @@ void Z_Pagination::rebuild() {
 void Z_Pagination::refreshStyle() {
     if (pageButtons.isEmpty()) return;
     const Tokens tokens(profileValue);
-    const QString disabled = tokens.c("base.stoken.pagination.base.disabled.item.label-color").name(QColor::HexArgb);
-    const QString disabledBorder = tokens.c("base.stoken.pagination.base.disabled.navigation.border-color").name(QColor::HexArgb);
-    const QString disabledBackground = tokens.c("base.stoken.pagination.base.disabled.navigation.background").name(QColor::HexArgb);
-    const QString disabledIcon = tokens.c("base.stoken.pagination.base.disabled.navigation.icon-color").name(QColor::HexArgb);
-    const QString primary = tokens.c("base.stoken.pagination.base.default.item.label-color").name(QColor::HexArgb);
-    const QString surface = tokens.c("base.stoken.pagination.base.default.navigation.background").name(QColor::HexArgb);
-    const QString border = tokens.c("base.stoken.pagination.base.default.navigation.border-color").name(QColor::HexArgb);
-    const QString navigationIcon = tokens.c("base.stoken.pagination.base.default.navigation.icon-color").name(QColor::HexArgb);
-    const QString selectedLabel = tokens.c("base.stoken.pagination.base.selected.item.label-color").name(QColor::HexArgb);
-    const QString selectedBackground = tokens.c("base.stoken.pagination.base.selected.item.background").name(QColor::HexArgb);
-    const QString hoverBackground = tokens.c("base.stoken.pagination.base.hover.item.background").name(QColor::HexArgb);
-    const QString focus = tokens.c("base.stoken.pagination.base.focused.focus-ring.color").name(QColor::HexArgb);
-    const int itemRadius = tokens.n("base.stoken.pagination.base.default.item.radius");
-    const int navigationRadius = tokens.n("base.stoken.pagination.base.default.navigation.radius");
-    const int borderWidth = tokens.n("base.stoken.pagination.base.default.border-width");
+    const QString disabled = tokens.c("component.pagination.base.state.disabled.slot.item.label-color").name(QColor::HexArgb);
+    const QString disabledBorder = tokens.c("component.pagination.base.state.disabled.slot.navigation.border-color").name(QColor::HexArgb);
+    const QString disabledBackground = tokens.c("component.pagination.base.state.disabled.slot.navigation.background-color").name(QColor::HexArgb);
+    const QString disabledIcon = tokens.c("component.pagination.base.state.disabled.slot.navigation.icon-color").name(QColor::HexArgb);
+    const QString primary = tokens.c("component.pagination.base.state.default.slot.item.label-color").name(QColor::HexArgb);
+    const QString surface = tokens.c("component.pagination.base.state.default.slot.navigation.background-color").name(QColor::HexArgb);
+    const QString border = tokens.c("component.pagination.base.state.default.slot.navigation.border-color").name(QColor::HexArgb);
+    const QString navigationIcon = tokens.c("component.pagination.base.state.default.slot.navigation.icon-color").name(QColor::HexArgb);
+    const QString selectedLabel = tokens.c("component.pagination.base.state.selected.slot.item.label-color").name(QColor::HexArgb);
+    const QString selectedBackground = tokens.c("component.pagination.base.state.selected.slot.item.background-color").name(QColor::HexArgb);
+    const QString hoverBackground = tokens.c("component.pagination.base.state.hover.slot.item.background-color").name(QColor::HexArgb);
+    const QString focus = tokens.c("component.pagination.base.state.focused.slot.focus-ring.color").name(QColor::HexArgb);
+    const int itemRadius = tokens.n("component.pagination.base.state.default.slot.item.border-radius");
+    const int navigationRadius = tokens.n("component.pagination.base.state.default.slot.navigation.border-radius");
+    const int borderWidth = tokens.n("component.pagination.base.state.default.slot.navigation.border-width");
     for (auto* button : pageButtons) {
         const int page = button->property("pageNumber").toInt();
         const bool selected = page == currentPageValue && button->objectName().startsWith("page_");
@@ -2482,8 +2452,8 @@ void Z_PageHeader::paintEvent(QPaintEvent*) {
     const Tokens tokens(profileValue);
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
-    painter.setPen(QPen(tokens.c("base.stoken.color.border.default"), 1));
-    painter.setBrush(tokens.c("base.stoken.color.background.surface"));
+    painter.setPen(QPen(tokens.c("semantic.color.border.default"), 1));
+    painter.setBrush(tokens.c("semantic.color.background.surface"));
     painter.drawRoundedRect(rect().adjusted(0, 0, -1, -1), 10, 10);
 }
 void Z_PageHeader::refreshStyle() {
@@ -2492,13 +2462,13 @@ void Z_PageHeader::refreshStyle() {
     QFont titleFont = titleLabel->font(); titleFont.setWeight(QFont::DemiBold); titleLabel->setFont(titleFont);
     contextLabel->setFont(componentFont(13));
     titleLabel->setStyleSheet(QStringLiteral("color:%1;")
-                                 .arg(tokens.c("base.stoken.color.text.primary").name(QColor::HexArgb)));
+                                 .arg(tokens.c("semantic.color.text.primary").name(QColor::HexArgb)));
     contextLabel->setStyleSheet(QStringLiteral("color:%1;")
-                                   .arg(tokens.c("base.stoken.color.text.secondary").name(QColor::HexArgb)));
+                                   .arg(tokens.c("semantic.color.text.secondary").name(QColor::HexArgb)));
     actionControl->setStyleSheet(QStringLiteral(
         "QToolButton { background:%1; color:%2; border:1px solid %2; border-radius:8px; padding:0 14px; }")
-        .arg(tokens.c("base.stoken.color.interactive.brand.subtle").name(QColor::HexArgb),
-             tokens.c("base.stoken.color.interactive.brand.default").name(QColor::HexArgb)));
+        .arg(tokens.c("semantic.color.interactive.brand.subtle").name(QColor::HexArgb),
+             tokens.c("semantic.color.interactive.brand.default").name(QColor::HexArgb)));
     QFont actionFont = componentFont(14); actionFont.setWeight(QFont::DemiBold);
     actionControl->setFont(actionFont);
 }
@@ -2562,8 +2532,8 @@ void Z_TitleBar::paintEvent(QPaintEvent*) {
     const Tokens tokens(profileValue);
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
-    painter.setPen(QPen(tokens.c("base.stoken.color.border.default"), 1));
-    painter.setBrush(tokens.c("base.stoken.color.background.surface"));
+    painter.setPen(QPen(tokens.c("semantic.color.border.default"), 1));
+    painter.setBrush(tokens.c("semantic.color.background.surface"));
     painter.drawRoundedRect(rect().adjusted(0, 0, -1, -1), 10, 10);
 }
 void Z_TitleBar::mousePressEvent(QMouseEvent* event) {
@@ -2582,18 +2552,18 @@ void Z_TitleBar::refreshStyle() {
     const Tokens tokens(profileValue);
     titleLabel->setText(titleValue);
     titleLabel->setStyleSheet(QStringLiteral("color:%1;")
-                                 .arg(tokens.c("base.stoken.color.text.primary").name(QColor::HexArgb)));
+                                 .arg(tokens.c("semantic.color.text.primary").name(QColor::HexArgb)));
     QFont titleFont = componentFont(14); titleFont.setWeight(QFont::DemiBold); titleLabel->setFont(titleFont);
     if (auto* mark = findChild<QLabel*>(QStringLiteral("applicationMark"))) {
         mark->setStyleSheet(QStringLiteral("color:%1;")
-                                .arg(tokens.c("base.stoken.color.interactive.brand.default").name(QColor::HexArgb)));
+                                .arg(tokens.c("semantic.color.interactive.brand.default").name(QColor::HexArgb)));
         mark->setFont(componentFont(16));
     }
-    const QString surface = tokens.c("base.stoken.color.background.surface").name(QColor::HexArgb);
-    const QString border = tokens.c("base.stoken.color.border.default").name(QColor::HexArgb);
-    const QString primary = tokens.c("base.stoken.color.text.primary").name(QColor::HexArgb);
-    const QString brand = tokens.c("base.stoken.color.interactive.brand.default").name(QColor::HexArgb);
-    const QString subtle = tokens.c("base.stoken.color.interactive.brand.subtle").name(QColor::HexArgb);
+    const QString surface = tokens.c("semantic.color.background.surface").name(QColor::HexArgb);
+    const QString border = tokens.c("semantic.color.border.default").name(QColor::HexArgb);
+    const QString primary = tokens.c("semantic.color.text.primary").name(QColor::HexArgb);
+    const QString brand = tokens.c("semantic.color.interactive.brand.default").name(QColor::HexArgb);
+    const QString subtle = tokens.c("semantic.color.interactive.brand.subtle").name(QColor::HexArgb);
     const QString normal = QStringLiteral(
         "QToolButton { background:%1; color:%2; border:1px solid %3; border-radius:7px; }")
         .arg(surface, primary, border);

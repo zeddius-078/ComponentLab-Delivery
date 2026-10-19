@@ -66,6 +66,22 @@ def check():
     demo = PROJECT / "build/demo/component_gallery"
     if demo.exists():
         assert not list(demo.rglob("*.lib")) and not list(demo.rglob("*.h"))
+        # The gallery consumes the packaged V2 map first.  If a demo package is
+        # present, fail fast instead of allowing a stale map to masquerade as a
+        # current SDK build.
+        sdk_map = SDK / "resources/mappings/figma-component-map-v2.json"
+        demo_map = demo / "resources/mappings/figma-component-map-v2.json"
+        if demo_map.exists():
+            assert hashlib.sha256(demo_map.read_bytes()).digest() == hashlib.sha256(
+                sdk_map.read_bytes()).digest(), "demo V2 component map is stale"
+    v2_map = json.loads((SDK / "resources/mappings/figma-component-map-v2.json").read_bytes())
+    assert v2_map["schemaVersion"] == "2.0"
+    button = next(item for item in v2_map["components"] if item["componentId"] == "button")
+    primary = next(item for item in button["bindings"] if item["variable"] ==
+                   "button/base/intent/primary/slot/container/background-color")
+    # Regression guard for the issue where ComponentLab displayed an old token map.
+    assert primary["canonicalPath"] == "component.button.base.intent.primary.slot.container.background-color"
+    assert primary["canonicalValue"] == "#6235F7"
     assert not (PROJECT / "build/dist").exists()
     assert not (PROJECT / "build/dependencies").exists()
     assert not (SOURCE / "runtime").exists()

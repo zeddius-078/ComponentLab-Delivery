@@ -1,0 +1,22 @@
+CRITICAL REQUIRED POST-PROCESSING ORDER FOR DESIGN_TO_CODE:
+The manifests above contain TEMPORARY localhost URLs. You MUST complete these steps in order before doing unrelated work or optional refinement:
+
+1. **Code files** (listed in `pageEntries` and `codeEntries`):
+   - HTTP GET every file URL in the manifests.
+   - Save each file to the `path` specified in the manifest when present.
+   - If `path` is missing, derive a framework-appropriate path from `id` or `name`.
+
+2. **Image resources** (http://localhost:PORT/assets/BATCH_TS/xxx.png|jpg|svg|gif):
+   - Download every image URL referenced by the saved code files.
+   - Save images to the project's assets/images directory.
+   - Treat BATCH_TS as a temporary server cache key; never keep it in the local project path.
+   - Replace each full http://localhost URL with a local path using only the basename, e.g. `http://localhost:PORT/assets/BATCH_TS/logo.png` -> `assets/images/logo.png`.
+
+3. **Font resources** (http://localhost:PORT/assets/BATCH_TS/xxx.ttf|otf|woff|woff2):
+   - Download every font URL referenced by @font-face rules.
+   - Save fonts to the project's fonts directory.
+   - Treat BATCH_TS as a temporary server cache key; never keep it in the local project path.
+   - Update @font-face src URLs to use local relative paths with only the basename, e.g. `http://localhost:PORT/assets/BATCH_TS/Outfit-Regular.ttf` -> `fonts/Outfit-Regular.ttf`.
+
+WARNING: All resource URLs are TEMPORARY. The server has a 100MB cache limit - older resources may be evicted without notice.
+Do NOT perform default code refinement, call refine_generated_code, or perform optional cleanup before completing steps 1-3.

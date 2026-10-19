@@ -68,7 +68,7 @@ void SelectOption::setText(const QString &text) {
 }
 void SelectOption::setControlSize(const QString &size) {
     // Tokens::size 拒绝不存在的等级，不静默选择另一尺寸。
-    tokens->size(size);
+    tokens->size(size, field::Family::Select);
     source->setControlSize(size);
     sizeName = size;
     view->setStyleSheet(source->styleSheet());

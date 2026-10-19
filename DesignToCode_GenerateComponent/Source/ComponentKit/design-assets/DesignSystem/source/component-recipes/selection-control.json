@@ -1,0 +1,68 @@
+{
+  "$registry": {
+    "component": "selection-control",
+    "version": "2.0"
+  },
+  "$status": "active",
+  "base": {
+    "state": {
+      "default": {
+        "slot": {
+          "indicator": {
+            "color": {
+              "$type": "color",
+              "$value": "{semantic.color.icon.secondary}",
+              "$description": "Recovered from legacy V2 layer component.selection-control.base.default.indicator.color",
+              "$sourceOwner": "old-tree-recovery"
+            },
+            "size": {
+              "$type": "dimension",
+              "$value": "{semantic.visualization-size.sm}",
+              "$description": "Recovered from legacy V2 layer component.selection-control.base.default.indicator.size",
+              "$sourceOwner": "old-tree-recovery",
+              "unit": "px"
+            }
+          }
+        }
+      },
+      "disabled": {
+        "slot": {
+          "indicator": {
+            "color": {
+              "$type": "color",
+              "$value": "{semantic.color.icon.disabled}",
+              "$description": "Recovered from legacy V2 layer component.selection-control.base.disabled.indicator.color",
+              "$sourceOwner": "old-tree-recovery"
+            }
+          }
+        }
+      },
+      "focused": {
+        "slot": {
+          "focus-ring": {
+            "width": {
+              "$type": "borderWidth",
+              "$value": "{semantic.border-width.focus-ring}",
+              "$description": "Recovered from legacy V2 layer component.selection-control.base.focused.focus-ring.width",
+              "$sourceOwner": "old-tree-recovery",
+              "unit": "px"
+            }
+          }
+        }
+      },
+      "selected": {
+        "slot": {
+          "indicator": {
+            "color": {
+              "$type": "color",
+              "$value": "{semantic.color.interactive.brand.default}",
+              "$description": "Recovered from legacy V2 layer component.selection-control.base.selected.indicator.color",
+              "$sourceOwner": "old-tree-recovery"
+            }
+          }
+        }
+      }
+    }
+  },
+  "overrides": []
+}

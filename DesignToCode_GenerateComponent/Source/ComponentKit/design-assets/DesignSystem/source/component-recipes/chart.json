@@ -1,0 +1,92 @@
+{
+  "$registry": {
+    "component": "chart",
+    "version": "2.0"
+  },
+  "$status": "active",
+  "base": {
+    "state": {
+      "default": {
+        "slot": {
+          "content": {
+            "grid": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  167,
+                  167,
+                  167
+                ]
+              },
+              "$description": "图表网格线",
+              "$sourceOwner": "figma-audit-v2"
+            },
+            "orders-canceled": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  255,
+                  0,
+                  19
+                ]
+              },
+              "$description": "已取消系列色（审计值）",
+              "$sourceOwner": "figma-audit-v2"
+            },
+            "orders-pending": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  255,
+                  149,
+                  0
+                ]
+              },
+              "$description": "待处理系列色（审计值）",
+              "$sourceOwner": "figma-audit-v2"
+            },
+            "orders-shipped": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  14,
+                  143,
+                  33
+                ]
+              },
+              "$description": "已发货系列色（审计值）",
+              "$sourceOwner": "figma-audit-v2"
+            },
+            "series-primary": {
+              "$type": "color",
+              "$value": {
+                "colorSpace": "srgb",
+                "components": [
+                  29,
+                  72,
+                  64
+                ]
+              },
+              "$description": "主系列色（审计值）",
+              "$sourceOwner": "figma-audit-v2"
+            }
+          },
+          "status": {
+            "height": {
+              "$type": "dimension",
+              "$value": 76,
+              "$description": "状态区高度（审计值）",
+              "$sourceOwner": "figma-audit-v2",
+              "unit": "px"
+            }
+          }
+        }
+      }
+    }
+  },
+  "overrides": []
+}

@@ -1,0 +1,1 @@
+{"jsonrpc": "2.0", "method": "tools/call", "params": {"name": "design_to_code", "arguments": {"guids": ["27:450"], "clientFrameworks": "html"}}, "id": 4}

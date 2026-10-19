@@ -143,10 +143,6 @@ void Z_OtpInput::setStatus(const QString& v) {
     for (auto* f : frames)
         f->setStatus(v);
 }
-void Z_OtpInput::setVariant(const QString& v) {
-    for (auto* f : frames)
-        f->setVariant(v);
-}
 void Z_OtpInput::setAppearance(const QString& v) {
     for (auto* f : frames)
         f->setAppearance(v);

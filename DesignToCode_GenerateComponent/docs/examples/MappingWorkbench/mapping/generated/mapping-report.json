@@ -1,0 +1,34 @@
+{
+    "dependencies": [
+        "Qt5::UiTools",
+        "d2c_theme",
+        "d2c_appearance",
+        "mapping_core",
+        "mapping-resources.qrc",
+        "component-resources.qrc"
+    ],
+    "designParity": "NOT_VERIFIED_WITH_LIVE_DESIGN",
+    "files": {
+        "MappingGenerated.cpp": "31321ba4003b3a0a06f33364522648406b6779bf21cbf172f4f319fd017cba93",
+        "MappingGenerated.h": "dd45f115348716ec0f6dd1dbc6cf2035a7d92215b03ac538c38dff210ab92ba4",
+        "MappingGenerated.qss": "d6a4217b81042aa343cc0d9b5da82fc16e628228ee1963289f6ee8f0ae68f6db",
+        "MappingGenerated.ui": "12f52a28bafc75900417406f2cec3560a48ebf9eae32c114cc3b5210a4297c1b",
+        "ui-contract.json": "3a6dff3528c3196c14dd03a798b7f5b4224ca312c56b3fae76b342787ae95f59"
+    },
+    "layout": {
+        "margin": 8,
+        "spacing": 8
+    },
+    "mappingId": "component-lab-qt-mapping-v1",
+    "profile": "standard-light",
+    "source": {
+        "documentUrl": "",
+        "kind": "localFixture",
+        "nodeId": "",
+        "rawSha256": "",
+        "reviewed": false
+    },
+    "status": "ADAPTED",
+    "tokenPipelineModified": false,
+    "tokenSourceHash": "4767a3527608:df7276b57aed"
+}

@@ -1,0 +1,11 @@
+**Optional refinement tags available for user selection:**
+
+| Tag | Refinement Direction | Description |
+| :--- | :--- | :--- |
+| **A** | Responsive & Flexbox | Replace hard-coded pixels and float layouts |
+| **B** | Extract CSS Variables | Convert colors and font sizes to reusable variables |
+| **C** | Convert to Tailwind | Remove inline styles, use Tailwind utility classes |
+| **D** | DRY / duplicate extraction | Extract repeated UI or logic; merge only equivalent copies; warn if visuals might drift |
+| **E** | Project DS & components | Map to project tokens and shared components; **UI may diverge from the Pixso export** - warn the user |
+
+*Reply with one or more optional tags to apply, e.g. `AB`, `A+B`, or `Execute A, D, and E`. If you do not want optional refinement, say so directly.*

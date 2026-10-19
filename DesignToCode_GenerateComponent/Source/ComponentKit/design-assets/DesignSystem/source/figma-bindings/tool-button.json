@@ -1,0 +1,60 @@
+{
+  "$description": "Tool Button V2 Figma structure and variable binding manifest. Specification only; it does not write or mutate the Figma file.",
+  "component": "tool-button",
+  "version": "2.0",
+  "architectureAuthority": "V2 component-registry, component-contracts, and component-recipes",
+  "$status": "draft-v2",
+  "writePolicy": "specification-only",
+  "publicComponentSet": "ComponentLab/ToolButton",
+  "figmaComponentSet": null,
+  "figmaComponentSetStatus": "candidate-unverified",
+  "figmaVariantCount": null,
+  "figmaVariantCountStatus": "not-yet-materialized",
+  "migrationEvidence": {
+    "source": "source/component-recipes/tool-button.json",
+    "status": "legacy-recipe-replaced",
+    "reasons": [
+      "legacy auto-raise, checked-hover and hover-pressed were compound state names",
+      "legacy open mixed runtime menu lifecycle with visual state",
+      "legacy recipe did not expose independent value and menu structure axes"
+    ]
+  },
+  "variantAxes": {
+    "presentation": ["standard", "auto-raise"],
+    "value": ["unchecked", "checked"],
+    "state": ["default", "hover", "pressed", "focused", "disabled"],
+    "menu": ["none", "split"]
+  },
+  "materialization": {
+    "mode": "generator-managed",
+    "logicalCombinationCount": 30,
+    "manualVariantAuthoring": false,
+    "runtimeOnlyAxes": ["menu.open"]
+  },
+  "nestedStructure": {
+    "toolButton": ["container", "content", "icon", "label", "action", "menu", "border", "divider", "focus-ring"]
+  },
+  "componentProperties": {
+    "labelText": "text",
+    "icon": "instance-swap",
+    "labelVisible": "boolean",
+    "menuVisible": "boolean"
+  },
+  "variableNamespace": {
+    "collection": "DSM/Component",
+    "prefix": "tool-button/",
+    "canonicalPrefix": "component.tool-button."
+  },
+  "bindingRules": [
+    {"figmaSlot": "ToolButton/Container", "figmaProperty": "fill-radius-height", "canonicalPattern": "component.tool-button.base.{shared|presentation|value|state}.slot.container.*", "source": "component-recipes/tool-button.json#/base"},
+    {"figmaSlot": "ToolButton/Content", "figmaProperty": "label-icon", "canonicalPattern": "component.tool-button.base.shared.slot.{label|icon}.*", "source": "component-recipes/tool-button.json#/base/shared"},
+    {"figmaSlot": "ToolButton/Border", "figmaProperty": "stroke", "canonicalPattern": "component.tool-button.*.slot.border.*", "source": "component-recipes/tool-button.json#/base"},
+    {"figmaSlot": "ToolButton/FocusRing", "figmaProperty": "stroke", "canonicalPattern": "component.tool-button.state.focused.slot.focus-ring.*", "source": "component-recipes/tool-button.json#/base/state/focused"},
+    {"figmaSlot": "ToolButton/SplitMenu", "figmaProperty": "divider-action-width", "canonicalPattern": "component.tool-button.menu.split.slot.{divider|action}.*", "source": "component-recipes/tool-button.json#/base/menu/split"}
+  ],
+  "sharedComponentBindings": {
+    "typography": "composite.typography",
+    "icons": "component.icon"
+  },
+  "runtimeOnly": ["action-identity", "checkable-value-mutation", "menu-open-lifecycle", "event-dispatch", "keyboard-navigation"]
+}

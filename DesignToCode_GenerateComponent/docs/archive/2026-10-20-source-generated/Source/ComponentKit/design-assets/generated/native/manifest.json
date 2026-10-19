@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "componentCount": 59,
+  "generatedCppCount": 57,
+  "profiles": [
+    "standard-light",
+    "standard-dark",
+    "wide-light",
+    "wide-dark"
+  ],
+  "definitionSha256": "450af6244e117520803b41f703a0cfd32e39d63df20ec8dfb2533b7452c4efcb",
+  "runtimeTokenSha256": "183b72764b557cefe75a51fba0fdd67a298581582bc558d3bbc1ef02c7d4d55c",
+  "namingRule": "Q<Class> -> commonWidget::Z_<Class>"
+}

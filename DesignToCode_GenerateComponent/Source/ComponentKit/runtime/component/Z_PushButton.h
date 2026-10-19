@@ -4,6 +4,7 @@
 #include <QColor>
 #include <QFont>
 #include <QIcon>
+#include <QJsonObject>
 #include <QMap>
 #include <QPixmap>
 #include <QString>
@@ -20,8 +21,10 @@ class QPainter;
 class QResizeEvent;
 
 namespace commonWidget {
+enum class ButtonIntent { Primary, Secondary, Operation, Danger };
+enum class ButtonAppearance { Filled, Outlined, Dashed, Text, Link };
 enum class ButtonType { Primary, Default, Dashed, Text, Link };
-enum class ButtonSize { XS, S, M, L };
+enum class ButtonSize { Small, Medium, Large, XS = Small, S = Small, M = Medium, L = Large };
 enum class IconContainerStyle { Filled, Outlined, Bare };
 
 namespace button_detail {
@@ -37,29 +40,17 @@ struct Metrics {
     qreal indicatorStroke = 0;
     int iconOnlySize = 0;
 };
-struct LegacyRecipe {
-    ButtonType type;
-    bool danger;
-    bool ghost;
-    IconContainerStyle iconStyle;
-};
 struct Runtime {
-    std::array<Metrics, 4> sizes;
+    std::array<Metrics, 3> sizes;
     int cycleMs = 0;
     int frameMs = 0;
-    int sweepDegrees = 0;
-    QColor focusColor, dangerFocusColor, ghostFocusColor;
-    QString qssTemplate;
-    QString generatedQss;
-    QVector<QMap<QString, QString>> qssRows;
+    qreal spinnerStartDegrees = 0;
+    qreal spinnerSweepDegrees = 0;
+    qreal spinnerTrackOpacity = 0;
+    QJsonObject values;
     std::function<QPixmap(const QIcon&, int, const QColor&,
                           QIcon::Mode, qreal)> renderIcon;
-    std::function<QIcon(int)> legacyOperationIcon;
-    std::function<LegacyRecipe(const QString&)> legacyRecipe;
-    std::function<ButtonSize(const QFont&)> legacyFontSize;
 };
-QString renderButtonQss(const QString& source,
-                       const QVector<QMap<QString, QString>>& rows);
 void installButtonRuntime(QApplication& app, const Runtime& runtime);
 }
 
@@ -80,8 +71,11 @@ public:
     QString leadingIconSource() const;
     QString trailingIconSource() const;
     QColor focusIndicatorColor() const;
+    QString visualState() const;
 
 public slots:
+    void setIntent(ButtonIntent value);
+    void setAppearance(ButtonAppearance value);
     void setType(ButtonType value);
     void setDanger(bool value);
     void setGhost(bool value);
@@ -99,38 +93,24 @@ public slots:
     void setLeadingIconSource(const QString& source);
     void setTrailingIconSource(const QString& source);
 
-public:
-    // Compatibility only. New callers use the explicit setters above.
-    void SetPrimaryButton();
-    void SetSecondaryButton();
-    void SetDangerousButton();
-    void SetOperateIco(int icoIndex = 0);
-    void SetIcoButton();
-    void SetDarkButton(const QIcon& icon);
-    void SetIcoRightButton(const QString& text, const QIcon& icon);
-    void SetFont(const QFont& font);
+signals:
+    void visualStateChanged(const QString& state);
 
 protected:
     bool event(QEvent* event) override;
     bool eventFilter(QObject* watched, QEvent* event) override;
     void paintEvent(QPaintEvent* event) override;
     void resizeEvent(QResizeEvent* event) override;
+    virtual QString stateStyleOverride(const QString& state) const;
+    void refreshState();
 
 private:
-    enum class ButtonVariant { Solid, Outlined, Dashed, Text, Link };
-    enum class ButtonColor { Primary, Neutral, Danger };
-    struct Recipe { ButtonColor color; ButtonVariant variant; };
     struct Impl;
     std::unique_ptr<Impl> d;
-    Recipe resolveRecipe() const;
-    QString visualState() const;
+    QString contentMode() const;
     void sync();
     void refreshVisual();
-    bool hasFigmaAppearance() const;
-    QString figmaState() const;
-    void paintFigmaAppearance(QPainter& painter);
     void watchParents();
-    void applyLegacy(const QString& name);
     void requireIconContent(const QIcon& leading, bool leadingVisible,
                             const QIcon& trailing, bool trailingVisible) const;
 };

@@ -17,6 +17,10 @@
 class FormalResources {
 public:
     explicit FormalResources(const QJsonObject& mapping) {
+        // 设计侧 Profile 解析结果由调用方预先写入 resolvedComponents 映射；
+        // 资源器只保留元数据供页面清单引用，不重新解析设计树。
+        metadata["resolvedDesignProfile"] = mapping["resolvedDesignProfile"];
+        metadata["resolvedProfileAlias"] = mapping["resolvedProfileAlias"];
         const auto collect = [this](const QJsonObject& entries) {
             for (auto it = entries.begin(); it != entries.end(); ++it) {
                 const auto entry = it.value().toObject();
@@ -83,6 +87,9 @@ public:
     bool hasPageResources() const { return true; }
     QJsonArray trace() const { return records; }
 
+    // 页面清单引用采集解析元数据；键由页面生成器预先写入映射。
+    QJsonValue operator[](const QString& key) const { return metadata.value(key); }
+
     void write(const QString& directory, const QString& pageClass,
                const QByteArray& pageQss) const {
         // 页面 QSS 始终存在；图片目录只在确有页面图片时创建，避免空资源目录进入交付包。
@@ -117,6 +124,7 @@ private:
     QMap<QString, QString> resolved;
     QMap<QString, Asset> targets;
     QJsonArray records;
+    QJsonObject metadata;
     static QString resolveShared(const QString& id) {
         if (commonWidget::IconAssetCatalog::isSemanticId(id) &&
             commonWidget::IconAssetCatalog::contains(id))

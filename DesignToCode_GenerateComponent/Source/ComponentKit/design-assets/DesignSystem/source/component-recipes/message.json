@@ -1,0 +1,68 @@
+{
+  "$registry": {
+    "component": "message",
+    "version": "2.0"
+  },
+  "$status": "active",
+  "base": {
+    "state": {
+      "default": {
+        "slot": {
+          "border": {
+            "color": {
+              "$type": "color",
+              "$value": "{semantic.color.border.secondary}",
+              "$description": "Recovered from legacy V2 layer component.message.base.default.border.color",
+              "$sourceOwner": "old-tree-recovery"
+            }
+          },
+          "container": {
+            "background-color": {
+              "$type": "color",
+              "$value": "{semantic.color.background.surface-raised}",
+              "$description": "Recovered from legacy V2 layer component.message.base.default.container.background-color",
+              "$sourceOwner": "old-tree-recovery"
+            }
+          }
+        }
+      },
+      "error": {
+        "slot": {
+          "icon": {
+            "color": {
+              "$type": "color",
+              "$value": "{semantic.color.status.danger.default}",
+              "$description": "Recovered from legacy V2 layer component.message.base.error.icon.color",
+              "$sourceOwner": "old-tree-recovery"
+            }
+          }
+        }
+      },
+      "success": {
+        "slot": {
+          "icon": {
+            "color": {
+              "$type": "color",
+              "$value": "{semantic.color.status.success.default}",
+              "$description": "Recovered from legacy V2 layer component.message.base.success.icon.color",
+              "$sourceOwner": "old-tree-recovery"
+            }
+          }
+        }
+      },
+      "warning": {
+        "slot": {
+          "icon": {
+            "color": {
+              "$type": "color",
+              "$value": "{semantic.color.status.warning.default}",
+              "$description": "Recovered from legacy V2 layer component.message.base.warning.icon.color",
+              "$sourceOwner": "old-tree-recovery"
+            }
+          }
+        }
+      }
+    }
+  },
+  "overrides": []
+}

@@ -1,0 +1,15 @@
+/* Z_UndoView <- QUndoView; compiled from the active Token profile. */
+*[designSystemClass="commonWidget::Z_UndoView"] {
+    color: #F3F3F3;
+    background-color: #272727;
+    font-size: 14px;
+}
+*[designSystemClass="commonWidget::Z_UndoView"]:disabled {
+    color: #8A8A8A;
+    background-color: #303030;
+    border-color: #8A8A8A;
+}
+*[designSystemClass="commonWidget::Z_UndoView"] {
+    border: 1px solid #676767;
+    border-radius: 4px;
+}

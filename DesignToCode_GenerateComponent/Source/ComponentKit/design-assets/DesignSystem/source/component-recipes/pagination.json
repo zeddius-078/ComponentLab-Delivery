@@ -1,0 +1,219 @@
+{
+  "$registry": {
+    "component": "pagination",
+    "version": "2.0"
+  },
+  "$status": "active",
+  "base": {
+    "state": {
+      "compact": {
+        "slot": {
+          "container": {
+            "gap": {
+              "$type": "dimension",
+              "$value": "{primitive.dimension.2}",
+              "$description": "Recovered from legacy V2 layer component.pagination.base.compact.container.gap",
+              "$sourceOwner": "old-tree-recovery",
+              "unit": "px"
+            },
+            "padding-block": {
+              "$type": "dimension",
+              "$value": "{primitive.dimension.6}",
+              "$description": "Recovered from legacy V2 layer component.pagination.base.compact.container.padding-block",
+              "$sourceOwner": "old-tree-recovery",
+              "unit": "px"
+            },
+            "padding-inline": {
+              "$type": "dimension",
+              "$value": "{primitive.dimension.6}",
+              "$description": "Recovered from legacy V2 layer component.pagination.base.compact.container.padding-inline",
+              "$sourceOwner": "old-tree-recovery",
+              "unit": "px"
+            }
+          },
+          "item": {
+            "visual-height": {
+              "$type": "dimension",
+              "$value": "{primitive.dimension.32}",
+              "$description": "Recovered from legacy V2 layer component.pagination.base.compact.item.visual-height",
+              "$sourceOwner": "old-tree-recovery",
+              "unit": "px"
+            },
+            "visual-width": {
+              "$type": "dimension",
+              "$value": "{primitive.dimension.28}",
+              "$description": "Recovered from legacy V2 layer component.pagination.base.compact.item.visual-width",
+              "$sourceOwner": "old-tree-recovery",
+              "unit": "px"
+            }
+          }
+        }
+      },
+      "default": {
+        "slot": {
+          "container": {
+            "gap": {
+              "$type": "dimension",
+              "$value": "{primitive.dimension.4}",
+              "$description": "Recovered from legacy V2 layer component.pagination.base.default.container.gap",
+              "$sourceOwner": "old-tree-recovery",
+              "unit": "px"
+            },
+            "padding-block": {
+              "$type": "dimension",
+              "$value": "{primitive.dimension.8}",
+              "$description": "Recovered from legacy V2 layer component.pagination.base.default.container.padding-block",
+              "$sourceOwner": "old-tree-recovery",
+              "unit": "px"
+            },
+            "padding-inline": {
+              "$type": "dimension",
+              "$value": "{primitive.dimension.8}",
+              "$description": "Recovered from legacy V2 layer component.pagination.base.default.container.padding-inline",
+              "$sourceOwner": "old-tree-recovery",
+              "unit": "px"
+            }
+          },
+          "item": {
+            "label-color": {
+              "$type": "color",
+              "$value": "{semantic.color.text.primary}",
+              "$description": "Recovered from legacy V2 layer component.pagination.base.default.item.label-color",
+              "$sourceOwner": "old-tree-recovery"
+            },
+            "radius": {
+              "$type": "borderRadius",
+              "$value": "{semantic.radius.control-default}",
+              "$description": "Recovered from legacy V2 layer component.pagination.base.default.item.radius",
+              "$sourceOwner": "old-tree-recovery",
+              "unit": "px"
+            },
+            "visual-height": {
+              "$type": "dimension",
+              "$value": "{primitive.dimension.36}",
+              "$description": "Recovered from legacy V2 layer component.pagination.base.default.item.visual-height",
+              "$sourceOwner": "old-tree-recovery",
+              "unit": "px"
+            },
+            "visual-width": {
+              "$type": "dimension",
+              "$value": "{primitive.dimension.32}",
+              "$description": "Recovered from legacy V2 layer component.pagination.base.default.item.visual-width",
+              "$sourceOwner": "old-tree-recovery",
+              "unit": "px"
+            }
+          },
+          "navigation": {
+            "background-color": {
+              "$type": "color",
+              "$value": "{semantic.color.background.control-default}",
+              "$description": "Recovered from legacy V2 layer component.pagination.base.default.navigation.background-color",
+              "$sourceOwner": "old-tree-recovery"
+            },
+            "border-color": {
+              "$type": "color",
+              "$value": "{semantic.color.border.default}",
+              "$description": "Recovered from legacy V2 layer component.pagination.base.default.navigation.border-color",
+              "$sourceOwner": "old-tree-recovery"
+            },
+            "border-width": {
+              "$type": "borderWidth",
+              "$value": "{semantic.border-width.boundary-default}",
+              "$description": "Recovered from legacy V2 layer component.pagination.base.default.border-width",
+              "$sourceOwner": "old-tree-recovery",
+              "unit": "px"
+            },
+            "icon-color": {
+              "$type": "color",
+              "$value": "{semantic.color.interactive.brand.default}",
+              "$description": "Recovered from legacy V2 layer component.pagination.base.default.navigation.icon-color",
+              "$sourceOwner": "old-tree-recovery"
+            },
+            "radius": {
+              "$type": "borderRadius",
+              "$value": "{semantic.radius.control-default}",
+              "$description": "Recovered from legacy V2 layer component.pagination.base.default.navigation.radius",
+              "$sourceOwner": "old-tree-recovery",
+              "unit": "px"
+            }
+          }
+        }
+      },
+      "disabled": {
+        "slot": {
+          "item": {
+            "label-color": {
+              "$type": "color",
+              "$value": "{semantic.color.text.disabled}",
+              "$description": "Recovered from legacy V2 layer component.pagination.base.disabled.item.label-color",
+              "$sourceOwner": "old-tree-recovery"
+            }
+          },
+          "navigation": {
+            "background-color": {
+              "$type": "color",
+              "$value": "{semantic.color.background.disabled}",
+              "$description": "Recovered from legacy V2 layer component.pagination.base.disabled.navigation.background-color",
+              "$sourceOwner": "old-tree-recovery"
+            },
+            "border-color": {
+              "$type": "color",
+              "$value": "{semantic.color.border.disabled}",
+              "$description": "Recovered from legacy V2 layer component.pagination.base.disabled.navigation.border-color",
+              "$sourceOwner": "old-tree-recovery"
+            },
+            "icon-color": {
+              "$type": "color",
+              "$value": "{semantic.color.text.disabled}",
+              "$description": "Recovered from legacy V2 layer component.pagination.base.disabled.navigation.icon-color",
+              "$sourceOwner": "old-tree-recovery"
+            }
+          }
+        }
+      },
+      "focused": {
+        "slot": {
+          "focus-ring": {
+            "color": {
+              "$type": "color",
+              "$value": "{semantic.color.interactive.brand.focus-ring}",
+              "$description": "Recovered from legacy V2 layer component.pagination.base.focused.focus-ring.color",
+              "$sourceOwner": "old-tree-recovery"
+            }
+          }
+        }
+      },
+      "hover": {
+        "slot": {
+          "item": {
+            "background-color": {
+              "$type": "color",
+              "$value": "{semantic.color.interactive.brand.subtle}",
+              "$description": "Recovered from legacy V2 layer component.pagination.base.hover.item.background-color",
+              "$sourceOwner": "old-tree-recovery"
+            }
+          }
+        }
+      },
+      "selected": {
+        "slot": {
+          "item": {
+            "background-color": {
+              "$type": "color",
+              "$value": "{semantic.color.interactive.brand.default}",
+              "$description": "Recovered from legacy V2 layer component.pagination.base.selected.item.background-color",
+              "$sourceOwner": "old-tree-recovery"
+            },
+            "label-color": {
+              "$type": "color",
+              "$value": "{semantic.color.text.invert}",
+              "$description": "Recovered from legacy V2 layer component.pagination.base.selected.item.label-color",
+              "$sourceOwner": "old-tree-recovery"
+            }
+          }
+        }
+      }
+    }
+  },
+  "overrides": []
+}

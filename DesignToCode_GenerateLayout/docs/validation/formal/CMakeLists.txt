@@ -1,0 +1,76 @@
+cmake_minimum_required(VERSION 3.21)
+project(FormalDeliveryChecks LANGUAGES CXX)
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTOUIC ON)
+find_package(Qt5 5.15 REQUIRED COMPONENTS Widgets Test Svg)
+find_package(GeneratedComponentSDK 1.0 CONFIG REQUIRED)
+if(MSVC)
+    set(CMAKE_CL_SHOWINCLUDES_PREFIX "注意: 包含文件:")
+    add_compile_options(/utf-8)
+endif()
+add_executable(select_option_tests SelectOptionTests.cpp SelectOptionFixture.ui)
+target_link_libraries(select_option_tests PRIVATE GeneratedComponentSDK::Components Qt5::Test)
+enable_testing()
+option(FORMAL_GENERATOR_TESTS "Build tool-internal publication tests (not a consumer dependency)" OFF)
+if(FORMAL_GENERATOR_TESTS)
+    add_executable(formal_publication_tests FormalPublicationTests.cpp)
+    target_include_directories(formal_publication_tests PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/../../../Source/HtmlDsl/pipeline/compiler")
+    target_link_libraries(formal_publication_tests PRIVATE Qt5::Core Qt5::Test)
+    add_test(NAME formal_publication_atomicity COMMAND formal_publication_tests)
+endif()
+add_test(NAME select_option_public_contract COMMAND select_option_tests)
+set_tests_properties(select_option_public_contract PROPERTIES
+    ENVIRONMENT "QT_QPA_PLATFORM=offscreen" TIMEOUT 30)
+
+if(FORMAL_PAGE_ROOT)
+    file(TO_CMAKE_PATH "${FORMAL_PAGE_ROOT}" FORMAL_PAGE_ROOT)
+    # 消费工程仅链接公开 SDK 与交付四件套，不包含生成器、设计树和 QUiLoader。
+    set(FORMAL_UI_HEADER "${CMAKE_CURRENT_BINARY_DIR}/formal-ui/ui_ReviewPage.h")
+    add_custom_command(OUTPUT "${FORMAL_UI_HEADER}"
+        COMMAND ${CMAKE_COMMAND} -E make_directory "${CMAKE_CURRENT_BINARY_DIR}/formal-ui"
+        COMMAND Qt5::uic -o "${FORMAL_UI_HEADER}" "${FORMAL_PAGE_ROOT}/form/ReviewPage.ui"
+        DEPENDS "${FORMAL_PAGE_ROOT}/form/ReviewPage.ui" VERBATIM)
+    add_executable(formal_page_tests ReviewPageTests.cpp
+        "${FORMAL_PAGE_ROOT}/src/ReviewPage.cpp" "${FORMAL_UI_HEADER}")
+    set_property(TARGET formal_page_tests PROPERTY AUTOUIC OFF)
+    target_include_directories(formal_page_tests PRIVATE "${FORMAL_PAGE_ROOT}/include")
+    target_include_directories(formal_page_tests PRIVATE "${CMAKE_CURRENT_BINARY_DIR}/formal-ui")
+    target_compile_definitions(formal_page_tests PRIVATE
+        FORMAL_QSS="${FORMAL_PAGE_ROOT}/view/res/qss/ReviewPage.qss")
+    target_link_libraries(formal_page_tests PRIVATE GeneratedComponentSDK::Components Qt5::Test)
+    if(FORMAL_GENERATOR_TESTS)
+        add_executable(token_change_probe TokenChangeProbe.cpp "${FORMAL_PAGE_ROOT}/src/ReviewPage.cpp" "${FORMAL_UI_HEADER}")
+        set_property(TARGET token_change_probe PROPERTY AUTOUIC OFF)
+        target_include_directories(token_change_probe PRIVATE "${FORMAL_PAGE_ROOT}/include" "${CMAKE_CURRENT_BINARY_DIR}/formal-ui")
+        target_link_libraries(token_change_probe PRIVATE GeneratedComponentSDK::Components Qt5::Test)
+    endif()
+    get_filename_component(FORMAL_BATCH_ROOT "${FORMAL_PAGE_ROOT}" DIRECTORY)
+    foreach(PAGE_SPEC "result|ReviewResultPage|RESULT" "horizontal|HorizontalReviewPage|HORIZONTAL")
+        string(REPLACE "|" ";" PAGE_PARTS "${PAGE_SPEC}")
+        list(GET PAGE_PARTS 0 PAGE_FOLDER)
+        list(GET PAGE_PARTS 1 PAGE_CLASS)
+        list(GET PAGE_PARTS 2 PAGE_KEY)
+        set(PAGE_ROOT "${FORMAL_BATCH_ROOT}/${PAGE_FOLDER}")
+        set(PAGE_HEADER "${CMAKE_CURRENT_BINARY_DIR}/formal-ui/ui_${PAGE_CLASS}.h")
+        add_custom_command(OUTPUT "${PAGE_HEADER}"
+            COMMAND ${CMAKE_COMMAND} -E make_directory "${CMAKE_CURRENT_BINARY_DIR}/formal-ui"
+            COMMAND Qt5::uic -o "${PAGE_HEADER}" "${PAGE_ROOT}/form/${PAGE_CLASS}.ui"
+            DEPENDS "${PAGE_ROOT}/form/${PAGE_CLASS}.ui" VERBATIM)
+        target_sources(formal_page_tests PRIVATE "${PAGE_ROOT}/src/${PAGE_CLASS}.cpp" "${PAGE_HEADER}")
+        target_include_directories(formal_page_tests PRIVATE "${PAGE_ROOT}/include")
+        target_compile_definitions(formal_page_tests PRIVATE
+            "FORMAL_${PAGE_KEY}_QSS=\"${PAGE_ROOT}/view/res/qss/${PAGE_CLASS}.qss\"")
+        if(EXISTS "${PAGE_ROOT}/view/res/${PAGE_CLASS}.qrc")
+            file(GLOB PAGE_ASSETS CONFIGURE_DEPENDS "${PAGE_ROOT}/view/res/images/*")
+            set(PAGE_RCC "${CMAKE_CURRENT_BINARY_DIR}/formal-ui/qrc_${PAGE_CLASS}.cpp")
+            add_custom_command(OUTPUT "${PAGE_RCC}"
+                COMMAND Qt5::rcc -name "${PAGE_CLASS}" -o "${PAGE_RCC}" "${PAGE_ROOT}/view/res/${PAGE_CLASS}.qrc"
+                DEPENDS "${PAGE_ROOT}/view/res/${PAGE_CLASS}.qrc" ${PAGE_ASSETS} VERBATIM)
+            target_sources(formal_page_tests PRIVATE "${PAGE_RCC}")
+            target_compile_definitions(formal_page_tests PRIVATE "FORMAL_${PAGE_KEY}_PAGE_ASSET=1")
+        endif()
+    endforeach()
+    add_test(NAME formal_review_page COMMAND formal_page_tests)
+    set_tests_properties(formal_review_page PROPERTIES ENVIRONMENT "QT_QPA_PLATFORM=offscreen" TIMEOUT 30)
+endif()

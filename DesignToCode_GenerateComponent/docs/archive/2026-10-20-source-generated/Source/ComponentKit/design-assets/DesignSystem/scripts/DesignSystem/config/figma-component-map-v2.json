@@ -1,0 +1,10 @@
+{
+  "$description": "ComponentLab V2 runtime map generated from V2 binding manifests and recipes.",
+  "schemaVersion": "2.0",
+  "authority": {
+    "componentBindings": "source/figma-bindings/*.json",
+    "componentValues": "source/component-recipes/*.json",
+    "legacyAuditSnapshot": "value-only evidence; never a variable-name source"
+  },
+  "components": []
+}

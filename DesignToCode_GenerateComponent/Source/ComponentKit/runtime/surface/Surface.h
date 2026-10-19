@@ -15,18 +15,13 @@ struct Recipe {
     qreal borderWidth = 0;
     QJsonArray shadows;
     QColor iconFilledForeground;
-    QJsonObject solidInnerShadow;
 };
 class Catalog {
   public:
     explicit Catalog(const QString& profile);
     QStringList presetIds() const;
-    QStringList buttonPresetIds() const;
     QString label(const QString& preset) const;
-    QString buttonUnsupportedReason(const QString& preset, const QString& type, bool ghost) const;
     Recipe checkbox(const QString& preset, bool selected, const QString& state) const;
-    Recipe button(const QString& preset, const QString& type, bool danger, bool ghost,
-                  const QString& state, const QString& size = "M") const;
     QJsonObject checkboxMetrics(const QString& size) const;
     QColor focusColor() const;
     qreal focusWidth() const;

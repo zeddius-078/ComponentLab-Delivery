@@ -5,6 +5,7 @@
 #include "FormalResources.h"
 #include "FormalPublication.h"
 #include "ComponentInitializer.h"
+#include "ComponentLibrary.h"
 #include "ComponentTheme.h"
 #include <QApplication>
 #include <QCommandLineParser>
@@ -15,6 +16,14 @@
 #include <QDirIterator>
 #include <QLabel>
 #include <QAbstractButton>
+#include <QLineEdit>
+#include <QTextEdit>
+#include <QGroupBox>
+#include <QTabWidget>
+#include <QStackedWidget>
+#include <QProgressBar>
+#include <QAbstractSlider>
+#include <QCalendarWidget>
 #include <QBoxLayout>
 #include <QGridLayout>
 #include <QFormLayout>
@@ -59,6 +68,25 @@ bool redirectedDirectory(const QString& path) {
 }
 
 // 创建工具内部目录前逐层检查真实位置，包含 build/delivery 自身的重定向。
+void checkPreviewOutput(const QString& requested) {
+    QDir project(QCoreApplication::applicationDirPath());
+    while (!project.exists("Source/HtmlDsl/pipeline")) {
+        if (!project.cdUp()) throw std::runtime_error("TOOL_ROOT_NOT_FOUND");
+    }
+    const auto target = QDir::cleanPath(QFileInfo(requested).absoluteFilePath());
+    const auto relative = project.relativeFilePath(target);
+    const bool external = relative.startsWith("../") || QDir::isAbsolutePath(relative);
+    if (!external && !relative.startsWith("build/", Qt::CaseInsensitive))
+        throw std::runtime_error("OUTPUT_MUST_BE_IN_BUILD");
+    QString cursor = target;
+    while (!cursor.isEmpty()) {
+        if (redirectedDirectory(cursor)) throw std::runtime_error("OUTPUT_PATH_IS_LINK");
+        const auto parent = QFileInfo(cursor).absolutePath();
+        if (parent == cursor) break;
+        cursor = parent;
+    }
+}
+
 QString internalDirectory(const QDir& project, const QString& relative) {
     QDir cursor(QFileInfo(project.absolutePath()).canonicalFilePath());
     for (const auto& part : relative.split('/')) {
@@ -104,12 +132,77 @@ QString formalDestination(const QString& requested) {
     return destination;
 }
 
+struct ProfileResolution {
+    QString designProfile;
+    QString runtimeProfile;
+    QString alias;
+};
+
+void collectDesignProfiles(const QJsonValue& value, QSet<QString>& profiles) {
+    // 只读取组件实例的 Profile 变体，避免把变量模式名称误当成页面运行上下文。
+    if (!value.isObject()) {
+        if (value.isArray()) {
+            const auto array = value.toArray();
+            // 递归扫描数组中的节点，覆盖根节点、子节点和嵌套属性集合。
+            for (const auto& item : array)
+                collectDesignProfiles(item, profiles);
+        }
+        return;
+    }
+    const auto object = value.toObject();
+    const auto variants = object["propRefMap"].toObject()["variant"].toArray();
+    // 页面同一轮生成只允许一个有效设计 Profile，混合主题必须显式失败。
+    for (const auto& item : variants) {
+        const auto variant = item.toObject();
+        if (variant["name"] == QStringLiteral("Profile") && variant["value"].isString())
+            profiles.insert(variant["value"].toString());
+    }
+    // 继续扫描所有子节点，保证嵌套布局里的实例也参与页面 Profile 判定。
+    collectDesignProfiles(object["childNode"], profiles);
+}
+
+ProfileResolution resolveDesignProfile(const QJsonObject& raw, const QJsonObject& mapping) {
+    QSet<QString> designProfiles;
+    collectDesignProfiles(raw["pixTreeNodes"], designProfiles);
+    const auto defaultRuntime = mapping["profile"].toString();
+    // 没有显式 Profile 时沿用映射合同默认上下文，不凭布局或文件名猜测主题。
+    if (designProfiles.isEmpty())
+        return {defaultRuntime, defaultRuntime, {}};
+    // 多个设计上下文无法由一个 QApplication 主题同时承载，必须要求设计侧拆页或统一上下文。
+    if (designProfiles.size() != 1)
+        throw std::runtime_error("MIXED_DESIGN_PROFILES");
+    const auto designProfile = *designProfiles.cbegin();
+    // 规范运行上下文可以直接使用，别名只负责设计侧名称到规范上下文的转换。
+    if (designProfile == defaultRuntime)
+        return {designProfile, defaultRuntime, {}};
+    const auto alias = mapping["profileAliases"].toObject()[designProfile].toObject();
+    if (alias.isEmpty())
+        throw std::runtime_error(("PROFILE_MISMATCH: " + designProfile).toStdString());
+    const auto runtimeProfile = alias["runtimeProfile"].toString();
+    const auto runtimeProfiles = mapping["runtimeProfiles"].toArray();
+    // 别名目标必须是已发布的 SDK Token 上下文，禁止把设计名称直接写入运行时。
+    bool knownRuntime = false;
+    // 逐项匹配已发布上下文，避免缺少 Token 时继续生成页面。
+    for (const auto& item : runtimeProfiles)
+        if (item.toString() == runtimeProfile) {
+            knownRuntime = true;
+            break;
+        }
+    if (!knownRuntime)
+        throw std::runtime_error(("UNKNOWN_RUNTIME_PROFILE: " + runtimeProfile).toStdString());
+    return {designProfile, runtimeProfile, designProfile};
+}
+
 class Emitter {
 public:
     // 将组件调用和布局记录按稳定名称索引，写 XML 时据此区分组件与普通容器。
     Emitter(v2::SceneBuilder& scene, const QString& profile, const QString& namingHash,
-            bool formal = false, const QJsonObject& componentRules = {})
-        : scene(scene), profile(profile), namingHash(namingHash), formal(formal), resources(componentRules) {
+            bool formal = false, const QJsonObject& componentRules = {},
+            const QString& libraryProfileName = QStringLiteral("token-sdk"),
+            const QJsonObject& libraryProfile = {})
+        : scene(scene), profile(profile), namingHash(namingHash), formal(formal),
+          resources(componentRules), libraryProfileName(libraryProfileName),
+          libraryProfile(libraryProfile) {
         const auto trace = scene.trace();
         // 按稳定 objectName 索引通用组件，写 XML 时将它们视为原生叶节点。
         for (const auto& c : trace["components"].toArray())
@@ -118,6 +211,11 @@ public:
         for (const auto& c : trace["adapters"].toArray()) {
             auto s = c.toObject();
             s["qtClass"] = formal ? "designer_widgets::SelectOption" : "v2::SelectOptionAdapter";
+            specs.insert(scene.widget(s["nodeId"].toString())->objectName(), s);
+        }
+        // qt-native 聚合选项列表：类名与 items 由 SceneBuilder 写入，这里只按节点登记。
+        for (const auto& c : trace["optionGroups"].toArray()) {
+            auto s = c.toObject();
             specs.insert(scene.widget(s["nodeId"].toString())->objectName(), s);
         }
         // 以设计 ID 索引布局轨迹，发射时复用已解析的方向与对齐语义。
@@ -156,15 +254,45 @@ public:
         std::sort(sortedTypes.begin(), sortedTypes.end());
         // 按排序后的类型列表写 promoted 声明，消除集合迭代顺序对输出字节的影响。
         for (const auto& type : sortedTypes) {
+            const QString headerPolicy =
+                libraryProfile["headerPolicy"].toString(QStringLiteral("sdk-default"));
+            // Qt 内置类不需要 customwidget 声明；uic 直接识别 Q* 类型。
+            if (headerPolicy == QStringLiteral("qt-builtin") &&
+                type.startsWith(QLatin1Char('Q')))
+                continue;
             xml->writeStartElement("customwidget");
             xml->writeTextElement("class", type);
-            const auto base = type == "commonWidget::Z_PushButton" ? "QPushButton"
-                              : type == "commonWidget::Z_CheckBox" ? "QCheckBox"
-                                                                   : "QWidget";
-            xml->writeTextElement("extends", base);
-            xml->writeTextElement("header", type.startsWith("designer_widgets::") ? "DesignerWidgets.h" : type.startsWith("v2::")
-                                                ? "WidgetRegistry.h"
-                                                : type.section("::", -1) + ".h");
+            QString extends = "QWidget";
+            QString header;
+            if (headerPolicy == QStringLiteral("component-library")) {
+                const auto entry = libraryProfile["libraryClasses"].toObject()[type].toObject();
+                d2c::library::require(!entry.isEmpty(), "NO_HEADER_FOR_CLASS: " + type);
+                extends = entry["qtBase"].toString();
+                header = entry["header"].toString();
+            } else if (headerPolicy == QStringLiteral("custom-header-map")) {
+                for (const auto& entry : libraryProfile["headerMap"].toArray()) {
+                    const auto item = entry.toObject();
+                    if (QRegularExpression(item["classPattern"].toString())
+                            .match(type)
+                            .hasMatch()) {
+                        extends = item["extends"].toString(QStringLiteral("QWidget"));
+                        header = item["header"].toString();
+                        break;
+                    }
+                }
+                if (header.isEmpty())
+                    throw std::runtime_error(("NO_HEADER_FOR_CLASS: " + type).toStdString());
+            } else {
+                extends = type == "commonWidget::Z_PushButton" ? "QPushButton"
+                          : type == "commonWidget::Z_CheckBox" ? "QCheckBox"
+                                                                : "QWidget";
+                header = type.startsWith("designer_widgets::") ? "DesignerWidgets.h"
+                         : type.startsWith("v2::")
+                         ? "WidgetRegistry.h"
+                         : type.section("::", -1) + ".h";
+            }
+            xml->writeTextElement("extends", extends);
+            xml->writeTextElement("header", header);
             xml->writeEndElement();
         }
         xml->writeEndElement();
@@ -191,7 +319,7 @@ public:
         const auto designBytes = QJsonDocument(design).toJson();
         save(prefix + ".design-tree.json", designBytes);
         // 清单关联设计 ID、objectName、API 参数、输入哈希及设计树哈希。
-        const QJsonObject manifest{
+        QJsonObject manifest{
             {"schemaVersion", 2},
             {"profile", profile},
             {"rootId", page->property("designNodeId").toString()},
@@ -203,8 +331,18 @@ public:
             {"designTreeSha256",
              QString::fromLatin1(
                  QCryptographicHash::hash(designBytes, QCryptographicHash::Sha256).toHex())},
-            {"structureSource", "sibling .ui XML"},
-            {"generator", "C++ UiCompiler; build-time conversion only"}};
+             {"structureSource", "sibling .ui XML"},
+             {"libraryProfile", libraryProfileName},
+             {"designProfile", resources["resolvedDesignProfile"].toString(profile)},
+             {"profileAlias", resources["resolvedProfileAlias"].toString()},
+             {"generator", "C++ UiCompiler; build-time conversion only"}};
+        if (libraryProfile.contains("componentLibrary")) {
+            manifest["libraryId"] = libraryProfile["libraryId"];
+            manifest["componentLibrarySha256"] = libraryProfile["componentLibrarySha256"];
+            manifest["implementationStatus"] = "planned";
+            manifest["validationScope"] = "class-contract-only; Qt-base geometry; target implementation not verified";
+            manifest["layoutClassPolicy"] = "native Qt layouts and spacers retained; target names are declarations only";
+        }
         save(prefix + ".components.json", QJsonDocument(manifest).toJson());
     }
 
@@ -221,6 +359,12 @@ private:
     QString layoutSetup;
     QJsonArray structuralDecisions;
     FormalResources resources;
+    QString libraryProfileName;
+    QJsonObject libraryProfile;
+
+    bool publicQtPolicy() const {
+        return libraryProfile["apiPolicy"].toString() == QStringLiteral("public-qt");
+    }
 
     // 使用 C++ 字符串字面量承载已解析值，不把运行参数外置到设计追溯清单。
     QString literal(const QString& value) const {
@@ -248,18 +392,34 @@ private:
                          "// 页面结构由 uic 编译；业务通过公开对象、信号槽或继承接入。\nclass " + className +
                          " : public designer_widgets::ThemeHost {\npublic:\n    explicit " + className +
                          "(QWidget* parent = nullptr);\n    ~" + className + "() override;\n";
-        QString code = "#include \"" + className + ".h\"\n#include \"ui_" + className +
-                       ".h\"\n#include <ComponentFactory.h>\n#include <QFile>\n#include <QResource>\n#include <stdexcept>\n\n" +
-                       className + "::" + className + "(QWidget* parent)\n    : ThemeHost(" + literal(profile) +
-                       ", parent), ui_(std::make_unique<Ui::Generated_" + page->objectName() + ">()) {\n"
-                       "    ui_->setupUi(this);\n    commonWidget::ComponentFactory factory(" + literal(profile) +
-                       ");\n    QString error;\n";
+        QString code;
+        if (publicQtPolicy()) {
+            // public-qt：不使用 SDK ThemeHost/ComponentFactory，直接构造页面并调用公开 Qt API。
+            header = "#pragma once\n#include <QWidget>\n#include <QLabel>\n#include <QHBoxLayout>\n"
+                     "#include <QVBoxLayout>\n#include <QGridLayout>\n#include <QFormLayout>\n"
+                     "#include <QPushButton>\n#include <QLineEdit>\n#include <QCheckBox>\n"
+                     "#include <memory>\nnamespace Ui { class Generated_" + page->objectName() + "; }\n"
+                     "// 页面结构由 uic 编译；业务通过公开对象、信号槽或继承接入。\nclass " + className +
+                     " : public QWidget {\npublic:\n    explicit " + className +
+                     "(QWidget* parent = nullptr);\n    ~" + className + "() override;\n";
+            code = "#include \"" + className + ".h\"\n#include \"ui_" + className +
+                   ".h\"\n#include <stdexcept>\n\n" + className + "::" + className +
+                   "(QWidget* parent)\n    : QWidget(parent), ui_(std::make_unique<Ui::Generated_" +
+                   page->objectName() + ">()) {\n    ui_->setupUi(this);\n";
+        } else {
+            code = "#include \"" + className + ".h\"\n#include \"ui_" + className +
+                   ".h\"\n#include <ComponentFactory.h>\n#include <QFile>\n#include <QResource>\n#include <stdexcept>\n\n" +
+                   className + "::" + className + "(QWidget* parent)\n    : ThemeHost(" + literal(profile) +
+                   ", parent), ui_(std::make_unique<Ui::Generated_" + page->objectName() + ">()) {\n"
+                   "    ui_->setupUi(this);\n    commonWidget::ComponentFactory factory(" + literal(profile) +
+                   ");\n    QString error;\n";
+        }
         if (resources.hasPageResources())
             code += "    Q_INIT_RESOURCE(" + className + ");\n";
         code += v2::component_initializer::emitInitialization(
             specs,
             [this](const QString& value) { return literal(value); },
-            [this](const QJsonValue& value) { return cppValue(value); });
+            [this](const QJsonValue& value) { return cppValue(value); }, publicQtPolicy());
         // 组件属性完成后加载页面级 QSS；组件内部样式继续由 SDK 主题和组件自身管理。
         code += "    {\n"
                 "        QFile pageStyle(QStringLiteral(\":/d2c/" + className +
@@ -302,6 +462,8 @@ private:
                 {"spacing", it.value()["spacing"]}, {"padding", it.value()["padding"]},
                 {"upstreamTokenBinding", "not verified by current parser"}});
         formalRecord = QJsonObject{{"schemaVersion", 1}, {"profile", profile},
+                                  {"designProfile", resources["resolvedDesignProfile"].toString(profile)},
+                                  {"profileAlias", resources["resolvedProfileAlias"].toString()},
                                   {"sourceSha256", sourceHash}, {"engineeringNamesSha256", namingHash},
                                   {"nodes", nodes}, {"trace", scene.trace()}, {"diagnostics", diagnostics},
                                   {"resources", resources.trace()}, {"structuralDecisions", structuralDecisions}};
@@ -531,11 +693,20 @@ private:
         QString type = component                  ? specs[name]["qtClass"].toString()
                        : qobject_cast<QLabel*>(w) ? "QLabel"
                                                   : "QWidget";
+        if (!component && !root && libraryProfile.contains("componentLibrary")) {
+            const auto entry = libraryProfile["libraryEntries"].toObject()[type].toObject();
+            d2c::library::require(!entry.isEmpty(), "UNMAPPED_LIBRARY_COMPONENT: " + type);
+            type = entry["className"].toString();
+            types.insert(type);
+        }
         if (formal) {
-            const QMap<QString, QString> wrappers{{"commonWidget::Z_CheckBox", "designer_widgets::CheckBox"},
-                {"commonWidget::Z_InputField", "designer_widgets::InputField"},
-                {"commonWidget::Z_Select", "designer_widgets::Select"}};
-            type = wrappers.value(type, type);
+            // designer_widgets 提升只属于 token-sdk 交付；其他库配置保持映射表解析出的类名。
+            if (libraryProfileName == QStringLiteral("token-sdk")) {
+                const QMap<QString, QString> wrappers{{"commonWidget::Z_CheckBox", "designer_widgets::CheckBox"},
+                    {"commonWidget::Z_InputField", "designer_widgets::InputField"},
+                    {"commonWidget::Z_Select", "designer_widgets::Select"}};
+                type = wrappers.value(type, type);
+            }
             if (publicObjects.contains(name)) throw std::runtime_error("DUPLICATE_ENGINEERING_NAME");
             publicObjects[name] = type;
         }
@@ -590,6 +761,44 @@ private:
             qss += css + '\n';
         } else if (auto* button = qobject_cast<QAbstractButton*>(w))
             property("text", "string", button->text());
+        // qt-native 页面没有运行时工厂：公开 Qt 组件的初始状态必须直接序列化进 XML，
+        // 使 uic/QUiLoader 无需清单调用即可还原构建期状态。
+        if (component && publicQtPolicy()) {
+            if (auto* button = qobject_cast<QAbstractButton*>(w)) {
+                if (button->isCheckable())
+                    property("checkable", "bool", "true");
+                if (button->isChecked())
+                    property("checked", "bool", "true");
+            }
+            if (auto* edit = qobject_cast<QLineEdit*>(w)) {
+                if (!edit->placeholderText().isEmpty())
+                    property("placeholderText", "string", edit->placeholderText());
+                if (edit->isReadOnly())
+                    property("readOnly", "bool", "true");
+            }
+            if (auto* textEdit = qobject_cast<QTextEdit*>(w)) {
+                if (textEdit->isReadOnly())
+                    property("readOnly", "bool", "true");
+            }
+            if (auto* group = qobject_cast<QGroupBox*>(w))
+                if (!group->title().isEmpty())
+                    property("title", "string", group->title());
+            if (auto* tabs = qobject_cast<QTabWidget*>(w))
+                property("currentIndex", "number", QString::number(tabs->currentIndex()));
+            else if (auto* stack = qobject_cast<QStackedWidget*>(w))
+                property("currentIndex", "number", QString::number(stack->currentIndex()));
+            if (auto* progress = qobject_cast<QProgressBar*>(w)) {
+                if (!progress->format().isEmpty())
+                    property("format", "string", progress->format());
+                property("value", "number", QString::number(progress->value()));
+            }
+            if (auto* slider = qobject_cast<QAbstractSlider*>(w))
+                if (slider->value() != 0)
+                    property("value", "number", QString::number(slider->value()));
+            if (auto* calendar = qobject_cast<QCalendarWidget*>(w))
+                if (calendar->isGridVisible())
+                    property("gridVisible", "bool", "true");
+        }
         // 仅展开页面容器，避免把原生组件内部图标和绘制层重复生成到 XML。
         if (!component) {
             // 只输出已启用背景填充的容器，保留其他容器的透明行为。
@@ -598,6 +807,18 @@ private:
                        w->palette().color(QPalette::Window).name(QColor::HexArgb) + "; }\n";
             if (w->layout())
                 emitLayout(w);
+        }
+        // qt-native 聚合选项列表：items 属于组件静态内容，直接序列化进 XML。
+        if (component && type == QStringLiteral("QListWidget")) {
+            for (const auto& value : specs[name]["items"].toArray()) {
+                const auto entry = value.toObject();
+                xml->writeStartElement("item");
+                property("text", "string", entry["label"].toString());
+                // 选项契约固定 disabled：去掉 ItemIsEnabled，保留只读呈现位。
+                if (!entry["enabled"].toBool(true))
+                    property("flags", "set", "ItemIsSelectable|ItemIsUserCheckable");
+                xml->writeEndElement();
+            }
         }
         xml->writeEndElement();
     }
@@ -610,10 +831,12 @@ int main(int argc, char** argv) {
     QCommandLineParser cli;
     cli.addHelpOption();
     cli.addOption({"strict-layout", "Require explicit layout gap and margins"});
-    cli.addOption({"formal", "Generate isolated uic page package (light-compact only)"});
+    cli.addOption({"formal", "Generate isolated uic page package (wide-light only)"});
     // 登记生成必需的输入和输出参数，使 CLI 以固定契约接收路径。
     for (const auto& name : {"raw", "mapping", "extensions", "font", "output"})
         cli.addOption({name, name, "path"});
+    cli.addOption({"library-profile",
+                   "Library profile name from library-profiles.json (default token-sdk)", "name"});
     cli.process(app);
     try {
         // 逐项检查参数存在后再读取设计，防止空路径误用当前目录。
@@ -621,30 +844,51 @@ int main(int argc, char** argv) {
             // 逐个拒绝缺失的必要参数，确保生成器有完整的设计输入、规则、字体和输出位置。
             if (!cli.isSet(name))
                 throw std::runtime_error("MISSING_GENERATOR_ARGUMENT");
+        if (!cli.isSet("formal")) checkPreviewOutput(cli.value("output"));
         // 字体影响 sizeHint 和静态尺寸，加载失败时不能用系统替代字体继续生成。
         if (QFontDatabase::addApplicationFont(cli.value("font")) < 0)
             throw std::runtime_error("FONT_LOAD_FAILED");
         const auto components = v2::readJson(cli.value("mapping") + "/component-mapping.json");
         const bool formal = cli.isSet("formal");
-        if (formal && components["profile"] != "light-compact")
-            throw std::runtime_error("FORMAL_REQUIRES_LIGHT_COMPACT_MAPPING");
+        // 可切换组件库配置：选择 library-profiles.json 中的一个 profile；默认 token-sdk。
+        const auto profiles = v2::readJson(cli.value("mapping") + "/library-profiles.json");
+        const QString profileName = cli.isSet("library-profile")
+            ? cli.value("library-profile")
+            : profiles["defaultProfile"].toString(QStringLiteral("token-sdk"));
+        auto libraryProfile = profiles["profiles"].toObject()[profileName].toObject();
+        if (libraryProfile.isEmpty())
+            throw std::runtime_error(("UNKNOWN_LIBRARY_PROFILE: " + profileName).toStdString());
+        libraryProfile = d2c::library::load(libraryProfile, cli.value("mapping"));
+        if (formal && libraryProfile["libraryStatus"] == "contract-only")
+            throw std::runtime_error("CONTRACT_ONLY_LIBRARY_REQUIRES_PREVIEW: target implementation is not verified");
         const auto destination = formal ? formalDestination(cli.value("output")) : QString{};
-        component_theme::install(app, components["profile"].toString());
         const auto raw = v2::readJson(cli.value("raw"));
         const auto sourceHash = hash(cli.value("raw"));
+        const auto profileResolution = resolveDesignProfile(raw, components);
+        // 正式页面要求已发布的 wide-light 运行上下文；必须在设计 Profile 别名解析后判断。
+        if (formal && profileResolution.runtimeProfile != QStringLiteral("wide-light"))
+            throw std::runtime_error("FORMAL_REQUIRES_LIGHT_COMPACT_MAPPING");
+        auto resolvedComponents = components;
+        resolvedComponents["profile"] = profileResolution.runtimeProfile;
+        resolvedComponents["resolvedDesignProfile"] = profileResolution.designProfile;
+        resolvedComponents["resolvedProfileAlias"] = profileResolution.alias;
+        // 主题安装必须使用别名解析后的 SDK 上下文，而不是把设计侧名称当作 Token profile。
+        component_theme::install(app, profileResolution.runtimeProfile);
         // 先从设计输入投影节点树，再创建临时 Qt 对象，保持两种树的来源明确。
-        const auto design = v2::designTree(raw, sourceHash, components["profile"].toString());
+        const auto design = v2::designTree(raw, sourceHash, profileResolution.runtimeProfile);
         auto layoutRules = v2::readJson(cli.value("mapping") + "/layout-mapping.json");
         if (cli.isSet("strict-layout") || formal)
             layoutRules["requireExplicitMetrics"] = true;
-        v2::SceneBuilder scene(raw, components, layoutRules,
+        v2::SceneBuilder scene(raw, resolvedComponents, layoutRules,
                                v2::readJson(cli.value("extensions")),
-                               v2::readJson(cli.value("mapping") + "/engineering-names.json"));
+                               v2::readJson(cli.value("mapping") + "/engineering-names.json"),
+                               libraryProfile);
         std::unique_ptr<QWidget> page(scene.build());
         page->ensurePolished();
         page->layout()->activate();
-        Emitter emitter(scene, components["profile"].toString(),
-                        hash(cli.value("mapping") + "/engineering-names.json"), formal, components);
+        Emitter emitter(scene, profileResolution.runtimeProfile,
+                        hash(cli.value("mapping") + "/engineering-names.json"), formal, resolvedComponents,
+                        profileName, libraryProfile);
         if (formal) {
             const auto parent = QFileInfo(destination).absolutePath();
             if (!QDir().mkpath(parent)) throw std::runtime_error("OUTPUT_DIRECTORY_FAILED");
@@ -656,7 +900,9 @@ int main(int argc, char** argv) {
                 {"componentMappingSha256", hash(cli.value("mapping") + "/component-mapping.json")},
                 {"layoutMappingSha256", hash(cli.value("mapping") + "/layout-mapping.json")},
                 {"extensionsSha256", hash(cli.value("extensions"))},
-                {"fontSha256", hash(cli.value("font"))}};
+                {"fontSha256", hash(cli.value("font"))},
+                {"libraryProfile", profileName},
+                {"libraryProfileSha256", hash(cli.value("mapping") + "/library-profiles.json")}};
             // 清单只写包外。检查器必须核对现有字节，不能只信任某次运行的 PASS。
             QJsonObject outputHashes;
             QDirIterator files(staging.path(), QDir::Files, QDirIterator::Subdirectories);

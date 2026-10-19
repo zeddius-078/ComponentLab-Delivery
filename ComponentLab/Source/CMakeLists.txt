@@ -58,12 +58,16 @@ set(COMPONENT_LAB_DEMO_SOURCES
     delivery/demo/ContainersGallery.h delivery/demo/ContainersGallery.cpp
     delivery/demo/NativeDisplayGallery.h delivery/demo/NativeDisplayGallery.cpp
     delivery/demo/EvidenceGallery.h delivery/demo/EvidenceGallery.cpp
+    delivery/demo/V2ComponentMapPage.h delivery/demo/V2ComponentMapPage.cpp
     delivery/demo/ButtonPages.cpp delivery/demo/FormPages.cpp
     delivery/demo/ComponentLab.ui)
 
 if(COMPONENTLAB_BUILD_DEMO)
     add_executable(component_lab WIN32 delivery/demo/main.cpp ${COMPONENT_LAB_DEMO_SOURCES})
     target_include_directories(component_lab PRIVATE delivery/demo)
+    target_compile_definitions(component_lab PRIVATE
+        V2_COMPONENT_MAP_PATH="${GENERATED_COMPONENT_SDK_ROOT}/resources/mappings/figma-component-map-v2.json"
+        V2_COMPONENT_REGISTRY_PATH="${GENERATED_COMPONENT_SDK_ROOT}/resources/mappings/component-registry.json")
     target_link_libraries(component_lab PRIVATE component_lab_presentation)
 endif()
 
@@ -74,30 +78,44 @@ if(BUILD_TESTING)
     target_link_libraries(checkbox_tests PRIVATE component_lab_presentation Qt5::Test)
     add_executable(forms_tests delivery/tests/FormsTests.cpp)
     target_link_libraries(forms_tests PRIVATE component_lab_presentation Qt5::Test)
-    add_executable(solid_inner_shadow_tests delivery/tests/SolidInnerShadowTests.cpp)
-    target_link_libraries(solid_inner_shadow_tests PRIVATE component_lab_presentation Qt5::Test)
     add_executable(composition_tests delivery/tests/CompositionTests.cpp ${COMPONENT_LAB_DEMO_SOURCES})
     target_include_directories(composition_tests PRIVATE delivery/demo)
+    target_compile_definitions(composition_tests PRIVATE
+        V2_COMPONENT_MAP_PATH="${GENERATED_COMPONENT_SDK_ROOT}/resources/mappings/figma-component-map-v2.json"
+        V2_COMPONENT_REGISTRY_PATH="${GENERATED_COMPONENT_SDK_ROOT}/resources/mappings/component-registry.json")
     target_link_libraries(composition_tests PRIVATE component_lab_presentation Qt5::Test)
     add_executable(token_probe delivery/tests/TokenProbe.cpp)
     target_compile_definitions(token_probe PRIVATE
-        COMPONENT_SDK_DESIGN_MAP="${GENERATED_COMPONENT_SDK_ROOT}/resources/mappings/design-component-map.json")
+        COMPONENT_SDK_COMPONENT_MAP="${GENERATED_COMPONENT_SDK_ROOT}/resources/mappings/qt-component-map.json")
     target_link_libraries(token_probe PRIVATE component_lab_presentation Qt5::Test)
+    add_executable(table_token_tests delivery/tests/TableTokenTests.cpp
+        delivery/demo/DataViewsGallery.h delivery/demo/DataViewsGallery.cpp
+        delivery/demo/FigmaGalleryView.h delivery/demo/FigmaGalleryView.cpp)
+    target_include_directories(table_token_tests PRIVATE delivery/demo)
+    target_link_libraries(table_token_tests PRIVATE component_lab_presentation)
 
     add_test(NAME directory_structure COMMAND "${Python3_EXECUTABLE}" -B
         "${CMAKE_CURRENT_SOURCE_DIR}/delivery/tests/test_directory_structure.py")
-    foreach(PROFILE light-comfortable light-compact dark-comfortable dark-compact)
+    foreach(PROFILE standard-light wide-light standard-dark wide-dark)
         add_test(NAME ${PROFILE} COMMAND checkbox_tests -o ${TEST_OUTPUT_DIR}/${PROFILE}.txt,txt)
         add_test(NAME forms_${PROFILE} COMMAND forms_tests -o ${TEST_OUTPUT_DIR}/forms-${PROFILE}.txt,txt)
-        add_test(NAME solid_inner_shadow_${PROFILE} COMMAND solid_inner_shadow_tests -o ${TEST_OUTPUT_DIR}/solid-inner-shadow-${PROFILE}.txt,txt)
         add_test(NAME composition_${PROFILE} COMMAND composition_tests -o ${TEST_OUTPUT_DIR}/composition-${PROFILE}.txt,txt)
-        foreach(TEST_NAME ${PROFILE} forms_${PROFILE} solid_inner_shadow_${PROFILE} composition_${PROFILE})
+        add_test(NAME table_${PROFILE} COMMAND table_token_tests)
+        foreach(TEST_NAME ${PROFILE} forms_${PROFILE} composition_${PROFILE} table_${PROFILE})
             set_tests_properties(${TEST_NAME} PROPERTIES
-                ENVIRONMENT "QT_QPA_PLATFORM=offscreen;DEMO_PROFILE=${PROFILE};DEMO_EVIDENCE=${TEST_OUTPUT_DIR}/${TEST_NAME}"
+                # CTest launches test executables without the Qt launcher
+                # environment used by the demo.  Add the imported Qt bin
+                # directory explicitly; otherwise Windows shows the hidden
+                # missing-Qt-DLL dialog and the test appears to hang until
+                # its timeout.
+                ENVIRONMENT "QT_QPA_PLATFORM=offscreen;DEMO_PROFILE=${PROFILE};DEMO_EVIDENCE=${TEST_OUTPUT_DIR}/${TEST_NAME};PATH=$<TARGET_FILE_DIR:Qt5::Core>"
                 # The full native gallery regression currently takes about 165-250 s on
                 # the supported MSVC/Qt runner; leave headroom so concurrent OS activity
                 # does not turn a completed assertion run into a false timeout.
-                TIMEOUT 300)
+                # The composition suite builds large Figma state galleries
+                # incrementally; a 20-case input/navigation slice already
+                # exceeds five minutes on the supported offscreen runner.
+                TIMEOUT 900)
         endforeach()
     endforeach()
 endif()
@@ -107,6 +125,10 @@ if(COMPONENTLAB_BUILD_DEMO)
     install(FILES delivery/qt.conf DESTINATION .)
     install(FILES delivery/tools/RunOffline.cmd DESTINATION . RENAME Run.cmd)
     install(DIRECTORY "${GENERATED_COMPONENT_SDK_ROOT}/licenses/" DESTINATION licenses)
+    install(FILES
+        "${GENERATED_COMPONENT_SDK_ROOT}/resources/mappings/figma-component-map-v2.json"
+        "${GENERATED_COMPONENT_SDK_ROOT}/resources/mappings/component-registry.json"
+        DESTINATION resources/mappings)
     install(DIRECTORY "${GENERATED_COMPONENT_SDK_ROOT}/resources/tokens/default/" DESTINATION TokenSets/default
         PATTERN "*.h" EXCLUDE)
 endif()

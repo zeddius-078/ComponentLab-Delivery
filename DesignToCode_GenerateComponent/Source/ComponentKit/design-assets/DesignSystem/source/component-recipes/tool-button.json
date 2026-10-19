@@ -1,0 +1,83 @@
+{
+  "$schema": "../../schema/component-recipe-schema.json",
+  "$registry": {"component": "tool-button", "version": "2.0"},
+  "$status": "draft-v2",
+  "$description": "Tool Button V2 sparse recipe. Presentation, persistent value, interaction state and menu structure are independent; old compound state names are migration evidence only.",
+  "base": {
+    "shared": {
+      "slot/container/background-color": "{semantic.color.background.control-default}",
+      "slot/container/radius": "{semantic.radius.control-default}",
+      "slot/container/visual-height": "{primitive.dimension.32}",
+      "slot/foreground/color": "{semantic.color.text.primary}",
+      "slot/icon/size": "{semantic.visualization-size.sm}",
+      "slot/label/font-size": "{semantic.typography.label.default.font-size}",
+      "slot/label/font-weight": "{semantic.typography.font-weight.label-strong}",
+      "slot/label/letter-spacing": "{semantic.typography.letter-spacing.default}"
+    },
+    "presentation": {
+      "standard": {"slot/border/color": "{semantic.color.border.default}"},
+      "auto-raise": {
+        "slot/border/color": "{primitive.color.none}",
+        "slot/container/background-color": "{primitive.color.none}"
+      }
+    },
+    "value": {
+      "checked": {
+        "slot/border/color": "{semantic.color.interactive.brand.default}",
+        "slot/container/background-color": "{semantic.color.interactive.brand.subtle}",
+        "slot/foreground/color": "{semantic.color.interactive.brand.default}"
+      }
+    },
+    "state": {
+      "hover": {"slot/container/background-color": "{primitive.color.highlight.purple-15}"},
+      "pressed": {"slot/border/color": "{semantic.color.interactive.brand.pressed}"},
+      "focused": {"slot/focus-ring/color": "{semantic.color.interactive.brand.focus-ring}"},
+      "disabled": {
+        "slot/border/color": "{semantic.color.border.secondary}",
+        "slot/container/background-color": "{semantic.color.background.disabled}",
+        "slot/foreground/color": "{semantic.color.text.disabled}"
+      }
+    },
+    "menu": {
+      "split": {
+        "slot/action/visual-width": "{primitive.dimension.28}",
+        "slot/divider/color": "{semantic.color.border.secondary}"
+      }
+    }
+  },
+  "overrides": [],
+  "modelRules": {
+    "presentation": {
+      "standard": "normal tool-button surface",
+      "auto-raise": "runtime hover-raise policy with a transparent resting surface"
+    },
+    "value": {
+      "unchecked": "not selected",
+      "checked": "persistent checked value; does not replace interaction state"
+    },
+    "state": {
+      "default": "initial interaction state",
+      "hover": "pointer hover overlay",
+      "pressed": "activation visual overlay",
+      "focused": "keyboard focus ring overlay",
+      "disabled": "locked interaction while preserving value"
+    },
+    "menu": {
+      "none": "single action surface",
+      "split": "primary action plus secondary menu trigger; structure is runtime-owned"
+    },
+    "removedLegacyStates": {
+      "auto-raise": "presentation=auto-raise",
+      "checked": "value=checked",
+      "checked-hover": "value=checked + state=hover",
+      "hover-pressed": "state=pressed with hover overlay",
+      "open": "runtime menu lifecycle, not a visual state axis"
+    }
+  },
+  "diagnostics": [{
+    "severity": "warning",
+    "code": "V2-DRAFT-TOOL-BUTTON-VISUALS-PENDING",
+    "message": "The axis separation is rebuilt from the legacy recipe; exact visual values and Figma materialization remain subject to component audit.",
+    "source": "source/component-recipes/tool-button.json"
+  }]
+}

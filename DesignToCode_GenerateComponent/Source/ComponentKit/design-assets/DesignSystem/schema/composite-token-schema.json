@@ -1,0 +1,16 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "composite-token-schema.json",
+  "title": "ComponentLab V2 Composite Token Package",
+  "type": "object",
+  "required": ["$version", "kind", "tokens"],
+  "properties": {
+    "$version": { "type": "string" },
+    "kind": { "enum": ["typography", "gradient", "shadow", "blur", "motion"] },
+    "$status": { "enum": ["draft", "candidate", "active", "reserved"] },
+    "tokens": { "type": "object" },
+    "migrationSources": { "type": "array", "items": { "type": "object" } },
+    "diagnostics": { "type": "array", "items": { "type": "object" } }
+  },
+  "additionalProperties": true
+}

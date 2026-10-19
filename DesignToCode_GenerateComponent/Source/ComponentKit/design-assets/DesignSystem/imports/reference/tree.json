@@ -2,113 +2,113 @@
   "tree": {
     "color": {
       "bg": {
-        "primary": {"$type": "color", "$value": "{color/bg/primary}", "$description": "输入框默认背景色"},
-        "hover": {"$type": "color", "$value": "{color/bg/hover}", "$description": "输入框默认背景色"},
-        "select": {"$type": "color", "$value": "{color/accent/soft}", "$description": "输入框默认背景色"}
+        "primary": {"$type": "color","$value": "{color/bg/primary}","$description": "输入框默认背景色"},
+        "hover": {"$type": "color","$value": "{color/bg/hover}","$description": "输入框默认背景色"},
+        "select": {"$type": "color","$value": "{color/accent/soft}","$description": "输入框默认背景色"}
       },
       "Border": {
-        "default": {"$type": "color", "$value": "{color/border/primary}", "$description": "输入框悬浮描边色"}
+        "default": {"$type": "color","$value": "{color/border/primary}","$description": "输入框悬浮描边色"}
       },
       "text": {
-        "default": {"$type": "color", "$value": "{color/text/primary}"}
+        "default": {"$type": "color","$value": "{color/text/primary}"}
       }
     },
     "content": {
       "fontSize": {
-        "text": {"$type": "number", "$value": "{typography/fontSize/body}"}
+        "text": {"$type": "number","$value": "{typography/fontSize/body}"}
       },
       "fontWeight": {
-        "regular": {"$type": "number", "$value": "{typography/fontWeight/regular}"}
+        "regular": {"$type": "number","$value": "{typography/fontWeight/regular}"}
       },
       "lineHeight": {
-        "md": {"$type": "number", "$value": "{typography/lineHeight/body}"}
+        "md": {"$type": "number","$value": "{typography/lineHeight/body}"}
       },
       "iconSize": {
-        "default": {"$type": "number", "$value": "{size/height/md}"}
+        "default": {"$type": "number","$value": "{size/height/md}"}
       },
       "height": {
-        "md": {"$type": "number", "$value": "{size/height/2xl}"}
+        "md": {"$type": "number","$value": "{size/height/2xl}"}
       }
     },
     "padding": {
-      "default": {"$type": "number", "$value": "{size/padding/md}"}
+      "default": {"$type": "number","$value": "{size/padding/md}"}
     },
     "border": {
-      "default": {"$type": "number", "$value": "{borderWidth/hairline}"}
+      "default": {"$type": "number","$value": "{borderWidth/hairline}"}
     }
   },
   "semantic": {
     "color": {
       "bg": {
-        "primary": {"$type": "color", "$value": "{color/neutral/p-100}", "$description": "一级容器背景色"},
-        "hover": {"$type": "color", "$value": "{color/neutral/p-96}", "$description": "悬停状态背景色\n用于：输入框类、默认按钮等背景"}
+        "primary": {"$type": "color","$value": "{color/neutral/p-100}","$description": "一级容器背景色"},
+        "hover": {"$type": "color","$value": "{color/neutral/p-96}","$description": "悬停状态背景色\n用于：输入框类、默认按钮等背景"}
       },
       "accent": {
-        "soft": {"$type": "color", "$value": "{color/purple/p-96}", "$description": "强调状态背景色\n用于：选中状态背景色，生产状态背景色等"}
+        "soft": {"$type": "color","$value": "{color/purple/p-96}","$description": "强调状态背景色\n用于：选中状态背景色，生产状态背景色等"}
       },
       "border": {
-        "primary": {"$type": "color", "$value": "{color/neutral/p-73}", "$description": "分割线-主要"}
+        "primary": {"$type": "color","$value": "{color/neutral/p-73}","$description": "分割线-主要"}
       },
       "text": {
-        "primary": {"$type": "color", "$value": "{color/neutral/p-10}", "$description": "用于：主要默认文本色"}
+        "primary": {"$type": "color","$value": "{color/neutral/p-10}","$description": "用于：主要默认文本色"}
       }
     },
     "typography": {
       "fontSize": {
-        "body": {"$type": "number", "$value": "{font/fontSize/p-14}", "$description": "用于：正文文本"}
+        "body": {"$type": "number","$value": "{font/fontSize/p-14}","$description": "用于：正文文本"}
       },
       "fontWeight": {
-        "regular": {"$type": "number", "$value": "{font/fontWeight/p-400}", "$description": "用于：常规正文"}
+        "regular": {"$type": "number","$value": "{font/fontWeight/p-400}","$description": "用于：常规正文"}
       },
       "lineHeight": {
-        "body": {"$type": "number", "$value": "{lineHeight/p-22}", "$description": "用于：正文文本"}
+        "body": {"$type": "number","$value": "{lineHeight/p-22}","$description": "用于：正文文本"}
       }
     },
     "size": {
       "height": {
-        "md": {"$type": "number", "$value": "{size/p-20}", "$description": "文本辅助图标\n用于：常规、日期输入框、状态等场景"},
-        "2xl": {"$type": "number", "$value": "{size/p-32}"}
+        "md": {"$type": "number","$value": "{size/p-20}","$description": "文本辅助图标\n用于：常规、日期输入框、状态等场景"},
+        "2xl": {"$type": "number","$value": "{size/p-32}"}
       },
       "padding": {
-        "md": {"$type": "number", "$value": "{spacing/p-4}"}
+        "md": {"$type": "number","$value": "{spacing/p-4}"}
       }
     },
     "borderWidth": {
-      "hairline": {"$type": "number", "$value": "{borderWidth/p-100}", "$description": "用于：输入框、页签底部、分割线等、16px图标"}
+      "hairline": {"$type": "number","$value": "{borderWidth/p-100}","$description": "用于：输入框、页签底部、分割线等、16px图标"}
     }
   },
   "primitive": {
     "color": {
       "neutral": {
-        "p-100": {"$type": "color", "$value": {"colorSpace": "srgb", "components": [1, 1, 1], "alpha": 1, "hex": "#FFFFFF"}, "$description": "标准白色\n用于：白色一级容器、气泡背景、反色文本、反色图标"},
-        "p-96": {"$type": "color", "$value": {"colorSpace": "srgb", "components": [0.9607843137254902, 0.9607843137254902, 0.9607843137254902], "alpha": 1, "hex": "#F5F5F5"}, "$description": "用于：次要按钮按下、输入框默认状态、\n数值代表在HSL色值中的L明度值，仅用于色阶中相对明度的参考。"},
-        "p-73": {"$type": "color", "$value": {"colorSpace": "srgb", "components": [0.7333333333333333, 0.7333333333333333, 0.7333333333333333], "alpha": 1, "hex": "#BBBBBB"}, "$description": "用于：浅色背景、禁用文本色、禁用链接文本、滚动条两端按钮的箭头、滚动条的默认状态色\n数值代表在HSL色值中的L明度值，仅用于色阶中相对明度的参考。"},
-        "p-10": {"$type": "color", "$value": {"colorSpace": "srgb", "components": [0.09803921568627451, 0.09803921568627451, 0.09803921568627451], "alpha": 1, "hex": "#191919"}, "$description": "用于：文本、图标、页签选中下划线、输入框悬停描边、链接文本默认\n数值代表在HSL色值中的L明度值，仅用于色阶中相对明度的参考。"}
+        "p-100": {"$type": "color","$value": {"colorSpace": "srgb","components": [1,1,1],"alpha": 1,"hex": "#FFFFFF"},"$description": "标准白色\n用于：白色一级容器、气泡背景、反色文本、反色图标"},
+        "p-96": {"$type": "color","$value": {"colorSpace": "srgb","components": [0.9607843137254902,0.9607843137254902,0.9607843137254902],"alpha": 1,"hex": "#F5F5F5"},"$description": "用于：次要按钮按下、输入框默认状态、\n数值代表在HSL色值中的L明度值，仅用于色阶中相对明度的参考。"},
+        "p-73": {"$type": "color","$value": {"colorSpace": "srgb","components": [0.7333333333333333,0.7333333333333333,0.7333333333333333],"alpha": 1,"hex": "#BBBBBB"},"$description": "用于：浅色背景、禁用文本色、禁用链接文本、滚动条两端按钮的箭头、滚动条的默认状态色\n数值代表在HSL色值中的L明度值，仅用于色阶中相对明度的参考。"},
+        "p-10": {"$type": "color","$value": {"colorSpace": "srgb","components": [0.09803921568627451,0.09803921568627451,0.09803921568627451],"alpha": 1,"hex": "#191919"},"$description": "用于：文本、图标、页签选中下划线、输入框悬停描边、链接文本默认\n数值代表在HSL色值中的L明度值，仅用于色阶中相对明度的参考。"}
       },
       "purple": {
-        "p-96": {"$type": "color", "$value": {"colorSpace": "srgb", "components": [0.9372549019607843, 0.9176470588235294, 0.996078431372549], "alpha": 1, "hex": "#EFEAFE"}, "$description": "用于：控件选中背景色；\n名称中数值表示以高亮色#6235F7为基准，在白色背景上透明度的数值对应色填充色。\n如“10”代表10%透明的#6235F7紫色。"}
+        "p-96": {"$type": "color","$value": {"colorSpace": "srgb","components": [0.9372549019607843,0.9176470588235294,0.996078431372549],"alpha": 1,"hex": "#EFEAFE"},"$description": "用于：控件选中背景色；\n名称中数值表示以高亮色#6235F7为基准，在白色背景上透明度的数值对应色填充色。\n如“10”代表10%透明的#6235F7紫色。"}
       }
     },
     "font": {
       "fontSize": {
-        "p-14": {"$type": "number", "$value": 14, "$description": "小字号"}
+        "p-14": {"$type": "number","$value": 14,"$description": "小字号"}
       },
       "fontWeight": {
-        "p-400": {"$type": "number", "$value": 400, "$description": "Regular"}
+        "p-400": {"$type": "number","$value": 400,"$description": "Regular"}
       }
     },
     "lineHeight": {
-      "p-22": {"$type": "number", "$value": 22, "$description": "小字号行高"}
+      "p-22": {"$type": "number","$value": 22,"$description": "小字号行高"}
     },
     "size": {
-      "p-20": {"$type": "number", "$value": 20, "$description": "小尺寸"},
-      "p-32": {"$type": "number", "$value": 32, "$description": "大尺寸"}
+      "p-20": {"$type": "number","$value": 20,"$description": "小尺寸"},
+      "p-32": {"$type": "number","$value": 32,"$description": "大尺寸"}
     },
     "spacing": {
-      "p-4": {"$type": "number", "$value": 4, "$description": "紧凑间距"}
+      "p-4": {"$type": "number","$value": 4,"$description": "紧凑间距"}
     },
     "borderWidth": {
-      "p-100": {"$type": "number", "$value": 1, "$description": "内描边"}
+      "p-100": {"$type": "number","$value": 1,"$description": "内描边"}
     }
   }
 }

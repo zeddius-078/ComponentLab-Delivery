@@ -87,22 +87,17 @@ void commonControls(Page& page, T* preview, std::shared_ptr<const surface::Catal
                     const char* appearanceName) {
     auto* size = combo(page.controls, QString::fromUtf8("尺寸"), {"sm", "md", "lg"});
     size->setCurrentText("md");
-    auto* variant = combo(page.controls, QString::fromUtf8("形态"),
-                          {"outlined", "filled", "borderless", "underlined"});
     size->setObjectName(QString(appearanceName)+"Size");
-    variant->setObjectName(QString(appearanceName)+"Variant");
     auto* appearance = new QComboBox;
     appearance->setObjectName(appearanceName);
-    for (const auto& id : catalog->presetIds())
-        appearance->addItem(catalog->label(id), id);
-    page.controls->addRow(QString::fromUtf8("材质"), appearance);
+    appearance->addItem("outlined", "outlined");
+    page.controls->addRow(QString::fromUtf8("V2 外观"), appearance);
     auto* status =
-        combo(page.controls, QString::fromUtf8("校验状态"), {"none", "error", "warning"});
+        combo(page.controls, QString::fromUtf8("校验状态"), {"none", "error"});
     status->setObjectName(QString(appearanceName)+"Status");
     auto *readOnly = check(catalog, page.controls, "readOnly"),
          *disabled = check(catalog, page.controls, "disabled");
     QObject::connect(size, &QComboBox::currentTextChanged, preview, &T::setControlSize);
-    QObject::connect(variant, &QComboBox::currentTextChanged, preview, &T::setVariant);
     QObject::connect(
         appearance, qOverload<int>(&QComboBox::currentIndexChanged), preview,
         [preview, appearance] { preview->setAppearance(appearance->currentData().toString()); });
@@ -113,16 +108,13 @@ void commonControls(Page& page, T* preview, std::shared_ptr<const surface::Catal
     QObject::connect(disabled, &QCheckBox::toggled, preview,
                      [preview](bool on) { preview->setEnabled(!on); });
     if constexpr (std::is_same<T,Z_InputField>::value) {
-        appearance->insertItem(0,QString::fromUtf8("Figma 当前亮色"),"figma-light");
-        appearance->setCurrentIndex(0);
-        preview->setAppearance("figma-light");
         auto* note=new QLabel;
         note->setObjectName("inputAppearanceEvidence");note->setWordWrap(true);
         page.controls->addRow(note);
         auto describe=[preview,note] {
-            note->setText(preview->control()->isFigmaInputAppearance() ?
-                QString::fromUtf8("当前 Figma：outlined；Small / Medium / Large；Default / Hover / Focus / Filled / Error / Disabled。") :
-                QString::fromUtf8("SDK 兼容模式：当前 Figma 未定义该材质、形态或 warning 组合，不计作 Figma 变体。"));
+            Q_UNUSED(preview)
+            note->setText(QString::fromUtf8(
+                "V2 运行时：outlined；Small / Medium / Large；Default / Hover / Focus / Filled / Error / Disabled。"));
         };
         QObject::connect(preview->control(),&field::Chrome::visualChanged,note,describe);describe();
     }
@@ -210,10 +202,9 @@ void DemoWindow::formPages() {
     auto inputStates = page();
     inputStates.exampleRoot->setObjectName("INPUT_STATE_GROUP");
     extraInspections.append(qMakePair(inputStates.tree, inputStates.exampleRoot));
-    auto* inputMaterial = combo(inputStates.controls, QString::fromUtf8("材质"), {});
+    auto* inputMaterial = combo(inputStates.controls, QString::fromUtf8("V2 外观"), {});
     inputMaterial->setObjectName("inputStateAppearance");
-    for (const auto& id : catalog->presetIds())
-        inputMaterial->addItem(catalog->label(id), id);
+    inputMaterial->addItem("outlined", "outlined");
     auto* groupEnabled =
         check(catalog, inputStates.controls, QString::fromUtf8("启用工艺复核"), true);
     auto* notes = new Z_InputField(tokens);
@@ -238,15 +229,17 @@ void DemoWindow::formPages() {
     connect(otp, &commonWidget::Z_OtpInput::completed, otpResult,
             [otpResult](const QString& value) { otpResult->setText("OTP = " + value); });
     QVector<Z_InputField*> inputSamples{notes, password};
-    const QStringList inputLabels{"Error", "Warning", "Read only", "Disabled", "Search", "Loading"};
+    const QStringList inputLabels{"Error", "Focused", "Read only", "Disabled", "Search", "Loading"};
     for (int i = 0; i < inputLabels.size(); ++i) {
         auto* sample = new Z_InputField(tokens);
         sample->setObjectName("inputStateExample" + QString::number(i));
         sample->setLabel(inputLabels[i]);
         sample->setValue("ETCH_CF4_Standard");
         sample->setAllowClear(true);
-        if (i == 0 || i == 1)
-            sample->setStatus(i == 0 ? "error" : "warning");
+        if (i == 0)
+            sample->setStatus("error");
+        if (i == 1)
+            sample->control()->setSnapshotState("Focus");
         if (i == 2)
             sample->setReadOnly(true);
         if (i == 3)
@@ -358,10 +351,9 @@ void DemoWindow::formPages() {
     auto selectStates = page();
     selectStates.exampleRoot->setObjectName("SELECT_STATE_GROUP");
     extraInspections.append(qMakePair(selectStates.tree, selectStates.exampleRoot));
-    auto* selectMaterial = combo(selectStates.controls, QString::fromUtf8("材质"), {});
+    auto* selectMaterial = combo(selectStates.controls, QString::fromUtf8("V2 外观"), {});
     selectMaterial->setObjectName("selectStateAppearance");
-    for (const auto& id : catalog->presetIds())
-        selectMaterial->addItem(catalog->label(id), id);
+    selectMaterial->addItem("outlined", "outlined");
     auto* selectGroupEnabled =
         check(catalog, selectStates.controls, QString::fromUtf8("启用设备选择"), true);
     auto* multi = new Z_Select(tokens);
@@ -381,7 +373,7 @@ void DemoWindow::formPages() {
         groupResult->setText("values = [" + multi->values().join(", ") + "]");
     });
     QVector<Z_Select*> selectSamples{multi, tagExample};
-    const QStringList selectLabels{"Error", "Warning", "Read only", "Disabled", "Empty", "Loading"};
+    const QStringList selectLabels{"Error", "Focused", "Read only", "Disabled", "Empty", "Loading"};
     for (int i = 0; i < selectLabels.size(); ++i) {
         auto* sample = new Z_Select(tokens);
         sample->setObjectName("selectStateExample" + QString::number(i));
@@ -389,8 +381,10 @@ void DemoWindow::formPages() {
         sample->setOptions(i == 4 ? QVector<Z_Select::Option>() : options());
         if (i != 4)
             sample->setValues({"etch-01"});
-        if (i == 0 || i == 1)
-            sample->setStatus(i == 0 ? "error" : "warning");
+        if (i == 0)
+            sample->setStatus("error");
+        if (i == 1)
+            sample->control()->setSnapshotState("Focus");
         if (i == 2)
             sample->setReadOnly(true);
         if (i == 3)

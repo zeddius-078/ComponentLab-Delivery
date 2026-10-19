@@ -7,6 +7,7 @@
 #include <QJsonDocument>
 #include <QLabel>
 #include <QListView>
+#include <QListWidget>
 #include <QVBoxLayout>
 #include <QRegularExpression>
 #include <cmath>
@@ -70,9 +71,10 @@ QJsonObject mergeRules(QJsonObject base, const QJsonObject& extension) {
 }
 
 SceneBuilder::SceneBuilder(QJsonObject input, QJsonObject componentRules, QJsonObject layoutRules,
-                           QJsonObject ext, QJsonObject names)
+                           QJsonObject ext, QJsonObject names, QJsonObject libraryProfile)
     : raw(std::move(input)), extensions(std::move(ext)), engineeringNames(std::move(names)),
-      components(raw, std::move(componentRules)),
+      libraryProfile(std::move(libraryProfile)), componentRules(std::move(componentRules)),
+      components(raw, this->componentRules, this->libraryProfile),
       layouts(mergeRules(std::move(layoutRules), extensions["layout"].toObject()), raw) {
     // 一次生成仅对应一个根页面，多个根无法共享同一输出前缀。
     if (raw["pixTreeNodes"].toArray().size() != 1)
@@ -111,6 +113,9 @@ QWidget* SceneBuilder::option(const QJsonObject& node, QWidget* parent) {
     if (family["name"] != rule["designComponentName"] ||
         family["componentKey"] != rule["designComponentKey"])
         return components.convert(node, parent);
+    // SelectOption 适配器属于 token-sdk 交付；qt-native 没有对应公开 Qt 等价物，必须失败关闭。
+    if (libraryProfile["widgetSource"].toString() == QStringLiteral("qt-builtin-map"))
+        throw std::runtime_error("SELECT_OPTION_REQUIRES_TOKEN_SDK");
     const auto master = find(family["childNode"].toArray(), node["mainComponent"].toString());
     // 实例 key 必须匹配已定位母版，避免把另一个组件的属性用于选项适配。
     if (master["componentKey"] != node["componentKey"])
@@ -129,12 +134,61 @@ QWidget* SceneBuilder::option(const QJsonObject& node, QWidget* parent) {
         props[name] = p["value"];
     }
     const auto expected = rule["properties"].toObject();
+    // Profile 接受契约固定值、当前 SDK 上下文或指向当前上下文的显式别名；其余属性必须完全匹配契约。
+    const auto profileAccepted = [&](const QString& value) {
+        if (value == expected["Profile"].toString() ||
+            value == componentRules["profile"].toString())
+            return true;
+        const auto alias = componentRules["profileAliases"].toObject()[value].toObject();
+        return !alias.isEmpty() &&
+               alias["runtimeProfile"].toString() == componentRules["profile"].toString();
+    };
     // 逐项要求当前变体匹配已验证契约，拒绝未实现的多选、主题或状态组合。
     for (auto it = expected.begin(); it != expected.end(); ++it)
         // 当前选项适配只实现契约声明的固定变体，值不一致就拒绝生成。
-        if (props[it.key()] != it.value())
+        if (props[it.key()] != it.value() &&
+            !(it.key() == "Profile" && profileAccepted(props[it.key()].toString())))
             throw std::runtime_error("UNSUPPORTED_OPTION_VARIANT");
     // 选项文字同样遵循母版槽位及实例覆盖；必须唯一命中，防止读错标签。
+    const auto label = optionLabel(node, family);
+    extra.append(QJsonObject{{"nodeId", node["guid"]},
+                             {"componentName", family["name"]},
+                             {"componentKey", family["componentKey"]},
+                             {"adapter", rule["qtAdapter"]},
+                             {"publicApi", rule["publicApi"]},
+                             {"label", label},
+                              {"state", props["state"]},
+                              {"profile", componentRules["profile"].toString()},
+                             {"controlSize", rule["controlSize"]},
+                             {"textSource", "master slot + instance props override"}});
+    return createSelectOption(extra.last().toObject(), parent);
+}
+
+QJsonArray SceneBuilder::optionGroup(const QJsonObject& node) {
+    // 仅 qt-native 配置存在聚合合同；其他配置继续走逐实例选项适配。
+    if (libraryProfile["widgetSource"].toString() != QStringLiteral("qt-builtin-map"))
+        return {};
+    const auto children = node["childNode"].toArray();
+    if (children.isEmpty())
+        return {};
+    const auto rule = extensions["selectOption"].toObject();
+    // 全部子节点都必须是已登记 SelectOption 实例，任一例外即退回普通容器路径。
+    for (const auto& value : children) {
+        const auto child = value.toObject();
+        if (child["type"] != "INSTANCE")
+            return {};
+        const auto family =
+            find(raw["pixComponentTreeDslNodes"].toArray(), child["mainStateGroup"].toString());
+        if (family["name"] != rule["designComponentName"] ||
+            family["componentKey"] != rule["designComponentKey"])
+            return {};
+    }
+    return children;
+}
+
+QString SceneBuilder::optionLabel(const QJsonObject& node, const QJsonObject& family) {
+    const auto rule = extensions["selectOption"].toObject();
+    const auto master = find(family["childNode"].toArray(), node["mainComponent"].toString());
     QJsonArray found;
     textSlots(master, rule["textSlot"].toString(), found);
     // 文字槽必须唯一，缺失或多次命中都无法确定选项标签。
@@ -150,18 +204,7 @@ QWidget* SceneBuilder::option(const QJsonObject& node, QWidget* parent) {
     }
     if (!labelValue.isString())
         throw std::runtime_error("INVALID_TEXT_VALUE");
-    const auto label = labelValue.toString();
-    extra.append(QJsonObject{{"nodeId", node["guid"]},
-                             {"componentName", family["name"]},
-                             {"componentKey", family["componentKey"]},
-                             {"adapter", rule["qtAdapter"]},
-                             {"publicApi", rule["publicApi"]},
-                             {"label", label},
-                             {"state", props["state"]},
-                             {"profile", props["Profile"]},
-                             {"controlSize", rule["controlSize"]},
-                             {"textSource", "master slot + instance props override"}});
-    return createSelectOption(extra.last().toObject(), parent);
+    return labelValue.toString();
 }
 
 QWidget* SceneBuilder::create(const QJsonObject& node, QWidget* parent) {
@@ -175,6 +218,68 @@ QWidget* SceneBuilder::create(const QJsonObject& node, QWidget* parent) {
     if (node["type"] == "INSTANCE")
         w = option(node, parent);
     else if (node["type"] == "FRAME") {
+        const auto group = optionGroup(node);
+        if (!group.isEmpty()) {
+            // qt-native 聚合：父框整体生成为一个 QListWidget，每个选项是禁用 item。
+            auto* list = new QListWidget(parent);
+            w = list;
+            const auto rule = extensions["selectOption"].toObject();
+            const auto expected = rule["properties"].toObject();
+            const auto profileAccepted = [&](const QString& value) {
+                if (value == expected["Profile"].toString() ||
+                    value == componentRules["profile"].toString())
+                    return true;
+                const auto alias =
+                    componentRules["profileAliases"].toObject()[value].toObject();
+                return !alias.isEmpty() &&
+                       alias["runtimeProfile"].toString() == componentRules["profile"].toString();
+            };
+            QJsonArray items;
+            for (const auto& value : group) {
+                const auto child = value.toObject();
+                const auto family = find(raw["pixComponentTreeDslNodes"].toArray(),
+                                         child["mainStateGroup"].toString());
+                const auto master =
+                    find(family["childNode"].toArray(), child["mainComponent"].toString());
+                if (master["componentKey"] != child["componentKey"])
+                    throw std::runtime_error("INVALID_OPTION_MASTER_KEY");
+                QJsonObject props;
+                for (const auto& variant : child["propRefMap"].toObject()["variant"].toArray()) {
+                    const auto entry = variant.toObject();
+                    const auto name = entry["name"].toString();
+                    if (props.contains(name))
+                        throw std::runtime_error("DUPLICATE_OPTION_PROPERTY");
+                    props[name] = entry["value"];
+                }
+                for (auto it = expected.begin(); it != expected.end(); ++it)
+                    if (props[it.key()] != it.value() &&
+                        !(it.key() == "Profile" &&
+                          profileAccepted(props[it.key()].toString())))
+                        throw std::runtime_error("UNSUPPORTED_OPTION_VARIANT");
+                const auto label = optionLabel(child, family);
+                auto* item = new QListWidgetItem(label, list);
+                // 选项契约固定 disabled：去掉 ItemIsEnabled，其余保留只读呈现位。
+                item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsUserCheckable);
+                items.append(QJsonObject{{"nodeId", child["guid"]},
+                                         {"label", label},
+                                         {"enabled", false}});
+            }
+            const double dw = node["width"].toDouble();
+            const double dh = node["height"].toDouble();
+            // 聚合控件沿用设计实测几何，避免默认 sizeHint 改变页面占位。
+            if (std::isfinite(dw) && std::isfinite(dh) && dw > 0 && dh > 0) {
+                w->setMinimumSize(int(std::ceil(dw)), int(std::ceil(dh)));
+                w->setMaximumSize(int(std::ceil(dw)), int(std::ceil(dh)));
+            }
+            optionGroups.append(QJsonObject{
+                {"nodeId", node["guid"]},
+                {"componentName", rule["designComponentName"]},
+                {"componentKey", rule["designComponentKey"]},
+                {"qtClass", "QListWidget"},
+                {"state", "disabled"},
+                {"profile", componentRules["profile"].toString()},
+                {"items", items}});
+        } else {
         auto owned = std::make_unique<QWidget>(parent);
         w = owned.get();
         const auto sizing = node["autoLayout"].toObject();
@@ -199,6 +304,7 @@ QWidget* SceneBuilder::create(const QJsonObject& node, QWidget* parent) {
             return create(child, owner);
         });
         owned.release();
+        }
     } else if (node["type"] == "PARAGRAPH") {
         if (!node["nodeText"].isString())
             throw std::runtime_error("INVALID_TEXT_VALUE");
@@ -255,6 +361,7 @@ QJsonObject SceneBuilder::trace() const {
     }
     return {{"components", components.trace()},
             {"adapters", extra},
+            {"optionGroups", optionGroups},
             {"layouts", layouts.trace()},
             {"geometry", geometry}};
 }

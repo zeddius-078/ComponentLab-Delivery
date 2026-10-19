@@ -1,0 +1,16 @@
+{
+  "fileKey": "w92BKW1EcutKmTXkwzNHbf",
+  "status": "code-connect-out-of-scope",
+  "checkedAt": "2026-10-19",
+  "reason": "This iteration explicitly accepts direct Figma edits without Code Connect persistence. The account still cannot persist Code Connect mappings, but that is not an acceptance blocker for the V2 component and variable alignment work.",
+  "accountPlan": { "team": "My Project", "tier": "pro", "seat": "Full", "codeConnectWritable": false },
+  "publicComponentSets": {
+    "Button": { "nodeId": "2258:15827", "mapping": "unavailable" },
+    "Checkbox": { "nodeId": "2258:16082", "mapping": "unavailable" },
+    "Radio": { "nodeId": "2256:56", "mapping": "unavailable" },
+    "Table": { "nodeId": "2256:16548", "mapping": "unavailable" },
+    "Select": { "nodeId": "2258:17336", "mapping": "unavailable" },
+    "Input": { "nodeId": "2258:16387", "mapping": "unavailable" }
+  },
+  "nextAction": "Keep Code Connect persistence as a separate future task; validate V2 Component Set IDs, variable bindings, and repository mappings directly."
+}

@@ -1,8 +1,0 @@
-{
-  "schemaVersion": 2,
-  "profile": "light-comfortable",
-  "rootId": "extension:instrument-root",
-  "nodes": {"extension:instrument-root": "instrumentHost", "extension:instrument-slot": "instrumentSlot"},
-  "components": [],
-  "source": "Project extension template; no Pixso source; outside the review workflow"
-}

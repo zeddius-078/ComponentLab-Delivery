@@ -53,7 +53,7 @@ class RowDelegate : public QStyledItemDelegate {
   public:
     RowDelegate(std::shared_ptr<const field::Tokens> t, QWidget* parent)
         : QStyledItemDelegate(parent), tokens(std::move(t)),
-          catalog(std::make_shared<surface::Catalog>(tokens->data()["profile"].toString())),
+          catalog(std::make_shared<surface::Catalog>(tokens->profile())),
           renderer(new Z_CheckBox(catalog, {}, parent)), cache(16384) {
         renderer->setObjectName("CHECKBOX_ROW_RENDERER");
         renderer->setAttribute(Qt::WA_DontShowOnScreen);
@@ -179,7 +179,7 @@ Z_Select::Z_Select(std::shared_ptr<const field::Tokens> tokens, QWidget* parent)
     d->hint->setWordWrap(true);
     d->label->setProperty("fieldPart", "LABEL");
     d->hint->setProperty("fieldPart", "HINT");
-    d->chrome = new field::Chrome(d->tokens, this);
+    d->chrome = new field::Chrome(d->tokens, this, field::Family::Select);
     d->row = new QHBoxLayout(d->chrome);
     d->row->setSpacing(d->tokens->metric("gap"));
     d->prefix = new QLabel(d->chrome);
@@ -264,6 +264,7 @@ Z_Select::Z_Select(std::shared_ptr<const field::Tokens> tokens, QWidget* parent)
         if (!d->syncing && d->view)
             sync();
     });
+    syncOpenCondition();
     sync();
 }
 Z_Select::~Z_Select() {
@@ -371,22 +372,9 @@ void Z_Select::setControlSize(const QString& v) {
     d->chrome->setControlSize(v);
     sync();
 }
-void Z_Select::setVariant(const QString& v) {
-    d->chrome->setVariant(v);
-}
 void Z_Select::setAppearance(const QString& v) {
-    if (v == QStringLiteral("figma-light")) {
-        // figma-light is a captured design appearance rather than a Token
-        // catalog recipe. Keep a valid material underneath for variants that
-        // intentionally fall back, then let FieldChrome own the captured
-        // outlined rendering.
-        d->chrome->setAppearance(QStringLiteral("solid"));
-        d->chrome->setFigmaInputAppearance(true);
-    } else {
-        d->tokens->recipe(v, QStringLiteral("outlined"), QStringLiteral("default"));
-        d->chrome->setFigmaInputAppearance(false);
-        d->chrome->setAppearance(v);
-    }
+    d->tokens->recipe(field::Family::Select, v, QStringLiteral("default"), false);
+    d->chrome->setAppearance(v);
     sync();
 }
 void Z_Select::setStatus(const QString& v) {
@@ -434,7 +422,10 @@ void Z_Select::setReadOnly(bool on) {
     sync();
 }
 void Z_Select::setLoading(bool on) {
+    if (on)
+        setOpen(false);
     d->loading = on;
+    d->chrome->setLoading(on);
     d->arrow->setBusy(on);
     sync();
 }
@@ -491,11 +482,12 @@ void Z_Select::setQuery(const QString& query) {
     emit searchRequested(d->filter->query);
 }
 void Z_Select::setOpen(bool on) {
-    if (on && (!isEnabled() || d->readOnly))
+    if (on && (!isEnabled() || d->readOnly || d->loading))
         return;
     if (on == d->open)
         return;
     d->open = on;
+    syncOpenCondition();
     if (on) {
         sync();
         positionPopup();
@@ -505,8 +497,14 @@ void Z_Select::setOpen(bool on) {
     } else {
         d->popup->hide();
         d->display->setFocus();
+        sync();
     }
     emit openChanged(on);
+}
+void Z_Select::syncOpenCondition() {
+    setProperty("selectOpen", d->open);
+    d->chrome->setOpenCondition(d->open);
+    d->arrow->setProperty("selectOpen", d->open);
 }
 void Z_Select::moveCurrent(int direction, bool end) {
     int count = d->filter->rowCount();
@@ -584,6 +582,8 @@ bool Z_Select::eventFilter(QObject* watched, QEvent* e) {
     }
     if (watched == d->popup && e->type() == QEvent::Hide && d->open) {
         d->open = false;
+        syncOpenCondition();
+        sync();
         emit openChanged(false);
     }
     if (watched == d->display && e->type() == QEvent::MouseButtonPress) {
@@ -669,7 +669,7 @@ void Z_Select::syncTags() {
         return;
     const auto& t = *d->tokens;
     QFont font(t.family());
-    font.setPixelSize(t.size(d->chrome->controlSize())["fontSize"].toInt());
+    font.setPixelSize(t.size(d->chrome->controlSize(), field::Family::Select)["fontSize"].toInt());
     QFontMetrics fm(font);
     int remaining = qMax(0, d->tags->width()), shown = 0;
     const int actionWidth = d->clear->sizeHint().width();
@@ -729,32 +729,14 @@ void Z_Select::sync() {
         return;
     d->syncing = true;
     const auto& t = *d->tokens;
-    auto m = t.size(d->chrome->controlSize());
-    const bool captured = d->chrome->isFigmaInputAppearance();
-    const auto metrics = captured ? field::inputVisuals()["metrics"].toObject() : QJsonObject{};
-    const auto colors = captured ? field::inputVisuals()["colors"].toObject() : QJsonObject{};
-    const auto capturedSize = captured
-        ? metrics["sizes"].toObject()[d->chrome->controlSize()].toObject() : QJsonObject{};
-    if (captured) {
-        m["paddingInline"] = capturedSize["paddingInline"];
-        m["lineHeight"] = metrics["textFrameHeight"];
-    }
-    const QString css = captured
-        ? QStringLiteral(
-              "QLineEdit[fieldPart=\"EDITOR\"]{background:transparent;border:0;padding:0;"
-              "min-height:0;color:%1;font-family:'HarmonyOS Sans','HarmonyOS Sans SC';font-size:14px;}"
-              "QLabel{background:transparent;border:0;color:%1;font-family:'HarmonyOS Sans','HarmonyOS Sans SC';font-size:14px;}"
-              "QLabel#HINT{color:%2;}")
-              .arg(colors[d->chrome->visualState() == QStringLiteral("disabled")
-                              ? QStringLiteral("disabledText") : QStringLiteral("text")].toString(),
-                   colors[d->chrome->visualState() == QStringLiteral("disabled")
-                              ? QStringLiteral("disabledText") : QStringLiteral("placeholder")].toString())
-        : t.qss(t.recipe(d->chrome->property("surfacePreset").toString(),
-                         d->chrome->property("fieldVariant").toString(), d->chrome->visualState()),
-                d->chrome->controlSize());
+    auto m = t.size(d->chrome->controlSize(), field::Family::Select);
+    const QString appearance = d->chrome->property("fieldAppearance").toString();
+    const QString css = t.qss(
+        t.recipe(field::Family::Select, appearance, d->chrome->visualState(), d->open),
+        d->chrome->controlSize(), field::Family::Select);
     if (styleSheet() != css)
         setStyleSheet(css);
-    int pad = m["paddingInline"].toInt() + (captured ? 1 : t.metric("borderWidth"));
+    int pad = m["paddingInline"].toInt() + t.metric("borderWidth");
     d->row->setContentsMargins(pad, 0, pad, 0);
     d->display->setFixedHeight(m["lineHeight"].toInt());
     d->prefix->setVisible(!d->prefixText.isEmpty() || !d->prefixIcon.isNull());
@@ -787,16 +769,20 @@ void Z_Select::sync() {
                                                                    : "muted"));
         w->setPalette(pal);
     }
-    d->chrome->setControlHeight(tags ? qMax(t.metric("tagHeight"), d->clear->sizeHint().height()) +
-                                           2 * t.metric("borderWidth") +
-                                           2 * m["paddingBlock"].toInt()
-                                     : d->chrome->controlHeight());
-    QFont f(captured ? QStringLiteral("HarmonyOS Sans") : t.family());
-    f.setPixelSize(captured ? 14 : m["fontSize"].toInt());
+    const int actionSafeHeight = d->clear->isVisible()
+        ? d->clear->sizeHint().height() + 4 * t.metric("borderWidth")
+        : d->chrome->controlHeight();
+    d->chrome->setControlHeight(
+        tags ? qMax(t.metric("tagHeight"), actionSafeHeight) +
+                   2 * m["paddingBlock"].toInt()
+             : actionSafeHeight);
+    QFont f(t.family());
+    f.setPixelSize(m["fontSize"].toInt());
     d->popup->setFont(f);
     d->search->setMinimumHeight(t.metric("actionSize"));
-    d->delegate->setAppearance(captured ? QStringLiteral("figma-light")
-                                        : d->chrome->property("surfacePreset").toString());
+    // Multiple-select rows consume the independently governed Checkbox
+    // appearance; the Select field appearance must not leak into it.
+    d->delegate->setAppearance(QStringLiteral("solid"));
     for (int row = 0; row < d->model->rowCount(); ++row) {
         auto* item = d->model->item(row);
         if (item->data(GroupRole).toBool())

@@ -1,0 +1,1004 @@
+/* Z_Widget <- QWidget; compiled from the active Token profile. */
+*[designSystemClass="commonWidget::Z_Widget"] {
+    color: #F3F3F3;
+    background-color: #272727;
+    font-size: 14px;
+}
+*[designSystemClass="commonWidget::Z_Widget"]:disabled {
+    color: #8A8A8A;
+    background-color: #303030;
+    border-color: #8A8A8A;
+}
+
+/* Z_Frame <- QFrame; compiled from the active Token profile. */
+*[designSystemClass="commonWidget::Z_Frame"] {
+    color: #F3F3F3;
+    background-color: #272727;
+    font-size: 14px;
+}
+*[designSystemClass="commonWidget::Z_Frame"]:disabled {
+    color: #8A8A8A;
+    background-color: #303030;
+    border-color: #8A8A8A;
+}
+
+/* Z_PushButton uses its specialized Token compiler output. This file records its native mapping without overriding that style. */
+
+/* Z_ToolButton <- QToolButton; compiled from the active Token profile. */
+*[designSystemClass="commonWidget::Z_ToolButton"][designSystemStyleOwner="tokens"] {
+    color: #F3F3F3;
+    background-color: #272727;
+    font-size: 14px;
+}
+*[designSystemClass="commonWidget::Z_ToolButton"][designSystemStyleOwner="tokens"]:disabled {
+    color: #8A8A8A;
+    background-color: #303030;
+    border-color: #8A8A8A;
+}
+*[designSystemClass="commonWidget::Z_ToolButton"][designSystemStyleOwner="tokens"] {
+    min-height: 32px;
+    border: 1px solid #676767;
+    border-radius: 4px;
+    padding: 0 12px;
+}
+*[designSystemClass="commonWidget::Z_ToolButton"][designSystemStyleOwner="tokens"]:hover { background-color: #F3EFFF; }
+*[designSystemClass="commonWidget::Z_ToolButton"][designSystemStyleOwner="tokens"]:pressed { border-color: #6235F7; }
+
+/* Z_RadioButton <- QRadioButton; compiled from the active Token profile. */
+*[designSystemClass="commonWidget::Z_RadioButton"] {
+    color: #F3F3F3;
+    background-color: #272727;
+    font-size: 14px;
+}
+*[designSystemClass="commonWidget::Z_RadioButton"]:disabled {
+    color: #8A8A8A;
+    background-color: #303030;
+    border-color: #8A8A8A;
+}
+*[designSystemClass="commonWidget::Z_RadioButton"] {
+    min-height: 32px;
+    border: 1px solid #676767;
+    border-radius: 4px;
+    padding: 0 12px;
+}
+*[designSystemClass="commonWidget::Z_RadioButton"]:hover { background-color: #F3EFFF; }
+*[designSystemClass="commonWidget::Z_RadioButton"]:pressed { border-color: #6235F7; }
+
+/* Z_CheckBox uses its specialized Token compiler output. This file records its native mapping without overriding that style. */
+
+/* Z_CommandLinkButton <- QCommandLinkButton; compiled from the active Token profile. */
+*[designSystemClass="commonWidget::Z_CommandLinkButton"][designSystemStyleOwner="tokens"] {
+    color: #F3F3F3;
+    background-color: #272727;
+    font-size: 14px;
+}
+*[designSystemClass="commonWidget::Z_CommandLinkButton"][designSystemStyleOwner="tokens"]:disabled {
+    color: #8A8A8A;
+    background-color: #303030;
+    border-color: #8A8A8A;
+}
+*[designSystemClass="commonWidget::Z_CommandLinkButton"][designSystemStyleOwner="tokens"] {
+    min-height: 32px;
+    border: 1px solid #676767;
+    border-radius: 4px;
+    padding: 0 12px;
+}
+*[designSystemClass="commonWidget::Z_CommandLinkButton"][designSystemStyleOwner="tokens"]:hover { background-color: #F3EFFF; }
+*[designSystemClass="commonWidget::Z_CommandLinkButton"][designSystemStyleOwner="tokens"]:pressed { border-color: #6235F7; }
+
+/* Z_DialogButtonBox <- QDialogButtonBox; compiled from the active Token profile. */
+*[designSystemClass="commonWidget::Z_DialogButtonBox"][designSystemStyleOwner="tokens"] {
+    color: #F3F3F3;
+    background-color: #272727;
+    font-size: 14px;
+}
+*[designSystemClass="commonWidget::Z_DialogButtonBox"][designSystemStyleOwner="tokens"]:disabled {
+    color: #8A8A8A;
+    background-color: #303030;
+    border-color: #8A8A8A;
+}
+*[designSystemClass="commonWidget::Z_DialogButtonBox"][designSystemStyleOwner="tokens"] {
+    min-height: 32px;
+    border: 1px solid #676767;
+    border-radius: 4px;
+    padding: 0 12px;
+}
+*[designSystemClass="commonWidget::Z_DialogButtonBox"][designSystemStyleOwner="tokens"]:hover { background-color: #F3EFFF; }
+*[designSystemClass="commonWidget::Z_DialogButtonBox"][designSystemStyleOwner="tokens"]:pressed { border-color: #6235F7; }
+
+/* Z_LineEdit <- QLineEdit; compiled from the active Token profile. */
+*[designSystemClass="commonWidget::Z_LineEdit"][designSystemStyleOwner="tokens"] {
+    color: #F3F3F3;
+    background-color: #272727;
+    font-size: 14px;
+}
+*[designSystemClass="commonWidget::Z_LineEdit"][designSystemStyleOwner="tokens"]:disabled {
+    color: #8A8A8A;
+    background-color: #303030;
+    border-color: #8A8A8A;
+}
+*[designSystemClass="commonWidget::Z_LineEdit"][designSystemStyleOwner="tokens"] {
+    min-height: 32px;
+    border: 1px solid #676767;
+    border-radius: 4px;
+    padding-left: 8px;
+    padding-right: 8px;
+}
+*[designSystemClass="commonWidget::Z_LineEdit"][designSystemStyleOwner="tokens"]:focus[focusIndicatorVisible="true"] { border-color: #6235F7; }
+
+/* Z_SpinBox <- QSpinBox; compiled from the active Token profile. */
+*[designSystemClass="commonWidget::Z_SpinBox"] {
+    color: #F3F3F3;
+    background-color: #272727;
+    font-size: 14px;
+}
+*[designSystemClass="commonWidget::Z_SpinBox"]:disabled {
+    color: #8A8A8A;
+    background-color: #303030;
+    border-color: #8A8A8A;
+}
+*[designSystemClass="commonWidget::Z_SpinBox"] {
+    min-height: 32px;
+    border: 1px solid #676767;
+    border-radius: 4px;
+    padding-left: 8px;
+    padding-right: 8px;
+}
+*[designSystemClass="commonWidget::Z_SpinBox"]:focus[focusIndicatorVisible="true"] { border-color: #6235F7; }
+
+/* Z_DoubleSpinBox <- QDoubleSpinBox; compiled from the active Token profile. */
+*[designSystemClass="commonWidget::Z_DoubleSpinBox"] {
+    color: #F3F3F3;
+    background-color: #272727;
+    font-size: 14px;
+}
+*[designSystemClass="commonWidget::Z_DoubleSpinBox"]:disabled {
+    color: #8A8A8A;
+    background-color: #303030;
+    border-color: #8A8A8A;
+}
+*[designSystemClass="commonWidget::Z_DoubleSpinBox"] {
+    min-height: 32px;
+    border: 1px solid #676767;
+    border-radius: 4px;
+    padding-left: 8px;
+    padding-right: 8px;
+}
+*[designSystemClass="commonWidget::Z_DoubleSpinBox"]:focus[focusIndicatorVisible="true"] { border-color: #6235F7; }
+
+/* Z_Slider <- QSlider; compiled from the active Token profile. */
+*[designSystemClass="commonWidget::Z_Slider"][designSystemStyleOwner="tokens"] {
+    color: #F3F3F3;
+    background-color: #272727;
+    font-size: 14px;
+}
+*[designSystemClass="commonWidget::Z_Slider"][designSystemStyleOwner="tokens"]:disabled {
+    color: #8A8A8A;
+    background-color: #303030;
+    border-color: #8A8A8A;
+}
+*[designSystemClass="commonWidget::Z_Slider"][designSystemStyleOwner="tokens"] {
+    min-height: 32px;
+    border: 1px solid #676767;
+    border-radius: 4px;
+    padding-left: 8px;
+    padding-right: 8px;
+}
+*[designSystemClass="commonWidget::Z_Slider"][designSystemStyleOwner="tokens"]:focus[focusIndicatorVisible="true"] { border-color: #6235F7; }
+
+/* Z_ScrollBar <- QScrollBar; compiled from the active Token profile. */
+*[designSystemClass="commonWidget::Z_ScrollBar"][designSystemStyleOwner="tokens"] {
+    color: #F3F3F3;
+    background-color: #272727;
+    font-size: 14px;
+}
+*[designSystemClass="commonWidget::Z_ScrollBar"][designSystemStyleOwner="tokens"]:disabled {
+    color: #8A8A8A;
+    background-color: #303030;
+    border-color: #8A8A8A;
+}
+*[designSystemClass="commonWidget::Z_ScrollBar"][designSystemStyleOwner="tokens"] {
+    min-height: 32px;
+    border: 1px solid #676767;
+    border-radius: 4px;
+    padding-left: 8px;
+    padding-right: 8px;
+}
+*[designSystemClass="commonWidget::Z_ScrollBar"][designSystemStyleOwner="tokens"]:focus[focusIndicatorVisible="true"] { border-color: #6235F7; }
+
+/* Z_Dial <- QDial; compiled from the active Token profile. */
+*[designSystemClass="commonWidget::Z_Dial"][designSystemStyleOwner="tokens"] {
+    color: #F3F3F3;
+    background-color: #272727;
+    font-size: 14px;
+}
+*[designSystemClass="commonWidget::Z_Dial"][designSystemStyleOwner="tokens"]:disabled {
+    color: #8A8A8A;
+    background-color: #303030;
+    border-color: #8A8A8A;
+}
+*[designSystemClass="commonWidget::Z_Dial"][designSystemStyleOwner="tokens"] {
+    min-height: 32px;
+    border: 1px solid #676767;
+    border-radius: 4px;
+    padding-left: 8px;
+    padding-right: 8px;
+}
+*[designSystemClass="commonWidget::Z_Dial"][designSystemStyleOwner="tokens"]:focus[focusIndicatorVisible="true"] { border-color: #6235F7; }
+
+/* Z_ComboBox <- QComboBox; compiled from the active Token profile. */
+*[designSystemClass="commonWidget::Z_ComboBox"][designSystemStyleOwner="tokens"] {
+    color: #F3F3F3;
+    background-color: #272727;
+    font-size: 14px;
+}
+*[designSystemClass="commonWidget::Z_ComboBox"][designSystemStyleOwner="tokens"]:disabled {
+    color: #8A8A8A;
+    background-color: #303030;
+    border-color: #8A8A8A;
+}
+*[designSystemClass="commonWidget::Z_ComboBox"][designSystemStyleOwner="tokens"] {
+    min-height: 32px;
+    border: 1px solid #676767;
+    border-radius: 4px;
+    padding-left: 8px;
+    padding-right: 8px;
+}
+*[designSystemClass="commonWidget::Z_ComboBox"][designSystemStyleOwner="tokens"]:focus[focusIndicatorVisible="true"] { border-color: #6235F7; }
+
+/* Z_FontComboBox <- QFontComboBox; compiled from the active Token profile. */
+*[designSystemClass="commonWidget::Z_FontComboBox"][designSystemStyleOwner="tokens"] {
+    color: #F3F3F3;
+    background-color: #272727;
+    font-size: 14px;
+}
+*[designSystemClass="commonWidget::Z_FontComboBox"][designSystemStyleOwner="tokens"]:disabled {
+    color: #8A8A8A;
+    background-color: #303030;
+    border-color: #8A8A8A;
+}
+*[designSystemClass="commonWidget::Z_FontComboBox"][designSystemStyleOwner="tokens"] {
+    min-height: 32px;
+    border: 1px solid #676767;
+    border-radius: 4px;
+    padding-left: 8px;
+    padding-right: 8px;
+}
+*[designSystemClass="commonWidget::Z_FontComboBox"][designSystemStyleOwner="tokens"]:focus[focusIndicatorVisible="true"] { border-color: #6235F7; }
+
+/* Z_DateTimeEdit <- QDateTimeEdit; compiled from the active Token profile. */
+*[designSystemClass="commonWidget::Z_DateTimeEdit"][designSystemStyleOwner="tokens"] {
+    color: #F3F3F3;
+    background-color: #272727;
+    font-size: 14px;
+}
+*[designSystemClass="commonWidget::Z_DateTimeEdit"][designSystemStyleOwner="tokens"]:disabled {
+    color: #8A8A8A;
+    background-color: #303030;
+    border-color: #8A8A8A;
+}
+*[designSystemClass="commonWidget::Z_DateTimeEdit"][designSystemStyleOwner="tokens"] {
+    min-height: 32px;
+    border: 1px solid #676767;
+    border-radius: 4px;
+    padding-left: 8px;
+    padding-right: 8px;
+}
+*[designSystemClass="commonWidget::Z_DateTimeEdit"][designSystemStyleOwner="tokens"]:focus[focusIndicatorVisible="true"] { border-color: #6235F7; }
+
+/* Z_DateEdit <- QDateEdit; compiled from the active Token profile. */
+*[designSystemClass="commonWidget::Z_DateEdit"][designSystemStyleOwner="tokens"] {
+    color: #F3F3F3;
+    background-color: #272727;
+    font-size: 14px;
+}
+*[designSystemClass="commonWidget::Z_DateEdit"][designSystemStyleOwner="tokens"]:disabled {
+    color: #8A8A8A;
+    background-color: #303030;
+    border-color: #8A8A8A;
+}
+*[designSystemClass="commonWidget::Z_DateEdit"][designSystemStyleOwner="tokens"] {
+    min-height: 32px;
+    border: 1px solid #676767;
+    border-radius: 4px;
+    padding-left: 8px;
+    padding-right: 8px;
+}
+*[designSystemClass="commonWidget::Z_DateEdit"][designSystemStyleOwner="tokens"]:focus[focusIndicatorVisible="true"] { border-color: #6235F7; }
+
+/* Z_TimeEdit <- QTimeEdit; compiled from the active Token profile. */
+*[designSystemClass="commonWidget::Z_TimeEdit"][designSystemStyleOwner="tokens"] {
+    color: #F3F3F3;
+    background-color: #272727;
+    font-size: 14px;
+}
+*[designSystemClass="commonWidget::Z_TimeEdit"][designSystemStyleOwner="tokens"]:disabled {
+    color: #8A8A8A;
+    background-color: #303030;
+    border-color: #8A8A8A;
+}
+*[designSystemClass="commonWidget::Z_TimeEdit"][designSystemStyleOwner="tokens"] {
+    min-height: 32px;
+    border: 1px solid #676767;
+    border-radius: 4px;
+    padding-left: 8px;
+    padding-right: 8px;
+}
+*[designSystemClass="commonWidget::Z_TimeEdit"][designSystemStyleOwner="tokens"]:focus[focusIndicatorVisible="true"] { border-color: #6235F7; }
+
+/* Z_KeySequenceEdit <- QKeySequenceEdit; compiled from the active Token profile. */
+*[designSystemClass="commonWidget::Z_KeySequenceEdit"][designSystemStyleOwner="tokens"] {
+    color: #F3F3F3;
+    background-color: #272727;
+    font-size: 14px;
+}
+*[designSystemClass="commonWidget::Z_KeySequenceEdit"][designSystemStyleOwner="tokens"]:disabled {
+    color: #8A8A8A;
+    background-color: #303030;
+    border-color: #8A8A8A;
+}
+*[designSystemClass="commonWidget::Z_KeySequenceEdit"][designSystemStyleOwner="tokens"] {
+    min-height: 32px;
+    border: 1px solid #676767;
+    border-radius: 4px;
+    padding-left: 8px;
+    padding-right: 8px;
+}
+*[designSystemClass="commonWidget::Z_KeySequenceEdit"][designSystemStyleOwner="tokens"]:focus[focusIndicatorVisible="true"] { border-color: #6235F7; }
+
+/* Z_Label <- QLabel; compiled from the active Token profile. */
+*[designSystemClass="commonWidget::Z_Label"] {
+    color: #F3F3F3;
+    background-color: #272727;
+    font-size: 14px;
+}
+*[designSystemClass="commonWidget::Z_Label"]:disabled {
+    color: #8A8A8A;
+    background-color: #303030;
+    border-color: #8A8A8A;
+}
+*[designSystemClass="commonWidget::Z_Label"] { background: transparent; border: none; }
+
+/* Z_LCDNumber <- QLCDNumber; compiled from the active Token profile. */
+*[designSystemClass="commonWidget::Z_LCDNumber"] {
+    color: #F3F3F3;
+    background-color: #272727;
+    font-size: 14px;
+}
+*[designSystemClass="commonWidget::Z_LCDNumber"]:disabled {
+    color: #8A8A8A;
+    background-color: #303030;
+    border-color: #8A8A8A;
+}
+*[designSystemClass="commonWidget::Z_LCDNumber"] {
+    border: 1px solid #676767;
+    border-radius: 4px;
+}
+
+/* Z_ProgressBar <- QProgressBar; compiled from the active Token profile. */
+*[designSystemClass="commonWidget::Z_ProgressBar"] {
+    color: #F3F3F3;
+    background-color: #272727;
+    font-size: 14px;
+}
+*[designSystemClass="commonWidget::Z_ProgressBar"]:disabled {
+    color: #8A8A8A;
+    background-color: #303030;
+    border-color: #8A8A8A;
+}
+*[designSystemClass="commonWidget::Z_ProgressBar"] {
+    min-height: 32px;
+    border: 1px solid #676767;
+    border-radius: 4px;
+    text-align: center;
+}
+*[designSystemClass="commonWidget::Z_ProgressBar"]::chunk { background-color: #6235F7; border-radius: 4px; }
+
+/* Z_TextBrowser <- QTextBrowser; compiled from the active Token profile. */
+*[designSystemClass="commonWidget::Z_TextBrowser"] {
+    color: #F3F3F3;
+    background-color: #272727;
+    font-size: 14px;
+}
+*[designSystemClass="commonWidget::Z_TextBrowser"]:disabled {
+    color: #8A8A8A;
+    background-color: #303030;
+    border-color: #8A8A8A;
+}
+*[designSystemClass="commonWidget::Z_TextBrowser"] {
+    border: 1px solid #676767;
+    border-radius: 4px;
+}
+
+/* Z_GraphicsView <- QGraphicsView; compiled from the active Token profile. */
+*[designSystemClass="commonWidget::Z_GraphicsView"] {
+    color: #F3F3F3;
+    background-color: #272727;
+    font-size: 14px;
+}
+*[designSystemClass="commonWidget::Z_GraphicsView"]:disabled {
+    color: #8A8A8A;
+    background-color: #303030;
+    border-color: #8A8A8A;
+}
+*[designSystemClass="commonWidget::Z_GraphicsView"] {
+    border: 1px solid #676767;
+    border-radius: 4px;
+}
+
+/* Z_CalendarWidget <- QCalendarWidget; compiled from the active Token profile. */
+*[designSystemClass="commonWidget::Z_CalendarWidget"][designSystemStyleOwner="tokens"] {
+    color: #F3F3F3;
+    background-color: #272727;
+    font-size: 14px;
+}
+*[designSystemClass="commonWidget::Z_CalendarWidget"][designSystemStyleOwner="tokens"]:disabled {
+    color: #8A8A8A;
+    background-color: #303030;
+    border-color: #8A8A8A;
+}
+*[designSystemClass="commonWidget::Z_CalendarWidget"][designSystemStyleOwner="tokens"] {
+    border: 1px solid #676767;
+    border-radius: 4px;
+}
+*[designSystemClass="commonWidget::Z_CalendarWidget"][designSystemStyleOwner="tokens"] QWidget#qt_calendar_navigationbar {
+    background-color: #202020;
+    border: 0;
+    border-radius: 4px;
+    min-height: 44px;
+    max-height: 44px;
+}
+*[designSystemClass="commonWidget::Z_CalendarWidget"][designSystemStyleOwner="tokens"] QToolButton {
+    color: #F3F3F3;
+    background: transparent;
+    border: 0;
+    border-radius: 4px;
+    font-weight: 600;
+}
+*[designSystemClass="commonWidget::Z_CalendarWidget"][designSystemStyleOwner="tokens"] QToolButton::menu-indicator { image: none; width: 0; }
+*[designSystemClass="commonWidget::Z_CalendarWidget"][designSystemStyleOwner="tokens"] QToolButton:hover { background-color: #272727; }
+*[designSystemClass="commonWidget::Z_CalendarWidget"][designSystemStyleOwner="tokens"] QSpinBox {
+    color: #F3F3F3;
+    background: transparent;
+    border: 0;
+    selection-background-color: #6235F7;
+}
+*[designSystemClass="commonWidget::Z_CalendarWidget"][designSystemStyleOwner="tokens"] QAbstractItemView {
+    color: #F3F3F3;
+    background-color: #272727;
+    border: 0;
+    outline: 0;
+    selection-background-color: #6235F7;
+    selection-color: #FFFFFF;
+}
+*[designSystemClass="commonWidget::Z_CalendarWidget"][designSystemStyleOwner="tokens"] QAbstractItemView::item:selected {
+    background-color: #6235F7;
+    color: #FFFFFF;
+    border-radius: 4px;
+}
+*[designSystemClass="commonWidget::Z_CalendarWidget"][designSystemStyleOwner="tokens"] QAbstractItemView:disabled {
+    color: #8A8A8A;
+    background-color: #303030;
+    selection-background-color: #8A8A8A;
+    selection-color: #8A8A8A;
+}
+*[designSystemClass="commonWidget::Z_CalendarWidget"][designSystemStyleOwner="tokens"] QAbstractItemView:disabled::item:selected {
+    background-color: #8A8A8A;
+    color: #8A8A8A;
+}
+*[designSystemClass="commonWidget::Z_CalendarWidget"][designSystemStyleOwner="tokens"][figmaSnapshotState="Disabled"] QWidget#qt_calendar_navigationbar {
+    background-color: #303030;
+}
+
+/* Z_TextEdit <- QTextEdit; compiled from the active Token profile. */
+*[designSystemClass="commonWidget::Z_TextEdit"] {
+    color: #F3F3F3;
+    background-color: #272727;
+    font-size: 14px;
+}
+*[designSystemClass="commonWidget::Z_TextEdit"]:disabled {
+    color: #8A8A8A;
+    background-color: #303030;
+    border-color: #8A8A8A;
+}
+*[designSystemClass="commonWidget::Z_TextEdit"] {
+    border: 1px solid #676767;
+    border-radius: 4px;
+}
+
+/* Z_PlainTextEdit <- QPlainTextEdit; compiled from the active Token profile. */
+*[designSystemClass="commonWidget::Z_PlainTextEdit"] {
+    color: #F3F3F3;
+    background-color: #272727;
+    font-size: 14px;
+}
+*[designSystemClass="commonWidget::Z_PlainTextEdit"]:disabled {
+    color: #8A8A8A;
+    background-color: #303030;
+    border-color: #8A8A8A;
+}
+*[designSystemClass="commonWidget::Z_PlainTextEdit"] {
+    border: 1px solid #676767;
+    border-radius: 4px;
+}
+
+/* Z_ListView <- QListView; compiled from the active Token profile. */
+*[designSystemClass="commonWidget::Z_ListView"] {
+    color: #F3F3F3;
+    background-color: #272727;
+    font-size: 14px;
+}
+*[designSystemClass="commonWidget::Z_ListView"]:disabled {
+    color: #8A8A8A;
+    background-color: #303030;
+    border-color: #8A8A8A;
+}
+*[designSystemClass="commonWidget::Z_ListView"] {
+    border: 1px solid #676767;
+    border-radius: 4px;
+}
+
+/* Z_TreeView <- QTreeView; compiled from the active Token profile. */
+*[designSystemClass="commonWidget::Z_TreeView"] {
+    color: #F3F3F3;
+    background-color: #272727;
+    font-size: 14px;
+}
+*[designSystemClass="commonWidget::Z_TreeView"]:disabled {
+    color: #8A8A8A;
+    background-color: #303030;
+    border-color: #8A8A8A;
+}
+*[designSystemClass="commonWidget::Z_TreeView"] {
+    border: 1px solid #676767;
+    border-radius: 4px;
+}
+
+/* Z_TableView <- QTableView; compiled from the active Token profile. */
+*[designSystemClass="commonWidget::Z_TableView"] {
+    color: #F3F3F3;
+    background-color: #272727;
+    font-size: 14px;
+}
+*[designSystemClass="commonWidget::Z_TableView"]:disabled {
+    color: #8A8A8A;
+    background-color: #303030;
+    border-color: #8A8A8A;
+}
+*[designSystemClass="commonWidget::Z_TableView"] {
+    border: 1px solid #676767;
+    border-radius: 4px;
+}
+
+/* Z_ColumnView <- QColumnView; compiled from the active Token profile. */
+*[designSystemClass="commonWidget::Z_ColumnView"] {
+    color: #F3F3F3;
+    background-color: #272727;
+    font-size: 14px;
+}
+*[designSystemClass="commonWidget::Z_ColumnView"]:disabled {
+    color: #8A8A8A;
+    background-color: #303030;
+    border-color: #8A8A8A;
+}
+*[designSystemClass="commonWidget::Z_ColumnView"] {
+    border: 1px solid #676767;
+    border-radius: 4px;
+}
+
+/* Z_UndoView <- QUndoView; compiled from the active Token profile. */
+*[designSystemClass="commonWidget::Z_UndoView"] {
+    color: #F3F3F3;
+    background-color: #272727;
+    font-size: 14px;
+}
+*[designSystemClass="commonWidget::Z_UndoView"]:disabled {
+    color: #8A8A8A;
+    background-color: #303030;
+    border-color: #8A8A8A;
+}
+*[designSystemClass="commonWidget::Z_UndoView"] {
+    border: 1px solid #676767;
+    border-radius: 4px;
+}
+
+/* Z_ListWidget <- QListWidget; compiled from the active Token profile. */
+*[designSystemClass="commonWidget::Z_ListWidget"] {
+    color: #F3F3F3;
+    background-color: #272727;
+    font-size: 14px;
+}
+*[designSystemClass="commonWidget::Z_ListWidget"]:disabled {
+    color: #8A8A8A;
+    background-color: #303030;
+    border-color: #8A8A8A;
+}
+*[designSystemClass="commonWidget::Z_ListWidget"] {
+    border: 1px solid #676767;
+    border-radius: 4px;
+}
+
+/* Z_TreeWidget <- QTreeWidget; compiled from the active Token profile. */
+*[designSystemClass="commonWidget::Z_TreeWidget"] {
+    color: #F3F3F3;
+    background-color: #272727;
+    font-size: 14px;
+}
+*[designSystemClass="commonWidget::Z_TreeWidget"]:disabled {
+    color: #8A8A8A;
+    background-color: #303030;
+    border-color: #8A8A8A;
+}
+*[designSystemClass="commonWidget::Z_TreeWidget"] {
+    border: 1px solid #676767;
+    border-radius: 4px;
+}
+
+/* Z_TableWidget <- QTableWidget; compiled from the active Token profile. */
+*[designSystemClass="commonWidget::Z_TableWidget"] {
+    color: #F3F3F3;
+    background-color: #272727;
+    font-size: 14px;
+}
+*[designSystemClass="commonWidget::Z_TableWidget"]:disabled {
+    color: #8A8A8A;
+    background-color: #303030;
+    border-color: #8A8A8A;
+}
+*[designSystemClass="commonWidget::Z_TableWidget"] {
+    border: 1px solid #676767;
+    border-radius: 4px;
+}
+
+/* Z_GroupBox <- QGroupBox; compiled from the active Token profile. */
+*[designSystemClass="commonWidget::Z_GroupBox"] {
+    color: #F3F3F3;
+    background-color: #272727;
+    font-size: 14px;
+}
+*[designSystemClass="commonWidget::Z_GroupBox"]:disabled {
+    color: #8A8A8A;
+    background-color: #303030;
+    border-color: #8A8A8A;
+}
+*[designSystemClass="commonWidget::Z_GroupBox"] {
+    border: 1px solid #676767;
+    border-radius: 4px;
+}
+
+/* Z_ScrollArea <- QScrollArea; compiled from the active Token profile. */
+*[designSystemClass="commonWidget::Z_ScrollArea"] {
+    color: #F3F3F3;
+    background-color: #272727;
+    font-size: 14px;
+}
+*[designSystemClass="commonWidget::Z_ScrollArea"]:disabled {
+    color: #8A8A8A;
+    background-color: #303030;
+    border-color: #8A8A8A;
+}
+*[designSystemClass="commonWidget::Z_ScrollArea"] {
+    border: 1px solid #676767;
+    border-radius: 4px;
+}
+*[designSystemClass="commonWidget::Z_ScrollArea"][figmaSnapshotState="Focus"],
+*[designSystemClass="commonWidget::Z_ScrollArea"]:focus[focusIndicatorVisible="true"] { border: 2px solid #6235F7; }
+*[designSystemClass="commonWidget::Z_ScrollArea"] QWidget#qt_scrollarea_viewport { background-color: #272727; }
+*[designSystemClass="commonWidget::Z_ScrollArea"]:disabled QWidget#qt_scrollarea_viewport { background-color: #303030; }
+*[designSystemClass="commonWidget::Z_ScrollAreaContent"] {
+    background-color: #272727;
+}
+*[designSystemClass="commonWidget::Z_ScrollAreaContent"]:disabled {
+    background-color: #303030;
+}
+*[designSystemClass="commonWidget::Z_ScrollAreaContentSkeleton"] {
+    background-color: #303030;
+    border: 0;
+    border-radius: 4px;
+}
+*[designSystemClass="commonWidget::Z_ScrollAreaContentSkeleton"]:disabled {
+    background-color: #8A8A8A;
+}
+
+/* Z_TabWidget <- QTabWidget; compiled from the active Token profile. */
+*[designSystemClass="commonWidget::Z_TabWidget"][designSystemStyleOwner="tokens"] {
+    color: #F3F3F3;
+    background-color: #272727;
+    font-size: 14px;
+}
+*[designSystemClass="commonWidget::Z_TabWidget"][designSystemStyleOwner="tokens"]:disabled {
+    color: #8A8A8A;
+    background-color: #303030;
+    border-color: #8A8A8A;
+}
+*[designSystemClass="commonWidget::Z_TabWidget"][designSystemStyleOwner="tokens"] {
+    border: 1px solid #676767;
+    border-radius: 4px;
+}
+
+/* Z_ToolBox <- QToolBox; compiled from the active Token profile. */
+*[designSystemClass="commonWidget::Z_ToolBox"][designSystemStyleOwner="tokens"] {
+    color: #F3F3F3;
+    background-color: #272727;
+    font-size: 14px;
+}
+*[designSystemClass="commonWidget::Z_ToolBox"][designSystemStyleOwner="tokens"]:disabled {
+    color: #8A8A8A;
+    background-color: #303030;
+    border-color: #8A8A8A;
+}
+*[designSystemClass="commonWidget::Z_ToolBox"][designSystemStyleOwner="tokens"] {
+    border: 1px solid #676767;
+    border-radius: 4px;
+}
+
+/* Z_StackedWidget <- QStackedWidget; compiled from the active Token profile. */
+*[designSystemClass="commonWidget::Z_StackedWidget"] {
+    color: #F3F3F3;
+    background-color: #272727;
+    font-size: 14px;
+}
+*[designSystemClass="commonWidget::Z_StackedWidget"]:disabled {
+    color: #8A8A8A;
+    background-color: #303030;
+    border-color: #8A8A8A;
+}
+*[designSystemClass="commonWidget::Z_StackedWidget"] {
+    border: 1px solid #676767;
+    border-radius: 4px;
+}
+
+/* Z_Splitter <- QSplitter; compiled from the active Token profile. */
+*[designSystemClass="commonWidget::Z_Splitter"] {
+    color: #F3F3F3;
+    background-color: #272727;
+    font-size: 14px;
+}
+*[designSystemClass="commonWidget::Z_Splitter"]:disabled {
+    color: #8A8A8A;
+    background-color: #303030;
+    border-color: #8A8A8A;
+}
+*[designSystemClass="commonWidget::Z_Splitter"] {
+    border: 1px solid #8A8A8A;
+    border-radius: 9px;
+}
+*[designSystemClass="commonWidget::Z_SplitterHandle"] {
+    background-color: #8A8A8A;
+    border: 0;
+}
+*[designSystemClass="commonWidget::Z_SplitterHandle"]:hover,
+*[designSystemClass="commonWidget::Z_SplitterHandle"][figmaSnapshotState="Hover"] {
+    background-color: #202020;
+}
+*[designSystemClass="commonWidget::Z_SplitterHandle"]:pressed,
+*[designSystemClass="commonWidget::Z_SplitterHandle"][figmaSnapshotState="Dragging"] {
+    background-color: #6235F7;
+}
+*[designSystemClass="commonWidget::Z_SplitterHandle"]:disabled {
+    background-color: #8A8A8A;
+}
+
+/* Z_DockWidget <- QDockWidget; compiled from the active Token profile. */
+*[designSystemClass="commonWidget::Z_DockWidget"][designSystemStyleOwner="tokens"] {
+    color: #F3F3F3;
+    background-color: #272727;
+    font-size: 14px;
+}
+*[designSystemClass="commonWidget::Z_DockWidget"][designSystemStyleOwner="tokens"]:disabled {
+    color: #8A8A8A;
+    background-color: #303030;
+    border-color: #8A8A8A;
+}
+*[designSystemClass="commonWidget::Z_DockWidget"][designSystemStyleOwner="tokens"] {
+    border: 1px solid #676767;
+    border-radius: 4px;
+}
+
+/* Z_MdiArea <- QMdiArea; compiled from the active Token profile. */
+*[designSystemClass="commonWidget::Z_MdiArea"][designSystemStyleOwner="tokens"] {
+    color: #F3F3F3;
+    background-color: #272727;
+    font-size: 14px;
+}
+*[designSystemClass="commonWidget::Z_MdiArea"][designSystemStyleOwner="tokens"]:disabled {
+    color: #8A8A8A;
+    background-color: #303030;
+    border-color: #8A8A8A;
+}
+*[designSystemClass="commonWidget::Z_MdiArea"][designSystemStyleOwner="tokens"] {
+    border: 1px solid #676767;
+    border-radius: 4px;
+}
+
+/* Z_MdiSubWindow <- QMdiSubWindow; compiled from the active Token profile. */
+*[designSystemClass="commonWidget::Z_MdiSubWindow"][designSystemStyleOwner="tokens"] {
+    color: #F3F3F3;
+    background-color: #272727;
+    font-size: 14px;
+}
+*[designSystemClass="commonWidget::Z_MdiSubWindow"][designSystemStyleOwner="tokens"]:disabled {
+    color: #8A8A8A;
+    background-color: #303030;
+    border-color: #8A8A8A;
+}
+*[designSystemClass="commonWidget::Z_MdiSubWindow"][designSystemStyleOwner="tokens"] {
+    border: 1px solid #676767;
+    border-radius: 4px;
+}
+
+/* Z_Wizard <- QWizard; compiled from the active Token profile. */
+*[designSystemClass="commonWidget::Z_Wizard"] {
+    color: #F3F3F3;
+    background-color: #272727;
+    font-size: 14px;
+}
+*[designSystemClass="commonWidget::Z_Wizard"]:disabled {
+    color: #8A8A8A;
+    background-color: #303030;
+    border-color: #8A8A8A;
+}
+*[designSystemClass="commonWidget::Z_Wizard"] {
+    border: 1px solid #676767;
+    border-radius: 4px;
+}
+
+/* Z_WizardPage <- QWizardPage; compiled from the active Token profile. */
+*[designSystemClass="commonWidget::Z_WizardPage"] {
+    color: #F3F3F3;
+    background-color: #272727;
+    font-size: 14px;
+}
+*[designSystemClass="commonWidget::Z_WizardPage"]:disabled {
+    color: #8A8A8A;
+    background-color: #303030;
+    border-color: #8A8A8A;
+}
+*[designSystemClass="commonWidget::Z_WizardPage"] {
+    border: 1px solid #676767;
+    border-radius: 4px;
+}
+
+/* Z_Menu <- QMenu; compiled from the active Token profile. */
+*[designSystemClass="commonWidget::Z_Menu"] {
+    color: #F3F3F3;
+    background-color: #272727;
+    font-size: 14px;
+}
+*[designSystemClass="commonWidget::Z_Menu"]:disabled {
+    color: #8A8A8A;
+    background-color: #303030;
+    border-color: #8A8A8A;
+}
+
+/* Z_MenuBar <- QMenuBar; compiled from the active Token profile. */
+*[designSystemClass="commonWidget::Z_MenuBar"] {
+    color: #F3F3F3;
+    background-color: #272727;
+    font-size: 14px;
+}
+*[designSystemClass="commonWidget::Z_MenuBar"]:disabled {
+    color: #8A8A8A;
+    background-color: #303030;
+    border-color: #8A8A8A;
+}
+
+/* Z_ToolBar <- QToolBar; compiled from the active Token profile. */
+*[designSystemClass="commonWidget::Z_ToolBar"] {
+    color: #F3F3F3;
+    background-color: #272727;
+    font-size: 14px;
+}
+*[designSystemClass="commonWidget::Z_ToolBar"]:disabled {
+    color: #8A8A8A;
+    background-color: #303030;
+    border-color: #8A8A8A;
+}
+
+/* Z_StatusBar <- QStatusBar; compiled from the active Token profile. */
+*[designSystemClass="commonWidget::Z_StatusBar"] {
+    color: #F3F3F3;
+    background-color: #272727;
+    font-size: 14px;
+}
+*[designSystemClass="commonWidget::Z_StatusBar"]:disabled {
+    color: #8A8A8A;
+    background-color: #303030;
+    border-color: #8A8A8A;
+}
+
+/* Z_OpenGLWidget <- QOpenGLWidget; compiled from the active Token profile. */
+*[designSystemClass="commonWidget::Z_OpenGLWidget"] {
+    color: #F3F3F3;
+    background-color: #272727;
+    font-size: 14px;
+}
+*[designSystemClass="commonWidget::Z_OpenGLWidget"]:disabled {
+    color: #8A8A8A;
+    background-color: #303030;
+    border-color: #8A8A8A;
+}
+
+/* Z_Dialog <- QDialog; compiled from the active Token profile. */
+*[designSystemClass="commonWidget::Z_Dialog"] {
+    color: #F3F3F3;
+    background-color: #272727;
+    font-size: 14px;
+}
+*[designSystemClass="commonWidget::Z_Dialog"]:disabled {
+    color: #8A8A8A;
+    background-color: #303030;
+    border-color: #8A8A8A;
+}
+
+/* Z_MessageBox <- QMessageBox; compiled from the active Token profile. */
+*[designSystemClass="commonWidget::Z_MessageBox"] {
+    color: #F3F3F3;
+    background-color: #272727;
+    font-size: 14px;
+}
+*[designSystemClass="commonWidget::Z_MessageBox"]:disabled {
+    color: #8A8A8A;
+    background-color: #303030;
+    border-color: #8A8A8A;
+}
+
+/* Z_FileDialog <- QFileDialog; compiled from the active Token profile. */
+*[designSystemClass="commonWidget::Z_FileDialog"] {
+    color: #F3F3F3;
+    background-color: #272727;
+    font-size: 14px;
+}
+*[designSystemClass="commonWidget::Z_FileDialog"]:disabled {
+    color: #8A8A8A;
+    background-color: #303030;
+    border-color: #8A8A8A;
+}
+
+/* Z_ColorDialog <- QColorDialog; compiled from the active Token profile. */
+*[designSystemClass="commonWidget::Z_ColorDialog"] {
+    color: #F3F3F3;
+    background-color: #272727;
+    font-size: 14px;
+}
+*[designSystemClass="commonWidget::Z_ColorDialog"]:disabled {
+    color: #8A8A8A;
+    background-color: #303030;
+    border-color: #8A8A8A;
+}
+
+/* Z_FontDialog <- QFontDialog; compiled from the active Token profile. */
+*[designSystemClass="commonWidget::Z_FontDialog"] {
+    color: #F3F3F3;
+    background-color: #272727;
+    font-size: 14px;
+}
+*[designSystemClass="commonWidget::Z_FontDialog"]:disabled {
+    color: #8A8A8A;
+    background-color: #303030;
+    border-color: #8A8A8A;
+}
+
+/* Z_InputDialog <- QInputDialog; compiled from the active Token profile. */
+*[designSystemClass="commonWidget::Z_InputDialog"] {
+    color: #F3F3F3;
+    background-color: #272727;
+    font-size: 14px;
+}
+*[designSystemClass="commonWidget::Z_InputDialog"]:disabled {
+    color: #8A8A8A;
+    background-color: #303030;
+    border-color: #8A8A8A;
+}
+
+/* Z_ProgressDialog <- QProgressDialog; compiled from the active Token profile. */
+*[designSystemClass="commonWidget::Z_ProgressDialog"] {
+    color: #F3F3F3;
+    background-color: #272727;
+    font-size: 14px;
+}
+*[designSystemClass="commonWidget::Z_ProgressDialog"]:disabled {
+    color: #8A8A8A;
+    background-color: #303030;
+    border-color: #8A8A8A;
+}

@@ -1,5 +1,4 @@
 #include "DemoRuntime.h"
-#include "ButtonAppearanceAdapter.h"
 #include "TokenResources.h"
 #include "Z_CheckBox.h"
 #include "Z_InputField.h"
@@ -33,8 +32,10 @@ int main(int argc, char** argv) {
     parser.addOptions({{"token-dir", "Generated Token directory", "path"},
                        {"output", "Evidence directory", "path"},
                        {"compare", "Baseline images", "path"},
-                       {"profile", "Profile", "name", "light-comfortable"},
-                       {"appearance", "Material", "name", "solid"}});
+                       {"profile", "Profile", "name", "standard-light"},
+                       {"button-appearance", "Button V2 appearance", "name", "filled"},
+                       {"field-appearance", "Input/Select V2 appearance", "name", "outlined"},
+                       {"checkbox-appearance", "Checkbox appearance", "name", "solid"}});
     parser.process(app);
     try {
         token_resources::setGeneratedRoot(parser.value("token-dir"));
@@ -43,10 +44,10 @@ int main(int argc, char** argv) {
         auto fields = std::make_shared<field::Tokens>(parser.value("profile"));
         QString output = parser.value("output");
         require(!output.isEmpty() && QDir().mkpath(output), "Invalid output");
-        QFile mappingFile(QString::fromUtf8(COMPONENT_SDK_DESIGN_MAP));
+        QFile mappingFile(QString::fromUtf8(COMPONENT_SDK_COMPONENT_MAP));
         require(mappingFile.open(QIODevice::ReadOnly), "Missing component mapping");
         const auto mappings =
-            QJsonDocument::fromJson(mappingFile.readAll()).object()["components"].toArray();
+            QJsonDocument::fromJson(mappingFile.readAll()).object()["components"].toObject();
         QJsonObject results;
         for (QString name : {"button", "checkbox", "input", "select"}) {
             QWidget canvas;
@@ -57,14 +58,21 @@ int main(int argc, char** argv) {
             if (name == "button") {
                 auto* button = new Z_PushButton(&canvas);
                 button->setText("Execute recipe");
-                button->setType(ButtonType::Primary);
-                auto* adapter = new ButtonAppearanceAdapter(button, surface);
-                adapter->setAppearance(parser.value("appearance"));
+                button->setIntent(ButtonIntent::Primary);
+                const QMap<QString, ButtonAppearance> appearances{
+                    {"filled", ButtonAppearance::Filled},
+                    {"outlined", ButtonAppearance::Outlined},
+                    {"dashed", ButtonAppearance::Dashed},
+                    {"text", ButtonAppearance::Text},
+                    {"link", ButtonAppearance::Link}};
+                require(appearances.contains(parser.value("button-appearance")),
+                        "Unsupported Button V2 appearance");
+                button->setAppearance(appearances.value(parser.value("button-appearance")));
                 widget = button;
             } else if (name == "checkbox") {
                 auto* check = new Z_CheckBox(surface, "Enable process check", &canvas);
                 check->setChecked(true);
-                check->setAppearance(parser.value("appearance"));
+                check->setAppearance(parser.value("checkbox-appearance"));
                 widget = check;
             } else if (name == "input") {
                 auto* input = new Z_InputField(fields, &canvas);
@@ -72,7 +80,7 @@ int main(int argc, char** argv) {
                 input->setValue("ETCH_CF4_Standard");
                 input->setHint("LOT-0915");
                 input->setPrefix("ID");
-                input->setAppearance(parser.value("appearance"));
+                input->setAppearance(parser.value("field-appearance"));
                 widget = input;
             } else {
                 auto* select = new Z_Select(fields, &canvas);
@@ -80,26 +88,32 @@ int main(int argc, char** argv) {
                 select->setOptions({{"a", "ETCH-01", {}, false}});
                 select->setValues({"a"});
                 select->setHint("Process ready");
-                select->setAppearance(parser.value("appearance"));
+                select->setAppearance(parser.value("field-appearance"));
                 widget = select;
             }
             widget->move(24, 24);
             widget->resize(name == "input" || name == "select"
                                ? QSize(456, widget->sizeHint().height())
                                : widget->sizeHint());
+            const auto componentName = name == "button" ? QStringLiteral("Button")
+                                     : name == "checkbox" ? QStringLiteral("Checkbox")
+                                     : name == "input" ? QStringLiteral("Input")
+                                                       : QStringLiteral("Select");
+            const auto mapping = mappings[componentName].toObject();
+            require(!mapping.isEmpty() && QString(widget->metaObject()->className()) ==
+                        mapping["class"].toString(), "Mapped Qt class mismatch");
+            const QMap<QString, QStringList> expectedParts{
+                {"button", {"LEADING", "LABEL", "TRAILING"}},
+                {"checkbox", {"INDICATOR_FACE", "LABEL"}},
+                {"input", {"CONTROL", "EDITOR"}},
+                {"select", {"CONTROL", "DISPLAY"}},
+            };
             QJsonArray mapped;
-            for (const auto& entry : mappings)
-                if (entry.toObject()["id"] == name) {
-                    const auto mapping = entry.toObject();
-                    require(QString(widget->metaObject()->className()) ==
-                                mapping["class"].toString(),
-                            "Mapped Qt class mismatch");
-                    for (const auto& item : mapping["parts"].toArray()) {
-                        const auto part = item.toObject()["name"].toString();
-                        require(widget->findChild<QWidget*>(part), "Mapped QWidget part missing");
-                        mapped.append(part);
-                    }
-                }
+            for (const auto& part : expectedParts[name]) {
+                require(widget->findChild<QWidget*>(part),
+                        qPrintable(name + ": mapped QWidget part missing: " + part));
+                mapped.append(part);
+            }
             require(!mapped.isEmpty(), "Component has no mapping");
             metrics["mappingParts"] = mapped;
             canvas.show();

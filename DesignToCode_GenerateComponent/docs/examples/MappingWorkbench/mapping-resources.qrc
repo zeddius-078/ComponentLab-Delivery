@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/mapping">
+        <file alias="qt-component-map.json">mapping/qt-component-map.json</file>
+        <file alias="example.ui-contract.json">mapping/example.ui-contract.json</file>
+        <file alias="component-parsers.json">mapping/component-parsers.json</file>
+        <file alias="code-options.json">mapping/code-options.json</file>
+        <file alias="page.qss">mapping/page.qss</file>
+        <file alias="overview.html">ui/Overview.html</file>
+        <file alias="figma-component-map-v2.json">../../../build/work/Source/ComponentKit/design-assets/DesignSystem/config/figma-component-map-v2.json</file>
+    </qresource>
+</RCC>

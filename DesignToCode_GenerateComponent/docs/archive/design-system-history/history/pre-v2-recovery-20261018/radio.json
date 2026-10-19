@@ -1,0 +1,213 @@
+{
+  "$registry": {
+    "component": "radio",
+    "version": "2.0"
+  },
+  "$status": "active",
+  "base": {
+    "size": {
+      "md": {
+        "slot": {
+          "container": {
+            "padding": {
+              "$type": "spacing",
+              "$value": "{semantic.size.padding.2xl}",
+              "$description": "Recovered from legacy V2 layer component.radio.size.md.container.padding",
+              "$sourceOwner": "old-tree-recovery",
+              "unit": "px"
+            }
+          },
+          "indicator": {
+            "size": {
+              "$type": "dimension",
+              "$value": "{semantic.size.height.sm}",
+              "$description": "Recovered from legacy V2 layer component.radio.size.md.indicator.size",
+              "$sourceOwner": "old-tree-recovery",
+              "unit": "px"
+            }
+          }
+        }
+      },
+      "sm": {
+        "slot": {
+          "container": {
+            "padding": {
+              "$type": "spacing",
+              "$value": "{semantic.size.padding.sm}",
+              "$description": "Recovered from legacy V2 layer component.radio.size.sm.container.padding",
+              "$sourceOwner": "old-tree-recovery",
+              "unit": "px"
+            }
+          },
+          "indicator": {
+            "size": {
+              "$type": "dimension",
+              "$value": "{semantic.size.height.sm}",
+              "$description": "Recovered from legacy V2 layer component.radio.size.sm.indicator.size",
+              "$sourceOwner": "old-tree-recovery",
+              "unit": "px"
+            }
+          }
+        }
+      }
+    },
+    "state": {
+      "default": {
+        "slot": {
+          "content": {
+            "font-size": {
+              "$type": "fontSize",
+              "$value": "{semantic.typography.body.default.font-size}",
+              "$description": "Recovered from legacy V2 layer component.radio.base.default.content.font-size",
+              "$sourceOwner": "old-tree-recovery",
+              "unit": "px"
+            },
+            "font-weight": {
+              "$type": "fontWeight",
+              "$value": "{semantic.typography.font-weight.body}",
+              "$description": "Recovered from legacy V2 layer component.radio.base.default.content.font-weight",
+              "$sourceOwner": "old-tree-recovery"
+            },
+            "line-height": {
+              "$type": "lineHeight",
+              "$value": "{semantic.typography.body.default.line-height}",
+              "$description": "Recovered from legacy V2 layer component.radio.base.default.content.line-height",
+              "$sourceOwner": "old-tree-recovery",
+              "unit": "px"
+            }
+          },
+          "indicator": {
+            "background-color": {
+              "$type": "color",
+              "$value": "{semantic.color.background.tertiary}",
+              "$description": "Recovered from legacy V2 layer component.radio.base.default.indicator.background-color",
+              "$sourceOwner": "old-tree-recovery"
+            },
+            "border-width": {
+              "$type": "borderWidth",
+              "$value": "{semantic.border-width.hairline}",
+              "$description": "Recovered from legacy V2 layer component.radio.base.default.indicator.border-width",
+              "$sourceOwner": "old-tree-recovery",
+              "unit": "px"
+            }
+          },
+          "label": {
+            "color": {
+              "$type": "color",
+              "$value": "{semantic.color.text.primary}",
+              "$description": "Recovered from legacy V2 layer component.radio.base.default.label.color",
+              "$sourceOwner": "old-tree-recovery"
+            }
+          }
+        }
+      },
+      "disabled": {
+        "slot": {
+          "indicator": {
+            "background-color": {
+              "$type": "color",
+              "$value": "{semantic.color.background.disabled}",
+              "$description": "Recovered from legacy V2 layer component.radio.base.disabled.indicator.background-color",
+              "$sourceOwner": "old-tree-recovery"
+            }
+          },
+          "label": {
+            "color": {
+              "$type": "color",
+              "$value": "{semantic.color.text.disabled}",
+              "$description": "Recovered from legacy V2 layer component.radio.base.disabled.label.color",
+              "$sourceOwner": "old-tree-recovery"
+            }
+          }
+        }
+      },
+      "hover": {
+        "slot": {
+          "indicator": {
+            "background-color": {
+              "$type": "color",
+              "$value": "{semantic.color.background.disabled}",
+              "$description": "Recovered from legacy V2 layer component.radio.base.hover.indicator.background-color",
+              "$sourceOwner": "old-tree-recovery"
+            }
+          }
+        }
+      },
+      "pressed": {
+        "slot": {
+          "indicator": {
+            "background-color": {
+              "$type": "color",
+              "$value": "{semantic.color.background.pressed}",
+              "$description": "Recovered from legacy V2 layer component.radio.base.pressed.indicator.background-color",
+              "$sourceOwner": "old-tree-recovery"
+            }
+          }
+        }
+      },
+      "selected-disabled": {
+        "slot": {
+          "indicator": {
+            "color": {
+              "$type": "color",
+              "$value": "{semantic.color.interactive.brand.disabled}",
+              "$description": "Recovered from legacy V2 layer component.radio.base.selected-disabled.indicator.color",
+              "$sourceOwner": "old-tree-recovery"
+            }
+          }
+        }
+      },
+      "selected-hover": {
+        "slot": {
+          "indicator": {
+            "color": {
+              "$type": "color",
+              "$value": "{semantic.color.interactive.brand.hover}",
+              "$description": "Recovered from legacy V2 layer component.radio.base.selected-hover.indicator.color",
+              "$sourceOwner": "old-tree-recovery"
+            }
+          }
+        }
+      },
+      "selected-pressed": {
+        "slot": {
+          "indicator": {
+            "color": {
+              "$type": "color",
+              "$value": "{semantic.color.interactive.brand.pressed}",
+              "$description": "Recovered from legacy V2 layer component.radio.base.selected-pressed.indicator.color",
+              "$sourceOwner": "old-tree-recovery"
+            }
+          }
+        }
+      },
+      "selected": {
+        "slot": {
+          "glyph": {
+            "color": {
+              "$type": "color",
+              "$value": "{semantic.color.icon.invert}",
+              "$description": "Recovered from legacy V2 layer component.radio.base.selected.glyph.color",
+              "$sourceOwner": "old-tree-recovery"
+            }
+          },
+          "indicator": {
+            "border-color": {
+              "$type": "color",
+              "$value": "{semantic.color.interactive.brand.default}",
+              "$description": "Recovered from legacy V2 layer component.radio.base.selected.indicator.border-color",
+              "$sourceOwner": "old-tree-recovery"
+            },
+            "color": {
+              "$type": "color",
+              "$value": "{semantic.color.interactive.brand.default}",
+              "$description": "Recovered from legacy V2 layer component.radio.base.selected.indicator.color",
+              "$sourceOwner": "old-tree-recovery"
+            }
+          }
+        }
+      }
+    }
+  },
+  "overrides": []
+}

@@ -5,6 +5,7 @@
 #include "TokenResources.h"
 #include "Typography.h"
 #include "Z_PushButton.h"
+#include "Z_TableView.h"
 #include <QApplication>
 #include <QJsonArray>
 #include <QJsonDocument>
@@ -30,37 +31,65 @@ QString activeProfile() { return profile_context::activeProfile(); }
 
 void install(QApplication &application, const QString &profile) {
     initializeComponentResources();
-    // 现有 Button 运行配置为进程级单次安装；沿用此约束，不在本轮改写主题生命周期。
     if (!activeProfile().isEmpty())
         throw std::logic_error("Component theme is already installed");
-    const auto manifest = readObject(":/button/manifest.json");
-    QJsonObject selected;
-    // Profile 名称来自既有产物，未知名称直接失败，避免主题与组件参数混配。
-    for (const auto &entry : manifest["profiles"].toArray()) {
-        if (entry.toObject()["profile"] == profile)
-            selected = entry.toObject();
-    }
+    const auto runtimeDocument = readObject(":/tokens/tokens_qt.json");
+    const auto selected = runtimeDocument["profiles"].toObject()[profile].toObject();
     if (selected.isEmpty())
         throw std::invalid_argument("Unknown component theme profile");
 
+    const auto value = [&selected](const QString &path) -> QJsonValue {
+        for (const auto &category : {"color", "layout", "number", "font", "boolean", "string", "asset"}) {
+            const auto values = selected[category].toObject();
+            if (values.contains(path))
+                return values[path];
+        }
+        throw std::runtime_error(("Missing generated V2 Token: " + path).toStdString());
+    };
+    const auto number = [&value](const QString &path) {
+        const auto result = value(path);
+        if (!result.isDouble())
+            throw std::runtime_error(("Non-numeric generated V2 Token: " + path).toStdString());
+        return result.toDouble();
+    };
+    const auto tokenColor = [&value](const QString &path) {
+        const QColor result(value(path).toString());
+        if (!result.isValid())
+            throw std::runtime_error(("Invalid generated V2 color: " + path).toStdString());
+        return result;
+    };
+
     commonWidget::button_detail::Runtime runtime;
-    const auto sizes = selected["sizes"].toArray();
-    if (sizes.size() != int(runtime.sizes.size()))
-        throw std::runtime_error("Incomplete Button size catalog");
-    // 保持既有 XS/S/M/L 顺序和字段绑定，组件内部尺寸计算继续使用同一组 Token。
+    runtime.values = selected;
+    commonWidget::table_detail::Runtime tableRuntime;
+    tableRuntime.values = selected;
+    const QStringList sizes{"small", "medium", "large"};
     for (int index = 0; index < sizes.size(); ++index) {
-        const auto size = sizes[index].toObject();
-        runtime.sizes[index] = {size["minimumHeight"].toInt(),      size["paddingInline"].toInt(),
-                                size["paddingBlock"].toInt(),       size["gap"].toInt(),
-                                size["borderWidth"].toInt(),        size["iconCanvas"].toInt(),
-                                size["iconContainer"].toInt(),      size["indicatorSize"].toInt(),
-                                size["indicatorStroke"].toDouble(), size["iconOnlySize"].toInt()};
+        const auto name = sizes[index];
+        const auto prefix = "component.button.base.size." + name + ".slot.";
+        const auto minimumHeight = qRound(number(prefix + "container.min-height"));
+        const auto iconSize = qRound(number(prefix + "icon.size"));
+        runtime.sizes[index] = {
+            minimumHeight,
+            qRound(number(prefix + "container.padding-inline")),
+            qRound(number(prefix + "container.padding-block")),
+            qRound(number("component.button.base.content.icon-left-text.slot.content.gap")),
+            qRound(number("component.button.base.shared.slot.border.border-width")),
+            iconSize,
+            iconSize,
+            qRound(number(prefix + "spinner.size")),
+            number("component.button.base.shared.slot.spinner.stroke-width"),
+            minimumHeight};
     }
-    const auto motion = manifest["loading"].toObject();
-    runtime.cycleMs = motion["cycleMs"].toInt();
-    runtime.frameMs = motion["frameMs"].toInt();
-    runtime.sweepDegrees = motion["sweepDegrees"].toInt();
-    runtime.generatedQss = QString::fromUtf8(token_resources::read(":/button/" + profile + ".qss"));
+    const auto motionDocument = readObject(":/composites/qt.json");
+    const auto spinnerMotion = motionDocument["motion"].toObject()["loading.spinner"].toObject();
+    if (spinnerMotion["status"] != "active")
+        throw std::runtime_error("Released Spinner Motion is unavailable");
+    runtime.cycleMs = spinnerMotion["timing"].toObject()["durationMs"].toInt();
+    runtime.frameMs = 16; // Qt repaint cadence; visual timing remains Token-owned.
+    runtime.spinnerStartDegrees = number("component.button.base.shared.slot.spinner.arc-start-angle");
+    runtime.spinnerSweepDegrees = number("component.button.base.shared.slot.spinner.arc-sweep-angle");
+    runtime.spinnerTrackOpacity = number("component.button.base.shared.slot.spinner.track-opacity");
     // 图标沿用组件库已有的透明蒙版绘制，状态颜色由组件传入；不引入演示图标枚举。
     runtime.renderIcon = [](const QIcon &icon, int canvas, const QColor &color, QIcon::Mode,
                             qreal dpr) {
@@ -68,47 +97,37 @@ void install(QApplication &application, const QString &profile) {
             throw std::invalid_argument("Invalid component icon request");
         return field::iconPixmap(icon, canvas, dpr, color);
     };
-    const auto colors = selected["palette"].toObject();
-    const auto color = [&colors](const char *key) {
-        const auto value = colors[key].toString();
-        if (value.isEmpty())
-            throw std::runtime_error("Missing component palette entry");
-        return surface::color(value);
-    };
-    runtime.focusColor = color("focus");
-    runtime.dangerFocusColor = color("danger");
-    runtime.ghostFocusColor = color("onBrand");
-
     // 全局文本使用 HarmonyOS Sans；缺失的简体中文字形显式回退到 SC。
     // 字体资产由 SDK 注册，不依赖操作系统是否预装字体。
     typography::installApplicationFonts();
     QFont font;
     font.setFamilies(typography::applicationFamilies());
-    font.setPixelSize(manifest["bodyFontSize"].toInt());
+    font.setPixelSize(qRound(number("component.button.base.typography.slot.label.font-size")));
     application.setFont(font);
     auto palette = application.palette();
-    palette.setColor(QPalette::Window, color("app"));
-    palette.setColor(QPalette::WindowText, color("foreground"));
-    palette.setColor(QPalette::Base, color("surface"));
-    palette.setColor(QPalette::AlternateBase, color("neutralHover"));
-    palette.setColor(QPalette::Text, color("foreground"));
-    palette.setColor(QPalette::Button, color("surface"));
-    palette.setColor(QPalette::ButtonText, color("foreground"));
-    palette.setColor(QPalette::Highlight, color("primary"));
-    palette.setColor(QPalette::HighlightedText, color("primaryText"));
-    palette.setColor(QPalette::Disabled, QPalette::Text, color("disabledText"));
-    palette.setColor(QPalette::Disabled, QPalette::ButtonText, color("disabledText"));
-    palette.setColor(QPalette::Disabled, QPalette::WindowText, color("disabledText"));
+    palette.setColor(QPalette::Window, tokenColor("semantic.color.background.page"));
+    palette.setColor(QPalette::WindowText, tokenColor("semantic.color.text.primary"));
+    palette.setColor(QPalette::Base, tokenColor("semantic.color.background.control-default"));
+    palette.setColor(QPalette::AlternateBase, tokenColor("semantic.color.background.hover"));
+    palette.setColor(QPalette::Text, tokenColor("semantic.color.text.primary"));
+    palette.setColor(QPalette::Button, tokenColor("semantic.color.background.control-default"));
+    palette.setColor(QPalette::ButtonText, tokenColor("semantic.color.text.primary"));
+    palette.setColor(QPalette::Highlight, tokenColor("semantic.color.interactive.brand.default"));
+    palette.setColor(QPalette::HighlightedText, tokenColor("semantic.color.text.invert"));
+    palette.setColor(QPalette::Disabled, QPalette::Text, tokenColor("semantic.color.text.disabled"));
+    palette.setColor(QPalette::Disabled, QPalette::ButtonText, tokenColor("semantic.color.text.disabled"));
+    palette.setColor(QPalette::Disabled, QPalette::WindowText, tokenColor("semantic.color.text.disabled"));
     application.setPalette(palette);
     const auto nativeQss = QString::fromUtf8(
         token_resources::read(":/native/" + profile + "/native-components.qss"));
     if (nativeQss.trimmed().isEmpty())
         throw std::runtime_error("Missing generated native component QSS");
     application.setStyleSheet(application.styleSheet() + nativeQss);
-    const auto focus = selected["focusIndicator"].toObject();
-    commonWidget::FocusIndicator::instance().configure(focus["mode"].toString(),
-                                                       focus["opacity"].toDouble(-1));
+    commonWidget::FocusIndicator::instance().configure(
+        value("adapter.qt.focus-indicator.mode").toString(),
+        number("adapter.qt.focus-indicator.opacity"));
     commonWidget::button_detail::installButtonRuntime(application, runtime);
+    commonWidget::table_detail::installTableRuntime(application, tableRuntime);
     profile_context::install(application, profile);
 }
 } // namespace component_theme

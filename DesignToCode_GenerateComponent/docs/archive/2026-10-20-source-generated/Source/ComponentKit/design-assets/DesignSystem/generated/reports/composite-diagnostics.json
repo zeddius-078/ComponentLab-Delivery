@@ -1,0 +1,42 @@
+{
+  "phase": "composite-validation",
+  "motionStatus": "candidate",
+  "releaseBlocked": false,
+  "releasedSlices": [
+    "loading.spinner"
+  ],
+  "blockedSlices": [
+    "attention.pulse",
+    "enter.list-item",
+    "enter.modal",
+    "exit.fade-out",
+    "feedback.button-press",
+    "feedback.focus",
+    "loading.skeleton-pulse",
+    "state-change.accordion-arrow",
+    "state-change.select-open",
+    "transition.fade",
+    "transition.slide-up"
+  ],
+  "platformOutputsGenerated": true,
+  "compositeCount": 12,
+  "validatedComponents": [
+    "button",
+    "input",
+    "select"
+  ],
+  "summary": {
+    "errors": 0,
+    "warnings": 1
+  },
+  "diagnostics": [
+    {
+      "severity": "warning",
+      "phase": "composite-validation",
+      "code": "MOTION-CANDIDATE-SLICES-BLOCKED",
+      "sourceFile": "DesignSystem/source/motion.json",
+      "sourcePath": "/$status",
+      "message": "未评审 Motion slices 不生成平台产物；已发布 slices 不受阻断。"
+    }
+  ]
+}

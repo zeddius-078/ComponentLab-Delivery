@@ -1,0 +1,235 @@
+{
+  "$description": "menu V2 Component Contract. Structure and runtime semantics are independent from value evidence.",
+  "component": "menu",
+  "version": "2.0",
+  "$status": "draft-v2",
+  "contractKind": "menu",
+  "registryBindings": {
+    "source": "source/component-registry.json#/components/menu",
+    "axes": [
+      "state",
+      "size"
+    ],
+    "slots": [
+      "container",
+      "content",
+      "item",
+      "icon",
+      "shortcut",
+      "indicator",
+      "submenu",
+      "separator",
+      "border"
+    ],
+    "authority": "component-registry"
+  },
+  "structure": [
+    "container",
+    "item",
+    "content",
+    "icon",
+    "shortcut",
+    "indicator",
+    "submenu",
+    "separator",
+    "border"
+  ],
+  "modelLayers": {
+    "menuSurface": {
+      "owner": "ucd",
+      "publicIdentity": "ComponentLab/Menu",
+      "responsibilities": [
+        "popup command-menu surface",
+        "surface size, padding, background, radius and border visuals",
+        "composition of governed menu atoms"
+      ],
+      "publicComponent": true
+    },
+    "menuAtom": {
+      "owner": "ucd",
+      "identity": "MenuItem",
+      "management": "independent-internal-governance",
+      "publicComponent": false,
+      "responsibilities": [
+        "item row anatomy",
+        "icon, content, shortcut, indicator and submenu affordance structure",
+        "item-level visual states"
+      ],
+      "reuseBoundary": "may reuse primitive typography, icon and spacing tokens; must not inherit Button component semantics"
+    },
+    "runtimeActionModel": {
+      "owner": "qt-runtime",
+      "objects": [
+        "QMenu",
+        "QAction",
+        "QActionGroup"
+      ],
+      "responsibilities": [
+        "menu identity data, including QMenu::title",
+        "action identity and command data",
+        "enabled, visible, checkable and checked values",
+        "shortcut resolution",
+        "submenu ownership",
+        "popup lifecycle, keyboard navigation and trigger events"
+      ],
+      "notTokenized": true
+    },
+    "mappingAdapter": {
+      "owner": "component-adapter",
+      "responsibilities": [
+        "map Runtime Action Model to Z_Menu and Menu Atom rendering",
+        "map Menu Recipe values to Qt visual adaptation",
+        "preserve runtime authority over action behavior"
+      ]
+    }
+  },
+  "layoutRules": {
+    "decorationArea": {
+      "owner": "menu-atom",
+      "reserved": true,
+      "contents": [
+        "icon",
+        "indicator",
+        "submenu"
+      ],
+      "emptyBehavior": "preserve-area-width",
+      "alignment": "fixed",
+      "isTokenAxis": false
+    },
+    "shortcutColumn": {
+      "owner": "menu-atom",
+      "reserved": true,
+      "alignment": "right",
+      "emptyBehavior": "preserve-column-width",
+      "isInteractionTarget": false,
+      "valueSource": "runtime-action-model"
+    },
+    "menuAtomRightRail": {
+      "orderFromContentToEdge": [
+        "content",
+        "shortcut",
+        "icon",
+        "indicator"
+      ],
+      "modes": {
+        "plain": [
+          "content",
+          "shortcut",
+          "icon"
+        ],
+        "indicator": [
+          "content",
+          "shortcut",
+          "icon",
+          "indicator"
+        ],
+        "submenu": [
+          "content",
+          "shortcut",
+          "icon",
+          "submenu"
+        ]
+      },
+      "indicator": {
+        "position": "rightmost",
+        "priority": 2
+      },
+      "icon": {
+        "position": "right-rail",
+        "whenIndicatorPresent": "immediately-before-indicator",
+        "whenIndicatorAbsent": "rightmost"
+      },
+      "content": {
+        "alignment": "fixed-column",
+        "reserveDecorationAreaWhenEmpty": true,
+        "textAlignment": "stable-across-items"
+      }
+    }
+  },
+  "separatorRules": {
+    "role": "action-group-boundary",
+    "placement": "between-action-groups",
+    "interactive": false,
+    "participatesIn": [],
+    "alignment": "surface-content-width",
+    "tokenOwner": "menu.separator",
+    "runtimeSource": "action-group-structure",
+    "firstOrLastItem": "forbidden"
+  },
+  "stateLayers": {
+    "menuAtomInteraction": {
+      "owner": "runtime-api",
+      "appliesTo": "menuAtom",
+      "states": [
+        "default",
+        "hover",
+        "pressed",
+        "focused",
+        "disabled"
+      ],
+      "visualAuthority": "menu-atom-recipe"
+    },
+    "runtimeActionLifecycle": {
+      "owner": "qt-runtime",
+      "appliesTo": "runtimeActionModel",
+      "states": [
+        "loading"
+      ],
+      "visualPolicy": "runtime-controlled; must not become a Menu Surface state",
+      "locked": true
+    }
+  },
+  "compositionRules": [
+    "Menu item type and action identity are runtime-owned.",
+    "Menu visuals use sparse state overlays rather than a behavior Cartesian product.",
+    "Check/radio indicators and submenu direction remain native/runtime-owned.",
+    "Shortcut visibility is content data, not a visual state axis.",
+    "Checked is QAction value data, not a Menu selected state.",
+    "Selected, emphasis and none are not valid Menu state values.",
+    "Indicator, submenu and shortcut are fixed Menu Atom structure slots; their runtime presence is data-driven.",
+    "Separator is a Menu-owned visual structure and does not represent an action.",
+    "Separator appears only between Runtime Action Model groups and never receives interaction states.",
+    "Indicator and submenu are mutually exclusive within one Menu Atom; each owns the terminal position of the right rail in its own mode."
+  ],
+  "contentModel": {
+    "itemText": {
+      "kind": "localized-content-key",
+      "source": "runtime-action-label-or-content-key",
+      "defaultLocale": "en-US",
+      "fallbackLocale": "en-US",
+      "visualToken": false
+    },
+    "shortcutText": {
+      "kind": "localized-content-or-runtime-display",
+      "source": "runtime-shortcut-display",
+      "defaultLocale": "en-US",
+      "fallbackLocale": "en-US",
+      "visualToken": false
+    },
+    "separator": { "kind": "structure-only", "content": "not-applicable" },
+    "forbiddenContentResponsibilities": [
+      "action-identity", "qaction-trigger", "enabled-state", "checked-value",
+      "submenu-relationship", "indicator-state", "separator-placement", "visual-token"
+    ]
+  },
+  "tokenBoundary": {
+    "recipeOwns": [
+      "container, item, content, icon, shortcut, indicator, submenu, separator and border visuals",
+      "size, padding, typography and gradient values"
+    ],
+    "runtimeOwns": [
+      "QMenu::title menu identity data",
+      "QAction identity",
+      "trigger and shortcut resolution",
+      "popup direction",
+      "check/radio state",
+      "submenu hierarchy",
+      "accessibility"
+    ],
+    "contractDoesNotOwn": [
+      "resolved token values",
+      "QAction business behavior",
+      "Figma variable names"
+    ]
+  }
+}

@@ -1,0 +1,104 @@
+{
+  "$description": "Button V2 Figma structure and variable binding manifest. Specification only; it does not write or mutate the Figma file.",
+  "component": "button",
+  "version": "2.0",
+  "architectureAuthority": "V2 component-registry, component-contracts, and component-recipes; any reference JSON supplies values only and never defines Figma variable names.",
+  "$status": "draft-v2",
+  "writePolicy": "specification-only",
+  "publicComponentSet": "ComponentLab/Button",
+  "figmaComponentSet": "2258:15827",
+  "figmaComponentSetStatus": "candidate-unverified",
+  "figmaVariantCount": null,
+  "figmaVariantCountStatus": "migration-evidence-only",
+  "migrationEvidence": {
+    "source": "DesignToCode_GenerateComponent/reports/figma-v2-structure-audit.json#/components/button",
+    "observedVariantCount": 132,
+    "status": "untrusted-legacy-evidence",
+    "reasons": [
+      "legacy dark intent evidence exists",
+      "operation/production naming drift exists",
+      "pressed/focused and active/focus-visible state names drift",
+      "small/medium/large and xs size evidence drift",
+      "the observed set is not proven to be a legal design subset generated from Registry rules"
+    ]
+  },
+  "legacyFigmaComponentSets": ["173:2710", "173:2804", "173:2898", "173:2992", "173:3086", "1135:20", "1260:738"],
+  "variantAxes": {
+    "intent": ["primary", "secondary", "operation", "danger"],
+    "appearance": ["filled", "outlined", "dashed", "filled-inner-shadow", "text", "link"],
+    "state": ["default", "hover", "pressed", "focused", "disabled", "loading"],
+    "content": ["icon-only", "icon-left-text", "text-icon-right", "text-only", "icon-left-text-icon-right"],
+    "size": ["small", "medium", "large"]
+  },
+  "materialization": {
+    "mode": "generator-managed",
+    "logicalCombinationCount": 2700,
+    "manualVariantAuthoring": false,
+    "runtimeOnlyAxes": []
+  },
+  "nestedStructure": {
+    "button": ["container", "content", "label", "icon", "border", "focus-ring", "spinner"]
+  },
+  "componentProperties": {
+    "labelText": "text",
+    "leadingIcon": "instance-swap",
+    "trailingIcon": "instance-swap",
+    "leadingIconVisible": "boolean",
+    "trailingIconVisible": "boolean"
+  },
+  "variableNamespace": {
+    "collection": "DSM/Component",
+    "prefix": "button/",
+    "canonicalPrefix": "component.button."
+  },
+  "bindingRules": [
+    {
+      "figmaSlot": "Button/Container",
+      "figmaProperty": "fill-radius-padding-size",
+      "canonicalPattern": "component.button.base.{size|shared}.slot.container.*",
+      "source": "component-recipes/button.json#/base"
+    },
+    {
+      "figmaSlot": "Button/Label",
+      "figmaProperty": "text-style-fill",
+      "canonicalPattern": "component.button.base.{shared|intent|appearance|state}.slot.label.*",
+      "source": "component-recipes/button.json#/base"
+    },
+    {
+      "figmaSlot": "Button/Icon",
+      "figmaProperty": "icon-fill-size",
+      "canonicalPattern": "component.button.base.{shared|content}.slot.icon.*",
+      "source": "component-recipes/button.json#/base"
+    },
+    {
+      "figmaSlot": "Button/Border",
+      "figmaProperty": "stroke-stroke-weight",
+      "canonicalPattern": "component.button.{base|intent|appearance|state}.*.slot.border.*",
+      "source": "component-recipes/button.json#/base+overrides"
+    },
+    {
+      "figmaSlot": "Button/FocusRing",
+      "figmaProperty": "stroke-stroke-weight",
+      "canonicalPattern": "component.button.*.state.focused.*.slot.focus-ring.*",
+      "source": "component-recipes/button.json#/overrides"
+    },
+    {
+      "figmaSlot": "Button/Spinner",
+      "figmaProperty": "stroke-size-opacity-arc",
+      "canonicalPattern": "component.button.*.state.loading.*.slot.spinner.*",
+      "source": "component-recipes/button.json#/overrides"
+    }
+  ],
+  "sharedComponentBindings": {
+    "typography": "composite.typography",
+    "spinner": "component.spinner",
+    "icons": "component.icon"
+  },
+  "runtimeOnly": [
+    "activation",
+    "permission",
+    "loading-lifecycle",
+    "motion-playback",
+    "event-dispatch"
+  ]
+}

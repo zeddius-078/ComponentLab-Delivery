@@ -1,0 +1,28 @@
+{
+  "$description": "Switch V2 Component Contract. Binary setting value, interaction state, size and optional label remain independent.",
+  "component": "switch",
+  "version": "1.0",
+  "$status": "draft-v2",
+  "contractKind": "binary-setting-control",
+  "registryBindings": {"source": "source/component-registry.json#/components/switch", "axes": ["value", "state", "size"], "slots": ["track", "knob", "label", "focus-ring", "loading-spinner", "content"], "authority": "component-registry"},
+  "structure": ["track", "knob", "label", "focus-ring", "loading-spinner", "content"],
+  "runtimeModel": {
+    "value": {"registryAxis": "value", "values": ["off", "on"], "owner": "runtime-interaction", "meaning": "controlled binary setting value"},
+    "state": {"registryAxis": "state", "priority": ["disabled", "loading", "pressed", "focused", "hover", "default"]},
+    "focus": {"state": "focused", "activation": "keyboard-only", "visual": "border-only", "mouseHover": false, "mousePress": false},
+    "disabled": {"preserveValue": true, "lockInteraction": true},
+    "loading": {"preserveValue": true, "lockInteraction": true, "visual": "dynamic-spinner-in-knob", "spinnerSource": "composite.spinner"}
+  },
+  "stateLayers": {"value": "binary setting value", "pointerInteraction": "hover and pressed visuals", "focus": "keyboard-only focus ring", "availability": "disabled and loading lock interaction", "content": "optional localized label"},
+  "contentModel": {"label": {"kind": "localized-content-key", "defaultLocale": "en-US", "fallbackLocale": "en-US", "optional": true, "visualToken": false}},
+  "compositionRules": [
+    "Switch expresses an immediately controlled binary setting; it is not a Checkbox selection control.",
+    "Value and State are independent axes; on and off are not interaction states.",
+    "State changes visual treatment and availability but does not mutate Value inside the Token layer.",
+    "Disabled and Loading preserve the current value and lock interaction.",
+    "Loading replaces the knob content with the shared dynamic Spinner; it does not create a new value or component type.",
+    "The optional label shares the Switch interaction surface and does not create an independent focus target.",
+    "Size controls the visual track and knob dimensions; interaction-size remains a profile/runtime constraint."
+  ],
+  "tokenBoundary": {"recipeOwns": ["track and knob dimensions", "off/on and state visual references", "label typography and color", "focus-ring visual reference", "loading-spinner visual references"], "runtimeOwns": ["value mutation", "keyboard and pointer event handling", "disabled permission and interaction lock", "loading lifecycle and spinner playback"], "contractDoesNotOwn": ["resolved color or dimension values", "business setting persistence", "platform-specific animation implementation"]}
+}

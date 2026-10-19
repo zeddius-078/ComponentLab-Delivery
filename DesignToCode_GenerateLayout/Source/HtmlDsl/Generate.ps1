@@ -1,7 +1,7 @@
 # 路线 B2：结果页由 HTML 布局和同源 DSL 身份合成；入口页沿用显式声明的完整 DSL。
 # 页面结构和组件身份均从本目录的同源输入生成，不读取其他路线。
 param(
-    [string]$OutputDirectory = "$PSScriptRoot/generated",
+    [string]$OutputDirectory = "",
     [switch]$Formal,
     [switch]$Preview,
     [string]$CaptureManifest,
@@ -9,15 +9,17 @@ param(
     [string]$MappingDirectory,
     [string]$Font,
     [string]$Batch,
-    [string]$Page
+    [string]$Page,
+    [string]$LibraryProfile
 )
 $ErrorActionPreference = 'Stop'
 if ($Formal -and $Preview) { throw 'FORMAL_AND_PREVIEW_ARE_EXCLUSIVE' }
 if ($Preview) {
-    foreach ($name in @('MappingDirectory','Font','Batch','Page')) {
+    foreach ($name in @('Batch','Page')) {
         if ($PSBoundParameters.ContainsKey($name)) { throw 'PREVIEW_DOES_NOT_ACCEPT_FORMAL_ARGUMENTS' }
     }
     if (-not $CaptureManifest -or -not $ReviewCaptureManifest) { throw 'PREVIEW_CAPTURE_MANIFESTS_REQUIRED' }
+    if (-not $MappingDirectory -or -not $Font) { throw 'PREVIEW_MAPPING_AND_FONT_REQUIRED' }
 }
 # 默认只生成正式交付；预览也必须显式声明每个页面的采集清单。
 # 保留 Formal 开关兼容前轮已记录命令，不再把无开关调用解释为旧预览。
@@ -34,11 +36,19 @@ if ($Formal) {
     }
     if (-not $MappingDirectory -or -not (Test-Path -LiteralPath "$MappingDirectory/component-mapping.json")) { throw 'FORMAL_MAPPING_REQUIRED' }
     $mapping = Get-Content -Raw -LiteralPath "$MappingDirectory/component-mapping.json" | ConvertFrom-Json
-    if ($mapping.profile -ne 'light-compact') { throw 'FORMAL_REQUIRES_LIGHT_COMPACT_MAPPING' }
+    if ($mapping.profile -ne 'wide-light') { throw 'FORMAL_REQUIRES_WIDE_LIGHT_MAPPING' }
 }
 . "$PSScriptRoot/../NativeTools.ps1"
 $previousNodePath = $env:NODE_PATH
 Initialize-NativeTools -NeedNode
+$previewRoot = [IO.Path]::GetFullPath("$D2CProjectRoot/build/preview")
+if ($Preview) {
+    if (-not $OutputDirectory) { $OutputDirectory = Join-Path $previewRoot 'html-dsl' }
+    $resolvedPreviewOutput = Assert-BuildOutput $OutputDirectory
+    if ($resolvedPreviewOutput -ne $previewRoot -and -not $resolvedPreviewOutput.StartsWith("$previewRoot$([IO.Path]::DirectorySeparatorChar)", [StringComparison]::OrdinalIgnoreCase)) {
+        throw 'PREVIEW_OUTPUT_MUST_BE_IN_BUILD'
+    }
+}
 $pipeline = [IO.Path]::GetFullPath("$PSScriptRoot/pipeline")
 $node = $NativeNode
 $python = (Get-Command python -ErrorAction Stop).Source
@@ -72,13 +82,15 @@ try {
     if ($Formal) {
         $report = "$D2CProjectRoot/build/reports/formal-delivery/$Batch/$Page/adaptation"
         $compiler = "$D2CProjectRoot/build/cache/V2-html-dsl/v2_ui_compiler.exe"
-        if (-not (Test-Path -LiteralPath $compiler)) { throw '请先执行 Source/Qt/V2/Build.ps1 -CompileOnly' }
+        if (-not (Test-Path -LiteralPath $compiler)) { throw '请先执行 Source/Build.ps1' }
     & $node "$PSScriptRoot/tools/adapt_v2.cjs" $scratch $report $CaptureManifest
         if ($LASTEXITCODE -ne 0) { throw 'FORMAL_CAPTURE_ADAPTATION_FAILED' }
         $previousPlatform = $env:QT_QPA_PLATFORM
         try {
             $env:QT_QPA_PLATFORM = 'offscreen'
-            & $compiler --raw "$scratch/hybrid-result.json" --mapping $MappingDirectory --extensions "$MappingDirectory/extensions.json" --font $Font --output "$D2CProjectRoot/build/delivery/$Batch/$Page" --strict-layout --formal
+            $profileArgs = @()
+            if ($LibraryProfile) { $profileArgs = @('--library-profile', $LibraryProfile) }
+            & $compiler --raw "$scratch/hybrid-result.json" --mapping $MappingDirectory --extensions "$MappingDirectory/extensions.json" --font $Font --output "$D2CProjectRoot/build/delivery/$Batch/$Page" --strict-layout --formal @profileArgs
             if ($LASTEXITCODE -ne 0) { throw "FORMAL_GENERATION_FAILED: $Page" }
         } finally { $env:QT_QPA_PLATFORM = $previousPlatform }
         return
@@ -97,7 +109,7 @@ try {
         review = "$reviewScratch/hybrid-result.json"
         'result-html' = "$resultScratch/hybrid-result.json"
     }
-    & "$pipeline/Generate-Pages.ps1" -Pages $pages -OutputDirectory $OutputDirectory
+    & "$pipeline/Generate-Pages.ps1" -Pages $pages -OutputDirectory $OutputDirectory -MappingDirectory $MappingDirectory -Font $Font -LibraryProfile $LibraryProfile
 } finally {
     $env:NODE_PATH = $previousNodePath
     # 只清理由当前调用创建的缓存目录；解析绝对路径后限制父目录、前缀和链接属性。
@@ -109,5 +121,3 @@ try {
     }
 }
 
-# 仪表宿主随本路线复制，保证另一条路线的模板调整不会改变本次生成。
-Copy-Item "$pipeline/compiler/instrument_host.*" -Destination $OutputDirectory

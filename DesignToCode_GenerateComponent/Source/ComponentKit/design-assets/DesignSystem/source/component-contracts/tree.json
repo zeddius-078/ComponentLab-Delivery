@@ -1,0 +1,93 @@
+{
+  "$description": "tree V2 Component Contract. Structure and runtime semantics are independent from value evidence.",
+  "component": "tree",
+  "version": "2.0",
+  "$status": "draft-v2",
+  "contractKind": "hierarchical-view",
+  "registryBindings": {
+    "source": "source/component-registry.json#/components/tree",
+    "axes": [
+      "state"
+    ],
+    "slots": [
+      "container",
+      "content",
+      "item",
+      "icon",
+      "border"
+    ],
+    "authority": "component-registry"
+  },
+  "structure": [
+    "container",
+    "item",
+    "icon",
+    "content",
+    "border"
+  ],
+  "stateLayers": {
+    "interaction": {
+      "owner": "runtime-api",
+      "states": [
+        "default",
+        "hover",
+        "selected"
+      ]
+    },
+    "availability": {
+      "owner": "runtime-api",
+      "states": [
+        "disabled"
+      ]
+    }
+  },
+  "compositionRules": [
+    "Hierarchy, expansion and lazy loading are runtime-owned.",
+    "Item hover and selection are independent runtime overlays.",
+    "Disclosure icons represent structure and are not data state variants.",
+    "TreeView and TreeWidget share one visual contract but keep distinct Qt adapters."
+  ],
+  "contentModel": {
+    "nodeLabelText": {
+      "kind": "localized-content-key-or-runtime-label",
+      "source": "runtime-tree-node-label",
+      "defaultLocale": "en-US",
+      "fallbackLocale": "en-US",
+      "visualToken": false
+    },
+    "nodeAuxiliaryText": {
+      "kind": "localized-content-or-runtime-display",
+      "source": "optional-node-metadata-slot",
+      "defaultLocale": "en-US",
+      "fallbackLocale": "en-US",
+      "visualToken": false
+    },
+    "emptyStateText": {
+      "kind": "localized-content-key",
+      "source": "tree-empty-state-slot",
+      "defaultLocale": "en-US",
+      "fallbackLocale": "en-US"
+    },
+    "forbiddenContentResponsibilities": [
+      "node-id", "parent-child-relationship", "expanded-state", "selected-state",
+      "disabled-state", "lazy-loading", "keyboard-navigation", "visual-token"
+    ]
+  },
+  "tokenBoundary": {
+    "recipeOwns": [
+      "container, item, icon, content and border visuals",
+      "padding, typography and row geometry"
+    ],
+    "runtimeOwns": [
+      "model hierarchy",
+      "expansion/collapse",
+      "selection and keyboard navigation",
+      "sorting, lazy loading and accessibility"
+    ],
+    "contractDoesNotOwn": [
+      "resolved token values",
+      "model data",
+      "Figma variable names"
+    ]
+  }
+}

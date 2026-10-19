@@ -12,7 +12,7 @@
 <h3>2. 日常开发：按规则读取与装配</h3>
 <table cellpadding="6" cellspacing="0" border="1" width="100%">
 <tr><th>阶段</th><th>动作</th><th>检查</th></tr>
-<tr><td>设计实例</td><td>从 98 个 Figma 规范页、148 个组件集与 1608 个 Variant 读取结构；110 项融合目录用于开发对齐</td><td>组件、布局辅助项和资产分型；页面、组件集、Variant 与开发身份可追溯</td></tr>
+<tr><td>设计实例</td><td>从 98 个 Figma 规范页、148 个组件集与 1616 个 Variant 读取结构；110 项融合目录用于开发对齐</td><td>组件、布局辅助项和资产分型；页面、组件集、Variant 与开发身份可追溯</td></tr>
 <tr><td>MCP 快照</td><td>读取主组件 key、实例 ID、属性与布局变量</td><td>保留原始 JSON 与 SHA-256</td></tr>
 <tr><td>规则转换</td><td>按登记表转换为 UI Contract</td><td>未知组件、属性、资源和视觉覆写停止输出</td></tr>
 <tr><td>Qt 适配</td><td>生成 .ui、.h、.cpp、.qss；装配现有 Z_ 组件</td><td>类型、状态、信号、Token 引用与布局一致</td></tr>
@@ -30,13 +30,13 @@
 <tr><td>.cpp</td><td>调用已有工厂、设置类型化属性</td><td>Qt Runtime</td></tr>
 <tr><td>.qss</td><td>页面背景；组件视觉继续消费既有 generated 样式</td><td>Qt Style Sheet</td></tr>
 </table>
-<h3>5. Figma 与 Pixso 的入口</h3>
-<p>Figma 使用 MCP 实例快照和项目登记表。Pixso 使用 DSM 别名与 D2C+ 解析配置，再转换到同一 UI Contract。DSM 属于 Pixso；Qt 适配层属于本项目。</p>
+<h3>5. Figma 输入</h3>
+<p>当前设计输入只接受 Figma MCP 实例快照和项目登记表，并转换为同一 UI Contract。历史 Pixso 转换链不参与当前映射、校验或生成。</p>
 <p>模型负责调用读取工具、执行规则、运行校验与编译。新的组件类型或视觉能力需要设计与开发明确扩展登记表和组件实现。</p>
 <h3>当前状态</h3>
-<p><b>变量已回读核对：</b>4 层 Token，Primitive 250、Profile 89、Semantic 254、Component 397；具体组件绑定与审批状态仍按逐项证据判定。</p>
-<p><b>Figma 结构：</b>10 个章节、98 个组件规范页、148 个组件集、1608 个 Variant。组件集名称、属性轴、值域和组合按当前 Figma 回读。</p>
-<p><b>融合目录：</b>110 项，包括 105 个 Widget/Composite、2 个 LayoutHelper 和 3 个 Asset。105 个组件身份中 85 个可实例化并按规范身份注册，20 个保留为工程缺口；Drawer 的旧类名和 Factory 字符串仅作为兼容入口，不重复计数。设计审批状态独立管理。</p>
+<p><b>当前 Token 编译输入：</b>Primitive 299、Profile 72、Semantic 310、Component 706、Product 17；生成 4 个运行时上下文和 1404 个 canonical Token。Dark 仍标记为不可发布。</p>
+<p><b>Figma 结构：</b>10 个章节、98 个组件规范页、148 个组件集、1616 个 Variant。组件集名称、属性轴、值域和组合按当前 Figma 清单回读。</p>
+<p><b>融合目录：</b>110 项，包括 105 个 Widget/Composite、2 个 LayoutHelper 和 3 个 Asset；当前目录登记 105 个运行时组件候选，工程缺口计数为 0。该计数表示身份与实现登记闭合，不等于设计审批或视觉一致性通过。</p>
 <p><b>审批与本地能力：</b>当前目录未记录 Approved 项。规则转换器与 Qt 适配器可执行；“流程与预览”“契约与产物”仍使用 localFixture 示例，它证明装配行为，不代表全部 Figma 视觉与交互已经实现。</p>
-<p>完整字段、DSM 配置和开发接口见 Documents/DesignMapping/Guide.md。Token 原解析器和 APK 构建流程保持原状。</p>
+<p>完整字段、Figma 映射和开发接口见项目内《设计组件映射指南》。Token 只由 V2 canonical source 编译。</p>
 </body></html>

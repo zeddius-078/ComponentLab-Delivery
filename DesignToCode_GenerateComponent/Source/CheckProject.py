@@ -1,5 +1,6 @@
 """Check local documentation, resources and three-project dependency boundaries."""
 import json
+import hashlib
 from pathlib import Path
 import re
 import sys
@@ -7,6 +8,7 @@ import xml.etree.ElementTree as ET
 
 PROJECT = Path(__file__).resolve().parent.parent
 SOURCE = PROJECT / "Source"
+WORK_SOURCE = PROJECT / "build/work/Source"
 NAMES = {"ComponentLab", "DesignToCode_GenerateComponent", "DesignToCode_GenerateLayout"}
 OTHER = NAMES - {PROJECT.name}
 REPORT = PROJECT / "build/reports/project-check.json"
@@ -14,25 +16,33 @@ REPORT = PROJECT / "build/reports/project-check.json"
 
 def check():
     result = {"project": PROJECT.name, "localLinks": 0, "resourceFiles": 0}
+    result["pendingDeletion"] = []
+    for entry in PROJECT.iterdir():
+        if entry.is_dir() and entry.name.startswith("待删除-"):
+            result["pendingDeletion"].append(entry.name)
+        elif entry.is_dir():
+            assert entry.name in {"Source", "docs", "build"}, (entry, "unexpected root directory")
+    for entry in SOURCE.rglob("*"):
+        assert entry.name not in {"generated", "__pycache__"}, (entry, "generated files in Source")
+        assert entry.suffix not in {".pyc", ".obj", ".exe", ".dll", ".lib", ".pdb"}, (entry, "build artifact in Source")
     # The component Token chain is an owned production path and must survive directory cleanup.
     token_chain = [
-        SOURCE / "ComponentKit/design-assets/tokens/button-contract.json",
         SOURCE / "ComponentKit/design-assets/tokens/checkbox-contract.json",
-        SOURCE / "ComponentKit/design-assets/tokens/forms-contract.json",
         SOURCE / "ComponentKit/design-assets/tools/export_tokens.py",
-        SOURCE / "ComponentKit/design-assets/tools/token_compiler.cpp",
         SOURCE / "ComponentKit/design-assets/tools/checkbox_token_compiler.cpp",
-        SOURCE / "ComponentKit/design-assets/tools/forms_token_compiler.cpp",
-        SOURCE / "ComponentKit/design-assets/generated",
+        WORK_SOURCE / "ComponentKit/design-assets/generated",
         SOURCE / "ComponentKit/design-assets/DesignSystem/source/primitive.json",
         SOURCE / "ComponentKit/design-assets/DesignSystem/source/profile.json",
         SOURCE / "ComponentKit/design-assets/DesignSystem/source/semantic.json",
-        SOURCE / "ComponentKit/design-assets/DesignSystem/source/component.json",
+        WORK_SOURCE / "ComponentKit/design-assets/DesignSystem/generated/component.json",
+        SOURCE / "ComponentKit/design-assets/DesignSystem/source/component-recipes",
         SOURCE / "ComponentKit/design-assets/DesignSystem/source/product/application-layout.json",
         SOURCE / "ComponentKit/design-assets/DesignSystem/source/dictionary.json",
         SOURCE / "ComponentKit/design-assets/DesignSystem/source/component-registry.json",
-        SOURCE / "ComponentKit/design-assets/DesignSystem/config/legacy-map.json",
-        SOURCE / "ComponentKit/design-assets/DesignSystem/config/manifest.json",
+        WORK_SOURCE / "ComponentKit/design-assets/DesignSystem/config/figma-component-map-v2.json",
+        SOURCE / "ComponentKit/design-assets/DesignSystem/config/figma-audit-v2.json",
+        SOURCE / "ComponentKit/design-assets/DesignSystem/config/reference-mapping.json",
+        WORK_SOURCE / "ComponentKit/design-assets/DesignSystem/config/manifest.json",
         SOURCE / "ComponentKit/design-assets/DesignSystem/schema/v2-token-schema.json",
         SOURCE / "ComponentKit/design-assets/DesignSystem/scripts/v2/compile.py",
     ]
@@ -46,11 +56,11 @@ def check():
     assert len({item["qtClass"] for item in native_components}) == len(native_components)
     assert len({item["sdkClass"] for item in native_components}) == len(native_components)
     source_map = json.loads((
-        SOURCE / "ComponentKit/component-definitions/generated-component-source-map.json"
+        WORK_SOURCE / "ComponentKit/component-definitions/generated-component-source-map.json"
     ).read_text(encoding="utf-8"))
     assert len(source_map["components"]) == len(native_components)
     design_catalog = json.loads((
-        SOURCE / "ComponentKit/component-definitions/generated-design-component-catalog.json"
+        WORK_SOURCE / "ComponentKit/component-definitions/generated-design-component-catalog.json"
     ).read_text(encoding="utf-8"))
     assert design_catalog["figmaFileKey"] == "w92BKW1EcutKmTXkwzNHbf"
     entries = design_catalog["entries"]
@@ -116,8 +126,8 @@ def check():
     assert len({item["canonicalId"] for item in entries}) == len(entries)
     sdk_classes = [item["sdkClass"] for item in components if item["sdkClass"]]
     assert len(set(sdk_classes)) == len(sdk_classes)
-    native_source = SOURCE / "ComponentKit/runtime/component/native"
-    native_styles = SOURCE / "ComponentKit/design-assets/generated/native"
+    native_source = WORK_SOURCE / "ComponentKit/runtime/component/native"
+    native_styles = WORK_SOURCE / "ComponentKit/design-assets/generated/native"
     for component in native_components:
         qt_class = component["qtClass"]
         sdk_class = component["sdkClass"]
@@ -128,12 +138,15 @@ def check():
         else:
             assert (SOURCE / f"ComponentKit/runtime/component/{sdk_class}.h").is_file(), sdk_class
             assert (SOURCE / f"ComponentKit/runtime/component/{sdk_class}.cpp").is_file(), sdk_class
-        for profile in ("light-comfortable", "light-compact", "dark-comfortable", "dark-compact"):
+        for profile in ("standard-light", "wide-light", "standard-dark", "wide-dark"):
             assert (native_styles / profile / f"{sdk_class}.qss").is_file(), (profile, sdk_class)
     sdk = PROJECT / "build/sdk"
     # Exactly one first-level SDK output is allowed; build/cache remains disposable compiler state.
+    # `sdk-debug` is a local, non-published Debug CRT companion used by the
+    # consumer tests.  It must not be mistaken for a second published SDK;
+    # only the exact `build/sdk` directory is the delivery artifact.
     sdk_outputs = [path for path in (PROJECT / "build").iterdir()
-                   if path.is_dir() and "sdk" in path.name.lower()]
+                   if path.is_dir() and path.name.lower() == "sdk"]
     assert sdk_outputs == [sdk], ("unexpected SDK output", sdk_outputs)
     manifest = json.loads((sdk / "manifest/component-sdk.json").read_bytes())
     assert manifest["owner"] == PROJECT.name
@@ -146,9 +159,28 @@ def check():
         sdk / manifest["designComponentCatalog"]
     ).read_text(encoding="utf-8"))
     assert published_catalog == design_catalog
+    # ComponentLab Debug consumes the local sdk-debug companion.  Its V2 map
+    # must be byte-identical to the published map, otherwise the gallery can
+    # display stale bindings while the Release package is already corrected.
+    v2_map = sdk / "resources/mappings/figma-component-map-v2.json"
+    source_v2_map = WORK_SOURCE / "ComponentKit/design-assets/DesignSystem/config/figma-component-map-v2.json"
+    expected_hash = hashlib.sha256(source_v2_map.read_bytes()).hexdigest()
+    assert hashlib.sha256(v2_map.read_bytes()).hexdigest() == expected_hash
+    v2_document = json.loads(v2_map.read_text(encoding="utf-8"))
+    button = next(item for item in v2_document["components"] if item["componentId"] == "button")
+    button_padding = [
+        item for item in button["bindings"]
+        if item["variable"].endswith("slot/container/padding-block")
+    ]
+    assert len(button_padding) == 3
+    assert all(item["value"] == "semantic.layout.padding.block.none"
+               and item["status"] == "specified" for item in button_padding)
+    debug_v2_map = PROJECT / "build/sdk-debug/resources/mappings/figma-component-map-v2.json"
+    if debug_v2_map.is_file():
+        assert hashlib.sha256(debug_v2_map.read_bytes()).hexdigest() == expected_hash
     assert not list(sdk.rglob("*.exe")) and not list(sdk.rglob("*.dll"))
     assert not (PROJECT / "build/dist").exists()
-    consumer_test = SOURCE / "SDKConsumerTest"
+    consumer_test = PROJECT / "docs/validation/SDKConsumerTest"
     assert (consumer_test / "main.cpp").is_file()
     assert "#include <MyDesignSystem/MyDesignSystem.h>" in (consumer_test / "main.cpp").read_text(encoding="utf-8")
     assert "GeneratedComponentSDK::Components" in (consumer_test / "CMakeLists.txt").read_text(encoding="utf-8")
@@ -168,13 +200,15 @@ def check():
                 assert "/" + name + "/" not in code, (file, "sibling project path", name)
             assert "/ComponentLab-Delivery/DesignToCode/" not in code, (file, "retired path")
     # QRC inputs must resolve inside this project's maintained source.
-    for qrc in SOURCE.rglob("*.qrc"):
+    for qrc in WORK_SOURCE.rglob("*.qrc"):
         for entry in ET.parse(qrc).findall(".//file"):
             target = (qrc.parent / entry.text).resolve()
-            assert target.is_relative_to(SOURCE) and target.is_file(), (qrc, target)
+            assert target.is_relative_to(WORK_SOURCE) and target.is_file(), (qrc, target)
             result["resourceFiles"] += 1
     # Navigation must remain usable after copying just this project.
     for file in [PROJECT / "README.md", *(PROJECT / "docs").rglob("*.md"), *SOURCE.rglob("*.md")]:
+        if file.is_relative_to(PROJECT / "docs/archive"):
+            continue  # Historical paths are retained as evidence, not current navigation.
         content = file.read_text(encoding="utf-8-sig")
         assert len(re.findall(r"^\x60\x60\x60", content, re.M)) % 2 == 0, file
         for link in re.findall(r"\]\(([^)]+)\)", content):
@@ -182,6 +216,8 @@ def check():
             if not link or re.match(r"^https?://", link):
                 continue
             target = (file.parent / link).resolve()
+            if target.is_relative_to(PROJECT / "build"):
+                continue  # Optional generated links need not exist in a clean checkout.
             assert target.is_relative_to(PROJECT) and target.exists(), (file, link)
             result["localLinks"] += 1
     # Inspect only active build descriptions; before-project-split stores explicitly retired caches.
@@ -203,7 +239,7 @@ def check():
     result["engineeringGaps"] = statistics["engineeringGapCount"]
     result["sdkAuthority"] = "build/sdk"
     result["sdkMode"] = "sole-publisher"
-    result["sdkConsumerTest"] = "Source/SDKConsumerTest"
+    result["sdkConsumerTest"] = "docs/validation/SDKConsumerTest"
     result["status"] = "PASS"
     return result
 

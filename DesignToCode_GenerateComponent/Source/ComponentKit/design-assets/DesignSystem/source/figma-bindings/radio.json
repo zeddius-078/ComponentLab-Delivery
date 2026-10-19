@@ -1,0 +1,82 @@
+{
+  "$description": "Radio V2 Figma structure and variable binding manifest. Specification only; legacy evidence is retained for migration audit.",
+  "component": "radio",
+  "version": "2.0",
+  "architectureAuthority": "V2 component-registry, component-contracts, and component-recipes; the reference JSON is value-only evidence and must not define Figma variable names.",
+  "valueAuthority": "source/component-value-evidence/radio.json",
+  "$status": "draft-v2",
+  "writePolicy": "specification-only",
+  "publicComponentSet": "ComponentLab/Radio",
+  "legacyIdentities": [
+    "DSM/Radio",
+    "DSM/Radio/Group"
+  ],
+  "figmaPages": [
+    "341:2"
+  ],
+  "figmaComponentSet": "2256:56",
+  "figmaComponentSetStatus": "verified",
+  "figmaVariantCount": 24,
+  "figmaVariantCountStatus": "verified",
+  "variantAxes": {
+    "value": [
+      "unselected",
+      "selected"
+    ],
+    "state": ["default", "disabled", "focused", "hover", "pressed"],
+    "content": ["control-only", "control-with-label"],
+    "size": [
+      "compact",
+      "small",
+      "medium",
+      "large"
+    ]
+  },
+  "variableNamespace": {
+    "collection": "DSM/Component",
+    "prefix": "radio/",
+    "canonicalPrefix": "component.radio.",
+    "evidence": "source/component-value-evidence/radio.json"
+  },
+  "nestedStructure": {
+    "radio": ["container", "indicator", "glyph", "label", "content"]
+  },
+  "componentProperties": {
+    "labelText": "text",
+    "labelVisible": "boolean"
+  },
+  "contentProperties": {
+    "labelText": {
+      "kind": "localized-content-key",
+      "defaultLocale": "en-US",
+      "fallbackLocale": "en-US",
+      "requiredWhen": "content=control-with-label"
+    },
+    "labelVisible": {
+      "kind": "content-structure-switch",
+      "mapsTo": "content"
+    }
+  },
+  "bindingRules": [
+    {
+      "figmaSlot": "Radio/Indicator",
+      "canonicalPattern": "component.radio.*.slot.indicator.*",
+      "valueEvidence": "radio/color/*,radio/size/*,radio/border/default"
+    },
+    {
+      "figmaSlot": "Radio/Label",
+      "canonicalPattern": "component.radio.base.shared.slot.label.*",
+      "valueEvidence": "radio/content/*,radio/color/text/*"
+    }
+  ],
+  "sharedComponentBindings": {
+    "typography": "composite.typography",
+    "selectedGlyph": "component.icon.radio-selected"
+  },
+  "runtimeOnly": [
+    "radio-group-membership",
+    "selection-mutation",
+    "sibling-unselection",
+    "keyboard-focus-activation"
+  ]
+}

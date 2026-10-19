@@ -1,0 +1,33 @@
+{
+  "$schema": "../schema/composite-token-schema.json",
+  "$description": "Shadow Composite package. filled-inner-shadow consumes this package together with Gradient Composite.",
+  "$version": "2.0",
+  "$status": "draft",
+  "layer": "composite",
+  "kind": "shadow",
+  "contracts": {
+    "layers": [],
+    "layerCount": { "min": 0, "max": 8 },
+    "layerMembers": {
+      "inset": "boolean",
+      "offsetX": "Primitive/Profile dimension reference",
+      "offsetY": "Primitive/Profile dimension reference",
+      "blur": "Primitive/Profile dimension reference",
+      "spread": "Primitive/Profile dimension reference",
+      "color": "Color Token reference"
+    }
+  },
+  "tokens": {},
+  "migrationSources": [
+    "source/component-recipes/button.json legacy inner-shadow-* fields",
+    "source/component-registry.json historical inner-shadow vocabulary"
+  ],
+  "diagnostics": [
+    {
+      "severity": "warning",
+      "code": "SHADOW-LEGACY-MIGRATION-PENDING",
+      "message": "Legacy inner-shadow values remain historical evidence; no public Shadow Composite is activated until color and geometry references are normalized.",
+      "source": "source/shadow.json"
+    }
+  ]
+}

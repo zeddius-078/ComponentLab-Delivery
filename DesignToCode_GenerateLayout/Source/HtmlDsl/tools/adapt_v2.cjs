@@ -5,12 +5,13 @@ const path = require('path');
 const crypto = require('crypto');
 const {pathToFileURL} = require('url');
 const {chromium} = require('playwright');
+const {outputPath} = require('./output_paths.cjs');
 const root = path.resolve(__dirname, '..');
 // 要求调用方提供临时目录，确保本工具产生的预览与混合输入有明确的清理归属。
 if(!process.argv[2])throw Error('OUTPUT_DIRECTORY_REQUIRED: caller owns temporary output cleanup');
-const output = path.resolve(process.argv[2]);
+const output = outputPath(process.argv[2]);
 // 独立验证可指定报告目录，避免覆盖旧演示已保存的验收证据。
-const report = process.argv[3] ? path.resolve(process.argv[3]) : path.resolve(root, '../../build/reports/v2/html-dsl-adaptation');
+const report = outputPath(process.argv[3] || path.resolve(root, '../../build/reports/v2/html-dsl-adaptation'));
 const hash = data => crypto.createHash('sha256').update(data).digest('hex');
 const write = (name, data) => fs.writeFileSync(path.join(report, name), JSON.stringify(data, null, 2));
 // 清单内的相对路径以 capture.json 所在目录为基准，保证从任意工作目录调用都得到同一输入。

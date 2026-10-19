@@ -1,0 +1,1025 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pixso HTML</title>
+  <style>
+@font-face {
+	font-family: 'HarmonyOS Sans SC';
+	font-style: normal;
+	font-weight: 400;
+	src: url(http://localhost:3667/assets/1790355461100/HarmonyOS_Sans_SC_Regular.ttf) format('truetype');
+}
+</style>
+  <script src="js/animation.js"></script>
+  <style>
+:root, 
+[data-collection-3-3093-mode="standard-light"] {
+  /* standard-light */
+  --contract-forms-palette-disabledtext: var(--project-basic-input-state-disabled-text);
+  --contract-forms-sizes-md-fontsize: var(--project-basic-input-size-md-fontsize);
+  --contract-forms-metrics-optionheight: var(--project-dimension-control-height-md);
+  --contract-button-materialstates-secondary-disabled-foreground: var(--stoken-button-base-disabled-label-color);
+  --contract-button-materialstates-secondary-disabled-border: var(--stoken-button-base-disabled-border-color);
+  --contract-button-materialstates-secondary-disabled-stops-0-color: var(--stoken-button-base-disabled-container-gradient-stop-01);
+  --contract-button-materialstates-primary-default-foreground: var(--stoken-button-primary-default-label-color);
+  --contract-button-materialstates-primary-default-border: var(--stoken-button-primary-default-border-color);
+  --contract-button-palette-primary: var(--project-color-action-primary);
+  --contract-button-shape-radius: var(--stoken-button-base-default-container-radius);
+  --contract-button-metrics-m-fontsize: var(--stoken-typography-font-size-label-default);
+  --contract-button-metrics-m-iconcontainer: var(--derived-button-m-iconcontainer);
+  --contract-button-metrics-m-gap: var(--stoken-button-icon-text-base-default-container-gap);
+  --contract-button-metrics-m-minimumheight: var(--project-basic-button-size-md-height);
+  --stoken-button-icon-text-base-default-container-gap: var(--stoken-metric-space-horizontal-micro);
+  --stoken-button-base-default-container-radius: var(--stoken-metric-radius-control-default);
+  --stoken-button-primary-default-label-color: var(--stoken-color-text-invert);
+  --stoken-button-primary-default-border-color: var(--stoken-color-highlight-purple-deep-1);
+  --stoken-button-base-disabled-label-color: var(--stoken-color-text-disabled-strong);
+  --stoken-button-base-disabled-border-color: var(--stoken-color-neutral-gray-20);
+  --stoken-button-base-disabled-container-gradient-stop-01: var(--stoken-color-neutral-gray-0);
+  --project-basic-input-state-disabled-text: var(--stoken-input-base-disabled-content-color);
+  --stoken-input-base-disabled-content-color: var(--stoken-color-text-disabled);
+  --project-basic-input-size-md-fontsize: var(--stoken-typography-font-size-body-default);
+  --project-basic-button-size-md-height: var(--stoken-button-size-medium-container-min-height);
+  --stoken-button-size-medium-container-min-height: var(--stoken-metric-interaction-size-default);
+}
+
+[data-collection-3-3093-mode="wide-light"] {
+  /* wide-light */
+  --contract-forms-palette-disabledtext: var(--project-basic-input-state-disabled-text);
+  --contract-forms-sizes-md-fontsize: var(--project-basic-input-size-md-fontsize);
+  --contract-forms-metrics-optionheight: var(--project-dimension-control-height-md);
+  --contract-button-materialstates-secondary-disabled-foreground: var(--stoken-button-base-disabled-label-color);
+  --contract-button-materialstates-secondary-disabled-border: var(--stoken-button-base-disabled-border-color);
+  --contract-button-materialstates-secondary-disabled-stops-0-color: var(--stoken-button-base-disabled-container-gradient-stop-01);
+  --contract-button-materialstates-primary-default-foreground: var(--stoken-button-primary-default-label-color);
+  --contract-button-materialstates-primary-default-border: var(--stoken-button-primary-default-border-color);
+  --contract-button-palette-primary: var(--project-color-action-primary);
+  --contract-button-shape-radius: var(--stoken-button-base-default-container-radius);
+  --contract-button-metrics-m-fontsize: var(--stoken-typography-font-size-label-default);
+  --contract-button-metrics-m-iconcontainer: var(--derived-button-m-iconcontainer);
+  --contract-button-metrics-m-gap: var(--stoken-button-icon-text-base-default-container-gap);
+  --contract-button-metrics-m-minimumheight: var(--project-basic-button-size-md-height);
+  --stoken-button-icon-text-base-default-container-gap: var(--stoken-metric-space-horizontal-micro);
+  --stoken-button-base-default-container-radius: var(--stoken-metric-radius-control-default);
+  --stoken-button-primary-default-label-color: var(--stoken-color-text-invert);
+  --stoken-button-primary-default-border-color: var(--stoken-color-highlight-purple-deep-1);
+  --stoken-button-base-disabled-label-color: var(--stoken-color-text-disabled-strong);
+  --stoken-button-base-disabled-border-color: var(--stoken-color-neutral-gray-20);
+  --stoken-button-base-disabled-container-gradient-stop-01: var(--stoken-color-neutral-gray-0);
+  --project-basic-input-state-disabled-text: var(--stoken-input-base-disabled-content-color);
+  --stoken-input-base-disabled-content-color: var(--stoken-color-text-disabled);
+  --project-basic-input-size-md-fontsize: var(--stoken-typography-font-size-body-default);
+  --project-basic-button-size-md-height: var(--stoken-button-size-medium-container-min-height);
+  --stoken-button-size-medium-container-min-height: var(--stoken-metric-interaction-size-default);
+}
+
+[data-collection-3-3093-mode="standard-dark"] {
+  /* standard-dark */
+  --contract-forms-palette-disabledtext: var(--project-basic-input-state-disabled-text);
+  --contract-forms-sizes-md-fontsize: var(--project-basic-input-size-md-fontsize);
+  --contract-forms-metrics-optionheight: var(--project-dimension-control-height-md);
+  --contract-button-materialstates-secondary-disabled-foreground: var(--stoken-button-base-disabled-label-color);
+  --contract-button-materialstates-secondary-disabled-border: var(--stoken-button-base-disabled-border-color);
+  --contract-button-materialstates-secondary-disabled-stops-0-color: var(--stoken-button-base-disabled-container-gradient-stop-01);
+  --contract-button-materialstates-primary-default-foreground: var(--stoken-button-primary-default-label-color);
+  --contract-button-materialstates-primary-default-border: var(--stoken-button-primary-default-border-color);
+  --contract-button-palette-primary: var(--project-color-action-primary);
+  --contract-button-shape-radius: var(--stoken-button-base-default-container-radius);
+  --contract-button-metrics-m-fontsize: var(--stoken-typography-font-size-label-default);
+  --contract-button-metrics-m-iconcontainer: var(--derived-button-m-iconcontainer);
+  --contract-button-metrics-m-gap: var(--stoken-button-icon-text-base-default-container-gap);
+  --contract-button-metrics-m-minimumheight: var(--project-basic-button-size-md-height);
+  --stoken-button-icon-text-base-default-container-gap: var(--stoken-metric-space-horizontal-micro);
+  --stoken-button-base-default-container-radius: var(--stoken-metric-radius-control-default);
+  --stoken-button-primary-default-label-color: var(--stoken-color-text-invert);
+  --stoken-button-primary-default-border-color: var(--stoken-color-highlight-purple-deep-1);
+  --stoken-button-base-disabled-label-color: var(--stoken-color-text-disabled-strong);
+  --stoken-button-base-disabled-border-color: var(--stoken-color-neutral-gray-20);
+  --stoken-button-base-disabled-container-gradient-stop-01: var(--stoken-color-neutral-gray-0);
+  --project-basic-input-state-disabled-text: var(--stoken-input-base-disabled-content-color);
+  --stoken-input-base-disabled-content-color: var(--stoken-color-text-disabled);
+  --project-basic-input-size-md-fontsize: var(--stoken-typography-font-size-body-default);
+  --project-basic-button-size-md-height: var(--stoken-button-size-medium-container-min-height);
+  --stoken-button-size-medium-container-min-height: var(--stoken-metric-interaction-size-default);
+}
+
+[data-collection-3-3093-mode="wide-dark"] {
+  /* wide-dark */
+  --contract-forms-palette-disabledtext: var(--project-basic-input-state-disabled-text);
+  --contract-forms-sizes-md-fontsize: var(--project-basic-input-size-md-fontsize);
+  --contract-forms-metrics-optionheight: var(--project-dimension-control-height-md);
+  --contract-button-materialstates-secondary-disabled-foreground: var(--stoken-button-base-disabled-label-color);
+  --contract-button-materialstates-secondary-disabled-border: var(--stoken-button-base-disabled-border-color);
+  --contract-button-materialstates-secondary-disabled-stops-0-color: var(--stoken-button-base-disabled-container-gradient-stop-01);
+  --contract-button-materialstates-primary-default-foreground: var(--stoken-button-primary-default-label-color);
+  --contract-button-materialstates-primary-default-border: var(--stoken-button-primary-default-border-color);
+  --contract-button-palette-primary: var(--project-color-action-primary);
+  --contract-button-shape-radius: var(--stoken-button-base-default-container-radius);
+  --contract-button-metrics-m-fontsize: var(--stoken-typography-font-size-label-default);
+  --contract-button-metrics-m-iconcontainer: var(--derived-button-m-iconcontainer);
+  --contract-button-metrics-m-gap: var(--stoken-button-icon-text-base-default-container-gap);
+  --contract-button-metrics-m-minimumheight: var(--project-basic-button-size-md-height);
+  --stoken-button-icon-text-base-default-container-gap: var(--stoken-metric-space-horizontal-micro);
+  --stoken-button-base-default-container-radius: var(--stoken-metric-radius-control-default);
+  --stoken-button-primary-default-label-color: var(--stoken-color-text-invert);
+  --stoken-button-primary-default-border-color: var(--stoken-color-highlight-purple-deep-1);
+  --stoken-button-base-disabled-label-color: var(--stoken-color-text-disabled-strong);
+  --stoken-button-base-disabled-border-color: var(--stoken-color-neutral-gray-20);
+  --stoken-button-base-disabled-container-gradient-stop-01: var(--stoken-color-neutral-gray-0);
+  --project-basic-input-state-disabled-text: var(--stoken-input-base-disabled-content-color);
+  --stoken-input-base-disabled-content-color: var(--stoken-color-text-disabled);
+  --project-basic-input-size-md-fontsize: var(--stoken-typography-font-size-body-default);
+  --project-basic-button-size-md-height: var(--stoken-button-size-medium-container-min-height);
+  --stoken-button-size-medium-container-min-height: var(--stoken-metric-interaction-size-default);
+}
+
+[data-collection-3-3093-mode="teal-standard-light"] {
+  /* teal/standard-light */
+  --contract-forms-palette-disabledtext: var(--project-basic-input-state-disabled-text);
+  --contract-forms-sizes-md-fontsize: var(--project-basic-input-size-md-fontsize);
+  --contract-forms-metrics-optionheight: var(--project-dimension-control-height-md);
+  --contract-button-materialstates-secondary-disabled-foreground: var(--stoken-button-base-disabled-label-color);
+  --contract-button-materialstates-secondary-disabled-border: var(--stoken-button-base-disabled-border-color);
+  --contract-button-materialstates-secondary-disabled-stops-0-color: var(--stoken-button-base-disabled-container-gradient-stop-01);
+  --contract-button-materialstates-primary-default-foreground: var(--stoken-button-primary-default-label-color);
+  --contract-button-materialstates-primary-default-border: var(--stoken-button-primary-default-border-color);
+  --contract-button-palette-primary: var(--project-color-action-primary);
+  --contract-button-shape-radius: var(--stoken-button-base-default-container-radius);
+  --contract-button-metrics-m-fontsize: var(--stoken-typography-font-size-label-default);
+  --contract-button-metrics-m-iconcontainer: var(--derived-button-m-iconcontainer);
+  --contract-button-metrics-m-gap: var(--stoken-button-icon-text-base-default-container-gap);
+  --contract-button-metrics-m-minimumheight: var(--project-basic-button-size-md-height);
+  --stoken-button-icon-text-base-default-container-gap: var(--stoken-metric-space-horizontal-micro);
+  --stoken-button-base-default-container-radius: var(--stoken-metric-radius-control-default);
+  --stoken-button-primary-default-label-color: var(--stoken-color-text-invert);
+  --stoken-button-primary-default-border-color: rgba(22, 54, 48, 1);
+  --stoken-button-base-disabled-label-color: var(--stoken-color-text-disabled-strong);
+  --stoken-button-base-disabled-border-color: var(--stoken-color-neutral-gray-20);
+  --stoken-button-base-disabled-container-gradient-stop-01: var(--stoken-color-neutral-gray-0);
+  --project-basic-input-state-disabled-text: var(--stoken-input-base-disabled-content-color);
+  --stoken-input-base-disabled-content-color: var(--stoken-color-text-disabled);
+  --project-basic-input-size-md-fontsize: var(--stoken-typography-font-size-body-default);
+  --project-basic-button-size-md-height: var(--stoken-button-size-medium-container-min-height);
+  --stoken-button-size-medium-container-min-height: 40px;
+}
+
+[data-collection-3-3093-mode="teal-wide-light"] {
+  /* teal/wide-light */
+  --contract-forms-palette-disabledtext: var(--project-basic-input-state-disabled-text);
+  --contract-forms-sizes-md-fontsize: var(--project-basic-input-size-md-fontsize);
+  --contract-forms-metrics-optionheight: var(--project-dimension-control-height-md);
+  --contract-button-materialstates-secondary-disabled-foreground: var(--stoken-button-base-disabled-label-color);
+  --contract-button-materialstates-secondary-disabled-border: var(--stoken-button-base-disabled-border-color);
+  --contract-button-materialstates-secondary-disabled-stops-0-color: var(--stoken-button-base-disabled-container-gradient-stop-01);
+  --contract-button-materialstates-primary-default-foreground: var(--stoken-button-primary-default-label-color);
+  --contract-button-materialstates-primary-default-border: var(--stoken-button-primary-default-border-color);
+  --contract-button-palette-primary: var(--project-color-action-primary);
+  --contract-button-shape-radius: var(--stoken-button-base-default-container-radius);
+  --contract-button-metrics-m-fontsize: var(--stoken-typography-font-size-label-default);
+  --contract-button-metrics-m-iconcontainer: var(--derived-button-m-iconcontainer);
+  --contract-button-metrics-m-gap: var(--stoken-button-icon-text-base-default-container-gap);
+  --contract-button-metrics-m-minimumheight: var(--project-basic-button-size-md-height);
+  --stoken-button-icon-text-base-default-container-gap: var(--stoken-metric-space-horizontal-micro);
+  --stoken-button-base-default-container-radius: var(--stoken-metric-radius-control-default);
+  --stoken-button-primary-default-label-color: var(--stoken-color-text-invert);
+  --stoken-button-primary-default-border-color: rgba(22, 54, 48, 1);
+  --stoken-button-base-disabled-label-color: var(--stoken-color-text-disabled-strong);
+  --stoken-button-base-disabled-border-color: var(--stoken-color-neutral-gray-20);
+  --stoken-button-base-disabled-container-gradient-stop-01: var(--stoken-color-neutral-gray-0);
+  --project-basic-input-state-disabled-text: var(--stoken-input-base-disabled-content-color);
+  --stoken-input-base-disabled-content-color: var(--stoken-color-text-disabled);
+  --project-basic-input-size-md-fontsize: var(--stoken-typography-font-size-body-default);
+  --project-basic-button-size-md-height: var(--stoken-button-size-medium-container-min-height);
+  --stoken-button-size-medium-container-min-height: 40px;
+}
+
+[data-collection-3-3093-mode="teal-standard-dark"] {
+  /* teal/standard-dark */
+  --contract-forms-palette-disabledtext: var(--project-basic-input-state-disabled-text);
+  --contract-forms-sizes-md-fontsize: var(--project-basic-input-size-md-fontsize);
+  --contract-forms-metrics-optionheight: var(--project-dimension-control-height-md);
+  --contract-button-materialstates-secondary-disabled-foreground: var(--stoken-button-base-disabled-label-color);
+  --contract-button-materialstates-secondary-disabled-border: var(--stoken-button-base-disabled-border-color);
+  --contract-button-materialstates-secondary-disabled-stops-0-color: var(--stoken-button-base-disabled-container-gradient-stop-01);
+  --contract-button-materialstates-primary-default-foreground: var(--stoken-button-primary-default-label-color);
+  --contract-button-materialstates-primary-default-border: var(--stoken-button-primary-default-border-color);
+  --contract-button-palette-primary: var(--project-color-action-primary);
+  --contract-button-shape-radius: var(--stoken-button-base-default-container-radius);
+  --contract-button-metrics-m-fontsize: var(--stoken-typography-font-size-label-default);
+  --contract-button-metrics-m-iconcontainer: var(--derived-button-m-iconcontainer);
+  --contract-button-metrics-m-gap: var(--stoken-button-icon-text-base-default-container-gap);
+  --contract-button-metrics-m-minimumheight: var(--project-basic-button-size-md-height);
+  --stoken-button-icon-text-base-default-container-gap: var(--stoken-metric-space-horizontal-micro);
+  --stoken-button-base-default-container-radius: var(--stoken-metric-radius-control-default);
+  --stoken-button-primary-default-label-color: var(--stoken-color-text-invert);
+  --stoken-button-primary-default-border-color: rgba(22, 54, 48, 1);
+  --stoken-button-base-disabled-label-color: var(--stoken-color-text-disabled-strong);
+  --stoken-button-base-disabled-border-color: var(--stoken-color-neutral-gray-20);
+  --stoken-button-base-disabled-container-gradient-stop-01: var(--stoken-color-neutral-gray-0);
+  --project-basic-input-state-disabled-text: var(--stoken-input-base-disabled-content-color);
+  --stoken-input-base-disabled-content-color: var(--stoken-color-text-disabled);
+  --project-basic-input-size-md-fontsize: var(--stoken-typography-font-size-body-default);
+  --project-basic-button-size-md-height: var(--stoken-button-size-medium-container-min-height);
+  --stoken-button-size-medium-container-min-height: 40px;
+}
+
+[data-collection-3-3093-mode="teal-wide-dark"] {
+  /* teal/wide-dark */
+  --contract-forms-palette-disabledtext: var(--project-basic-input-state-disabled-text);
+  --contract-forms-sizes-md-fontsize: var(--project-basic-input-size-md-fontsize);
+  --contract-forms-metrics-optionheight: var(--project-dimension-control-height-md);
+  --contract-button-materialstates-secondary-disabled-foreground: var(--stoken-button-base-disabled-label-color);
+  --contract-button-materialstates-secondary-disabled-border: var(--stoken-button-base-disabled-border-color);
+  --contract-button-materialstates-secondary-disabled-stops-0-color: var(--stoken-button-base-disabled-container-gradient-stop-01);
+  --contract-button-materialstates-primary-default-foreground: var(--stoken-button-primary-default-label-color);
+  --contract-button-materialstates-primary-default-border: var(--stoken-button-primary-default-border-color);
+  --contract-button-palette-primary: var(--project-color-action-primary);
+  --contract-button-shape-radius: var(--stoken-button-base-default-container-radius);
+  --contract-button-metrics-m-fontsize: var(--stoken-typography-font-size-label-default);
+  --contract-button-metrics-m-iconcontainer: var(--derived-button-m-iconcontainer);
+  --contract-button-metrics-m-gap: var(--stoken-button-icon-text-base-default-container-gap);
+  --contract-button-metrics-m-minimumheight: var(--project-basic-button-size-md-height);
+  --stoken-button-icon-text-base-default-container-gap: var(--stoken-metric-space-horizontal-micro);
+  --stoken-button-base-default-container-radius: var(--stoken-metric-radius-control-default);
+  --stoken-button-primary-default-label-color: var(--stoken-color-text-invert);
+  --stoken-button-primary-default-border-color: rgba(22, 54, 48, 1);
+  --stoken-button-base-disabled-label-color: var(--stoken-color-text-disabled-strong);
+  --stoken-button-base-disabled-border-color: var(--stoken-color-neutral-gray-20);
+  --stoken-button-base-disabled-container-gradient-stop-01: var(--stoken-color-neutral-gray-0);
+  --project-basic-input-state-disabled-text: var(--stoken-input-base-disabled-content-color);
+  --stoken-input-base-disabled-content-color: var(--stoken-color-text-disabled);
+  --project-basic-input-size-md-fontsize: var(--stoken-typography-font-size-body-default);
+  --project-basic-button-size-md-height: var(--stoken-button-size-medium-container-min-height);
+  --stoken-button-size-medium-container-min-height: 40px;
+}
+
+:root, 
+[data-collection-3-3088-mode="standard-light"] {
+  /* standard-light */
+  --stoken-color-text-disabled-strong: var(--stoken-color-neutral-gray-30);
+  --stoken-metric-space-horizontal-micro: var(--stoken-spacing-scale-01);
+  --stoken-metric-radius-control-default: var(--stoken-radius-md-4);
+  --stoken-typography-font-size-label-default: var(--stoken-typography-scale-font-size-02);
+  --project-dimension-control-height-md: var(--stoken-metric-interaction-size-default);
+  --stoken-metric-interaction-size-default: var(--stoken-interaction-size-04);
+  --project-color-action-primary: var(--stoken-color-interactive-brand-default);
+  --stoken-color-text-invert: var(--stoken-color-neutral-gray-0);
+  --stoken-color-text-disabled: var(--stoken-color-neutral-gray-45);
+  --stoken-color-interactive-brand-default: var(--stoken-color-highlight-purple-100);
+  --stoken-typography-font-size-body-default: var(--stoken-typography-scale-font-size-02);
+}
+
+[data-collection-3-3088-mode="wide-light"] {
+  /* wide-light */
+  --stoken-color-text-disabled-strong: var(--stoken-color-neutral-gray-30);
+  --stoken-metric-space-horizontal-micro: var(--stoken-spacing-scale-01);
+  --stoken-metric-radius-control-default: var(--stoken-radius-md-4);
+  --stoken-typography-font-size-label-default: var(--stoken-typography-scale-font-size-02);
+  --project-dimension-control-height-md: var(--stoken-metric-interaction-size-default);
+  --stoken-metric-interaction-size-default: var(--stoken-interaction-size-04);
+  --project-color-action-primary: var(--stoken-color-interactive-brand-default);
+  --stoken-color-text-invert: var(--stoken-color-neutral-gray-0);
+  --stoken-color-text-disabled: var(--stoken-color-neutral-gray-45);
+  --stoken-color-interactive-brand-default: var(--stoken-color-highlight-purple-100);
+  --stoken-typography-font-size-body-default: var(--stoken-typography-scale-font-size-02);
+}
+
+[data-collection-3-3088-mode="standard-dark"] {
+  /* standard-dark */
+  --stoken-color-text-disabled-strong: var(--stoken-color-neutral-gray-30);
+  --stoken-metric-space-horizontal-micro: var(--stoken-spacing-scale-01);
+  --stoken-metric-radius-control-default: var(--stoken-radius-md-4);
+  --stoken-typography-font-size-label-default: var(--stoken-typography-scale-font-size-02);
+  --project-dimension-control-height-md: var(--stoken-metric-interaction-size-default);
+  --stoken-metric-interaction-size-default: var(--stoken-interaction-size-04);
+  --project-color-action-primary: var(--stoken-color-interactive-brand-default);
+  --stoken-color-text-invert: var(--stoken-color-neutral-gray-0);
+  --stoken-color-text-disabled: var(--stoken-color-neutral-gray-45);
+  --stoken-color-interactive-brand-default: var(--stoken-color-highlight-purple-100);
+  --stoken-typography-font-size-body-default: var(--stoken-typography-scale-font-size-02);
+}
+
+[data-collection-3-3088-mode="wide-dark"] {
+  /* wide-dark */
+  --stoken-color-text-disabled-strong: var(--stoken-color-neutral-gray-30);
+  --stoken-metric-space-horizontal-micro: var(--stoken-spacing-scale-01);
+  --stoken-metric-radius-control-default: var(--stoken-radius-md-4);
+  --stoken-typography-font-size-label-default: var(--stoken-typography-scale-font-size-02);
+  --project-dimension-control-height-md: var(--stoken-metric-interaction-size-default);
+  --stoken-metric-interaction-size-default: var(--stoken-interaction-size-04);
+  --project-color-action-primary: var(--stoken-color-interactive-brand-default);
+  --stoken-color-text-invert: var(--stoken-color-neutral-gray-0);
+  --stoken-color-text-disabled: var(--stoken-color-neutral-gray-45);
+  --stoken-color-interactive-brand-default: var(--stoken-color-highlight-purple-100);
+  --stoken-typography-font-size-body-default: var(--stoken-typography-scale-font-size-02);
+}
+
+[data-collection-3-3088-mode="teal-standard-light"] {
+  /* teal/standard-light */
+  --stoken-color-text-disabled-strong: var(--stoken-color-neutral-gray-30);
+  --stoken-metric-space-horizontal-micro: var(--stoken-spacing-scale-01);
+  --stoken-metric-radius-control-default: 6px;
+  --stoken-typography-font-size-label-default: 16px;
+  --project-dimension-control-height-md: var(--stoken-metric-interaction-size-default);
+  --stoken-metric-interaction-size-default: var(--stoken-interaction-size-04);
+  --project-color-action-primary: var(--stoken-color-interactive-brand-default);
+  --stoken-color-text-invert: var(--stoken-color-neutral-gray-0);
+  --stoken-color-text-disabled: var(--stoken-color-neutral-gray-45);
+  --stoken-color-interactive-brand-default: rgba(29, 72, 64, 1);
+  --stoken-typography-font-size-body-default: 16px;
+}
+
+[data-collection-3-3088-mode="teal-wide-light"] {
+  /* teal/wide-light */
+  --stoken-color-text-disabled-strong: var(--stoken-color-neutral-gray-30);
+  --stoken-metric-space-horizontal-micro: var(--stoken-spacing-scale-01);
+  --stoken-metric-radius-control-default: 6px;
+  --stoken-typography-font-size-label-default: 16px;
+  --project-dimension-control-height-md: var(--stoken-metric-interaction-size-default);
+  --stoken-metric-interaction-size-default: var(--stoken-interaction-size-04);
+  --project-color-action-primary: var(--stoken-color-interactive-brand-default);
+  --stoken-color-text-invert: var(--stoken-color-neutral-gray-0);
+  --stoken-color-text-disabled: var(--stoken-color-neutral-gray-45);
+  --stoken-color-interactive-brand-default: rgba(29, 72, 64, 1);
+  --stoken-typography-font-size-body-default: 16px;
+}
+
+[data-collection-3-3088-mode="teal-standard-dark"] {
+  /* teal/standard-dark */
+  --stoken-color-text-disabled-strong: var(--stoken-color-neutral-gray-30);
+  --stoken-metric-space-horizontal-micro: var(--stoken-spacing-scale-01);
+  --stoken-metric-radius-control-default: 6px;
+  --stoken-typography-font-size-label-default: 16px;
+  --project-dimension-control-height-md: var(--stoken-metric-interaction-size-default);
+  --stoken-metric-interaction-size-default: var(--stoken-interaction-size-04);
+  --project-color-action-primary: var(--stoken-color-interactive-brand-default);
+  --stoken-color-text-invert: var(--stoken-color-neutral-gray-0);
+  --stoken-color-text-disabled: var(--stoken-color-neutral-gray-45);
+  --stoken-color-interactive-brand-default: rgba(29, 72, 64, 1);
+  --stoken-typography-font-size-body-default: 16px;
+}
+
+[data-collection-3-3088-mode="teal-wide-dark"] {
+  /* teal/wide-dark */
+  --stoken-color-text-disabled-strong: var(--stoken-color-neutral-gray-30);
+  --stoken-metric-space-horizontal-micro: var(--stoken-spacing-scale-01);
+  --stoken-metric-radius-control-default: 6px;
+  --stoken-typography-font-size-label-default: 16px;
+  --project-dimension-control-height-md: var(--stoken-metric-interaction-size-default);
+  --stoken-metric-interaction-size-default: var(--stoken-interaction-size-04);
+  --project-color-action-primary: var(--stoken-color-interactive-brand-default);
+  --stoken-color-text-invert: var(--stoken-color-neutral-gray-0);
+  --stoken-color-text-disabled: var(--stoken-color-neutral-gray-45);
+  --stoken-color-interactive-brand-default: rgba(29, 72, 64, 1);
+  --stoken-typography-font-size-body-default: 16px;
+}
+
+:root, 
+[data-collection-3-3083-mode="standard-light"] {
+  /* standard-light */
+  --derived-button-m-iconcontainer: 28px;
+  --stoken-spacing-scale-01: var(--stoken-dimension-dimension-4);
+  --stoken-interaction-size-04: var(--stoken-dimension-dimension-32);
+  --stoken-typography-scale-font-size-02: var(--stoken-font-size-14);
+}
+
+[data-collection-3-3083-mode="wide-light"] {
+  /* wide-light */
+  --derived-button-m-iconcontainer: 28px;
+  --stoken-spacing-scale-01: var(--stoken-dimension-dimension-4);
+  --stoken-interaction-size-04: var(--stoken-dimension-dimension-32);
+  --stoken-typography-scale-font-size-02: var(--stoken-font-size-14);
+}
+
+[data-collection-3-3083-mode="standard-dark"] {
+  /* standard-dark */
+  --derived-button-m-iconcontainer: 28px;
+  --stoken-spacing-scale-01: var(--stoken-dimension-dimension-4);
+  --stoken-interaction-size-04: var(--stoken-dimension-dimension-32);
+  --stoken-typography-scale-font-size-02: var(--stoken-font-size-14);
+}
+
+[data-collection-3-3083-mode="wide-dark"] {
+  /* wide-dark */
+  --derived-button-m-iconcontainer: 28px;
+  --stoken-spacing-scale-01: var(--stoken-dimension-dimension-4);
+  --stoken-interaction-size-04: var(--stoken-dimension-dimension-32);
+  --stoken-typography-scale-font-size-02: var(--stoken-font-size-14);
+}
+
+[data-collection-3-3083-mode="teal-standard-light"] {
+  /* teal/standard-light */
+  --derived-button-m-iconcontainer: 28px;
+  --stoken-spacing-scale-01: var(--stoken-dimension-dimension-4);
+  --stoken-interaction-size-04: var(--stoken-dimension-dimension-32);
+  --stoken-typography-scale-font-size-02: var(--stoken-font-size-14);
+}
+
+[data-collection-3-3083-mode="teal-wide-light"] {
+  /* teal/wide-light */
+  --derived-button-m-iconcontainer: 28px;
+  --stoken-spacing-scale-01: var(--stoken-dimension-dimension-4);
+  --stoken-interaction-size-04: var(--stoken-dimension-dimension-32);
+  --stoken-typography-scale-font-size-02: var(--stoken-font-size-14);
+}
+
+[data-collection-3-3083-mode="teal-standard-dark"] {
+  /* teal/standard-dark */
+  --derived-button-m-iconcontainer: 28px;
+  --stoken-spacing-scale-01: var(--stoken-dimension-dimension-4);
+  --stoken-interaction-size-04: var(--stoken-dimension-dimension-32);
+  --stoken-typography-scale-font-size-02: var(--stoken-font-size-14);
+}
+
+[data-collection-3-3083-mode="teal-wide-dark"] {
+  /* teal/wide-dark */
+  --derived-button-m-iconcontainer: 28px;
+  --stoken-spacing-scale-01: var(--stoken-dimension-dimension-4);
+  --stoken-interaction-size-04: var(--stoken-dimension-dimension-32);
+  --stoken-typography-scale-font-size-02: var(--stoken-font-size-14);
+}
+
+:root, 
+[data-collection-3-3078-mode="standard-light"] {
+  /* standard-light */
+  --stoken-radius-md-4: 4px;
+  --stoken-dimension-dimension-4: 4px;
+  --stoken-color-neutral-gray-30: rgba(187, 187, 187, 1);
+  --stoken-color-highlight-purple-deep-1: rgba(90, 62, 193, 1);
+  --stoken-dimension-dimension-32: 32px;
+  --stoken-color-neutral-gray-20: rgba(208, 208, 208, 1);
+  --stoken-color-neutral-gray-45: rgba(138, 138, 138, 1);
+  --stoken-color-highlight-purple-100: rgba(98, 53, 247, 1);
+  --stoken-color-neutral-gray-0: rgba(255, 255, 255, 1);
+  --stoken-font-size-14: 14px;
+}
+
+[data-collection-3-3078-mode="wide-light"] {
+  /* wide-light */
+  --stoken-radius-md-4: 4px;
+  --stoken-dimension-dimension-4: 4px;
+  --stoken-color-neutral-gray-30: rgba(187, 187, 187, 1);
+  --stoken-color-highlight-purple-deep-1: rgba(90, 62, 193, 1);
+  --stoken-dimension-dimension-32: 32px;
+  --stoken-color-neutral-gray-20: rgba(208, 208, 208, 1);
+  --stoken-color-neutral-gray-45: rgba(138, 138, 138, 1);
+  --stoken-color-highlight-purple-100: rgba(98, 53, 247, 1);
+  --stoken-color-neutral-gray-0: rgba(255, 255, 255, 1);
+  --stoken-font-size-14: 14px;
+}
+
+[data-collection-3-3078-mode="standard-dark"] {
+  /* standard-dark */
+  --stoken-radius-md-4: 4px;
+  --stoken-dimension-dimension-4: 4px;
+  --stoken-color-neutral-gray-30: rgba(187, 187, 187, 1);
+  --stoken-color-highlight-purple-deep-1: rgba(90, 62, 193, 1);
+  --stoken-dimension-dimension-32: 32px;
+  --stoken-color-neutral-gray-20: rgba(208, 208, 208, 1);
+  --stoken-color-neutral-gray-45: rgba(138, 138, 138, 1);
+  --stoken-color-highlight-purple-100: rgba(98, 53, 247, 1);
+  --stoken-color-neutral-gray-0: rgba(255, 255, 255, 1);
+  --stoken-font-size-14: 14px;
+}
+
+[data-collection-3-3078-mode="wide-dark"] {
+  /* wide-dark */
+  --stoken-radius-md-4: 4px;
+  --stoken-dimension-dimension-4: 4px;
+  --stoken-color-neutral-gray-30: rgba(187, 187, 187, 1);
+  --stoken-color-highlight-purple-deep-1: rgba(90, 62, 193, 1);
+  --stoken-dimension-dimension-32: 32px;
+  --stoken-color-neutral-gray-20: rgba(208, 208, 208, 1);
+  --stoken-color-neutral-gray-45: rgba(138, 138, 138, 1);
+  --stoken-color-highlight-purple-100: rgba(98, 53, 247, 1);
+  --stoken-color-neutral-gray-0: rgba(255, 255, 255, 1);
+  --stoken-font-size-14: 14px;
+}
+
+[data-collection-3-3078-mode="teal-standard-light"] {
+  /* teal/standard-light */
+  --stoken-radius-md-4: 4px;
+  --stoken-dimension-dimension-4: 4px;
+  --stoken-color-neutral-gray-30: rgba(187, 187, 187, 1);
+  --stoken-color-highlight-purple-deep-1: rgba(90, 62, 193, 1);
+  --stoken-dimension-dimension-32: 32px;
+  --stoken-color-neutral-gray-20: rgba(208, 208, 208, 1);
+  --stoken-color-neutral-gray-45: rgba(138, 138, 138, 1);
+  --stoken-color-highlight-purple-100: rgba(98, 53, 247, 1);
+  --stoken-color-neutral-gray-0: rgba(255, 255, 255, 1);
+  --stoken-font-size-14: 14px;
+}
+
+[data-collection-3-3078-mode="teal-wide-light"] {
+  /* teal/wide-light */
+  --stoken-radius-md-4: 4px;
+  --stoken-dimension-dimension-4: 4px;
+  --stoken-color-neutral-gray-30: rgba(187, 187, 187, 1);
+  --stoken-color-highlight-purple-deep-1: rgba(90, 62, 193, 1);
+  --stoken-dimension-dimension-32: 32px;
+  --stoken-color-neutral-gray-20: rgba(208, 208, 208, 1);
+  --stoken-color-neutral-gray-45: rgba(138, 138, 138, 1);
+  --stoken-color-highlight-purple-100: rgba(98, 53, 247, 1);
+  --stoken-color-neutral-gray-0: rgba(255, 255, 255, 1);
+  --stoken-font-size-14: 14px;
+}
+
+[data-collection-3-3078-mode="teal-standard-dark"] {
+  /* teal/standard-dark */
+  --stoken-radius-md-4: 4px;
+  --stoken-dimension-dimension-4: 4px;
+  --stoken-color-neutral-gray-30: rgba(187, 187, 187, 1);
+  --stoken-color-highlight-purple-deep-1: rgba(90, 62, 193, 1);
+  --stoken-dimension-dimension-32: 32px;
+  --stoken-color-neutral-gray-20: rgba(208, 208, 208, 1);
+  --stoken-color-neutral-gray-45: rgba(138, 138, 138, 1);
+  --stoken-color-highlight-purple-100: rgba(98, 53, 247, 1);
+  --stoken-color-neutral-gray-0: rgba(255, 255, 255, 1);
+  --stoken-font-size-14: 14px;
+}
+
+[data-collection-3-3078-mode="teal-wide-dark"] {
+  /* teal/wide-dark */
+  --stoken-radius-md-4: 4px;
+  --stoken-dimension-dimension-4: 4px;
+  --stoken-color-neutral-gray-30: rgba(187, 187, 187, 1);
+  --stoken-color-highlight-purple-deep-1: rgba(90, 62, 193, 1);
+  --stoken-dimension-dimension-32: 32px;
+  --stoken-color-neutral-gray-20: rgba(208, 208, 208, 1);
+  --stoken-color-neutral-gray-45: rgba(138, 138, 138, 1);
+  --stoken-color-highlight-purple-100: rgba(98, 53, 247, 1);
+  --stoken-color-neutral-gray-0: rgba(255, 255, 255, 1);
+  --stoken-font-size-14: 14px;
+}
+
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+ol,ul,menu {
+  padding-inline-start: 0;
+  list-style: none;
+}
+
+ol li::marker, ul li::before {
+  letter-spacing: 0;
+}
+
+.scroll-container > div {
+  width: 100%;
+}
+
+.container > div {
+  width: 100%;
+}
+
+.Pixso-canvas-0_1 > div {
+  width: 100%;
+}
+
+html {
+  width: 100%;
+  height: 100%;
+}
+
+body { 
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  background-color: white;
+}
+    
+span {
+  word-break: break-word;
+}
+
+.container {
+  width: 100%;
+  height: 100%;
+}
+
+.scroll-container {
+  height: 100%;
+  width: 100%;
+  overflow: auto;
+}
+
+.Pixso-canvas-0_1,.Pixso-frame-21_436 {
+  width: 100%;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.Pixso-canvas-0_1 {
+  height: 100%;
+}
+
+.Pixso-frame-21_436,.frame-content-21_436 {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-start;
+}
+
+.Pixso-frame-21_436 {
+  height: 560px;
+  min-width: 600px;
+  overflow: hidden;
+  background-color: rgba(255, 255, 255, 1);
+}
+
+.frame-content-21_436 {
+  gap: 20px;
+  padding: 24px 28px 32px 36px;
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.Pixso-instance-21_481,.Pixso-instance-21_448,.Pixso-instance-21_474,.Pixso-instance-21_476,.Pixso-instance-21_478 {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: row;
+  gap: var(--contract-button-metrics-m-gap);
+  justify-content: center;
+  align-items: center;
+  padding: 0px 13px 0px 13px;
+  border-radius: var(--contract-button-shape-radius) var(--contract-button-shape-radius) var(--contract-button-shape-radius) var(--contract-button-shape-radius);
+  z-index: 1;
+  background-color: var(--contract-button-palette-primary);
+}
+
+.stroke-wrapper-21_481 {
+  position: relative;
+  isolation: isolate;
+  width: 114px;
+  height: var(--contract-button-metrics-m-minimumheight);
+  display: flex;
+  flex-shrink: 0;
+}
+
+.stroke-21_481,.stroke-21_448,.stroke-21_474,.stroke-21_476,.stroke-21_478 {
+  position: absolute;
+  inset: 0px;
+  border-radius: 4px 4px 4px 4px;
+  pointer-events: none;
+  z-index: 0;
+  border-width: 1px 1px 1px 1px;
+  border-style: solid;
+  box-sizing: border-box;
+  border-color: var(--contract-button-materialstates-primary-default-border);
+}
+
+.Pixso-frame-21_498,.frame-content-21_498 {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.Pixso-frame-21_498 {
+  width: var(--contract-button-metrics-m-iconcontainer);
+  height: var(--contract-button-metrics-m-iconcontainer);
+  flex-shrink: 0;
+  border-radius: 2px 2px 2px 2px;
+}
+
+.frame-content-21_498 {
+  width: 100%;
+  height: 100%;
+}
+
+.Pixso-vector-21_499 {
+  width: 24px;
+  height: 24px;
+  background-image: url("http://localhost:3667/assets/1790355461100/GLYPHarrowleft.svg");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.Pixso-paragraph-21_502,.Pixso-paragraph-21_449,.Pixso-paragraph-21_475,.Pixso-paragraph-21_477,.Pixso-paragraph-21_479,.Pixso-paragraph-21_437 {
+  font-family: "HarmonyOS Sans SC-Regular";
+  font-weight: 400;
+  text-align: left;
+  letter-spacing: 0px;
+  text-decoration: none;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.Pixso-paragraph-21_502,.Pixso-paragraph-21_449,.Pixso-paragraph-21_475,.Pixso-paragraph-21_477,.Pixso-paragraph-21_479 {
+  font-size: var(--contract-button-metrics-m-fontsize);
+  line-height: 17.5px;
+  color: var(--contract-button-materialstates-primary-default-foreground);
+  width: auto;
+  height: auto;
+  white-space: pre;
+  flex-grow: 0;
+}
+
+.Pixso-paragraph-21_437 {
+  font-size: 24px;
+  line-height: 32px;
+  color: rgba(31, 36, 41, 1);
+  width: 320px;
+  height: 32px;
+}
+
+.Pixso-frame-21_457,.frame-content-21_457 {
+  width: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.Pixso-frame-21_457 {
+  height: auto;
+  flex-shrink: 0;
+}
+
+.frame-content-21_457 {
+  gap: 10px;
+}
+
+.Pixso-instance-21_471,.Pixso-instance-21_469,.Pixso-instance-21_467,.Pixso-instance-21_465 {
+  width: 310px;
+  height: var(--contract-forms-metrics-optionheight);
+  position: relative;
+  flex-shrink: 0;
+}
+
+.Pixso-paragraph-21_472,.Pixso-paragraph-21_470,.Pixso-paragraph-21_468,.Pixso-paragraph-21_466 {
+  font-size: var(--contract-forms-sizes-md-fontsize);
+  font-family: "HarmonyOS Sans SC-Regular";
+  font-weight: 400;
+  text-align: left;
+  letter-spacing: 0px;
+  line-height: 22px;
+  font-feature-settings: "locl" 0;
+  text-decoration: none;
+  color: var(--contract-forms-palette-disabledtext);
+  width: 270px;
+  height: auto;
+  position: absolute;
+  left: 8px;
+  top: 5px;
+  white-space: pre;
+}
+
+.Pixso-frame-21_473 {
+  width: auto;
+  height: auto;
+  position: relative;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+.stroke-wrapper-21_448,.stroke-wrapper-21_474,.stroke-wrapper-21_476,.stroke-wrapper-21_478,.stroke-wrapper-21_450 {
+  position: relative;
+  isolation: isolate;
+  width: 82px;
+  height: var(--contract-button-metrics-m-minimumheight);
+  display: flex;
+  flex-shrink: 0;
+}
+
+.Pixso-instance-21_450 {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: row;
+  gap: var(--contract-button-metrics-m-gap);
+  justify-content: center;
+  align-items: center;
+  padding: 0px 13px 0px 13px;
+  border-radius: var(--contract-button-shape-radius) var(--contract-button-shape-radius) var(--contract-button-shape-radius) var(--contract-button-shape-radius);
+  z-index: 1;
+  background-color: var(--contract-button-materialstates-secondary-disabled-stops-0-color);
+}
+
+.stroke-21_450 {
+  position: absolute;
+  inset: 0px;
+  border-radius: 4px 4px 4px 4px;
+  pointer-events: none;
+  z-index: 0;
+  border-width: 1px 1px 1px 1px;
+  border-style: solid;
+  box-sizing: border-box;
+  border-color: var(--contract-button-materialstates-secondary-disabled-border);
+}
+
+.Pixso-paragraph-21_451 {
+  font-size: var(--contract-button-metrics-m-fontsize);
+  font-family: "HarmonyOS Sans SC-Regular";
+  font-weight: 400;
+  text-align: left;
+  letter-spacing: 0px;
+  line-height: 17.5px;
+  text-decoration: none;
+  color: var(--contract-button-materialstates-secondary-disabled-foreground);
+  width: auto;
+  height: auto;
+  position: relative;
+  flex-shrink: 0;
+  white-space: pre;
+  flex-grow: 0;
+}
+
+
+  </style>
+</head>
+<body>
+<div class="scroll-container">
+  <div id="0_1" class="Pixso-canvas-0_1">
+    <div id="21_436" class="Pixso-frame-21_436">
+      <div class="frame-content-21_436">
+        <div id="21_481" class="stroke-wrapper-21_481">
+          <div class="Pixso-instance-21_481">
+            <div id="21_498" class="Pixso-frame-21_498">
+              <div class="frame-content-21_498">
+                <div id="21_499" class="Pixso-vector-21_499"></div>
+              </div>
+            </div>
+            <p id="21_502" class="Pixso-paragraph-21_502">返回</p>
+          </div>
+          <div class="stroke-21_481"></div>
+        </div>
+        <p id="21_437" class="Pixso-paragraph-21_437">工单列表</p>
+        <div id="21_457" class="Pixso-frame-21_457">
+          <div class="frame-content-21_457">
+            <div id="21_471" class="Pixso-instance-21_471">
+              <p id="21_472" class="Pixso-paragraph-21_472">tags ETCH-01</p>
+            </div>
+            <div id="21_469" class="Pixso-instance-21_469">
+              <p id="21_470" class="Pixso-paragraph-21_470">tags ETCH-01</p>
+            </div>
+            <div id="21_467" class="Pixso-instance-21_467">
+              <p id="21_468" class="Pixso-paragraph-21_468">tags ETCH-01</p>
+            </div>
+            <div id="21_465" class="Pixso-instance-21_465">
+              <p id="21_466" class="Pixso-paragraph-21_466">tags ETCH-01</p>
+            </div>
+          </div>
+        </div>
+        <div id="21_473" class="Pixso-frame-21_473">
+          <div id="21_448" class="stroke-wrapper-21_448">
+            <div class="Pixso-instance-21_448">
+              <p id="21_449" class="Pixso-paragraph-21_449">确认1</p>
+            </div>
+            <div class="stroke-21_448"></div>
+          </div>
+          <div id="21_474" class="stroke-wrapper-21_474">
+            <div class="Pixso-instance-21_474">
+              <p id="21_475" class="Pixso-paragraph-21_475">确认2</p>
+            </div>
+            <div class="stroke-21_474"></div>
+          </div>
+          <div id="21_476" class="stroke-wrapper-21_476">
+            <div class="Pixso-instance-21_476">
+              <p id="21_477" class="Pixso-paragraph-21_477">确认3</p>
+            </div>
+            <div class="stroke-21_476"></div>
+          </div>
+          <div id="21_478" class="stroke-wrapper-21_478">
+            <div class="Pixso-instance-21_478">
+              <p id="21_479" class="Pixso-paragraph-21_479">确认4</p>
+            </div>
+            <div class="stroke-21_478"></div>
+          </div>
+          <div id="21_450" class="stroke-wrapper-21_450">
+            <div class="Pixso-instance-21_450">
+              <p id="21_451" class="Pixso-paragraph-21_451">提交</p>
+            </div>
+            <div class="stroke-21_450"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script>
+
+</script>
+<script>
+  // 设置图层变量模式
+  document.addEventListener('DOMContentLoaded', function() {
+            const element_21_481 = document.getElementById('21_481');
+            if (element_21_481) {
+              element_21_481.setAttribute('data-collection-3-3078-mode', 'standard-light');
+            }
+            const element_21_481 = document.getElementById('21_481');
+            if (element_21_481) {
+              element_21_481.setAttribute('data-collection-3-3083-mode', 'standard-light');
+            }
+            const element_21_481 = document.getElementById('21_481');
+            if (element_21_481) {
+              element_21_481.setAttribute('data-collection-3-3088-mode', 'standard-light');
+            }
+            const element_21_481 = document.getElementById('21_481');
+            if (element_21_481) {
+              element_21_481.setAttribute('data-collection-3-3093-mode', 'standard-light');
+            }
+            const element_21_448 = document.getElementById('21_448');
+            if (element_21_448) {
+              element_21_448.setAttribute('data-collection-3-3078-mode', 'standard-light');
+            }
+            const element_21_448 = document.getElementById('21_448');
+            if (element_21_448) {
+              element_21_448.setAttribute('data-collection-3-3083-mode', 'standard-light');
+            }
+            const element_21_448 = document.getElementById('21_448');
+            if (element_21_448) {
+              element_21_448.setAttribute('data-collection-3-3088-mode', 'standard-light');
+            }
+            const element_21_448 = document.getElementById('21_448');
+            if (element_21_448) {
+              element_21_448.setAttribute('data-collection-3-3093-mode', 'standard-light');
+            }
+            const element_21_474 = document.getElementById('21_474');
+            if (element_21_474) {
+              element_21_474.setAttribute('data-collection-3-3078-mode', 'standard-light');
+            }
+            const element_21_474 = document.getElementById('21_474');
+            if (element_21_474) {
+              element_21_474.setAttribute('data-collection-3-3083-mode', 'standard-light');
+            }
+            const element_21_474 = document.getElementById('21_474');
+            if (element_21_474) {
+              element_21_474.setAttribute('data-collection-3-3088-mode', 'standard-light');
+            }
+            const element_21_474 = document.getElementById('21_474');
+            if (element_21_474) {
+              element_21_474.setAttribute('data-collection-3-3093-mode', 'standard-light');
+            }
+            const element_21_476 = document.getElementById('21_476');
+            if (element_21_476) {
+              element_21_476.setAttribute('data-collection-3-3078-mode', 'standard-light');
+            }
+            const element_21_476 = document.getElementById('21_476');
+            if (element_21_476) {
+              element_21_476.setAttribute('data-collection-3-3083-mode', 'standard-light');
+            }
+            const element_21_476 = document.getElementById('21_476');
+            if (element_21_476) {
+              element_21_476.setAttribute('data-collection-3-3088-mode', 'standard-light');
+            }
+            const element_21_476 = document.getElementById('21_476');
+            if (element_21_476) {
+              element_21_476.setAttribute('data-collection-3-3093-mode', 'standard-light');
+            }
+            const element_21_478 = document.getElementById('21_478');
+            if (element_21_478) {
+              element_21_478.setAttribute('data-collection-3-3078-mode', 'standard-light');
+            }
+            const element_21_478 = document.getElementById('21_478');
+            if (element_21_478) {
+              element_21_478.setAttribute('data-collection-3-3083-mode', 'standard-light');
+            }
+            const element_21_478 = document.getElementById('21_478');
+            if (element_21_478) {
+              element_21_478.setAttribute('data-collection-3-3088-mode', 'standard-light');
+            }
+            const element_21_478 = document.getElementById('21_478');
+            if (element_21_478) {
+              element_21_478.setAttribute('data-collection-3-3093-mode', 'standard-light');
+            }
+            const element_21_450 = document.getElementById('21_450');
+            if (element_21_450) {
+              element_21_450.setAttribute('data-collection-3-3078-mode', 'standard-light');
+            }
+            const element_21_450 = document.getElementById('21_450');
+            if (element_21_450) {
+              element_21_450.setAttribute('data-collection-3-3083-mode', 'standard-light');
+            }
+            const element_21_450 = document.getElementById('21_450');
+            if (element_21_450) {
+              element_21_450.setAttribute('data-collection-3-3088-mode', 'standard-light');
+            }
+            const element_21_450 = document.getElementById('21_450');
+            if (element_21_450) {
+              element_21_450.setAttribute('data-collection-3-3093-mode', 'standard-light');
+            }
+  });
+</script>
+</body>
+</html>

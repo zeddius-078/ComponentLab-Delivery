@@ -34,7 +34,7 @@ class FigmaCatalogContractTests(unittest.TestCase):
             entry = entries[canonical_id]
             self.assertEqual(record, entry["visualEvidence"])
             self.assertEqual(
-                {"light-comfortable", "light-compact", "dark-comfortable", "dark-compact"},
+                {"standard-light", "wide-light", "standard-dark", "wide-dark"},
                 set(record["profiles"]),
             )
             self.assertEqual(set(record["profiles"]), set(record["runtimeGallerySha256"]))

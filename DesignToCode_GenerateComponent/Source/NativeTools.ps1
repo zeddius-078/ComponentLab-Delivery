@@ -1,6 +1,18 @@
 # Build-only SDK configuration. Design parsers and component rules remain route-local.
 $D2CSourceRoot = $PSScriptRoot
 $D2CProjectRoot = Split-Path $D2CSourceRoot -Parent
+function Assert-BuildOutput {
+    param([Parameter(Mandatory)][string]$Path)
+    $resolved = [IO.Path]::GetFullPath($Path)
+    $buildRoot = [IO.Path]::GetFullPath("$D2CProjectRoot/build")
+    if (-not $resolved.StartsWith($buildRoot + [IO.Path]::DirectorySeparatorChar, [StringComparison]::OrdinalIgnoreCase)) { throw 'OUTPUT_MUST_BE_IN_BUILD' }
+    $cursor = $resolved
+    while ($cursor -and $cursor.StartsWith($buildRoot, [StringComparison]::OrdinalIgnoreCase)) {
+        if ((Test-Path -LiteralPath $cursor) -and ((Get-Item -LiteralPath $cursor -Force).Attributes -band [IO.FileAttributes]::ReparsePoint)) { throw 'OUTPUT_PATH_IS_LINK' }
+        $cursor = Split-Path $cursor -Parent
+    }
+    return $resolved
+}
 function Initialize-NativeTools {
     param([switch]$NeedNode)
     if (-not $env:QT_ROOT -or -not (Test-Path -LiteralPath "$env:QT_ROOT/lib/cmake/Qt5")) {

@@ -2322,6 +2322,80 @@
           "unit": "px"
         }
       },
+      "motion": {
+        "duration": {
+          "instant": { "$type": "number", "$value": 0, "$description": "Motion candidate preset", "unit": "ms", "$status": "candidate" },
+          "fast": { "$type": "number", "$value": 200, "$description": "Motion candidate preset", "unit": "ms", "$status": "candidate" },
+          "standard": { "$type": "number", "$value": 320, "$description": "Motion candidate preset", "unit": "ms", "$status": "candidate" },
+          "emphasis": { "$type": "number", "$value": 520, "$description": "Motion candidate preset", "unit": "ms", "$status": "candidate" },
+          "slow": { "$type": "number", "$value": 720, "$description": "Motion candidate preset", "unit": "ms", "$status": "candidate" },
+          "loop": { "$type": "number", "$value": 1800, "$description": "Released Spinner loop duration; remaining Motion presets stay candidate", "unit": "ms", "$status": "active" }
+        },
+        "delay": {
+          "none": { "$type": "number", "$value": 0, "$description": "Released Spinner delay; remaining Motion presets stay candidate", "unit": "ms", "$status": "active" },
+          "short": { "$type": "number", "$value": 80, "$description": "Motion candidate preset", "unit": "ms", "$status": "candidate" },
+          "standard": { "$type": "number", "$value": 160, "$description": "Motion candidate preset", "unit": "ms", "$status": "candidate" }
+        },
+        "easing": {
+          "linear": { "$type": "string", "$value": "linear", "$description": "Released Spinner easing; remaining Motion presets stay candidate", "$status": "active" },
+          "ease-in": { "$type": "string", "$value": "cubic-bezier(0.55, 0.06, 0.68, 0.19)", "$description": "Motion candidate preset", "$status": "candidate" },
+          "ease-out": { "$type": "string", "$value": "cubic-bezier(0.22, 0.61, 0.36, 1)", "$description": "Motion candidate preset", "$status": "candidate" },
+          "ease-in-out": { "$type": "string", "$value": "cubic-bezier(0.65, 0, 0.35, 1)", "$description": "Motion candidate preset", "$status": "candidate" },
+          "standard": { "$type": "string", "$value": "cubic-bezier(0.22, 1, 0.36, 1)", "$description": "Motion candidate preset", "$status": "candidate" }
+        },
+        "distance": {
+          "none": { "$type": "dimension", "$value": 0, "$description": "Motion candidate preset", "unit": "px", "$status": "candidate" },
+          "small": { "$type": "dimension", "$value": 8, "$description": "Motion candidate preset", "unit": "px", "$status": "candidate" },
+          "medium": { "$type": "dimension", "$value": 24, "$description": "Motion candidate preset", "unit": "px", "$status": "candidate" },
+          "large": { "$type": "dimension", "$value": 48, "$description": "Motion candidate preset", "unit": "px", "$status": "candidate" }
+        },
+        "scale": {
+          "identity": { "$type": "number", "$value": 1, "$description": "Motion candidate preset", "$status": "candidate" },
+          "press": { "$type": "number", "$value": 0.98, "$description": "Motion candidate preset", "$status": "candidate" },
+          "enter": { "$type": "number", "$value": 0.96, "$description": "Motion candidate preset", "$status": "candidate" },
+          "pulse": { "$type": "number", "$value": 1.04, "$description": "Motion candidate preset", "$status": "candidate" }
+        },
+        "rotation": {
+          "none": { "$type": "number", "$value": 0, "$description": "Released Spinner rotation start; remaining Motion presets stay candidate", "unit": "deg", "$status": "active" },
+          "quarter-turn": { "$type": "number", "$value": 90, "$description": "Motion candidate preset", "unit": "deg", "$status": "candidate" },
+          "half-turn": { "$type": "number", "$value": 180, "$description": "Motion candidate preset", "unit": "deg", "$status": "candidate" },
+          "full-turn": { "$type": "number", "$value": 360, "$description": "Released Spinner rotation end; remaining Motion presets stay candidate", "unit": "deg", "$status": "active" }
+        },
+        "opacity": {
+          "transparent": { "$type": "number", "$value": 0, "$description": "Motion candidate preset", "$status": "candidate" },
+          "subtle": { "$type": "number", "$value": 0.4, "$description": "Motion candidate preset", "$status": "candidate" },
+          "visible": { "$type": "number", "$value": 1, "$description": "Motion candidate preset", "$status": "candidate" }
+        }
+      },
+      "spinner": {
+        "stroke-width": {
+          "$type": "borderWidth",
+          "$value": 2,
+          "$description": "Released Spinner visual stroke width; derived from the reviewed circular-loading reference",
+          "unit": "px",
+          "$status": "active"
+        },
+        "track-opacity": {
+          "$type": "number",
+          "$value": 0.18,
+          "$description": "Released Spinner track opacity",
+          "$status": "active"
+        },
+        "arc-start-angle": {
+          "$type": "number",
+          "$value": -90,
+          "$description": "Released Spinner arc start angle; top of the circle",
+          "unit": "deg",
+          "$status": "active"
+        },
+        "arc-sweep-angle": {
+          "$type": "number",
+          "$value": 90,
+          "$description": "Released Spinner visible arc sweep; endpoint is derived from start plus sweep",
+          "unit": "deg",
+          "$status": "active"
+        }
+      },
       "spacing": {
         "0": {
           "$type": "spacing",

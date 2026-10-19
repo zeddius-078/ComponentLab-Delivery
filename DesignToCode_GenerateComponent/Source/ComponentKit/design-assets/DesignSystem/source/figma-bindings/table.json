@@ -1,0 +1,190 @@
+{
+  "$description": "Table V2 Figma component and variable binding manifest. This file records the intended Figma structure; it does not write or mutate the Figma file.",
+  "component": "table",
+  "version": "2.0",
+  "architectureAuthority": "V2 component-registry, component-contracts, and component-recipes; the reference JSON is value-only evidence and must not define Figma variable names.",
+  "valueAuthority": "source/component-value-evidence/table.json",
+  "$status": "draft-v2",
+  "writePolicy": "specification-only",
+  "valueEvidence": "source/component-value-evidence/table.json",
+  "publicComponentSet": "ComponentLab/Table",
+  "figmaComponentSet": "2256:16548",
+  "figmaComponentSetStatus": "verified",
+  "figmaVariantCount": 8,
+  "figmaVariantCountStatus": "verified",
+  "legacyFigmaComponentSets": ["363:366", "717:21", "1111:21"],
+  "legacyIdentities": [
+    "ComponentLab/TableView",
+    "ComponentLab/DataTable",
+    "ComponentLab/TableWidget"
+  ],
+  "variantAxes": {
+    "density": ["compact", "small", "medium", "large"],
+    "striping": ["none", "zebra"]
+  },
+  "nestedStructure": {
+    "table": [
+      "header",
+      "body",
+      "loading-state",
+      "empty-state",
+      "no-match-state",
+      "error-state",
+      "footer"
+    ],
+    "header": [
+      "header-row",
+      "header-group",
+      "header-leaf",
+      "sort-indicator",
+      "filter-trigger",
+      "header-action-group"
+    ],
+    "body": [
+      "row",
+      "cell-content",
+      "cell-editor",
+      "cell-action",
+      "selection-control",
+      "row-action-group"
+    ],
+    "actionSlots": [
+      "table-action-group",
+      "selection-action-group"
+    ]
+  },
+  "componentProperties": {
+    "showHeader": "boolean",
+    "showFooter": "boolean",
+    "showLoadingState": "boolean",
+    "showEmptyState": "boolean",
+    "showNoMatchState": "boolean",
+    "showErrorState": "boolean",
+    "bodyContent": "instance-swap",
+    "headerContent": "instance-swap",
+    "footerContent": "instance-swap"
+  },
+  "contentProperties": {
+    "headerText": {
+      "kind": "localized-content-key",
+      "source": "column-schema-header",
+      "defaultLocale": "en-US",
+      "fallbackLocale": "en-US"
+    },
+    "cellDisplayText": {
+      "kind": "runtime-instance-content",
+      "source": "cell-content-slot"
+    },
+    "cellEditorText": {
+      "kind": "runtime-instance-content",
+      "source": "cell-editor-slot"
+    },
+    "lifecycleText": {
+      "kind": "localized-content-key",
+      "source": "loading-empty-no-match-error-state-slots",
+      "defaultLocale": "en-US",
+      "fallbackLocale": "en-US"
+    },
+    "actionText": {
+      "kind": "localized-content-key-or-runtime-label",
+      "source": "table-action-slots"
+    }
+  },
+  "variableNamespace": {
+    "collection": "DSM/Component",
+    "prefix": "table/",
+    "canonicalPrefix": "component.table."
+  },
+  "bindingRules": [
+    {
+      "figmaSlot": "Table/Container",
+      "figmaProperty": "fill-padding",
+      "canonicalPattern": "component.table.base.shared.slot.container.*",
+      "source": "component-recipes/table.json#/base/shared"
+    },
+    {
+      "figmaSlot": "Table/Header",
+      "figmaProperty": "fill-text-typography-padding",
+      "canonicalPattern": "component.table.base.shared.slot.header.*",
+      "source": "component-recipes/table.json#/base/shared"
+    },
+    {
+      "figmaSlot": "Table/Body/Row",
+      "figmaProperty": "background-min-height-border",
+      "canonicalPattern": "component.table.base.{density|striping}.slot.row.*",
+      "source": "component-recipes/table.json#/base"
+    },
+    {
+      "figmaSlot": "Table/Body/Row/Cell",
+      "figmaProperty": "text-background-typography-gap-padding",
+      "canonicalPattern": "component.table.base.shared.slot.cell.*",
+      "source": "component-recipes/table.json#/base/shared"
+    },
+    {
+      "figmaSlot": "Table/Body/Row",
+      "figmaProperty": "row-hover-background",
+      "canonicalToken": "component.table.overlay.row-interaction.hover.slot.row.background-color",
+      "figmaVariable": "table/overlay/row-interaction/hover/slot/row/background-color",
+      "source": "component-recipes/table.json#/overlays?row-interaction=hover"
+    },
+    {
+      "figmaSlot": "Table/Body/Column",
+      "figmaProperty": "column-hover-background",
+      "canonicalToken": "component.table.overlay.column-interaction.hover.slot.column.background-color",
+      "figmaVariable": "table/overlay/column-interaction/hover/slot/column/background-color",
+      "source": "component-recipes/table.json#/overlays?column-interaction=hover"
+    },
+    {
+      "figmaSlot": "Table/Body/Cell",
+      "figmaProperty": "cell-selection-background",
+      "canonicalToken": "component.table.overlay.cell-selection.selected.slot.cell.background-color",
+      "figmaVariable": "table/overlay/cell-selection/selected/slot/cell/background-color",
+      "source": "component-recipes/table.json#/overlays?cell-selection=selected"
+    },
+    {
+      "figmaSlot": "Table/Header/ActionGroup",
+      "figmaProperty": "gap",
+      "canonicalToken": "component.table.base.shared.slot.header.action-gap",
+      "figmaVariable": "table/base/shared/slot/header/action-gap",
+      "source": "component-recipes/table.json#/base/shared/slot/header/action-gap"
+    },
+    {
+      "figmaSlot": "Table/Header/SortIndicator",
+      "figmaProperty": "size-color",
+      "canonicalPattern": "component.table.base.shared.slot.sort-indicator.*",
+      "source": "component-recipes/table.json#/base/shared"
+    },
+    {
+      "figmaSlot": "Table/Header/FilterTrigger",
+      "figmaProperty": "size-color",
+      "canonicalPattern": "component.table.base.shared.slot.filter-trigger.*",
+      "source": "component-recipes/table.json#/base/shared"
+    },
+    {
+      "figmaSlot": "Table/Body/State",
+      "figmaProperty": "loading-empty-no-match-error",
+      "canonicalPattern": "component.table.base.shared.slot.{loading-state|empty-state|no-match-state|error-state}.*",
+      "source": "component-recipes/table.json#/base/shared"
+    }
+  ],
+  "sharedComponentBindings": {
+    "selectionControl": "component.checkbox",
+    "sortIndicator": "component.icon.sort",
+    "scrollbar": "component.scroll-bar",
+    "overflowPresentation": "shared.tooltip-popover",
+    "pagination": "component.pagination"
+  },
+  "runtimeOnly": [
+    "columnSchema",
+    "headerTree",
+    "rowSelection",
+    "cellSelection",
+    "freeze",
+    "cellSpan",
+    "dataWindow",
+    "dataRefresh",
+    "actionAvailability",
+    "queryCapabilities",
+    "keyboardInteraction"
+  ]
+}

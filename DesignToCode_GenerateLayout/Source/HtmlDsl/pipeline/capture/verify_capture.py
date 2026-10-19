@@ -3,7 +3,7 @@
 # 检查通过表示本地文件相互一致；服务身份、所属设计文件和图片来源另需证据。
 # 当前检查使用 assert；命令见 docs/mainSkill/generate-layout-pipeline/references/设计到布局生成说明.md，避免用 -O/-OO 关闭断言。
 # 命令从 DesignToCode 执行：
-# python -B HtmlDsl/pipeline/capture/verify_capture.py HtmlDsl/pipeline/design-inputs/node-12-382-full
+# python -B Source/HtmlDsl/pipeline/capture/verify_capture.py docs/fixtures/layout/design-inputs/node-12-382-full
 # -B 仅关闭 Python 字节码缓存写入，校验断言仍会执行。
 import argparse
 import hashlib
@@ -51,10 +51,14 @@ def verify(directory):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('directory', type=Path)
+    parser.add_argument('--output', type=Path)
     args = parser.parse_args()
     result = verify(args.directory)
     # 全部检查通过后才写报告，并覆盖同名旧报告；失败时旧报告可能仍在。
     # 判断本次结果应同时查看命令退出状态，避免把旧 PASS 当作本次通过。
-    (args.directory / 'verification.json').write_text(
+    from output_paths import PROJECT, output_path
+    output = output_path(args.output or PROJECT / 'build/reports/capture' / args.directory.name / 'verification.json')
+    output.parent.mkdir(parents=True, exist_ok=True)
+    output.write_text(
         json.dumps(result, indent=2, ensure_ascii=False), encoding='utf-8')
     print(json.dumps(result, ensure_ascii=False))

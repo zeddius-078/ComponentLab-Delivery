@@ -1,0 +1,34 @@
+{
+  "$schema": "../../schema/component-recipe-schema.json",
+  "$registry": {"component": "statistic", "version": "2.0"},
+  "$status": "draft-v2",
+  "$description": "Statistic V2 sparse recipe. One value presentation with optional content slots and lifecycle feedback overrides.",
+  "base": {
+    "size": {
+      "compact": {"slot/container/padding-block": "{primitive.dimension.8}", "slot/container/padding-inline": "{primitive.dimension.12}"},
+      "default": {"slot/container/padding-block": "{primitive.dimension.12}", "slot/container/padding-inline": "{primitive.dimension.16}"}
+    },
+    "shared": {
+      "slot/container/background-color": "{semantic.color.background.surface}",
+      "slot/container/gap": "{semantic.space.vertical.micro}",
+      "slot/container/border-radius": "{primitive.radius.md-4}",
+      "slot/title/color": "{semantic.color.text.secondary}",
+      "slot/title/typography": "{typography.body.body-1}",
+      "slot/value/color": "{semantic.color.text.primary}",
+      "slot/value/typography": "{typography.body.body-1}",
+      "slot/prefix/color": "{semantic.color.text.secondary}",
+      "slot/prefix/typography": "{typography.body.body-1}",
+      "slot/suffix/color": "{semantic.color.text.secondary}",
+      "slot/suffix/typography": "{typography.body.body-1}",
+      "slot/feedback/typography": "{typography.body.body-1}"
+    }
+  },
+  "stateOverrides": {
+    "default": {"tokens": {}},
+    "loading": {"tokens": {"slot/loading-skeleton/color": "{semantic.color.background.hover}", "slot/loading-skeleton/visual-height": "{primitive.dimension.16}", "slot/loading-skeleton/border-radius": "{primitive.radius.sm-2}"}},
+    "empty": {"tokens": {"slot/feedback/color": "{semantic.color.text.secondary}"}},
+    "error": {"tokens": {"slot/feedback/color": "{semantic.color.status.danger.default}"}}
+  },
+  "overlayPolicy": {"resolutionOrder": ["shared-base", "size", "state-sparse-override"], "stateOverrideMode": "sparse-inherit-unmentioned"},
+  "diagnostics": [{"severity": "warning", "code": "V2-DRAFT-STATISTIC-RUNTIME-PAINT", "message": "Z_Statistic still contains runtime presentation literals; migrate title/value/feedback/skeleton reads to compiled Statistic tokens before release.", "source": "runtime/component/Z_DesignComponents.cpp"}]
+}

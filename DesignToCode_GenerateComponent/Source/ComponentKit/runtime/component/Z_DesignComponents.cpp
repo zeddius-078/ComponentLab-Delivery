@@ -140,7 +140,7 @@ struct CompositeTokens {
     QColor color(const char* name) const {
         const QString value = colors[QString::fromLatin1(name)].toString();
         if (value.isEmpty())
-            throw std::runtime_error("Missing composite component color token");
+            throw std::runtime_error(("Missing composite component color token: " + QString::fromLatin1(name)).toStdString());
         if (value.startsWith(QStringLiteral("rgba("))) {
             const auto parts = value.mid(value.indexOf('(') + 1,
                                          value.lastIndexOf(')') - value.indexOf('(') - 1)
@@ -161,7 +161,7 @@ struct CompositeTokens {
     int metric(const char* name) const {
         const auto value = layout[QString::fromLatin1(name)];
         if (!value.isDouble())
-            throw std::runtime_error("Missing composite component layout token");
+            throw std::runtime_error(("Missing composite component layout token: " + QString::fromLatin1(name)).toStdString());
         return value.toInt();
     }
 };
@@ -171,15 +171,6 @@ QString qssColor(const QColor& value) {
                ? value.name(QColor::HexRgb)
                : QStringLiteral("rgba(%1,%2,%3,%4)")
                      .arg(value.red()).arg(value.green()).arg(value.blue()).arg(value.alpha());
-}
-
-QString profileForDensity(const QString& profile, const QString& density) {
-    const QString appearance = profile.startsWith(QStringLiteral("dark-"))
-                                   ? QStringLiteral("dark")
-                                   : QStringLiteral("light");
-    return appearance + (density == QStringLiteral("Compact")
-                             ? QStringLiteral("-compact")
-                             : QStringLiteral("-comfortable"));
 }
 
 QString compositeCjkFontFamily() {
@@ -1093,7 +1084,7 @@ void configureFigmaStatistic(Z_Statistic* statistic,
 }
 
 Z_Chart::Z_Chart(QWidget* parent)
-    : Z_Chart(QStringLiteral("light-comfortable"), parent) {}
+    : Z_Chart(QStringLiteral("standard-light"), parent) {}
 
 Z_Chart::Z_Chart(const QString& profile, QWidget* parent)
     : Z_DesignComponent(QStringLiteral("Chart"), parent),
@@ -1143,22 +1134,22 @@ void Z_Chart::paintEvent(QPaintEvent*) {
     painter.scale(width() / 520.0, height() / 300.0);
 
     const CompositeTokens tokens(m_profile);
-    const QColor surface = tokens.color("component.basic.card.background");
-    const QColor border = tokens.color("component.basic.card.border");
+    const QColor surface = tokens.color("component.card.base.surface.card.slot.container.background-color");
+    const QColor border = tokens.color("component.card.base.surface.card.slot.container.border-color");
     const QColor ink = tokens.color("semantic.color.text.primary");
     const QColor muted = tokens.color("semantic.color.text.muted");
-    const QColor mutedSurface = tokens.color("semantic.color.background.surface-muted");
-    const QColor grid = tokens.color("component.composite.chart.grid");
-    const QColor series = tokens.color("component.composite.chart.seriesPrimary");
-    const QColor shipped = tokens.color("component.composite.chart.ordersShipped");
-    const QColor pending = tokens.color("component.composite.chart.ordersPending");
-    const QColor canceled = tokens.color("component.composite.chart.ordersCanceled");
+    const QColor mutedSurface = tokens.color("semantic.color.background.surface-tertiary");
+    const QColor grid = tokens.color("component.chart.base.state.default.slot.content.grid");
+    const QColor series = tokens.color("component.chart.base.state.default.slot.content.series-primary");
+    const QColor shipped = tokens.color("component.chart.base.state.default.slot.content.orders-shipped");
+    const QColor pending = tokens.color("component.chart.base.state.default.slot.content.orders-pending");
+    const QColor canceled = tokens.color("component.chart.base.state.default.slot.content.orders-canceled");
 
     painter.setPen(QPen(border, 1));
     painter.setBrush(surface);
     painter.drawRoundedRect(QRectF(.5, .5, 519, 299),
-                            tokens.metric("component.basic.card.radius"),
-                            tokens.metric("component.basic.card.radius"));
+                            tokens.metric("component.card.base.surface.card.slot.container.border-radius"),
+                            tokens.metric("component.card.base.surface.card.slot.container.border-radius"));
     drawMetricText(painter, QRectF(20, 20, 360, 28), title(), ink, 16, QFont::DemiBold);
     drawMetricText(painter, QRectF(380, 20, 120, 28), m_meta, muted, 12, QFont::Normal,
                    Qt::AlignRight | Qt::AlignVCenter);
@@ -1195,7 +1186,7 @@ void Z_Chart::paintEvent(QPaintEvent*) {
         if (total <= 0)
             total = 1;
         const QRectF status(plot.left(), plot.top() + 20, plot.width(),
-                            tokens.metric("component.composite.chart.statusHeight"));
+                            tokens.metric("component.chart.base.state.default.slot.status.height"));
         QPainterPath clip;
         clip.addRoundedRect(status, 16, 16);
         painter.save();
@@ -1268,7 +1259,7 @@ Z_IMPLEMENT_CANVAS_COMPONENT(Z_Skeleton, "Skeleton", "Layout=Text, Motion=Still"
 #undef Z_IMPLEMENT_CANVAS_COMPONENT
 
 Z_Navbar::Z_Navbar(QWidget* parent)
-    : Z_Navbar(QStringLiteral("light-comfortable"), parent) {}
+    : Z_Navbar(QStringLiteral("standard-light"), parent) {}
 
 Z_Navbar::Z_Navbar(const QString& profile, QWidget* parent)
     : QWidget(parent), m_profile(profile) {
@@ -1383,11 +1374,11 @@ void Z_Navbar::setProfileName(const QString& value) {
         initials += word.left(1).toUpper();
     if (initials.isEmpty()) initials = QStringLiteral("U");
     if (initials.size() > 2) initials = initials.left(2);
-    const CompositeTokens tokens(profileForDensity(m_profile, m_density));
+    const CompositeTokens tokens(m_profile);
     m_profileAction->setText(value + QStringLiteral("  \u2304"));
     m_profileAction->setIcon(initialsIcon(
-        initials, tokens.color("base.stoken.color.interactive.brand.default"),
-        tokens.color("base.stoken.color.text.invert")));
+        initials, tokens.color("semantic.color.interactive.brand.default"),
+        tokens.color("semantic.color.text.invert")));
     m_profileAction->setIconSize(QSize(32, 32));
     m_profileAction->setAccessibleDescription(value);
     emit profileNameChanged(value);
@@ -1407,17 +1398,19 @@ void Z_Navbar::setFocusIndicatorEnabled(bool enabled) {
 void Z_Navbar::refreshGeometryAndStyle() {
     if (!m_layout)
         return;
-    const CompositeTokens tokens(profileForDensity(m_profile, m_density));
+    const CompositeTokens tokens(m_profile);
     const bool compact = m_density == QStringLiteral("Compact");
-    const int height = tokens.metric("component.composite.navbar.height");
-    const int padding = tokens.metric("component.composite.navbar.paddingInline");
-    const int gap = tokens.metric("component.composite.navbar.gap");
-    const QColor background = tokens.color("component.composite.navbar.background");
-    const QColor border = tokens.color("component.composite.navbar.border");
-    const QColor title = tokens.color("component.composite.navbar.title");
-    const QColor meta = tokens.color("component.composite.navbar.meta");
-    const QColor accent = tokens.color("base.stoken.color.interactive.brand.default");
-    const QColor onBrand = tokens.color("base.stoken.color.text.invert");
+    const int height = compact
+        ? tokens.metric("component.navigation-bar.base.state.default.slot.container.compact-height")
+        : tokens.metric("component.navigation-bar.base.state.default.slot.container.height");
+    const int padding = tokens.metric("component.navigation-bar.base.state.default.slot.container.padding-inline");
+    const int gap = tokens.metric("component.navigation-bar.base.state.default.slot.content.gap");
+    const QColor background = tokens.color("component.navigation-bar.base.state.default.slot.container.background-color");
+    const QColor border = tokens.color("component.navigation-bar.base.state.default.slot.container.border-color");
+    const QColor title = tokens.color("component.navigation-bar.base.state.default.slot.content.title");
+    const QColor meta = tokens.color("component.navigation-bar.base.state.default.slot.content.meta");
+    const QColor accent = tokens.color("semantic.color.interactive.brand.default");
+    const QColor onBrand = tokens.color("semantic.color.text.invert");
     m_layout->setContentsMargins(padding, 0, padding, 0);
     m_layout->setSpacing(gap);
     setFixedHeight(height);
@@ -1450,7 +1443,7 @@ void Z_Navbar::refreshGeometryAndStyle() {
         "QToolButton:hover{background:%2;}"
         "QToolButton[focusIndicatorVisible=\"true\"]{border:2px solid %3;}")
                                     .arg(qssColor(meta),
-                                         qssColor(tokens.color("base.stoken.color.background.hover")),
+                                         qssColor(tokens.color("semantic.color.background.hover")),
                                          qssColor(accent));
     m_notification->setStyleSheet(actionStyle);
     m_profileAction->setStyleSheet(actionStyle + QStringLiteral(
@@ -1459,7 +1452,7 @@ void Z_Navbar::refreshGeometryAndStyle() {
 }
 
 Z_Sidebar::Z_Sidebar(QWidget* parent)
-    : Z_Sidebar(QStringLiteral("light-comfortable"), parent) {}
+    : Z_Sidebar(QStringLiteral("standard-light"), parent) {}
 
 Z_Sidebar::Z_Sidebar(const QString& profile, QWidget* parent)
     : QWidget(parent), m_profile(profile) {
@@ -1541,12 +1534,12 @@ QSize Z_Sidebar::minimumSizeHint() const { return sizeHint(); }
 
 void Z_Sidebar::paintEvent(QPaintEvent* event) {
     Q_UNUSED(event)
-    const CompositeTokens tokens(profileForDensity(m_profile, m_density));
+    const CompositeTokens tokens(m_profile);
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing, true);
     painter.setPen(Qt::NoPen);
-    painter.setBrush(tokens.color("component.composite.sidebar.background"));
-    const qreal radius = tokens.metric("component.composite.sidebar.radius");
+    painter.setBrush(tokens.color("component.side-menu.base.state.default.slot.container.background-color"));
+    const qreal radius = tokens.metric("component.side-menu.base.state.default.slot.container.border-radius");
     painter.drawRoundedRect(QRectF(rect()), radius, radius);
 }
 
@@ -1685,19 +1678,19 @@ void Z_Sidebar::rebuildRoutes() {
 void Z_Sidebar::refreshGeometryAndStyle() {
     if (!m_collapseAction)
         return;
-    const CompositeTokens tokens(profileForDensity(m_profile, m_density));
+    const CompositeTokens tokens(m_profile);
     const bool compact = m_density == QStringLiteral("Compact");
-    const int itemHeight = tokens.metric("component.composite.sidebar.navItemHeight");
-    const int width = m_collapsed ? 80 : tokens.metric("component.composite.sidebar.width");
-    const int radius = tokens.metric("component.composite.sidebar.radius");
-    const int itemRadius = tokens.metric("component.composite.sidebar.navItemRadius");
-    const QColor background = tokens.color("component.composite.sidebar.background");
-    const QColor text = tokens.color("component.composite.sidebar.navItemText");
-    const QColor selectedText = tokens.color("component.composite.sidebar.navItemActiveText");
-    const QColor selectedBackground = tokens.color("component.composite.sidebar.navItemActiveBg");
-    const QColor border = tokens.color("base.stoken.color.border.secondary");
-    const QColor accent = tokens.color("base.stoken.color.interactive.brand.default");
-    const QColor onBrand = tokens.color("base.stoken.color.text.invert");
+    const int itemHeight = tokens.metric("component.side-menu.base.state.default.slot.item.height");
+    const int width = m_collapsed ? 80 : tokens.metric("component.side-menu.base.state.default.slot.container.width");
+    const int radius = tokens.metric("component.side-menu.base.state.default.slot.container.border-radius");
+    const int itemRadius = tokens.metric("component.side-menu.base.state.default.slot.item.border-radius");
+    const QColor background = tokens.color("component.side-menu.base.state.default.slot.container.background-color");
+    const QColor text = tokens.color("component.side-menu.base.state.default.slot.item.color");
+    const QColor selectedText = tokens.color("component.side-menu.base.state.default.slot.item.color");
+    const QColor selectedBackground = tokens.color("component.side-menu.base.state.default.slot.item.background-color");
+    const QColor border = tokens.color("semantic.color.border.secondary");
+    const QColor accent = tokens.color("semantic.color.interactive.brand.default");
+    const QColor onBrand = tokens.color("semantic.color.text.invert");
     setFixedWidth(width);
     setMinimumHeight(compact ? 466 : 520);
     if (auto* outer = qobject_cast<QVBoxLayout*>(layout()))
@@ -1731,7 +1724,7 @@ void Z_Sidebar::refreshGeometryAndStyle() {
         .arg(qssColor(background)).arg(radius).arg(qssColor(accent)).arg(qssColor(onBrand))
         .arg(qssColor(text)).arg(qssColor(border)).arg(qssColor(selectedBackground))
         .arg(itemRadius).arg(qssColor(selectedText))
-        .arg(qssColor(tokens.color("base.stoken.color.text.disabled"))));
+        .arg(qssColor(tokens.color("semantic.color.text.disabled"))));
     updateSelection();
     updateGeometry();
 }
@@ -1739,9 +1732,9 @@ void Z_Sidebar::refreshGeometryAndStyle() {
 void Z_Sidebar::updateSelection() {
     if (!m_routeGroup)
         return;
-    const CompositeTokens tokens(profileForDensity(m_profile, m_density));
-    const QColor normal = tokens.color("component.composite.sidebar.navItemText");
-    const QColor selected = tokens.color("component.composite.sidebar.navItemActiveText");
+    const CompositeTokens tokens(m_profile);
+    const QColor normal = tokens.color("component.side-menu.base.state.default.slot.item.color");
+    const QColor selected = tokens.color("component.side-menu.base.state.default.slot.item.color");
     const QStringList icons{QStringLiteral("home.svg"), QStringLiteral("document.svg"),
                             QStringLiteral("document.svg"), QStringLiteral("document.svg"),
                             QStringLiteral("document.svg"), QStringLiteral("settings.svg")};
@@ -1757,7 +1750,7 @@ void Z_Sidebar::updateSelection() {
 }
 
 Z_DesktopBottomNavigation::Z_DesktopBottomNavigation(QWidget* parent)
-    : Z_DesktopBottomNavigation(QStringLiteral("light-comfortable"), parent) {}
+    : Z_DesktopBottomNavigation(QStringLiteral("standard-light"), parent) {}
 
 Z_DesktopBottomNavigation::Z_DesktopBottomNavigation(const QString& profile, QWidget* parent)
     : QWidget(parent), m_profile(profile) {
@@ -1984,8 +1977,8 @@ void Z_DesktopBottomNavigation::updatePlacement() {
 
 void Z_DesktopBottomNavigation::updateSelection() {
     const CompositeTokens tokens(m_profile);
-    const QColor normal = tokens.color("base.stoken.color.text.primary");
-    const QColor selected = tokens.color("base.stoken.color.interactive.brand.default");
+    const QColor normal = tokens.color("semantic.color.text.primary");
+    const QColor selected = tokens.color("semantic.color.interactive.brand.default");
     for (int i = 0; i < m_secondaryButtons.size(); ++i)
         m_secondaryButtons[i]->setChecked(i == m_secondaryIndex);
     for (int i = 0; i < m_primaryButtons.size(); ++i) {
@@ -1999,12 +1992,12 @@ void Z_DesktopBottomNavigation::updateSelection() {
 
 void Z_DesktopBottomNavigation::refreshStyle() {
     const CompositeTokens tokens(m_profile);
-    const QColor background = tokens.color("base.stoken.color.background.control-default");
-    const QColor hover = tokens.color("base.stoken.color.background.hover");
-    const QColor border = tokens.color("base.stoken.color.border.secondary");
-    const QColor text = tokens.color("base.stoken.color.text.primary");
-    const QColor disabled = tokens.color("base.stoken.color.text.disabled");
-    const QColor accent = tokens.color("base.stoken.color.interactive.brand.default");
+    const QColor background = tokens.color("semantic.color.background.control-default");
+    const QColor hover = tokens.color("semantic.color.background.hover");
+    const QColor border = tokens.color("semantic.color.border.secondary");
+    const QColor text = tokens.color("semantic.color.text.primary");
+    const QColor disabled = tokens.color("semantic.color.text.disabled");
+    const QColor accent = tokens.color("semantic.color.interactive.brand.default");
     setStyleSheet(QStringLiteral(
         "QWidget#desktopBottomNavigation{background:%1;border:1px solid %2;}"
         "QWidget#desktopBottomNavigationSecondaryTier{background:%3;border:0;}"
@@ -2031,7 +2024,7 @@ void Z_DesktopBottomNavigation::refreshStyle() {
 }
 
 Z_Switch::Z_Switch(QWidget* parent)
-    : Z_Switch(QStringLiteral("light-comfortable"), parent) {}
+    : Z_Switch(QStringLiteral("standard-light"), parent) {}
 
 Z_Switch::Z_Switch(const QString& profile, QWidget* parent)
     : QAbstractButton(parent), m_profile(profile), m_label(QStringLiteral("Switch label")) {
@@ -2055,11 +2048,11 @@ QRect Z_Switch::trackGeometry() const {
     const CompositeTokens tokens(m_profile);
     const bool small = axisIs(m_variantProperties, "Size", "Small");
     const QSize trackSize(
-        tokens.metric(small ? "base.stoken.switch.size.small.track.visual-width"
-                            : "base.stoken.switch.size.medium.track.visual-width"),
-        tokens.metric(small ? "base.stoken.switch.size.small.track.visual-height"
-                            : "base.stoken.switch.size.medium.track.visual-height"));
-    const int inset = tokens.metric("base.stoken.switch.base.default.knob.inset");
+        tokens.metric(small ? "component.switch.base.size.small.slot.track.visual-width"
+                            : "component.switch.base.size.medium.slot.track.visual-width"),
+        tokens.metric(small ? "component.switch.base.size.small.slot.track.visual-height"
+                            : "component.switch.base.size.medium.slot.track.visual-height"));
+    const int inset = tokens.metric("component.switch.base.state.default.slot.knob.inset");
     const int leading = layoutDirection() == Qt::RightToLeft
                             ? width() - inset - trackSize.width()
                             : inset;
@@ -2069,14 +2062,14 @@ QRect Z_Switch::trackGeometry() const {
 QSize Z_Switch::sizeHint() const {
     const CompositeTokens tokens(m_profile);
     const int interactiveSize =
-        tokens.metric("semantic.dimension.control.interactive-size");
+        tokens.metric("adapter.qt.dimension.control-height.interactive-size");
     if (m_showLabel)
         return QSize(180, interactiveSize);
     const int trackWidth = tokens.metric(
         axisIs(m_variantProperties, "Size", "Small")
-            ? "base.stoken.switch.size.small.track.visual-width"
-            : "base.stoken.switch.size.medium.track.visual-width");
-    const int inset = tokens.metric("base.stoken.switch.base.default.knob.inset");
+            ? "component.switch.base.size.small.slot.track.visual-width"
+            : "component.switch.base.size.medium.slot.track.visual-width");
+    const int inset = tokens.metric("component.switch.base.state.default.slot.knob.inset");
     return QSize(trackWidth + inset * 2, interactiveSize);
 }
 void Z_Switch::setVariantTuple(const QString& tuple) {
@@ -2118,12 +2111,12 @@ void Z_Switch::nextCheckState() {
 void Z_Switch::paintEvent(QPaintEvent*) {
     QPainter painter(this); painter.setRenderHint(QPainter::Antialiasing);
     const CompositeTokens tokens(m_profile);
-    const QColor knob = tokens.color("component.basic.switch.knob");
-    const QColor text = tokens.color("component.basic.switch.text");
-    const QColor disabledText = tokens.color("component.basic.switch.disabledText");
-    const QColor disabledTrack = tokens.color("component.basic.switch.trackDisabled");
-    const QColor offTrack = tokens.color("component.basic.switch.trackOff");
-    const QColor onTrack = tokens.color("component.basic.switch.trackOn");
+    const QColor knob = tokens.color("component.switch.base.state.default.slot.knob.background-color");
+    const QColor text = tokens.color("semantic.color.text.primary");
+    const QColor disabledText = tokens.color("semantic.color.text.disabled");
+    const QColor disabledTrack = tokens.color("component.switch.base.state.disabled.slot.track.background-color");
+    const QColor offTrack = tokens.color("component.switch.base.state.default.slot.track.background-color");
+    const QColor onTrack = tokens.color("component.switch.base.value.on.slot.track.background-color");
     const QString state = axis(m_variantProperties, "State");
     const bool previewFocus = axisIs(m_variantProperties, "State", "Focus-visible");
     const QRectF track = trackGeometry();
@@ -2131,9 +2124,9 @@ void Z_Switch::paintEvent(QPaintEvent*) {
     const bool focus = focusIndicator.enabledFor(this) &&
                        (focusIndicator.visibleFor(this) || previewFocus);
     const QColor focusColor =
-        tokens.color("base.stoken.color.interactive.brand.focus-ring");
-    const QColor onHover = tokens.color("base.stoken.color.interactive.brand.hover");
-    const QColor onPressed = tokens.color("base.stoken.color.interactive.brand.pressed");
+        tokens.color("semantic.color.interactive.brand.focus-ring");
+    const QColor onHover = tokens.color("semantic.color.interactive.brand.hover");
+    const QColor onPressed = tokens.color("semantic.color.interactive.brand.pressed");
     QColor trackColor = isChecked() ? onTrack : offTrack;
     if (isEnabled() && state == QStringLiteral("Hover"))
         trackColor = isChecked() ? onHover
@@ -2144,11 +2137,11 @@ void Z_Switch::paintEvent(QPaintEvent*) {
     painter.setPen(QPen(focus ? focusColor : Qt::transparent, focus ? 2 : 0));
     painter.setBrush(isEnabled() ? trackColor : disabledTrack);
     painter.drawRoundedRect(track, track.height() / 2.0, track.height() / 2.0);
-    const qreal inset = tokens.metric("base.stoken.switch.base.default.knob.inset");
+    const qreal inset = tokens.metric("component.switch.base.state.default.slot.knob.inset");
     const qreal knobSize = tokens.metric(
         axisIs(m_variantProperties, "Size", "Small")
-            ? "base.stoken.switch.size.small.knob.visual-size"
-            : "base.stoken.switch.size.medium.knob.visual-size");
+            ? "component.switch.base.size.small.slot.knob.visual-size"
+            : "component.switch.base.size.medium.slot.knob.visual-size");
     const bool checkedAtVisualEnd = isChecked() != (layoutDirection() == Qt::RightToLeft);
     const qreal knobLeft = checkedAtVisualEnd ? track.right() - inset - knobSize + 1.0
                                                : track.left() + inset;

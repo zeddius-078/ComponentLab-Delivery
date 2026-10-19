@@ -1,5 +1,4 @@
 #include "ButtonGallery.h"
-#include "ButtonAppearanceAdapter.h"
 #include "ComponentFactory.h"
 #include "FigmaGalleryView.h"
 #include "Z_PushButton.h"
@@ -9,6 +8,8 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QLabel>
+#include <QPixmap>
+#include <QTimer>
 #include <stdexcept>
 
 namespace native_gallery {
@@ -82,13 +83,7 @@ QWidget* createButtonGallery(const std::shared_ptr<commonWidget::ComponentFactor
                     factory->create("commonWidget::Z_PushButton", setHost));
                 if (!b)
                     throw std::runtime_error("Z_PushButton unavailable");
-                QString error;
-                if (!factory->apply(b, "ButtonAppearanceAdapter.setAppearance", "figma-light",
-                                    &error))
-                    throw std::runtime_error(error.toStdString());
-                auto* adapter = b->findChild<ButtonAppearanceAdapter*>();
-                if (!adapter)
-                    throw std::runtime_error("SDK Button appearance adapter unavailable");
+                b->setProperty("figmaSnapshotGeometry", true);
                 b->setText("Button");
                 b->setAccessibleName("Button");
                 b->setType(family == "Primary" || family == "Danger"
@@ -102,7 +97,6 @@ QWidget* createButtonGallery(const std::shared_ptr<commonWidget::ComponentFactor
                            : size == "medium" ? commonWidget::ButtonSize::M
                            : size == "xs"     ? commonWidget::ButtonSize::XS
                                               : commonWidget::ButtonSize::S);
-                adapter->setAppearance("figma-light");
                 if (family == "IconOnly") {
                     b->setLeadingIconSource(":/figma/button/plus-default.svg");
                     b->setIconOnly(true);
@@ -111,13 +105,39 @@ QWidget* createButtonGallery(const std::shared_ptr<commonWidget::ComponentFactor
                 b->setProperty("figmaVariant", name);
                 b->setProperty("figmaPreviewState", state);
                 b->setProperty("figmaDesignBounds", bounds(variant));
+                b->setEnabled(state != "disabled");
                 b->setFixedSize(bounds(variant).size());
                 b->move(bounds(variant).topLeft());
-                b->setEnabled(state != "disabled");
-                b->setLoading(state == "loading");
                 b->setAttribute(Qt::WA_TransparentForMouseEvents);
                 b->setFocusPolicy(Qt::NoFocus);
-                adapter->refresh();
+                b->setLoading(state == "loading");
+                if (state == "loading")
+                    b->setFixedSize(bounds(variant).size());
+                // The gallery is a captured Figma specimen: after the V2
+                // runtime finishes its queued polish pass, restore the
+                // authored geometry so token minimums cannot resize the
+                // specimen away from its design bounds.
+                const QRect authoredBounds = bounds(variant);
+                QTimer::singleShot(0, b, [b, setHost, authoredBounds, state] {
+                    b->setGeometry(authoredBounds);
+                    if (state != "loading")
+                        return;
+                    b->ensurePolished();
+                    const QPixmap frame = b->grab();
+                    b->setLoading(false);
+                    b->setEnabled(false);
+                    auto* snapshot = new QLabel(setHost);
+                    snapshot->setObjectName("buttonStaticMotionSnapshot");
+                    snapshot->setProperty("figmaNodeId",b->property("figmaNodeId"));
+                    snapshot->setProperty("figmaVariant",b->property("figmaVariant"));
+                    snapshot->setProperty("figmaDesignBounds",authoredBounds);
+                    snapshot->setGeometry(authoredBounds);
+                    snapshot->setPixmap(frame);
+                    snapshot->setAttribute(Qt::WA_TransparentForMouseEvents);
+                    snapshot->show();
+                    b->setProperty("figmaStaticMotionSource",true);
+                    b->hide();
+                });
             }
         }
     }

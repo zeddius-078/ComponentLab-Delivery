@@ -1,0 +1,25 @@
+{
+  "$description": "Badge V2 Component Contract. Non-interactive status marker with text and dot presentations.",
+  "component": "badge",
+  "version": "1.0",
+  "$status": "draft-v2",
+  "contractKind": "static-status-marker",
+  "registryBindings": {"source": "source/component-registry.json#/components/badge", "axes": ["kind", "tone"], "slots": ["container", "label"], "authority": "component-registry"},
+  "structure": ["container", "label"],
+  "stateLayers": {"kind": "text or dot presentation", "tone": "status semantic tone", "content": "runtime label for text presentation"},
+  "runtimeModel": {
+    "kind": {"registryAxis": "kind", "values": ["text", "dot"], "owner": "component-configuration"},
+    "tone": {"registryAxis": "tone", "values": ["neutral", "info", "success", "warning", "danger"], "owner": "component-configuration"},
+    "interaction": {"focusable": false, "clickable": false, "hoverable": false}
+  },
+  "contentModel": {"label": {"kind": "localized-content-key-or-runtime-text", "defaultLocale": "en-US", "fallbackLocale": "en-US", "requiredWhen": "kind=text", "ignoredWhen": "kind=dot", "visualToken": false}},
+  "compositionRules": [
+    "Badge is a non-interactive status marker, not a Button, Tag or interactive control.",
+    "Kind controls whether the marker is text or dot; it does not create an interaction state.",
+    "Tone controls semantic color roles and does not represent a runtime lifecycle state.",
+    "Dot presentation does not render label content; text presentation renders the runtime label inside the container.",
+    "Badge has no hover, pressed, focused, disabled or loading axis.",
+    "Badge geometry is resolved from kind-specific visual tokens and content measurement; label text never becomes a design Token."
+  ],
+  "tokenBoundary": {"recipeOwns": ["container tone colors", "kind-specific geometry", "label color and typography"], "runtimeOwns": ["label value", "kind/tone property delivery", "content measurement and accessibility label"], "contractDoesNotOwn": ["business status lifecycle", "click behavior", "resolved color or dimension values"]}
+}

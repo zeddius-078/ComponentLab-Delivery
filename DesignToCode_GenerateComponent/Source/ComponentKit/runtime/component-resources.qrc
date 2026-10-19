@@ -149,19 +149,6 @@
         <file alias="button-visuals.json">../component-definitions/figma-button-visuals.json</file>
         <file alias="progress-visuals.json">../component-definitions/figma-progress-visuals.json</file>
         <file alias="radio-visuals.json">../component-definitions/figma-radio-visuals.json</file>
-        <file alias="input-visuals.json">../component-definitions/figma-input-visuals.json</file>
-        <file alias="input/EyeOffPrimary.svg">assets/icons/figma-input/EyeOffPrimary.svg</file>
-        <file alias="input/EyeOffAccent.svg">assets/icons/figma-input/EyeOffAccent.svg</file>
-        <file alias="input/EyeOffDisabled.svg">assets/icons/figma-input/EyeOffDisabled.svg</file>
-        <file alias="input/EyeOffDanger.svg">assets/icons/figma-input/EyeOffDanger.svg</file>
-        <file alias="input/EyePrimary.svg">assets/icons/figma-input/EyePrimary.svg</file>
-        <file alias="input/EyeAccent.svg">assets/icons/figma-input/EyeAccent.svg</file>
-        <file alias="input/EyeDisabled.svg">assets/icons/figma-input/EyeDisabled.svg</file>
-        <file alias="input/EyeDanger.svg">assets/icons/figma-input/EyeDanger.svg</file>
-        <file alias="input/LoadingPrimary.svg">assets/icons/figma-input/LoadingPrimary.svg</file>
-        <file alias="input/SearchPrimary.svg">assets/icons/figma-input/SearchPrimary.svg</file>
-        <file alias="input/SearchDisabled.svg">assets/icons/figma-input/SearchDisabled.svg</file>
-        <file alias="input/ClosePrimary.svg">assets/icons/figma-input/ClosePrimary.svg</file>
         <file alias="radio/unselected-default.svg">assets/icons/figma-radio/unselected-default.svg</file>
         <file alias="radio/unselected-hover.svg">assets/icons/figma-radio/unselected-hover.svg</file>
         <file alias="radio/unselected-pressed.svg">assets/icons/figma-radio/unselected-pressed.svg</file>
@@ -229,45 +216,27 @@
         <file alias="search.svg">assets/icons/search.svg</file>
         <file alias="chevron-down.svg">assets/icons/chevron-down.svg</file>
     </qresource>
-    <qresource prefix="/forms">
-        <file alias="light-comfortable/catalog.json">../design-assets/generated/forms/light-comfortable/catalog.json</file>
-        <file alias="light-compact/catalog.json">../design-assets/generated/forms/light-compact/catalog.json</file>
-        <file alias="dark-comfortable/catalog.json">../design-assets/generated/forms/dark-comfortable/catalog.json</file>
-        <file alias="dark-compact/catalog.json">../design-assets/generated/forms/dark-compact/catalog.json</file>
-        <file alias="light-comfortable/Z_Field.qss">../design-assets/generated/forms/light-comfortable/Z_Field.qss</file>
-        <file alias="light-compact/Z_Field.qss">../design-assets/generated/forms/light-compact/Z_Field.qss</file>
-        <file alias="dark-comfortable/Z_Field.qss">../design-assets/generated/forms/dark-comfortable/Z_Field.qss</file>
-        <file alias="dark-compact/Z_Field.qss">../design-assets/generated/forms/dark-compact/Z_Field.qss</file>
-    </qresource>
-    <qresource prefix="/button">
-        <file alias="manifest.json">../design-assets/generated/button/manifest.json</file>
-        <file alias="light-comfortable.qss">../design-assets/generated/button/light-comfortable/Z_PushButton.qss</file>
-        <file alias="light-comfortable-demo.qss">../design-assets/generated/button/light-comfortable/demo.qss</file>
-        <file alias="light-compact.qss">../design-assets/generated/button/light-compact/Z_PushButton.qss</file>
-        <file alias="light-compact-demo.qss">../design-assets/generated/button/light-compact/demo.qss</file>
-        <file alias="dark-comfortable.qss">../design-assets/generated/button/dark-comfortable/Z_PushButton.qss</file>
-        <file alias="dark-comfortable-demo.qss">../design-assets/generated/button/dark-comfortable/demo.qss</file>
-        <file alias="dark-compact.qss">../design-assets/generated/button/dark-compact/Z_PushButton.qss</file>
-        <file alias="dark-compact-demo.qss">../design-assets/generated/button/dark-compact/demo.qss</file>
-    </qresource>
     <qresource prefix="/checkbox">
-        <file alias="light-comfortable/catalog.json">../design-assets/generated/checkbox/light-comfortable/catalog.json</file>
-        <file alias="light-compact/catalog.json">../design-assets/generated/checkbox/light-compact/catalog.json</file>
-        <file alias="dark-comfortable/catalog.json">../design-assets/generated/checkbox/dark-comfortable/catalog.json</file>
-        <file alias="dark-compact/catalog.json">../design-assets/generated/checkbox/dark-compact/catalog.json</file>
-        <file alias="light-comfortable/Z_CheckBox.qss">../design-assets/generated/checkbox/light-comfortable/Z_CheckBox.qss</file>
-        <file alias="light-compact/Z_CheckBox.qss">../design-assets/generated/checkbox/light-compact/Z_CheckBox.qss</file>
-        <file alias="dark-comfortable/Z_CheckBox.qss">../design-assets/generated/checkbox/dark-comfortable/Z_CheckBox.qss</file>
-        <file alias="dark-compact/Z_CheckBox.qss">../design-assets/generated/checkbox/dark-compact/Z_CheckBox.qss</file>
+        <file alias="standard-light/catalog.json">../design-assets/generated/checkbox/standard-light/catalog.json</file>
+        <file alias="wide-light/catalog.json">../design-assets/generated/checkbox/wide-light/catalog.json</file>
+        <file alias="standard-dark/catalog.json">../design-assets/generated/checkbox/standard-dark/catalog.json</file>
+        <file alias="wide-dark/catalog.json">../design-assets/generated/checkbox/wide-dark/catalog.json</file>
+        <file alias="standard-light/Z_CheckBox.qss">../design-assets/generated/checkbox/standard-light/Z_CheckBox.qss</file>
+        <file alias="wide-light/Z_CheckBox.qss">../design-assets/generated/checkbox/wide-light/Z_CheckBox.qss</file>
+        <file alias="standard-dark/Z_CheckBox.qss">../design-assets/generated/checkbox/standard-dark/Z_CheckBox.qss</file>
+        <file alias="wide-dark/Z_CheckBox.qss">../design-assets/generated/checkbox/wide-dark/Z_CheckBox.qss</file>
     </qresource>
     <qresource prefix="/native">
-        <file alias="light-comfortable/native-components.qss">../design-assets/generated/native/light-comfortable/native-components.qss</file>
-        <file alias="light-compact/native-components.qss">../design-assets/generated/native/light-compact/native-components.qss</file>
-        <file alias="dark-comfortable/native-components.qss">../design-assets/generated/native/dark-comfortable/native-components.qss</file>
-        <file alias="dark-compact/native-components.qss">../design-assets/generated/native/dark-compact/native-components.qss</file>
+        <file alias="standard-light/native-components.qss">../design-assets/generated/native/standard-light/native-components.qss</file>
+        <file alias="wide-light/native-components.qss">../design-assets/generated/native/wide-light/native-components.qss</file>
+        <file alias="standard-dark/native-components.qss">../design-assets/generated/native/standard-dark/native-components.qss</file>
+        <file alias="wide-dark/native-components.qss">../design-assets/generated/native/wide-dark/native-components.qss</file>
     </qresource>
     <qresource prefix="/tokens">
         <file alias="tokens_qt.json">../design-assets/DesignSystem/generated/runtime/tokens_qt.json</file>
+    </qresource>
+    <qresource prefix="/composites">
+        <file alias="qt.json">../design-assets/DesignSystem/generated/composites/qt.json</file>
     </qresource>
     <qresource prefix="/icons">
         <file alias="checkbox-check.svg">assets/icons/checkbox-check.svg</file>

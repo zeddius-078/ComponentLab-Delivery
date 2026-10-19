@@ -1,4 +1,5 @@
 #include "DemoRuntime.h"
+#include "FocusIndicator.h"
 #include "Z_InputField.h"
 #include "Z_Select.h"
 #include "Z_OtpInput.h"
@@ -23,6 +24,7 @@
 #include <QTextBlock>
 #include <QFontInfo>
 #include <QFontDatabase>
+#include <cstdio>
 using commonWidget::Z_InputField;
 using commonWidget::Z_Select;
 
@@ -44,7 +46,7 @@ class FormsTests : public QObject {
     }
   private slots:
     void initTestCase() {
-        const auto profile = qEnvironmentVariable("DEMO_PROFILE", "light-comfortable");
+        const auto profile = qEnvironmentVariable("DEMO_PROFILE", "standard-light");
         tokens = std::make_shared<field::Tokens>(profile);
         evidence = qEnvironmentVariable("DEMO_EVIDENCE");
         if (!evidence.isEmpty())
@@ -67,86 +69,67 @@ class FormsTests : public QObject {
             QVERIFY(w.control()->rect().contains(w.lineEdit()->geometry()));
         }
         for (auto name : {"LABEL", "CONTROL", "PREFIX", "SUFFIX", "EDITOR", "TEXTAREA", "CLEAR",
-                          "PASSWORD_TOGGLE", "SEARCH_ACTION", "FOOTER", "HINT", "COUNT"})
+                          "PASSWORD_TOGGLE", "SEARCH_ACTION", "LOADING_ACTION", "FOOTER", "HINT", "COUNT"})
             QVERIFY2(w.findChild<QWidget*>(name), name);
     }
-    void capturedInputPreservesEditorsAndNativeContracts() {
-        Z_InputField w(tokens);w.setAppearance("figma-light");w.setSnapshotState("Default");
+    void v2InputPreservesEditorsAndLocksLoading() {
+        Z_InputField w(tokens);w.setAppearance("outlined");
         auto* line=w.lineEdit();auto* area=w.textArea();
-        w.setPlaceholder("Input text");show(w,320);
-        for(const auto& size:QStringList{"sm","md","lg"}) {
-            w.setControlSize(size);QCoreApplication::processEvents();
-            QCOMPARE(w.control()->height(),size=="lg"?40:32);
-            QCOMPARE(line->height(),20);QCOMPARE(line->font().pixelSize(),14);
-            QCOMPARE(line->x(),size=="sm"?9:size=="md"?13:17);
-        }
-        w.setValue("ABCDE");line->setSelection(1,3);w.setSnapshotState("Hover");
-        QCOMPARE(w.lineEdit(),line);QCOMPARE(w.textArea(),area);QCOMPARE(line->selectedText(),QString("BCD"));
-        w.setKind(Z_InputField::Kind::Password);w.setPasswordVisible(true);
-        QCOMPARE(line->echoMode(),QLineEdit::Normal);QCOMPARE(w.value(),QString("ABCDE"));
-        auto* action=w.findChild<field::Action*>("PASSWORD_TOGGLE");
-        w.setSnapshotState("Focus");QCOMPARE(action->property("figmaInputGlyph").toString(),QString("EyeOffAccent"));
-        QCOMPARE(action->size(),QSize(32,32));QCOMPARE(action->property("figmaAssetBounds").toRect(),QRect(9,9,16,16));
-        action->click();QCOMPARE(line->echoMode(),QLineEdit::Password);
-        w.setSnapshotState("Error");QCOMPARE(action->property("figmaInputGlyph").toString(),QString("EyeDanger"));
-        w.setKind(Z_InputField::Kind::Search);w.setAllowClear(true);
-        QSignalSpy searches(&w,&Z_InputField::searchRequested);
-        w.setLoading(true);w.findChild<field::Action*>("SEARCH_ACTION")->click();QCOMPARE(searches.count(),0);
-        QCOMPARE(w.findChild<field::Action*>("SEARCH_ACTION")->property("figmaInputGlyph").toString(),QString("LoadingPrimary"));
-        w.setLoading(false);w.findChild<field::Action*>("SEARCH_ACTION")->click();QCOMPARE(searches.count(),1);
-        w.setControlled(true);QSignalSpy requests(&w,&Z_InputField::valueChangeRequested);
-        w.findChild<field::Action*>("CLEAR")->click();QCOMPARE(requests.count(),1);QCOMPARE(w.value(),QString("ABCDE"));
-        w.setControlled(false);w.findChild<field::Action*>("CLEAR")->click();QVERIFY(w.value().isEmpty());
-        w.setKind(Z_InputField::Kind::TextArea);w.setAutoSize(false,2,5);
-        QCOMPARE(w.control()->height(),54);w.setControlSize("sm");QCOMPARE(w.control()->height(),46);
-        w.setSnapshotState("Default");w.setPlaceholder("Describe the context...");
-        QCoreApplication::processEvents();
-        QVERIFY(w.value().isEmpty());QVERIFY(area->document()->isEmpty());
-        QCOMPARE(area->placeholderText(),QString("Describe the context..."));
-        if(!evidence.isEmpty())QVERIFY(w.grab().save(evidence+"/input-textarea-captured.png"));
-        w.setVariant("underlined");QVERIFY(!w.control()->isFigmaInputAppearance());
-        QVERIFY(w.control()->property("figmaInputCompatibilityFallback").toBool());
-        w.setVariant("outlined");QVERIFY(w.control()->isFigmaInputAppearance());
-        w.setAppearance("solid");QVERIFY(!w.control()->isFigmaInputAppearance());
-        w.setAppearance("figma-light");w.setKind(Z_InputField::Kind::Text);w.setSnapshotState("");
-        line->setFocus();QInputMethodEvent commit;commit.setCommitString(QString::fromUtf8("中文"));
-        QApplication::sendEvent(line,&commit);QCOMPARE(w.value(),QString::fromUtf8("中文"));
+        w.setValue("ABCDE");show(w,320);line->setSelection(1,3);
+        w.setSnapshotState("Hover");
+        QCOMPARE(w.lineEdit(),line);QCOMPARE(w.textArea(),area);
+        QCOMPARE(line->selectedText(),QString("BCD"));
+        QCOMPARE(w.control()->property("fieldAppearance").toString(),QString("outlined"));
+        QVERIFY(!tokens->sourceHash().isEmpty());
+        w.setKind(Z_InputField::Kind::Search);
+        w.setLoading(true);
+        QVERIFY(line->isReadOnly());
+        QVERIFY(w.findChild<field::Action*>("LOADING_ACTION")->isVisible());
+        QVERIFY(!w.findChild<field::Action*>("SEARCH_ACTION")->isVisible());
+        w.setLoading(false);QVERIFY(!line->isReadOnly());
+        QVERIFY_EXCEPTION_THROWN(w.setAppearance("figma-light"),std::invalid_argument);
         QVERIFY_EXCEPTION_THROWN(w.setSnapshotState("Pressed"),std::invalid_argument);
     }
-    void capturedInputInitialTextRendering() {
-        Z_InputField w(tokens);w.setKind(Z_InputField::Kind::Password);
-        w.setAppearance("figma-light");w.setValue("secret42");w.setSnapshotState("Default");show(w,320);
-        QCOMPARE(w.lineEdit()->displayText(),QString(8,QChar(0x2022)));
-        QCOMPARE(QFontInfo(w.lineEdit()->font()).family(),QString("Inter"));
-        QCOMPARE(w.lineEdit()->font().weight(),int(QFont::Medium));
-        w.setAppearance("solid");QVERIFY(w.lineEdit()->displayText()!=QString(8,QChar(0x2022)));
+    void inputHoverAndActiveFocusUseDistinctStates() {
+        const auto hoverRecipe = tokens->recipe(field::Family::Input, "outlined", "hover");
+        const auto focusedRecipe = tokens->recipe(field::Family::Input, "outlined", "focused");
+        QCOMPARE(hoverRecipe.border, tokens->color("hoverBorder"));
+        QCOMPARE(focusedRecipe.border, tokens->color("focusBorder"));
+        QCOMPARE(hoverRecipe.border, QColor("#191919"));
+        QCOMPARE(focusedRecipe.border, QColor("#6235F7"));
+        QVERIFY(hoverRecipe.border != focusedRecipe.border);
+
+        auto& focusIndicator = commonWidget::FocusIndicator::instance();
+        const auto previousMode = focusIndicator.mode();
+        focusIndicator.setMode(commonWidget::FocusIndicator::Mode::Keyboard);
+
+        QWidget host;
+        QVBoxLayout layout(&host);
+        QLineEdit focusSink;
+        Z_InputField input(tokens);
+        layout.addWidget(&focusSink);
+        layout.addWidget(&input);
+        show(host);
+
+        focusSink.setFocus();
+        QTest::mouseMove(input.control(), input.control()->rect().center());
+        QTRY_COMPARE(input.control()->property("fieldState").toString(), QString("hover"));
+
+        QTest::mouseClick(input.lineEdit(), Qt::LeftButton, {}, input.lineEdit()->rect().center());
+        QTRY_VERIFY(input.lineEdit()->hasFocus());
+        QTRY_COMPARE(input.control()->property("fieldState").toString(), QString("focused"));
+        focusIndicator.setMode(previousMode);
     }
-    void capturedInputInitialPlaceholderRendering() {
-        Z_InputField w(tokens);w.setKind(Z_InputField::Kind::TextArea);w.setAppearance("figma-light");
-        w.setPlaceholder("Describe the context...");w.setSnapshotState("Default");w.setReadOnly(true);show(w,320);
-        QSignalSpy nativeChanges(w.textArea(),&QPlainTextEdit::textChanged);
-        QSignalSpy valueChanges(&w,&Z_InputField::valueChanged);
-        const auto image=w.grab().toImage().convertToFormat(QImage::Format_ARGB32);
-        int textPixels=0;
-        for(int y=4;y<23;++y)for(int x=18;x<220;++x)
-            if(image.pixelColor(x,y).alpha()>0 && image.pixelColor(x,y).value()<210)++textPixels;
-        QVERIFY2(textPixels>20,qPrintable(QString("placeholder pixels=%1").arg(textPixels)));
-        QCOMPARE(nativeChanges.count(),0);QCOMPARE(valueChanges.count(),0);
-    }
-    void capturedTextAreaLineHeightKeepsNativeEditing() {
-        Z_InputField w(tokens);w.setKind(Z_InputField::Kind::TextArea);w.setAppearance("figma-light");
+    void v2TextAreaLineHeightKeepsNativeEditing() {
+        Z_InputField w(tokens);w.setKind(Z_InputField::Kind::TextArea);w.setAppearance("outlined");
         w.setValue("First line\nSecond line");show(w,320);
         auto* area=w.textArea();auto* doc=area->document();
-        QCOMPARE(QFontInfo(area->font()).family(),QString("Inter"));
-        QCOMPARE(area->font().weight(),int(QFont::Medium));
-        QCOMPARE(doc->documentLayout()->blockBoundingRect(doc->begin()).height(),14.0);
+        QCOMPARE(area->font().pixelSize(),tokens->size("md")["fontSize"].toInt());
         auto cursor=area->textCursor();cursor.setPosition(0);area->setTextCursor(cursor);
-        const int firstY=area->cursorRect().y();
-        QTest::keyClick(area,Qt::Key_Down);QCOMPARE(area->cursorRect().y()-firstY,14);
         area->moveCursor(QTextCursor::End);QTest::keyClicks(area,"!");
         QCOMPARE(w.value(),QString("First line\nSecond line!"));
         area->undo();QCOMPARE(w.value(),QString("First line\nSecond line"));
-        w.setAppearance("solid");QVERIFY(doc->documentLayout()->blockBoundingRect(doc->begin()).height()>14);
+        QVERIFY(doc->documentLayout()->blockBoundingRect(doc->begin()).height()>0);
     }
     void editingGraphemesAndIme() {
         Z_InputField w(tokens);
@@ -209,7 +192,7 @@ class FormsTests : public QObject {
             w.setPrefix(i % 2 ? "Prefix" : "");
             w.setSuffix(i % 2 ? "suffix" : "");
             w.setShowCount(i % 2);
-            w.setAppearance(i % 2 ? "gradient-inset" : "solid");
+            w.setSnapshotState(i % 2 ? "Hover" : "Default");
         }
         QCOMPARE(w.lineEdit(), editor);
         QCOMPARE(editor->selectedText(), QString("BCD"));
@@ -241,9 +224,70 @@ class FormsTests : public QObject {
         QTest::mouseClick(w.findChild<QAbstractButton*>("SEARCH_ACTION"), Qt::LeftButton);
         QCOMPARE(search.count(), 2);
     }
+    void inputEmbeddedActionStatesAndApi() {
+        Z_InputField w(tokens);
+        w.setAllowClear(true);
+        w.setValue("secret");
+        show(w);
+        auto* clear = w.clearAction();
+        QCOMPARE(clear, w.findChild<field::Action*>("CLEAR"));
+        QCOMPARE(clear->role(), field::Action::Role::Clear);
+        QTest::mouseMove(w.lineEdit(), QPoint(2, 2));
+        QTRY_COMPARE(clear->interactionState(), field::Action::InteractionState::Default);
+        const auto defaultStyle = clear->styleSheet();
+        QSignalSpy clearStates(clear, &field::Action::interactionStateChanged);
+        QTest::mouseMove(clear, clear->rect().center());
+        QTRY_COMPARE(clear->interactionState(), field::Action::InteractionState::Hover);
+        QTRY_VERIFY(defaultStyle != clear->styleSheet());
+        const auto hoverStyle = clear->styleSheet();
+        QTest::mousePress(clear, Qt::LeftButton, {}, clear->rect().center());
+        QCOMPARE(clear->interactionState(), field::Action::InteractionState::Pressed);
+        QTRY_VERIFY(hoverStyle != clear->styleSheet());
+        QTest::mouseRelease(clear, Qt::LeftButton, {}, clear->rect().center());
+        QVERIFY(clearStates.count() >= 2);
+
+        w.setValue("clear-by-api");
+        QSignalSpy cleared(&w, &Z_InputField::cleared);
+        w.clear();
+        QCOMPARE(w.value(), QString());
+        QCOMPARE(cleared.count(), 1);
+
+        w.setValue("secret");
+        w.setReadOnly(true);
+        QVERIFY(clear->isVisible());
+        QCOMPARE(clear->interactionState(), field::Action::InteractionState::Disabled);
+        QVERIFY(clear->styleSheet() != defaultStyle);
+        const auto before = w.value();
+        w.clear();
+        QCOMPARE(w.value(), before);
+        w.setReadOnly(false);
+
+        w.setKind(Z_InputField::Kind::Password);
+        auto* password = w.passwordToggleAction();
+        QCOMPARE(password, w.findChild<field::Action*>("PASSWORD_TOGGLE"));
+        QCOMPARE(password->role(), field::Action::Role::PasswordToggle);
+        QSignalSpy visibility(&w, &Z_InputField::passwordVisibilityChanged);
+        w.togglePasswordVisibility();
+        QVERIFY(w.isPasswordVisible());
+        QCOMPARE(w.lineEdit()->echoMode(), QLineEdit::Normal);
+        QCOMPARE(visibility.count(), 1);
+        w.togglePasswordVisibility();
+        QVERIFY(!w.isPasswordVisible());
+        QCOMPARE(w.lineEdit()->echoMode(), QLineEdit::Password);
+        QCOMPARE(visibility.count(), 2);
+        QTest::mouseMove(w.lineEdit(), QPoint(2, 2));
+        QTRY_COMPARE(password->interactionState(), field::Action::InteractionState::Default);
+        QTest::mouseMove(password, password->rect().center());
+        QTRY_COMPARE(password->interactionState(), field::Action::InteractionState::Hover);
+        QTest::mousePress(password, Qt::LeftButton, {}, password->rect().center());
+        QCOMPARE(password->interactionState(), field::Action::InteractionState::Pressed);
+        QTest::mouseRelease(password, Qt::LeftButton, {}, password->rect().center());
+        w.setReadOnly(true);
+        QCOMPARE(password->interactionState(), field::Action::InteractionState::Disabled);
+    }
     void textAreaAutosizeAndCount() {
         // The gallery registers this CJK fallback before a user opens legacy Input examples.
-        QVERIFY(QFontDatabase::addApplicationFont(":/figma/fonts/NotoSansSC-Regular.otf") >= 0);
+        QVERIFY(QFontDatabase::addApplicationFont(":/fonts/HarmonyOS_Sans_SC_Regular.ttf") >= 0);
         Z_InputField w(tokens);
         w.setKind(Z_InputField::Kind::TextArea);
         w.setAutoSize(true, 2, 4);
@@ -253,11 +297,15 @@ class FormsTests : public QObject {
         const int initialHeight = w.control()->height();
         w.setValue(QString::fromUtf8("首片检测完成。\n等待工程师确认腔体状态。"));
         QTest::qWait(20);
-        QCOMPARE(w.textArea()->verticalScrollBar()->maximum(), 0);
         w.setValue("one\ntwo\nthree\nfour\nfive");
         QTest::qWait(20);
         QVERIFY(w.control()->height() > initialHeight);
-        QVERIFY(w.textArea()->verticalScrollBar()->maximum() > 0);
+        const int cappedHeight = w.control()->height();
+        w.setValue("one\ntwo\nthree\nfour\nfive\nsix\nseven\neight\nnine");
+        QTest::qWait(20);
+        QCOMPARE(w.control()->height(), cappedHeight);
+        w.setValue("one\ntwo\nthree\nfour\nfive");
+        QTest::qWait(20);
         QCOMPARE(w.value(), QString("one\ntwo\nthree\nfour\nfive"));
         QCOMPARE(w.findChild<QLabel*>("COUNT")->text(), QString("23 / 5"));
         w.setValue(QString(180, 'x'));
@@ -419,7 +467,7 @@ class FormsTests : public QObject {
         QVERIFY2(labels.first()->text().contains("Alpha"),
                  qPrintable("Hidden page tag: " + labels.first()->text()));
     }
-    void materialsAndRenderEvidence() {
+    void v2StatesAndRenderEvidence() {
         Z_InputField input(tokens);
         Z_Select select(tokens);
         input.setLabel("Recipe");
@@ -429,26 +477,23 @@ class FormsTests : public QObject {
         select.setValues({"a"});
         show(input);
         show(select);
-        const auto height = input.control()->height();
-        for (auto variant : {"outlined", "filled", "borderless", "underlined"}) {
-            input.setVariant(variant);
-            select.setVariant(variant);
-            for (auto preset : {"solid", "gradient", "inset", "gradient-inset", "outline",
-                                "elevated", "gradient-elevated"}) {
-                input.setAppearance(preset);
-                select.setAppearance(preset);
+        for (const auto& size : QStringList{"sm", "md", "lg"}) {
+            input.setControlSize(size);
+            select.setControlSize(size);
+            for (const auto& state : QStringList{"Default", "Hover", "Focused", "Error", "Disabled"}) {
+                input.setSnapshotState(state);
+                select.control()->setSnapshotState(state);
                 QApplication::processEvents();
-                QCOMPARE(input.control()->height(), height);
                 QVERIFY(!input.grab().isNull());
                 QVERIFY(!select.grab().isNull());
             }
         }
         if (!evidence.isEmpty()) {
-            input.setVariant("outlined");
-            input.setAppearance("gradient-inset");
+            input.setAppearance("outlined");
+            input.setSnapshotState("Focused");
             QVERIFY(input.grab().save(evidence + "/input.png"));
-            select.setVariant("outlined");
-            select.setAppearance("gradient-elevated");
+            select.setAppearance("outlined");
+            select.control()->setSnapshotState("Focused");
             QVERIFY(select.grab().save(evidence + "/select.png"));
             select.setOpen(true);
             QTest::qWait(40);
@@ -458,12 +503,17 @@ class FormsTests : public QObject {
     }
 };
 int main(int argc, char** argv) {
-    QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
-    QCoreApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
-    QApplication app(argc, argv);
-    app.setStyle(QStyleFactory::create("Fusion"));
-    button_demo::install(app, qEnvironmentVariable("DEMO_PROFILE", "light-comfortable"));
-    FormsTests tests;
-    return QTest::qExec(&tests, argc, argv);
+    try {
+        QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+        QCoreApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
+        QApplication app(argc, argv);
+        app.setStyle(QStyleFactory::create("Fusion"));
+        button_demo::install(app, qEnvironmentVariable("DEMO_PROFILE", "standard-light"));
+        FormsTests tests;
+        return QTest::qExec(&tests, argc, argv);
+    } catch (const std::exception& error) {
+        std::fprintf(stderr, "FormsTests uncaught exception: %s\n", error.what());
+        return 2;
+    }
 }
 #include "FormsTests.moc"

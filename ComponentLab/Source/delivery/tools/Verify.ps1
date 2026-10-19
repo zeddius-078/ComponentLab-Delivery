@@ -44,9 +44,9 @@ try {
     $env:QT_PLUGIN_PATH = 'D:\invalid-plugin-path'
     $env:QT_QPA_PLATFORM_PLUGIN_PATH = 'D:\invalid-platform-path'
     $env:QT_QPA_PLATFORM = 'windows'
-    foreach ($profile in @('light-comfortable','light-compact','dark-comfortable','dark-compact')) {
+    foreach ($profile in @('standard-light','wide-light','standard-dark','wide-dark')) {
         foreach ($appearance in @('solid','gradient-elevated')) {
-            $scale = if ($profile -eq 'dark-compact' -and $appearance -eq 'gradient-elevated') { '1.5' } else { '1' }
+            $scale = if ($profile -eq 'wide-dark' -and $appearance -eq 'gradient-elevated') { '1.5' } else { '1' }
             $env:QT_SCALE_FACTOR = $scale
             $capture = Join-Path $output "$profile/$appearance"
             [void](New-Item -ItemType Directory -Path $capture -Force)

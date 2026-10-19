@@ -1,8 +1,7 @@
 """ComponentLab V2 token compiler entry point.
 
 Compiles the canonical V2 source (DesignSystem/source) into platform artifacts:
-Qt runtime envelope, CSS, DTCG exports, legacy sToken compatibility export,
-token catalog and mapping report.
+Qt runtime envelope, CSS, DTCG exports, token catalog and mapping report.
 
 Usage: python -B design-assets/tools/export_tokens.py [--root DESIGN_ASSETS] [--check]
 """

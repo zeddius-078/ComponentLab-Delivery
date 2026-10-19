@@ -1,0 +1,5 @@
+IMPORTANT - Preserve design fidelity:
+design_to_code output already closely matches the Pixso design. Unless the user explicitly asks to change the UI or visual appearance, do NOT rewrite layouts, spacing, colors, typography, radii, shadows, or restyle/swap pieces for a subjective better look.
+This preserves rendered appearance, not the generated DOM shape; semantic tag replacement is allowed when styles and behavior are preserved.
+You MAY replace generated pieces with the project's existing design-system or app components when integrating into the codebase, but you MUST first warn the user that the on-screen UI may diverge from the Pixso export (spacing, theming, behavior).
+You may adjust non-visual project conventions (file paths, imports, module naming) after confirming with the user. Default semantic/code-quality refinement is described separately below; optional refinements should only use refine_generated_code with tags the user selected.
