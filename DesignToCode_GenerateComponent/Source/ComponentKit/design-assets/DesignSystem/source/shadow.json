@@ -2,7 +2,7 @@
   "$schema": "../schema/composite-token-schema.json",
   "$description": "Shadow Composite package. filled-inner-shadow consumes this package together with Gradient Composite.",
   "$version": "2.0",
-  "$status": "draft",
+  "$status": "candidate",
   "layer": "composite",
   "kind": "shadow",
   "contracts": {
@@ -14,19 +14,160 @@
       "offsetY": "Primitive/Profile dimension reference",
       "blur": "Primitive/Profile dimension reference",
       "spread": "Primitive/Profile dimension reference",
-      "color": "Color Token reference"
+      "color": "Color Token reference",
+      "opacity": "Primitive opacity token reference"
     }
   },
-  "tokens": {},
+  "tokens": {
+    "elevation-1": {
+      "$status": "candidate-evidence",
+      "$source": "Figma Shadow frame 1532:352912; Rest 8041:140440; Hover 8041:140461",
+      "rest": {
+        "layers": [
+          { "inset": false, "offsetX": 0, "offsetY": 1, "blur": 2, "spread": 0, "color": "{semantic.color.shadow.base}", "opacity": "{primitive.opacity.5}", "units": "px", "opacityUnit": "%" }
+        ]
+      },
+      "hover": {
+        "layers": [
+          { "inset": false, "offsetX": 0, "offsetY": 1, "blur": 2, "spread": 0, "color": "{semantic.color.shadow.base}", "opacity": "{primitive.opacity.15}", "units": "px", "opacityUnit": "%" },
+          { "inset": false, "offsetX": 0, "offsetY": 0, "blur": 0, "spread": 1, "color": "{semantic.color.shadow.base}", "opacity": "{primitive.opacity.20}", "units": "px", "opacityUnit": "%" }
+        ]
+      },
+      "focused": { "inherits": "rest", "focusRing": "shared.focus-ring", "note": "Figma Focused adds a separate focus ring; it is not duplicated in Shadow Composite." },
+      "disabled": { "layers": [] }
+    },
+    "elevation-2": {
+      "$status": "candidate-evidence",
+      "$source": "Figma Shadow frame 1532:352912; Rest 8041:140441; Hover 8041:140462",
+      "rest": {
+        "layers": [
+          { "inset": false, "offsetX": 0, "offsetY": 1, "blur": 8, "spread": 0, "color": "{semantic.color.shadow.base}", "opacity": "{primitive.opacity.6}", "units": "px", "opacityUnit": "%" },
+          { "inset": false, "offsetX": 0, "offsetY": 1, "blur": 10, "spread": 0, "color": "{semantic.color.shadow.base}", "opacity": "{primitive.opacity.10}", "units": "px", "opacityUnit": "%" }
+        ]
+      },
+      "hover": {
+        "layers": [
+          { "inset": false, "offsetX": 0, "offsetY": 0, "blur": 0, "spread": 1, "color": "{semantic.color.shadow.base}", "opacity": "{primitive.opacity.20}", "units": "px", "opacityUnit": "%" },
+          { "inset": false, "offsetX": 0, "offsetY": 1, "blur": 8, "spread": 0, "color": "{semantic.color.shadow.base}", "opacity": "{primitive.opacity.6}", "units": "px", "opacityUnit": "%" },
+          { "inset": false, "offsetX": 0, "offsetY": 1, "blur": 6, "spread": 0, "color": "{semantic.color.shadow.base}", "opacity": "{primitive.opacity.20}", "units": "px", "opacityUnit": "%" }
+        ]
+      },
+      "focused": { "inherits": "rest", "focusRing": "shared.focus-ring" },
+      "disabled": { "layers": [] }
+    },
+    "elevation-3": {
+      "$status": "candidate-evidence",
+      "$source": "Figma Shadow frame 1532:352912; Rest 8041:140442; Hover 8041:140463",
+      "rest": {
+        "layers": [
+          { "inset": false, "offsetX": 20, "offsetY": 8, "blur": 20, "spread": -2, "color": "{semantic.color.shadow.base}", "opacity": "{primitive.opacity.6}", "units": "px", "opacityUnit": "%" },
+          { "inset": false, "offsetX": 0, "offsetY": 4, "blur": 20, "spread": -10, "color": "{semantic.color.shadow.base}", "opacity": "{primitive.opacity.10}", "units": "px", "opacityUnit": "%" }
+        ]
+      },
+      "hover": {
+        "layers": [
+          { "inset": false, "offsetX": 0, "offsetY": 2, "blur": 4, "spread": -2, "color": "{semantic.color.shadow.base}", "opacity": "{primitive.opacity.6}", "units": "px", "opacityUnit": "%" },
+          { "inset": false, "offsetX": 0, "offsetY": 4, "blur": 10, "spread": -2, "color": "{semantic.color.shadow.base}", "opacity": "{primitive.opacity.20}", "units": "px", "opacityUnit": "%" },
+          { "inset": false, "offsetX": 0, "offsetY": 0, "blur": 0, "spread": 1, "color": "{semantic.color.shadow.base}", "opacity": "{primitive.opacity.20}", "units": "px", "opacityUnit": "%" }
+        ]
+      },
+      "focused": { "inherits": "rest", "focusRing": "shared.focus-ring" },
+      "disabled": { "layers": [] }
+    },
+    "elevation-4": {
+      "$status": "candidate-evidence",
+      "$source": "Figma Shadow frame 1532:352912; Rest 8041:140443; Hover 8041:140464",
+      "rest": {
+        "layers": [
+          { "inset": false, "offsetX": 0, "offsetY": 4, "blur": 6, "spread": -2, "color": "{semantic.color.shadow.base}", "opacity": "{primitive.opacity.5}", "units": "px", "opacityUnit": "%" },
+          { "inset": false, "offsetX": 0, "offsetY": 12, "blur": 16, "spread": -4, "color": "{semantic.color.shadow.base}", "opacity": "{primitive.opacity.10}", "units": "px", "opacityUnit": "%" }
+        ]
+      },
+      "hover": {
+        "layers": [
+          { "inset": false, "offsetX": 0, "offsetY": 0, "blur": 0, "spread": 1, "color": "{semantic.color.shadow.base}", "opacity": "{primitive.opacity.20}", "units": "px", "opacityUnit": "%" },
+          { "inset": false, "offsetX": 0, "offsetY": 4, "blur": 6, "spread": -2, "color": "{semantic.color.shadow.base}", "opacity": "{primitive.opacity.5}", "units": "px", "opacityUnit": "%" },
+          { "inset": false, "offsetX": 0, "offsetY": 12, "blur": 16, "spread": -4, "color": "{semantic.color.shadow.base}", "opacity": "{primitive.opacity.20}", "units": "px", "opacityUnit": "%" }
+        ]
+      },
+      "focused": { "inherits": "rest", "focusRing": "shared.focus-ring" },
+      "disabled": { "layers": [] }
+    },
+    "elevation-5": {
+      "$status": "candidate-evidence",
+      "$source": "Figma Shadow frame 1532:352912; Rest 8041:140444; Hover 8041:140465",
+      "rest": {
+        "layers": [
+          { "inset": false, "offsetX": 0, "offsetY": 8, "blur": 8, "spread": -4, "color": "{semantic.color.shadow.base}", "opacity": "{primitive.opacity.4}", "units": "px", "opacityUnit": "%" },
+          { "inset": false, "offsetX": 0, "offsetY": 20, "blur": 24, "spread": -4, "color": "{semantic.color.shadow.base}", "opacity": "{primitive.opacity.10}", "units": "px", "opacityUnit": "%" }
+        ]
+      },
+      "hover": {
+        "layers": [
+          { "inset": false, "offsetX": 0, "offsetY": 0, "blur": 0, "spread": 1, "color": "{semantic.color.shadow.base}", "opacity": "{primitive.opacity.20}", "units": "px", "opacityUnit": "%" },
+          { "inset": false, "offsetX": 0, "offsetY": 8, "blur": 8, "spread": -4, "color": "{semantic.color.shadow.base}", "opacity": "{primitive.opacity.4}", "units": "px", "opacityUnit": "%" },
+          { "inset": false, "offsetX": 0, "offsetY": 20, "blur": 24, "spread": -4, "color": "{semantic.color.shadow.base}", "opacity": "{primitive.opacity.20}", "units": "px", "opacityUnit": "%" }
+        ]
+      },
+      "focused": { "inherits": "rest", "focusRing": "shared.focus-ring" },
+      "disabled": { "layers": [] }
+    },
+    "elevation-6": {
+      "$status": "candidate-evidence",
+      "$source": "Figma Shadow frame 1532:352912; Rest 8041:140445; Hover 8041:140466",
+      "rest": { "layers": [ { "inset": false, "offsetX": 0, "offsetY": 24, "blur": 48, "spread": -12, "color": "{semantic.color.shadow.base}", "opacity": "{primitive.opacity.25}", "units": "px", "opacityUnit": "%" } ] },
+      "hover": { "layers": [ { "inset": false, "offsetX": 0, "offsetY": 0, "blur": 0, "spread": 1, "color": "{semantic.color.shadow.base}", "opacity": "{primitive.opacity.20}", "units": "px", "opacityUnit": "%" }, { "inset": false, "offsetX": 0, "offsetY": 24, "blur": 48, "spread": -12, "color": "{semantic.color.shadow.base}", "opacity": "{primitive.opacity.35}", "units": "px", "opacityUnit": "%" } ] },
+      "focused": { "inherits": "rest", "focusRing": "shared.focus-ring" },
+      "disabled": { "layers": [] }
+    },
+    "elevation-7": {
+      "$status": "candidate-evidence",
+      "$source": "Figma Shadow frame 1532:352912; Rest 8041:140446; Hover 8041:140467",
+      "rest": { "layers": [ { "inset": false, "offsetX": 0, "offsetY": 32, "blur": 74, "spread": -12, "color": "{semantic.color.shadow.base}", "opacity": "{primitive.opacity.20}", "units": "px", "opacityUnit": "%" } ] },
+      "hover": { "layers": [ { "inset": false, "offsetX": 0, "offsetY": 0, "blur": 0, "spread": 1, "color": "{semantic.color.shadow.base}", "opacity": "{primitive.opacity.20}", "units": "px", "opacityUnit": "%" }, { "inset": false, "offsetX": 0, "offsetY": 32, "blur": 74, "spread": -12, "color": "{semantic.color.shadow.base}", "opacity": "{primitive.opacity.30}", "units": "px", "opacityUnit": "%" } ] },
+      "focused": { "inherits": "rest", "focusRing": "shared.focus-ring" },
+      "disabled": { "layers": [] }
+    }
+  },
   "migrationSources": [
     "source/component-recipes/button.json legacy inner-shadow-* fields",
     "source/component-registry.json historical inner-shadow vocabulary"
   ],
+  "figmaEvidence": {
+    "sourceUrl": "https://www.figma.com/design/LmHTG2QFEv5ijQEIEchLiz/Design-Tokens-Creative-Kit----Free-%F0%9F%9A%80%E2%9C%A8--Community---Copy-?node-id=1532-352912&t=bsdkNxgp6CMMSbEI-4",
+    "fileKey": "LmHTG2QFEv5ijQEIEchLiz",
+    "frameNode": "1532:352912",
+    "effectStyleFamily": "Shadow/Elevation {1..7}",
+    "stateRows": { "rest": "8041:140440..8041:140446", "focused": "8041:140447,8041:140455..8041:140460", "hover": "8041:140461..8041:140467", "disabled": "8041:140448" },
+    "focusedHandling": "Focused row reuses Rest shadow and adds shared focus ring; focus ring is intentionally outside this composite.",
+    "disabledHandling": "Disabled rectangle has no shadow effect in the inspected Figma evidence."
+  },
+  "normalization": {
+    "baseColor": "{semantic.color.shadow.base}",
+    "baseColorResolvedValue": "#000000",
+    "geometryUnit": "px",
+    "positiveGeometryPolicy": "reuse-or-add-primitive-dimension",
+    "negativeSpreadPolicy": "shadow-composite-local-candidate",
+    "negativeSpreadValues": [-2, -4, -10, -12],
+    "allowNegativeSpread": true,
+    "opacityUnit": "%",
+    "preserveRawCandidateValues": true,
+    "approximationPolicy": "keep-fallback-candidate-and-block-activation"
+  },
+  "sourceAssessment": {
+    "status": "candidate-evidence-awaiting-normalization",
+    "legacyEvidenceOnly": false,
+    "reliableFigmaEffectEvidence": true,
+    "reliablePopupShadowValuesFound": true,
+    "requiredBeforeActivation": ["approved-layer-count", "normalized-offsets", "normalized-blur-and-spread", "approved-opacity-scale", "semantic-color-resolution", "vue-and-qt-rendering-review"],
+    "doNotPromoteLegacyValues": true,
+    "nextSource": "design-review-approval-and-normalized-primitive-profile-mapping"
+  },
   "diagnostics": [
     {
       "severity": "warning",
-      "code": "SHADOW-LEGACY-MIGRATION-PENDING",
-      "message": "Legacy inner-shadow values remain historical evidence; no public Shadow Composite is activated until color and geometry references are normalized.",
+      "code": "SHADOW-FIGMA-CANDIDATE-NORMALIZATION-PENDING",
+      "message": "Figma Shadow/Elevation 1..7 effects are recorded as candidate evidence. No public Shadow Composite is activated until geometry, opacity, semantic color, and Vue/Qt rendering mappings are approved.",
       "source": "source/shadow.json"
     }
   ]

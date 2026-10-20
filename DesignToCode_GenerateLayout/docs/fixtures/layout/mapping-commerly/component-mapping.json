@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "identity": "BLOCKED Commerly profile: no complete contracts approved. Read README.md and inventory.json; empty rules intentionally reject component instances.",
+  "unknownComponent": "UNMAPPED_COMPONENT",
+  "profile": "standard-light",
+  "runtimeProfiles": [
+    "standard-light",
+    "wide-light",
+    "standard-dark",
+    "wide-dark"
+  ],
+  "rules": []
+}

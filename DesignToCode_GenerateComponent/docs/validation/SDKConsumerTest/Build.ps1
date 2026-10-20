@@ -6,14 +6,15 @@ param(
 )
 $ErrorActionPreference = 'Stop'
 $projectRoot = [IO.Path]::GetFullPath((Join-Path $PSScriptRoot '../../..'))
+if (-not $SdkRoot) { $SdkRoot = $env:GENERATED_COMPONENT_SDK_ROOT }
 if (-not $SdkRoot) { $SdkRoot = Join-Path $projectRoot 'build/sdk' }
 $SdkRoot = [IO.Path]::GetFullPath($SdkRoot)
 $build = if ($BuildDirectory) {
     [IO.Path]::GetFullPath($BuildDirectory)
 } else {
-    Join-Path $projectRoot 'build/cache/SDKConsumerTest'
+    Join-Path $projectRoot 'output/work/cache/SDKConsumerTest'
 }
-$report = Join-Path $projectRoot 'build/reports/sdk-consumer'
+$report = Join-Path $projectRoot 'output/logs/sdk-consumer'
 
 if (-not (Test-Path -LiteralPath "$SdkRoot/cmake/GeneratedComponentSDKConfig.cmake")) {
     throw "GeneratedComponentSDK package is missing: $SdkRoot"

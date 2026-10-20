@@ -1,0 +1,7 @@
+{
+  "version": 1, "defaultProfile": "token-sdk",
+  "profiles": {"token-sdk": {
+    "libraryKind": "token-sdk", "classRenames": [], "componentOverrides": {},
+    "apiPolicy": "sdk-composition", "widgetSource": "sdk-factory", "headerPolicy": "sdk-default"
+  }}
+}

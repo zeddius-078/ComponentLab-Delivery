@@ -3,11 +3,11 @@ cmake_minimum_required(VERSION 3.21)
 # prepared workspace so relative C++ includes and resource aliases stay stable.
 get_filename_component(_input_project "${CMAKE_CURRENT_SOURCE_DIR}/../.." ABSOLUTE)
 if(EXISTS "${_input_project}/Source/Publish-ComponentSDK.ps1")
-    file(REAL_PATH "${_input_project}/build" _allowed_build)
+    file(REAL_PATH "${_input_project}/output/work" _allowed_build)
     file(REAL_PATH "${CMAKE_BINARY_DIR}" _requested_build)
     cmake_path(IS_PREFIX _allowed_build "${_requested_build}" NORMALIZE _safe_build)
     if(NOT _safe_build)
-        message(FATAL_ERROR "OUTPUT_MUST_BE_IN_BUILD")
+        message(FATAL_ERROR "OUTPUT_MUST_BE_IN_WORK")
     endif()
     find_package(Python3 3.9...<3.10 REQUIRED COMPONENTS Interpreter)
     execute_process(COMMAND "${Python3_EXECUTABLE}" -B "${_input_project}/Source/PrepareBuild.py"
@@ -15,18 +15,18 @@ if(EXISTS "${_input_project}/Source/Publish-ComponentSDK.ps1")
     if(NOT _prepared EQUAL 0)
         message(FATAL_ERROR "Component build preparation failed")
     endif()
-    add_subdirectory("${_input_project}/build/work/Source/ComponentKit" "${CMAKE_CURRENT_BINARY_DIR}/prepared")
+    add_subdirectory("${_input_project}/output/work/generated/Source/ComponentKit" "${CMAKE_CURRENT_BINARY_DIR}/prepared")
     return()
 endif()
-get_filename_component(COMPONENT_PROJECT_ROOT "${CMAKE_CURRENT_SOURCE_DIR}/../../../.." ABSOLUTE)
+get_filename_component(COMPONENT_PROJECT_ROOT "${CMAKE_CURRENT_SOURCE_DIR}/../../../../.." ABSOLUTE)
 if(NOT EXISTS "${COMPONENT_PROJECT_ROOT}/Source/Publish-ComponentSDK.ps1")
     message(FATAL_ERROR "Build ComponentKit through Source/Publish-ComponentSDK.ps1")
 endif()
-file(REAL_PATH "${COMPONENT_PROJECT_ROOT}/build" _allowed_build)
+file(REAL_PATH "${COMPONENT_PROJECT_ROOT}/output/work" _allowed_build)
 file(REAL_PATH "${CMAKE_BINARY_DIR}" _requested_build)
 cmake_path(IS_PREFIX _allowed_build "${_requested_build}" NORMALIZE _safe_build)
 if(NOT _safe_build)
-    message(FATAL_ERROR "OUTPUT_MUST_BE_IN_BUILD")
+    message(FATAL_ERROR "OUTPUT_MUST_BE_IN_WORK")
 endif()
 project(DesignToCodeComponentKit LANGUAGES CXX)
 if(MSVC AND DEFINED BUTTON_MSVC_INCLUDE_PREFIX)
@@ -231,7 +231,7 @@ if(COMPONENTLAB_SOURCE_SDK)
     add_custom_target(package_componentlab_source
         COMMAND "${CMAKE_COMMAND}"
             "-DSDK_SOURCE_DIR=${CMAKE_CURRENT_SOURCE_DIR}"
-            "-DSDK_OUTPUT_DIR=${COMPONENT_PROJECT_ROOT}/build/resource/ComponentLabSourceSDK"
+            "-DSDK_OUTPUT_DIR=${COMPONENT_PROJECT_ROOT}/output/work/resource/ComponentLabSourceSDK"
             "-DSDK_TEMPLATE_DIR=${CMAKE_CURRENT_SOURCE_DIR}/source-sdk"
             -P "${CMAKE_CURRENT_SOURCE_DIR}/source-sdk/stage_source_sdk.cmake"
         COMMENT "Stage the self-contained ComponentLab Source SDK package"

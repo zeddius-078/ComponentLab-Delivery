@@ -56,10 +56,10 @@ def verify_page(package: Path, record_path: Path):
 def verify_batch(project: Path, batch: str):
     if not re.fullmatch(r'[A-Za-z0-9][A-Za-z0-9_-]*', batch):
         raise ValueError('INVALID_BATCH')
-    directory = project / 'build/delivery' / batch
+    directory = project / 'output/delivery' / batch
     pages = ('review', 'result', 'horizontal')
     if not directory.is_dir() or {p.name for p in directory.iterdir()} != set(pages):
         raise ValueError('THREE_COMPLETE_PAGES_REQUIRED')
     return {page: verify_page(directory / page,
-        project / 'build/reports/formal-delivery' / batch / page / 'generation-record.json')
+        project / 'output/logs/formal-delivery' / batch / page / 'generation-record.json')
         for page in pages}

@@ -7,7 +7,7 @@ import xml.etree.ElementTree as ET
 
 PROJECT = Path(__file__).resolve().parents[4]
 ROOT = PROJECT / "Source"
-KIT = PROJECT / "build/work/Source/ComponentKit"
+KIT = PROJECT / "output/work/generated/Source/ComponentKit"
 
 
 class IndependenceTests(unittest.TestCase):

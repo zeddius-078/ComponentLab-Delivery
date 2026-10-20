@@ -11,7 +11,7 @@
   "figmaVariantCount": null,
   "figmaVariantCountStatus": "migration-evidence-only",
   "migrationEvidence": {
-    "source": "DesignToCode_GenerateComponent/reports/figma-v2-structure-audit.json#/components/button",
+    "sourceStatus": "historical report removed from active tree; recover through Git; not current measurement",
     "observedVariantCount": 132,
     "status": "untrusted-legacy-evidence",
     "reasons": [

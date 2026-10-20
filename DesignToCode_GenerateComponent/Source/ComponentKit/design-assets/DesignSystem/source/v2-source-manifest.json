@@ -3,8 +3,8 @@
   "$version": "2.0",
   "status": "draft-v2",
   "architectureBaseline": {
-    "current": "reports/2026-10-19-seven-layer-architecture-refresh.md",
-    "previous": "reports/archive/2026-10-18/2026-10-18-change-report.md",
+    "current": "authority.tokenArchitecture",
+    "historyPolicy": "Recover historical architecture reports from Git; no historical report is a build input.",
     "changeType": "major-architecture-refresh",
     "supersedes": [
       "pre-seven-layer-token-organization",
@@ -106,7 +106,7 @@
     "migrationAliases": "source/migrations/token-aliases.json"
     ,"componentValueEvidence": "source/component-value-evidence/*.json"
     ,"figmaVariableArchitecture": "DSM/Component is generated from V2 bindings; imports/reference/*.json is value-only evidence and never a variable-name source"
-    ,"figmaStructureAudit": "../../../../../reports/figma-v2-structure-audit.json"
+    ,"figmaStructureAuditStatus": "not-currently-measured; historical reports are available through Git only"
     ,"materializationPolicy": {
       "design": {
         "mode": "sparse",
@@ -257,7 +257,6 @@
         "recipe": "source/component-recipes/tool-button.json",
         "figmaBindingManifest": "source/figma-bindings/tool-button.json",
         "status": "draft-v2",
-        "history": "docs/archive/design-system-history/history/pre-v2-recovery-20261018/tool-button.json",
         "confirmed": [
           "independent-tool-button-contract",
           "presentation-value-state-menu-axes-separated",
@@ -270,24 +269,21 @@
       "contract": "source/component-contracts/button.json",
       "recipe": "source/component-recipes/button.json",
       "figmaBindingManifest": "source/figma-bindings/button.json",
-      "status": "draft-v2",
-      "history": "docs/archive/design-system-history/history/pre-v2-recovery-20261018/button.json"
+      "status": "draft-v2"
     },
     "input": {
       "registry": "source/component-registry.json#/components/input",
       "contract": "source/component-contracts/input.json",
       "recipe": "source/component-recipes/input.json",
       "figmaBindingManifest": "source/figma-bindings/input.json",
-      "status": "draft-v2",
-      "history": "docs/archive/design-system-history/history/pre-v2-recovery-20261018/input.json"
+      "status": "draft-v2"
     },
     "select": {
       "registry": "source/component-registry.json#/components/select",
       "contract": "source/component-contracts/select.json",
       "recipe": "source/component-recipes/select.json",
       "figmaBindingManifest": "source/figma-bindings/select.json",
-      "status": "draft-v2",
-      "history": "docs/archive/design-system-history/history/pre-v2-recovery-20261018/select.json"
+      "status": "draft-v2"
     },
     "table": {
       "registry": "source/component-registry.json#/components/table",
@@ -296,7 +292,6 @@
       "figmaBindingManifest": "source/figma-bindings/table.json",
       "valueEvidence": "source/component-value-evidence/table.json",
       "status": "draft-v2",
-      "history": "docs/archive/design-system-history/history/pre-v2-recovery-20261018/table.json",
       "confirmed": [
         "composite-data-table-contract",
         "shared-size-spacing-padding-bindings",
@@ -337,7 +332,6 @@
       "recipe": "source/component-recipes/checkbox.json",
       "figmaBindingManifest": "source/figma-bindings/checkbox.json",
       "status": "draft-v2",
-      "history": "docs/archive/design-system-history/history/pre-v2-recovery-20261018/checkbox.json",
       "confirmed": ["value-and-state-are-independent-axes", "keyboard-only-border-focus-ring", "value-specific-indicator-visuals", "disabled-preserves-value-and-locks-interaction", "pressed-is-visual-only", "state-priority-locked", "indeterminate-transition-is-runtime-owned", "indicator-and-label-share-interaction-surface", "content-control-only-or-control-with-label", "size-compact-small-medium-large-mapped-to-20-24-28-32", "interaction-size-is-one-4px-step-larger", "interaction-size-scope-depends-on-content"]
     },
     "radio": {
@@ -347,7 +341,6 @@
       "figmaBindingManifest": "source/figma-bindings/radio.json",
       "valueEvidence": "source/component-value-evidence/radio.json",
       "status": "draft-v2",
-      "history": "docs/archive/design-system-history/history/pre-v2-recovery-20261018/radio.json",
       "confirmed": ["value-and-state-are-independent-axes", "keyboard-only-border-focus-ring", "disabled-preserves-value-and-locks-interaction", "indicator-and-label-share-interaction-surface", "size-compact-small-medium-large-with-visual-and-interaction-mapping", "value-specific-indicator-visuals", "value-transition-is-radio-group-runtime-owned", "pressed-is-visual-only"]
     },
     "menu": {
@@ -475,8 +468,61 @@
       "status": "draft-v2",
       "confirmed": [
         "one-public-date-time-input-identity",
+        "date-time-input-unifies-popup-focus-close-and-confirm-lifecycle",
+        "date-time-input-field-uses-section-editing-and-confirm-only-submit",
+        "date-time-input-empty-and-clear-use-placeholder-and-confirm-only-submit",
+        "date-time-input-locale-format-and-partial-input-are-runtime-controlled",
+        "date-time-input-field-feedback-uses-error-first-priority-and-locks-invalid-states",
+        "date-time-input-uses-qt-native-event-boundary-and-custom-visual-shell-only",
+        "date-time-input-popup-shadow-delegates-to-shadow-composite-until-activation",
         "date-time-and-datetime-are-runtime-editor-modes",
         "custom-calendar-popup-and-range-surface-are-required",
+        "date-range-reuses-date-time-input-with-range-fields-and-calendar-surface",
+        "date-range-structure-is-range-fields-calendar-surface-and-action-area",
+        "range-and-time-wheel-use-confirm-before-commit",
+        "time-wheel-uses-24-hour-format-only",
+        "time-wheel-seconds-use-runtime-controlled-step-values",
+        "time-wheel-inputs-snap-to-active-step",
+        "time-wheel-popup-focus-and-close-lifecycle-is-runtime-owned",
+        "calendar-surface-uses-year-month-weekday-seven-column-square-day-grid",
+        "calendar-supports-single-multiple-and-range-selection-with-feedback-slot",
+        "multiple-date-selection-toggles-temporary-dates-across-months-and-confirms-as-a-set",
+        "selection-hint-is-runtime-feedback-between-day-grid-and-action-area",
+        "single-date-selection-also-requires-confirm-before-commit",
+        "calendar-day-cell-keyboard-navigation-is-runtime-defined",
+        "out-of-month-days-are-visible-but-not-selectable-by-default",
+        "minimum-maximum-and-disabled-dates-remain-visible-but-unselectable",
+        "day-cell-state-priority-is-disabled-selected-range-focused-hover-today-default",
+        "day-cell-selection-visuals-differ-by-single-multiple-and-range-mode",
+        "range-background-connects-across-week-and-month-boundaries",
+        "range-hover-preview-is-preview-only-and-does-not-change-temporary-value",
+        "range-keyboard-focus-updates-preview-only-range",
+        "range-containing-unavailable-date-blocks-confirmation-with-feedback",
+        "range-end-before-start-is-invalid-without-auto-swap",
+        "same-day-range-is-valid-and-commits-as-single-day-range",
+        "same-day-range-keeps-both-range-fields-visible",
+        "range-start-only-keeps-end-empty-and-disables-confirmation",
+        "reselecting-range-start-clears-end-and-reenters-start-only",
+        "selected-range-endpoints-can-be-reedited-and-recomputed",
+        "clicking-range-middle-starts-new-range-and-clears-end",
+        "month-navigation-preserves-temporary-selection-and-range-preview",
+        "year-header-opens-contextual-year-selection-without-new-public-axis",
+        "year-selection-uses-runtime-controlled-contiguous-candidate-window",
+        "year-selection-updates-temporary-view-and-uses-confirm-only-submit",
+        "year-selection-keyboard-focus-returns-to-year-header-without-discard",
+        "year-option-remains-private-and-reuses-shared-semantic-tokens",
+        "year-options-use-runtime-controlled-contiguous-grid-layout",
+        "year-grid-keyboard-navigation-does-not-wrap",
+        "year-option-reuses-unified-state-priority",
+        "year-change-preserves-month-and-clamps-invalid-day-focus",
+        "year-availability-disables-empty-years-and-preserves-selected-year-visibility",
+        "disabled-year-remains-focusable-but-selection-is-no-op",
+        "valid-year-selection-returns-to-month-day-grid-within-popup",
+        "month-header-uses-private-twelve-month-contextual-grid",
+        "month-grid-keyboard-navigation-does-not-wrap",
+        "disabled-month-remains-focusable-but-selection-is-no-op",
+        "valid-month-selection-returns-to-month-day-grid-within-popup",
+        "year-return-focuses-temporary-day-cell",
         "popup-and-format-are-runtime-owned",
         "readonly-error-loading-use-disabled-like-visual-lock",
         "qt-temporal-types-remain-value-and-parsing-adapters-only",
@@ -502,7 +548,7 @@
       }
   },
     "gradient": { "package": "source/gradient.json", "status": "draft", "activeTokens": 0 },
-    "shadow": { "package": "source/shadow.json", "status": "draft", "activeTokens": 0 },
+    "shadow": { "package": "source/shadow.json", "status": "candidate", "activeTokens": 0, "candidateTokens": 14, "sourceAssessment": "candidate-evidence-awaiting-normalization" },
     "blur": { "package": "source/blur.json", "status": "reserved", "activeTokens": 0 },
     "motion": {
       "package": "source/motion.json",

@@ -37,7 +37,7 @@ class IndependenceTests(unittest.TestCase):
         self.assertFalse((ROOT / 'ComponentKit').exists())
         self.assertFalse((PROJECT / 'build/dist').exists())
         self.assertFalse((PROJECT / 'build/dependencies').exists())
-        demo = PROJECT / 'build/demo/page_examples'
+        demo = PROJECT / 'output/work/demo/page_examples'
         if demo.exists():
             self.assertFalse(list(demo.rglob('*.lib')))
             self.assertFalse(list(demo.rglob('*.h')))

@@ -210,9 +210,9 @@ int main(int argc, char** argv) {
         QDir project(QCoreApplication::applicationDirPath());
         while (!project.exists("Source/Publish-ComponentSDK.ps1"))
             require(project.cdUp(), "COMPONENT_PROJECT_NOT_FOUND");
-        const QString buildRoot = project.filePath("build") + '/';
+        const QString buildRoot = project.filePath("output/work/generated") + '/';
         require(QDir::cleanPath(out).startsWith(buildRoot, Qt::CaseInsensitive),
-                "OUTPUT_MUST_BE_IN_BUILD");
+                "OUTPUT_MUST_BE_IN_WORK");
         bool check = a.size() == 4;
         auto contract = json(root + "/tokens/checkbox-contract.json"),
              profiles = json(root + "/DesignSystem/generated/runtime/tokens_qt.json");

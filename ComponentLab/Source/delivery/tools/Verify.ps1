@@ -1,21 +1,21 @@
-param([string]$Dist, [switch]$SkipCompilerChecks)
+param([string]$Dist, [string]$ReportDirectory, [string]$SdkRoot, [switch]$SkipCompilerChecks)
 $ErrorActionPreference = 'Stop'
 $root = Split-Path (Split-Path $PSScriptRoot -Parent) -Parent
-if (-not $Dist) { $Dist = Join-Path (Split-Path $root -Parent) 'build/demo/component_gallery' }
+. "$root/ProjectTools.ps1"
+$python = Resolve-ProjectPython
+if (-not $Dist) { $Dist = Join-Path (Split-Path $root -Parent) 'build/tools/gallery' }
 $Dist = (Resolve-Path -LiteralPath $Dist).Path
 $stamp = Get-Date -Format 'yyyyMMdd-HHmmss'
-$output = Join-Path (Split-Path $root -Parent) "build/reports/verify-$stamp"
+$output = Assert-ProjectOutput $(if ($ReportDirectory) { $ReportDirectory } else {
+    Join-Path (Split-Path $root -Parent) "output/logs/verify-$stamp"
+}) -Lane logs
 [void](New-Item -ItemType Directory -Path $output -Force)
 $saved = @{}
-foreach ($key in @('PATH','QT_PLUGIN_PATH','QT_QPA_PLATFORM_PLUGIN_PATH','QT_QPA_PLATFORM','QT_SCALE_FACTOR')) {
+foreach ($key in @('PATH','QT_PLUGIN_PATH','QT_QPA_PLATFORM_PLUGIN_PATH','QT_QPA_PLATFORM','QT_SCALE_FACTOR','GENERATED_COMPONENT_SDK_ROOT')) {
     $saved[$key] = [Environment]::GetEnvironmentVariable($key, 'Process')
 }
-$sdk = if ($env:GENERATED_COMPONENT_SDK_ROOT) {
-    [IO.Path]::GetFullPath($env:GENERATED_COMPONENT_SDK_ROOT)
-} else {
-    $workspace = Split-Path (Split-Path $root -Parent) -Parent
-    [IO.Path]::GetFullPath((Join-Path $workspace 'DesignToCode_GenerateComponent/build/sdk'))
-}
+$sdk = & "$root/Verify-GeneratedComponentSDK.ps1" -Package $SdkRoot
+$env:GENERATED_COMPONENT_SDK_ROOT = $sdk
 $catalogPath = Join-Path $sdk 'resources/mappings/design-component-catalog.json'
 if (-not (Test-Path -LiteralPath $catalogPath)) {
     throw "Authoritative design component catalog missing: $catalogPath"
@@ -30,15 +30,8 @@ $results = @()
 try {
     if (-not $SkipCompilerChecks) {
         $env:PATH = $Dist + ';' + $saved['PATH']
-        & python (Join-Path $root 'delivery/tools/CheckProject.py') 2>&1 | Tee-Object -FilePath (Join-Path $output 'governance.log')
+        & $python -B (Join-Path $root 'delivery/tools/CheckProject.py') --dist $Dist 2>&1 | Tee-Object -FilePath (Join-Path $output 'governance.log')
         if ($LASTEXITCODE -ne 0) { throw 'Project governance failed' }
-        $manifest = Get-Content -LiteralPath (Join-Path $sdk 'manifest/component-sdk.json') -Raw | ConvertFrom-Json
-        foreach ($file in $manifest.files) {
-            $path = Join-Path $sdk $file.path
-            if (-not (Test-Path -LiteralPath $path) -or (Get-FileHash -LiteralPath $path).Hash -ne $file.sha256) {
-                throw "Authoritative SDK drift: $($file.path)"
-            }
-        }
     }
     $env:PATH = "$env:SystemRoot\System32;$env:SystemRoot"
     $env:QT_PLUGIN_PATH = 'D:\invalid-plugin-path'
@@ -93,7 +86,7 @@ try {
             Write-Output "PASS native offline simulation: $profile / $appearance / scale=$scale"
         }
     }
-    @{id='COMPONENT-LAB-CPP-QT-2026-09-15-R4-sToken';timestamp=$stamp;dist=$Dist;exeSha256=(Get-FileHash -LiteralPath (Join-Path $Dist 'component_lab.exe') -Algorithm SHA256).Hash;cleanPath=$true;invalidExternalPluginPath=$true;workingDirectory=$env:SystemRoot;freshMachineTest=$false;compilerChecks=(-not $SkipCompilerChecks);results=$results} | ConvertTo-Json -Depth 20 | Set-Content -LiteralPath (Join-Path $output 'verification.json') -Encoding utf8
+    @{status='PASS';timestamp=$stamp;dist=$Dist;exeSha256=(Get-FileHash -LiteralPath (Join-Path $Dist 'component_lab.exe') -Algorithm SHA256).Hash;sdkManifestSha256=(Get-FileHash -LiteralPath (Join-Path $sdk 'manifest/component-sdk.json')).Hash;cleanPath=$true;invalidExternalPluginPath=$true;workingDirectory=$env:SystemRoot;freshMachineTest=$false;compilerChecks=(-not $SkipCompilerChecks);results=$results} | ConvertTo-Json -Depth 20 | Set-Content -LiteralPath (Join-Path $output 'verification.json') -Encoding utf8
     Write-Output "EVIDENCE: $output"
 } finally {
     foreach ($key in $saved.Keys) { [Environment]::SetEnvironmentVariable($key, $saved[$key], 'Process') }

@@ -16,20 +16,20 @@ spec.loader.exec_module(policy)
 class OutputBoundaryTests(unittest.TestCase):
     def test_python_rejects_maintained_paths(self):
         for target in (PROJECT / "Source/probe", PROJECT / "docs/probe", PROJECT / "build/../Source/probe"):
-            with self.assertRaisesRegex(ValueError, "OUTPUT_MUST_BE_IN_BUILD"):
+            with self.assertRaisesRegex(ValueError, "OUTPUT_MUST_BE_IN_WORK_BUILD"):
                 policy.output_path(target)
-        self.assertEqual(policy.output_path(PROJECT / "build/cache/probe"), PROJECT / "build/cache/probe")
+        self.assertEqual(policy.output_path(PROJECT / "output/work/cache/probe"), PROJECT / "output/work/cache/probe")
 
     def test_capture_rejects_before_network(self):
         result = subprocess.run([sys.executable, "-B", str(CAPTURE / "capture_mcp.py"),
             "--endpoint", "http://127.0.0.1:1/mcp", "--tool", "eval_script",
             "--arguments", "{}", "--output", str(PROJECT / "Source/probe")], capture_output=True, text=True)
         self.assertNotEqual(result.returncode, 0)
-        self.assertIn("OUTPUT_MUST_BE_IN_BUILD", result.stderr)
+        self.assertIn("OUTPUT_MUST_BE_IN_WORK_BUILD", result.stderr)
         self.assertFalse((PROJECT / "Source/probe").exists())
 
     def test_node_rejects_maintained_paths(self):
-        script = "const p=require(process.argv[1]);for(const v of process.argv.slice(2)){try{p.outputPath(v);process.exit(2)}catch(e){if(e.message!=='OUTPUT_MUST_BE_IN_BUILD')throw e}}"
+        script = "const p=require(process.argv[1]);for(const v of process.argv.slice(2)){try{p.outputPath(v);process.exit(2)}catch(e){if(e.message!=='OUTPUT_MUST_BE_IN_WORK_BUILD')throw e}}"
         result = subprocess.run([os.environ.get("NODE_EXE", "node"), "-e", script,
             str(PROJECT / "Source/HtmlDsl/tools/output_paths.cjs"),
             str(PROJECT / "Source/probe"), str(PROJECT / "docs/probe"),
@@ -37,16 +37,16 @@ class OutputBoundaryTests(unittest.TestCase):
         self.assertEqual(result.returncode, 0, result.stderr)
 
     def test_compiler_rejects_maintained_paths(self):
-        compiler = PROJECT / "build/cache/V2-html-dsl/v2_ui_compiler.exe"
+        compiler = PROJECT / "build/tools/layout/bin/v2_ui_compiler.exe"
         if not compiler.exists():
             self.skipTest("Build Source/Build.ps1 first")
-        environment = dict(os.environ, QT_QPA_PLATFORM="offscreen")
+        environment = dict(os.environ, QT_QPA_PLATFORM="offscreen", D2C_RUNTIME_ROOT=str(PROJECT / "build/tools/layout"), D2C_WORK_ROOT=str(PROJECT))
         for folder in ("Source", "docs"):
             result = subprocess.run([str(compiler), "--raw", "missing", "--mapping", "missing",
                 "--extensions", "missing", "--font", "missing", "--output", str(PROJECT / folder / "probe")],
                 capture_output=True, text=True, env=environment)
             self.assertNotEqual(result.returncode, 0)
-            self.assertIn("OUTPUT_MUST_BE_IN_BUILD", result.stderr)
+            self.assertIn("OFFLINE_PREVIEW_OUTSIDE_WORK_BUILD", result.stderr)
 
 
 if __name__ == "__main__":

@@ -1,35 +1,16 @@
-# ComponentLabSourceSDK
+# ComponentKit Source SDK
 
-Qt 5 组件 **源码交付包**（Source SDK）。不包含预编译库：组件实现随业务工程本地编译。
+这是 ComponentKit 的源码级 CMake 包，用于在组件生产流程中编译 `GeneratedComponentSDK`。业务工程使用发布后的 `build/sdk`，不直接引用这个目录。
 
-## 使用方式
-
-### 方式一：add_subdirectory（推荐）
+## 使用
 
 ```cmake
-add_subdirectory(<本目录> ComponentLabSourceSDK)
-target_link_libraries(my_app PRIVATE GeneratedComponentSDK::Components)
+add_subdirectory(Source/ComponentKit/source-sdk)
+target_link_libraries(app PRIVATE GeneratedComponentSDK::Components)
 ```
 
-### 方式二：独立构建
+公开头文件位于 `include/MyDesignSystem`。组件源码、Token 资源和 QSS 由 ComponentKit 的构建规则登记。
 
-```powershell
-cmake -S <本目录> -B <cache> -G Ninja -DCMAKE_PREFIX_PATH=<Qt 5.15>
-cmake --build <cache>
-```
+## 与发布 SDK 的关系
 
-## 代码引用
-
-```cpp
-#include <MyDesignSystem/MyDesignSystem.h>
-```
-
-## 说明
-
-- 组件源码、公开头文件、QRC/QSS/图标/字体/Token 资源均来自
-  `DesignToCode_GenerateComponent` 的同一事实源（本包 `manifest.json` 记录
-  来源哈希与逐文件清单）。
-- **不要与二进制 SDK 同时链接**：`GeneratedComponentSDK::Components`
-  （`find_package(GeneratedComponentSDK)`）与本包定义同一组组件符号。
-- 运行时剖面名：`standard-light` / `standard-dark` / `wide-light` / `wide-dark`。
-- MSVC 14.5x + Qt 5.15.2 组合下，本包自动强制包含 `qt5152_msvc_compat.h`。
+Source SDK 是编译输入；`build/sdk` 是经过 Token 检查、编译、manifest 校验和独立消费测试后的发布包。两者的文件清单和来源指纹由发布器核对。

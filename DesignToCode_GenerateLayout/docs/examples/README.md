@@ -1,10 +1,22 @@
-# 固定样例与验证资产
+# 固定样例
 
-本目录是维护输入，不是输出目录。Qt 示例源文件、instrument_host 模板和字体保留于此；样例执行产生的文件只能进入项目 `build`。
+本目录保存可重复使用的 Qt 示例工程、模板、字体和技术夹具。执行输出写入项目 `output`。
 
-- 解析器构建：项目根执行 `pwsh -File Source/Build.ps1 -Test`。
-- V2 演示：项目根执行 `pwsh -File docs/examples/Qt/V2/Build.ps1 -Test`。
-- 单节点案例：`Qt/V2/Case-27-450/Build.ps1`。
-- 历史 V1 包装入口：`Package-V1.ps1`。
+| 路径 | 内容 |
+| --- | --- |
+| `Qt` | V2 页面运行与回归工作台 |
+| `offline-capture` | 手写 HTML、DSL 和布局规格的链路样例，来源标记为 `synthetic-example` |
+| `resources` | 示例字体等固定资源 |
+| `styles` | 结构预览的初始样式 |
+| `templates` | 示例工程和验证模板 |
 
-`build` 不保留任何唯一维护文件；删除后以这里的固定输入和 `Source` 工具重建。Qt、MSVC、Node/Playwright 和外部权威组件 SDK 仍是显式环境依赖，不由删除 build 的测试替代验证。
+运行入口：
+
+```powershell
+pwsh -File Source/Build.ps1 -Test
+pwsh -File docs/examples/Qt/V2/Build.ps1 -Test
+```
+
+样例通过只说明样例输入和对应阶段通过。真实 Pixso 页面、完整组件覆盖和视觉签核需要独立证据。
+
+[返回文档索引](../README.md)

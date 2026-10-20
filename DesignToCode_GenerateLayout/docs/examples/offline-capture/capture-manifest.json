@@ -1,0 +1,12 @@
+{
+  "schemaVersion": "capture-manifest.v1",
+  "manifestType": "synthetic-example",
+  "notice": "Technical offline pipeline example only; not a real Pixso capture or design acceptance result.",
+  "expectedRootId": "sample:1",
+  "fileKey": "offline-synthetic-example",
+  "sourceHtml": "page.html",
+  "sourceDsl": "canonical.raw.json",
+  "layoutReference": "layout-reference.json",
+  "fontFamily": "HarmonyOS Sans SC",
+  "resources": [{"url": "https://example.invalid/offline-example/font.ttf", "local": "../resources/HarmonyOS_Sans_SC_Regular.ttf"}]
+}

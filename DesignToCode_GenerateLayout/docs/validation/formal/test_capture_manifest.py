@@ -14,7 +14,9 @@ TOOL = PROJECT / "Source/HtmlDsl/pipeline/capture/capture_manifest.py"
 
 class CaptureManifestTests(unittest.TestCase):
     def setUp(self):
-        self.temp = tempfile.TemporaryDirectory(prefix="capture-manifest-")
+        base = PROJECT / "output/work/capture-manifest-tests"
+        base.mkdir(parents=True, exist_ok=True)
+        self.temp = tempfile.TemporaryDirectory(prefix="capture-manifest-", dir=base)
         self.addCleanup(self.temp.cleanup)
         self.root = Path(self.temp.name)
         self.html = self.root / "page.html"

@@ -1,27 +1,57 @@
 """Check local documentation, resources and three-project dependency boundaries."""
 import json
+import argparse
 import hashlib
 from pathlib import Path
 import re
 import sys
 import xml.etree.ElementTree as ET
+from SDKPackage import source_inventory, verify
 
 PROJECT = Path(__file__).resolve().parent.parent
 SOURCE = PROJECT / "Source"
-WORK_SOURCE = PROJECT / "build/work/Source"
+WORK_SOURCE = PROJECT / "output/work/generated/Source"
 NAMES = {"ComponentLab", "DesignToCode_GenerateComponent", "DesignToCode_GenerateLayout"}
 OTHER = NAMES - {PROJECT.name}
-REPORT = PROJECT / "build/reports/project-check.json"
+REPORT = PROJECT / "output/logs/project-check.json"
+
+
+def check_source():
+    """Clean-checkout gate: maintained inputs only, no SDK or generated files."""
+    files = source_inventory(PROJECT)
+    for entry in PROJECT.iterdir():
+        if entry.is_dir() and not entry.name.startswith("待删除-"):
+            assert entry.name in {"Source", "docs", "build", "output"}, (entry, "unexpected root directory")
+    for entry in SOURCE.rglob("*"):
+        assert entry.name not in {"generated", "__pycache__"}, (entry, "generated files in Source")
+        assert entry.suffix not in {".pyc", ".obj", ".exe", ".dll", ".lib", ".pdb"}, entry
+        if entry.is_file() and entry.suffix == ".json":
+            json.loads(entry.read_text(encoding="utf-8-sig"))
+    native = json.loads((SOURCE / "ComponentKit/component-definitions/native-components.json").read_text(encoding="utf-8"))["components"]
+    assert native
+    for field in ("qtClass", "sdkClass"):
+        assert len({item[field] for item in native}) == len(native), field
+    for item in native:
+        assert item["sdkClass"] == "Z_" + item["qtClass"][1:], item
+    for path in SOURCE.rglob("*"):
+        if path.is_file() and path.suffix in {".py", ".ps1", ".cpp", ".h", ".cmake", ".qrc"}:
+            text = path.read_text(encoding="utf-8-sig").replace("\\", "/")
+            for sibling in OTHER:
+                assert "/" + sibling + "/" not in text, (path, "sibling source dependency")
+    return {"project": PROJECT.name, "mode": "source-only", "status": "PASS",
+            "maintainedInputs": len(files), "nativeComponentContracts": len(native),
+            "sdkRequired": False}
 
 
 def check():
+    check_source()
     result = {"project": PROJECT.name, "localLinks": 0, "resourceFiles": 0}
     result["pendingDeletion"] = []
     for entry in PROJECT.iterdir():
         if entry.is_dir() and entry.name.startswith("待删除-"):
             result["pendingDeletion"].append(entry.name)
         elif entry.is_dir():
-            assert entry.name in {"Source", "docs", "build"}, (entry, "unexpected root directory")
+            assert entry.name in {"Source", "docs", "build", "output"}, (entry, "unexpected root directory")
     for entry in SOURCE.rglob("*"):
         assert entry.name not in {"generated", "__pycache__"}, (entry, "generated files in Source")
         assert entry.suffix not in {".pyc", ".obj", ".exe", ".dll", ".lib", ".pdb"}, (entry, "build artifact in Source")
@@ -141,14 +171,14 @@ def check():
         for profile in ("standard-light", "wide-light", "standard-dark", "wide-dark"):
             assert (native_styles / profile / f"{sdk_class}.qss").is_file(), (profile, sdk_class)
     sdk = PROJECT / "build/sdk"
-    # Exactly one first-level SDK output is allowed; build/cache remains disposable compiler state.
+    # Exactly one current SDK authority; build/.state holds one recovery version.
     # `sdk-debug` is a local, non-published Debug CRT companion used by the
     # consumer tests.  It must not be mistaken for a second published SDK;
     # only the exact `build/sdk` directory is the delivery artifact.
     sdk_outputs = [path for path in (PROJECT / "build").iterdir()
                    if path.is_dir() and path.name.lower() == "sdk"]
     assert sdk_outputs == [sdk], ("unexpected SDK output", sdk_outputs)
-    manifest = json.loads((sdk / "manifest/component-sdk.json").read_bytes())
+    manifest = verify(sdk, configuration="Release", project=PROJECT)
     assert manifest["owner"] == PROJECT.name
     assert manifest["tokenAuthority"] and manifest["componentAuthority"]
     assert manifest["designComponentCatalog"] == "resources/mappings/design-component-catalog.json"
@@ -175,17 +205,22 @@ def check():
     assert len(button_padding) == 3
     assert all(item["value"] == "semantic.layout.padding.block.none"
                and item["status"] == "specified" for item in button_padding)
-    debug_v2_map = PROJECT / "build/sdk-debug/resources/mappings/figma-component-map-v2.json"
-    if debug_v2_map.is_file():
-        assert hashlib.sha256(debug_v2_map.read_bytes()).hexdigest() == expected_hash
+    debug_sdk = PROJECT / "build/sdk-debug"
+    if debug_sdk.exists():
+        try:
+            verify(debug_sdk, configuration="Debug", project=PROJECT)
+            result["debugCompanion"] = "verified"
+        except (ValueError, OSError, KeyError) as error:
+            # An independently built Debug package cannot be repaired by copying
+            # two Release JSON files. Release acceptance does not certify Debug.
+            result["debugCompanion"] = "unverified: " + str(error)
     assert not list(sdk.rglob("*.exe")) and not list(sdk.rglob("*.dll"))
     assert not (PROJECT / "build/dist").exists()
     consumer_test = PROJECT / "docs/validation/SDKConsumerTest"
     assert (consumer_test / "main.cpp").is_file()
     assert "#include <MyDesignSystem/MyDesignSystem.h>" in (consumer_test / "main.cpp").read_text(encoding="utf-8")
     assert "GeneratedComponentSDK::Components" in (consumer_test / "CMakeLists.txt").read_text(encoding="utf-8")
-    demo = PROJECT / "build/demo/component_mapping_workbench"
-    if demo.exists():
+    for demo in (PROJECT / "output/delivery").glob("mapping-workbench-*"):
         assert not list(demo.rglob("*.lib")) and not list(demo.rglob("*.h"))
         assert not (demo / "cmake").exists()
     # Directory junctions would silently restore a shared dependency after a physical split.
@@ -216,12 +251,12 @@ def check():
             if not link or re.match(r"^https?://", link):
                 continue
             target = (file.parent / link).resolve()
-            if target.is_relative_to(PROJECT / "build"):
+            if target.is_relative_to(PROJECT / "build") or target.is_relative_to(PROJECT / "output"):
                 continue  # Optional generated links need not exist in a clean checkout.
             assert target.is_relative_to(PROJECT) and target.exists(), (file, link)
             result["localLinks"] += 1
     # Inspect only active build descriptions; before-project-split stores explicitly retired caches.
-    cache = PROJECT / "build/cache"
+    cache = PROJECT / "output/work/cache"
     for ninja in cache.rglob("build.ninja"):
         if "before-project-split" in ninja.relative_to(cache).parts:
             continue
@@ -245,9 +280,17 @@ def check():
 
 
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--source-only", action="store_true",
+                        help="Validate maintained source without requiring build outputs.")
+    args = parser.parse_args()
+    if sys.version_info[:2] != (3, 9):
+        parser.error("Python 3.9 is required; do not change the installed environment.")
+    if args.source_only:
+        REPORT = PROJECT / "output/logs/project-source-check.json"
     REPORT.parent.mkdir(parents=True, exist_ok=True)
     try:
-        result = check()
+        result = check_source() if args.source_only else check()
     except Exception as error:
         result = {"project": PROJECT.name, "status": "FAIL", "error": str(error)}
     REPORT.write_text(json.dumps(result, ensure_ascii=False, indent=2), encoding="utf-8")

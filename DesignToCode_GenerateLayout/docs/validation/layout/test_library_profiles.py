@@ -12,7 +12,7 @@ PIPELINE = PROJECT / "Source/HtmlDsl/pipeline"
 FIXTURES = PROJECT / "docs/fixtures/layout"
 COMPILER = Path(os.environ.get(
     "D2C_COMPILER",
-    str(PROJECT / "build/cache/V2-html-dsl/v2_ui_compiler.exe"),
+    str(PROJECT / "build/tools/layout/bin/v2_ui_compiler.exe"),
 ))
 
 
@@ -20,6 +20,7 @@ class LibraryProfileTests(unittest.TestCase):
     """使用同一个 CLI 检查三种组件库配置的类名与调用策略切换。"""
 
     def setUp(self):
+        (PROJECT / 'output/work').mkdir(parents=True, exist_ok=True)
         self.review = json.loads(
             (FIXTURES / "design-inputs/review-page/canonical.raw.json").read_text(
                 encoding="utf-8"
@@ -29,7 +30,7 @@ class LibraryProfileTests(unittest.TestCase):
     def generate(self, raw, output, profile=None):
         input_path = output.parent / "input.json"
         input_path.write_text(json.dumps(raw, ensure_ascii=False), encoding="utf-8")
-        environment = dict(os.environ, QT_QPA_PLATFORM="offscreen")
+        environment = dict(os.environ, QT_QPA_PLATFORM="offscreen", D2C_RUNTIME_ROOT=str(PROJECT / "build/tools/layout"), D2C_WORK_ROOT=str(PROJECT))
         qt_root = environment.get("QT_ROOT")
         if qt_root:
             environment["PATH"] = str(Path(qt_root) / "bin") + os.pathsep + environment.get("PATH", "")
@@ -57,7 +58,7 @@ class LibraryProfileTests(unittest.TestCase):
         }
 
     def test_token_sdk_default_unchanged(self):
-        with tempfile.TemporaryDirectory(prefix="lib-token-") as directory:
+        with tempfile.TemporaryDirectory(dir=PROJECT / 'output/work', prefix="lib-token-") as directory:
             result = self.generate(self.review, Path(directory) / "page")
             self.assertEqual(
                 result.returncode, 0, result.stderr.decode("utf-8", errors="replace")
@@ -72,7 +73,7 @@ class LibraryProfileTests(unittest.TestCase):
             self.assertEqual(components["libraryProfile"], "token-sdk")
 
     def test_qt_native_batch_rename_and_api_filter(self):
-        with tempfile.TemporaryDirectory(prefix="lib-qt-") as directory:
+        with tempfile.TemporaryDirectory(dir=PROJECT / 'output/work', prefix="lib-qt-") as directory:
             result = self.generate(self.review, Path(directory) / "page", profile="qt-native")
             self.assertEqual(
                 result.returncode, 0, result.stderr.decode("utf-8", errors="replace")
@@ -105,7 +106,7 @@ class LibraryProfileTests(unittest.TestCase):
                     self.assertNotIn("setType", entry.get("calls", []))
 
     def test_custom_library_batch_rename_and_override(self):
-        with tempfile.TemporaryDirectory(prefix="lib-custom-") as directory:
+        with tempfile.TemporaryDirectory(dir=PROJECT / 'output/work', prefix="lib-custom-") as directory:
             result = self.generate(self.review, Path(directory) / "page", profile="custom-library")
             self.assertEqual(
                 result.returncode, 0, result.stderr.decode("utf-8", errors="replace")
@@ -115,7 +116,7 @@ class LibraryProfileTests(unittest.TestCase):
             self.assertTrue(any(c.startswith("MyOrg::") for c in classes))
 
     def test_component_override_wins_over_batch_rename(self):
-        with tempfile.TemporaryDirectory(prefix="lib-priority-") as directory:
+        with tempfile.TemporaryDirectory(dir=PROJECT / 'output/work', prefix="lib-priority-") as directory:
             result = self.generate(self.review, Path(directory) / "page", profile="qt-native")
             self.assertEqual(
                 result.returncode, 0, result.stderr.decode("utf-8", errors="replace")
@@ -139,7 +140,7 @@ class LibraryProfileTests(unittest.TestCase):
                 self.assertEqual(entry["qtClass"], "QLineEdit")
 
     def test_unknown_profile_rejected(self):
-        with tempfile.TemporaryDirectory(prefix="lib-unknown-") as directory:
+        with tempfile.TemporaryDirectory(dir=PROJECT / 'output/work', prefix="lib-unknown-") as directory:
             result = self.generate(self.review, Path(directory) / "page", profile="nope")
             self.assertNotEqual(result.returncode, 0)
             self.assertIn(

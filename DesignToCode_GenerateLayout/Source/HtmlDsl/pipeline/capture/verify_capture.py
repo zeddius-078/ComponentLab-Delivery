@@ -57,7 +57,7 @@ if __name__ == '__main__':
     # 全部检查通过后才写报告，并覆盖同名旧报告；失败时旧报告可能仍在。
     # 判断本次结果应同时查看命令退出状态，避免把旧 PASS 当作本次通过。
     from output_paths import PROJECT, output_path
-    output = output_path(args.output or PROJECT / 'build/reports/capture' / args.directory.name / 'verification.json')
+    output = output_path(args.output or PROJECT / 'output/logs/capture' / args.directory.name / 'verification.json')
     output.parent.mkdir(parents=True, exist_ok=True)
     output.write_text(
         json.dumps(result, indent=2, ensure_ascii=False), encoding='utf-8')

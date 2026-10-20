@@ -5,4 +5,4 @@ $resultManifest = "$root/../docs/fixtures/layout/html-dsl/result-page/capture.js
 $reviewManifest = "$root/../docs/fixtures/layout/html-dsl/holdout-19-45/capture.json"
 # 预览回归也通过明确清单选择输入，避免入口隐式读取固定历史样例。
 & "$root/HtmlDsl/Generate.ps1" -Preview -CaptureManifest $resultManifest -ReviewCaptureManifest $reviewManifest -MappingDirectory "$root/../docs/fixtures/layout/mapping" -Font "$root/../docs/examples/resources/HarmonyOS_Sans_SC_Regular.ttf"
-Copy-Item "$root/../docs/examples/templates/instrument_host/instrument_host.*" -Destination "$root/../build/preview/html-dsl"
+Copy-Item "$root/../docs/examples/templates/instrument_host/instrument_host.*" -Destination "$root/../output/work/preview/html-dsl"

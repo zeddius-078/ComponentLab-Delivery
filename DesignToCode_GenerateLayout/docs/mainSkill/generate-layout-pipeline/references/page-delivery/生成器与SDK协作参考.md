@@ -25,7 +25,9 @@ GenerateComponent 运行 `Source/Publish-ComponentSDK.ps1`，输出：
 - `manifest/component-sdk.json`
 - `licenses/*.txt`
 
-GenerateLayout 运行 `Source/Verify-GeneratedComponentSDK.ps1`。脚本校验工作区唯一权威 SDK 的发布者、权限字段和每个文件的 SHA-256，不复制文件。CMake 默认从同级 `DesignToCode_GenerateComponent/build/sdk` 导入静态库，外部工作区可通过 `GENERATED_COMPONENT_SDK_ROOT` 指向同一权威发布目录；不提供源码回退路径。
+GenerateLayout 运行 `Source/Verify-GeneratedComponentSDK.ps1`。脚本拒绝旧清单，校验 v2 发布身份、权限、Release/x64/MD（显式 Debug 对应 MDd）、工具链元数据及全量文件集合/长度/SHA-256，不复制文件。优先级为显式 `-Package` → `GENERATED_COMPONENT_SDK_ROOT` → 默认同级 `DesignToCode_GenerateComponent/build/sdk`。布局 Build.ps1 在 CMake 前验证 SDK，缓存绑定不同 SDK 根路径时拒绝继续；不提供组件源码回退。
+
+SDK 位于 build 并不等于应提交二进制到源码库。开发仓库通过工作区 Source/Workspace.ps1 的 build 按依赖顺序恢复 SDK 和下游工具；外部 SDK 只读消费，缺失或不匹配时不能覆盖。离线发布另由 package 收集固定运行依赖和已验证二进制，消费者使用包内 Run.cmd，无需在上位机重建开发环境。
 
 ## 未映射处理
 
@@ -42,4 +44,4 @@ GenerateLayout 运行 `Source/Verify-GeneratedComponentSDK.ps1`。脚本校验�
 
 组件生成与目标库声明分离：library-profiles.json 选择配置，componentLibrary 指向独立 JSON；classPrefix 只改变目标类和自动头文件名，默认 SDK 保持不变。contract-only/planned 不需要为测试而生成实现，也不能用于正式发布。解析器构建当前仍需要原 SDK；解耦目标映射不等于已消除所有构建依赖。
 
-历史日志归 docs/archive，当前输出归 build。环境不可自主安装或更新，执行前遵循工作区 AGENTS.md。
+历史版本通过 Git 追溯，不再维护 docs/archive；当前机器报告归 output/logs。Python 构建和测试显式用已安装的 3.9；环境不可自主安装或更新，执行前遵循工作区 AGENTS.md。

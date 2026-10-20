@@ -45,7 +45,6 @@ REGISTRY_PATH = SOURCE_DIR / "component-registry.json"
 GENERATED_COMPONENT = ROOT / "DesignSystem/generated/component.json"
 GENERATED_COMBOS = ROOT / "DesignSystem/generated/component-combinations.json"
 DIAGNOSTICS = ROOT / "DesignSystem/generated/reports/component-diagnostics.json"
-DESIGN_BUDGET_REPORT = ROOT.parents[2] / "docs/archive/design-audits/2026-10-19/design-materialization-budget.json"
 SOURCE_MANIFEST = SOURCE_DIR / "v2-source-manifest.json"
 
 AXIS_PREFIX = {
@@ -113,7 +112,8 @@ def combo_key(when: dict) -> str:
 
 
 class ComponentCompiler:
-    def __init__(self, phase: str = "local"):
+    def __init__(self, phase: str = "local", design_budget_report: Path | None = None):
+        self.design_budget_report = design_budget_report
         self.phase = phase
         self.registry = load_json(REGISTRY_PATH)
         self.source_manifest = load_json(SOURCE_MANIFEST)
@@ -564,7 +564,7 @@ class ComponentCompiler:
         but release output records that capacity is not yet verified.
         """
         source = "generated/reports/design-materialization-budget.json"
-        if not DESIGN_BUDGET_REPORT.exists():
+        if self.design_budget_report is None:
             self.materialization_metrics["designBudgetStatus"] = "capacity-unverified"
             if self.phase == "release":
                 self.diagnostics.append(Diagnostic(
@@ -573,7 +573,7 @@ class ComponentCompiler:
                     suggestion="先由 Figma/Pixso 只读适配器生成设计侧变量计数后再发布。"))
             return
         try:
-            report = load_json(DESIGN_BUDGET_REPORT)
+            report = load_json(self.design_budget_report)
         except (OSError, json.JSONDecodeError, ValueError) as exc:
             self.diagnostics.append(Diagnostic(
                 "error", self.phase, source, "", "",
@@ -1303,9 +1303,11 @@ def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--phase", choices=["local", "ci", "release"], default="local")
     parser.add_argument("--check", action="store_true")
+    parser.add_argument("--design-budget-report", type=Path,
+                        help="Optional current platform measurement; never inferred from history.")
     args = parser.parse_args(argv)
 
-    compiler = ComponentCompiler(args.phase)
+    compiler = ComponentCompiler(args.phase, args.design_budget_report)
     compiler.validate()
     has_errors = any(d.entry["severity"] == "error" for d in compiler.diagnostics)
     for diagnostic in compiler.diagnostics:

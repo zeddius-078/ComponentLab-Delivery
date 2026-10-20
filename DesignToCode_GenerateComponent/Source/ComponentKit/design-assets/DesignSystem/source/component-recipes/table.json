@@ -8,7 +8,7 @@
   "$status": "draft-v2",
   "$description": "Table V2 visual recipe. Structure, column roles, content, editors and runtime semantics are defined by component-contracts/table.json; this file only maps visual Slots to shared or semantic Tokens.",
   "$migration": {
-    "visualBaseline": "docs/archive/design-system-history/history/pre-v2-recovery-20261018/table.json",
+    "visualBaselineStatus": "historical-only; current values use $valueEvidence, history is recovered through Git",
     "preserveVisualValues": true,
     "legacyStateNames": "not-active",
     "missingBaselineValues": [

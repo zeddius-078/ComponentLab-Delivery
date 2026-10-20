@@ -1,49 +1,53 @@
 # 组件 SDK 上手指南
 
-本项目把设计组件身份、属性、状态和 Token 编译为 Qt 5.15.2 C++ `Z_*` 组件，并发布 `GeneratedComponentSDK`。
+## 1. 检查输入
 
-## 固定环境
-
-遵循工作区 AGENTS.md，不安装、升级、降级或自动补包。以下变量仅指定已有安装路径，不是安装步骤；需要变更环境先问用户。Python 固定使用已安装的 3.9；发布入口通过 `py -3.9` 查找解释器，也可用当前进程的 `D2C_PYTHON_EXE` 指定已有 3.9 完整路径。版本不符即停止，不回退系统默认版本；CMake 使用同一解释器且限制在 3.9 系列。
-
-## 已有工具路径
+组件维护输入位于 `Source/ComponentKit`。开始前检查 Registry、Contract、Recipe、Binding、Token 源和组件源码是否在同一版本。
 
 ```powershell
-$env:QT_ROOT = '<Qt5 MSVC x64 SDK>'
-$env:VS_ROOT = '<Visual Studio 安装目录>'
-$env:NINJA_ROOT = '<Ninja 目录>'
-$env:CMAKE_EXE = '<cmake.exe>'
+py -3.9 -B Source/CheckProject.py --source-only
 ```
 
-## 发布与验证
+## 2. 发布 SDK
 
 ```powershell
-pwsh -File Source/Publish-ComponentSDK.ps1
-pwsh -File docs/validation/SDKConsumerTest/Build.ps1
-pwsh -File docs/examples/MappingWorkbench/Build.ps1 -GenerateTokens -Test -Deploy
-py -3.9 -B Source/CheckProject.py
+pwsh -File Source/Publish-ComponentSDK.ps1 -QtRoot <Qt5目录>
 ```
 
-发布结果位于 `build/sdk`，包含公共头文件、静态库、Token 与映射资源、CMake 包和 manifest。映射工作台位于 `build/demo/component_mapping_workbench`，不进入 SDK。
+发布流程包括：准备输入副本、生成 Token 和 QSS、配置 CMake、编译组件、校验 manifest、执行独立消费者测试，然后原子更新 `build/sdk`。
 
-## 开发者接入
+## 3. 业务工程接入
 
 ```cmake
 set(GeneratedComponentSDK_DIR "<SDK目录>/cmake")
 find_package(GeneratedComponentSDK 1.0 CONFIG REQUIRED)
-target_link_libraries(my_app PRIVATE GeneratedComponentSDK::Components)
+target_link_libraries(app PRIVATE GeneratedComponentSDK::Components)
 ```
 
 ```cpp
 #include <MyDesignSystem/MyDesignSystem.h>
+
+auto *button = new commonWidget::Z_PushButton(parent);
 ```
 
-业务工程只引用公共头和库。新增组件的完整交付至少包括组件合同、Token/QSS、`.h/.cpp`、工厂注册、公共头导出和独立消费测试。
+业务工程使用公开头文件、CMake target 和 SDK 资源。组件私有源码、生成副本和生产方路径不进入业务工程。
 
-## 执行与结果边界
+## 4. SDK 校验
 
-PrepareBuild.py 先把维护输入复制到 build/work，再生成与编译。仅准备输入使用 `py -3.9 -B Source/PrepareBuild.py --copy-only`；不加参数会执行生成。不要在 Source 内直接运行写出文件的生成器，也不要编辑 build/work 当作维护源。
+```powershell
+py -3.9 -B Source/SDKPackage.py verify --sdk build/sdk --configuration Release --project-root .
+```
 
-上述命令是验证流程，不是全链通过声明。只做文档或目标库类名合同变更无需发布 SDK。Analysis 类名合同由 GenerateLayout 管理，不在这里开发或登记假实现。
+校验 manifest 的版本、工具链、配置、来源指纹、文件列表和逐文件哈希。ComponentLab 与 GenerateLayout 还会执行各自的消费侧校验。
 
-Python 兼容回归：`py -3.9 -B -m unittest discover -s docs/validation -p test_python39_writes.py -v`。必须记录实际解释器版本；有限写入回归不等于完整 SDK 通过。长期记录归档 docs/archive；build/reports 可删除并重建。
+## 5. 维护边界
+
+| 需求 | 修改位置 |
+| --- | --- |
+| Token 原子值、主题和 Profile | `Source/ComponentKit/design-assets/DesignSystem/source` |
+| 组件合法组合和状态 | Contract、Registry、Recipe |
+| 设计变量绑定 | `source/figma-bindings` |
+| Qt 类、属性和 API 映射 | `Source/Qt/MappingWorkbench` 和映射配置 |
+| SDK 发布 | `Source/Publish-ComponentSDK.ps1` |
+
+ComponentLab 只展示 SDK；GenerateLayout 只消费 SDK 并装配页面。

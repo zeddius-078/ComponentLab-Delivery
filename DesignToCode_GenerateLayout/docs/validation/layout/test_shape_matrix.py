@@ -15,7 +15,7 @@ PIPELINE = PROJECT / "Source/HtmlDsl/pipeline"
 FIXTURES = PROJECT / "docs/fixtures/layout"
 COMPILER = Path(os.environ.get(
     "D2C_COMPILER",
-    str(PROJECT / "build/cache/V2-html-dsl/v2_ui_compiler.exe"),
+    str(PROJECT / "build/tools/layout/bin/v2_ui_compiler.exe"),
 ))
 
 
@@ -23,6 +23,7 @@ class LayoutShapeMatrixTests(unittest.TestCase):
     """使用同一个 CLI 检查布局方向、嵌套深度和重复输出。"""
 
     def setUp(self):
+        (PROJECT / 'output/work').mkdir(parents=True, exist_ok=True)
         self.review = json.loads(
             (FIXTURES / "design-inputs/review-page/canonical.raw.json").read_text(
                 encoding="utf-8"
@@ -37,7 +38,7 @@ class LayoutShapeMatrixTests(unittest.TestCase):
     def generate(self, raw, output):
         input_path = output.parent / "input.json"
         input_path.write_text(json.dumps(raw, ensure_ascii=False), encoding="utf-8")
-        environment = dict(os.environ, QT_QPA_PLATFORM="offscreen")
+        environment = dict(os.environ, QT_QPA_PLATFORM="offscreen", D2C_RUNTIME_ROOT=str(PROJECT / "build/tools/layout"), D2C_WORK_ROOT=str(PROJECT))
         qt_root = environment.get("QT_ROOT")
         if qt_root:
             environment["PATH"] = str(Path(qt_root) / "bin") + os.pathsep + environment.get("PATH", "")
@@ -74,14 +75,14 @@ class LayoutShapeMatrixTests(unittest.TestCase):
         self.assertTrue(all(name and name[0].islower() for name in names))
 
     def test_vertical_root_shape(self):
-        with tempfile.TemporaryDirectory(prefix="layout-shape-vertical-") as directory:
+        with tempfile.TemporaryDirectory(dir=PROJECT / 'output/work', prefix="layout-shape-vertical-") as directory:
             self.generate(self.review, Path(directory) / "vertical")
             self.assert_valid_ui(Path(directory) / "vertical")
 
     def test_horizontal_root_shape(self):
         raw = copy.deepcopy(self.review)
         raw["pixTreeNodes"][0]["autoLayout"]["stackMode"] = "HORIZONTAL"
-        with tempfile.TemporaryDirectory(prefix="layout-shape-horizontal-") as directory:
+        with tempfile.TemporaryDirectory(dir=PROJECT / 'output/work', prefix="layout-shape-horizontal-") as directory:
             self.generate(raw, Path(directory) / "horizontal")
             self.assert_valid_ui(Path(directory) / "horizontal")
 
@@ -102,7 +103,7 @@ class LayoutShapeMatrixTests(unittest.TestCase):
             for child in node.get("childNode", []):
                 complete_metrics(child)
         complete_metrics(raw["pixTreeNodes"][0])
-        with tempfile.TemporaryDirectory(prefix="layout-shape-nested-") as directory:
+        with tempfile.TemporaryDirectory(dir=PROJECT / 'output/work', prefix="layout-shape-nested-") as directory:
             self.generate(raw, Path(directory) / "nested")
             output = Path(directory) / "nested"
             self.assert_valid_ui(output)
@@ -110,7 +111,7 @@ class LayoutShapeMatrixTests(unittest.TestCase):
             self.assertGreaterEqual(len(ET.parse(ui_file).findall(".//layout")), 2)
 
     def test_same_shape_is_byte_stable(self):
-        with tempfile.TemporaryDirectory(prefix="layout-shape-repeat-") as directory:
+        with tempfile.TemporaryDirectory(dir=PROJECT / 'output/work', prefix="layout-shape-repeat-") as directory:
             first = Path(directory) / "first"
             second = Path(directory) / "second"
             self.generate(self.review, first)
@@ -190,7 +191,7 @@ class LayoutShapeMatrixTests(unittest.TestCase):
             ),
         ]
         for name, raw, expected_class in cases:
-            with self.subTest(name=name), tempfile.TemporaryDirectory(prefix=f"layout-{name}-") as directory:
+            with self.subTest(name=name), tempfile.TemporaryDirectory(dir=PROJECT / 'output/work', prefix=f"layout-{name}-") as directory:
                 output = Path(directory) / name
                 self.generate(raw, output)
                 ui = ET.parse(Path(str(output) + ".ui"))
@@ -270,7 +271,7 @@ class LayoutShapeMatrixTests(unittest.TestCase):
             }],
             "pixComponentTreeDslNodes": [],
         }
-        with tempfile.TemporaryDirectory(prefix="layout-mixed-") as directory:
+        with tempfile.TemporaryDirectory(dir=PROJECT / 'output/work', prefix="layout-mixed-") as directory:
             output = Path(directory) / "mixed"
             self.generate(mixed, output)
             ui = ET.parse(Path(str(output) + ".ui"))

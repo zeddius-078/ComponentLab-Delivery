@@ -1,0 +1,15 @@
+{
+  "version": 2, "modePath": "autoLayout.stackMode",
+  "modes": {"HORIZONTAL": "QHBoxLayout", "VERTICAL": "QVBoxLayout"},
+  "gapField": "autoLayoutItemSpacing",
+  "paddingFields": ["autoLayoutPaddingLeft", "autoLayoutPaddingTop", "autoLayoutPaddingRight", "autoLayoutPaddingBottom"],
+  "primaryAlignmentField": "autoLayoutPrimaryAlign", "counterAlignmentField": "autoLayoutCounterAlign",
+  "alignmentValues": {"flex-start": "start", "center": "center", "flex-end": "end"},
+  "missingAlignment": "start", "childOrder": "reverse-childNode", "visibilityField": "visible",
+  "missingVisibility": true, "sizeModes": {"FIXED": "Fixed", "RESIZE_TO_FIT": "Hug", "FILL_PARENT": "Fill"},
+  "parentCounterSizingModes": {"FIXED": "self", "RESIZE_TO_FIT": "FILL_PARENT"},
+  "parentPrimarySizingModes": {"FIXED": "self", "RESIZE_TO_FIT": "RESIZE_TO_FIT", "FILL_PARENT": "FILL_PARENT"},
+  "resizeModes": {"width": {"0": "axis", "1": "RESIZE_TO_FIT"}, "height": {"0": "axis"}},
+  "layoutHelpers": {"contractField": "layoutHelper", "canonicalIdField": "canonicalId", "definitions": {}},
+  "requireExplicitMetrics": true
+}

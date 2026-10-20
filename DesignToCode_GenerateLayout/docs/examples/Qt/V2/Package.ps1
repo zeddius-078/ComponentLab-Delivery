@@ -3,7 +3,7 @@ $ErrorActionPreference = 'Stop'
 . "$PSScriptRoot/../../../../Source/NativeTools.ps1"
 Initialize-NativeTools
 & "$PSScriptRoot/Build.ps1" -Test
-$out = Join-Path $D2CProjectRoot 'build/demo/page_examples/V2'
+$out = Join-Path $D2CProjectRoot 'output/work/demo/page_examples/V2'
 & "$env:QT_ROOT/bin/windeployqt.exe" --release --no-translations --no-opengl-sw `
     --no-system-d3d-compiler --no-compiler-runtime "$out/d2c_v2.exe"
 if ($LASTEXITCODE -ne 0) { throw 'Qt deployment failed: HTML + DSL' }

@@ -1,0 +1,11 @@
+{
+  "schema": "initial-visual/v1",
+  "name": "neutral-light",
+  "version": 1,
+  "canvas": "#f4f5f7",
+  "surface": "#ffffff",
+  "text": "#17212b",
+  "border": "#d6dce3",
+  "placeholder": "#e8edf2",
+  "radius": 12
+}

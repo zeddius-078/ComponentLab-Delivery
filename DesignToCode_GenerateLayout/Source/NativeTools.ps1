@@ -5,9 +5,9 @@ $D2CWorkspaceRoot = Split-Path $D2CProjectRoot -Parent
 function Assert-BuildOutput {
     param([Parameter(Mandatory)][string]$Path)
     $resolved = [IO.Path]::GetFullPath($Path)
-    $buildRoot = [IO.Path]::GetFullPath("$D2CProjectRoot/build")
+    $buildRoot = [IO.Path]::GetFullPath("$D2CProjectRoot/output/work")
     if (-not $resolved.StartsWith($buildRoot + [IO.Path]::DirectorySeparatorChar, [StringComparison]::OrdinalIgnoreCase)) {
-        throw 'OUTPUT_MUST_BE_IN_BUILD'
+        throw 'OUTPUT_MUST_BE_IN_WORK'
     }
     $cursor = $resolved
     while ($cursor -and $cursor.StartsWith($buildRoot, [StringComparison]::OrdinalIgnoreCase)) {
@@ -17,6 +17,48 @@ function Assert-BuildOutput {
         $cursor = Split-Path $cursor -Parent
     }
     return $resolved
+}
+function Resolve-SupportRoot {
+    # An explicit override is authoritative; do not silently replace a broken selection.
+    $candidates = if ($env:D2C_SUPPORT_ROOT) {
+        @($env:D2C_SUPPORT_ROOT)
+    } else {
+        @((Join-Path $D2CWorkspaceRoot 'Source'), (Join-Path $D2CProjectRoot 'build/tools/support'))
+    }
+    foreach ($support in $candidates) {
+        if ((Test-Path -LiteralPath "$support/SDKContract.py" -PathType Leaf) -and
+            (Test-Path -LiteralPath "$support/ArtifactLifecycle.py" -PathType Leaf)) {
+            return [IO.Path]::GetFullPath($support)
+        }
+    }
+    throw 'WORKSPACE_SUPPORT_MISSING: specify D2C_SUPPORT_ROOT with the published support tools.'
+}
+function Initialize-LayoutRuntime {
+    param([string]$ToolRoot, [string]$WorkRoot, [switch]$NeedNode)
+    if (-not $ToolRoot) { $ToolRoot = if ($env:D2C_RUNTIME_ROOT) { $env:D2C_RUNTIME_ROOT } else { "$D2CProjectRoot/build/tools/layout" } }
+    if (-not $WorkRoot) { $WorkRoot = if ($env:D2C_WORK_ROOT) { $env:D2C_WORK_ROOT } else { $D2CProjectRoot } }
+    $env:D2C_RUNTIME_ROOT = [IO.Path]::GetFullPath($ToolRoot)
+    $env:D2C_WORK_ROOT = [IO.Path]::GetFullPath($WorkRoot)
+    if (-not (Test-Path -LiteralPath "$ToolRoot/bin/v2_ui_compiler.exe") -or -not (Test-Path -LiteralPath "$ToolRoot/tool-manifest.json")) {
+        throw 'LAYOUT_TOOL_NOT_PUBLISHED: run workspace build layout in the fixed development environment.'
+    }
+    $python = Resolve-ProjectPython
+    & $python -B "$ToolRoot/scripts/ArtifactLifecycle.py" verify-tools --root $ToolRoot | Out-Host
+    if ($LASTEXITCODE) { throw 'LAYOUT_TOOL_INTEGRITY_FAILED' }
+    $env:QT_QPA_PLATFORM_PLUGIN_PATH = "$ToolRoot/bin/platforms"
+    $env:QT_PLUGIN_PATH = "$ToolRoot/bin"
+    $env:QT_QPA_PLATFORM = 'offscreen'
+    $env:PYTHONDONTWRITEBYTECODE = '1'
+    if ($NeedNode) {
+        if (-not $env:NODE_EXE -or -not $env:D2C_NODE_MODULES -or -not $env:D2C_BROWSER_EXE) {
+            throw 'CONTROLLED_RUNTIME_REQUIRED: use the workspace runtime launcher; NODE_EXE, D2C_NODE_MODULES and D2C_BROWSER_EXE must select the fixed runtime.'
+        }
+        foreach ($required in @($env:NODE_EXE, "$env:D2C_NODE_MODULES/playwright", $env:D2C_BROWSER_EXE)) {
+            if (-not (Test-Path -LiteralPath $required)) { throw "CONTROLLED_RUNTIME_MISSING: $required" }
+        }
+        $script:NativeNode = $env:NODE_EXE
+        $env:NODE_PATH = $env:D2C_NODE_MODULES
+    }
 }
 $GeneratedComponentSDKRoot = if ($env:GENERATED_COMPONENT_SDK_ROOT) {
     [IO.Path]::GetFullPath($env:GENERATED_COMPONENT_SDK_ROOT)
@@ -55,7 +97,7 @@ function Initialize-NativeTools {
         $nodeModules = if ($env:D2C_NODE_MODULES) {
             [IO.Path]::GetFullPath($env:D2C_NODE_MODULES)
         } else {
-            'D:\DevTools\ComponentLabNode\node_modules'
+            throw 'CONTROLLED_NODE_MODULES_REQUIRED: set D2C_NODE_MODULES to the approved runtime; no package installation or fallback.'
         }
         if (-not (Test-Path -LiteralPath (Join-Path $nodeModules 'playwright'))) {
             throw "Playwright module missing. Set D2C_NODE_MODULES to its node_modules directory: $nodeModules"
@@ -72,6 +114,7 @@ function Deploy-NativeQt {
     $crt = Get-ChildItem "$env:VCToolsRedistDir/x64/Microsoft.VC*.CRT" -Directory | Select-Object -First 1
     if (-not $crt) { throw 'MSVC CRT directory missing.' }
     Get-ChildItem -LiteralPath $crt.FullName -Filter '*.dll' | Copy-Item -Destination $folder
+    Copy-Item -LiteralPath "$env:QT_ROOT/plugins/platforms/qoffscreen.dll" -Destination "$folder/platforms/qoffscreen.dll"
     foreach ($required in @('Qt5Core.dll','Qt5Gui.dll','Qt5Widgets.dll','platforms/qwindows.dll','msvcp140.dll','vcruntime140.dll')) {
         if (-not (Test-Path -LiteralPath (Join-Path $folder $required))) { throw "Missing runtime: $required" }
     }

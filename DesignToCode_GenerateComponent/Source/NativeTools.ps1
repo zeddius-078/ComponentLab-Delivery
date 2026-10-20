@@ -4,10 +4,34 @@ $D2CProjectRoot = Split-Path $D2CSourceRoot -Parent
 function Assert-BuildOutput {
     param([Parameter(Mandatory)][string]$Path)
     $resolved = [IO.Path]::GetFullPath($Path)
-    $buildRoot = [IO.Path]::GetFullPath("$D2CProjectRoot/build")
-    if (-not $resolved.StartsWith($buildRoot + [IO.Path]::DirectorySeparatorChar, [StringComparison]::OrdinalIgnoreCase)) { throw 'OUTPUT_MUST_BE_IN_BUILD' }
+    $buildRoot = [IO.Path]::GetFullPath("$D2CProjectRoot/output/work")
+    if (-not $resolved.StartsWith($buildRoot + [IO.Path]::DirectorySeparatorChar, [StringComparison]::OrdinalIgnoreCase)) { throw 'OUTPUT_MUST_BE_IN_WORK' }
     $cursor = $resolved
-    while ($cursor -and $cursor.StartsWith($buildRoot, [StringComparison]::OrdinalIgnoreCase)) {
+    while ($cursor) {
+        if ((Test-Path -LiteralPath $cursor) -and ((Get-Item -LiteralPath $cursor -Force).Attributes -band [IO.FileAttributes]::ReparsePoint)) { throw 'OUTPUT_PATH_IS_LINK' }
+        $cursor = Split-Path $cursor -Parent
+    }
+    return $resolved
+}
+function Assert-ControlledBuildOutput {
+    param([Parameter(Mandatory)][string]$Path)
+    $resolved = [IO.Path]::GetFullPath($Path)
+    $root = [IO.Path]::GetFullPath("$D2CProjectRoot/build")
+    if (-not $resolved.StartsWith($root + [IO.Path]::DirectorySeparatorChar, [StringComparison]::OrdinalIgnoreCase)) { throw 'CONTROLLED_OUTPUT_MUST_BE_IN_BUILD' }
+    $cursor = $resolved
+    while ($cursor) {
+        if ((Test-Path -LiteralPath $cursor) -and ((Get-Item -LiteralPath $cursor -Force).Attributes -band [IO.FileAttributes]::ReparsePoint)) { throw 'OUTPUT_PATH_IS_LINK' }
+        $cursor = Split-Path $cursor -Parent
+    }
+    return $resolved
+}
+function Assert-DeliveryOutput {
+    param([Parameter(Mandatory)][string]$Path)
+    $resolved = [IO.Path]::GetFullPath($Path)
+    $root = [IO.Path]::GetFullPath("$D2CProjectRoot/output/delivery")
+    if (-not $resolved.StartsWith($root + [IO.Path]::DirectorySeparatorChar, [StringComparison]::OrdinalIgnoreCase)) { throw 'DELIVERY_MUST_BE_IN_OUTPUT_DELIVERY' }
+    $cursor = $resolved
+    while ($cursor) {
         if ((Test-Path -LiteralPath $cursor) -and ((Get-Item -LiteralPath $cursor -Force).Attributes -band [IO.FileAttributes]::ReparsePoint)) { throw 'OUTPUT_PATH_IS_LINK' }
         $cursor = Split-Path $cursor -Parent
     }

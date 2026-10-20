@@ -1,26 +1,9 @@
-param([string]$Package)
+param([string]$Package, [ValidateSet('Release','Debug')][string]$Configuration = 'Release')
 $ErrorActionPreference = 'Stop'
-$project = Split-Path $PSScriptRoot -Parent
-$workspace = Split-Path $project -Parent
-$source = if ($env:GENERATED_COMPONENT_SDK_ROOT) {
-    [IO.Path]::GetFullPath($env:GENERATED_COMPONENT_SDK_ROOT)
-} else {
-    [IO.Path]::GetFullPath((Join-Path $workspace 'DesignToCode_GenerateComponent/build/sdk'))
-}
-if ($Package -and [IO.Path]::GetFullPath($Package) -ne $source) {
-    throw "GenerateLayout must consume the authoritative SDK directly: $source"
-}
-if (-not (Test-Path -LiteralPath "$source/manifest/component-sdk.json")) {
-    throw "Published SDK manifest missing: $source"
-}
-$manifest = Get-Content -LiteralPath "$source/manifest/component-sdk.json" -Raw | ConvertFrom-Json
-if ($manifest.owner -ne 'DesignToCode_GenerateComponent' -or -not $manifest.componentAuthority) {
-    throw 'Package is not an authorized GenerateComponent publication.'
-}
-foreach ($file in $manifest.files) {
-    $path = Join-Path $source $file.path
-    if (-not (Test-Path -LiteralPath $path) -or (Get-FileHash -LiteralPath $path).Hash -ne $file.sha256) {
-        throw "SDK source hash mismatch: $($file.path)"
-    }
-}
-Write-Output $source
+. "$PSScriptRoot/NativeTools.ps1"
+$source = if ($Package) { [IO.Path]::GetFullPath($Package) } else { $GeneratedComponentSDKRoot }
+$python = Resolve-ProjectPython
+$support = Resolve-SupportRoot
+& $python -B "$support/SDKContract.py" verify --sdk $source --configuration $Configuration | Out-Host
+if ($LASTEXITCODE -ne 0) { throw 'SDK_VERIFICATION_FAILED' }
+return $source

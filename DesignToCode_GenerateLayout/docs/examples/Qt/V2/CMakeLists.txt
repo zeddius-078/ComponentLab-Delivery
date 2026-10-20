@@ -24,6 +24,6 @@ target_link_libraries(v2_tests PRIVATE v2_runtime Qt5::Test Qt5::Xml)
 target_compile_definitions(v2_tests PRIVATE V2_ROOT="${CMAKE_CURRENT_SOURCE_DIR}" D2C_ROOT="${D2C}"
   PIPELINE_ROOT="${D2C_PIPELINE_ROOT}" FIXTURE_ROOT="${D2C_PROJECT_ROOT}/docs/fixtures/layout")
 enable_testing()
-file(MAKE_DIRECTORY "${D2C_PROJECT_ROOT}/build/reports/v2")
-add_test(NAME v2_workflow COMMAND v2_tests -o "${D2C_PROJECT_ROOT}/build/reports/v2/qt-results.xml,xml")
+file(MAKE_DIRECTORY "${D2C_PROJECT_ROOT}/output/logs/v2")
+add_test(NAME v2_workflow COMMAND v2_tests -o "${D2C_PROJECT_ROOT}/output/logs/v2/qt-results.xml,xml")
 set_tests_properties(v2_workflow PROPERTIES ENVIRONMENT "QT_QPA_PLATFORM=offscreen" TIMEOUT 120)

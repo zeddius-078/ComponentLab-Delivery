@@ -28,14 +28,14 @@ def snapshot():
 class SourceBoundaryTests(unittest.TestCase):
     def test_output_paths(self):
         prepare = load_module("prepare_boundary", "Source/PrepareBuild.py")
-        prepare.safe_output(PROJECT / "build/work")
-        for relative in ("Source/generated", "docs/generated", "build/../Source/generated"):
+        prepare.safe_output(PROJECT / "output/work/generated")
+        for relative in ("Source/generated", "docs/generated", "build/sdk", "output/work/../../Source/generated"):
             with self.assertRaises(ValueError):
                 prepare.safe_output(PROJECT / relative)
 
     def test_generator_guard(self):
         guard = load_module("output_guard_boundary", "Source/ComponentKit/tools/output_guard.py")
-        guard.require_build_workspace(PROJECT / "build/work/Source/ComponentKit")
+        guard.require_build_workspace(PROJECT / "output/work/generated/Source/ComponentKit")
         with self.assertRaises(RuntimeError):
             guard.require_build_workspace(PROJECT / "Source/ComponentKit")
 

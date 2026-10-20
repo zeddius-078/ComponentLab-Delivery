@@ -12,12 +12,12 @@ import xml.etree.ElementTree as ET
 
 PROJECT = Path(__file__).resolve().parents[3]
 FIXTURES = PROJECT / "docs/fixtures/layout"
-COMPILER = PROJECT / "build/cache/V2-html-dsl/v2_ui_compiler.exe"
+COMPILER = PROJECT / "build/tools/layout/bin/v2_ui_compiler.exe"
 
 
 class ComponentLibraryTests(unittest.TestCase):
     def setUp(self):
-        scratch = PROJECT / "build/preview/library-contract-tests"
+        scratch = PROJECT / "output/work/preview/library-contract-tests"
         scratch.mkdir(parents=True, exist_ok=True)
         self.temp = tempfile.TemporaryDirectory(dir=str(scratch))
         self.addCleanup(self.temp.cleanup)
@@ -27,7 +27,7 @@ class ComponentLibraryTests(unittest.TestCase):
         self.raw = json.loads((FIXTURES / "design-inputs/review-page/canonical.raw.json").read_bytes())
         self.library_path = self.mapping / "component-libraries/analysis-system.json"
         self.library = json.loads(self.library_path.read_bytes())
-        self.environment = dict(os.environ, QT_QPA_PLATFORM="offscreen")
+        self.environment = dict(os.environ, QT_QPA_PLATFORM="offscreen", D2C_RUNTIME_ROOT=str(PROJECT / "build/tools/layout"), D2C_WORK_ROOT=str(PROJECT))
 
     def generate(self, profile="analysis-system", name="page", formal=False):
         source = self.root / "input.json"

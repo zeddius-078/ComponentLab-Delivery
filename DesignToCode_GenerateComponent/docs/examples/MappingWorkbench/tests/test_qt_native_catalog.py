@@ -7,7 +7,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 CATALOG = ROOT / "mapping/qt-native-catalog.json"
-COMPONENT_KIT = ROOT.parents[2] / "build/work/Source/ComponentKit"
+COMPONENT_KIT = ROOT.parents[2] / "output/work/generated/Source/ComponentKit"
 REGISTRY = COMPONENT_KIT / "component-definitions/native-components.json"
 SOURCE_MAP = COMPONENT_KIT / "component-definitions/generated-component-source-map.json"
 COMPONENT_MAP = ROOT / "mapping/qt-component-map.json"

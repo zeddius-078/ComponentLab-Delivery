@@ -19,8 +19,8 @@ def main():
     case.setUp()
     try:
         sources = {
-            "result": PROJECT / "build/cache/formal-inputs/result/hybrid-result.json",
-            "horizontal": PROJECT / "build/cache/Case-27-450/working/hybrid-result.json",
+            "result": PROJECT / "output/work/cache/formal-inputs/result/hybrid-result.json",
+            "horizontal": PROJECT / "output/work/cache/Case-27-450/working/hybrid-result.json",
         }
         if args.page in sources:
             case.raw = json.loads(sources[args.page].read_bytes())
@@ -30,11 +30,11 @@ def main():
             if args.page == "review":
                 raise ValueError("RESOURCE_FIXTURE_REQUIRES_ICON_CONSUMER")
             case.page_asset_fixture()
-        output = PROJECT / "build/delivery" / args.batch / args.page
+        output = PROJECT / "output/delivery" / args.batch / args.page
         code, error = case.generate(formal=True, output=output)
         if code:
             raise RuntimeError(error)
-        record_path = PROJECT / "build/reports/formal-delivery" / args.batch / args.page / "generation-record.json"
+        record_path = PROJECT / "output/logs/formal-delivery" / args.batch / args.page / "generation-record.json"
         record = json.loads(record_path.read_bytes())
         record["fixture"] = {
             "purpose": "Compact technical contract verification; not approved design",

@@ -2173,6 +2173,12 @@
           "$description": "Migrated from legacy sToken --opacity/0",
           "unit": "%"
         },
+        "4": {
+          "$type": "opacity",
+          "$value": 4,
+          "$description": "Shadow Composite opacity scale",
+          "unit": "%"
+        },
         "10": {
           "$type": "opacity",
           "$value": 10,
@@ -2197,10 +2203,22 @@
           "$description": "Migrated from legacy sToken --opacity/20",
           "unit": "%"
         },
+        "25": {
+          "$type": "opacity",
+          "$value": 25,
+          "$description": "Shadow Composite opacity scale",
+          "unit": "%"
+        },
         "30": {
           "$type": "opacity",
           "$value": 30,
           "$description": "Migrated from legacy sToken --opacity/30",
+          "unit": "%"
+        },
+        "35": {
+          "$type": "opacity",
+          "$value": 35,
+          "$description": "Shadow Composite opacity scale",
           "unit": "%"
         },
         "40": {
@@ -2213,6 +2231,12 @@
           "$type": "opacity",
           "$value": 5,
           "$description": "Migrated from legacy sToken --opacity/5",
+          "unit": "%"
+        },
+        "6": {
+          "$type": "opacity",
+          "$value": 6,
+          "$description": "Shadow Composite opacity scale",
           "unit": "%"
         },
         "50": {

@@ -1,0 +1,23 @@
+{
+  "_fixtureNotice": "Hand-authored technical fixture. Not collected from Pixso and not visual design acceptance evidence.",
+  "pixTreeNodes": [{
+    "guid": "sample:1", "name": "offlineExample", "type": "FRAME",
+    "width": 360, "height": 160, "left": 0, "top": 0,
+    "fillPaints": [{"type": "SOLID", "color": {"r": 255, "g": 255, "b": 255, "a": 1}}],
+    "autoLayout": {
+      "stackMode": "VERTICAL", "stackCounterSizing": "FIXED", "stackPrimarySizing": "FIXED",
+      "autoLayoutItemSpacing": 12, "autoLayoutPaddingLeft": 24, "autoLayoutPaddingTop": 24,
+      "autoLayoutPaddingRight": 24, "autoLayoutPaddingBottom": 24,
+      "autoLayoutPrimaryAlign": "flex-start", "autoLayoutCounterAlign": "flex-start"
+    },
+    "childNode": [{
+      "guid": "sample:2", "name": "exampleHeading", "type": "PARAGRAPH",
+      "width": 312, "height": 28, "left": 24, "top": 24,
+      "nodeText": "Synthetic offline example", "fontFamily": "HarmonyOS Sans SC",
+      "fontSize": 16, "fontWeight": 400, "fontStyle": "Regular",
+      "fillPaints": [{"type": "SOLID", "color": {"r": 32, "g": 32, "b": 32, "a": 1}}],
+      "autoLayout": {"stackCounterSizing": "FIXED", "stackPrimarySizing": "FIXED"}
+    }]
+  }],
+  "pixComponentTreeDslNodes": [], "variableMap": {}, "variableSetMap": {}
+}

@@ -1,21 +1,27 @@
-# 文档中心
+# 工作区文档中心
 
-本目录说明 `ComponentLab`、`DesignToCode_GenerateComponent` 和 `DesignToCode_GenerateLayout` 的协作关系。`DesignToCode_GenerateComponent/build/sdk` 是全工作区唯一权威组件 SDK；两个消费项目校验后直接引用。
+这里记录三个项目的共同规则、执行入口和交付边界。项目内部的技术细节放在对应项目的 `docs/` 中。
 
-| 分区 | 用途 | 入口 |
+## 阅读顺序
+
+| 顺序 | 文档 | 用途 |
 | --- | --- | --- |
-| `tutorial` | 第一次阅读、构建顺序和常用命令 | [三项目上手指南](tutorial/三项目上手指南.md) |
-| `mainSkill` | AI 执行任务时使用的职责、流程与验证约束 | [工作区 Skill](mainSkill/design-to-qt-workspace/SKILL.md) |
-| `designRules` | 跨项目架构、依赖方向和交付原则 | [三项目总体架构](designRules/architecture/项目总体架构.md) |
+| 1 | [三项目上手指南](tutorial/三项目上手指南.md) | 了解首次检出、环境检查和构建顺序 |
+| 2 | [项目总体架构](designRules/architecture/项目总体架构.md) | 查看职责、数据流和 SDK 依赖 |
+| 3 | [工具与交付依赖](designRules/architecture/工具与交付依赖.md) | 核对开发工具、运行依赖和许可清单 |
+| 4 | [离线交付](tutorial/离线交付.md) | 使用完整离线包 |
+| 5 | [工作区 Skill](mainSkill/design-to-qt-workspace/SKILL.md) | 执行跨项目任务时的操作规则 |
 
-## 三个项目
+## 项目入口
 
-| 项目 | 唯一职责 | 主要输出 |
+| 项目 | 文档入口 | 输出 |
 | --- | --- | --- |
-| [DesignToCode_GenerateComponent](../DesignToCode_GenerateComponent/README.md) | 设计身份、属性、状态和 Token 到 `Z_*` Qt 组件的映射与构建 | 唯一权威 `build/sdk` |
-| [ComponentLab](../ComponentLab/README.md) | 校验并展示已发布组件，检查外观、状态、Profile 和对象树 | `build/demo/component_gallery`；不发布 SDK |
-| [DesignToCode_GenerateLayout](../DesignToCode_GenerateLayout/README.md) | 合并同版本 HTML + DSL，按所选组件库合同映射并生成 Qt 页面 | 布局生成工具链与 `.ui/.h/.cpp/.qss/.qrc` 页面包 |
+| [GenerateComponent](../DesignToCode_GenerateComponent/README.md) | [组件文档](../DesignToCode_GenerateComponent/docs/README.md) | `build/sdk` 中的 `GeneratedComponentSDK` |
+| [ComponentLab](../ComponentLab/README.md) | [展示文档](../ComponentLab/docs/README.md) | 组件展示程序和验证结果 |
+| [GenerateLayout](../DesignToCode_GenerateLayout/README.md) | [布局文档](../DesignToCode_GenerateLayout/docs/README.md) | 布局生成工具与页面文件包 |
 
-详细规则只在所属项目的 `docs` 中维护。所有历史记录、阶段报告和已替代说明统一进入所属项目的 `docs/archive`；`build/reports` 仅存当次可再生结果。需要长期保留的结果先归档再清理 build。工作区旧版说明见 [归档索引](archive/README.md)。
+## 工作区目录
 
-执行遵循工作区 AGENTS.md 的固定环境原则。独立组件库可声明未实现类，但 contract-only/planned 不等于已发布组件；当前多库与前缀能力见 GenerateLayout 文档。
+`Source/` 保存工作区脚本，`docs/` 保存共同规则，三个项目各自拥有同名目录。项目的 `build/` 保存受控发布资产，`output/` 保存执行期间的工作文件、日志和交付批次。
+
+历史过程通过 Git 提交查看。当前文档只描述可执行的现行流程；验证结果随对应版本或 output 日志保存。

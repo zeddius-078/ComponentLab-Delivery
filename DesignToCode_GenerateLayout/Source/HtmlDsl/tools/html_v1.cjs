@@ -4,7 +4,7 @@ const path = require('path');
 const crypto = require('crypto');
 const {pathToFileURL} = require('url');
 const {chromium} = require('playwright');
-const {outputPath} = require('./output_paths.cjs');
+const {outputPath, browserLaunchOptions} = require('./output_paths.cjs');
 
 async function main() {
   // 调用方指定并清理临时输出目录；报告可通过 --report-dir 单独保存。
@@ -45,7 +45,7 @@ async function main() {
   const removedMissingScript = html.includes(missingScript);
   html=html.replace(missingScript,'');
   fs.writeFileSync(path.join(out,'preview.html'),html);
-  const browser = await chromium.launch({headless:true,channel:'msedge'});
+  const browser = await chromium.launch(browserLaunchOptions());
   try {
     const width=Number(option('--width')||720),height=Number(option('--height')||600);
     // 视口必须为正整数像素，避免无效尺寸进入浏览器并导致测量结果不可比较。

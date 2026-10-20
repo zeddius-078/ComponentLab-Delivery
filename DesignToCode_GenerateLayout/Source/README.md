@@ -1,12 +1,18 @@
 # GenerateLayout 源码
 
-本目录只保存当前布局生成器源码、构建入口和校验工具。
+本目录是布局生成工具的维护源码，包含采集、适配、编译、构建和校验入口。
 
-硬约束：`Source/` 不保存任何生成产物、构建缓存、页面包或报告。预览、编译、交付和验证结果统一写入同级 `build/`。
+| 文件或目录 | 职责 |
+| --- | --- |
+| `HtmlDsl` | HTML + DSL 采集、适配、组件转换、布局转换和页面编译 |
+| `Build.ps1` | 构建、测试并发布布局工具 |
+| `CMakeLists.txt` | C++ 目标和测试配置 |
+| `GeneratedComponentDependency.cmake` | 引入指定的 GenerateComponent SDK |
+| `Verify-GeneratedComponentSDK.ps1` | 校验 SDK manifest、文件和 ABI |
+| `NativeTools.ps1` | 定位固定工具并设置当前进程环境 |
+| `CheckProject.py` | 项目结构和规则检查 |
+| `Workspace.ps1` | doctor、build、verify、package、clean 编排 |
 
-- 组件 Token、组件 Contract、Recipe 和生成规则由 `DesignToCode_GenerateComponent/Source/` 维护。
-- 输入夹具统一位于项目级 `docs/fixtures/layout`，不得由生成器回写。
-- 历史资料进入项目级 `docs/archive/`。
-- 固定样例、模板、字体和验证代码进入 `docs/examples`、`docs/fixtures`、`docs/validation`；生成器只读取显式输入，不回写。
-- `build` 随时可删除；预览进入 `build/preview`，正式页面包进入 `build/delivery`，编译缓存进入 `build/cache`，验证报告进入 `build/reports`。
-- `Build.ps1`、CMake 配置、采集和校验脚本本身是维护源码，必须留在 `Source`，不能放进可删除的 `build`。
+源码不保存 EXE、页面、日志或缓存。执行结果分别写入 `output/work`、`output/delivery` 和 `output/logs`；稳定工具经构建后发布到 `build/tools/layout`。
+
+组件实现和 Token 由 GenerateComponent 维护。Python 入口使用已有 Python 3.9，依赖缺失时停止并报告。

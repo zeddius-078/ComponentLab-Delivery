@@ -8,6 +8,7 @@ from __future__ import annotations
 import json
 import sys
 import unittest
+from unittest.mock import patch
 from pathlib import Path
 
 SCRIPTS = Path(__file__).resolve().parents[2]
@@ -316,25 +317,26 @@ class ModelTests(unittest.TestCase):
         self.assertIsNone(metrics["designVariableCount"])
 
     def test_design_budget_report_is_read_only_and_capacity_aware(self):
-        report = json.loads((ROOT.parents[2] / "docs/archive/design-audits/2026-10-19/design-materialization-budget.json").read_text(encoding="utf-8"))
-        collection = next(item for item in report["collections"]
-                           if item["name"] == "DSM/Component")
-        figma_metrics = collection["platforms"]["Figma"]
-        self.assertEqual(report["status"], "capacity-unverified")
-        self.assertTrue(report["measurementPolicy"]["designSourceIsNotRewritten"])
-        figma_count = figma_metrics["observedVariableCount"]
-        self.assertTrue(figma_count is None or isinstance(figma_count, int))
-        button_measurement = report["componentMeasurements"]["button"]
-        self.assertEqual(report["modelBaselineDesignSourceTokenCount"], 634)
-        self.assertEqual(button_measurement["modelBaselineDesignSourceTokenCount"], 106)
-        self.assertEqual(button_measurement["variantCountStatus"], "verified")
-        self.assertFalse(button_measurement["variantCountIsNotMappingBaseline"])
         compiler = ComponentCompiler("ci")
-        compiler.validate()
-        # Figma is below its platform hard cap; Pixso remains unmeasured.
-        # There is intentionally no project-wide numeric target.
-        self.assertEqual(compiler.materialization_metrics["designBudgetStatus"],
-                         "capacity-unverified")
+        compiler.validate_design_budget_report(10, 5000)
+        self.assertEqual(compiler.materialization_metrics["designBudgetStatus"], "capacity-unverified")
+        # A minimal adapter response tests semantics, not obsolete historical counts.
+        report = {"designSourceTokenCount": 10, "collections": [
+            {"name": "DSM/Component", "platforms": {
+                "Figma": {"observedVariableCount": 12, "platformHardMax": 5000},
+                "Pixso": {"observedVariableCount": None}}}]}
+        before = json.dumps(report, sort_keys=True)
+        compiler.design_budget_report = Path("current-platform-measurement.json")
+        with patch("v2.component_compile.load_json", return_value=report):
+            compiler.validate_design_budget_report(10, 5000)
+        self.assertEqual(json.dumps(report, sort_keys=True), before)
+        self.assertEqual(compiler.materialization_metrics["observedVariableCounts"]["Figma"], 12)
+        self.assertEqual(compiler.materialization_metrics["designBudgetStatus"], "capacity-unverified")
+        report["collections"][0]["platforms"]["Figma"]["observedVariableCount"] = 5001
+        with patch("v2.component_compile.load_json", return_value=report):
+            compiler.validate_design_budget_report(10, 5000)
+        self.assertEqual(compiler.materialization_metrics["designBudgetStatus"], "over-budget")
+        self.assertTrue(any(item.entry["severity"] == "error" for item in compiler.diagnostics))
 
     def test_figma_binding_names_are_v2_owned_and_value_evidence_only(self):
         """Reference JSON may supply terminal values, never the Figma schema."""
@@ -389,26 +391,19 @@ class ModelTests(unittest.TestCase):
         for axis in ("intent", "content", "mode"):
             self.assertTrue(forbidden.isdisjoint(axes[axis]["values"]), axis)
 
-    def test_figma_structure_audit_matches_binding_manifests(self):
-        audit_path = ROOT.parents[2] / "docs/archive/reports/figma-v2-structure-audit.json"
-        audit = json.loads(audit_path.read_text(encoding="utf-8"))
-        self.assertEqual(audit["variablePolicy"]["collection"], "DSM/Component")
-        self.assertFalse(audit["variablePolicy"]["referenceFilesMayDefineVariableNames"])
-        self.assertFalse(audit["variablePolicy"]["legacyBindingsAllowed"])
+    def test_current_binding_manifests_match_registry(self):
         manifest = json.loads((SOURCE / "v2-source-manifest.json").read_text(encoding="utf-8"))
-        for component, record in audit["components"].items():
-            binding = json.loads((ROOT / "DesignSystem" / manifest["components"][component]["figmaBindingManifest"]).read_text(encoding="utf-8"))
-            self.assertEqual(record["nodeId"], binding["figmaComponentSet"])
-            if component == "button":
-                self.assertIsNone(binding["figmaVariantCount"])
-                self.assertEqual(binding["figmaVariantCountStatus"], "migration-evidence-only")
-                self.assertEqual(binding["migrationEvidence"]["observedVariantCount"], record["variantCount"])
-            else:
-                self.assertEqual(record["variantCount"], binding["figmaVariantCount"])
-            if component != "button":
-                expected = {key.lower(): sorted(values) for key, values in record["axes"].items()}
-                actual = {key: sorted(values) for key, values in binding["variantAxes"].items()}
-                self.assertEqual(expected, actual)
+        registry = self.compiler_registry()
+        for component, record in manifest["components"].items():
+            if "figmaBindingManifest" not in record:
+                continue
+            binding = json.loads((ROOT / "DesignSystem" / record["figmaBindingManifest"]).read_text(encoding="utf-8"))
+            self.assertEqual(binding["component"], component)
+            # Legacy value-evidence manifests are not approved V2 axis contracts.
+            # Match the compiler's explicit migration boundary, not an old audit.
+            if binding.get("$status") == "draft-v2" and binding.get("writePolicy") == "specification-only":
+                self.assertEqual(binding["variableNamespace"]["canonicalPrefix"], f"component.{component}.")
+                self.assertEqual(binding["variantAxes"], registry["components"][component]["axes"])
 
     @staticmethod
     def compiler_registry():

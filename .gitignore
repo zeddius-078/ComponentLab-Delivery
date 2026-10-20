@@ -1,5 +1,6 @@
-# Reproducible build outputs and local caches
+# Controlled local publications are delivered separately, not disposable caches.
 **/build/**
+**/output/**
 **/cache/**
 **/__pycache__/**
 **/.pytest_cache/**

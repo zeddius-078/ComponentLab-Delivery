@@ -575,6 +575,13 @@
             }
           }
         },
+        "shadow": {
+          "base": {
+            "$type": "color",
+            "$value": "{primitive.color.neutral.gray.100}",
+            "$description": "Base color for Shadow Composite; resolves to #000000"
+          }
+        },
         "text": {
           "disabled": {
             "$type": "color",

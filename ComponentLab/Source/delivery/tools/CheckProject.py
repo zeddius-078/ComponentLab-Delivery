@@ -16,8 +16,8 @@ SDK = Path(os.environ.get(
 def validation_inputs():
     paths = [p for folder in (SOURCE / "delivery", SOURCE / "presentation")
              for p in folder.rglob("*") if p.is_file() and "__pycache__" not in p.parts]
-    paths.extend((SOURCE / name) for name in
-                 ("CMakeLists.txt", "GeneratedComponentDependency.cmake") )
+    paths.extend(p for p in SOURCE.iterdir() if p.is_file()
+                 and (p.suffix in {".ps1", ".cmake"} or p.name == "CMakeLists.txt"))
     paths.append(SDK / "manifest/component-sdk.json")
     result = {}
     for path in sorted(set(paths)):
@@ -27,7 +27,7 @@ def validation_inputs():
     return result
 
 
-def check():
+def check(dist=None):
     # ComponentLab directly consumes the workspace authority and must never publish or cache an SDK copy.
     assert not (PROJECT / "build/sdk").exists(), "ComponentLab must not contain build/sdk"
     assert not (SOURCE / "Import-GeneratedComponentSDK.ps1").exists(), "Copy-based SDK import is retired"
@@ -63,7 +63,7 @@ def check():
     assert (SDK / "lib/GeneratedComponentSDK.lib").is_file()
     assert (SDK / "resources/tokens/default").is_dir()
     assert not list(SDK.rglob("*.exe")) and not list(SDK.rglob("*.dll"))
-    demo = PROJECT / "build/demo/component_gallery"
+    demo = Path(dist).resolve() if dist else PROJECT / "build/tools/gallery"
     if demo.exists():
         assert not list(demo.rglob("*.lib")) and not list(demo.rglob("*.h"))
         # The gallery consumes the packaged V2 map first.  If a demo package is
@@ -103,12 +103,17 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--snapshot", type=Path)
     parser.add_argument("--print-inputs", action="store_true")
+    parser.add_argument("--dist", type=Path, help="Explicit staged or stable gallery to inspect")
     args = parser.parse_args()
     if args.print_inputs:
         print(json.dumps(validation_inputs(), sort_keys=True))
         return
-    result = check()
+    result = check(args.dist)
     if args.snapshot:
+        allowed = PROJECT / "output/logs"
+        if not args.snapshot.resolve().is_relative_to(allowed):
+            raise ValueError("SNAPSHOT_MUST_BE_IN_OUTPUT_LOGS")
+        args.snapshot.parent.mkdir(parents=True, exist_ok=True)
         args.snapshot.write_text(json.dumps(validation_inputs(), indent=2, sort_keys=True),
                                  encoding="utf-8")
     print(json.dumps(result, ensure_ascii=False))

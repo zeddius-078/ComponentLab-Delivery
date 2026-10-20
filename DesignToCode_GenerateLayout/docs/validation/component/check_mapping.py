@@ -73,5 +73,5 @@ report = {'phase': 2, 'status': 'PASS', 'instances': results,
           'publicAssets': sorted(asset_entries),
           'mappingSha256': hashlib.sha256((ROOT.parent/'docs/fixtures/layout/mapping/component-mapping.json').read_bytes()).hexdigest(),
           'scope': 'identity, property domains and public asset ownership; native API execution verified in Phase 3'}
-(ROOT.parent/'build/reports/component/mapping-result.json').write_text(json.dumps(report, indent=2), encoding='utf-8')
+(ROOT.parent/'output/logs/component/mapping-result.json').write_text(json.dumps(report, indent=2), encoding='utf-8')
 print(json.dumps(report))

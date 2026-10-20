@@ -10,7 +10,9 @@ param(
     [string]$Font,
     [string]$Batch,
     [string]$Page,
-    [string]$LibraryProfile
+    [string]$LibraryProfile,
+    [string]$ToolRoot,
+    [string]$WorkRoot
 )
 $ErrorActionPreference = 'Stop'
 if ($Formal -and $Preview) { throw 'FORMAL_AND_PREVIEW_ARE_EXCLUSIVE' }
@@ -41,8 +43,10 @@ if ($Formal) {
 . "$PSScriptRoot/../NativeTools.ps1"
 $python = Resolve-ProjectPython
 $previousNodePath = $env:NODE_PATH
-Initialize-NativeTools -NeedNode
-$previewRoot = [IO.Path]::GetFullPath("$D2CProjectRoot/build/preview")
+Initialize-LayoutRuntime -ToolRoot $ToolRoot -WorkRoot $WorkRoot -NeedNode
+$D2CProjectRoot = $env:D2C_WORK_ROOT
+$toolScripts = "$env:D2C_RUNTIME_ROOT/scripts"
+$previewRoot = [IO.Path]::GetFullPath("$D2CProjectRoot/output/work/preview")
 if ($Preview) {
     if (-not $OutputDirectory) { $OutputDirectory = Join-Path $previewRoot 'html-dsl' }
     $resolvedPreviewOutput = Assert-BuildOutput $OutputDirectory
@@ -52,7 +56,7 @@ if ($Preview) {
 }
 $pipeline = [IO.Path]::GetFullPath("$PSScriptRoot/pipeline")
 $node = $NativeNode
-$manifestChecker = "$PSScriptRoot/pipeline/capture/capture_manifest.py"
+$manifestChecker = "$toolScripts/capture/capture_manifest.py"
 $manifestMode = if ($Formal) { 'formal' } else { 'preview' }
 # 生成前校验跨工具输入合同；适配器只接收已通过路径、根节点、资源和哈希检查的清单。
 foreach ($manifest in @($CaptureManifest, $(if ($Preview) { $ReviewCaptureManifest })) | Where-Object { $_ }) {
@@ -65,7 +69,7 @@ $CaptureManifest = [IO.Path]::GetFullPath($CaptureManifest)
 if ($Preview) { $ReviewCaptureManifest = [IO.Path]::GetFullPath($ReviewCaptureManifest) }
 if ($Formal) {
     # 适配器也会写缓存和报告；在它启动前检查路径，不能只依赖后段 C++ 发布检查。
-    foreach ($relative in @('build/cache', "build/reports/formal-delivery/$Batch/$Page/adaptation", "build/delivery/$Batch")) {
+    foreach ($relative in @('output/work/cache', "output/logs/formal-delivery/$Batch/$Page/adaptation", "output/delivery/$Batch")) {
         $cursor = [IO.Path]::GetFullPath($D2CProjectRoot)
         foreach ($part in $relative.Split('/')) {
             $cursor = Join-Path $cursor $part
@@ -75,34 +79,34 @@ if ($Formal) {
             } else { New-Item -ItemType Directory -Path $cursor | Out-Null }
         }
     }
-    if (Test-Path -LiteralPath "$D2CProjectRoot/build/delivery/$Batch/$Page") { throw 'FORMAL_OUTPUT_ALREADY_EXISTS' }
+    if (Test-Path -LiteralPath "$D2CProjectRoot/output/delivery/$Batch/$Page") { throw 'FORMAL_OUTPUT_ALREADY_EXISTS' }
 }
-$scratch = [IO.Path]::GetFullPath("$D2CProjectRoot/build/cache/DesignToCodeHTML-transient-" + [guid]::NewGuid().ToString('N'))
+$scratch = [IO.Path]::GetFullPath("$D2CProjectRoot/output/work/cache/DesignToCodeHTML-transient-" + [guid]::NewGuid().ToString('N'))
 try {
     if ($Formal) {
-        $report = "$D2CProjectRoot/build/reports/formal-delivery/$Batch/$Page/adaptation"
-        $compiler = "$D2CProjectRoot/build/cache/V2-html-dsl/v2_ui_compiler.exe"
+        $report = "$D2CProjectRoot/output/logs/formal-delivery/$Batch/$Page/adaptation"
+        $compiler = "$env:D2C_RUNTIME_ROOT/bin/v2_ui_compiler.exe"
         if (-not (Test-Path -LiteralPath $compiler)) { throw '请先执行 Source/Build.ps1' }
-    & $node "$PSScriptRoot/tools/adapt_v2.cjs" $scratch $report $CaptureManifest
+    & $node "$toolScripts/tools/adapt_v2.cjs" $scratch $report $CaptureManifest
         if ($LASTEXITCODE -ne 0) { throw 'FORMAL_CAPTURE_ADAPTATION_FAILED' }
         $previousPlatform = $env:QT_QPA_PLATFORM
         try {
             $env:QT_QPA_PLATFORM = 'offscreen'
             $profileArgs = @()
             if ($LibraryProfile) { $profileArgs = @('--library-profile', $LibraryProfile) }
-            & $compiler --raw "$scratch/hybrid-result.json" --mapping $MappingDirectory --extensions "$MappingDirectory/extensions.json" --font $Font --output "$D2CProjectRoot/build/delivery/$Batch/$Page" --strict-layout --formal @profileArgs
+            & $compiler --raw "$scratch/hybrid-result.json" --mapping $MappingDirectory --extensions "$MappingDirectory/extensions.json" --font $Font --output "$D2CProjectRoot/output/delivery/$Batch/$Page" --strict-layout --formal @profileArgs
             if ($LASTEXITCODE -ne 0) { throw "FORMAL_GENERATION_FAILED: $Page" }
         } finally { $env:QT_QPA_PLATFORM = $previousPlatform }
         return
     }
     $resultScratch = Join-Path $scratch 'result'
     $reviewScratch = Join-Path $scratch 'review'
-    $resultReport = "$D2CProjectRoot/build/reports/v2/html-dsl-adaptation/result"
-    $reviewReport = "$D2CProjectRoot/build/reports/v2/html-dsl-adaptation/review"
-    & $node "$PSScriptRoot/tools/adapt_v2.cjs" $resultScratch $resultReport $CaptureManifest
+    $resultReport = "$D2CProjectRoot/output/logs/v2/html-dsl-adaptation/result"
+    $reviewReport = "$D2CProjectRoot/output/logs/v2/html-dsl-adaptation/review"
+    & $node "$toolScripts/tools/adapt_v2.cjs" $resultScratch $resultReport $CaptureManifest
     # 结果页适配失败时停止编译，避免把旧混合输入复制进新预览。
     if ($LASTEXITCODE -ne 0) { throw 'HTML + DSL result adaptation failed' }
-    & $node "$PSScriptRoot/tools/adapt_v2.cjs" $reviewScratch $reviewReport $ReviewCaptureManifest
+    & $node "$toolScripts/tools/adapt_v2.cjs" $reviewScratch $reviewReport $ReviewCaptureManifest
     # 复核页适配失败时同样停止，保证两个预览页来自本轮明确清单。
     if ($LASTEXITCODE -ne 0) { throw 'HTML + DSL review adaptation failed' }
     $pages = [ordered]@{
@@ -115,7 +119,7 @@ try {
     # 只清理由当前调用创建的缓存目录；解析绝对路径后限制父目录、前缀和链接属性。
     if (Test-Path -LiteralPath $scratch) {
         $resolved = (Resolve-Path -LiteralPath $scratch).Path
-        if ([IO.Path]::GetDirectoryName($resolved) -ne [IO.Path]::GetFullPath("$D2CProjectRoot/build/cache") -or [IO.Path]::GetFileName($resolved) -notlike 'DesignToCodeHTML-transient-*') { throw 'Unsafe temporary path' }
+        if ([IO.Path]::GetDirectoryName($resolved) -ne [IO.Path]::GetFullPath("$D2CProjectRoot/output/work/cache") -or [IO.Path]::GetFileName($resolved) -notlike 'DesignToCodeHTML-transient-*') { throw 'Unsafe temporary path' }
         if ((Get-Item -LiteralPath $resolved).Attributes -band [IO.FileAttributes]::ReparsePoint) { throw 'Temporary path is a link' }
         Remove-Item -LiteralPath $resolved -Recurse -Force
     }

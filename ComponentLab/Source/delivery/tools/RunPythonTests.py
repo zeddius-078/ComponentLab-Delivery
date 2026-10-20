@@ -5,7 +5,7 @@ import json
 from pathlib import Path
 import unittest
 
-from CheckProject import ROOT, validation_inputs
+from CheckProject import SOURCE as ROOT, PROJECT, validation_inputs
 
 
 class CaseResult(unittest.TextTestResult):
@@ -19,6 +19,8 @@ class CaseResult(unittest.TextTestResult):
 
 
 def run(pattern, output):
+    if not output.resolve().is_relative_to(PROJECT / "output/logs"):
+        raise ValueError("TEST_OUTPUT_MUST_BE_IN_OUTPUT_LOGS")
     suite = unittest.defaultTestLoader.discover(str(ROOT/"delivery/tests"), pattern=pattern)
     discovered = suite.countTestCases()
     before = validation_inputs()

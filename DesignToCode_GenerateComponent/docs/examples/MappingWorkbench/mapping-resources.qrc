@@ -6,6 +6,6 @@
         <file alias="code-options.json">mapping/code-options.json</file>
         <file alias="page.qss">mapping/page.qss</file>
         <file alias="overview.html">ui/Overview.html</file>
-        <file alias="figma-component-map-v2.json">../../../build/work/Source/ComponentKit/design-assets/DesignSystem/config/figma-component-map-v2.json</file>
+        <file alias="figma-component-map-v2.json">../../../output/work/generated/Source/ComponentKit/design-assets/DesignSystem/config/figma-component-map-v2.json</file>
     </qresource>
 </RCC>

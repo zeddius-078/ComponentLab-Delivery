@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "layout": {
+    "resizeModes": {
+      "height": {
+        "1": "RESIZE_TO_FIT"
+      }
+    }
+  }
+}

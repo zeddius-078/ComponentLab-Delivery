@@ -1,4 +1,4 @@
-"""使用真实复核输入验证生成器门禁；所有变体和输出仅存在于临时目录。"""
+"""固定采集的只读副本与显式合成夹具验证门禁，不代表设计/视觉签核。"""
 import json
 import hashlib
 import os
@@ -13,22 +13,37 @@ from delivery_contract import verify_page
 PROJECT = Path(__file__).resolve().parents[3]
 PIPELINE = PROJECT / "Source/HtmlDsl/pipeline"
 FIXTURES = PROJECT / "docs/fixtures/layout"
-COMPILER = Path(os.environ.get("D2C_COMPILER", str(PROJECT / "build/cache/V2-html-dsl/v2_ui_compiler.exe")))
+COMPILER = Path(os.environ.get("D2C_COMPILER", str(PROJECT / "build/tools/layout/bin/v2_ui_compiler.exe")))
 
 
 class GeneratorContractTests(unittest.TestCase):
     def setUp(self):
-        self.temp = tempfile.TemporaryDirectory(prefix="layout-contract-")
+        cache = PROJECT / "output/work/cache/formal-contract-tests"
+        cache.mkdir(parents=True, exist_ok=True)
+        # Junction/ACL tests need NTFS; the project's exFAT volume cannot model
+        # those Windows security boundaries. Only these isolated probes use TEMP.
+        ntfs_probe = self._testMethodName in {
+            "test_junction_cannot_redirect_delivery_into_business",
+            "test_readonly_business_directory_is_not_written",
+        }
+        self.temp = tempfile.TemporaryDirectory(
+            prefix="layout-contract-", dir=None if ntfs_probe else cache)
         self.addCleanup(self.temp.cleanup)
         self.root = Path(self.temp.name)
-        self.raw = json.loads((FIXTURES / "design-inputs/review-page/canonical.raw.json").read_bytes())
+        self.raw = self.read_capture("review-page")
         self.names = json.loads((FIXTURES / "mapping/engineering-names.json").read_bytes())
         shutil.copytree(FIXTURES / "mapping", self.root / "mapping")
+
+    def read_capture(self, name):
+        source = FIXTURES / "design-inputs" / name / "canonical.raw.json"
+        original = source.read_bytes()
+        self.addCleanup(lambda: self.assertEqual(source.read_bytes(), original))
+        return json.loads(original)
 
     def generate(self, formal=False, output=None, compiler=COMPILER):
         (self.root / "input.json").write_text(json.dumps(self.raw), encoding="utf-8")
         (self.root / "mapping/engineering-names.json").write_text(json.dumps(self.names), encoding="utf-8")
-        env = dict(os.environ, QT_QPA_PLATFORM="offscreen")
+        env = dict(os.environ, QT_QPA_PLATFORM="offscreen", D2C_RUNTIME_ROOT=str(PROJECT / "build/tools/layout"), D2C_WORK_ROOT=str(PROJECT))
         arguments = [
             str(compiler), "--raw", str(self.root / "input.json"),
             "--mapping", str(self.root / "mapping"),
@@ -79,6 +94,13 @@ class GeneratorContractTests(unittest.TestCase):
         extension_rules = json.loads(extensions.read_bytes())
         extension_rules["selectOption"]["properties"]["Profile"] = "wide-light"
         extensions.write_text(json.dumps(extension_rules), encoding="utf-8")
+        # The variable validator resolves the design-side mode, not the SDK alias.
+        # Rename only the test copy's existing compact mode; preserve IDs/values
+        # and retain every variable reference so missing/cyclic values still fail.
+        for modes in self.raw.get("variableSetMap", {}).values():
+            for mode in modes:
+                if mode.get("name") == "light-compact":
+                    mode["name"] = "wide-light"
         def visit(node):
             for prop in node.get("propRefMap", {}).get("variant", []):
                 if prop.get("name") == "Profile":
@@ -89,7 +111,7 @@ class GeneratorContractTests(unittest.TestCase):
             visit(root)
 
     def formal_output(self):
-        base = PROJECT / "build/delivery"
+        base = PROJECT / "output/delivery"
         base.mkdir(parents=True, exist_ok=True)
         batch = tempfile.TemporaryDirectory(prefix="contract-", dir=base)
         self.addCleanup(batch.cleanup)
@@ -142,9 +164,11 @@ class GeneratorContractTests(unittest.TestCase):
         self.reject_formal_fixture('INVALID_TEXT_VALUE')
 
     def test_formal_rejects_implicit_profile_switch(self):
-        code, error = self.generate(formal=True)
+        output = self.formal_output()
+        code, error = self.generate(formal=True, output=output)
         self.assertNotEqual(code, 0)
         self.assertIn("FORMAL_REQUIRES_LIGHT_COMPACT_MAPPING", error)
+        self.assertFalse(output.exists())
 
     def test_entry_defaults_to_formal_and_rejects_mixed_modes(self):
         entry = PROJECT / 'Source/HtmlDsl/Generate.ps1'
@@ -211,7 +235,7 @@ class GeneratorContractTests(unittest.TestCase):
         output = self.formal_output()
         code, error = self.generate(formal=True, output=output)
         self.assertEqual(code, 0, error)
-        record = json.loads((PROJECT / 'build/reports/formal-delivery' / output.parent.name / output.name / 'generation-record.json').read_bytes())
+        record = json.loads((PROJECT / 'output/logs/formal-delivery' / output.parent.name / output.name / 'generation-record.json').read_bytes())
         self.assertEqual(record['variableValidation']['status'], 'PASS')
         self.assertGreater(record['variableValidation']['referenceCount'], 0)
 
@@ -220,7 +244,7 @@ class GeneratorContractTests(unittest.TestCase):
         output = self.formal_output()
         code, error = self.generate(formal=True, output=output)
         self.assertEqual(code, 0, error)
-        record = PROJECT / 'build/reports/formal-delivery' / output.parent.name / output.name / 'generation-record.json'
+        record = PROJECT / 'output/logs/formal-delivery' / output.parent.name / output.name / 'generation-record.json'
         verify_page(output, record)
         qss = output / 'view/res/qss/ReviewPage.qss'
         qss.write_bytes(qss.read_bytes() + b'\n/* changed after generation */\n')
@@ -232,7 +256,7 @@ class GeneratorContractTests(unittest.TestCase):
         output = self.formal_output()
         code, error = self.generate(formal=True, output=output)
         self.assertEqual(code, 0, error)
-        record = PROJECT / 'build/reports/formal-delivery' / output.parent.name / output.name / 'generation-record.json'
+        record = PROJECT / 'output/logs/formal-delivery' / output.parent.name / output.name / 'generation-record.json'
         (output / 'design-trace.json').write_text('{}', encoding='utf-8')
         with self.assertRaisesRegex(ValueError, 'OUTPUT_FILE_SET_CHANGED'):
             verify_page(output, record)
@@ -251,7 +275,7 @@ class GeneratorContractTests(unittest.TestCase):
         self.assertEqual(code, 0, error)
         files = sorted(str(p.relative_to(output)).replace("\\", "/") for p in output.rglob("*") if p.is_file())
         self.assertEqual(files, ["form/ReviewPage.ui", "include/ReviewPage.h", "src/ReviewPage.cpp", "view/res/ReviewPage.qrc", "view/res/qss/ReviewPage.qss"])
-        record_path = PROJECT / 'build/reports/formal-delivery' / output.parent.name / output.name / 'generation-record.json'
+        record_path = PROJECT / 'output/logs/formal-delivery' / output.parent.name / output.name / 'generation-record.json'
         record = json.loads(record_path.read_bytes())
         self.assertEqual(set(record['outputSha256']), set(files))
         for name in files:
@@ -314,9 +338,40 @@ class GeneratorContractTests(unittest.TestCase):
         second = {p.relative_to(outputs[1]): p.read_bytes() for p in outputs[1].rglob("*") if p.is_file()}
         self.assertEqual(first, second)
 
+    def test_compact_fixture_keeps_variable_values_and_requires_matching_mode(self):
+        variables = json.loads(json.dumps(self.raw["variableMap"]))
+        modes = json.loads(json.dumps(self.raw["variableSetMap"]))
+        self.compact_fixture()
+        self.assertEqual(self.raw["variableMap"], variables)
+        for set_id, original_modes in modes.items():
+            self.assertEqual(self.raw["variableSetMap"][set_id], [
+                dict(mode, name="wide-light") if mode["name"] == "light-compact" else mode
+                for mode in original_modes
+            ])
+        # A broken test fixture must still fail; never suppress variable checks.
+        for current_modes in self.raw["variableSetMap"].values():
+            for mode in current_modes:
+                if mode["name"] == "wide-light":
+                    mode["name"] = "unselected-test-mode"
+        self.reject_formal_fixture("VARIABLE_MODE_VALUE_MISSING")
+
     def result_fixture(self):
-        source = PROJECT / "build/cache/formal-inputs/result/hybrid-result.json"
-        self.raw = json.loads(source.read_bytes())
+        self.raw = self.read_capture("result-page")
+        root = self.raw["pixTreeNodes"][0]
+        # Resource contract fixture, not a browser-adapted result-page baseline:
+        # retain the captured root's explicit metrics and one real Leading icon
+        # instance. Full-page adaptation is tested separately with its manifest.
+        return_button = next(node for node in root["childNode"] if node["guid"] == "21:481")
+        self.assertEqual(
+            next(prop["value"] for prop in return_button["propRefMap"]["variant"]
+                 if prop["name"] == "content"), "Leading")
+        root["childNode"] = [return_button]
+        self.raw["_testFixture"] = {
+            "kind": "synthetic-resource-contract",
+            "source": "result-page/canonical.raw.json",
+            "change": "Root plus return-button subset; explicit compact test profile",
+            "notEvidenceOf": "full-page HTML adaptation or visual acceptance",
+        }
         self.compact_fixture()
 
     def resource_entry(self, update):
@@ -362,8 +417,10 @@ class GeneratorContractTests(unittest.TestCase):
         output = self.formal_output()
         code, error = self.generate(formal=True, output=output)
         self.assertEqual(code, 0, error)
-        self.assertEqual([p.name for p in output.rglob("*.qrc")], ["ReviewPage.qrc"])
+        self.assertEqual([p.name for p in output.rglob("*.qrc")], ["ReviewResultPage.qrc"])
         self.assertFalse(list(output.rglob("*.svg")))
+        cpp = (output / "src/ReviewResultPage.cpp").read_text(encoding="utf-8")
+        self.assertIn("setLeadingIcon", cpp)
 
     def test_unknown_resource_ownership_is_rejected(self):
         self.result_fixture()
@@ -425,10 +482,10 @@ class GeneratorContractTests(unittest.TestCase):
         # G: 为 exFAT，不支持联接。在 NTFS 临时目录放置同一生成器字节来验证重定向。
         tool = self.root / 'ntfs-tool'
         (tool / 'Source/HtmlDsl/pipeline').mkdir(parents=True)
-        compiler = tool / 'build/cache/compiler/v2_ui_compiler.exe'
+        compiler = tool / 'output/work/cache/compiler/v2_ui_compiler.exe'
         compiler.parent.mkdir(parents=True)
         shutil.copy2(COMPILER, compiler)
-        output = tool / 'build/delivery/junction/page'
+        output = tool / 'output/delivery/junction/page'
         output.parent.mkdir(parents=True)
         link = output.parent / 'redirected'
         self.powershell_fixture('New-Item -ItemType Junction -Path $env:LINK -Target $env:TARGET | Out-Null',
@@ -438,7 +495,7 @@ class GeneratorContractTests(unittest.TestCase):
         self.addCleanup(lambda: os.rmdir(link))
         code, error = self.generate(formal=True, output=link / 'page', compiler=compiler)
         self.assertNotEqual(code, 0)
-        self.assertIn('FORMAL_OUTPUT_REDIRECTED', error)
+        self.assertIn('OUTPUT_PATH_IS_LINK', error)
         self.assertEqual(list(business.iterdir()), [marker])
         self.assertEqual(marker.read_bytes(), b'business source stays unchanged')
 

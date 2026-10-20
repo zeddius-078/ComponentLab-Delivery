@@ -34,12 +34,14 @@
 #include <QTemporaryDir>
 #include <QRegularExpression>
 #include <QProcess>
+#include "StructurePreview.h"
 #include <QLibraryInfo>
 #ifdef Q_OS_WIN
 #include <qt_windows.h>
 #endif
 
 namespace {
+void validateOutputWrite(const QString& path);
 // 哈希关联实际文件字节；单文件使用 QSaveFile，正式四件套另在暂存目录整体发布。
 QString hash(const QString& file) {
     QFile f(file);
@@ -51,6 +53,7 @@ QString hash(const QString& file) {
 }
 
 void save(const QString& file, const QByteArray& bytes) {
+    validateOutputWrite(file);
     QSaveFile f(file);
     // 打开、写入长度和原子提交全部成功才视为输出完成，防止保留截断文件。
     if (!f.open(QIODevice::WriteOnly) || f.write(bytes) != bytes.size() || !f.commit())
@@ -67,18 +70,24 @@ bool redirectedDirectory(const QString& path) {
     return QFileInfo(path).isSymLink();
 }
 
-// 创建工具内部目录前逐层检查真实位置，包含 build/delivery 自身的重定向。
-void checkPreviewOutput(const QString& requested) {
-    QDir project(QCoreApplication::applicationDirPath());
-    while (!project.exists("Source/HtmlDsl/pipeline")) {
-        if (!project.cdUp()) throw std::runtime_error("TOOL_ROOT_NOT_FOUND");
-    }
-    const auto target = QDir::cleanPath(QFileInfo(requested).absoluteFilePath());
-    const auto relative = project.relativeFilePath(target);
-    const bool external = relative.startsWith("../") || QDir::isAbsolutePath(relative);
-    if (!external && !relative.startsWith("build/", Qt::CaseInsensitive))
-        throw std::runtime_error("OUTPUT_MUST_BE_IN_BUILD");
-    QString cursor = target;
+struct RuntimeRoots {
+    QDir tool;
+    QDir work;
+    bool offline = false;
+};
+RuntimeRoots runtimeRoots;
+
+void rejectRuntimeOutput(const QString& path) {
+    if (!runtimeRoots.offline) return;
+    const auto target = QDir::cleanPath(QFileInfo(path).absoluteFilePath());
+    const auto tool = runtimeRoots.tool.absolutePath();
+    if (target.compare(tool, Qt::CaseInsensitive) == 0 ||
+        target.startsWith(tool + "/", Qt::CaseInsensitive))
+        throw std::runtime_error("OUTPUT_INSIDE_RUNTIME");
+}
+
+void rejectRedirectedAncestors(const QString& path) {
+    QString cursor = path;
     while (!cursor.isEmpty()) {
         if (redirectedDirectory(cursor)) throw std::runtime_error("OUTPUT_PATH_IS_LINK");
         const auto parent = QFileInfo(cursor).absolutePath();
@@ -87,12 +96,52 @@ void checkPreviewOutput(const QString& requested) {
     }
 }
 
+void validateOutputWrite(const QString& path) {
+    rejectRuntimeOutput(path);
+    rejectRedirectedAncestors(QDir::cleanPath(QFileInfo(path).absoluteFilePath()));
+}
+
+RuntimeRoots resolveRuntimeRoots(const QCommandLineParser& cli) {
+    const auto tool = cli.isSet("tool-root") ? cli.value("tool-root")
+                                           : qEnvironmentVariable("D2C_RUNTIME_ROOT");
+    const auto work = cli.isSet("work-root") ? cli.value("work-root")
+                                           : qEnvironmentVariable("D2C_WORK_ROOT");
+    if (!tool.isEmpty() || !work.isEmpty()) {
+        if (tool.isEmpty() || work.isEmpty()) throw std::runtime_error("OFFLINE_ROOTS_REQUIRED");
+        for (const auto& root : {tool, work}) {
+            if (!QDir::isAbsolutePath(root) || !QFileInfo(root).isDir())
+                throw std::runtime_error("OFFLINE_ROOT_INVALID");
+            rejectRedirectedAncestors(QDir::cleanPath(root));
+        }
+        const auto canonicalTool = QFileInfo(tool).canonicalFilePath();
+        const auto canonicalWork = QFileInfo(work).canonicalFilePath();
+        if (canonicalWork.compare(canonicalTool, Qt::CaseInsensitive) == 0 ||
+            canonicalWork.startsWith(canonicalTool + "/", Qt::CaseInsensitive))
+            throw std::runtime_error("WORK_ROOT_INSIDE_RUNTIME");
+        return {QDir(canonicalTool), QDir(canonicalWork), true};
+    }
+    throw std::runtime_error("OFFLINE_ROOTS_REQUIRED: provide --tool-root and --work-root");
+}
+
+// 创建工具内部目录前逐层检查真实位置，包含 output/delivery 自身的重定向。
+void checkPreviewOutput(const QString& requested) {
+    const auto& project = runtimeRoots.work;
+    const auto target = QDir::cleanPath(QFileInfo(requested).absoluteFilePath());
+    rejectRuntimeOutput(target);
+    const auto relative = project.relativeFilePath(target);
+    const bool external = relative.startsWith("../") || QDir::isAbsolutePath(relative);
+    if (external || !relative.startsWith("output/work/", Qt::CaseInsensitive))
+        throw std::runtime_error("OFFLINE_PREVIEW_OUTSIDE_WORK_BUILD");
+    rejectRedirectedAncestors(target);
+}
+
 QString internalDirectory(const QDir& project, const QString& relative) {
     QDir cursor(QFileInfo(project.absolutePath()).canonicalFilePath());
     for (const auto& part : relative.split('/')) {
         if (!QRegularExpression("^[A-Za-z0-9][A-Za-z0-9_-]*$").match(part).hasMatch())
             throw std::runtime_error("INVALID_INTERNAL_PATH");
         const auto expected = cursor.filePath(part);
+        rejectRuntimeOutput(expected);
         QFileInfo info(expected);
         if (redirectedDirectory(expected)) throw std::runtime_error("FORMAL_OUTPUT_REDIRECTED");
         if (info.exists() && (!info.isDir() || info.isSymLink() ||
@@ -104,13 +153,12 @@ QString internalDirectory(const QDir& project, const QString& relative) {
     return cursor.absolutePath();
 }
 
-// 正式模式只发布到工具自己的 build/delivery；规范路径同时阻断 .. 和目录联接逃逸。
+// 正式模式只发布到工具自己的 output/delivery；规范路径同时阻断 .. 和目录联接逃逸。
 QString formalDestination(const QString& requested) {
-    QDir root(QCoreApplication::applicationDirPath());
-    while (!root.exists("Source/HtmlDsl/pipeline")) {
-        if (!root.cdUp()) throw std::runtime_error("TOOL_ROOT_NOT_FOUND");
-    }
-    const auto base = internalDirectory(root, "build/delivery");
+    const auto& root = runtimeRoots.work;
+    rejectRuntimeOutput(requested);
+    rejectRedirectedAncestors(QDir::cleanPath(QFileInfo(requested).absoluteFilePath()));
+    const auto base = internalDirectory(root, "output/delivery");
     const auto canonicalBase = QFileInfo(base).canonicalFilePath();
     const auto destination = QDir::cleanPath(QFileInfo(requested).absoluteFilePath());
     const auto relative = QDir(canonicalBase).relativeFilePath(destination);
@@ -446,7 +494,11 @@ private:
         resources.write(directory, className, qss.toUtf8());
         // uic 输出只用于验证；页面 QRC 随页面包交付，由业务 CMake 编译并链接。
         QProcess uic;
-        uic.start(QLibraryInfo::location(QLibraryInfo::BinariesPath) + "/uic.exe",
+        const auto uicPath = runtimeRoots.offline
+            ? runtimeRoots.tool.filePath("bin/uic.exe")
+            : QLibraryInfo::location(QLibraryInfo::BinariesPath) + "/uic.exe";
+        if (!QFileInfo(uicPath).isFile()) throw std::runtime_error("UIC_EXECUTABLE_MISSING");
+        uic.start(uicPath,
                   QStringList{directory + "/form/" + className + ".ui"});
         if (!uic.waitForFinished(30000)) {
             uic.kill(); uic.waitForFinished();
@@ -832,6 +884,10 @@ int main(int argc, char** argv) {
     cli.addHelpOption();
     cli.addOption({"strict-layout", "Require explicit layout gap and margins"});
     cli.addOption({"formal", "Generate isolated uic page package (wide-light only)"});
+    cli.addOption({"structure-preview", "Resolved design structure, without SDK component contracts"});
+    cli.addOption({"initial-style", "Versioned initial visual JSON for structure preview", "path"});
+    cli.addOption({"tool-root", "Offline runtime root (or D2C_RUNTIME_ROOT)", "path"});
+    cli.addOption({"work-root", "Offline work root (or D2C_WORK_ROOT)", "path"});
     // 登记生成必需的输入和输出参数，使 CLI 以固定契约接收路径。
     for (const auto& name : {"raw", "mapping", "extensions", "font", "output"})
         cli.addOption({name, name, "path"});
@@ -839,11 +895,45 @@ int main(int argc, char** argv) {
                    "Library profile name from library-profiles.json (default token-sdk)", "name"});
     cli.process(app);
     try {
+        if (cli.isSet("structure-preview")) {
+            if (cli.isSet("formal") || cli.isSet("mapping") || cli.isSet("library-profile") ||
+                cli.isSet("extensions") || cli.isSet("strict-layout"))
+                throw std::runtime_error("STRUCTURE_PREVIEW_MODE_CONFLICT");
+            for (const auto* name : {"raw", "font", "output", "initial-style"})
+                if (!cli.isSet(name)) throw std::runtime_error("MISSING_STRUCTURE_ARGUMENT");
+            runtimeRoots = resolveRuntimeRoots(cli);
+            checkPreviewOutput(cli.value("output"));
+            const auto relative = runtimeRoots.work.relativeFilePath(
+                QFileInfo(cli.value("output")).absoluteFilePath());
+            if (!relative.startsWith("output/work/", Qt::CaseInsensitive))
+                throw std::runtime_error("OUTPUT_MUST_BE_IN_BUILD");
+            for (const auto* suffix : {".ui", ".qss", ".structure.json", ".png"})
+                if (QFileInfo::exists(cli.value("output") + suffix))
+                    throw std::runtime_error("STRUCTURE_OUTPUT_ALREADY_EXISTS");
+            const int fontId = QFontDatabase::addApplicationFont(cli.value("font"));
+            if (fontId < 0 || QFontDatabase::applicationFontFamilies(fontId).isEmpty())
+                throw std::runtime_error("FONT_LOAD_FAILED");
+            v2::StructurePreview preview;
+            const auto result = preview.run(v2::readJson(cli.value("raw")),
+                v2::readJson(cli.value("initial-style")),
+                QFontDatabase::applicationFontFamilies(fontId).first(),
+                hash(cli.value("raw")), hash(cli.value("initial-style")), hash(cli.value("font")));
+            if (!QDir().mkpath(QFileInfo(cli.value("output")).absolutePath()))
+                throw std::runtime_error("OUTPUT_DIRECTORY_FAILED");
+            save(cli.value("output") + ".ui", result.ui);
+            save(cli.value("output") + ".qss", result.qss);
+            save(cli.value("output") + ".png", result.png);
+            save(cli.value("output") + ".structure.json", result.report);
+            QTextStream(stdout) << "STRUCTURE_PREVIEW_ONLY " << cli.value("output") << ".ui" << Qt::endl;
+            return 0;
+        }
+        if (cli.isSet("initial-style")) throw std::runtime_error("INITIAL_STYLE_REQUIRES_STRUCTURE_PREVIEW");
         // 逐项检查参数存在后再读取设计，防止空路径误用当前目录。
         for (const auto& name : {"raw", "mapping", "extensions", "font", "output"})
             // 逐个拒绝缺失的必要参数，确保生成器有完整的设计输入、规则、字体和输出位置。
             if (!cli.isSet(name))
                 throw std::runtime_error("MISSING_GENERATOR_ARGUMENT");
+        runtimeRoots = resolveRuntimeRoots(cli);
         if (!cli.isSet("formal")) checkPreviewOutput(cli.value("output"));
         // 字体影响 sizeHint 和静态尺寸，加载失败时不能用系统替代字体继续生成。
         if (QFontDatabase::addApplicationFont(cli.value("font")) < 0)
@@ -893,7 +983,8 @@ int main(int argc, char** argv) {
         if (formal) {
             const auto parent = QFileInfo(destination).absolutePath();
             if (!QDir().mkpath(parent)) throw std::runtime_error("OUTPUT_DIRECTORY_FAILED");
-            QTemporaryDir staging(parent + "/.staging-XXXXXX");
+            const auto stageRoot = internalDirectory(runtimeRoots.work, "output/work/stage");
+            QTemporaryDir staging(stageRoot + "/formal-XXXXXX");
             if (!staging.isValid()) throw std::runtime_error("OUTPUT_STAGING_FAILED");
             emitter.emitPage(page.get(), staging.path(), sourceHash, design);
             emitter.formalRecord["variableValidation"] = design["variableValidation"];
@@ -913,10 +1004,9 @@ int main(int argc, char** argv) {
             }
             emitter.formalRecord["outputSha256"] = outputHashes;
             // 先保存包外记录，发布失败时标记未发布；成功后整目录可供业务自行导入。
-            QDir project(QCoreApplication::applicationDirPath());
-            while (!project.exists("Source/HtmlDsl/pipeline")) project.cdUp();
-            const auto relative = QDir(project.filePath("build/delivery")).relativeFilePath(destination);
-            const auto recordDir = internalDirectory(project, "build/reports/formal-delivery/" + relative);
+            const auto& project = runtimeRoots.work;
+            const auto relative = QDir(project.filePath("output/delivery")).relativeFilePath(destination);
+            const auto recordDir = internalDirectory(project, "output/logs/formal-delivery/" + relative);
             v2::publishFormalPackage(staging.path(), destination,
                 recordDir + "/generation-record.json", emitter.formalRecord, save);
             staging.setAutoRemove(false);

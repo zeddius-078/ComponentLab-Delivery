@@ -1,156 +1,126 @@
----
-name: generate-layout-pipeline
-description: 在 G:/ComponentLab-Delivery/DesignToCode_GenerateLayout 中维护 Pixso HTML+DSL 采集、节点合并、工程命名、Qt .ui/.h/.cpp/.qss 生成、GeneratedComponentSDK 装配和页面验收。用户要求从设计页生成复杂布局、补页面映射或验证正式页面包时使用。
----
+# Generate Layout Pipeline Skill
 
-# Generate Layout Pipeline
+## 1. 任务边界
 
-## 唯一职责
+本 Skill 用于把同一设计版本的 HTML 与 Pixso DSL 转换为 Qt 页面文件。组件实现、Token、公共 QSS 和 SDK 由 `DesignToCode_GenerateComponent` 提供；页面生成器读取 SDK，不复制组件实现。
 
-本项目读取页面设计数据，生成 Qt 页面结构并装配已发布组件。允许维护独立目标组件集的类名合同，但不实现组件、不编译 Token，也不复制 `Z_*` 源码。
+正式页面输出：`.ui`、`.h`、`.cpp`、页面 `.qss` 和 `.qrc`。输出可供业务 Qt 工程继续编译和装配。
 
-## 开始前必须读取
+## 2. 执行前读取
 
-先遵循工作区 AGENTS.md：不得自主安装、升级或替换已匹配环境，缺依赖先报告用户。Python 构建脚本目标为 3.9，接口测试不等于该版本实机验证。
+按以下顺序读取：
 
-1. `G:/ComponentLab-Delivery/DesignToCode_GenerateLayout/README.md`
-2. `docs/tutorial/布局生成上手指南.md`
-3. `docs/mainSkill/generate-layout-pipeline/references/设计到布局生成说明.md`
-4. 涉及 `.ui` 时读取 `docs/designRules/layout/Qt-UI布局规则.md`
-5. 涉及分层时读取 `docs/designRules/architecture/Qt功能分层.md`
-6. 运行 `Source/Verify-GeneratedComponentSDK.ps1`，检查工作区唯一权威 SDK 与设计采集 manifest。
-7. 运行 `git status --short`，保留已有修改。
+1. 工作区 `AGENTS.md`：固定环境和协作约束。
+2. 项目 `README.md`：目录与入口。
+3. `docs/designRules/layout/布局转换器通用化规范.md`：布局字段和值域。
+4. `docs/designRules/library-profiles.md`：组件库选择。
+5. `docs/tutorial/布局生成上手指南.md`：当前命令。
+6. 目标页面的 capture manifest、HTML、DSL、layoutReference、字体和资源清单。
 
-## 输入与输出
+输入缺失时先记录缺失项，不能用固定样例代替目标页面。
 
-| 类型 | 必要内容 | 责任 |
-| --- | --- | --- |
-| HTML | 同版页面 DOM、文字与浏览器测量结果 | 提供位置、尺寸和文本测量 |
-| DSL | 原生节点 ID、父子关系、组件身份、实例属性、Token 绑定 | 提供设计语义和结构身份 |
-| Capture manifest | 来源 URL、文件/页面 ID、采集时间、输入哈希 | 证明两类输入可追溯且同版 |
-| Mapping | 组件映射、工程对象名、布局字段和异常规则 | 把设计语义编译为 Qt 结构 |
-| SDK | GenerateComponent 发布包与 manifest | 提供可实例化 `Z_*` 组件 |
-| 输出 | 正式页面包：`.ui/.h/.cpp/.qss/.qrc` | 供业务工程通过 uic、rcc 与 CMake 接入 |
+## 3. 选择生成深度
 
-## 关键目录
+| 深度 | 输入 | 输出 | 适用场景 |
+| --- | --- | --- | --- |
+| 结构预览 | 结构 DSL、初始样式、字体 | 结构 `.ui`、PNG、报告 | 先核对层级和位置 |
+| 正式页面 | 同版 HTML + DSL、布局证据、映射、字体、SDK | 页面五件套 | 进入业务 Qt 工程 |
 
-| 路径 | 职责 |
-| --- | --- |
-| `docs/fixtures/layout/html-dsl` | D2C HTML 和页面资源输入 |
-| `docs/fixtures/layout/design-inputs` | Pixso MCP 原始 DSL 与核对文件 |
-| `docs/examples/templates` | 交付模板；不作为解析器源码 |
-| `docs/examples/resources` | 生成工具使用的静态资源 |
-| `Source/HtmlDsl/pipeline/capture` | MCP 原始采集、HTML+DSL 清单组装与输入哈希验证 |
-| `docs/fixtures/layout/mapping` | 组件、布局、工程命名和扩展规则 |
-| `Source/HtmlDsl/pipeline/engines` | 节点、组件和布局转换逻辑 |
-| `Source/HtmlDsl/pipeline/compiler` | `.ui/.h/.cpp/.qss` 编译器 |
-| `docs/examples/Qt` | ReferencePage、V1/V2 页面运行与回归案例 |
-| `docs/validation` | 来源、结构、SDK 和隔离消费检查 |
-| `build/preview` | 预览页面生成物；不可回写到 `Source` |
-| `build/delivery` | 正式页面包 |
-| `build/demo/page_examples` | 页面效果演示 |
-| `build/cache` | CMake、编译器和临时中间产物 |
-| `build/reports` | 生成、验证和测试报告 |
+结构预览中的未知节点使用 QWidget 表达，适用于结构核对。正式页面要求组件身份和 SDK 合同完整。
 
-本项目的脚本、编译器和校验程序统称为“布局生成工具链 / Layout Generator Toolchain”。它们通过命令行和文件合同工作，不构成供业务工程链接的 SDK。唯一组件 SDK 位于 `../DesignToCode_GenerateComponent/build/sdk`。
+## 4. 依赖与环境
 
-目录不变量：`Source/` 只保存解析器、编译器及构建/采集/校验工具源码；映射与固定夹具放 `docs/fixtures`，模板与示例放 `docs/examples`，验证源码放 `docs/validation`；任何 `.ui`、`.h`、`.cpp`、`.qss`、`.qrc` 页面产物、缓存、报告或演示包必须写入 `build/`。
+使用已经安装的 Python 3.9、Qt 5.15.2、CMake、MSVC、Ninja、Node.js、Playwright 和已发布 SDK。路径通过当前进程参数或环境变量传入：`D2C_PYTHON_EXE`、`QT_ROOT`、`VS_ROOT`、`CMAKE_EXE`、`NINJA_ROOT`、`NODE_EXE`、`D2C_NODE_MODULES`、`GENERATED_COMPONENT_SDK_ROOT`。
 
-## 目标组件库选择
-
-涉及类名、前缀或库切换，必须读取 [组件库配置规范](../../designRules/library-profiles.md)。
-
-- library-profiles.json 按名称选择目标库，默认 token-sdk 保持不变；Generate.ps1 和 Generate-Pages.ps1 均传递 LibraryProfile。
-- analysis-system 通过 componentLibrary 读取独立 JSON。classPrefix + classSuffix 形成目标类；一处 classPrefix 同步变更类名和自动头文件名，不是改 JSON 文件名。
-- 只声明未实现类时保持 contract-only/planned，仅预览；Qt 基类测量和 uic 通过不证明目标实现可编译运行。正式模式必须拒绝此类库。
-- 布局和 spacer 使用 Qt 标准 XML，根页面保留 QWidget。不为前缀测试开发组件实现。
-- 解析器自身仍链接已发布 SDK；public-qt 目标不使用 SDK factory 调用，不等于解析器构建无 SDK 依赖。
-- Qt 原生选项组仅对明确登记的 SelectOption 组使用 QListWidget 静态适配；孤立选项仍失败，不宣称完整 Select 行为。
-
-## 数据合并规则
-
-1. HTML 和 DSL 必须来自同一个设计版本。
-2. 使用设计节点 ID 合并，不按显示文字、图层顺序或截图位置猜测身份。
-3. HTML 提供实测几何；DSL 提供组件、状态、Token 和层级语义。
-4. 缺失、重复或冲突节点必须失败并输出明确错误。
-5. 设计原始值、标准化值和 Qt 输出值分别记录，便于回溯转换。
-
-## Qt 文件分工
-
-| 文件 | 承担内容 |
-| --- | --- |
-| `.ui` | QWidget 层级、Qt Layout、objectName、静态属性和提升组件声明 |
-| `.h` | 页面类型和业务需要的类型明确访问器 |
-| `.cpp` | 页面初始化、信号连接、运行时状态和非静态装配 |
-| `.qss` | 页面级静态视觉；组件公共样式来自 SDK |
-| `.qrc` | 正式页面资源入口；注册页面 QSS，必要时追加页面专属图片、图标和字体 |
-
-SDK 组件内部对象不展开到页面 XML。业务逻辑、数据查询和权限判断不写入 `.ui` 或生成器映射。
-
-## 页面生成流程
-
-1. 固定 Pixso 文件、页面、节点和设计版本。
-2. 采集 HTML、DSL 与资源，使用 `pipeline/capture/capture_manifest.py` 生成 capture manifest 和 SHA-256。
-3. 验证 HTML、DSL、资源、字体、根节点和布局证据的一致性。
-4. 载入 SDK manifest 和公开组件注册表。
-5. 按 Node ID 合并为平台中立设计树。
-6. 解析 Auto Layout、尺寸模式、间距、对齐和容器边界。
-7. 按所选库配置解析唯一目标类；token-sdk 创建已发布类，contract-only 仅以 Qt 基类测量。缺少映射时停止。
-8. 用 `engineering-names.json` 生成稳定 lowerCamelCase objectName。
-9. 输出 `.ui/.h/.cpp/.qss/.qrc`；正式页面 QRC 注册页面级 QSS，页面存在专属静态资源时一并登记。
-10. 运行结构矩阵、uic、构建、交互和隔离消费验证。
-
-结构矩阵必须覆盖至少六种输入：纵向根、横向根、横纵嵌套、Grid 定位、Form 角色和同一输入重复生成。页面样例测试只能验证页面行为，不能替代结构矩阵。当前结构能力以 `layout-mapping.json` 明确列出的 Qt5 `QVBoxLayout`、`QHBoxLayout`、`QGridLayout` 和 `QFormLayout` 为边界；Grid 必须提供行列/跨度，Form 必须提供行号/角色。遇到未登记方向、缺少专属定位信息、绝对定位或未支持节点类型时输出明确错误。
-
-## 组件初始化生成规则
-
-组件初始化只消费 `ComponentConverter` 已经解析并写入 `calls` 的公开 API 调用，不在页面编译器中复制组件映射表，也不创建新的公共组件接口。组件头文件和 `ComponentFactory` 的公开接口来自唯一权威 SDK：`../DesignToCode_GenerateComponent/build/sdk`。
-
-| 初始化内容 | 生成位置 | 规则 |
-| --- | --- | --- |
-| 类型、`objectName`、父子关系、布局和可声明 Qt 属性 | `.ui` | 由场景与布局编译器表达，使用 SDK 已注册的 `Z_*` 组件类或其 Qt 提升类声明 |
-| 运行时组件属性 | 页面 `.cpp` 构造函数 | `ui_->setupUi(this)` 后创建 `commonWidget::ComponentFactory`，按稳定 objectName 顺序调用 `factory.apply(...)`；调用失败抛出生成期记录的错误 |
-| 页面视觉样式 | 页面 `.qss` + 页面 QRC | 页面 QSS 写入 `view/res/qss/<Page>.qss`，QRC 别名为 `:/d2c/<Page>/qss/<Page>.qss`；构造函数在组件属性初始化后读取并设置页面 QSS |
-| 公共组件视觉样式、Token、状态绘制 | SDK | 由 GenerateComponent 发布的 SDK 主题和组件实现负责，页面生成器不重复写入组件内部 QSS |
-| 应用级主题 | 业务入口 | 业务启动阶段调用已确认的 `component_theme::install(QApplication&, profile)`；页面 `ThemeHost` 只消费已安装 Profile 并提供页面运行时服务 |
-
-SDK 路径的顺序为：`ThemeHost` 初始化 → `ui_->setupUi(this)` → 创建 `ComponentFactory` → 注册页面 QRC → 应用组件属性 → 加载页面 QSS。`public-qt` 路径采用 QWidget 和公开 Qt API，不使用 ThemeHost/ComponentFactory；均以 UiCompiler.cpp 的当前实现核对。业务 CMake 必须将生成的页面 QRC 加入页面目标；包外 `generation-record.json` 只用于追溯，不进入运行依赖。
-
-视觉属性不得无差别写入构造函数：颜色、字体、边框、状态样式优先由 SDK Token/QSS 消费；只有映射合同明确要求且 `.ui`、SDK 或页面 QSS 无法表达的运行时属性，才生成 `ComponentFactory::apply` 调用。生成器必须复用既有 `api` 和值类型，不能依据设计字段临时拼接 setter 名称。
-
-## 工程命名
-
-- 已登记节点使用 `engineering-names.json` 中的稳定名称。
-- 未登记节点只接受可确定转换的 ASCII 名称。
-- 中文未映射、C++ 保留字、空名和重名直接失败。
-- 不把节点 ID 拼进业务对象名来掩盖冲突。
-- 设计追溯信息保存在包外报告，不污染正式 `.ui`。
-
-## 组件缺失处理
-
-输出设计节点 ID、设计组件身份、实例属性和当前 SDK 版本。回到 GenerateComponent 建立合同、实现组件并发布新 SDK；本项目校验同一发布目录后再生成。只要求未实现类的映射测试时可使用独立 contract-only 合同，但不得将其用于正式交付。禁止在页面编译器中创建临时 QWidget 替代正式组件。
-
-## 验证
+依赖检查使用：
 
 ```powershell
-python -B Source/CheckProject.py
-python -B docs/validation/check_delivery.py --formal-batch '<批次>'
-pwsh -File docs/validation/formal/Verify-RelocatedConsumer.ps1 -Batch '<批次>' -SdkRoot '<SDK目录>'
+pwsh -File ../Source/Workspace.ps1 -Action doctor
 ```
 
-需要检查 V2 回归时执行：
+环境检查失败时停止该阶段并记录原因。
+
+## 5. 输入清单
+
+capture manifest 绑定 HTML、DSL、设计文件标识、根节点、字体、显式资源、布局证据和 SHA-256。正式模式必须包含独立 `layoutReference`；该文件来自设计节点布局属性读取。
+
+创建与验证：
 
 ```powershell
-pwsh -File docs/examples/Qt/V2/Build.ps1 -Test
-pwsh -File docs/examples/Qt/V2/Verify.ps1
+py -3.9 -B Source/HtmlDsl/pipeline/capture/capture_manifest.py create `
+  --output '<capture目录>/capture.json' `
+  --html '<capture目录>/page.html' `
+  --dsl '<capture目录>/canonical.raw.json' `
+  --root-id '<根节点ID>' --file-key '<Pixso文件ID>' `
+  --font-family '<字体族>' `
+  --layout-reference '<布局证据.json>'
+py -3.9 -B Source/HtmlDsl/pipeline/capture/capture_manifest.py verify `
+  --manifest '<capture目录>/capture.json' --mode formal
 ```
 
-完成条件：输入可追溯且同版；设计树无未解释节点冲突；正式页面包可由 uic 和业务式 CMake 工程编译；目标类及 API 符合所选库合同；token-sdk 的组件来自已校验的权威 SDK；隔离验证不依赖兄弟项目源码；验证结果写入 `build/reports`。
+路径按清单自身目录解析。原始响应按字节保存，导入器只下载清单中显式声明的资源。
 
-预览回归也必须使用清单。`Generate.ps1 -Preview` 接收 `-CaptureManifest` 和 `-ReviewCaptureManifest`，分别对应结果页和复核页；不再从 `inputs/result-page` 或其他固定路径隐式读取页面。预览清单必须标记为 `preview-fixture`，正式模式拒绝消费该类型。
+## 6. 组件与布局映射
 
-## 专项检查与历史边界
+组件映射使用所选 Profile。稳定设计身份对应 SDK manifest 中的 canonical ID、Qt 类和公开属性。组件初始化生成器只调用合同中的 API。
 
-命名切换检查：`python -B -m unittest discover -s docs/validation/layout -p test_component_libraries.py -v`；已有库策略检查使用 test_library_profiles.py。仅检查文档时不触发组件 SDK 重新发布。
+布局分派如下：
 
-历史构建次数、失败批次和迁移过程统一放 docs/archive。采集清单需针对当前输入重新验哈希，不能用历史通过替代。专项通过、结构通过、编译通过和视觉签核必须分别报告。
+```text
+HORIZONTAL -> QHBoxLayout
+VERTICAL   -> QVBoxLayout
+GRID       -> QGridLayout
+FORM       -> QFormLayout
+```
+
+Grid 需要行、列和跨度；Form 需要行号和角色。定位信息缺失时报告错误，不能由 left/top 推断。
+
+## 7. 页面生成顺序
+
+```text
+capture verify
+  -> browser adapt
+  -> component mapping
+  -> layout conversion
+  -> .ui/.h/.cpp/.qss/.qrc
+  -> uic
+  -> consumer build
+  -> runtime / visual review
+```
+
+SDK 页面构造顺序为 `setupUi`、页面 QRC 注册、ComponentFactory 应用运行时属性、页面 QSS 加载。公共组件样式由 SDK 管理，页面 QSS 只表达页面专属样式。
+
+正式入口：
+
+```powershell
+pwsh -File Source/HtmlDsl/Generate.ps1 `
+  -CaptureManifest '<capture.json>' `
+  -MappingDirectory '<映射目录>' `
+  -Font '<字体文件>' `
+  -Batch '<批次>' -Page '<页面名>'
+```
+
+正式结果进入 `output/delivery/<批次>/<页面>`，临时数据进入 `output/work`，日志进入 `output/logs`。已有页面目录拒绝覆盖。
+
+## 8. 验证
+
+```powershell
+py -3.9 -B docs/validation/check_delivery.py --formal-batch '<批次>'
+pwsh -File docs/validation/formal/Verify-RelocatedConsumer.ps1 `
+  -Batch '<批次>' -SdkRoot '<SDK目录>'
+```
+
+验证至少分为：输入清单、浏览器适配、生成文件、uic、消费者编译、运行状态和视觉比对。每一项单独记录，不能从上一项推导下一项。
+
+## 9. 失败处理
+
+| 错误 | 处理 |
+| --- | --- |
+| 哈希不匹配 | 重新获取同版输入并更新清单 |
+| 缺少布局字段 | 回到设计节点数据补充定位信息 |
+| 未登记组件 | 在 GenerateComponent 建立合同并发布 SDK |
+| SDK manifest 不匹配 | 重新选择已发布 SDK 或重新构建 |
+| uic 失败 | 修正 `.ui` 序列化，不修改报告掩盖错误 |
+| 消费者编译失败 | 检查头文件、库、QRC 和 CMake 链接 |
+
+结构预览可用于确定节点和布局，不能替代正式组件映射。`synthetic-example` 只表示手写技术样例，不能作为 Pixso 实测证据。

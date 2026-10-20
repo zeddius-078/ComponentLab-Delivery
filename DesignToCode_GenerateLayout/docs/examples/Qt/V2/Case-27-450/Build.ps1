@@ -3,19 +3,20 @@ param([switch]$Verify)
 $ErrorActionPreference = 'Stop'
 . "$PSScriptRoot/../../../../../Source/NativeTools.ps1"
 Initialize-NativeTools -NeedNode
+$sdkRoot = & "$D2CSourceRoot/Verify-GeneratedComponentSDK.ps1"
 $case = $PSScriptRoot
 $d2c = [IO.Path]::GetFullPath("$case/../../../../../Source")
-$cache = "$D2CProjectRoot/build/cache/Case-27-450"
+$cache = "$D2CProjectRoot/output/work/cache/Case-27-450"
 $build = "$cache/build"
 $working = "$cache/working"
-$generated = "$D2CProjectRoot/build/preview/Case-27-450"
-$out = "$D2CProjectRoot/build/demo/page_examples/Case-27-450"
+$generated = "$D2CProjectRoot/output/work/preview/Case-27-450"
+$out = "$D2CProjectRoot/output/work/demo/page_examples/Case-27-450"
 $node = $NativeNode
 $previousPath=$env:PATH; $previousNode=$env:NODE_PATH; $previousPlatform=$env:QT_QPA_PLATFORM
 try {
     $env:QT_QPA_PLATFORM='offscreen'
-    New-Item -ItemType Directory -Force "$out/data", $generated, "$D2CProjectRoot/build/reports/Case-27-450" | Out-Null
-    & $NativeCMake -S $case -B $build -G Ninja '-DCMAKE_BUILD_TYPE=Release' "-DCMAKE_PREFIX_PATH=$env:QT_ROOT"
+    New-Item -ItemType Directory -Force "$out/data", $generated, "$D2CProjectRoot/output/logs/Case-27-450" | Out-Null
+    & $NativeCMake -S $case -B $build -G Ninja '-DCMAKE_BUILD_TYPE=Release' "-DCMAKE_PREFIX_PATH=$env:QT_ROOT" "-DGENERATED_COMPONENT_SDK_ROOT=$sdkRoot"
     # 每一步失败即停止，防止旧文件被误当成本轮输出。
     if($LASTEXITCODE -ne 0) { throw 'Configure failed' }
     & $NativeCMake --build $build --target v2_ui_compiler case_27_450
@@ -40,12 +41,12 @@ try {
     & "$env:QT_ROOT/bin/uic.exe" "$generated/page.ui" | Out-Null
     if($LASTEXITCODE -ne 0) { throw 'Invalid UI XML' }
     Copy-Item -LiteralPath $font -Destination "$out/data"
-    $layout=Get-Content -LiteralPath "$D2CProjectRoot/build/reports/Case-27-450/html-result.json" -Raw | ConvertFrom-Json
+    $layout=Get-Content -LiteralPath "$D2CProjectRoot/output/logs/Case-27-450/html-result.json" -Raw | ConvertFrom-Json
     # 运行检查只需要测量结果和来源摘要，去掉构建期 URL 与本地资源定位信息。
     @{bindings=$layout.bindings;sourceHtmlSha256=$layout.sourceHtmlSha256;sourceDslSha256=$layout.sourceDslSha256} |
         ConvertTo-Json -Depth 12 | Set-Content -LiteralPath "$out/data/layout-check.json" -Encoding utf8
     @{status='PASS';repeatRuns=2;hashes=$hashes} |
-        ConvertTo-Json -Depth 5 | Set-Content -LiteralPath "$D2CProjectRoot/build/reports/Case-27-450/generation.json" -Encoding utf8
+        ConvertTo-Json -Depth 5 | Set-Content -LiteralPath "$D2CProjectRoot/output/logs/Case-27-450/generation.json" -Encoding utf8
     Copy-Item -LiteralPath "$build/case_27_450.exe" -Destination $out
     Copy-GeneratedComponentRuntime -Destination $out
     & "$env:QT_ROOT/bin/windeployqt.exe" --release --no-translations --no-opengl-sw --no-system-d3d-compiler --no-compiler-runtime "$out/case_27_450.exe"
@@ -59,7 +60,7 @@ try {
             $env:PATH="$env:SystemRoot/System32;$env:SystemRoot"
             $env:QT_QPA_PLATFORM='windows'
             $env:QT_PLUGIN_PATH=''; $env:QT_QPA_PLATFORM_PLUGIN_PATH=''
-            $p=Start-Process -FilePath "$out/case_27_450.exe" -ArgumentList @('--verify', "$D2CProjectRoot/build/reports/Case-27-450") -WorkingDirectory $env:TEMP -WindowStyle Hidden -PassThru
+            $p=Start-Process -FilePath "$out/case_27_450.exe" -ArgumentList @('--verify', "$D2CProjectRoot/output/logs/Case-27-450") -WorkingDirectory $env:TEMP -WindowStyle Hidden -PassThru
             # 仅结束本次验证进程，避免失败时干扰其他演示窗口。
             if(-not $p.WaitForExit(30000)) { $p.Kill(); throw 'Native verification timed out' }
             if($p.ExitCode -ne 0) { throw "Native verification failed: $($p.ExitCode)" }

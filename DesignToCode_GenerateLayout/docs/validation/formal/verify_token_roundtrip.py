@@ -24,14 +24,14 @@ def main():
     parser.add_argument('--report', type=Path, required=True)
     args = parser.parse_args()
     report = args.report.resolve()
-    if not report.is_relative_to((PROJECT / 'build/reports').resolve()):
+    if not report.is_relative_to((PROJECT / 'output/logs').resolve()):
         raise ValueError('REPORT_OUTSIDE_TOOL')
     report.mkdir(parents=True, exist_ok=True)
     source = args.component_root / 'Source/ComponentKit/design-assets'
     original = hashes(source)
     # Token compilers run from the publisher's disposable build cache; this directory is not an SDK output.
-    compiler_build_dir = args.component_root / 'build/cache/GeneratedComponentSDK'
-    env = dict(os.environ, QT_QPA_PLATFORM='offscreen')
+    compiler_build_dir = args.component_root / 'output/work/cache/GeneratedComponentSDK'
+    env = dict(os.environ, QT_QPA_PLATFORM='offscreen', D2C_RUNTIME_ROOT=str(PROJECT / 'build/tools/layout'), D2C_WORK_ROOT=str(PROJECT))
     result = {'status': 'RUNNING', 'scope': 'V2 Primitive -> Alias/Profile -> SDK generated artifacts -> page button pixel',
               'sourceToken': 'primitive.color.highlight.purple-100', 'phases': {}}
 
@@ -43,7 +43,7 @@ def main():
         return process.stdout.decode('utf-8-sig')
 
     try:
-        with tempfile.TemporaryDirectory(prefix='token-roundtrip-', dir=PROJECT / 'build/cache') as temporary:
+        with tempfile.TemporaryDirectory(prefix='token-roundtrip-', dir=PROJECT / 'output/work/cache') as temporary:
             root = Path(temporary) / 'assets'
             shutil.copytree(source, root, ignore=shutil.ignore_patterns('__pycache__'))
             token_file = root / 'DesignSystem/source/primitive.json'

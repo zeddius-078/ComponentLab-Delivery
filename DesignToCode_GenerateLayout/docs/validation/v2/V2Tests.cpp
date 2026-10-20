@@ -29,10 +29,10 @@ class V2Tests : public QObject {
     Q_OBJECT
     const QString data = qEnvironmentVariableIsSet("D2C_V2_DATA")
                              ? qEnvironmentVariable("D2C_V2_DATA")
-                             : QString(D2C_ROOT) + "/../build/demo/page_examples/V2/data/html-dsl";
+                             : QString(D2C_ROOT) + "/../output/work/demo/page_examples/V2/data/html-dsl";
     const QString report = qEnvironmentVariableIsSet("D2C_V2_REPORT")
                                ? qEnvironmentVariable("D2C_V2_REPORT")
-                               : QString(D2C_ROOT) + "/../build/reports/v2";
+                               : QString(D2C_ROOT) + "/../output/logs/v2";
     const QString resultOverride = qEnvironmentVariable("D2C_V2_RESULT");
     QJsonObject baseline, resized;
 

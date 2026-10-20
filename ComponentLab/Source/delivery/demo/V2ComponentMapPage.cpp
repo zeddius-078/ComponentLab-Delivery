@@ -31,7 +31,11 @@ QJsonObject readObject(const QString& path) {
     const auto fileName = QFileInfo(path).fileName();
     const auto packaged = QCoreApplication::applicationDirPath() +
                           QStringLiteral("/resources/mappings/") + fileName;
-    candidates << packaged << path;
+    candidates << packaged;
+    // Offline use must fail visibly on missing packaged resources, never read
+    // a path compiled into the binary on the developer's computer.
+    if (qEnvironmentVariableIsEmpty("D2C_RUNTIME_ROOT"))
+        candidates << path;
     for (const auto& candidate : candidates) {
         QFile file(candidate);
         if (!file.open(QIODevice::ReadOnly))

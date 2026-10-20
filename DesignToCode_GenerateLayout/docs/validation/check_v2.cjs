@@ -7,10 +7,10 @@ const childProcess = require('child_process');
 const projectRoot = path.resolve(__dirname, '../..');
 const sourceRoot = path.join(projectRoot, 'Source');
 const routeRoot = path.join(sourceRoot, 'HtmlDsl');
-const generated = path.join(projectRoot, 'build/preview/html-dsl');
+const generated = path.join(projectRoot, 'output/work/preview/html-dsl');
 const fixtures = path.join(projectRoot, 'docs/fixtures/layout');
-const deployed = path.join(projectRoot, 'build/demo/page_examples/V2/data/html-dsl');
-const reports = path.join(projectRoot, 'build/reports/v2');
+const deployed = path.join(projectRoot, 'output/work/demo/page_examples/V2/data/html-dsl');
+const reports = path.join(projectRoot, 'output/logs/v2');
 const resultPath = path.join(reports, 'result.json');
 const load = file => JSON.parse(fs.readFileSync(file, 'utf8'));
 const hash = file => crypto.createHash('sha256').update(fs.readFileSync(file)).digest('hex');
@@ -98,7 +98,7 @@ try {
   assert(offline.structureSource === 'ui-xml', 'WRONG_RUNTIME_STRUCTURE_SOURCE');
   for (const [name, digest] of Object.entries(offline.fingerprints)) {
     const file = name === 'executable'
-      ? path.join(projectRoot, 'build/demo/page_examples/V2/d2c_v2.exe')
+      ? path.join(projectRoot, 'output/work/demo/page_examples/V2/d2c_v2.exe')
       : path.join(deployed, name);
     assert(digest === hash(file), `OFFLINE_FINGERPRINT_MISMATCH: ${name}`);
   }

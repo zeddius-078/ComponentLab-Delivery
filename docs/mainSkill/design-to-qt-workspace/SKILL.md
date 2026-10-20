@@ -1,50 +1,52 @@
 ---
 name: design-to-qt-workspace
-description: 管理 ComponentLab-Delivery 三项目的职责分流、Token 与 SDK 依赖、多组件库映射、文档归档和验证。用于跨项目任务、目录边界检查或设计到 Qt 链路协作。
+description: 管理 ComponentLab-Delivery 三个项目的任务分流、SDK 依赖、构建顺序和验证边界。
 ---
 
 # Design To Qt Workspace
 
 ## 开始前
 
-1. 读取工作区 AGENTS.md、[总体架构](../../designRules/architecture/项目总体架构.md)及目标项目 README。
-2. 读取责任项目的 Main Skill；涉及具体 API 再读其 references。
-3. 检查已有修改与并行任务，保留用户改动。只处理授权范围，不自动恢复挂起的问题。
+1. 读取工作区 `AGENTS.md`。
+2. 读取目标项目的 README 和 Main Skill。
+3. 执行 `git status --short`，保留已有修改。
+4. 根据任务范围选择只读检查、项目构建或完整工作区流程。
 
-## 分流
+## 任务分流
 
-| 任务 | 责任项目 | 验证边界 |
+| 任务 | 责任项目 | 主要验证 |
 | --- | --- | --- |
-| Token、组件实现、工厂、SDK 发布 | DesignToCode_GenerateComponent | 生成检查、构建、独立消费者 |
-| 已发布组件展示与交互 | ComponentLab | 展示构建、项目检查、运行验证 |
-| HTML+DSL 解析、布局、目标组件集声明 | DesignToCode_GenerateLayout | 输入校验、映射/结构测试、相应交付模式 |
-| 文档及历史整理 | 所属项目 docs | 路径、链接、事实与 Skill 校验 |
+| Token、组件合同、`Z_*` 实现、SDK 发布 | GenerateComponent | Token 检查、SDK 构建、独立消费者 |
+| 组件外观、状态、对象树展示 | ComponentLab | 展示构建、交互回归、SDK 消费 |
+| HTML + DSL、布局解析、页面文件生成 | GenerateLayout | Capture、结构矩阵、uic、页面消费者 |
+| 跨项目构建、环境检查、离线打包 | 根 `Source/Workspace.ps1` | 工作区级验证 |
 
-组件库定义、组件生成和布局生成分别维护。独立目标库 JSON 可声明 planned 类，不能注册为已实现 SDK。默认 token-sdk 与新库配置分离；前缀切换使用 classPrefix，不批量改写源设计和历史样例。
+## 数据边界
 
-## 硬边界
+GenerateComponent 生产唯一权威 SDK，路径为 `DesignToCode_GenerateComponent/build/sdk`。ComponentLab 和 GenerateLayout 通过 manifest 和 SHA-256 校验后消费它们。两个消费项目不复制组件私有源码。
 
-- Source 保存实现与构建工具；docs 保存现行规范、固定输入、样例、测试和档案；build 只保存可再生产物。
-- 阶段记录、旧说明、迁移证据统一 docs/archive。build/reports 仅是当次可再生报告，永久证据必须归档。
-- GenerateComponent 在 build/work 生成，不回写 Source。保留 PrepareBuild.py 显式读取的只读审计路径。
-- 两个消费者直接校验并引用 GenerateComponent/build/sdk，不复制 SDK 或私有源码。
-- 当前七层由 v2-source-manifest.json 定义；Theme 与 Profile 分开，Content 不承担视觉或运行时规则。
-- 一个统一组件集内的公共身份一对一；不同目标库是明确选择的映射上下文，不混合成一条多目标映射。
-- 环境固定：不安装、升级、降级、补包或修改全局配置；缺依赖先报告用户。Python 目标 3.9，较新解释器通过不等于 3.9 实测。
-- 导航栏缺失 Token 的消费契约问题按用户决定挂起；未经要求不恢复修复。
+`Source/` 保存维护实现；`docs/` 保存规则、固定输入和验证源码；`build/` 保存受控工具、SDK 和运行依赖；`output/` 保存本次工作区、日志和交付批次。
 
 ## 执行顺序
 
-组件实现或 Token 变化才执行 SDK 发布、docs/validation/SDKConsumerTest/Build.ps1、消费端 Source/Verify-GeneratedComponentSDK.ps1，然后重建对应消费者。文档或库命名合同更新不触发无关发布。
+```powershell
+pwsh -File Source/Workspace.ps1 -Action doctor
+pwsh -File Source/Workspace.ps1 -Action build -Target all
+pwsh -File Source/Workspace.ps1 -Action verify
+pwsh -File Source/Workspace.ps1 -Action package -ReleaseInputs <清单路径>
+```
 
-正式页面必须有同版 HTML/DSL、哈希、独立布局证据、显式字体与映射；输出 ui/h/cpp/qss/qrc。contract-only 库只做预览，不进入正式交付或运行验收。
+Python 使用已安装的 3.9。Qt、MSVC、CMake、Ninja、Node 和 Playwright 使用现有环境；缺少依赖时记录缺项，不自动安装或升级。
 
-## 验证与交付
+## 任务规则
 
-按改动选检查，不声称未执行的验收：
-- GenerateComponent、GenerateLayout：各自 `python -B Source/CheckProject.py`。
-- ComponentLab：`python -B Source/delivery/tools/CheckProject.py`。
-- Skill 修改：使用 skill-creator 的 quick_validate.py；缺依赖不安装。
-- 文档修改：检查本地链接、命令路径、当前/历史分区，保留归档原文。
+- 组件身份、属性、状态和 Token 由 GenerateComponent 维护。
+- ComponentLab 只展示和验证已发布组件。
+- GenerateLayout 只使用 SDK 组件装配页面，不生成第二套组件实现。
+- `contract-only/planned` 条目可以用于命名和映射测试，但不能写入已发布可运行组件清单。
+- HTML 与 DSL 必须来自同一设计版本，并通过 capture manifest 校验。
+- `.ui` 保存结构、布局、objectName 和可声明属性；页面 `.cpp` 负责运行时初始化；页面 `.qss` 负责页面级静态视觉；组件公共样式来自 SDK。
 
-说明修改范围、当前能力、实际测试、失败/未测项及归档入口。历史通过不能替代当前版本通过，登记数不能替代实例化与视觉验收。
+## 验收口径
+
+分别报告：输入证据、适配、页面生成、uic、C++ 消费、运行行为、视觉核对和离线新机器运行。只记录实际执行的命令和结果。

@@ -9,12 +9,12 @@ import unittest
 
 PROJECT = Path(__file__).resolve().parents[3]
 FIXTURE = PROJECT / "docs/fixtures/layout/design-inputs/review-page/canonical.raw.json"
-COMPILER = PROJECT / "build/cache/V2-html-dsl/v2_ui_compiler.exe"
+COMPILER = PROJECT / "build/tools/layout/bin/v2_ui_compiler.exe"
 
 
 class DesignProfileModeTests(unittest.TestCase):
     def setUp(self):
-        cache = PROJECT / "build/preview/design-profile-tests"
+        cache = PROJECT / "output/work/preview/design-profile-tests"
         cache.mkdir(parents=True, exist_ok=True)
         self.temp = tempfile.TemporaryDirectory(dir=str(cache))
         self.addCleanup(self.temp.cleanup)
@@ -26,7 +26,7 @@ class DesignProfileModeTests(unittest.TestCase):
     def generate(self):
         source = self.root / "input.json"
         source.write_bytes(json.dumps(self.raw, ensure_ascii=False).encode("utf-8"))
-        env = dict(os.environ, QT_QPA_PLATFORM="offscreen")
+        env = dict(os.environ, QT_QPA_PLATFORM="offscreen", D2C_RUNTIME_ROOT=str(PROJECT / "build/tools/layout"), D2C_WORK_ROOT=str(PROJECT))
         if env.get("QT_ROOT"):
             env["PATH"] = str(Path(env["QT_ROOT"]) / "bin") + os.pathsep + env.get("PATH", "")
         return subprocess.run([

@@ -30,13 +30,13 @@ if len(sys.argv) > 1:
         print(json.dumps({'status': 'FAIL', 'error': str(error)}, ensure_ascii=False))
         sys.exit(1)
     sys.exit(0)
-REPORTS = PROJECT / "build/reports"
+REPORTS = PROJECT / "output/logs"
 REPORTS.mkdir(parents=True, exist_ok=True)
 result = {"verifiedAtUtc": datetime.now(timezone.utc).isoformat(), "scope": "Current delivery consistency; tests are read from their saved runs"}
 try:
     # V1 的 CMD 与 EXE 同目录，逐个检查对应输入，避免入口指向缺失文件。
     v1 = PROJECT / "docs/examples/Qt/V1"
-    offline = PROJECT / "build/demo/page_examples/V1"
+    offline = PROJECT / "output/work/demo/page_examples/V1"
     launchers = {
         "Run-HTML-DSL.cmd": "hybrid-input.json",
         "Run-Holdout-HTML-DSL.cmd": "holdout-hybrid-input.json",
@@ -110,14 +110,19 @@ try:
     assert sdk_metadata["componentAuthority"] and sdk_metadata["tokenAuthority"]
     result["sdkAuthority"] = str(sdk_root)
     result["sdkMode"] = "direct-reference"
-    # Source 只保留生成器随产物输出的用法；正式说明集中在本项目 docs。
+    # Source 可保存对应目录的阅读入口；专项规范和操作指南仍集中在 docs。
     assert not (ROOT / "05_Docs").exists(), "Maintain guides in project docs"
-    assert set(ROOT.rglob("*.md")) <= {ROOT / "README.md"}, "Maintain layout documentation in project docs"
+    source_readmes = {
+        ROOT / "README.md",
+        ROOT / "HtmlDsl/README.md",
+        ROOT / "HtmlDsl/pipeline/README.md",
+    }
+    assert set(ROOT.rglob("*.md")) <= source_readmes, "Maintain guides in docs; Source permits only registered directory READMEs"
     assert (PROJECT / "README.md").is_file()
     assert (PROJECT / "docs/README.md").is_file()
     route_root = ROOT / route
     assert (route_root / "Generate.ps1").is_file()
-    assert (PROJECT / "build/preview/html-dsl").is_dir()
+    assert (PROJECT / "output/work/preview/html-dsl").is_dir()
     assert (route_root / "pipeline/Generate-Pages.ps1").is_file()
     assert not (route_root / "Inspect.ps1").exists(), "HTML-only inspection is outside the supported route"
     retained = [p for p in excluded if (ROOT / p).exists()]

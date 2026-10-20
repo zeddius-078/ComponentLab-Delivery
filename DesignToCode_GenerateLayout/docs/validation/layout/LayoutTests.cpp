@@ -63,7 +63,7 @@ private:
             QCOMPARE(widget->height(), qRound(source["height"].toDouble()));
         }
         const auto report = qEnvironmentVariable("D2C_LAYOUT_REPORT",
-            QString(D2C_ROOT) + "/../build/reports/layout");
+            QString(D2C_ROOT) + "/../output/logs/layout");
         QFile file(report + "/" +
                    node["autoLayout"].toObject()["stackMode"].toString() + "-result.json");
         QVERIFY(file.open(QIODevice::WriteOnly));

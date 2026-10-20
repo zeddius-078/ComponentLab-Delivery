@@ -11,7 +11,7 @@ const {outputPath} = require('../../../../../../Source/HtmlDsl/tools/output_path
 // 要求调用方提供临时目录，确保本工具产生的预览与混合输入有明确的清理归属。
 if(!process.argv[2])throw Error('OUTPUT_DIRECTORY_REQUIRED: caller owns temporary output cleanup');
 const output = outputPath(process.argv[2]);
-const report = path.resolve(root, '../../../../../build/reports/Case-27-450');
+const report = path.resolve(root, '../../../../../output/logs/Case-27-450');
 const hash = data => crypto.createHash('sha256').update(data).digest('hex');
 const write = (name, data) => fs.writeFileSync(path.join(report, name), JSON.stringify(data, null, 2));
 async function main() {

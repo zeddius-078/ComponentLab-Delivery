@@ -4,9 +4,9 @@ const path = require('path');
 const crypto = require('crypto');
 const assert = require('assert/strict');
 const root = path.resolve(__dirname, '..');
-const generatedRoot = path.resolve(root, '../../../../../build/preview/Case-27-450');
+const generatedRoot = path.resolve(root, '../../../../../output/work/preview/Case-27-450');
 const fixtureRoot = path.resolve(root, '../../../../../docs/fixtures/layout/Case-27-450');
-const verificationPath = path.resolve(root, '../../../../../build/reports/Case-27-450/verification.json');
+const verificationPath = path.resolve(root, '../../../../../output/logs/Case-27-450/verification.json');
 const resolveInput = name => name.startsWith('inputs/')
   ? path.join(fixtureRoot, name.slice('inputs/'.length))
   : path.join(root, name);
@@ -76,9 +76,9 @@ function verify() {
     assert.equal(sha(item.file), item.sha256, `DOWNLOAD_HASH: ${item.file}`);
     sourceHashes[item.file] = sha(item.file);
   }
-  const html = json('../../../../../build/reports/Case-27-450/html-result.json');
-  const qt = json('../../../../../build/reports/Case-27-450/qt-result.json');
-  const generation = json('../../../../../build/reports/Case-27-450/generation.json');
+  const html = json('../../../../../output/logs/Case-27-450/html-result.json');
+  const qt = json('../../../../../output/logs/Case-27-450/qt-result.json');
+  const generation = json('../../../../../output/logs/Case-27-450/generation.json');
   assert.equal(html.status, 'PASS');
   assert.equal(qt.status, 'PASS');
   assert.equal(generation.status, 'PASS');
@@ -97,7 +97,7 @@ function verify() {
   for (const [ext, expectedHash] of Object.entries(generation.hashes)) {
     const file = `page${ext}`;
     assert.equal(shaGenerated(file), expectedHash.toLowerCase());
-    assert.equal(shaGenerated(file), sha(`../../../../../build/demo/page_examples/Case-27-450/data/page${ext}`));
+    assert.equal(shaGenerated(file), sha(`../../../../../output/work/demo/page_examples/Case-27-450/data/page${ext}`));
     generatedHashes[file] = shaGenerated(file);
   }
   const dependencies = {};
@@ -134,7 +134,7 @@ function verify() {
       'Geometry equality does not establish pixel-perfect rendering or general responsive support.',
       'Pixso export itself is an upstream tool; this case proves replay of saved inputs, not determinism of future exports.'],
     sourceHashes, generatedHashes, dependencies,
-    executable: {file: '../../../../../build/demo/page_examples/Case-27-450/case_27_450.exe', sha256: sha('../../../../../build/demo/page_examples/Case-27-450/case_27_450.exe')}
+    executable: {file: '../../../../../output/work/demo/page_examples/Case-27-450/case_27_450.exe', sha256: sha('../../../../../output/work/demo/page_examples/Case-27-450/case_27_450.exe')}
   };
   fs.mkdirSync(path.dirname(verificationPath), {recursive: true});
   fs.writeFileSync(verificationPath, JSON.stringify(report, null, 2));

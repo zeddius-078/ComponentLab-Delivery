@@ -8,7 +8,7 @@ import unittest
 
 PROJECT = Path(__file__).resolve().parents[3]
 ADAPTER = PROJECT / "Source/HtmlDsl/tools/adapt_v2.cjs"
-DEFAULT_NODE_MODULES = Path(r"D:\DevTools\ComponentLabNode\node_modules")
+DEFAULT_NODE_MODULES = PROJECT / "build/runtime/node_modules"
 
 
 def node_environment():
@@ -21,12 +21,17 @@ def node_environment():
             f"{module_root}"
         )
     environment["NODE_PATH"] = str(module_root)
+    environment["D2C_RUNTIME_ROOT"] = str(PROJECT / "build/tools/layout")
+    environment["D2C_WORK_ROOT"] = str(PROJECT)
+    environment.setdefault("D2C_BROWSER_EXE", str(PROJECT / "build/runtime/browser/chrome.exe"))
     return environment
 
 
 class CaptureContractTests(unittest.TestCase):
     def setUp(self):
-        self.temp = tempfile.TemporaryDirectory(prefix="layout-capture-")
+        base = PROJECT / "output/work/capture-contract-tests"
+        base.mkdir(parents=True, exist_ok=True)
+        self.temp = tempfile.TemporaryDirectory(prefix="layout-capture-", dir=base)
         self.addCleanup(self.temp.cleanup)
         self.root = Path(self.temp.name)
         self.html = """<!doctype html><meta charset="utf-8"><style>
@@ -50,7 +55,7 @@ justify-content:flex-start} #fixture_2{width:20px;height:20px}
             "nodes": [{"id": "fixture:1", "metrics": self.metrics}]}]}
         (self.root / "reference.json").write_text(json.dumps(reference), encoding="utf-8")
         (self.root / "capture.json").write_text(json.dumps(self.capture), encoding="utf-8")
-        result = subprocess.run(["node", str(ADAPTER), str(self.root / "working"),
+        result = subprocess.run([os.environ.get("NODE_EXE", str(PROJECT / "build/runtime/node/node.exe")), str(ADAPTER), str(self.root / "working"),
             str(self.root / "report"), str(self.root / "capture.json")],
             capture_output=True, timeout=45, env=node_environment())
         report = json.loads((self.root / "report/html-result.json").read_bytes())

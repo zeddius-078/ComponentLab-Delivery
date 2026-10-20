@@ -1,4 +1,6 @@
-基于 Qt 6 官方中文文档 [Layout Management](https://doc.qt.io/qt-6/zh/layout.html)，以下整理了 Qt 布局管理器的详细列表，包含类继承关系、核心属性、关键方法及枚举说明。
+# Qt 5.15 基础布局参考
+
+本文按项目的 Qt 5.15.2 基线整理布局类、公共属性、关键方法和枚举。设计到 Qt 的实际字段以[布局转换器通用化规范](布局转换器通用化规范.md)为准；这里的类参考用于阅读 Qt API 和校对映射合同。
 
 ---
 
@@ -28,8 +30,6 @@ Qt 布局类均继承自 `QLayout`（而 `QLayout` 继承自 `QObject` 与 `QLay
 |---|---|---|
 | `contentsMargins` | `QMargins` | 布局内容区域的外边距（左、上、右、下） |
 | `sizeConstraint` | `SizeConstraint` | 布局对包含它的窗口尺寸的约束方式 |
-| `horizontalSizeConstraint` | `SizeConstraint` | 水平方向的尺寸约束（Qt 6.10 引入） |
-| `verticalSizeConstraint` | `SizeConstraint` | 垂直方向的尺寸约束（Qt 6.10 引入） |
 | `spacing` | `int` | 布局中部件之间的默认间距 |
 
 ### SizeConstraint 枚举

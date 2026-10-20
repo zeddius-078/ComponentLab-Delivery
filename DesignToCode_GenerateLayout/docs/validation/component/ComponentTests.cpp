@@ -339,7 +339,7 @@ private slots:
             button->click();
             QCOMPARE(spy.count(), 1);
         }
-        QFile output(QString(D2C_ROOT) + "/../build/reports/component/resource-calls.json");
+        QFile output(QString(D2C_ROOT) + "/../output/logs/component/resource-calls.json");
         QVERIFY(output.open(QIODevice::WriteOnly));
         output.write(QJsonDocument(engine.trace()).toJson());
     }
@@ -420,7 +420,7 @@ private slots:
             }
         }
         QCOMPARE(count, 4);
-        QFile output(QString(D2C_ROOT) + "/../build/reports/component/runtime-calls.json");
+        QFile output(QString(D2C_ROOT) + "/../output/logs/component/runtime-calls.json");
         QVERIFY(output.open(QIODevice::WriteOnly));
         output.write(QJsonDocument(engine.trace()).toJson());
     }

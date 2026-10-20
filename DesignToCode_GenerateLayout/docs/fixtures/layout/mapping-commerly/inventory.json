@@ -1,0 +1,726 @@
+{
+  "schemaVersion": 1,
+  "sourceFileKey": "HUTs4r6S0Eb3QzdijQyAzA",
+  "sourcePageId": "0:1",
+  "status": "BLOCKED_NOT_GENERATION_READY",
+  "renames": [],
+  "activeRuleCount": 0,
+  "scope": "16 local public families reported by read_components; referenced additional masters listed separately; no instances detached or merged",
+  "items": [
+    {
+      "id": "116:66735",
+      "key": "808a6b1992d0067f024fbf62931ee49adc41918b",
+      "name": "Integrations",
+      "type": "COMPONENT",
+      "candidateName": null,
+      "status": "BLOCKED",
+      "action": "KEEP_UNCHANGED",
+      "reasons": [
+        "PAGE_COMPOSITION_NOT_ATOMIC_COMPONENT"
+      ],
+      "variantNames": [],
+      "componentProperties": {},
+      "directInstanceCount": 1
+    },
+    {
+      "id": "116:20027",
+      "key": "3d86f7c2c480d433a1849da4ca7301445de38bf6",
+      "name": "Dashboard",
+      "type": "COMPONENT",
+      "candidateName": null,
+      "status": "BLOCKED",
+      "action": "KEEP_UNCHANGED",
+      "reasons": [
+        "PAGE_COMPOSITION_NOT_ATOMIC_COMPONENT"
+      ],
+      "variantNames": [],
+      "componentProperties": {},
+      "directInstanceCount": 10
+    },
+    {
+      "id": "49:1669",
+      "key": "4eb2b54276cee9065ae1afcee339e30d8a79f91a",
+      "name": "Logo",
+      "type": "COMPONENT",
+      "candidateName": null,
+      "status": "BLOCKED",
+      "action": "KEEP_UNCHANGED",
+      "reasons": [
+        "BRAND_ASSET_NOT_WIDGET"
+      ],
+      "variantNames": [],
+      "componentProperties": {},
+      "directInstanceCount": 11
+    },
+    {
+      "id": "37:346",
+      "key": "e37947d6cb78d4b04966ae1e1b17cccdb04e2fb3",
+      "name": "Sidebar",
+      "type": "COMPONENT",
+      "candidateName": "ComponentLab/Sidebar",
+      "status": "BLOCKED",
+      "action": "KEEP_UNCHANGED",
+      "reasons": [
+        "SIDEBAR_MENU_CONTENT_UNSUPPORTED",
+        "SIDEBAR_UPGRADE_SLOT_UNSUPPORTED"
+      ],
+      "variantNames": [],
+      "componentProperties": {},
+      "directInstanceCount": 24
+    },
+    {
+      "id": "86:6298",
+      "key": "6100fe9731c2deb78830a49d8ca08a5a6148cb06",
+      "name": "Navbar",
+      "type": "COMPONENT",
+      "candidateName": "ComponentLab/Navbar",
+      "status": "BLOCKED",
+      "action": "KEEP_UNCHANGED",
+      "reasons": [
+        "NAVBAR_BRAND_AND_AVATAR_UNSUPPORTED",
+        "NAVBAR_CONTENT_SLOTS_UNSUPPORTED"
+      ],
+      "variantNames": [],
+      "componentProperties": {},
+      "directInstanceCount": 24
+    },
+    {
+      "id": "86:4316",
+      "key": "f48b904828f39312610c09b62dac300091375249",
+      "name": "Integration",
+      "type": "COMPONENT",
+      "candidateName": null,
+      "status": "BLOCKED",
+      "action": "KEEP_UNCHANGED",
+      "reasons": [
+        "COMPOSITE_INTEGRATION_CARD_UNSUPPORTED"
+      ],
+      "variantNames": [],
+      "componentProperties": {},
+      "directInstanceCount": 10
+    },
+    {
+      "id": "37:92",
+      "key": "6e82a9ed9f3af6c38f5b78842a492e7985a64920",
+      "name": "Button",
+      "type": "COMPONENT_SET",
+      "candidateName": "ComponentLab/Button",
+      "status": "BLOCKED",
+      "action": "KEEP_UNCHANGED",
+      "reasons": [
+        "BUTTON_CONTENT_AXIS_MISSING",
+        "BOOLEAN_VISIBILITY_UNSUPPORTED",
+        "ICON_IDENTITY_UNMAPPED"
+      ],
+      "variantNames": [
+        "Type=Fill, State=Enabled",
+        "Type=Outline, State=Enabled",
+        "Type=Ghost, State=Enabled",
+        "Type=Fill, State=Disabled",
+        "Type=Outline, State=Disabled",
+        "Type=Ghost, State=Disabled"
+      ],
+      "componentProperties": {
+        "Show label#37:14": {
+          "defaultValue": true,
+          "name": "Show label",
+          "type": "BOOLEAN"
+        },
+        "Show left icon#37:7": {
+          "defaultValue": true,
+          "name": "Show left icon",
+          "type": "BOOLEAN"
+        },
+        "Show right icon#37:0": {
+          "defaultValue": true,
+          "name": "Show right icon",
+          "type": "BOOLEAN"
+        },
+        "State": {
+          "defaultValue": "Enabled",
+          "type": "VARIANT",
+          "variantOptions": [
+            "Enabled",
+            "Disabled"
+          ]
+        },
+        "Type": {
+          "defaultValue": "Fill",
+          "type": "VARIANT",
+          "variantOptions": [
+            "Fill",
+            "Outline",
+            "Ghost"
+          ]
+        }
+      },
+      "directInstanceCount": 177
+    },
+    {
+      "id": "37:204",
+      "key": "c040208f49d0fecfa3187f942c1bcd36cfc90238",
+      "name": "Input",
+      "type": "COMPONENT_SET",
+      "candidateName": "ComponentLab/Input",
+      "status": "BLOCKED",
+      "action": "KEEP_UNCHANGED",
+      "reasons": [
+        "BOOLEAN_VISIBILITY_UNSUPPORTED",
+        "INPUT_ACTIVE_STATE_UNRESOLVED",
+        "EDITOR_CONTENT_MODE_UNRESOLVED",
+        "ICON_IDENTITY_UNMAPPED"
+      ],
+      "variantNames": [
+        "Type=Default",
+        "Type=Filled",
+        "Type=Active",
+        "Type=Disabled",
+        "Type=Error"
+      ],
+      "componentProperties": {
+        "Show hint or instruction#37:27": {
+          "defaultValue": true,
+          "name": "Show hint or instruction",
+          "type": "BOOLEAN"
+        },
+        "Show label#37:21": {
+          "defaultValue": true,
+          "name": "Show label",
+          "type": "BOOLEAN"
+        },
+        "Show left icon#37:33": {
+          "defaultValue": true,
+          "name": "Show left icon",
+          "type": "BOOLEAN"
+        },
+        "Show right icon#37:39": {
+          "defaultValue": true,
+          "name": "Show right icon",
+          "type": "BOOLEAN"
+        },
+        "Type": {
+          "defaultValue": "Default",
+          "type": "VARIANT",
+          "variantOptions": [
+            "Default",
+            "Filled",
+            "Active",
+            "Disabled",
+            "Error"
+          ]
+        }
+      },
+      "directInstanceCount": 41
+    },
+    {
+      "id": "51:2243",
+      "key": "dfd5f4ab364e30ff975dec226929e671a2ceac05",
+      "name": "Switch",
+      "type": "COMPONENT_SET",
+      "candidateName": null,
+      "status": "BLOCKED",
+      "action": "KEEP_UNCHANGED",
+      "reasons": [
+        "NO_EXISTING_MAPPING_RULE",
+        "BOOLEAN_VISIBILITY_UNSUPPORTED"
+      ],
+      "variantNames": [
+        "Switch=On",
+        "Switch=Off"
+      ],
+      "componentProperties": {
+        "Show label#51:0": {
+          "defaultValue": true,
+          "name": "Show label",
+          "type": "BOOLEAN"
+        },
+        "Switch": {
+          "defaultValue": "On",
+          "type": "VARIANT",
+          "variantOptions": [
+            "Off",
+            "On"
+          ]
+        }
+      },
+      "directInstanceCount": 17
+    },
+    {
+      "id": "37:4667",
+      "key": "c760f7513ba8ffbb3a53b0bae4b185effda7d79c",
+      "name": "Checkbox",
+      "type": "COMPONENT_SET",
+      "candidateName": "ComponentLab/Checkbox",
+      "status": "BLOCKED",
+      "action": "KEEP_UNCHANGED",
+      "reasons": [
+        "BOOLEAN_VISIBILITY_UNSUPPORTED"
+      ],
+      "variantNames": [
+        "State=Unchecked",
+        "State=Checked"
+      ],
+      "componentProperties": {
+        "Show label#46:6": {
+          "defaultValue": true,
+          "name": "Show label",
+          "type": "BOOLEAN"
+        },
+        "State": {
+          "defaultValue": "Unchecked",
+          "type": "VARIANT",
+          "variantOptions": [
+            "Unchecked",
+            "Checked"
+          ]
+        }
+      },
+      "directInstanceCount": 22
+    },
+    {
+      "id": "46:3135",
+      "key": "d87de9c9a84d146ba8cb0477e0b9c3dcefca7da0",
+      "name": "Radio button",
+      "type": "COMPONENT_SET",
+      "candidateName": null,
+      "status": "BLOCKED",
+      "action": "KEEP_UNCHANGED",
+      "reasons": [
+        "NO_EXISTING_MAPPING_RULE",
+        "DESCRIPTION_VARIANT_UNSUPPORTED",
+        "BOOLEAN_VISIBILITY_UNSUPPORTED"
+      ],
+      "variantNames": [
+        "State=Unselected, Type=Default",
+        "State=Selected, Type=Default",
+        "State=Unselected, Type=With description",
+        "State=Selected, Type=With description"
+      ],
+      "componentProperties": {
+        "Show label#46:9": {
+          "defaultValue": true,
+          "name": "Show label",
+          "type": "BOOLEAN"
+        },
+        "State": {
+          "defaultValue": "Unselected",
+          "type": "VARIANT",
+          "variantOptions": [
+            "Unselected",
+            "Selected"
+          ]
+        },
+        "Type": {
+          "defaultValue": "Default",
+          "type": "VARIANT",
+          "variantOptions": [
+            "Default",
+            "With description"
+          ]
+        }
+      },
+      "directInstanceCount": 22
+    },
+    {
+      "id": "116:10185",
+      "key": "e4202c53426b864f5de36185299e90e8f21698b3",
+      "name": "Chips",
+      "type": "COMPONENT_SET",
+      "candidateName": null,
+      "status": "BLOCKED",
+      "action": "KEEP_UNCHANGED",
+      "reasons": [
+        "NO_EQUIVALENT_SELECTION_COMPONENT_RULE"
+      ],
+      "variantNames": [
+        "Orientation=Vertical, State=Unselected",
+        "Orientation=Vertical, State=Selected",
+        "Orientation=Horizontal, State=Unselected",
+        "Orientation=Horizontal, State=Selected"
+      ],
+      "componentProperties": {
+        "Orientation": {
+          "defaultValue": "Vertical",
+          "type": "VARIANT",
+          "variantOptions": [
+            "Vertical",
+            "Horizontal"
+          ]
+        },
+        "State": {
+          "defaultValue": "Unselected",
+          "type": "VARIANT",
+          "variantOptions": [
+            "Selected",
+            "Unselected"
+          ]
+        }
+      },
+      "directInstanceCount": 29
+    },
+    {
+      "id": "116:35997",
+      "key": "97920a235c80d210e781667654774af8365bd612",
+      "name": "Widget",
+      "type": "COMPONENT_SET",
+      "candidateName": null,
+      "status": "BLOCKED",
+      "action": "KEEP_UNCHANGED",
+      "reasons": [
+        "MIXED_COMPONENT_FAMILY",
+        "CHARTS_UNSUPPORTED"
+      ],
+      "variantNames": [
+        "Variant=Total Products",
+        "Variant=Shipping Distance",
+        "Variant=Product Stock",
+        "Variant=Stats Card",
+        "Variant=Delivery Time",
+        "Variant=Total Orders",
+        "Variant=Order Stats",
+        "Variant=Revenue Insight",
+        "Variant=Sales Overview"
+      ],
+      "componentProperties": {
+        "Variant": {
+          "defaultValue": "Total Products",
+          "type": "VARIANT",
+          "variantOptions": [
+            "Total Products",
+            "Revenue Insight",
+            "Sales Overview",
+            "Order Stats",
+            "Product Stock",
+            "Stats Card",
+            "Total Orders",
+            "Delivery Time",
+            "Shipping Distance"
+          ]
+        }
+      },
+      "directInstanceCount": 24
+    },
+    {
+      "id": "98:9266",
+      "key": "b376b6f4dae52c421bcd545cc00bc29b57621629",
+      "name": "Integration Logo",
+      "type": "COMPONENT_SET",
+      "candidateName": null,
+      "status": "BLOCKED",
+      "action": "KEEP_UNCHANGED",
+      "reasons": [
+        "BRAND_ASSET_NOT_WIDGET"
+      ],
+      "variantNames": [
+        "Property 1=Amazon",
+        "Property 1=Tiktok",
+        "Property 1=Shopee",
+        "Property 1=Paypal",
+        "Property 1=Stripe",
+        "Property 1=DHL",
+        "Property 1=HubSpot",
+        "Property 1=WhatsApp",
+        "Property 1=Zendesk",
+        "Property 1=Webhooks"
+      ],
+      "componentProperties": {
+        "Property 1": {
+          "defaultValue": "Amazon",
+          "type": "VARIANT",
+          "variantOptions": [
+            "Webhooks",
+            "Amazon",
+            "Tiktok",
+            "Shopee",
+            "Paypal",
+            "Stripe",
+            "DHL",
+            "HubSpot",
+            "WhatsApp",
+            "Zendesk"
+          ]
+        }
+      },
+      "directInstanceCount": 2
+    },
+    {
+      "id": "35:1413",
+      "key": "3451498648c866286aea709c5feee9c1e1a67e8a",
+      "name": "Icons",
+      "type": "COMPONENT_SET",
+      "candidateName": null,
+      "status": "BLOCKED",
+      "action": "KEEP_UNCHANGED",
+      "reasons": [
+        "ICON_ASSET_CATALOG_UNMAPPED"
+      ],
+      "variantNames": [
+        "Name=ArrowLeft",
+        "Name=ArrowRight",
+        "Name=ArrowDown",
+        "Name=ArrowUp",
+        "Name=LinkedinLogo",
+        "Name=InstagramLogo",
+        "Name=XLogo",
+        "Name=Calendar",
+        "Name=Wrench",
+        "Name=Headset",
+        "Name=HandCoins",
+        "Name=Crosshair",
+        "Name=ChartLineUp",
+        "Name=FileText",
+        "Name=Plus",
+        "Name=Minus",
+        "Name=Wallet",
+        "Name=Sparkle",
+        "Name=Menu",
+        "Name=Funnel",
+        "Name=EyeSlash",
+        "Name=Eye",
+        "Name=MagnifyingGlass",
+        "Name=PlugsConnected",
+        "Name=EnvelopeSimple",
+        "Name=Gear",
+        "Name=Question",
+        "Name=Package",
+        "Name=ClipboardText",
+        "Name=SquaresFour",
+        "Name=BuildingOffice",
+        "Name=BowlSteam",
+        "Name=Chair",
+        "Name=Devices",
+        "Name=Stethoscope",
+        "Name=TShirt",
+        "Name=Check",
+        "Name=Bell-notif",
+        "Name=Bell",
+        "Name=ShoppingCart",
+        "Name=UsersThree",
+        "Name=MoneyWavy",
+        "Name=Info",
+        "Name=CaretDown",
+        "Name=CaretLeft",
+        "Name=CaretRight",
+        "Name=CaretUp",
+        "Name=DownloadSimple",
+        "Name=UploadSimple",
+        "Name=Stack",
+        "Name=CheckCircle",
+        "Name=PencilSimple",
+        "Name=Trash",
+        "Name=DotsThree",
+        "Name=FloppyDisk",
+        "Name=PaperPlaneTilt",
+        "Name=Circle",
+        "Name=X",
+        "Name=Truck",
+        "Name=QrCode",
+        "Name=MapPin",
+        "Name=Phone",
+        "Name=Tag",
+        "Name=ChatCircleText",
+        "Name=Printer",
+        "Name=ArrowSquareOut",
+        "Name=UserSquare",
+        "Name=RocketLaunch",
+        "Name=TreasureChest",
+        "Name=Command",
+        "Name=Megaphone",
+        "Name=SignOut",
+        "Name=LightbulbFilament",
+        "Name=Crown",
+        "Name=CreditCard",
+        "Name=Bank",
+        "Name=Box"
+      ],
+      "componentProperties": {
+        "Name": {
+          "defaultValue": "ArrowLeft",
+          "type": "VARIANT",
+          "variantOptions": [
+            "ArrowDown",
+            "ArrowLeft",
+            "ArrowRight",
+            "ArrowUp",
+            "Calendar",
+            "ChartLineUp",
+            "Crosshair",
+            "FileText",
+            "HandCoins",
+            "Headset",
+            "InstagramLogo",
+            "LinkedinLogo",
+            "MagnifyingGlass",
+            "Wrench",
+            "XLogo",
+            "Plus",
+            "Minus",
+            "Wallet",
+            "Funnel",
+            "Menu",
+            "Sparkle",
+            "EyeSlash",
+            "Eye",
+            "SquaresFour",
+            "ClipboardText",
+            "Package",
+            "Question",
+            "Gear",
+            "EnvelopeSimple",
+            "PlugsConnected",
+            "TShirt",
+            "Stethoscope",
+            "Devices",
+            "Chair",
+            "BowlSteam",
+            "BuildingOffice",
+            "Check",
+            "Bell",
+            "Info",
+            "MoneyWavy",
+            "UsersThree",
+            "ShoppingCart",
+            "CaretUp",
+            "CaretRight",
+            "CaretLeft",
+            "CaretDown",
+            "DownloadSimple",
+            "Stack",
+            "CheckCircle",
+            "DotsThree",
+            "Trash",
+            "PencilSimple",
+            "PaperPlaneTilt",
+            "FloppyDisk",
+            "Circle",
+            "UploadSimple",
+            "X",
+            "ChatCircleText",
+            "Tag",
+            "Phone",
+            "MapPin",
+            "QrCode",
+            "Truck",
+            "Printer",
+            "Bell-notif",
+            "ArrowSquareOut",
+            "TreasureChest",
+            "RocketLaunch",
+            "UserSquare",
+            "Command",
+            "SignOut",
+            "Megaphone",
+            "LightbulbFilament",
+            "Crown",
+            "CreditCard",
+            "Bank",
+            "Box"
+          ]
+        }
+      },
+      "directInstanceCount": 301
+    },
+    {
+      "id": "27:18044",
+      "key": "1d4af2e207742c5012171a8cf3d1000cb5a70a25",
+      "name": "Input",
+      "type": "COMPONENT_SET",
+      "candidateName": null,
+      "status": "BLOCKED",
+      "action": "KEEP_UNCHANGED",
+      "reasons": [
+        "DUPLICATE_INPUT_IDENTITY",
+        "UNDEFINED_VARIANT_SEMANTICS",
+        "BOOLEAN_VISIBILITY_UNSUPPORTED"
+      ],
+      "variantNames": [
+        "属性 1=默认",
+        "属性 1=新增值 1"
+      ],
+      "componentProperties": {
+        "图层属性#27:1": {
+          "defaultValue": true,
+          "name": "图层属性",
+          "type": "BOOLEAN"
+        },
+        "属性 1": {
+          "defaultValue": "默认",
+          "type": "VARIANT",
+          "variantOptions": [
+            "默认",
+            "新增值 1"
+          ]
+        }
+      },
+      "directInstanceCount": 0
+    }
+  ],
+  "additionalReferencedMasters": [
+    {
+      "familyId": "86:6296",
+      "exampleName": "Avatar / Image-37",
+      "count": 3,
+      "status": "UNRESOLVED_REFERENCED_MASTER_KEEP_UNCHANGED"
+    },
+    {
+      "familyId": "70:15046",
+      "exampleName": "Avatar / Image-37",
+      "count": 3,
+      "status": "UNRESOLVED_REFERENCED_MASTER_KEEP_UNCHANGED"
+    },
+    {
+      "familyId": "49:1970",
+      "exampleName": "Icons/Package",
+      "count": 26,
+      "status": "UNRESOLVED_REFERENCED_MASTER_KEEP_UNCHANGED"
+    },
+    {
+      "familyId": "70:14674",
+      "exampleName": "Avatar / Text-45",
+      "count": 4,
+      "status": "UNRESOLVED_REFERENCED_MASTER_KEEP_UNCHANGED"
+    },
+    {
+      "familyId": "70:14688",
+      "exampleName": "Avatar / Image-45",
+      "count": 3,
+      "status": "UNRESOLVED_REFERENCED_MASTER_KEEP_UNCHANGED"
+    },
+    {
+      "familyId": "70:14692",
+      "exampleName": "Avatar / Image-45",
+      "count": 2,
+      "status": "UNRESOLVED_REFERENCED_MASTER_KEEP_UNCHANGED"
+    },
+    {
+      "familyId": "34:16",
+      "exampleName": "Header",
+      "count": 4,
+      "status": "UNRESOLVED_REFERENCED_MASTER_KEEP_UNCHANGED"
+    },
+    {
+      "familyId": "34:74",
+      "exampleName": "Footer",
+      "count": 4,
+      "status": "UNRESOLVED_REFERENCED_MASTER_KEEP_UNCHANGED"
+    },
+    {
+      "familyId": "37:1973",
+      "exampleName": "Header",
+      "count": 1,
+      "status": "UNRESOLVED_REFERENCED_MASTER_KEEP_UNCHANGED"
+    },
+    {
+      "familyId": "37:1983",
+      "exampleName": "Label",
+      "count": 12,
+      "status": "UNRESOLVED_REFERENCED_MASTER_KEEP_UNCHANGED"
+    },
+    {
+      "familyId": "37:1986",
+      "exampleName": "Footer",
+      "count": 1,
+      "status": "UNRESOLVED_REFERENCED_MASTER_KEEP_UNCHANGED"
+    }
+  ]
+}

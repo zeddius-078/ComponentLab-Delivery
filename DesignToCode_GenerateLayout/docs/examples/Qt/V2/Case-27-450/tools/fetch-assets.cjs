@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
 const {outputPath} = require('../../../../../../Source/HtmlDsl/tools/output_paths.cjs');
-if (!process.argv[2]) throw Error('CAPTURE_WORKING_DIRECTORY_REQUIRED: use build/cache');
+if (!process.argv[2]) throw Error('CAPTURE_WORKING_DIRECTORY_REQUIRED: use output/work/cache');
 const root = outputPath(process.argv[2]);
 const hash = b => crypto.createHash('sha256').update(b).digest('hex');
 async function download(url, target) {

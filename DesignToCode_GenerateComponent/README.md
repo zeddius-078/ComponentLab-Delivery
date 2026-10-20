@@ -1,41 +1,43 @@
 # DesignToCode_GenerateComponent
 
-本项目维护组件与 Token 的生产工具，发布供 ComponentLab、GenerateLayout 和业务工程消费的 GeneratedComponentSDK。目录登记、设计绑定、源码存在、构造成功和视觉验收是不同状态，不能由组件数量推断“全部可用”。
+这个项目负责把设计侧组件身份、属性、状态和 Token 编译为 Qt 组件，并发布供其他项目消费的 `GeneratedComponentSDK`。
 
-## 目录与入口
+## 目录
 
-| 路径 | 内容 |
+| 目录 | 作用 |
 | --- | --- |
-| Source/ComponentKit | 手工维护的组件实现、生成工具、Token 源、合同、模板和资源 |
-| Source/PrepareBuild.py | 准备 build/work 副本；默认执行生成，--copy-only 仅复制维护输入 |
-| docs | 现行规范、映射工作台、独立消费测试与历史档案 |
-| build/work/Source/ComponentKit | Token、原生组件 h/cpp、QSS、catalog 等生成物及编译输入副本 |
-| build/sdk | 当前组件 SDK 发布目录 |
-| build/resource | 源码交付包等可再生产物 |
-| build/cache、build/reports | 编译缓存与当次测试结果 |
+| `Source/ComponentKit` | Token 源、组件合同、Recipe、绑定、组件源码和生成工具 |
+| `Source/Qt` | Qt 能力目录、映射工作台和原生组件登记 |
+| `Source/PrepareBuild.py` | 将维护输入复制到 output 工作区 |
+| `Source/Publish-ComponentSDK.ps1` | 生成、编译、校验和发布 SDK |
+| `docs/` | 规则、教程、映射参考和验证代码 |
+| `build/sdk` | 当前唯一权威 SDK |
+| `build/tools` | 受控工具副本 |
+| `output/` | 生成、编译、测试和发布过程文件 |
 
-维护修改回到 Source 或 docs，不直接编辑 build/work。Source 不允许生成回写；build 可重建，不保存唯一历史记录。构建脚本本身留在 Source，不随 build 删除。
+## Token 和组件链
 
-Token 权威源为 `Source/ComponentKit/design-assets/DesignSystem/source`。七层、Theme/Profile 分离及稀疏 Recipe 规则见 [Token 规范](docs/designRules/design-system/Component层Token构建规范.md)。公共目录、原生能力与 Figma 库存分别位于 component-definitions，不把旧 Figma 变体数量当作规范模型。
+维护源位于 `Source/ComponentKit/design-assets/DesignSystem/source`。Registry 登记组件身份和合法组合，Contract 登记结构与行为，Recipe 登记视觉决策，Binding 登记设计变量，Runtime Mapping 登记 Qt 类和 API。
 
-## 发布与接入
+生成器读取这些输入，产生 Token、QSS、头文件、实现文件和映射资源，再编译为 SDK。生成结果由 manifest 记录来源指纹、工具链、配置和文件哈希。
 
-先读取工作区 AGENTS.md；使用已有安装环境，不自主安装或升级依赖。需要组件或 Token 发布时在本项目根执行：
+## 发布 SDK
+
+工作区根目录执行：
 
 ```powershell
-pwsh -File Source/Publish-ComponentSDK.ps1
-pwsh -File docs/validation/SDKConsumerTest/Build.ps1
-python -B Source/CheckProject.py
+pwsh -File Source/Workspace.ps1 -Action build -Target component
 ```
 
-两个消费项目校验后直接引用本项目 build/sdk，不保存 SDK 副本。业务侧公共入口是 `MyDesignSystem/MyDesignSystem.h`，链接目标为 `GeneratedComponentSDK::Components`。映射工作台位于 docs/examples/MappingWorkbench；页面解析与独立库命名合同归 GenerateLayout。
+直接执行时：
 
-## 当前限制
+```powershell
+pwsh -File Source/Publish-ComponentSDK.ps1 -QtRoot <Qt5目录>
+py -3.9 -B Source/SDKPackage.py verify --sdk build/sdk --configuration Release --project-root .
+```
 
-- 不能据文件生成或静态库编译通过宣称所有组件可实例化；组件仍须通过独立消费与运行测试。
-- Python 构建脚本以 3.9 为兼容目标。两个组件生成器采用 UTF-8 write_bytes 保持 LF；对应测试为 docs/validation/test_python39_writes.py。接口回归不等于真实 Python 3.9 实机通过。
-- analysis-system 是布局项目的 planned 类名合同，不属于本项目已发布组件。
-- PrepareBuild 显式读取两份 docs/archive 审计作只读验证；它们不是 Token 值来源。不得随意挪动或删除。
-- 旧 build 已隔离为待删除目录；本次文档工作不删除、不重新发布 SDK，也不恢复挂起修复。
+发布器先在 `output/work` 完成暂存、Token 检查、编译和独立消费者测试，再更新 `build/sdk`。消费者通过 `MyDesignSystem/MyDesignSystem.h` 和 `GeneratedComponentSDK::Components` 接入。
 
-使用步骤见 [SDK 上手指南](docs/tutorial/组件SDK上手指南.md)，完整入口见 [文档中心](docs/README.md)，历史记录见 [归档索引](docs/archive/README.md)。
+## 当前能力口径
+
+目录登记、设计绑定、源码存在、构造成功、独立消费和视觉验收分别记录。组件数量或 JSON 条目数量不代表组件已经完成全部验收。

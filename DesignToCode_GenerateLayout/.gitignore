@@ -1,5 +1,10 @@
-# Every build file is disposable; durable inputs and examples live in docs.
-/build/
+# Controlled build publications are delivered separately; never treat them as disposable caches.
+/build/*
+/output/*
+!/build/
+!/output/
+!/build/README.md
+!/output/README.md
 /待删除-build-20261020/
 __pycache__/
 *.pyc

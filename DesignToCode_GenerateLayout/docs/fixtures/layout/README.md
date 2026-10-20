@@ -1,13 +1,14 @@
 # 布局生成固定输入
 
-本目录保存 HTML、Pixso DSL、MCP 响应、截图和案例资源等只读夹具。它们是解析器的输入证据，不是源码，也不是生成结果。
+| 目录 | 内容 |
+| --- | --- |
+| `design-inputs` | DSL 与设计节点数据 |
+| `html-dsl` | HTML、DSL、capture manifest 和页面资源 |
+| `Case-27-450` | 节点案例输入 |
+| `mapping` | 公共组件、布局和 Profile 配置 |
+| `mapping-commerly` | Commerly 专用映射探针 |
+| `structure` | 结构预览输入 |
 
-- `design-inputs/`：页面 DSL 和验证用原始设计数据。
-- `html-dsl/`：HTML + DSL 采集清单及页面输入。
-- `Case-27-450/`：节点案例的采集输入和下载资源。
+文件来源、设计版本、根节点、关联资源和哈希由 capture manifest 表达。`structure` 与 `html-dsl` 是两种输入合同，分别用于结构预览和正式 HTML + DSL 路线。
 
-解析器不得回写这些目录。新的采集批次应以独立目录进入这里，再通过清单校验后参与生成。
-
-原始采集保持逐字节不变，包括换行、JSON 排版和旧 Profile 名称；命名迁移在适配器或映射配置完成，不能批量替换原始证据。上述三个采集目录在 `.gitattributes` 中禁用文本换行转换；不应对它们执行全量换行格式化或用新哈希覆盖旧清单来消除报错。
-
-全量只读检查（在项目根目录执行）：`py -3.9 -B -m unittest discover -s docs/validation -p test_fixture_integrity.py -v`。校验响应哈希和字节数、已保存的逐字提取、DSL 采集、页面清单及原验证记录；无独立哈希依据的文件不因此获得真实性认证。
+固定输入只读。一次执行产生的采集先写入 `output/work`，长期回归输入经过核对后再复制到本目录。

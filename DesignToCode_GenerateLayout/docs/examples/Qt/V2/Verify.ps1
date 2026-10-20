@@ -4,7 +4,7 @@ $ErrorActionPreference = 'Stop'
 Initialize-NativeTools -NeedNode
 & "$PSScriptRoot/Package.ps1"
 $root = [IO.Path]::GetFullPath("$PSScriptRoot/../../../../Source")
-$report = "$D2CProjectRoot/build/reports/v2"
+$report = "$D2CProjectRoot/output/logs/v2"
 $savedPath=$env:PATH; $savedPlatform=$env:QT_QPA_PLATFORM
 $savedPlugin=$env:QT_PLUGIN_PATH; $savedPlatformPlugin=$env:QT_QPA_PLATFORM_PLUGIN_PATH
 try {
@@ -12,8 +12,8 @@ try {
     $env:QT_PLUGIN_PATH=''; $env:QT_QPA_PLATFORM_PLUGIN_PATH=''
     $env:PATH="$env:SystemRoot/System32;$env:SystemRoot"
     $destination="$report/offline-html-dsl"
-    $p=Start-Process -FilePath "$D2CProjectRoot/build/demo/page_examples/V2/d2c_v2.exe" `
-        -ArgumentList @('--data', "$D2CProjectRoot/build/demo/page_examples/V2/data/html-dsl", `
+    $p=Start-Process -FilePath "$D2CProjectRoot/output/work/demo/page_examples/V2/d2c_v2.exe" `
+        -ArgumentList @('--data', "$D2CProjectRoot/output/work/demo/page_examples/V2/data/html-dsl", `
         '--smoke-report', $destination) -WorkingDirectory $env:TEMP -WindowStyle Hidden -PassThru
     if(-not $p.WaitForExit(30000)) { $p.Kill(); throw 'Offline timeout: HTML + DSL' }
     if($p.ExitCode -ne 0) { throw "Offline failed: HTML + DSL ($($p.ExitCode))" }

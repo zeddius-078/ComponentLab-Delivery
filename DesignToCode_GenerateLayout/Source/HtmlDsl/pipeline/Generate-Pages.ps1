@@ -4,23 +4,25 @@ param(
     [Parameter(Mandatory)][string]$OutputDirectory,
     [Parameter(Mandatory)][string]$MappingDirectory,
     [Parameter(Mandatory)][string]$Font,
-    [string]$LibraryProfile
+    [string]$LibraryProfile,
+    [string]$ToolRoot,
+    [string]$WorkRoot
 )
 $ErrorActionPreference = 'Stop'
 . "$PSScriptRoot/../../NativeTools.ps1"
-Initialize-NativeTools
-$buildRoot = [IO.Path]::GetFullPath("$D2CProjectRoot/build")
+Initialize-LayoutRuntime -ToolRoot $ToolRoot -WorkRoot $WorkRoot
+$D2CProjectRoot = $env:D2C_WORK_ROOT
+$buildRoot = [IO.Path]::GetFullPath("$D2CProjectRoot/output/work")
 $resolvedOutput = Assert-BuildOutput $OutputDirectory
 if ($resolvedOutput -ne $buildRoot -and -not $resolvedOutput.StartsWith("$buildRoot$([IO.Path]::DirectorySeparatorChar)", [StringComparison]::OrdinalIgnoreCase)) {
     throw 'OUTPUT_MUST_BE_IN_BUILD'
 }
-$compiler = "$D2CProjectRoot/build/cache/V2-html-dsl/v2_ui_compiler.exe"
+$compiler = "$env:D2C_RUNTIME_ROOT/bin/v2_ui_compiler.exe"
 # 先要求编译器存在；构建由 Qt 工程负责，解析入口保持为明确的数据转换步骤。
 if (-not (Test-Path -LiteralPath $compiler)) { throw '请先执行 Source/Build.ps1' }
 $previousPath = $env:PATH
 $previousPlatform = $env:QT_QPA_PLATFORM
 try {
-    $env:PATH = "$env:QT_ROOT/bin;" + $env:PATH
     $env:QT_QPA_PLATFORM = 'offscreen'
     New-Item -ItemType Directory -Force $OutputDirectory | Out-Null
     # 按路线声明逐页编译；输入和目标前缀由路线提供，路线私有层只负责规则转换与 XML 检查。
@@ -31,7 +33,7 @@ try {
         & $compiler --raw $Pages[$name] --mapping $MappingDirectory --extensions "$MappingDirectory/extensions.json" --font $Font --output "$OutputDirectory/$name" @profileArgs
         # 单页失败立即停止，避免后续部署使用不完整的一组页面。
         if ($LASTEXITCODE -ne 0) { throw "UI generation failed: $name" }
-        & "$env:QT_ROOT/bin/uic.exe" "$OutputDirectory/$name.ui" | Out-Null
+        & "$env:D2C_RUNTIME_ROOT/bin/uic.exe" "$OutputDirectory/$name.ui" | Out-Null
         # uic 只验证 XML，标准输出被丢弃，编译头文件不进入交付目录。
         if ($LASTEXITCODE -ne 0) { throw "UI XML validation failed: $name" }
     }

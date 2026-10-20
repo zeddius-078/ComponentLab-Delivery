@@ -11,7 +11,7 @@
     "authority": "component-registry"
   },
   "designSource": {
-    "legacyVisualBaseline": "docs/archive/design-system-history/history/pre-v2-recovery-20261018/table.json",
+    "legacyVisualBaselineStatus": "historical-only; recover from Git if needed, not a build input",
     "legacyArchitecture": "not-reused",
     "migrationPolicy": "preserve-equivalent-visual-values-rebuild-contract"
   },

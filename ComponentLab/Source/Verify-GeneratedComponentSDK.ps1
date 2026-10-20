@@ -1,25 +1,17 @@
-param([string]$Package)
+param([string]$Package, [ValidateSet('Release','Debug')][string]$Configuration = 'Release')
 $ErrorActionPreference = 'Stop'
-$project = Split-Path $PSScriptRoot -Parent
-$workspace = Split-Path $project -Parent
-$source = if ($env:GENERATED_COMPONENT_SDK_ROOT) {
+. "$PSScriptRoot/ProjectTools.ps1"
+$python = Resolve-ProjectPython
+$contract = Resolve-SupportTool 'SDKContract.py'
+$workspace = Split-Path $ComponentLabProject -Parent
+$source = if ($Package) {
+    [IO.Path]::GetFullPath($Package)
+} elseif ($env:GENERATED_COMPONENT_SDK_ROOT) {
     [IO.Path]::GetFullPath($env:GENERATED_COMPONENT_SDK_ROOT)
 } else {
-    [IO.Path]::GetFullPath((Join-Path $workspace 'DesignToCode_GenerateComponent/build/sdk'))
+    $folder = if ($Configuration -eq 'Debug') { 'build/sdk-debug' } else { 'build/sdk' }
+    [IO.Path]::GetFullPath((Join-Path $workspace "DesignToCode_GenerateComponent/$folder"))
 }
-if ($Package -and [IO.Path]::GetFullPath($Package) -ne $source) {
-    throw "ComponentLab must consume the authoritative SDK directly: $source"
-}
-$manifestPath = Join-Path $source 'manifest/component-sdk.json'
-if (-not (Test-Path -LiteralPath $manifestPath)) { throw "Published SDK manifest missing: $source" }
-$manifest = Get-Content -LiteralPath $manifestPath -Raw | ConvertFrom-Json
-if ($manifest.owner -ne 'DesignToCode_GenerateComponent' -or -not $manifest.componentAuthority) {
-    throw 'Package is not an authorized GenerateComponent publication.'
-}
-foreach ($file in $manifest.files) {
-    $path = Join-Path $source $file.path
-    if (-not (Test-Path -LiteralPath $path) -or (Get-FileHash -LiteralPath $path).Hash -ne $file.sha256) {
-        throw "SDK source hash mismatch: $($file.path)"
-    }
-}
-Write-Output $source
+& $python -B $contract verify --sdk $source --configuration $Configuration | Out-Null
+if ($LASTEXITCODE -ne 0) { throw 'SDK_VERIFICATION_FAILED' }
+Write-Output (Resolve-Path -LiteralPath $source).Path

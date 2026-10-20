@@ -11,12 +11,14 @@ if ($CompileOnly) {
 }
 $root = [IO.Path]::GetFullPath("$PSScriptRoot/../../../../Source")
 $folder = 'HtmlDsl'
-$build = "$D2CProjectRoot/build/cache/V2-demo"
+$build = "$D2CProjectRoot/output/work/cache/V2-demo"
+$sdkRoot = & "$D2CSourceRoot/Verify-GeneratedComponentSDK.ps1"
 & "$D2CSourceRoot/Build.ps1"
-$out = Join-Path $D2CProjectRoot 'build/demo/page_examples/V2'
-New-Item -ItemType Directory -Force $out, "$D2CProjectRoot/build/reports/v2" | Out-Null
+$out = Join-Path $D2CProjectRoot 'output/work/demo/page_examples/V2'
+New-Item -ItemType Directory -Force $out, "$D2CProjectRoot/output/logs/v2" | Out-Null
 
 & $NativeCMake -S $PSScriptRoot -B $build -G Ninja '-DCMAKE_BUILD_TYPE=Release' `
+    "-DGENERATED_COMPONENT_SDK_ROOT=$sdkRoot" `
     "-DCMAKE_PREFIX_PATH=$env:QT_ROOT" "-DD2C_ROUTE_FOLDER=$folder"
 if ($LASTEXITCODE -ne 0) { throw 'Configure failed: HTML + DSL' }
 & $NativeCMake --build $build --target layout_generator_demo d2c_v2 v2_tests
@@ -38,7 +40,7 @@ foreach ($page in @('review','result','instrument_host')) {
         @('.ui','.qss','.components.json','.design-tree.json')
     }
     foreach ($extension in $extensions) {
-        Copy-Item -LiteralPath "$D2CProjectRoot/build/preview/html-dsl/$sourceName$extension" `
+        Copy-Item -LiteralPath "$D2CProjectRoot/output/work/preview/html-dsl/$sourceName$extension" `
             -Destination "$target/$page$extension"
     }
 }
@@ -52,7 +54,7 @@ if ($Test) {
         $env:QT_QPA_PLATFORM='offscreen'
         $env:D2C_V2_DATA=$target
         $env:D2C_V2_RESULT="$target/result"
-        $env:D2C_V2_REPORT="$D2CProjectRoot/build/reports/v2/html-dsl"
+        $env:D2C_V2_REPORT="$D2CProjectRoot/output/logs/v2/html-dsl"
         New-Item -ItemType Directory -Force $env:D2C_V2_REPORT | Out-Null
         & "$build/v2_tests.exe" -o "$env:D2C_V2_REPORT/qt-results.xml,xml"
         if ($LASTEXITCODE -ne 0) { throw 'Tests failed: HTML + DSL' }

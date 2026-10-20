@@ -25,7 +25,7 @@ class Python39WriteTests(unittest.TestCase):
             ast.parse((TOOLS / name).read_text(encoding="utf-8"), filename=name, feature_version=9)
 
     def test_real_generator_write_loops_preserve_utf8_lf(self):
-        cache = PROJECT / "build/cache/python39-write-tests"
+        cache = PROJECT / "output/work/cache/python39-write-tests"
         cache.mkdir(parents=True, exist_ok=True)
         for name in ("generate_native_components", "generate_design_component_catalog"):
             with self.subTest(generator=name), tempfile.TemporaryDirectory(dir=str(cache)) as folder:

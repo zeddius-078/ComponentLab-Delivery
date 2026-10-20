@@ -5,15 +5,19 @@ const path = require('path');
 const crypto = require('crypto');
 const {pathToFileURL} = require('url');
 const {chromium} = require('playwright');
-const {outputPath} = require('./output_paths.cjs');
+const {outputPath, runtimeRoots, browserLaunchOptions} = require('./output_paths.cjs');
 const root = path.resolve(__dirname, '..');
+const roots = runtimeRoots();
+const launchOptions = browserLaunchOptions();
 // 要求调用方提供临时目录，确保本工具产生的预览与混合输入有明确的清理归属。
 if(!process.argv[2])throw Error('OUTPUT_DIRECTORY_REQUIRED: caller owns temporary output cleanup');
 const output = outputPath(process.argv[2]);
 // 独立验证可指定报告目录，避免覆盖旧演示已保存的验收证据。
-const report = outputPath(process.argv[3] || path.resolve(root, '../../build/reports/v2/html-dsl-adaptation'));
+const report = outputPath(process.argv[3] || (roots
+  ? path.join(roots.work, 'output/logs/v2/html-dsl-adaptation')
+  : path.resolve(root, '../../output/logs/v2/html-dsl-adaptation')));
 const hash = data => crypto.createHash('sha256').update(data).digest('hex');
-const write = (name, data) => fs.writeFileSync(path.join(report, name), JSON.stringify(data, null, 2));
+const write = (name, data) => fs.writeFileSync(outputPath(path.join(report, name)), JSON.stringify(data, null, 2));
 // 清单内的相对路径以 capture.json 所在目录为基准，保证从任意工作目录调用都得到同一输入。
 const capturePath = process.argv[4] ? path.resolve(process.argv[4]) : null;
 const captureDirectory = capturePath ? path.dirname(capturePath) : null;
@@ -26,6 +30,8 @@ async function main() {
   if(!capturePath) throw Error('CAPTURE_MANIFEST_REQUIRED');
   // 清单模式由 Generate.ps1 统一校验；此处只负责读取已经确定的输入路径。
   const capture = JSON.parse(fs.readFileSync(capturePath, 'utf8'));
+  const synthetic = capture.manifestType === 'synthetic-example';
+  const identitySource = synthetic ? 'synthetic technical fixture DSL (not Pixso capture)' : 'Pixso full DSL';
   const source = fs.readFileSync(resolveCapturePath(capture.sourceHtml), 'utf8');
   const rawBytes = fs.readFileSync(resolveCapturePath(capture.sourceDsl));
   const raw = JSON.parse(rawBytes);
@@ -41,26 +47,33 @@ async function main() {
   const resources=assets.map(([url,local])=>{
     // 替换前核对 URL 仍在原文中，防止资源表过期却继续生成看似完整的离线页面。
     if(!source.includes(url))throw Error('RESOURCE_NOT_IN_SOURCE: '+url);
-    html=html.split(url).join(pathToFileURL(local).href);
     return {url,local,sha256:hash(fs.readFileSync(local))};
   });
+  // Replace original references once: a relative CSS path must not also rewrite
+  // the file:// URL produced for an overlapping "./path" or absolute URL.
+  const resourceUrls = new Map(assets.map(([url, local]) => [url, pathToFileURL(local).href]));
+  if (resourceUrls.size) {
+    const pattern = [...resourceUrls.keys()].sort((a,b)=>b.length-a.length)
+      .map(url=>url.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')).join('|');
+    html = html.replace(new RegExp(pattern, 'g'), url => resourceUrls.get(url));
+  }
   const missingScript='<script src="js/animation.js"></script>';
   const removedMissingScript=html.includes(missingScript);html=html.replace(missingScript,'');
-  const browser=await chromium.launch({channel:'msedge',headless:true});
+  const browser=await chromium.launch(launchOptions);
   try {
     const viewport={width:Math.ceil(raw.pixTreeNodes[0].width),height:Math.ceil(raw.pixTreeNodes[0].height)};
     const page=await browser.newPage({viewport,deviceScaleFactor:1});
     // 所有临时资源必须已落地；预览测量不能悄悄从网络补取文件。
     await page.route(/^https?:\/\//, route=>route.abort());
     const beforeErrors=[];page.on('pageerror',e=>beforeErrors.push(e.message));
-    fs.writeFileSync(path.join(output,'preview.html'),html);
+    fs.writeFileSync(outputPath(path.join(output,'preview.html')),html);
     await page.goto(pathToFileURL(path.join(output,'preview.html')).href);
     await page.evaluate(()=>document.fonts.ready);
     // 当前导出脚本在同一回调重复声明 element_* 常量，先记录原错误再修改预览副本。
     // 替换范围限于这类生成标识符，将 const 改为可重复声明的 var。
     let replacements=0;
     html=html.replace(/const (element_\d+_\d+) = document\.getElementById/g,(_,name)=>{replacements++;return `var ${name} = document.getElementById`;});
-    fs.writeFileSync(path.join(output,'preview.html'),html);
+    fs.writeFileSync(outputPath(path.join(output,'preview.html')),html);
     const errors=[],failures=[];
     page.removeAllListeners('pageerror');page.on('pageerror',e=>errors.push(e.message));
     page.on('requestfailed',r=>failures.push({url:r.url(),error:r.failure()?.errorText}));
@@ -95,7 +108,7 @@ async function main() {
         cssVariables:[...getComputedStyle(document.documentElement)].filter(k=>k.startsWith('--')).length,
         fontLoaded:document.fonts.check(`14px "${fontFamily}"`)};
     },{tree:shape(raw.pixTreeNodes[0]),fontFamily:capture.fontFamily});
-    await page.screenshot({path:path.join(report,'html.png')});
+    await page.screenshot({path:outputPath(path.join(report,'html.png'))});
     // 脚本、网络或字体失败会改变测量结果，因此先确认页面可用，再生成混合输入。
     if(errors.length||failures.length||!measured.fontLoaded)throw Error('HTML_RENDER_FAILED: '+JSON.stringify({errors,failures}));
     const bindings=[];
@@ -134,11 +147,11 @@ async function main() {
     }
     raw.pixTreeNodes=[adapt(raw.pixTreeNodes[0],measured.tree)];
     // 混合文件显式携带双来源哈希，生成器可将其继续写入中立设计树。
-    raw._provenance={sourceDslSha256:hash(rawBytes),sourceHtmlSha256:hash(source),layout:'HTML computed layout',identity:'Pixso full DSL',
-      ...(referenceBytes ? {layoutReferenceSha256:hash(referenceBytes),layoutVerifiedAgainst:'Pixso Plugin API explicit metrics'} : {})};
-    const derived=JSON.stringify(raw);fs.writeFileSync(path.join(output,'hybrid-result.json'),derived);
+    raw._provenance={sourceDslSha256:hash(rawBytes),sourceHtmlSha256:hash(source),layout:'HTML computed layout',identity:identitySource,
+      ...(referenceBytes ? {layoutReferenceSha256:hash(referenceBytes),layoutVerifiedAgainst:synthetic ? 'hand-authored synthetic layout specification' : 'Pixso Plugin API explicit metrics'} : {})};
+    const derived=JSON.stringify(raw);fs.writeFileSync(outputPath(path.join(output,'hybrid-result.json')),derived);
     write('html-result.json',{status:'PASS',route:'B2: recursive HTML layout + explicit DSL identity',
-      componentIdentitySource:'Pixso full DSL',
+      componentIdentitySource:identitySource,
       htmlInstancesWithoutIdentity:measured.missingIdentity,
       sourceHtmlSha256:hash(source),sourceDslSha256:hash(rawBytes),outputSha256:hash(derived),
       viewport,layoutReferenceSha256:referenceBytes ? hash(referenceBytes) : null,

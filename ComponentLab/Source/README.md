@@ -1,12 +1,21 @@
 # ComponentLab 源码
 
-| 目录或文件 | 职责 |
-| --- | --- |
-| `delivery/demo` | Z-DesignSystem 组件树、逐组件演示窗口、对象树和 `.ui` |
-| `delivery/tests` | 外观、状态、组合与目录边界测试 |
-| `delivery/tools` | 构建、部署、检查和打包入口 |
-| `presentation` | 演示专用主题安装、图标样例和组合控制器 |
-| `GeneratedComponentDependency.cmake` | 构建时加载工作区唯一权威 SDK |
-| `Verify-GeneratedComponentSDK.ps1` | 校验权威 SDK 的发布者与逐文件哈希，不复制文件 |
+## 文件职责
 
-本目录不保存组件实现、DesignSystem 源、Token 编译器或 SDK 副本。组件能力直接来自 `DesignToCode_GenerateComponent/build/sdk`；外部工作区通过 `GENERATED_COMPONENT_SDK_ROOT` 指定同一权威发布目录。
+| 路径 | 内容 |
+| --- | --- |
+| `delivery/demo` | 展示窗口、组件页、对象树和页面资源 |
+| `presentation` | 展示侧状态控制和演示编排 |
+| `delivery/tests` | Qt Test 与项目边界检查 |
+| `delivery/tools` | 构建、部署、验证和打包入口 |
+| `CMakeLists.txt` | ComponentLab 目标、测试和安装规则 |
+
+源码引用 `GeneratedComponentSDK::Components`。组件实现和 Token 编译位于 GenerateComponent，页面生成位于 GenerateLayout。
+
+## 修改方式
+
+展示改动写在 `delivery/demo` 或 `presentation`；构建入口改在 `delivery/tools`。构建目录和 output 目录中的文件属于执行产物，修改不会成为维护源。
+
+## 验证
+
+在工作区根目录运行 `pwsh -File Source/Workspace.ps1 -Action verify`，或先校验 SDK，再运行本项目的 Build 和 Verify 脚本。

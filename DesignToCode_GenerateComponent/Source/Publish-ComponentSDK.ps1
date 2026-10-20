@@ -7,9 +7,9 @@ param(
 $ErrorActionPreference = 'Stop'
 $sourceRoot = $PSScriptRoot
 $projectRoot = Split-Path $sourceRoot -Parent
-$kit = Join-Path $projectRoot 'build/work/Source/ComponentKit'
-$build = if ($BuildDirectory) { [IO.Path]::GetFullPath($BuildDirectory) } else { Join-Path $projectRoot 'build/cache/GeneratedComponentSDK' }
-$sdk = Join-Path $projectRoot 'build/sdk'
+$kit = Join-Path $projectRoot 'output/work/generated/Source/ComponentKit'
+$build = if ($BuildDirectory) { [IO.Path]::GetFullPath($BuildDirectory) } else { Join-Path $projectRoot 'output/work/cache/GeneratedComponentSDK' }
+$authoritySdk = Join-Path $projectRoot 'build/sdk'
 if (-not $QtRoot -or -not (Test-Path -LiteralPath "$QtRoot/lib/cmake/Qt5")) {
     throw 'Set QT_ROOT or pass -QtRoot for Qt 5.15 MSVC x64.'
 }
@@ -18,12 +18,29 @@ $python = Resolve-ProjectPython
 $env:QT_ROOT = $QtRoot
 Initialize-NativeTools
 $build = Assert-BuildOutput $build
-$sdk = Assert-BuildOutput $sdk
+$authoritySdk = Assert-ControlledBuildOutput $authoritySdk
+$stageId = [guid]::NewGuid().ToString('N')
+$sdk = Assert-BuildOutput (Join-Path $projectRoot "output/work/cache/sdk-stage-$stageId")
+$lockPath = Assert-ControlledBuildOutput (Join-Path $projectRoot 'build/.state/operation.lock')
+New-Item -ItemType Directory -Path (Split-Path $lockPath) -Force | Out-Null
+# FileShare.None is released by the OS even when the publisher process crashes.
+# Keep the file itself: deleting a lock filename can race another publisher.
+try {
+    $publishLock = [IO.File]::Open($lockPath, [IO.FileMode]::OpenOrCreate, [IO.FileAccess]::ReadWrite, [IO.FileShare]::None)
+} catch {
+    throw "SDK publication is already locked; no output was changed: $lockPath"
+}
+try {
+New-Item -ItemType Directory -Path (Split-Path $sdk) -Force | Out-Null
+$snapshot = Assert-BuildOutput (Join-Path $projectRoot "output/work/cache/sdk-input-$stageId.json")
+& $python -B "$sourceRoot/SDKPackage.py" fingerprint --project-root $projectRoot |
+    Set-Content -LiteralPath $snapshot -Encoding utf8
+if ($LASTEXITCODE) { throw 'SDK source fingerprint failed.' }
 & $python -B "$sourceRoot/PrepareBuild.py"
 if ($LASTEXITCODE) { throw 'Component build preparation failed.' }
 & $Cmake -S $kit -B $build -G $Generator '-DCMAKE_BUILD_TYPE=Release' `
     "-DCMAKE_PREFIX_PATH=$QtRoot" "-DPython3_EXECUTABLE=$python" '-DD2C_BUILD_TOKEN_TOOLS=ON' `
-    '-DBUTTON_MSVC_INCLUDE_PREFIX=注意: 包含文件:'
+    '-DBUTTON_MSVC_INCLUDE_PREFIX=注意: 包含文件:' '-DCMAKE_MSVC_RUNTIME_LIBRARY=MultiThreadedDLL'
 if ($LASTEXITCODE) { throw 'SDK configure failed.' }
 & $Cmake --build $build --config Release --target d2c_generate_tokens
 if ($LASTEXITCODE) { throw 'Token generation failed.' }
@@ -31,16 +48,6 @@ if ($LASTEXITCODE) { throw 'Token generation failed.' }
 if ($LASTEXITCODE) { throw 'Token check failed.' }
 & $Cmake --build $build --config Release --target generated_component_sdk --parallel 4
 if ($LASTEXITCODE) { throw 'SDK build failed.' }
-if (Test-Path -LiteralPath $sdk) {
-    $resolved = [IO.Path]::GetFullPath($sdk)
-    $allowed = [IO.Path]::GetFullPath((Join-Path $projectRoot 'build/sdk'))
-    if ($resolved -ne $allowed) {
-        throw "Unsafe SDK output path: $resolved"
-    }
-    $previousSdk = Join-Path $projectRoot ('build/cache/previous-sdk-' + [guid]::NewGuid().ToString('N'))
-    New-Item -ItemType Directory -Path (Split-Path $previousSdk) -Force | Out-Null
-    Move-Item -LiteralPath $resolved -Destination $previousSdk
-}
 & $Cmake --install $build --config Release --prefix $sdk
 if ($LASTEXITCODE) { throw 'SDK install failed.' }
 
@@ -50,6 +57,9 @@ if(TARGET GeneratedComponentSDK::Components)
 endif()
 include(CMakeFindDependencyMacro)
 find_dependency(Qt5 5.15 COMPONENTS Widgets Svg)
+if(CMAKE_BUILD_TYPE STREQUAL "Debug")
+  message(FATAL_ERROR "This SDK is Release /MD. A verified complete Debug /MDd SDK is required for Debug.")
+endif()
 get_filename_component(_GENERATED_COMPONENT_SDK_ROOT "${CMAKE_CURRENT_LIST_DIR}/.." ABSOLUTE)
 add_library(GeneratedComponentSDK::Components STATIC IMPORTED)
 set_target_properties(GeneratedComponentSDK::Components PROPERTIES
@@ -144,16 +154,8 @@ Copy-Item -LiteralPath "$kit/design-assets/DesignSystem/config/figma-audit-v2.js
 Copy-Item -LiteralPath "$kit/design-assets/DesignSystem/config/reference-mapping.json" -Destination "$sdk/resources/mappings/reference-mapping.json"
 Copy-Item -LiteralPath "$kit/design-assets/DesignSystem/config/manifest.json" -Destination "$sdk/resources/mappings/token-manifest.json"
 Copy-Item -LiteralPath "$kit/design-assets/DesignSystem/source/component-registry.json" -Destination "$sdk/resources/mappings/component-registry.json"
-# The Debug CRT companion is not a published SDK, but ComponentLab's Debug
-# consumer selects it automatically.  Keep the two runtime-facing V2 mapping
-# files in lockstep with the authoritative Release package; otherwise the UI
-# can show an older token binding even after the source map and Release SDK
-# were regenerated.
-$debugSdk = Join-Path $projectRoot 'build/sdk-debug'
-if (Test-Path -LiteralPath "$debugSdk/resources/mappings") {
-    Copy-Item -LiteralPath "$sdk/resources/mappings/figma-component-map-v2.json" -Destination "$debugSdk/resources/mappings/figma-component-map-v2.json" -Force
-    Copy-Item -LiteralPath "$sdk/resources/mappings/component-registry.json" -Destination "$debugSdk/resources/mappings/component-registry.json" -Force
-}
+# Never partially update sdk-debug: its library and all mappings must be built
+# and verified together by a separate Debug publisher.
 $files = Get-ChildItem -LiteralPath $sdk -File -Recurse | Where-Object { $_.Name -ne 'component-sdk.json' }
 $manifest = [ordered]@{
     schemaVersion = 1
@@ -177,4 +179,15 @@ $manifest = [ordered]@{
     })
 }
 $manifest | ConvertTo-Json -Depth 6 | Set-Content -LiteralPath "$sdk/manifest/component-sdk.json" -Encoding utf8
-Write-Output $sdk
+& $python -B "$sourceRoot/SDKPackage.py" stamp --sdk $sdk --snapshot $snapshot `
+    --qt-root $QtRoot --cmake $Cmake --build-directory $build
+if ($LASTEXITCODE) { throw 'SDK staged package verification failed; previous SDK is unchanged.' }
+# Consumer compiles and runs against the staged package, not producer internals.
+& "$projectRoot/docs/validation/SDKConsumerTest/Build.ps1" -SdkRoot $sdk -QtRoot $QtRoot `
+    -Cmake $Cmake -BuildDirectory (Join-Path $projectRoot 'output/work/cache/SDKConsumerTest')
+& $python -B "$sourceRoot/SDKPackage.py" promote --stage $sdk --destination $authoritySdk
+if ($LASTEXITCODE) { throw 'SDK promotion failed; previous package was retained/restored.' }
+Write-Output $authoritySdk
+} finally {
+    $publishLock.Dispose()
+}

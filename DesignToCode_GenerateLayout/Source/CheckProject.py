@@ -9,7 +9,7 @@ PROJECT = Path(__file__).resolve().parent.parent
 SOURCE = PROJECT / "Source"
 NAMES = {"ComponentLab", "DesignToCode_GenerateComponent", "DesignToCode_GenerateLayout"}
 OTHER = NAMES - {PROJECT.name}
-REPORT = PROJECT / "build/reports/project-check.json"
+REPORT = PROJECT / "output/logs/project-check.json"
 
 
 def normalize_for_boundary_check(content):
@@ -26,18 +26,18 @@ def check():
     for directory in PROJECT.iterdir():
         if not directory.is_dir():
             continue
-        if directory.name.startswith("待删除-"):
+        if directory.name.startswith(("待删除-", "需删除-")):
             result["pendingDeletion"].append(directory.name)
             continue
-        assert directory.name in {"Source", "docs", "build"}, (directory, "unexpected maintained directory")
-    allowed = {".cpp", ".h", ".ps1", ".py", ".cjs", ".cmake"}
+        assert directory.name in {"Source", "docs", "build", "output"}, (directory, "unexpected maintained directory")
+    allowed = {".cpp", ".h", ".ps1", ".py", ".js", ".cjs", ".cmake", ".cmd"}
     # Directory junctions would silently restore a shared dependency after a physical split.
     for file in SOURCE.rglob("*"):
         assert not file.is_symlink() and not getattr(file, "is_junction", lambda: False)(), file
         if not file.is_file() or file == Path(__file__):
             continue
         assert file.suffix in allowed or file.name in {"CMakeLists.txt", "README.md", ".clang-format"}, (file, "non-tool file in Source")
-        if file.suffix in {".cpp", ".h", ".ps1", ".py", ".cjs", ".cmd", ".qrc"} or file.name == "CMakeLists.txt":
+        if file.suffix in {".cpp", ".h", ".ps1", ".py", ".js", ".cjs", ".cmd", ".qrc"} or file.name == "CMakeLists.txt":
             code = normalize_for_boundary_check(
                 file.read_text(encoding="utf-8-sig").replace("\\", "/")
             )
@@ -62,13 +62,13 @@ def check():
             if not link or re.match(r"^https?://", link):
                 continue
             target = (file.parent / link).resolve()
-            if target.is_relative_to(PROJECT / "build"):
+            if target.is_relative_to(PROJECT / "build") or target.is_relative_to(PROJECT / "output"):
                 result["optionalBuildLinks"] += 1
                 continue  # Generated examples are absent after deleting build, by design.
             assert target.is_relative_to(PROJECT) and target.exists(), (file, link)
             result["localLinks"] += 1
     # Inspect only active build descriptions; before-project-split stores explicitly retired caches.
-    cache = PROJECT / "build/cache"
+    cache = PROJECT / "output/work/cache"
     for ninja in cache.rglob("build.ninja"):
         if "before-project-split" in ninja.relative_to(cache).parts:
             continue

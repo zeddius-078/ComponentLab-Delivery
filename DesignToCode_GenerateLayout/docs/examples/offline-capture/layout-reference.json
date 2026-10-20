@@ -1,0 +1,9 @@
+{
+  "fileKey": "offline-synthetic-example",
+  "evidenceType": "hand-authored-synthetic-specification",
+  "notice": "Explicit example requirements, not inferred from browser measurements or collected through Pixso.",
+  "pages": [{
+    "id": "sample:1",
+    "nodes": [{"id": "sample:1", "metrics": {"gap": 12, "left": 24, "top": 24, "right": 24, "bottom": 24}}]
+  }]
+}
