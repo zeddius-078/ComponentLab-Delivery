@@ -13,6 +13,21 @@ function Assert-BuildOutput {
     }
     return $resolved
 }
+function Resolve-ProjectPython {
+    # Select an existing installation only; never fall back to a newer Python.
+    $candidate = $env:D2C_PYTHON_EXE
+    if (-not $candidate) {
+        $launcher = Get-Command py -ErrorAction SilentlyContinue
+        if (-not $launcher) { throw 'PYTHON39_REQUIRED: set D2C_PYTHON_EXE to an existing Python 3.9 executable; ask before environment changes.' }
+        $candidate = & $launcher.Source -3.9 -B -c 'import sys; print(sys.executable)'
+        if ($LASTEXITCODE -ne 0 -or -not $candidate) { throw 'PYTHON39_REQUIRED: existing Python 3.9 not found; ask the user.' }
+        $candidate = $candidate.Trim()
+    }
+    if (-not (Test-Path -LiteralPath $candidate -PathType Leaf)) { throw 'PYTHON39_EXECUTABLE_MISSING' }
+    $version = & $candidate -B -c 'import sys; print("%d.%d" % sys.version_info[:2])'
+    if ($LASTEXITCODE -ne 0 -or $version -ne '3.9') { throw 'PYTHON39_REQUIRED: refusing a different interpreter version.' }
+    return (Resolve-Path -LiteralPath $candidate).Path
+}
 function Initialize-NativeTools {
     param([switch]$NeedNode)
     if (-not $env:QT_ROOT -or -not (Test-Path -LiteralPath "$env:QT_ROOT/lib/cmake/Qt5")) {

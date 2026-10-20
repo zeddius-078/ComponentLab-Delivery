@@ -9,7 +9,7 @@ if(EXISTS "${_input_project}/Source/Publish-ComponentSDK.ps1")
     if(NOT _safe_build)
         message(FATAL_ERROR "OUTPUT_MUST_BE_IN_BUILD")
     endif()
-    find_package(Python3 REQUIRED COMPONENTS Interpreter)
+    find_package(Python3 3.9...<3.10 REQUIRED COMPONENTS Interpreter)
     execute_process(COMMAND "${Python3_EXECUTABLE}" -B "${_input_project}/Source/PrepareBuild.py"
         RESULT_VARIABLE _prepared)
     if(NOT _prepared EQUAL 0)
@@ -182,7 +182,7 @@ target_include_directories(d2c_appearance PUBLIC runtime/adapter runtime/compone
 target_link_libraries(d2c_appearance PUBLIC d2c_components)
 
 if(D2C_BUILD_TOKEN_TOOLS)
-    find_package(Python3 REQUIRED COMPONENTS Interpreter)
+    find_package(Python3 3.9...<3.10 REQUIRED COMPONENTS Interpreter)
     add_executable(d2c_checkbox_token_compiler design-assets/tools/checkbox_token_compiler.cpp)
     foreach(COMPONENT checkbox)
         target_link_libraries(d2c_${COMPONENT}_token_compiler PRIVATE Qt5::Core Qt5::Gui)

@@ -32,7 +32,7 @@ python -B Source/CheckProject.py
 
 ## 当前限制
 
-- 导航栏消费契约曾报告缺失 `component.navigation-bar.base.state.default.slot.container.height`；该问题按用户决定挂起。不能据文件生成或静态库编译通过宣称所有组件可实例化。
+- 不能据文件生成或静态库编译通过宣称所有组件可实例化；组件仍须通过独立消费与运行测试。
 - Python 构建脚本以 3.9 为兼容目标。两个组件生成器采用 UTF-8 write_bytes 保持 LF；对应测试为 docs/validation/test_python39_writes.py。接口回归不等于真实 Python 3.9 实机通过。
 - analysis-system 是布局项目的 planned 类名合同，不属于本项目已发布组件。
 - PrepareBuild 显式读取两份 docs/archive 审计作只读验证；它们不是 Token 值来源。不得随意挪动或删除。

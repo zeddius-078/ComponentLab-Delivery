@@ -8,7 +8,7 @@
 
 维护目录是 Source/ComponentKit/design-assets/DesignSystem/source。运行 Source/PrepareBuild.py 在 build/work/Source/ComponentKit 内生成；--copy-only 只复制输入。本文后续 generated 路径均指构建副本内路径，不允许在维护 Source 下回写。完整发布入口为 Source/Publish-ComponentSDK.ps1。
 
-历史数量、阶段审计和旧模型在 docs/archive；不作为当前 Figma 变量规模或运行成功依据。已登记的只读审计验证输入按 PrepareBuild.py 保留路径，不提供 Token 值。导航栏 container.height 消费契约问题按用户决定挂起，本次文档更新不恢复修复。
+历史数量、阶段审计和旧模型在 docs/archive；不作为当前 Figma 变量规模或运行成功依据。已登记的只读审计验证输入按 PrepareBuild.py 保留路径，不提供 Token 值。
 
 ## 0. V2 已确认的架构决策
 

@@ -875,7 +875,8 @@ int main(int argc, char** argv) {
         // 主题安装必须使用别名解析后的 SDK 上下文，而不是把设计侧名称当作 Token profile。
         component_theme::install(app, profileResolution.runtimeProfile);
         // 先从设计输入投影节点树，再创建临时 Qt 对象，保持两种树的来源明确。
-        const auto design = v2::designTree(raw, sourceHash, profileResolution.runtimeProfile);
+        // 原始变量集合使用设计侧模式名；SDK 别名仅用于主题与组件运行上下文。
+        const auto design = v2::designTree(raw, sourceHash, profileResolution.designProfile);
         auto layoutRules = v2::readJson(cli.value("mapping") + "/layout-mapping.json");
         if (cli.isSet("strict-layout") || formal)
             layoutRules["requireExplicitMetrics"] = true;

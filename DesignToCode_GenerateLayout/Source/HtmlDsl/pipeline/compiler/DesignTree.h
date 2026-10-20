@@ -9,8 +9,8 @@
 
 namespace v2 {
 // sourceHash 由调用方对输入文件计算，绑定本次树所依据的完整 DSL 或 B2 混合输入。
-inline QJsonObject designTree(const QJsonObject& raw, const QString& sourceHash, const QString& profile) {
-    const auto variableValidation = validateVariables(raw, profile);
+inline QJsonObject designTree(const QJsonObject& raw, const QString& sourceHash, const QString& designProfile) {
+    const auto variableValidation = validateVariables(raw, designProfile);
     QJsonArray nodes, roots;
     QSet<QString> ids;
     std::function<void(const QJsonObject&, const QJsonValue&)> walk;

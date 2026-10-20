@@ -14,14 +14,15 @@ if (-not $QtRoot -or -not (Test-Path -LiteralPath "$QtRoot/lib/cmake/Qt5")) {
     throw 'Set QT_ROOT or pass -QtRoot for Qt 5.15 MSVC x64.'
 }
 . "$PSScriptRoot/NativeTools.ps1"
+$python = Resolve-ProjectPython
 $env:QT_ROOT = $QtRoot
 Initialize-NativeTools
 $build = Assert-BuildOutput $build
 $sdk = Assert-BuildOutput $sdk
-& python -B "$sourceRoot/PrepareBuild.py"
+& $python -B "$sourceRoot/PrepareBuild.py"
 if ($LASTEXITCODE) { throw 'Component build preparation failed.' }
 & $Cmake -S $kit -B $build -G $Generator '-DCMAKE_BUILD_TYPE=Release' `
-    "-DCMAKE_PREFIX_PATH=$QtRoot" '-DD2C_BUILD_TOKEN_TOOLS=ON' `
+    "-DCMAKE_PREFIX_PATH=$QtRoot" "-DPython3_EXECUTABLE=$python" '-DD2C_BUILD_TOKEN_TOOLS=ON' `
     '-DBUTTON_MSVC_INCLUDE_PREFIX=注意: 包含文件:'
 if ($LASTEXITCODE) { throw 'SDK configure failed.' }
 & $Cmake --build $build --config Release --target d2c_generate_tokens

@@ -2,6 +2,7 @@ param(
     [string]$QtDir = $env:QT_ROOT,
     [string]$VsDir = $env:VS_ROOT,
     [string]$CMake = 'cmake',
+    [string]$Python = 'python',
     [string]$NinjaDir = $env:NINJA_ROOT,
     [string]$BuildDirectory = '',
     [switch]$SkipTests,
@@ -15,6 +16,7 @@ $project = Split-Path $root -Parent
 $build = if ($BuildDirectory) { [IO.Path]::GetFullPath($BuildDirectory) } else { Join-Path $project 'build/cache/main' }
 $logs = Join-Path $project "build/reports/build-$stamp"
 $CMake = (Get-Command $CMake -ErrorAction Stop).Source
+$Python = (Get-Command $Python -ErrorAction Stop).Source
 if (-not $QtDir) { throw 'Set QT_ROOT or provide -QtDir.' }
 [void](New-Item -ItemType Directory -Path $logs -Force)
 function Invoke-Step([string]$Name, [string]$Program, [string[]]$Arguments) {
@@ -28,9 +30,9 @@ try {
     $env:VSLANG = '1033'
     $prefix = -join ([char[]]@(0x6ce8,0x610f,0x003a,0x0020,0x5305,0x542b,0x6587,0x4ef6,0x003a))
     if (Test-Path -LiteralPath (Join-Path $env:VCToolsInstallDir 'bin\Hostx64\x64\1033\clui.dll')) { $prefix = 'Note: including file:' }
-    Invoke-Step 'configure' $CMake @('-S',$root,'-B',$build,'-G','Ninja','-DCMAKE_BUILD_TYPE=Release',"-DCMAKE_PREFIX_PATH=$QtDir","-DBUTTON_MSVC_INCLUDE_PREFIX=$prefix","-DTEST_OUTPUT_DIR=$logs/tests",'-DCOMPONENTLAB_BUILD_DEMO=ON','-DBUILD_TESTING=ON')
+    Invoke-Step 'configure' $CMake @('-S',$root,'-B',$build,'-G','Ninja','-DCMAKE_BUILD_TYPE=Release',"-DCMAKE_PREFIX_PATH=$QtDir","-DPython3_EXECUTABLE=$Python","-DBUTTON_MSVC_INCLUDE_PREFIX=$prefix","-DTEST_OUTPUT_DIR=$logs/tests",'-DCOMPONENTLAB_BUILD_DEMO=ON','-DBUILD_TESTING=ON')
     Invoke-Step 'compile' $CMake @('--build',$build,'--parallel','4')
-    Invoke-Step 'governance' 'python' @((Join-Path $root 'delivery/tools/CheckProject.py'),'--snapshot',(Join-Path $logs 'validation-inputs.json'))
+    Invoke-Step 'governance' $Python @((Join-Path $root 'delivery/tools/CheckProject.py'),'--snapshot',(Join-Path $logs 'validation-inputs.json'))
     if (-not $SkipTests) { Invoke-Step 'tests' (Join-Path (Split-Path $CMake) 'ctest.exe') @('--test-dir',$build,'-j','1','--output-on-failure','--output-junit',(Join-Path $logs 'ctest.xml')) }
     @{status='passed';testsExecuted=(-not $SkipTests);exeSha256=(Get-FileHash -LiteralPath (Join-Path $build 'component_lab.exe') -Algorithm SHA256).Hash;validationInputs=(Get-Content -LiteralPath (Join-Path $logs 'validation-inputs.json') -Raw | ConvertFrom-Json)} | ConvertTo-Json -Depth 8 | Set-Content -LiteralPath (Join-Path $logs 'build-verification.json') -Encoding utf8
     if ($SkipDeploy) { return }
@@ -46,7 +48,7 @@ try {
         if (-not (Test-Path -LiteralPath (Join-Path $dist $file))) { throw "Missing runtime: $file" }
     }
     if (-not $SkipTests) {
-        Invoke-Step 'delivery-manifest' 'python' @('-B',(Join-Path $root 'delivery/tools/DeliveryManifest.py'),'--results',$logs)
+        Invoke-Step 'delivery-manifest' $Python @('-B',(Join-Path $root 'delivery/tools/DeliveryManifest.py'),'--results',$logs)
     } else {
         Write-Output 'UNVERIFIED DEPLOY: tests and delivery-manifest refresh were skipped.'
     }

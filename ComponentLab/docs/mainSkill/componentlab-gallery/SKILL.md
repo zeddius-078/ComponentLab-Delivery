@@ -55,7 +55,7 @@ description: 维护 G:/ComponentLab-Delivery/ComponentLab 的 Qt5 C++ 组件展�
 ## 状态与归档
 
 - GenerateLayout 的 analysis-system 是未实现类名合同，不能加入本项目并伪装成真实组件。
-- 当前导航栏 container.height Token 消费问题按用户决定挂起；缺口影响构造测试时如实报告，不临时造替代类。
+- 组件构造或 Token 消费失败时须如实报告，不临时造替代类。
 - 历史测试数量、迁移过程和旧说明放 docs/archive；build/reports 只存当次可再生输出。
 - Profile/Theme 以 SDK 发布资源为准，standard/wide 与 light/dark 组合成四上下文；Density 不等同于 Profile。
 

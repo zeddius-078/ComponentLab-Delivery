@@ -110,6 +110,10 @@ GenerateLayout 生成的页面引用具体组件类（`commonWidget::Z_*`）并�
 
 别名只允许指向 `runtimeProfiles` 中已经发布的上下文。缺少别名、目标上下文不存在或页面混用多个 Profile 时，生成器返回明确错误并停止，不把设计名称直接写入 Token 运行时。
 
+设计树与变量校验必须使用解析出的 `designProfile`，不能传入 SDK 的 `runtimeProfile`。变量集合优先使用节点继承/覆盖的 `variableModeBySetMap` 模式 ID；未显式指定时按设计模式名选择，单模式集合可唯一确定。模式缺值、无效 ID 或同名歧义必须失败，不回退另一模式或默认零值。SDK 主题安装、组件实例化与页面运行记录仍使用 `runtimeProfile`。原始采集中的旧名称不做批量替换。
+
+回归入口：`py -3.9 -B -m unittest discover -s docs/validation/layout -p test_design_profile_modes.py -v`。测试调用真实编译器，覆盖旧/新设计模式、显式模式优先级及缺失、无效、歧义和未登记别名的拒绝；临时输入和输出均在 build 内。
+
 ## 切换方式
 
 ```powershell
@@ -210,7 +214,7 @@ currentIndex／value／format／title／gridVisible）由生成器直接序列�
 - SelectOption 组聚合仅覆盖明确登记结构和静态内容，不承担完整 Select 的多选、搜索或异步生命周期。
 - qt-native 与 contract-only 使用 Qt 基类测量，无法据此保证目标设计像素一致。
 - 同一选定组件集中，稳定 ID 与目标类必须唯一；不同库是不同映射上下文。多库并存不等于在统一设计目录里维护两套重复公共身份。
-- 本项目解析器仍链接原 SDK。导航栏 container.height Token 消费问题按用户决定挂起。
+- 本项目解析器链接发布后的组件 SDK；其版本与输入哈希必须按当次构建核验。
 
 ```powershell
 python -B -m unittest discover -s docs/validation/layout -p test_component_libraries.py -v

@@ -180,6 +180,19 @@ class ModelTests(unittest.TestCase):
                 self.assertIn(prefix + "color", component)
                 self.assertIn(prefix + "background-color", component)
 
+    def test_switch_value_and_state_tokens_are_materialized(self):
+        component = self.model.layers["component"]
+        self.assertIn("component.switch.base.shared.slot.knob.inset", component)
+        self.assertIn("component.switch.base.shared.slot.knob.background-color", component)
+        for value in ("off", "on"):
+            for state in ("default", "hover", "pressed", "focused", "disabled", "loading"):
+                prefix = f"component.switch.value.{value}.state.{state}.slot."
+                self.assertIn(prefix + "track.background-color", component)
+            self.assertIn(
+                f"component.switch.value.{value}.state.disabled.slot.label.color",
+                component,
+            )
+
     def test_input_content_is_instance_text_not_a_variant_axis(self):
         contract = json.loads((SOURCE / "component-contracts/input.json").read_text(encoding="utf-8"))
         binding = json.loads((SOURCE / "figma-bindings/input.json").read_text(encoding="utf-8"))

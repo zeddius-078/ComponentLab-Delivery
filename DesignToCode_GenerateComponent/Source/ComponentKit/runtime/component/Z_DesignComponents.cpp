@@ -137,10 +137,10 @@ struct CompositeTokens {
         layout = selected[QStringLiteral("layout")].toObject();
     }
 
-    QColor color(const char* name) const {
-        const QString value = colors[QString::fromLatin1(name)].toString();
+    QColor color(const QString& name) const {
+        const QString value = colors[name].toString();
         if (value.isEmpty())
-            throw std::runtime_error(("Missing composite component color token: " + QString::fromLatin1(name)).toStdString());
+            throw std::runtime_error(("Missing composite component color token: " + name).toStdString());
         if (value.startsWith(QStringLiteral("rgba("))) {
             const auto parts = value.mid(value.indexOf('(') + 1,
                                          value.lastIndexOf(')') - value.indexOf('(') - 1)
@@ -156,6 +156,10 @@ struct CompositeTokens {
         if (!result.isValid())
             throw std::runtime_error("Invalid composite component color token");
         return result;
+    }
+
+    QColor color(const char* name) const {
+        return color(QString::fromLatin1(name));
     }
 
     int metric(const char* name) const {
@@ -1401,14 +1405,14 @@ void Z_Navbar::refreshGeometryAndStyle() {
     const CompositeTokens tokens(m_profile);
     const bool compact = m_density == QStringLiteral("Compact");
     const int height = compact
-        ? tokens.metric("component.navigation-bar.base.state.default.slot.container.compact-height")
-        : tokens.metric("component.navigation-bar.base.state.default.slot.container.height");
-    const int padding = tokens.metric("component.navigation-bar.base.state.default.slot.container.padding-inline");
-    const int gap = tokens.metric("component.navigation-bar.base.state.default.slot.content.gap");
+        ? tokens.metric("component.navigation-bar.base.state.default.slot.utility-row.height")
+        : tokens.metric("component.navigation-bar.base.state.default.slot.navigation-row.height");
+    const int padding = tokens.metric("primitive.spacing.24");
+    const int gap = tokens.metric("semantic.space.horizontal.standard");
     const QColor background = tokens.color("component.navigation-bar.base.state.default.slot.container.background-color");
     const QColor border = tokens.color("component.navigation-bar.base.state.default.slot.container.border-color");
-    const QColor title = tokens.color("component.navigation-bar.base.state.default.slot.content.title");
-    const QColor meta = tokens.color("component.navigation-bar.base.state.default.slot.content.meta");
+    const QColor title = tokens.color("semantic.color.text.primary");
+    const QColor meta = tokens.color("semantic.color.text.secondary");
     const QColor accent = tokens.color("semantic.color.interactive.brand.default");
     const QColor onBrand = tokens.color("semantic.color.text.invert");
     m_layout->setContentsMargins(padding, 0, padding, 0);
@@ -2052,7 +2056,7 @@ QRect Z_Switch::trackGeometry() const {
                             : "component.switch.base.size.medium.slot.track.visual-width"),
         tokens.metric(small ? "component.switch.base.size.small.slot.track.visual-height"
                             : "component.switch.base.size.medium.slot.track.visual-height"));
-    const int inset = tokens.metric("component.switch.base.state.default.slot.knob.inset");
+    const int inset = tokens.metric("component.switch.base.shared.slot.knob.inset");
     const int leading = layoutDirection() == Qt::RightToLeft
                             ? width() - inset - trackSize.width()
                             : inset;
@@ -2069,7 +2073,7 @@ QSize Z_Switch::sizeHint() const {
         axisIs(m_variantProperties, "Size", "Small")
             ? "component.switch.base.size.small.slot.track.visual-width"
             : "component.switch.base.size.medium.slot.track.visual-width");
-    const int inset = tokens.metric("component.switch.base.state.default.slot.knob.inset");
+    const int inset = tokens.metric("component.switch.base.shared.slot.knob.inset");
     return QSize(trackWidth + inset * 2, interactiveSize);
 }
 void Z_Switch::setVariantTuple(const QString& tuple) {
@@ -2111,33 +2115,40 @@ void Z_Switch::nextCheckState() {
 void Z_Switch::paintEvent(QPaintEvent*) {
     QPainter painter(this); painter.setRenderHint(QPainter::Antialiasing);
     const CompositeTokens tokens(m_profile);
-    const QColor knob = tokens.color("component.switch.base.state.default.slot.knob.background-color");
-    const QColor text = tokens.color("semantic.color.text.primary");
-    const QColor disabledText = tokens.color("semantic.color.text.disabled");
-    const QColor disabledTrack = tokens.color("component.switch.base.state.disabled.slot.track.background-color");
-    const QColor offTrack = tokens.color("component.switch.base.state.default.slot.track.background-color");
-    const QColor onTrack = tokens.color("component.switch.base.value.on.slot.track.background-color");
+    const QColor knob = tokens.color("component.switch.base.shared.slot.knob.background-color");
     const QString state = axis(m_variantProperties, "State");
+    QString tokenState = QStringLiteral("default");
+    if (!isEnabled() || state == QStringLiteral("Disabled"))
+        tokenState = QStringLiteral("disabled");
+    else if (state == QStringLiteral("Hover"))
+        tokenState = QStringLiteral("hover");
+    else if (state == QStringLiteral("Pressed"))
+        tokenState = QStringLiteral("pressed");
+    else if (state == QStringLiteral("Focus-visible"))
+        tokenState = QStringLiteral("focused");
+    else if (state == QStringLiteral("Loading"))
+        tokenState = QStringLiteral("loading");
+    const QString tokenValue = isChecked() ? QStringLiteral("on") : QStringLiteral("off");
+    const QString trackToken = QStringLiteral(
+        "component.switch.value.%1.state.%2.slot.track.background-color")
+                                   .arg(tokenValue, tokenState);
+    const QColor trackColor = tokens.color(trackToken);
+    const QColor text = tokenState == QStringLiteral("disabled")
+                            ? tokens.color(QStringLiteral(
+                                  "component.switch.value.%1.state.disabled.slot.label.color")
+                                               .arg(tokenValue))
+                            : tokens.color("component.switch.base.shared.slot.label.color");
     const bool previewFocus = axisIs(m_variantProperties, "State", "Focus-visible");
     const QRectF track = trackGeometry();
     const auto& focusIndicator = FocusIndicator::instance();
     const bool focus = focusIndicator.enabledFor(this) &&
                        (focusIndicator.visibleFor(this) || previewFocus);
     const QColor focusColor =
-        tokens.color("semantic.color.interactive.brand.focus-ring");
-    const QColor onHover = tokens.color("semantic.color.interactive.brand.hover");
-    const QColor onPressed = tokens.color("semantic.color.interactive.brand.pressed");
-    QColor trackColor = isChecked() ? onTrack : offTrack;
-    if (isEnabled() && state == QStringLiteral("Hover"))
-        trackColor = isChecked() ? onHover
-                                 : QColor(QStringLiteral("#A3A3A3"));
-    else if (isEnabled() && state == QStringLiteral("Pressed"))
-        trackColor = isChecked() ? onPressed
-                                 : QColor(QStringLiteral("#8A8A8A"));
+        tokens.color("component.switch.base.state.focused.slot.focus-ring.color");
     painter.setPen(QPen(focus ? focusColor : Qt::transparent, focus ? 2 : 0));
-    painter.setBrush(isEnabled() ? trackColor : disabledTrack);
+    painter.setBrush(trackColor);
     painter.drawRoundedRect(track, track.height() / 2.0, track.height() / 2.0);
-    const qreal inset = tokens.metric("component.switch.base.state.default.slot.knob.inset");
+    const qreal inset = tokens.metric("component.switch.base.shared.slot.knob.inset");
     const qreal knobSize = tokens.metric(
         axisIs(m_variantProperties, "Size", "Small")
             ? "component.switch.base.size.small.slot.knob.visual-size"
@@ -2158,7 +2169,7 @@ void Z_Switch::paintEvent(QPaintEvent*) {
         labelFont.setPixelSize(14);
         labelFont.setWeight(QFont::Medium);
         painter.setFont(labelFont);
-        painter.setPen(isEnabled() ? text : disabledText);
+        painter.setPen(text);
         QRect labelRect;
         if (layoutDirection() == Qt::RightToLeft)
             labelRect = QRect(0, 0, track.left() - 8, height());

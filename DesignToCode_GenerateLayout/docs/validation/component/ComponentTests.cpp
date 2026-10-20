@@ -277,7 +277,8 @@ private slots:
     // 从真实母版定义组成测试实例，分别覆盖前图标、后图标、双图标与纯图标模式。
     void resourceMappingFromRealDefinitions() {
         const auto raw = read("../docs/fixtures/layout/design-inputs/node-12-382-full/canonical.raw.json");
-        d2c::ComponentConverter engine(raw, read("../docs/fixtures/layout/mapping/component-mapping.json"));
+        const auto mapping = read("../docs/fixtures/layout/mapping/component-mapping.json");
+        d2c::ComponentConverter engine(raw, mapping);
         QJsonObject family;
         // 从保存的组件集中查找 Button，保证图标测试使用真实母版定义。
         for (const auto& s : raw["pixComponentTreeDslNodes"].toArray())
@@ -295,11 +296,16 @@ private slots:
                 // 把母版变体整理为按名查值的表，便于同时限定外观、状态和 Profile。
                 for (const auto& p : node["propRefMap"].toObject()["variant"].toArray())
                     properties[p.toObject()["name"].toString()] = p.toObject()["value"].toString();
+                // 采集母版保留设计侧命名；仅按已登记别名判断其 SDK 上下文。
+                const auto designProfile = properties.value("Profile");
+                const auto runtimeProfile = designProfile == mapping["profile"].toString()
+                    ? designProfile
+                    : mapping["profileAliases"].toObject()[designProfile].toObject()["runtimeProfile"].toString();
                 // 只选取默认、纯色、Bare、亮色舒适档的对应母版，让本轮只比较图标模式差异。
                 if (properties.value("content") == mode && properties.value("state") == "default" &&
                     properties.value("appearance") == "solid" &&
                     properties.value("iconStyle") == "Bare" &&
-                    properties.value("Profile") == "standard-light") {
+                    !runtimeProfile.isEmpty() && runtimeProfile == mapping["profile"].toString()) {
                     definition = node;
                     break;
                 }

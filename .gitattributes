@@ -12,3 +12,7 @@
 *.jpg binary
 *.jpeg binary
 *.ttf binary
+# Immutable captures: preserve original bytes, including any original CRLF.
+DesignToCode_GenerateLayout/docs/fixtures/layout/design-inputs/** -text !eol
+DesignToCode_GenerateLayout/docs/fixtures/layout/html-dsl/** -text !eol
+DesignToCode_GenerateLayout/docs/fixtures/layout/Case-27-450/** -text !eol

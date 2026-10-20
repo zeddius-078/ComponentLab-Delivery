@@ -58,6 +58,20 @@ void textSlots(const QJsonObject& node, const QString& name, QJsonArray& found) 
     for (const auto& child : node["childNode"].toArray())
         textSlots(child.toObject(), name, found);
 }
+
+bool nameMatches(const QJsonObject& family, const QJsonObject& rule,
+                 const QString& designComponentNameKey) {
+    // 名称必须精确命中登记名单；key 始终保持精确匹配，防止仅凭名称误配组件。
+    if (family["componentKey"].toString() != rule["designComponentKey"].toString())
+        return false;
+    if (family["name"].toString() == rule[designComponentNameKey].toString())
+        return true;
+    const auto names = rule[designComponentNameKey + "s"].toArray();
+    for (const auto& entry : names)
+        if (family["name"].toString() == entry.toString())
+            return true;
+    return false;
+}
 }
 
 QJsonObject mergeRules(QJsonObject base, const QJsonObject& extension) {
@@ -110,8 +124,7 @@ QWidget* SceneBuilder::option(const QJsonObject& node, QWidget* parent) {
     const auto family =
         find(raw["pixComponentTreeDslNodes"].toArray(), node["mainStateGroup"].toString());
     // 名称与 key 必须同时匹配扩展规则；其他组件交给通用转换器处理，避免误用选项适配。
-    if (family["name"] != rule["designComponentName"] ||
-        family["componentKey"] != rule["designComponentKey"])
+    if (!nameMatches(family, rule, "designComponentName"))
         return components.convert(node, parent);
     // SelectOption 适配器属于 token-sdk 交付；qt-native 没有对应公开 Qt 等价物，必须失败关闭。
     if (libraryProfile["widgetSource"].toString() == QStringLiteral("qt-builtin-map"))
@@ -179,8 +192,7 @@ QJsonArray SceneBuilder::optionGroup(const QJsonObject& node) {
             return {};
         const auto family =
             find(raw["pixComponentTreeDslNodes"].toArray(), child["mainStateGroup"].toString());
-        if (family["name"] != rule["designComponentName"] ||
-            family["componentKey"] != rule["designComponentKey"])
+        if (!nameMatches(family, rule, "designComponentName"))
             return {};
     }
     return children;

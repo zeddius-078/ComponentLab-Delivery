@@ -39,6 +39,7 @@ if ($Formal) {
     if ($mapping.profile -ne 'wide-light') { throw 'FORMAL_REQUIRES_WIDE_LIGHT_MAPPING' }
 }
 . "$PSScriptRoot/../NativeTools.ps1"
+$python = Resolve-ProjectPython
 $previousNodePath = $env:NODE_PATH
 Initialize-NativeTools -NeedNode
 $previewRoot = [IO.Path]::GetFullPath("$D2CProjectRoot/build/preview")
@@ -51,11 +52,10 @@ if ($Preview) {
 }
 $pipeline = [IO.Path]::GetFullPath("$PSScriptRoot/pipeline")
 $node = $NativeNode
-$python = (Get-Command python -ErrorAction Stop).Source
 $manifestChecker = "$PSScriptRoot/pipeline/capture/capture_manifest.py"
 $manifestMode = if ($Formal) { 'formal' } else { 'preview' }
 # 生成前校验跨工具输入合同；适配器只接收已通过路径、根节点、资源和哈希检查的清单。
-foreach ($manifest in @($CaptureManifest, $(if ($Preview) { $ReviewCaptureManifest }))) {
+foreach ($manifest in @($CaptureManifest, $(if ($Preview) { $ReviewCaptureManifest })) | Where-Object { $_ }) {
     $manifestPath = [IO.Path]::GetFullPath($manifest)
     if (-not (Test-Path -LiteralPath $manifestPath -PathType Leaf)) { throw 'CAPTURE_MANIFEST_REQUIRED' }
     & $python -B $manifestChecker verify --manifest $manifestPath --mode $manifestMode

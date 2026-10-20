@@ -19,14 +19,18 @@
       "focused": {"slot/focus-ring/color": "{semantic.color.interactive.brand.focus-ring}", "slot/focus-ring/border-width": "{semantic.border-width.focus-ring}"}
     }
   },
-  "valueGroups": {
+  "valueStructure": {
+    "off": {"palette-group": "off"},
+    "on": {"palette-group": "on"}
+  },
+  "paletteGroups": {
     "off": {"slot/track/background-color": "{semantic.color.background.control-default}"},
     "on": {"slot/track/background-color": "{semantic.color.interactive.brand.default}"}
   },
   "stateOverrides": {
     "default": {},
-    "hover": {"valueGroups": {"off": {"slot/track/background-color": "{semantic.color.background.hover}"}, "on": {"slot/track/background-color": "{semantic.color.interactive.brand.hover}"}}},
-    "pressed": {"valueGroups": {"off": {"slot/track/background-color": "{semantic.color.background.pressed}"}, "on": {"slot/track/background-color": "{semantic.color.interactive.brand.pressed}"}}},
+    "hover": {"paletteGroups": {"off": {"slot/track/background-color": "{semantic.color.background.hover}"}, "on": {"slot/track/background-color": "{semantic.color.interactive.brand.hover}"}}},
+    "pressed": {"paletteGroups": {"off": {"slot/track/background-color": "{semantic.color.background.pressed}"}, "on": {"slot/track/background-color": "{semantic.color.interactive.brand.pressed}"}}},
     "focused": {"tokens": {"slot/focus-ring/color": "{semantic.color.interactive.brand.focus-ring}", "slot/focus-ring/border-width": "{semantic.border-width.focus-ring}"}},
     "disabled": {"tokens": {"slot/track/background-color": "{semantic.color.background.disabled}", "slot/label/color": "{semantic.color.text.disabled}"}},
     "loading": {"tokens": {"slot/loading-spinner/size": "{semantic.visualization-size.sm}", "slot/loading-spinner/color": "{semantic.color.interactive.brand.focus-ring}", "slot/loading-spinner/stroke-width": "{primitive.spinner.stroke-width}", "slot/loading-spinner/arc-start-angle": "{primitive.spinner.arc-start-angle}", "slot/loading-spinner/arc-sweep-angle": "{primitive.spinner.arc-sweep-angle}"}}

@@ -20,4 +20,4 @@
 
 Token 源位于 Source/ComponentKit/design-assets/DesignSystem/source。PrepareBuild 在 build/work 准备副本后生成；--copy-only 才是只复制输入。SDK 消费测试位于 docs/validation/SDKConsumerTest，映射工作台位于 docs/examples/MappingWorkbench。
 
-导航栏 container.height 消费契约问题仍挂起。Python 3.9 是兼容目标；test_python39_writes.py 的接口检查不能替代真实 3.9 实测。当前文档不宣称全量组件验收通过。
+Python 3.9 是兼容目标；接口检查不能替代真实 3.9 构建与消费实测。当前文档不宣称全量组件验收通过。

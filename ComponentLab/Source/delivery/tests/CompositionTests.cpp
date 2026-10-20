@@ -1320,6 +1320,15 @@ auto* secondEditor=editors->widget(1);auto* area=secondEditor->findChild<QMdiAre
         QCOMPARE(toggle->label(), QStringLiteral("Immediate setting"));
         toggle->setShowLabel(true);
         QCOMPARE(toggle->size(), QSize(180, 32));
+        QSignalSpy toggleChanges(toggle, &QAbstractButton::toggled);
+        QTest::mouseClick(toggle, Qt::LeftButton);
+        QCOMPARE(toggleChanges.count(), 1);
+        QVERIFY(!toggle->isChecked());
+        QCOMPARE(toggle->variantProperties().value("Value").toString(), QStringLiteral("Off"));
+        QTest::mouseClick(toggle, Qt::LeftButton);
+        QCOMPARE(toggleChanges.count(), 2);
+        QVERIFY(toggle->isChecked());
+        QCOMPARE(toggle->variantProperties().value("Value").toString(), QStringLiteral("On"));
 
         auto* tree = part<QTreeWidget>("componentTree");
         tree->setCurrentItem(pageItem(tree, QStringLiteral("346:2")));

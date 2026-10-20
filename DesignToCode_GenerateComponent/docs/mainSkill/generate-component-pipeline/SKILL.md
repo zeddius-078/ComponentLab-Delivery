@@ -53,4 +53,4 @@ python -B -m unittest discover -s docs/validation -p test_python39_writes.py -v
 
 Token 变更在 build/work 副本中运行 scripts/v2/tests；映射变更使用 docs/examples/MappingWorkbench/Build.ps1。完整发布需构建及独立消费，不以文件生成通过代替。
 
-导航栏 container.height Token 契约问题按用户决定挂起。文档整理与无关改动不得自行修复、重发 SDK 或宣称全量组件可运行。当次报告写 build/reports；需长期保留的结果冻结到 docs/archive，现行文档不追加流水账。
+文档整理与无关改动不得自行重发 SDK 或宣称全量组件可运行。当次报告写 build/reports；需长期保留的结果冻结到 docs/archive，现行文档不追加流水账。

@@ -31,6 +31,6 @@ pwsh -File Source/delivery/tools/Verify.ps1
 
 运行上下文为 standard-light、standard-dark、wide-light、wide-dark；组件密度与上下文分开。外部完整 Token 目录通过 --token-dir 用于验证，不修改 SDK 发布包。
 
-导航栏 container.height Token 消费问题按用户决定挂起。当前检查还报告 `demo V2 component map is stale`：已存在演示包的映射与 SDK 发布映射不一致，需要在演示重建任务中处理；本次文档整理不替换包内文件。相关失败须报告，不在 Demo 制作替代实现。阶段数量、旧截图和迁移过程统一保存在 [历史归档](docs/archive/README.md)，不再作为当前完成结论。
+相关失败须按当次实测报告，不在 Demo 中制作替代实现。阶段数量、旧截图和迁移过程统一保存在 [历史归档](docs/archive/README.md)，不再作为当前完成结论。
 
 详见 [上手指南](docs/tutorial/组件展示上手指南.md)、[Token 使用](docs/designRules/token/Token变量集使用.md)和 [文档中心](docs/README.md)。

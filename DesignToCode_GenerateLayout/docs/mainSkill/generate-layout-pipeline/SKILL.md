@@ -153,4 +153,4 @@ pwsh -File docs/examples/Qt/V2/Verify.ps1
 
 命名切换检查：`python -B -m unittest discover -s docs/validation/layout -p test_component_libraries.py -v`；已有库策略检查使用 test_library_profiles.py。仅检查文档时不触发组件 SDK 重新发布。
 
-历史构建次数、失败批次和迁移过程统一放 docs/archive。导航栏 container.height Token 消费问题按用户决定挂起；采集清单需针对当前输入重新验哈希，不能用历史通过替代。专项通过、结构通过、编译通过和视觉签核必须分别报告。
+历史构建次数、失败批次和迁移过程统一放 docs/archive。采集清单需针对当前输入重新验哈希，不能用历史通过替代。专项通过、结构通过、编译通过和视觉签核必须分别报告。
