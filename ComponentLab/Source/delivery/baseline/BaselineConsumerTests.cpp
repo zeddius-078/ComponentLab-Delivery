@@ -1,9 +1,13 @@
+#include "BaselineGallery.h"
+
 #include <MyDesignSystem/MyDesignSystem.h>
 
 #include <QApplication>
 #include <QImage>
 #include <QStyle>
 #include <QStyleOptionButton>
+#include <QTabWidget>
+#include <QTreeWidget>
 #include <QtTest>
 
 class BaselineConsumerTests final : public QObject {
@@ -78,6 +82,28 @@ class BaselineConsumerTests final : public QObject {
                  "Inherited constructor must receive the QSS indeterminate dash");
         QVERIFY2(fill.red() > 70 && fill.red() < 130 && fill.green() < 90 && fill.blue() > 220,
                  "Inherited constructor must receive the SDK purple fill");
+    }
+
+    void galleryRetainsPerformanceLabInformationArchitecture() {
+        commonWidget::initializeNativeComponentResources();
+        qApp->setStyleSheet(commonWidget::nativeComponentStyleSheet() +
+                            baselineGalleryCanvasStyleSheet());
+        BaselineWindow window;
+        QCOMPARE(window.componentSectionCount(), 4);
+        QVERIFY(window.hasObjectInspector());
+        QVERIFY(!baselineGalleryCanvasStyleSheet().isEmpty());
+        QVERIFY(window.findChild<QTabWidget*>(QStringLiteral("baselineSdkTabs")));
+        QVERIFY(window.findChild<QTabWidget*>(QStringLiteral("baselineGalleryTabs")));
+        auto* navigation = window.findChild<QTreeWidget*>(QStringLiteral("baselineNavigation"));
+        QVERIFY(navigation);
+        QCOMPARE(navigation->topLevelItemCount(), 4);
+        auto* inspector = window.findChild<QTreeWidget*>(QStringLiteral("baselineObjectInspector"));
+        QVERIFY(inspector);
+        QCOMPARE(inspector->columnCount(), 2);
+        QVERIFY(window.findChild<commonWidget::Z_PushButton*>(
+            QStringLiteral("baselinePrimaryButton")));
+        QVERIFY(window.findChild<commonWidget::Z_CheckBox*>(
+            QStringLiteral("baselineIndeterminateCheckbox")));
     }
 };
 

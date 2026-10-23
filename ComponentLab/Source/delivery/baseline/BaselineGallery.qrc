@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/componentlab/baseline">
+        <file>BaselineGallery.qss</file>
+    </qresource>
+</RCC>

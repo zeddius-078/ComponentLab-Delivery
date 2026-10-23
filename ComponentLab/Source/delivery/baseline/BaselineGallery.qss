@@ -1,0 +1,26 @@
+QWidget#baselineRoot { background: #F6F7FB; }
+QWidget#baselineCanvas, QWidget#baselineContentHost, QWidget#baselineMappingHost {
+    background: #FFFFFF; border: 1px solid #E1E4EA; border-radius: 8px;
+}
+QLabel#baselineGalleryTitle {
+    color: #16181D; font-family: "HarmonyOS Sans", "HarmonyOS Sans SC";
+    font-size: 26px; font-weight: 700;
+}
+QLabel#baselineGallerySubtitle, QLabel#baselinePageDescription, QLabel#baselineMappingDescription {
+    color: #606775; font-family: "HarmonyOS Sans", "HarmonyOS Sans SC"; font-size: 13px;
+}
+QLabel#baselineReleaseBadge {
+    color: #5632D8; background: #F0ECFF; border: 1px solid #D9CEFF;
+    border-radius: 12px; padding: 4px 10px; font-size: 12px; font-weight: 600;
+}
+QLabel#baselinePageKicker { color: #7956F8; font-size: 12px; font-weight: 600; }
+QLabel#baselinePageTitle { color: #20232A; font-size: 19px; font-weight: 700; }
+QTreeWidget#baselineNavigation, QTreeWidget#baselineObjectInspector {
+    background: #FFFFFF; border: 1px solid #E1E4EA; border-radius: 6px;
+    alternate-background-color: #F8F9FC;
+}
+QTreeWidget#baselineNavigation::item { min-height: 28px; padding: 2px 6px; }
+QTreeWidget#baselineNavigation::item:selected { color: #FFFFFF; background: #6235F7; }
+QTreeWidget#baselineObjectInspector::item { min-height: 24px; padding: 1px 4px; }
+QWidget#baselineStateNote { background: #F8F6FF; border: 1px solid #E2DAFF; border-radius: 6px; }
+QLabel#baselineStateNoteText { color: #4D3AA3; font-size: 12px; }

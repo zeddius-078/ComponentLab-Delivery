@@ -42,7 +42,10 @@ endif()
 # they are not compiled or installed for this baseline SDK.
 if(COMPONENTLAB_BASELINE_SDK)
     set(COMPONENT_LAB_BASELINE_SOURCES
-        delivery/baseline/BaselineComponentLab.cpp)
+        delivery/baseline/BaselineComponentLab.cpp
+        delivery/baseline/BaselineGallery.cpp
+        delivery/baseline/BaselineGallery.h
+        delivery/baseline/BaselineGallery.qrc)
     if(COMPONENTLAB_BUILD_DEMO)
         add_executable(component_lab WIN32 ${COMPONENT_LAB_BASELINE_SOURCES})
         target_link_libraries(component_lab PRIVATE
@@ -50,7 +53,10 @@ if(COMPONENTLAB_BASELINE_SDK)
     endif()
     if(BUILD_TESTING)
         add_executable(baseline_component_lab_tests
-            delivery/baseline/BaselineConsumerTests.cpp)
+            delivery/baseline/BaselineConsumerTests.cpp
+            delivery/baseline/BaselineGallery.cpp
+            delivery/baseline/BaselineGallery.h
+            delivery/baseline/BaselineGallery.qrc)
         target_link_libraries(baseline_component_lab_tests PRIVATE
             GeneratedComponentSDK::Components Qt5::Core Qt5::Gui Qt5::Widgets Qt5::Test)
         add_test(NAME baseline_component_lab_consumer COMMAND baseline_component_lab_tests)
