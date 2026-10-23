@@ -13,6 +13,7 @@
 #include <QJsonObject>
 #include <QLabel>
 #include <QListWidget>
+#include <QMenu>
 #include <QMenuBar>
 #include <QSaveFile>
 #include <QScrollArea>
@@ -196,8 +197,10 @@ void configureSpecimen(QWidget* specimen, const QString& qtClass) {
     }
     if (auto* edit = qobject_cast<QLineEdit*>(specimen))
         edit->setPlaceholderText(QObject::tr("输入批次或工单编号"));
-    if (auto* combo = qobject_cast<QComboBox*>(specimen))
-        combo->addItems({QObject::tr("自动"), QObject::tr("手动"), QObject::tr("维护")});
+    if (auto* combo = qobject_cast<QComboBox*>(specimen)) {
+        if (!qobject_cast<QFontComboBox*>(combo))
+            combo->addItems({QObject::tr("自动"), QObject::tr("手动"), QObject::tr("维护")});
+    }
     if (auto* spin = qobject_cast<QSpinBox*>(specimen)) {
         spin->setRange(0, 100);
         spin->setValue(42);
@@ -228,7 +231,7 @@ void configureSpecimen(QWidget* specimen, const QString& qtClass) {
     }
     if (auto* view = qobject_cast<QAbstractItemView*>(specimen)) {
         if (!qobject_cast<QListWidget*>(view) && !qobject_cast<QTreeWidget*>(view) &&
-            !qobject_cast<QTableWidget*>(view)) {
+            !qobject_cast<QTableWidget*>(view) && !qobject_cast<QUndoView*>(view)) {
             auto* model = new QStandardItemModel(3, 2, view);
             model->setHorizontalHeaderLabels({QObject::tr("设备"), QObject::tr("状态")});
             for (int row = 0; row < 3; ++row) {
@@ -238,6 +241,12 @@ void configureSpecimen(QWidget* specimen, const QString& qtClass) {
             view->setModel(model);
         }
     }
+    if (auto* undo = qobject_cast<QUndoView*>(specimen)) {
+        auto* stack = new QUndoStack(undo);
+        stack->push(new QUndoCommand(QObject::tr("修改参数")));
+        stack->push(new QUndoCommand(QObject::tr("保存配置")));
+        undo->setStack(stack);
+    }
     if (auto* tabs = qobject_cast<QTabWidget*>(specimen)) {
         tabs->addTab(new QLabel(QObject::tr("页签内容"), tabs), QObject::tr("概览"));
         tabs->addTab(new QLabel(QObject::tr("第二页"), tabs), QObject::tr("详情"));
@@ -245,8 +254,14 @@ void configureSpecimen(QWidget* specimen, const QString& qtClass) {
     if (auto* group = qobject_cast<QGroupBox*>(specimen))
         group->setTitle(QObject::tr("组件分组"));
     if (auto* area = qobject_cast<QScrollArea*>(specimen)) {
-        auto* content = new QLabel(QObject::tr("滚动内容\n项目 1\n项目 2\n项目 3\n项目 4\n项目 5"), area);
+        auto* content = new QWidget(area);
+        auto* contentLayout = new QVBoxLayout(content);
+        for (int item = 1; item <= 12; ++item)
+            contentLayout->addWidget(new QLabel(QObject::tr("项目 %1").arg(item), content));
+        content->setMinimumSize(240, 360);
+        area->setWidgetResizable(false);
         area->setWidget(content);
+        area->setFixedHeight(200);
     }
     if (auto* toolbox = qobject_cast<QToolBox*>(specimen)) {
         toolbox->addItem(new QLabel(QObject::tr("概览内容"), toolbox), QObject::tr("概览"));
@@ -264,6 +279,36 @@ void configureSpecimen(QWidget* specimen, const QString& qtClass) {
         bar->addAction(QObject::tr("刷新"));
     if (auto* bar = qobject_cast<QStatusBar*>(specimen))
         bar->showMessage(QObject::tr("运行中"));
+    if (auto* menu = qobject_cast<QMenu*>(specimen)) {
+        menu->addAction(QObject::tr("新建"));
+        menu->addAction(QObject::tr("打开"));
+        menu->addSeparator();
+        menu->addAction(QObject::tr("关闭"));
+    }
+    if (auto* dock = qobject_cast<QDockWidget*>(specimen)) {
+        dock->setWindowTitle(QObject::tr("设备属性"));
+        dock->setWidget(new QLabel(QObject::tr("属性内容"), dock));
+    }
+    if (auto* mdiChild = qobject_cast<QMdiSubWindow*>(specimen)) {
+        mdiChild->setWindowTitle(QObject::tr("文档 1"));
+        mdiChild->setWidget(new QLabel(QObject::tr("文档内容"), mdiChild));
+    }
+    if (auto* wizard = qobject_cast<QWizard*>(specimen)) {
+        for (const auto& title : {QObject::tr("选择设备"), QObject::tr("确认配置")}) {
+            auto* page = new commonWidget::Z_WizardPage(wizard);
+            page->setTitle(title);
+            auto* pageLayout = new QVBoxLayout(page);
+            pageLayout->addWidget(new QLabel(title, page));
+            wizard->addPage(page);
+        }
+    }
+    if (auto* page = qobject_cast<QWizardPage*>(specimen)) {
+        page->setTitle(QObject::tr("选择设备"));
+        auto* pageLayout = new QVBoxLayout(page);
+        pageLayout->addWidget(new QLabel(QObject::tr("页面内容"), page));
+    }
+    if (auto* lcd = qobject_cast<QLCDNumber*>(specimen))
+        lcd->display(42);
     if (auto* view = qobject_cast<QGraphicsView*>(specimen)) {
         auto* scene = new QGraphicsScene(view);
         scene->addText(QObject::tr("图形视图"));
@@ -276,6 +321,8 @@ void configureSpecimen(QWidget* specimen, const QString& qtClass) {
     if (auto* date = qobject_cast<QDateTimeEdit*>(specimen))
         date->setDateTime(QDateTime(QDate(2026, 9, 23), QTime(9, 30)));
     if (auto* text = qobject_cast<QTextEdit*>(specimen))
+        text->setPlainText(QObject::tr("工艺记录：等待设备确认。"));
+    if (auto* text = qobject_cast<QPlainTextEdit*>(specimen))
         text->setPlainText(QObject::tr("工艺记录：等待设备确认。"));
     if (auto* mdi = qobject_cast<QMdiArea*>(specimen)) {
         auto* child = new QLabel(QObject::tr("文档内容"), mdi);
@@ -298,8 +345,16 @@ SectionPage createComponentSection(const ScopeEntry& entry, QWidget* parent) {
         auto* openButton = new commonWidget::Z_PushButton(QObject::tr("打开 %1").arg(qtClass), appearanceCard);
         auto* popup = instantiate(entry, appearanceCard);
         configureSpecimen(popup, qtClass);
-        popup->setWindowFlags(Qt::Dialog);
-        QObject::connect(openButton, &QPushButton::clicked, popup, [popup] { popup->show(); });
+        if (auto* menu = qobject_cast<QMenu*>(popup)) {
+            QObject::connect(openButton, &QPushButton::clicked, menu,
+                             [menu, openButton] {
+                                 menu->popup(openButton->mapToGlobal(
+                                     QPoint(0, openButton->height())));
+                             });
+        } else {
+            popup->setWindowFlags(Qt::Dialog);
+            QObject::connect(openButton, &QPushButton::clicked, popup, [popup] { popup->show(); });
+        }
         static_cast<QVBoxLayout*>(appearanceCard->layout())->addWidget(openButton, 0, Qt::AlignLeft);
     } else if (requiresGraphics) {
         static_cast<QVBoxLayout*>(appearanceCard->layout())->addWidget(

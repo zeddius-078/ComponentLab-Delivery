@@ -154,6 +154,76 @@ class BaselineConsumerTests final : public QObject {
         QVERIFY(window.findChild<commonWidget::Z_CheckBox*>(
             QStringLiteral("baselineIndeterminateCheckbox")));
     }
+
+    void galleryExamplesPreserveNativeInteractionContracts() {
+        commonWidget::initializeNativeComponentResources();
+        qApp->setStyleSheet(commonWidget::nativeComponentStyleSheet() +
+                            baselineGalleryCanvasStyleSheet());
+        BaselineWindow window;
+        auto* menu = window.findChild<commonWidget::Z_Menu*>(
+            QStringLiteral("componentRoot_QMenu"));
+        QVERIFY(menu);
+        QCOMPARE(menu->actions().count(), 4);
+        QVERIFY(menu->windowFlags() & Qt::Popup);
+
+        auto* wizard = window.findChild<commonWidget::Z_Wizard*>(
+            QStringLiteral("componentRoot_QWizard"));
+        QVERIFY(wizard);
+        QCOMPARE(wizard->pageIds().count(), 2);
+
+        auto* dock = window.findChild<commonWidget::Z_DockWidget*>(
+            QStringLiteral("componentRoot_QDockWidget"));
+        QVERIFY(dock);
+        QVERIFY(dock->widget());
+        QVERIFY(!dock->windowTitle().isEmpty());
+
+        auto* scrollArea = window.findChild<commonWidget::Z_ScrollArea*>(
+            QStringLiteral("componentRoot_QScrollArea"));
+        QVERIFY(scrollArea);
+        QVERIFY(scrollArea->widget());
+        QVERIFY(scrollArea->widget()->minimumHeight() > scrollArea->height());
+        auto* navigation = window.findChild<QTreeWidget*>(QStringLiteral("baselineNavigation"));
+        QVERIFY(navigation);
+        auto* published = navigation->topLevelItem(0);
+        QTreeWidgetItem* scrollLeaf = nullptr;
+        for (int section = 0; section < published->childCount(); ++section) {
+            auto* category = published->child(section);
+            for (int item = 0; item < category->childCount(); ++item) {
+                auto* leaf = category->child(item);
+                if (leaf->data(0, Qt::UserRole + 1).toString() == QStringLiteral("QScrollArea"))
+                    scrollLeaf = leaf;
+            }
+        }
+        QVERIFY(scrollLeaf);
+        navigation->setCurrentItem(scrollLeaf);
+        window.show();
+        QTest::qWait(20);
+        auto* verticalBar = scrollArea->verticalScrollBar();
+        QVERIFY(verticalBar->maximum() > 0);
+        verticalBar->setValue(verticalBar->maximum());
+        QCOMPARE(verticalBar->value(), verticalBar->maximum());
+
+        auto* undo = window.findChild<commonWidget::Z_UndoView*>(
+            QStringLiteral("componentRoot_QUndoView"));
+        QVERIFY(undo);
+        QVERIFY(undo->stack());
+        QCOMPARE(undo->stack()->count(), 2);
+
+        auto* font = window.findChild<commonWidget::Z_FontComboBox*>(
+            QStringLiteral("componentRoot_QFontComboBox"));
+        QVERIFY(font);
+        QCOMPARE(font->findText(QStringLiteral("自动")), -1);
+        QVERIFY(font->count() > 0);
+
+        auto* plainText = window.findChild<commonWidget::Z_PlainTextEdit*>(
+            QStringLiteral("componentRoot_QPlainTextEdit"));
+        QVERIFY(plainText);
+        QVERIFY(!plainText->toPlainText().isEmpty());
+        auto* lcd = window.findChild<commonWidget::Z_LCDNumber*>(
+            QStringLiteral("componentRoot_QLCDNumber"));
+        QVERIFY(lcd);
+        QCOMPARE(lcd->value(), 42.0);
+    }
 };
 
 int main(int argc, char** argv) {
