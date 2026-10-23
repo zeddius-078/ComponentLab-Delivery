@@ -1,0 +1,9 @@
+<RCC>
+  <qresource prefix="/z-native">
+    <file alias="components.qss">ZNativeComponents.qss</file>
+    <file alias="fonts/HarmonyOS_Sans.ttf">fonts/HarmonyOS_Sans.ttf</file>
+    <file alias="fonts/HarmonyOS_Sans_SC.ttf">fonts/HarmonyOS_Sans_SC.ttf</file>
+    <file alias="fonts/LICENSE.txt">fonts/LICENSE.txt</file>
+    <file alias="icons/checkbox-indeterminate.svg">icons/checkbox-indeterminate.svg</file>
+  </qresource>
+</RCC>

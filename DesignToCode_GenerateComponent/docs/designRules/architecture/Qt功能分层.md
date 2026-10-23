@@ -63,3 +63,10 @@ Qt 基类映射 → Z_* .h/.cpp
 ## 维护原则
 
 组件公共行为和公共视觉修改 GenerateComponent。页面结构和页面局部样式修改 GenerateLayout。展示页面修改 ComponentLab。三者通过发布 SDK 连接。
+
+## 基础 SDK 发布范围
+
+基础 SDK 的发布边界、包目录合同、Token 视觉边界和验收门禁以
+[基础 Qt 组件 SDK 稳定化与迁移规则](基础Qt组件SDK稳定化与迁移规则.md) 为准。
+
+本轮仅发布 `Q* → commonWidget::Z_*` 的基础包装层；复合、自绘、页面型和实验性组件必须标为 `legacy-runtime`、`contract-only` 或 `planned`，不得混入基础 SDK 的公开安装内容。

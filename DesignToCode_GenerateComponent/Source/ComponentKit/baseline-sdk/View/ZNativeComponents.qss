@@ -1,0 +1,130 @@
+/*
+ * Baseline Qt-native profile: fixed QSS values, no runtime Token JSON or
+ * variable carrier.  Component-specific production profiles may replace this
+ * file through the normal GenerateComponent View/QSS compilation path.
+ */
+*[designSystemNative="true"] {
+    color: #191919;
+    font-family: "HarmonyOS Sans", "HarmonyOS Sans SC";
+    font-size: 14px;
+}
+
+*[designSystemNative="true"]:disabled {
+    color: #8A8A8A;
+}
+
+QPushButton[designSystemClass="commonWidget::Z_PushButton"],
+QToolButton[designSystemClass="commonWidget::Z_ToolButton"],
+QCommandLinkButton[designSystemClass="commonWidget::Z_CommandLinkButton"] {
+    min-height: 32px;
+    padding: 0 12px;
+    color: #FFFFFF;
+    background-color: #6235F7;
+    border: 1px solid #6235F7;
+    border-radius: 4px;
+}
+
+QPushButton[designSystemClass="commonWidget::Z_PushButton"]:hover,
+QToolButton[designSystemClass="commonWidget::Z_ToolButton"]:hover,
+QCommandLinkButton[designSystemClass="commonWidget::Z_CommandLinkButton"]:hover {
+    background-color: #7956F8;
+    border-color: #7956F8;
+}
+
+QPushButton[designSystemClass="commonWidget::Z_PushButton"]:disabled,
+QToolButton[designSystemClass="commonWidget::Z_ToolButton"]:disabled,
+QCommandLinkButton[designSystemClass="commonWidget::Z_CommandLinkButton"]:disabled {
+    color: #BBBBBB;
+    background-color: #EEEEEE;
+    border-color: #D9D9D9;
+}
+
+QLineEdit[designSystemClass="commonWidget::Z_LineEdit"],
+QSpinBox[designSystemClass="commonWidget::Z_SpinBox"],
+QDoubleSpinBox[designSystemClass="commonWidget::Z_DoubleSpinBox"],
+QComboBox[designSystemClass="commonWidget::Z_ComboBox"],
+QFontComboBox[designSystemClass="commonWidget::Z_FontComboBox"],
+QDateTimeEdit[designSystemClass="commonWidget::Z_DateTimeEdit"],
+QDateEdit[designSystemClass="commonWidget::Z_DateEdit"],
+QTimeEdit[designSystemClass="commonWidget::Z_TimeEdit"],
+QKeySequenceEdit[designSystemClass="commonWidget::Z_KeySequenceEdit"] {
+    min-height: 32px;
+    padding: 0 8px;
+    color: #191919;
+    background-color: #FFFFFF;
+    border: 1px solid #A7A7A7;
+    border-radius: 4px;
+}
+
+QLineEdit[designSystemClass="commonWidget::Z_LineEdit"]:focus,
+QSpinBox[designSystemClass="commonWidget::Z_SpinBox"]:focus,
+QDoubleSpinBox[designSystemClass="commonWidget::Z_DoubleSpinBox"]:focus,
+QComboBox[designSystemClass="commonWidget::Z_ComboBox"]:focus,
+QFontComboBox[designSystemClass="commonWidget::Z_FontComboBox"]:focus,
+QDateTimeEdit[designSystemClass="commonWidget::Z_DateTimeEdit"]:focus,
+QDateEdit[designSystemClass="commonWidget::Z_DateEdit"]:focus,
+QTimeEdit[designSystemClass="commonWidget::Z_TimeEdit"]:focus,
+QKeySequenceEdit[designSystemClass="commonWidget::Z_KeySequenceEdit"]:focus {
+    border-color: #6235F7;
+}
+
+QCheckBox[designSystemClass="commonWidget::Z_CheckBox"]::indicator,
+QRadioButton[designSystemClass="commonWidget::Z_RadioButton"]::indicator {
+    width: 16px;
+    height: 16px;
+    background-color: #FFFFFF;
+    border: 1px solid #A7A7A7;
+}
+
+QCheckBox[designSystemClass="commonWidget::Z_CheckBox"]::indicator {
+    border-radius: 4px;
+}
+
+QRadioButton[designSystemClass="commonWidget::Z_RadioButton"]::indicator {
+    border-radius: 8px;
+}
+
+QCheckBox[designSystemClass="commonWidget::Z_CheckBox"]::indicator:checked,
+QRadioButton[designSystemClass="commonWidget::Z_RadioButton"]::indicator:checked {
+    background-color: #6235F7;
+    border-color: #6235F7;
+}
+
+QCheckBox[designSystemClass="commonWidget::Z_CheckBox"]::indicator:indeterminate {
+    background-color: #6235F7;
+    border-color: #6235F7;
+    image: url(:/z-native/icons/checkbox-indeterminate.svg);
+}
+
+QProgressBar[designSystemClass="commonWidget::Z_ProgressBar"] {
+    min-height: 8px;
+    color: transparent;
+    background-color: #EEEEEE;
+    border: 0;
+    border-radius: 4px;
+}
+
+QProgressBar[designSystemClass="commonWidget::Z_ProgressBar"]::chunk {
+    background-color: #6235F7;
+    border-radius: 4px;
+}
+
+QAbstractItemView[designSystemNative="true"],
+QTextEdit[designSystemClass="commonWidget::Z_TextEdit"],
+QPlainTextEdit[designSystemClass="commonWidget::Z_PlainTextEdit"],
+QTextBrowser[designSystemClass="commonWidget::Z_TextBrowser"],
+QScrollArea[designSystemClass="commonWidget::Z_ScrollArea"],
+QGroupBox[designSystemClass="commonWidget::Z_GroupBox"],
+QFrame[designSystemClass="commonWidget::Z_Frame"] {
+    color: #191919;
+    background-color: #FFFFFF;
+    border: 1px solid #D9D9D9;
+    border-radius: 4px;
+}
+
+QTableView[designSystemClass="commonWidget::Z_TableView"]::item:selected,
+QTreeView[designSystemClass="commonWidget::Z_TreeView"]::item:selected,
+QListView[designSystemClass="commonWidget::Z_ListView"]::item:selected {
+    color: #191919;
+    background-color: #F3EFFF;
+}

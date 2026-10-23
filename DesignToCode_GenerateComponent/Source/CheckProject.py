@@ -2,6 +2,7 @@
 import json
 import argparse
 import hashlib
+import os
 from pathlib import Path
 import re
 import sys
@@ -33,6 +34,12 @@ def check_source():
         assert len({item[field] for item in native}) == len(native), field
     for item in native:
         assert item["sdkClass"] == "Z_" + item["qtClass"][1:], item
+    from ComponentKit.tools.check_base_sdk_scope import validate as validate_base_sdk_scope
+    from ComponentKit.tools.check_baseline_source_package import validate as validate_baseline_source_package
+    baseline = validate_base_sdk_scope()
+    baseline_package = validate_baseline_source_package()
+    assert baseline["status"] == "PASS"
+    assert baseline_package["status"] == "PASS"
     for path in SOURCE.rglob("*"):
         if path.is_file() and path.suffix in {".py", ".ps1", ".cpp", ".h", ".cmake", ".qrc"}:
             text = path.read_text(encoding="utf-8-sig").replace("\\", "/")
@@ -40,6 +47,9 @@ def check_source():
                 assert "/" + sibling + "/" not in text, (path, "sibling source dependency")
     return {"project": PROJECT.name, "mode": "source-only", "status": "PASS",
             "maintainedInputs": len(files), "nativeComponentContracts": len(native),
+            "baselineNativeComponentContracts": baseline["baselineNativeComponents"],
+            "deferredComponentContracts": baseline["deferredComponents"],
+            "baselineSourcePackage": baseline_package["status"],
             "sdkRequired": False}
 
 
@@ -180,43 +190,71 @@ def check():
     assert sdk_outputs == [sdk], ("unexpected SDK output", sdk_outputs)
     manifest = verify(sdk, configuration="Release", project=PROJECT)
     assert manifest["owner"] == PROJECT.name
-    assert manifest["tokenAuthority"] and manifest["componentAuthority"]
-    assert manifest["designComponentCatalog"] == "resources/mappings/design-component-catalog.json"
     assert (sdk / "include/MyDesignSystem/MyDesignSystem.h").is_file()
-    assert (sdk / "lib/GeneratedComponentSDK.lib").is_file()
-    assert (sdk / "resources/tokens/default").is_dir()
-    published_catalog = json.loads((
-        sdk / manifest["designComponentCatalog"]
-    ).read_text(encoding="utf-8"))
-    assert published_catalog == design_catalog
-    # ComponentLab Debug consumes the local sdk-debug companion.  Its V2 map
-    # must be byte-identical to the published map, otherwise the gallery can
-    # display stale bindings while the Release package is already corrected.
-    v2_map = sdk / "resources/mappings/figma-component-map-v2.json"
-    source_v2_map = WORK_SOURCE / "ComponentKit/design-assets/DesignSystem/config/figma-component-map-v2.json"
-    expected_hash = hashlib.sha256(source_v2_map.read_bytes()).hexdigest()
-    assert hashlib.sha256(v2_map.read_bytes()).hexdigest() == expected_hash
-    v2_document = json.loads(v2_map.read_text(encoding="utf-8"))
-    button = next(item for item in v2_document["components"] if item["componentId"] == "button")
-    button_padding = [
-        item for item in button["bindings"]
-        if item["variable"].endswith("slot/container/padding-block")
-    ]
-    assert len(button_padding) == 3
-    assert all(item["value"] == "semantic.layout.padding.block.none"
-               and item["status"] == "specified" for item in button_padding)
-    debug_sdk = PROJECT / "build/sdk-debug"
-    if debug_sdk.exists():
-        try:
-            verify(debug_sdk, configuration="Debug", project=PROJECT)
-            result["debugCompanion"] = "verified"
-        except (ValueError, OSError, KeyError) as error:
-            # An independently built Debug package cannot be repaired by copying
-            # two Release JSON files. Release acceptance does not certify Debug.
-            result["debugCompanion"] = "unverified: " + str(error)
+    if os.name == "nt":
+        assert (sdk / "lib/GeneratedComponentSDK.lib").is_file()
+    else:
+        assert (sdk / "lib/libGeneratedComponentSDK.so").is_file()
+    if manifest.get("packageKind") == "qt-native-baseline":
+        # The published migration package is intentionally smaller than the
+        # historical runtime: QSS is its visual authority; Token JSON and V2
+        # Figma maps must not appear in its consumer contract.
+        assert manifest["componentAuthority"] and not manifest["tokenAuthority"]
+        assert manifest["visualQssAuthority"] and not manifest["runtimeTokenJson"]
+        assert not manifest["legacyRuntime"]
+        assert (sdk / "include/MyDesignSystem/ZNativeComponents.h").is_file()
+        assert (sdk / "View/ZNativeComponents.qss").is_file()
+        assert (sdk / "View/z_native_components.qrc").is_file()
+        assert (sdk / "View/fonts/HarmonyOS_Sans.ttf").is_file()
+        assert (sdk / "View/fonts/HarmonyOS_Sans_SC.ttf").is_file()
+        assert (sdk / manifest["nativeScope"]).is_file()
+        assert manifest["nativeComponentCount"] == 59
+        assert not (sdk / "resources").exists()
+        published_scope = json.loads((sdk / manifest["nativeScope"]).read_text(encoding="utf-8"))
+        # The baseline SDK is published directly from the maintained source
+        # package, never from the historical generated full-runtime mirror.
+        source_scope = json.loads((SOURCE / "ComponentKit/component-definitions/base-sdk-scope.json").read_text(encoding="utf-8"))
+        assert published_scope == source_scope
+        assert len(published_scope["approvedQtClasses"]) == manifest["nativeComponentCount"]
+        result["sdkPackageKind"] = "qt-native-baseline"
+    else:
+        assert manifest["tokenAuthority"] and manifest["componentAuthority"]
+        assert manifest["designComponentCatalog"] == "resources/mappings/design-component-catalog.json"
+        assert (sdk / "resources/tokens/default").is_dir()
+        published_catalog = json.loads((
+            sdk / manifest["designComponentCatalog"]
+        ).read_text(encoding="utf-8"))
+        assert published_catalog == design_catalog
+        # ComponentLab Debug consumes the local sdk-debug companion.  Its V2 map
+        # must be byte-identical to the published map, otherwise the gallery can
+        # display stale bindings while the Release package is already corrected.
+        v2_map = sdk / "resources/mappings/figma-component-map-v2.json"
+        source_v2_map = WORK_SOURCE / "ComponentKit/design-assets/DesignSystem/config/figma-component-map-v2.json"
+        expected_hash = hashlib.sha256(source_v2_map.read_bytes()).hexdigest()
+        assert hashlib.sha256(v2_map.read_bytes()).hexdigest() == expected_hash
+        v2_document = json.loads(v2_map.read_text(encoding="utf-8"))
+        button = next(item for item in v2_document["components"] if item["componentId"] == "button")
+        button_padding = [
+            item for item in button["bindings"]
+            if item["variable"].endswith("slot/container/padding-block")
+        ]
+        assert len(button_padding) == 3
+        assert all(item["value"] == "semantic.layout.padding.block.none"
+                   and item["status"] == "specified" for item in button_padding)
+        debug_sdk = PROJECT / "build/sdk-debug"
+        if debug_sdk.exists():
+            try:
+                verify(debug_sdk, configuration="Debug", project=PROJECT)
+                result["debugCompanion"] = "verified"
+            except (ValueError, OSError, KeyError) as error:
+                # An independently built Debug package cannot be repaired by copying
+                # two Release JSON files. Release acceptance does not certify Debug.
+                result["debugCompanion"] = "unverified: " + str(error)
     assert not list(sdk.rglob("*.exe")) and not list(sdk.rglob("*.dll"))
     assert not (PROJECT / "build/dist").exists()
-    consumer_test = PROJECT / "docs/validation/SDKConsumerTest"
+    consumer_test = PROJECT / "docs/validation" / (
+        "BaselineNativeSDKConsumerTest" if manifest.get("packageKind") == "qt-native-baseline"
+        else "SDKConsumerTest")
     assert (consumer_test / "main.cpp").is_file()
     assert "#include <MyDesignSystem/MyDesignSystem.h>" in (consumer_test / "main.cpp").read_text(encoding="utf-8")
     assert "GeneratedComponentSDK::Components" in (consumer_test / "CMakeLists.txt").read_text(encoding="utf-8")
@@ -274,7 +312,7 @@ def check():
     result["engineeringGaps"] = statistics["engineeringGapCount"]
     result["sdkAuthority"] = "build/sdk"
     result["sdkMode"] = "sole-publisher"
-    result["sdkConsumerTest"] = "docs/validation/SDKConsumerTest"
+    result["sdkConsumerTest"] = str(consumer_test.relative_to(PROJECT)).replace("\\", "/")
     result["status"] = "PASS"
     return result
 

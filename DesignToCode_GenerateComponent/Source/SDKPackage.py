@@ -75,19 +75,39 @@ def shared_contract():
     return module
 
 
-def source_inventory(project):
+def source_inventory(project, package_kind=None):
     project = Path(project).resolve()
     if not (project / "Source").is_dir():
         raise ValueError("SDK_SOURCE_DIRECTORY_MISSING")
-    inputs = list((project / "Source").rglob("*"))
-    inputs += [project / relative for relative in (
-        "docs/designRules/design-system/component-traceability-manifest.json",
-        "docs/examples/MappingWorkbench/mapping/qt-component-map.json",
-        "docs/examples/MappingWorkbench/mapping/qt-native-catalog.json",
-        "docs/validation/SDKConsumerTest/CMakeLists.txt",
-        "docs/validation/SDKConsumerTest/main.cpp",
-        "docs/validation/SDKConsumerTest/Build.ps1",
-    )]
+    if package_kind == "qt-native-baseline":
+        # Do not make the native baseline package depend on the historical
+        # component compiler, mappings, or ComponentLab.  The inventory is
+        # deliberately the small physical package plus its scope contract and
+        # its independent consumer acceptance test.
+        inputs = list((project / "Source/ComponentKit/baseline-sdk").rglob("*"))
+        inputs += [project / relative for relative in (
+            "Source/ComponentKit/component-definitions/base-sdk-scope.json",
+            "Source/SDKPackage.py",
+            "Source/NativeTools.ps1",
+            "Source/Publish-BaselineNativeSDK.ps1",
+            "Source/ComponentKit/tools/check_base_sdk_scope.py",
+            "Source/ComponentKit/tools/check_baseline_source_package.py",
+            "docs/validation/BaselineNativeSDKConsumerTest/CMakeLists.txt",
+            "docs/validation/BaselineNativeSDKConsumerTest/main.cpp",
+            "docs/validation/BaselineNativeSDKConsumerTest/Build.ps1",
+            "docs/validation/BaselineNativeSourceConsumerTest/CMakeLists.txt",
+            "docs/validation/BaselineNativeSourceConsumerTest/Build.ps1",
+        )]
+    else:
+        inputs = list((project / "Source").rglob("*"))
+        inputs += [project / relative for relative in (
+            "docs/designRules/design-system/component-traceability-manifest.json",
+            "docs/examples/MappingWorkbench/mapping/qt-component-map.json",
+            "docs/examples/MappingWorkbench/mapping/qt-native-catalog.json",
+            "docs/validation/SDKConsumerTest/CMakeLists.txt",
+            "docs/validation/SDKConsumerTest/main.cpp",
+            "docs/validation/SDKConsumerTest/Build.ps1",
+        )]
     files = {}
     for path in sorted(inputs):
         if "__pycache__" in path.parts or path.suffix == ".pyc":
@@ -107,8 +127,8 @@ def fingerprint(files):
     return digest(json.dumps(files, sort_keys=True, separators=(",", ":")).encode("utf-8"))
 
 
-def snapshot(project):
-    files = source_inventory(project)
+def snapshot(project, package_kind=None):
+    files = source_inventory(project, package_kind)
     source_hash = fingerprint(files)
     def git(*args):
         try:
@@ -119,6 +139,7 @@ def snapshot(project):
     now = datetime.now(timezone.utc)
     return {
         "sourceFingerprint": source_hash, "sourceFiles": files,
+        "packageKind": package_kind or "legacy-full-runtime",
         "git": {"commit": git("rev-parse", "HEAD"),
                 "dirty": bool(git("status", "--porcelain", "--", ".")),
                 "available": git("rev-parse", "--is-inside-work-tree") == "true"},
@@ -143,7 +164,8 @@ def package_files(sdk):
 def verify(sdk, configuration="Release", project=None):
     sdk = Path(sdk).absolute()
     manifest = shared_contract().verify(sdk, configuration)
-    if project is not None and fingerprint(source_inventory(project)) != manifest["sourceFingerprint"]:
+    if project is not None and fingerprint(source_inventory(
+            project, manifest.get("packageKind"))) != manifest["sourceFingerprint"]:
         raise ValueError("SDK_STALE_SOURCE: rebuild from current maintained inputs")
     return manifest
 
@@ -151,9 +173,16 @@ def verify(sdk, configuration="Release", project=None):
 def stamp(sdk, snapshot_path, qt_root, cmake, build_directory):
     sdk = build_path(sdk)
     baseline = read_json(snapshot_path)
-    if fingerprint(source_inventory(PROJECT)) != baseline["sourceFingerprint"]:
+    package_kind = baseline.get("packageKind")
+    if fingerprint(source_inventory(PROJECT, package_kind)) != baseline["sourceFingerprint"]:
         raise ValueError("SDK_SOURCE_CHANGED_DURING_BUILD")
-    qmake = Path(qt_root) / "bin/qmake.exe"
+    linux = os.name != "nt"
+    if linux:
+        qmake = os.environ.get("QMAKE_EXE") or shutil.which("qmake")
+        if not qmake:
+            raise ValueError("SDK_QMAKE_MISSING: install Qt 5.15 development tools before publishing.")
+    else:
+        qmake = Path(qt_root) / "bin/qmake.exe"
     qt_version = subprocess.check_output([str(qmake), "-query", "QT_VERSION"]).decode().strip()
     cmake_version = subprocess.check_output([cmake, "--version"]).decode().splitlines()[0]
     cache = (Path(build_directory) / "CMakeCache.txt").read_text(encoding="utf-8")
@@ -162,11 +191,19 @@ def stamp(sdk, snapshot_path, qt_root, cmake, build_directory):
         if not match:
             raise ValueError("SDK_BUILD_CONFIGURATION_MISSING: " + name)
         return match.group(1).strip()
-    if cache_setting("CMAKE_BUILD_TYPE") != "Release" or \
-            cache_setting("CMAKE_MSVC_RUNTIME_LIBRARY") != "MultiThreadedDLL":
+    if cache_setting("CMAKE_BUILD_TYPE") != "Release":
         raise ValueError("SDK_BUILD_CONFIGURATION_MISMATCH")
-    if Path(cache_setting("Qt5Core_DIR")).resolve() != (Path(qt_root) / "lib/cmake/Qt5Core").resolve():
-        raise ValueError("SDK_CACHED_QT_ROOT_MISMATCH: configure a fresh build directory")
+    if linux:
+        expected_qt = (Path(qt_root) / "lib/cmake/Qt5Core").resolve()
+        if not expected_qt.is_dir():
+            expected_qt = (Path(qt_root) / "cmake/Qt5Core").resolve()
+        if Path(cache_setting("Qt5Core_DIR")).resolve() != expected_qt:
+            raise ValueError("SDK_CACHED_QT_ROOT_MISMATCH: configure a fresh build directory")
+    else:
+        if cache_setting("CMAKE_MSVC_RUNTIME_LIBRARY") != "MultiThreadedDLL":
+            raise ValueError("SDK_BUILD_CONFIGURATION_MISMATCH")
+        if Path(cache_setting("Qt5Core_DIR")).resolve() != (Path(qt_root) / "lib/cmake/Qt5Core").resolve():
+            raise ValueError("SDK_CACHED_QT_ROOT_MISMATCH: configure a fresh build directory")
     compiler_files = sorted(Path(build_directory).glob("CMakeFiles/*/CMakeCXXCompiler.cmake"))
     if not compiler_files:
         raise ValueError("SDK_COMPILER_METADATA_MISSING")
@@ -177,18 +214,33 @@ def stamp(sdk, snapshot_path, qt_root, cmake, build_directory):
             raise ValueError("SDK_COMPILER_METADATA_MISSING: " + name)
         return match.group(1).strip()
     compiler_id = cmake_setting("CMAKE_CXX_COMPILER_ID")
-    architecture = cmake_setting("CMAKE_CXX_COMPILER_ARCHITECTURE_ID")
-    if compiler_id != "MSVC" or architecture.lower() not in ("x64", "amd64"):
-        raise ValueError("SDK_REQUIRES_MSVC_X64")
+    if linux:
+        import platform
+        architecture = platform.machine().lower()
+    else:
+        architecture = cmake_setting("CMAKE_CXX_COMPILER_ARCHITECTURE_ID")
+    if linux:
+        if compiler_id != "GNU" or architecture.lower() not in ("x86_64", "amd64"):
+            raise ValueError("SDK_REQUIRES_GNU_X86_64")
+        toolchain = {
+            "configuration": "Release", "architecture": "x86_64", "crt": "gnu",
+            "qtVersion": qt_version, "pythonVersion": ".".join(map(str, sys.version_info[:3])),
+            "cmakeVersion": cmake_version, "compilerId": compiler_id,
+            "compilerVersion": cmake_setting("CMAKE_CXX_COMPILER_VERSION"),
+        }
+    else:
+        if compiler_id != "MSVC" or architecture.lower() not in ("x64", "amd64"):
+            raise ValueError("SDK_REQUIRES_MSVC_X64")
+        toolchain = {
+            "configuration": "Release", "architecture": "x64", "crt": "MD",
+            "qtVersion": qt_version, "pythonVersion": ".".join(map(str, sys.version_info[:3])),
+            "cmakeVersion": cmake_version, "compilerId": compiler_id,
+            "compilerVersion": cmake_setting("CMAKE_CXX_COMPILER_VERSION"),
+        }
     manifest = read_json(sdk / MANIFEST)
     manifest.update(baseline)
     manifest["schemaVersion"] = 2
-    manifest["toolchain"] = {
-        "configuration": "Release", "architecture": "x64", "crt": "MD",
-        "qtVersion": qt_version, "pythonVersion": ".".join(map(str, sys.version_info[:3])),
-        "cmakeVersion": cmake_version, "compilerId": compiler_id,
-        "compilerVersion": cmake_setting("CMAKE_CXX_COMPILER_VERSION"),
-    }
+    manifest["toolchain"] = toolchain
     version_file = sdk / "cmake/GeneratedComponentSDKConfigVersion.cmake"
     text = version_file.read_text(encoding="utf-8-sig")
     text = re.sub(r'set\(PACKAGE_VERSION "[^"]+"\)',
@@ -258,6 +310,7 @@ def main():
     commands = parser.add_subparsers(dest="command", required=True)
     fp = commands.add_parser("fingerprint")
     fp.add_argument("--project-root", type=Path, default=PROJECT)
+    fp.add_argument("--package-kind", choices=("qt-native-baseline", "legacy-full-runtime"))
     check = commands.add_parser("verify")
     check.add_argument("--sdk", type=Path, required=True)
     check.add_argument("--configuration", choices=("Release", "Debug"), default="Release")
@@ -272,7 +325,7 @@ def main():
     if sys.version_info[:2] != (3, 9):
         parser.error("Python 3.9 is required; do not update the installed environment.")
     if args.command == "fingerprint":
-        result = snapshot(args.project_root)
+        result = snapshot(args.project_root, args.package_kind)
     elif args.command == "verify":
         manifest = verify(args.sdk, args.configuration, args.project_root)
         result = {"status": "PASS", "releaseId": manifest["releaseId"], "sourceFingerprint": manifest["sourceFingerprint"]}

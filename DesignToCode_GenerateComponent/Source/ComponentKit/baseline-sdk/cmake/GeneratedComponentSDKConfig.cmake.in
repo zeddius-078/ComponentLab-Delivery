@@ -1,0 +1,20 @@
+@PACKAGE_INIT@
+
+include(CMakeFindDependencyMacro)
+find_dependency(Qt5 5.15 COMPONENTS Core Gui Widgets)
+
+# This publication is built with the MSVC Release CRT (/MD).  A Debug
+# consumer must use a separately published, independently verified /MDd
+# baseline package; never silently link the two CRT modes together.
+if(CMAKE_BUILD_TYPE STREQUAL "Debug")
+    message(FATAL_ERROR
+        "GeneratedComponentSDK baseline package is Release /MD only; a verified Debug /MDd package is required for Debug.")
+endif()
+
+include("${CMAKE_CURRENT_LIST_DIR}/GeneratedComponentSDKTargets.cmake")
+
+if(MSVC AND MSVC_VERSION GREATER_EQUAL 1951 AND Qt5Core_VERSION VERSION_EQUAL 5.15.2)
+    set_property(TARGET GeneratedComponentSDK::Components APPEND PROPERTY
+        INTERFACE_COMPILE_OPTIONS
+        "/FI${PACKAGE_PREFIX_DIR}/include/MyDesignSystem/qt5152_msvc_compat.h")
+endif()

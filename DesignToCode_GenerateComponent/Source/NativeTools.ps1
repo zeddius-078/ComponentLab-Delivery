@@ -48,7 +48,7 @@ function Resolve-ProjectPython {
         $candidate = $candidate.Trim()
     }
     if (-not (Test-Path -LiteralPath $candidate -PathType Leaf)) { throw 'PYTHON39_EXECUTABLE_MISSING' }
-    $version = & $candidate -B -c 'import sys; print("%d.%d" % sys.version_info[:2])'
+    $version = & $candidate -B -c 'import sys; print(''%d.%d'' % sys.version_info[:2])'
     if ($LASTEXITCODE -ne 0 -or $version -ne '3.9') { throw 'PYTHON39_REQUIRED: refusing a different interpreter version.' }
     return (Resolve-Path -LiteralPath $candidate).Path
 }

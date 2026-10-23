@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "package": "GeneratedComponentSDK",
+  "version": "2.0.0-development",
+  "publicationState": "baseline-native-source-package",
+  "scope": "../../component-definitions/base-sdk-scope.json",
+  "sourceConsumption": "add_subdirectory(<ComponentPackage>)",
+  "binaryConsumption": "find_package(GeneratedComponentSDK CONFIG REQUIRED)",
+  "publicHeader": "Include/MyDesignSystem/MyDesignSystem.h",
+  "resourceEntry": "View/z_native_components.qrc",
+  "resourceInitializer": "commonWidget::initializeNativeComponentResources",
+  "styleEntry": "commonWidget::nativeComponentStyleSheet",
+  "runtimeTokenJson": false,
+  "legacyRuntime": false,
+  "dependencies": {
+    "Qt": ">= 5.15 < 6",
+    "modules": ["Core", "Gui", "Widgets"]
+  },
+  "licenses": [
+    "Qt-LICENSE.txt: supplied by the consuming Qt distribution",
+    "View/fonts/LICENSE.txt: HarmonyOS Sans license"
+  ],
+  "releaseManifest": {
+    "required": true,
+    "generatedAtPublish": true,
+    "requiredFields": ["files.path", "files.sha256", "files.bytes", "toolchain", "scopeHash"]
+  }
+}
