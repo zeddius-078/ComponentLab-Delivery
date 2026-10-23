@@ -6,19 +6,25 @@
 #include <QDate>
 #include <QDir>
 #include <QFile>
-#include <QFormLayout>
-#include <QGridLayout>
+#include <QHash>
 #include <QHeaderView>
+#include <QGraphicsScene>
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QLabel>
+#include <QListWidget>
+#include <QMenuBar>
 #include <QSaveFile>
 #include <QScrollArea>
+#include <QStandardItemModel>
 #include <QStackedWidget>
 #include <QStyle>
 #include <QStyleOptionButton>
 #include <QTableWidget>
 #include <QTabWidget>
+#include <QTextEdit>
+#include <QTimer>
+#include <QToolBar>
 #include <QTreeWidget>
 #include <QVBoxLayout>
 
@@ -72,7 +78,7 @@ void addProperty(QTreeWidgetItem* parent, const QString& name, const QVariant& v
     new QTreeWidgetItem(parent, {name, value.toString()});
 }
 
-void appendObjectTree(QTreeWidgetItem* parent, QWidget* widget) {
+void appendObjectTree(QTreeWidgetItem* parent, QWidget* widget, int depth = 0) {
     if (!widget)
         return;
     const QString name = widget->objectName().isEmpty()
@@ -80,29 +86,284 @@ void appendObjectTree(QTreeWidgetItem* parent, QWidget* widget) {
                              : widget->objectName();
     auto* item = new QTreeWidgetItem(parent,
                                      {name, QString::fromLatin1(widget->metaObject()->className())});
-    item->setExpanded(true);
-    addProperty(item, QStringLiteral("enabled"), widget->isEnabled());
-    addProperty(item, QStringLiteral("visible"), widget->isVisible());
-    for (const auto& property : {"nativeQtClass", "designSystemClass"}) {
-        const QVariant value = widget->property(property);
-        if (value.isValid())
-            addProperty(item, QString::fromLatin1(property), value);
+    item->setExpanded(depth == 0);
+    if (depth == 0) {
+        addProperty(item, QStringLiteral("geometry"),
+                    QStringLiteral("%1 × %2").arg(widget->width()).arg(widget->height()));
+        addProperty(item, QStringLiteral("enabled"), widget->isEnabled());
+        addProperty(item, QStringLiteral("visible"), widget->isVisible());
+        for (const auto& property : {"nativeQtClass", "designSystemClass"}) {
+            const QVariant value = widget->property(property);
+            if (value.isValid())
+                addProperty(item, QString::fromLatin1(property), value);
+        }
+        if (auto* button = qobject_cast<QAbstractButton*>(widget))
+            addProperty(item, QStringLiteral("text"), button->text());
+        if (auto* checkbox = qobject_cast<QCheckBox*>(widget))
+            addProperty(item, QStringLiteral("checkState"), checkbox->checkState());
     }
+    if (depth >= 2)
+        return;
     for (auto* child : widget->findChildren<QWidget*>(QString(), Qt::FindDirectChildrenOnly))
-        appendObjectTree(item, child);
+        appendObjectTree(item, child, depth + 1);
 }
 
-QColor indeterminateDashPixel(QMainWindow* window) {
-    auto* checkbox = window->findChild<commonWidget::Z_CheckBox*>(
-        QStringLiteral("baselineIndeterminateCheckbox"));
-    if (!checkbox || checkbox->checkState() != Qt::PartiallyChecked)
-        return {};
-    QStyleOptionButton option;
-    option.initFrom(checkbox);
-    option.state |= QStyle::State_NoChange;
-    const QRect indicator = checkbox->style()->subElementRect(
-        QStyle::SE_CheckBoxIndicator, &option, checkbox);
-    return checkbox->grab().toImage().pixelColor(indicator.center());
+QString categoryFor(const QString& qtClass) {
+    static const QHash<QString, QString> categories{
+        {QStringLiteral("QMenu"), QStringLiteral("Navigation / 导航")},
+        {QStringLiteral("QMenuBar"), QStringLiteral("Navigation / 导航")},
+        {QStringLiteral("QToolBar"), QStringLiteral("Navigation / 导航")},
+        {QStringLiteral("QToolBox"), QStringLiteral("Navigation / 导航")},
+        {QStringLiteral("QTabWidget"), QStringLiteral("Navigation / 导航")},
+        {QStringLiteral("QDockWidget"), QStringLiteral("Navigation / 导航")},
+        {QStringLiteral("QMdiArea"), QStringLiteral("Navigation / 导航")},
+        {QStringLiteral("QMdiSubWindow"), QStringLiteral("Navigation / 导航")},
+        {QStringLiteral("QWizard"), QStringLiteral("Navigation / 导航")},
+        {QStringLiteral("QWizardPage"), QStringLiteral("Navigation / 导航")},
+        {QStringLiteral("QLabel"), QStringLiteral("Display / 展示")},
+        {QStringLiteral("QLCDNumber"), QStringLiteral("Display / 展示")},
+        {QStringLiteral("QProgressBar"), QStringLiteral("Display / 展示")},
+        {QStringLiteral("QTextBrowser"), QStringLiteral("Display / 展示")},
+        {QStringLiteral("QGraphicsView"), QStringLiteral("Display / 展示")},
+        {QStringLiteral("QCalendarWidget"), QStringLiteral("Display / 展示")},
+        {QStringLiteral("QOpenGLWidget"), QStringLiteral("Display / 展示")},
+        {QStringLiteral("QPushButton"), QStringLiteral("Actions / 操作")},
+        {QStringLiteral("QToolButton"), QStringLiteral("Actions / 操作")},
+        {QStringLiteral("QCommandLinkButton"), QStringLiteral("Actions / 操作")},
+        {QStringLiteral("QDialogButtonBox"), QStringLiteral("Actions / 操作")},
+        {QStringLiteral("QLineEdit"), QStringLiteral("Input / 输入")},
+        {QStringLiteral("QSpinBox"), QStringLiteral("Input / 输入")},
+        {QStringLiteral("QDoubleSpinBox"), QStringLiteral("Input / 输入")},
+        {QStringLiteral("QSlider"), QStringLiteral("Input / 输入")},
+        {QStringLiteral("QScrollBar"), QStringLiteral("Input / 输入")},
+        {QStringLiteral("QDial"), QStringLiteral("Input / 输入")},
+        {QStringLiteral("QDateTimeEdit"), QStringLiteral("Input / 输入")},
+        {QStringLiteral("QDateEdit"), QStringLiteral("Input / 输入")},
+        {QStringLiteral("QTimeEdit"), QStringLiteral("Input / 输入")},
+        {QStringLiteral("QKeySequenceEdit"), QStringLiteral("Input / 输入")},
+        {QStringLiteral("QTextEdit"), QStringLiteral("Input / 输入")},
+        {QStringLiteral("QPlainTextEdit"), QStringLiteral("Input / 输入")},
+        {QStringLiteral("QComboBox"), QStringLiteral("Selection / 选择")},
+        {QStringLiteral("QFontComboBox"), QStringLiteral("Selection / 选择")},
+        {QStringLiteral("QRadioButton"), QStringLiteral("Selection / 选择")},
+        {QStringLiteral("QCheckBox"), QStringLiteral("Selection / 选择")},
+        {QStringLiteral("QWidget"), QStringLiteral("Container / 容器")},
+        {QStringLiteral("QFrame"), QStringLiteral("Container / 容器")},
+        {QStringLiteral("QGroupBox"), QStringLiteral("Container / 容器")},
+        {QStringLiteral("QScrollArea"), QStringLiteral("Container / 容器")},
+        {QStringLiteral("QStackedWidget"), QStringLiteral("Container / 容器")},
+        {QStringLiteral("QSplitter"), QStringLiteral("Container / 容器")},
+        {QStringLiteral("QListView"), QStringLiteral("Data Views / 数据视图")},
+        {QStringLiteral("QTreeView"), QStringLiteral("Data Views / 数据视图")},
+        {QStringLiteral("QTableView"), QStringLiteral("Data Views / 数据视图")},
+        {QStringLiteral("QColumnView"), QStringLiteral("Data Views / 数据视图")},
+        {QStringLiteral("QUndoView"), QStringLiteral("Data Views / 数据视图")},
+        {QStringLiteral("QListWidget"), QStringLiteral("Data Views / 数据视图")},
+        {QStringLiteral("QTreeWidget"), QStringLiteral("Data Views / 数据视图")},
+        {QStringLiteral("QTableWidget"), QStringLiteral("Data Views / 数据视图")},
+        {QStringLiteral("QStatusBar"), QStringLiteral("Feedback / 反馈")},
+    };
+    if (categories.contains(qtClass))
+        return categories.value(qtClass);
+    return QStringLiteral("Window & System / 窗口与系统");
+}
+
+bool isFloatingType(const QString& qtClass) {
+    return qtClass == QStringLiteral("QMenu") || qtClass == QStringLiteral("QWizard") ||
+           qtClass.endsWith(QStringLiteral("Dialog")) ||
+           qtClass == QStringLiteral("QMessageBox") ||
+           qtClass == QStringLiteral("QProgressDialog");
+}
+
+QWidget* instantiate(const ScopeEntry& entry, QWidget* parent) {
+    const QString sdkClass = QString::fromLatin1(entry.sdkClass);
+#define INSTANTIATE(QT_CLASS, SDK_CLASS) \
+    if (sdkClass == QStringLiteral("commonWidget::" #SDK_CLASS)) \
+        return new commonWidget::SDK_CLASS(parent);
+    Z_NATIVE_COMPONENT_TYPES(INSTANTIATE)
+#undef INSTANTIATE
+    return nullptr;
+}
+
+void configureSpecimen(QWidget* specimen, const QString& qtClass) {
+    specimen->setObjectName(QStringLiteral("componentRoot_%1").arg(qtClass));
+    if (auto* button = qobject_cast<QAbstractButton*>(specimen)) {
+        button->setText(qtClass);
+        if (auto* checkbox = qobject_cast<QCheckBox*>(button)) {
+            checkbox->setText(QObject::tr("检查项目"));
+            checkbox->setTristate(true);
+        }
+    }
+    if (auto* edit = qobject_cast<QLineEdit*>(specimen))
+        edit->setPlaceholderText(QObject::tr("输入批次或工单编号"));
+    if (auto* combo = qobject_cast<QComboBox*>(specimen))
+        combo->addItems({QObject::tr("自动"), QObject::tr("手动"), QObject::tr("维护")});
+    if (auto* spin = qobject_cast<QSpinBox*>(specimen)) {
+        spin->setRange(0, 100);
+        spin->setValue(42);
+    }
+    if (auto* slider = qobject_cast<QAbstractSlider*>(specimen)) {
+        slider->setOrientation(Qt::Horizontal);
+        slider->setRange(0, 100);
+        slider->setValue(64);
+    }
+    if (auto* progress = qobject_cast<QProgressBar*>(specimen)) {
+        progress->setValue(68);
+        progress->setFormat(QStringLiteral("%p%"));
+    }
+    if (auto* text = qobject_cast<QLabel*>(specimen))
+        text->setText(QObject::tr("设备状态：运行中"));
+    if (auto* table = qobject_cast<QTableWidget*>(specimen)) {
+        table->setColumnCount(2);
+        table->setRowCount(2);
+        table->setHorizontalHeaderLabels({QObject::tr("参数"), QObject::tr("值")});
+        table->setItem(0, 0, new QTableWidgetItem(QObject::tr("状态")));
+        table->setItem(0, 1, new QTableWidgetItem(QObject::tr("运行")));
+    }
+    if (auto* list = qobject_cast<QListWidget*>(specimen))
+        list->addItems({QObject::tr("设备 01"), QObject::tr("设备 02"), QObject::tr("设备 03")});
+    if (auto* tree = qobject_cast<QTreeWidget*>(specimen)) {
+        tree->setHeaderLabel(QObject::tr("设备组"));
+        new QTreeWidgetItem(tree, {QStringLiteral("ETCH-01")});
+    }
+    if (auto* view = qobject_cast<QAbstractItemView*>(specimen)) {
+        if (!qobject_cast<QListWidget*>(view) && !qobject_cast<QTreeWidget*>(view) &&
+            !qobject_cast<QTableWidget*>(view)) {
+            auto* model = new QStandardItemModel(3, 2, view);
+            model->setHorizontalHeaderLabels({QObject::tr("设备"), QObject::tr("状态")});
+            for (int row = 0; row < 3; ++row) {
+                model->setItem(row, 0, new QStandardItem(QObject::tr("设备 %1").arg(row + 1)));
+                model->setItem(row, 1, new QStandardItem(QObject::tr("运行")));
+            }
+            view->setModel(model);
+        }
+    }
+    if (auto* tabs = qobject_cast<QTabWidget*>(specimen)) {
+        tabs->addTab(new QLabel(QObject::tr("页签内容"), tabs), QObject::tr("概览"));
+        tabs->addTab(new QLabel(QObject::tr("第二页"), tabs), QObject::tr("详情"));
+    }
+    if (auto* group = qobject_cast<QGroupBox*>(specimen))
+        group->setTitle(QObject::tr("组件分组"));
+    if (auto* area = qobject_cast<QScrollArea*>(specimen)) {
+        auto* content = new QLabel(QObject::tr("滚动内容\n项目 1\n项目 2\n项目 3\n项目 4\n项目 5"), area);
+        area->setWidget(content);
+    }
+    if (auto* toolbox = qobject_cast<QToolBox*>(specimen)) {
+        toolbox->addItem(new QLabel(QObject::tr("概览内容"), toolbox), QObject::tr("概览"));
+        toolbox->addItem(new QLabel(QObject::tr("参数内容"), toolbox), QObject::tr("参数"));
+    }
+    if (auto* stack = qobject_cast<QStackedWidget*>(specimen))
+        stack->addWidget(new QLabel(QObject::tr("内容区域"), stack));
+    if (auto* splitter = qobject_cast<QSplitter*>(specimen)) {
+        splitter->addWidget(new QLabel(QObject::tr("导航"), splitter));
+        splitter->addWidget(new QLabel(QObject::tr("内容"), splitter));
+    }
+    if (auto* bar = qobject_cast<QMenuBar*>(specimen))
+        bar->addMenu(QObject::tr("文件"))->addAction(QObject::tr("新建"));
+    if (auto* bar = qobject_cast<QToolBar*>(specimen))
+        bar->addAction(QObject::tr("刷新"));
+    if (auto* bar = qobject_cast<QStatusBar*>(specimen))
+        bar->showMessage(QObject::tr("运行中"));
+    if (auto* view = qobject_cast<QGraphicsView*>(specimen)) {
+        auto* scene = new QGraphicsScene(view);
+        scene->addText(QObject::tr("图形视图"));
+        view->setScene(scene);
+    }
+    if (auto* calendar = qobject_cast<QCalendarWidget*>(specimen))
+        calendar->setSelectedDate(QDate(2026, 9, 23));
+    if (auto* box = qobject_cast<QDialogButtonBox*>(specimen))
+        box->setStandardButtons(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
+    if (auto* date = qobject_cast<QDateTimeEdit*>(specimen))
+        date->setDateTime(QDateTime(QDate(2026, 9, 23), QTime(9, 30)));
+    if (auto* text = qobject_cast<QTextEdit*>(specimen))
+        text->setPlainText(QObject::tr("工艺记录：等待设备确认。"));
+    if (auto* mdi = qobject_cast<QMdiArea*>(specimen)) {
+        auto* child = new QLabel(QObject::tr("文档内容"), mdi);
+        mdi->addSubWindow(child)->show();
+    }
+}
+
+SectionPage createComponentSection(const ScopeEntry& entry, QWidget* parent) {
+    const QString qtClass = QString::fromLatin1(entry.qtClass);
+    const QString sdkClass = QString::fromLatin1(entry.sdkClass);
+    const bool floating = isFloatingType(qtClass);
+    const bool requiresGraphics = qtClass == QStringLiteral("QOpenGLWidget");
+    auto* appearanceContent = new QWidget;
+    auto* appearanceLayout = new QVBoxLayout(appearanceContent);
+    appearanceLayout->setContentsMargins(20, 20, 20, 28);
+    appearanceLayout->setSpacing(16);
+    auto* appearanceCard = card(qtClass + QObject::tr(" / 外观"),
+                                sdkClass + QObject::tr(" · SDK 真实实例"), appearanceContent);
+    if (floating) {
+        auto* openButton = new commonWidget::Z_PushButton(QObject::tr("打开 %1").arg(qtClass), appearanceCard);
+        auto* popup = instantiate(entry, appearanceCard);
+        configureSpecimen(popup, qtClass);
+        popup->setWindowFlags(Qt::Dialog);
+        QObject::connect(openButton, &QPushButton::clicked, popup, [popup] { popup->show(); });
+        static_cast<QVBoxLayout*>(appearanceCard->layout())->addWidget(openButton, 0, Qt::AlignLeft);
+    } else if (requiresGraphics) {
+        static_cast<QVBoxLayout*>(appearanceCard->layout())->addWidget(
+            label(QObject::tr("OpenGL 视口需要图形上下文；离线截图环境不创建上下文。"),
+                  QStringLiteral("baselinePageDescription"), appearanceCard));
+    } else {
+        auto* specimen = instantiate(entry, appearanceCard);
+        configureSpecimen(specimen, qtClass);
+        specimen->setWindowFlags(Qt::Widget);
+        const bool spacious = qobject_cast<QAbstractItemView*>(specimen) ||
+                              qobject_cast<QCalendarWidget*>(specimen) ||
+            qobject_cast<QTextEdit*>(specimen) || qobject_cast<QMdiArea*>(specimen) ||
+            qobject_cast<QTabWidget*>(specimen) || qobject_cast<QGraphicsView*>(specimen) ||
+            qobject_cast<QSplitter*>(specimen) || qobject_cast<QScrollArea*>(specimen);
+        if (spacious)
+            specimen->setMinimumHeight(190);
+        else
+            specimen->setMaximumWidth(qtClass == QStringLiteral("QSlider") ? 280 : 260);
+        static_cast<QVBoxLayout*>(appearanceCard->layout())->addWidget(
+            specimen, 0, spacious ? Qt::Alignment{} : Qt::AlignLeft);
+    }
+    appearanceLayout->addWidget(appearanceCard);
+    appearanceLayout->addStretch();
+
+    auto* stateContent = new QWidget;
+    auto* stateLayout = new QVBoxLayout(stateContent);
+    stateLayout->setContentsMargins(20, 20, 20, 28);
+    auto* stateCard = card(qtClass + QObject::tr(" / 分组与状态"),
+                           QObject::tr("此页只展示当前包装类的 Qt 原生状态。"), stateContent);
+    if (floating || requiresGraphics) {
+        static_cast<QVBoxLayout*>(stateCard->layout())->addWidget(
+            label(floating ? QObject::tr("窗口状态请使用外观页的打开操作查看。")
+                           : QObject::tr("此状态需要可用的 OpenGL 图形上下文。"),
+                  QStringLiteral("baselinePageDescription"), stateCard));
+    } else {
+        auto* row = new QHBoxLayout;
+        auto* normal = instantiate(entry, stateCard);
+        auto* disabled = instantiate(entry, stateCard);
+        configureSpecimen(normal, qtClass);
+        configureSpecimen(disabled, qtClass);
+        disabled->setEnabled(false);
+        normal->setMaximumWidth(260);
+        disabled->setMaximumWidth(260);
+        row->addWidget(normal, 0, Qt::AlignLeft);
+        row->addSpacing(32);
+        row->addWidget(disabled, 0, Qt::AlignLeft);
+        row->addStretch();
+        static_cast<QVBoxLayout*>(stateCard->layout())->addWidget(
+            label(QObject::tr("默认 / 可交互"), QStringLiteral("baselinePageDescription"), stateCard));
+        static_cast<QVBoxLayout*>(stateCard->layout())->addLayout(row);
+        if (auto* checkbox = qobject_cast<QCheckBox*>(normal)) {
+            auto* mixed = instantiate(entry, stateCard);
+            auto* mixedCheckbox = qobject_cast<QCheckBox*>(mixed);
+            mixedCheckbox->setTristate(true);
+            mixedCheckbox->setCheckState(Qt::PartiallyChecked);
+            mixedCheckbox->setText(QObject::tr("半选"));
+            mixedCheckbox->setObjectName(QStringLiteral("baselineIndeterminateCheckbox"));
+            static_cast<QVBoxLayout*>(stateCard->layout())->addWidget(mixed);
+            checkbox->setChecked(true);
+        }
+    }
+    stateLayout->addWidget(stateCard);
+    stateLayout->addStretch();
+    return {scroll(appearanceContent, parent), scroll(stateContent, parent)};
 }
 
 QWidget* wrapPage(const QString& kicker, const QString& title, const QString& description,
@@ -122,278 +383,6 @@ QWidget* wrapPage(const QString& kicker, const QString& title, const QString& de
     tabs->addTab(section.state, QObject::tr("分组与状态"));
     layout->addWidget(tabs, 1);
     return host;
-}
-
-SectionPage createActionSection(QWidget* parent) {
-    auto* appearanceContent = new QWidget;
-    auto* appearance = new QVBoxLayout(appearanceContent);
-    appearance->setContentsMargins(20, 20, 20, 28);
-    appearance->setSpacing(16);
-    auto* buttons = card(QObject::tr("Button / 按钮"),
-                         QObject::tr("所有样例均由已发布的 Z_* 公共头文件实例化。"),
-                         appearanceContent);
-    auto* buttonRow = new QHBoxLayout;
-    buttonRow->setSpacing(12);
-    auto* primary = new commonWidget::Z_PushButton(QObject::tr("Primary action"), buttons);
-    primary->setObjectName(QStringLiteral("baselinePrimaryButton"));
-    auto* secondary = new commonWidget::Z_PushButton(QObject::tr("Secondary action"), buttons);
-    secondary->setObjectName(QStringLiteral("baselineSecondaryButton"));
-    auto* tool = new commonWidget::Z_ToolButton(buttons);
-    tool->setText(QObject::tr("More"));
-    tool->setObjectName(QStringLiteral("baselineToolButton"));
-    auto* command = new commonWidget::Z_CommandLinkButton(QObject::tr("查看包装合同"), buttons);
-    command->setObjectName(QStringLiteral("baselineCommandLink"));
-    buttonRow->addWidget(primary);
-    buttonRow->addWidget(secondary);
-    buttonRow->addWidget(tool);
-    buttonRow->addWidget(command);
-    buttonRow->addStretch();
-    static_cast<QVBoxLayout*>(buttons->layout())->addLayout(buttonRow);
-    appearance->addWidget(buttons);
-
-    auto* select = card(QObject::tr("Checkbox 与 Radio / 复选与单选"),
-                        QObject::tr("半选保持 SDK 的紫底白色横杠，状态不是静态图片。"),
-                        appearanceContent);
-    auto* matrix = new QGridLayout;
-    matrix->setHorizontalSpacing(18);
-    matrix->setVerticalSpacing(10);
-    for (int index = 0; index < 4; ++index)
-        matrix->addWidget(new QLabel(QStringList{QObject::tr("未选"), QObject::tr("选中"),
-                                                 QObject::tr("半选"), QObject::tr("禁用")}
-                                        .at(index), select),
-                          0, index);
-    auto* unchecked = new commonWidget::Z_CheckBox(QObject::tr("复选状态"), select);
-    auto* checked = new commonWidget::Z_CheckBox(QObject::tr("复选状态"), select);
-    checked->setChecked(true);
-    auto* indeterminate = new commonWidget::Z_CheckBox(QObject::tr("半选状态"), select);
-    indeterminate->setObjectName(QStringLiteral("baselineIndeterminateCheckbox"));
-    indeterminate->setTristate(true);
-    indeterminate->setCheckState(Qt::PartiallyChecked);
-    auto* disabled = new commonWidget::Z_CheckBox(QObject::tr("不可用"), select);
-    disabled->setChecked(true);
-    disabled->setEnabled(false);
-    matrix->addWidget(unchecked, 1, 0);
-    matrix->addWidget(checked, 1, 1);
-    matrix->addWidget(indeterminate, 1, 2);
-    matrix->addWidget(disabled, 1, 3);
-    auto* radio = new commonWidget::Z_RadioButton(QObject::tr("默认"), select);
-    auto* selectedRadio = new commonWidget::Z_RadioButton(QObject::tr("选中"), select);
-    selectedRadio->setChecked(true);
-    auto* disabledRadio = new commonWidget::Z_RadioButton(QObject::tr("不可用"), select);
-    disabledRadio->setEnabled(false);
-    matrix->addWidget(radio, 2, 0);
-    matrix->addWidget(selectedRadio, 2, 1);
-    matrix->addWidget(disabledRadio, 2, 3);
-    static_cast<QVBoxLayout*>(select->layout())->addLayout(matrix);
-    appearance->addWidget(select);
-    appearance->addStretch();
-
-    auto* stateContent = new QWidget;
-    auto* stateLayout = new QVBoxLayout(stateContent);
-    stateLayout->setContentsMargins(20, 20, 20, 28);
-    auto* note = new QWidget(stateContent);
-    note->setObjectName(QStringLiteral("baselineStateNote"));
-    auto* noteLayout = new QVBoxLayout(note);
-    noteLayout->setContentsMargins(14, 10, 14, 10);
-    noteLayout->addWidget(label(QObject::tr("状态由控件自身驱动：可点击、可切换，非截图或仿制外观。"),
-                                QStringLiteral("baselineStateNoteText"), note));
-    stateLayout->addWidget(note);
-    auto* table = new commonWidget::Z_TableWidget(5, 3, stateContent);
-    table->setObjectName(QStringLiteral("baselineActionStateTable"));
-    table->setHorizontalHeaderLabels({QObject::tr("组件"), QObject::tr("状态"),
-                                      QObject::tr("运行时证据")});
-    const QList<QStringList> rows{
-        {QObject::tr("Z_PushButton"), QObject::tr("default / hover / disabled"), QObject::tr("Qt pressed")},
-        {QObject::tr("Z_CheckBox"), QObject::tr("unchecked / checked / indeterminate"), QObject::tr("白色横杠")},
-        {QObject::tr("Z_RadioButton"), QObject::tr("default / selected / disabled"), QObject::tr("Qt exclusive")},
-        {QObject::tr("Z_ToolButton"), QObject::tr("default / pressed"), QObject::tr("公共包装")},
-        {QObject::tr("Z_CommandLinkButton"), QObject::tr("default / disabled"), QObject::tr("公共包装")},
-    };
-    for (int row = 0; row < rows.size(); ++row)
-        for (int column = 0; column < rows.at(row).size(); ++column)
-            table->setItem(row, column, new QTableWidgetItem(rows.at(row).at(column)));
-    table->horizontalHeader()->setStretchLastSection(true);
-    table->verticalHeader()->setVisible(false);
-    stateLayout->addWidget(table);
-    stateLayout->addStretch();
-    return {scroll(appearanceContent, parent), scroll(stateContent, parent)};
-}
-
-SectionPage createInputSection(QWidget* parent) {
-    auto* appearanceContent = new QWidget;
-    auto* appearance = new QVBoxLayout(appearanceContent);
-    appearance->setContentsMargins(20, 20, 20, 28);
-    appearance->setSpacing(16);
-    auto* formCard = card(QObject::tr("Input / 输入"),
-                          QObject::tr("字段边框、字体与焦点色均来自 SDK 固定 QSS。"), appearanceContent);
-    auto* form = new QFormLayout;
-    form->setSpacing(12);
-    auto* line = new commonWidget::Z_LineEdit(formCard);
-    line->setObjectName(QStringLiteral("baselineLineEdit"));
-    line->setPlaceholderText(QObject::tr("输入文本"));
-    auto* combo = new commonWidget::Z_ComboBox(formCard);
-    combo->setObjectName(QStringLiteral("baselineComboBox"));
-    combo->addItems({QObject::tr("选项 A"), QObject::tr("选项 B"), QObject::tr("选项 C")});
-    auto* spin = new commonWidget::Z_SpinBox(formCard);
-    spin->setRange(0, 100);
-    spin->setValue(42);
-    auto* date = new commonWidget::Z_DateEdit(QDate::currentDate(), formCard);
-    date->setCalendarPopup(true);
-    form->addRow(QObject::tr("文本"), line);
-    form->addRow(QObject::tr("选择"), combo);
-    form->addRow(QObject::tr("数值"), spin);
-    form->addRow(QObject::tr("日期"), date);
-    static_cast<QVBoxLayout*>(formCard->layout())->addLayout(form);
-    appearance->addWidget(formCard);
-    auto* progressCard = card(QObject::tr("Progress / 进度"),
-                              QObject::tr("进度颜色和圆角不由 Gallery 定义。"), appearanceContent);
-    auto* progress = new commonWidget::Z_ProgressBar(progressCard);
-    progress->setObjectName(QStringLiteral("baselineProgressBar"));
-    progress->setValue(68);
-    static_cast<QVBoxLayout*>(progressCard->layout())->addWidget(progress);
-    appearance->addWidget(progressCard);
-    appearance->addStretch();
-
-    auto* stateContent = new QWidget;
-    auto* stateLayout = new QVBoxLayout(stateContent);
-    stateLayout->setContentsMargins(20, 20, 20, 28);
-    auto* stateCard = card(QObject::tr("输入状态"),
-                           QObject::tr("使用真实控件展示 placeholder、value 与 disabled。"), stateContent);
-    auto* grid = new QGridLayout;
-    grid->addWidget(new QLabel(QObject::tr("Placeholder"), stateCard), 0, 0);
-    grid->addWidget(new QLabel(QObject::tr("Value"), stateCard), 0, 1);
-    grid->addWidget(new QLabel(QObject::tr("Disabled"), stateCard), 0, 2);
-    auto* placeholder = new commonWidget::Z_LineEdit(stateCard);
-    placeholder->setPlaceholderText(QObject::tr("输入文本"));
-    auto* value = new commonWidget::Z_LineEdit(QStringLiteral("HarmonyOS Sans SC"), stateCard);
-    auto* unavailable = new commonWidget::Z_LineEdit(QObject::tr("不可编辑"), stateCard);
-    unavailable->setEnabled(false);
-    grid->addWidget(placeholder, 1, 0);
-    grid->addWidget(value, 1, 1);
-    grid->addWidget(unavailable, 1, 2);
-    static_cast<QVBoxLayout*>(stateCard->layout())->addLayout(grid);
-    stateLayout->addWidget(stateCard);
-    stateLayout->addStretch();
-    return {scroll(appearanceContent, parent), scroll(stateContent, parent)};
-}
-
-SectionPage createContainerSection(QWidget* parent) {
-    auto* appearanceContent = new QWidget;
-    auto* appearance = new QVBoxLayout(appearanceContent);
-    appearance->setContentsMargins(20, 20, 20, 28);
-    appearance->setSpacing(16);
-    auto* dataCard = card(QObject::tr("Table、Tabs 与 Calendar / 数据与容器"),
-                          QObject::tr("容器使用发布范围中的 Qt 原生包装类型。"), appearanceContent);
-    auto* grid = new QGridLayout;
-    auto* table = new commonWidget::Z_TableWidget(3, 2, dataCard);
-    table->setObjectName(QStringLiteral("baselineTableWidget"));
-    table->setHorizontalHeaderLabels({QObject::tr("参数"), QObject::tr("值")});
-    const QList<QStringList> records{{QObject::tr("SDK"), QObject::tr("已发布")},
-                                     {QObject::tr("QSS"), QObject::tr("QRC 内嵌")},
-                                     {QObject::tr("Token JSON"), QObject::tr("运行时不读取")}};
-    for (int row = 0; row < records.size(); ++row)
-        for (int column = 0; column < records.at(row).size(); ++column)
-            table->setItem(row, column, new QTableWidgetItem(records.at(row).at(column)));
-    table->horizontalHeader()->setStretchLastSection(true);
-    auto* tabs = new commonWidget::Z_TabWidget(dataCard);
-    tabs->setObjectName(QStringLiteral("baselineDataTabs"));
-    tabs->addTab(new commonWidget::Z_CalendarWidget(tabs), QObject::tr("Calendar"));
-    auto* tree = new commonWidget::Z_TreeWidget(tabs);
-    tree->setHeaderLabel(QObject::tr("TreeWidget"));
-    new QTreeWidgetItem(tree, {QObject::tr("组件资源")});
-    new QTreeWidgetItem(tree, {QObject::tr("发布合同")});
-    tree->expandAll();
-    tabs->addTab(tree, QObject::tr("Tree"));
-    grid->addWidget(table, 0, 0);
-    grid->addWidget(tabs, 0, 1);
-    static_cast<QVBoxLayout*>(dataCard->layout())->addLayout(grid);
-    appearance->addWidget(dataCard);
-    auto* scrollCard = card(QObject::tr("ScrollArea / 滚动区域"),
-                            QObject::tr("该样例验证真实滚动容器，而不是静态边框。"), appearanceContent);
-    auto* scrollArea = new commonWidget::Z_ScrollArea(scrollCard);
-    scrollArea->setObjectName(QStringLiteral("baselineScrollArea"));
-    scrollArea->setWidgetResizable(true);
-    auto* items = new QWidget(scrollArea);
-    auto* itemsLayout = new QVBoxLayout(items);
-    for (int index = 1; index <= 10; ++index)
-        itemsLayout->addWidget(new QLabel(QObject::tr("滚动内容 %1").arg(index), items));
-    itemsLayout->addStretch();
-    scrollArea->setWidget(items);
-    scrollArea->setMinimumHeight(120);
-    static_cast<QVBoxLayout*>(scrollCard->layout())->addWidget(scrollArea);
-    appearance->addWidget(scrollCard);
-    appearance->addStretch();
-
-    auto* stateContent = new QWidget;
-    auto* stateLayout = new QVBoxLayout(stateContent);
-    stateLayout->setContentsMargins(20, 20, 20, 28);
-    auto* splitCard = card(QObject::tr("Splitter / 分割器"),
-                           QObject::tr("拖动分隔条可改变两个真实区域的宽度。"), stateContent);
-    auto* splitter = new commonWidget::Z_Splitter(Qt::Horizontal, splitCard);
-    splitter->setObjectName(QStringLiteral("baselineDataSplitter"));
-    auto* left = new QLabel(QObject::tr("左侧内容"), splitter);
-    left->setAlignment(Qt::AlignCenter);
-    auto* right = new QLabel(QObject::tr("可拖拽分割器\n右侧内容"), splitter);
-    right->setAlignment(Qt::AlignCenter);
-    splitter->addWidget(left);
-    splitter->addWidget(right);
-    splitter->setMinimumHeight(140);
-    static_cast<QVBoxLayout*>(splitCard->layout())->addWidget(splitter);
-    stateLayout->addWidget(splitCard);
-    stateLayout->addStretch();
-    return {scroll(appearanceContent, parent), scroll(stateContent, parent)};
-}
-
-SectionPage createWindowSection(QWidget* parent) {
-    auto* appearanceContent = new QWidget;
-    auto* appearance = new QVBoxLayout(appearanceContent);
-    appearance->setContentsMargins(20, 20, 20, 28);
-    appearance->setSpacing(16);
-    auto* toolboxCard = card(QObject::tr("ToolBox / 工具箱"),
-                             QObject::tr("呈现已发布的原生工具箱包装。"), appearanceContent);
-    auto* toolbox = new commonWidget::Z_ToolBox(toolboxCard);
-    toolbox->setObjectName(QStringLiteral("baselineToolBox"));
-    toolbox->addItem(new QLabel(QObject::tr("工具箱内容 A"), toolbox), QObject::tr("常用操作"));
-    toolbox->addItem(new QLabel(QObject::tr("工具箱内容 B"), toolbox), QObject::tr("更多组件"));
-    toolbox->setMinimumHeight(130);
-    static_cast<QVBoxLayout*>(toolboxCard->layout())->addWidget(toolbox);
-    appearance->addWidget(toolboxCard);
-    auto* mdiCard = card(QObject::tr("MDI SubWindow / 多文档窗口"),
-                         QObject::tr("展示 Z_MdiArea 与 Z_MdiSubWindow 原生包装。"), appearanceContent);
-    auto* mdi = new commonWidget::Z_MdiArea(mdiCard);
-    mdi->setObjectName(QStringLiteral("baselineMdiArea"));
-    auto* sub = new commonWidget::Z_MdiSubWindow(mdi);
-    sub->setObjectName(QStringLiteral("baselineMdiSubWindow"));
-    sub->setWidget(new QLabel(QObject::tr("MdiSubWindow 内容"), sub));
-    sub->resize(260, 92);
-    mdi->addSubWindow(sub);
-    sub->show();
-    mdi->setMinimumHeight(156);
-    static_cast<QVBoxLayout*>(mdiCard->layout())->addWidget(mdi);
-    appearance->addWidget(mdiCard);
-    appearance->addStretch();
-
-    auto* stateContent = new QWidget;
-    auto* stateLayout = new QVBoxLayout(stateContent);
-    stateLayout->setContentsMargins(20, 20, 20, 28);
-    auto* stateCard = card(QObject::tr("发布边界"),
-                           QObject::tr("基础 Gallery 只验证 Qt 原生包装；复合、自绘、页面型和实验性组件不在此包中实例化。"),
-                           stateContent);
-    auto* table = new commonWidget::Z_TableWidget(4, 2, stateCard);
-    table->setHorizontalHeaderLabels({QObject::tr("项目"), QObject::tr("事实")});
-    const QList<QStringList> rows{{QObject::tr("SDK 组件"), QObject::tr("59 个 Q* → Z_* 包装")},
-                                  {QObject::tr("视觉资源"), QObject::tr("SDK 固定 QSS/QRC")},
-                                  {QObject::tr("Token JSON"), QObject::tr("仅构建期")},
-                                  {QObject::tr("展示职责"), QObject::tr("只消费 SDK")}};
-    for (int row = 0; row < rows.size(); ++row)
-        for (int column = 0; column < rows.at(row).size(); ++column)
-            table->setItem(row, column, new QTableWidgetItem(rows.at(row).at(column)));
-    table->horizontalHeader()->setStretchLastSection(true);
-    table->verticalHeader()->setVisible(false);
-    static_cast<QVBoxLayout*>(stateCard->layout())->addWidget(table);
-    stateLayout->addWidget(stateCard);
-    stateLayout->addStretch();
-    return {scroll(appearanceContent, parent), scroll(stateContent, parent)};
 }
 
 QWidget* createScopePage(QWidget* parent) {
@@ -480,18 +469,6 @@ BaselineWindow::BaselineWindow() {
     auto* stack = new QStackedWidget(splitter);
     stack->setObjectName(QStringLiteral("baselineGalleryPages"));
     pages_ = stack;
-    const auto actions = createActionSection(stack);
-    stack->addWidget(wrapPage(tr("20.3 · Actions / 操作"), tr("Button、Checkbox 与 Radio"),
-                              tr("以可操作的 Z_* 控件替代静态缩略图；状态由 Qt 事件驱动。"), actions, stack));
-    const auto inputs = createInputSection(stack);
-    stack->addWidget(wrapPage(tr("20.4 · Input / 输入"), tr("文本、选择与数值输入"),
-                              tr("字段视觉来自 SDK 固定 QSS；Gallery 只负责展示结构。"), inputs, stack));
-    const auto containers = createContainerSection(stack);
-    stack->addWidget(wrapPage(tr("20.6 · Container / 容器"), tr("表格、标签页、滚动与分割"),
-                              tr("容器保留真实滚动、选中和拖拽状态。"), containers, stack));
-    const auto windows = createWindowSection(stack);
-    stack->addWidget(wrapPage(tr("20.1 / 20.9 · Window & System"), tr("窗口与系统控件"),
-                              tr("基础包不将旧版页面型或实验性组件伪装为 SDK。"), windows, stack));
     objectInspector_ = new commonWidget::Z_TreeWidget(splitter);
     objectInspector_->setObjectName(QStringLiteral("baselineObjectInspector"));
     objectInspector_->setHeaderLabels({tr("节点 / 属性"), tr("类型 / 值")});
@@ -505,25 +482,50 @@ BaselineWindow::BaselineWindow() {
     splitter->setStretchFactor(1, 1);
     splitter->setSizes({285, 770, 300});
     browseLayout->addWidget(splitter);
-    const auto addLeaf = [this](QTreeWidgetItem* parent, const QString& text, int page) {
-        auto* item = new QTreeWidgetItem(parent, {text});
-        item->setData(0, Qt::UserRole, page);
-        return item;
-    };
-    auto* actionsNode = new QTreeWidgetItem(navigation_, {tr("20.3 · Actions / 操作")});
-    auto* actionsLeaf = addLeaf(actionsNode, tr("Button & Selection / 按钮与选择"), 0);
-    auto* inputNode = new QTreeWidgetItem(navigation_, {tr("20.4 · Input / 输入")});
-    addLeaf(inputNode, tr("Input controls / 输入控件"), 1);
-    auto* containerNode = new QTreeWidgetItem(navigation_, {tr("20.6 · Container / 容器")});
-    addLeaf(containerNode, tr("Data & Layout / 数据与布局"), 2);
-    auto* windowsNode = new QTreeWidgetItem(navigation_, {tr("20.1 / 20.9 · Window & System")});
-    addLeaf(windowsNode, tr("Native window controls / 窗口控件"), 3);
-    navigation_->expandAll();
+    auto* publishedNode = new QTreeWidgetItem(navigation_,
+                                               {tr("组件（%1）").arg(publishedScope().size())});
+    QHash<QString, QTreeWidgetItem*> categoryItems;
+    QTreeWidgetItem* defaultLeaf = nullptr;
+    const QStringList order{
+        QStringLiteral("Navigation / 导航"), QStringLiteral("Display / 展示"),
+        QStringLiteral("Actions / 操作"), QStringLiteral("Input / 输入"),
+        QStringLiteral("Selection / 选择"), QStringLiteral("Container / 容器"),
+        QStringLiteral("Data Views / 数据视图"), QStringLiteral("Feedback / 反馈"),
+        QStringLiteral("Window & System / 窗口与系统")};
+    for (const auto& category : order)
+        categoryItems.insert(category, new QTreeWidgetItem(publishedNode, {category}));
+    for (const auto& entry : publishedScope()) {
+        const QString qtClass = QString::fromLatin1(entry.qtClass);
+        const QString category = categoryFor(qtClass);
+        auto* branch = categoryItems.value(category);
+        auto* leaf = new QTreeWidgetItem(branch, {QString::fromLatin1(entry.sdkClass).section("::", -1)});
+        leaf->setData(0, Qt::UserRole, stack->count());
+        leaf->setData(0, Qt::UserRole + 1, qtClass);
+        leaf->setToolTip(0, QString::fromLatin1(entry.sdkClass));
+        const auto section = createComponentSection(entry, stack);
+        auto* page = wrapPage(category, qtClass + QStringLiteral(" / ") +
+                             QString::fromLatin1(entry.sdkClass).section("::", -1),
+                             tr("单组件展示 · 外观与分组状态分别查看"), section, stack);
+        connect(page->findChild<QTabWidget*>(QStringLiteral("baselineComponentTabs")),
+                &QTabWidget::currentChanged, this,
+                [this, page](int) { if (pages_->isVisible() &&
+                                        qobject_cast<QStackedWidget*>(pages_)->currentWidget() == page)
+                                    populateObjectInspector(page); });
+        stack->addWidget(page);
+        if (qtClass == QStringLiteral("QPushButton"))
+            defaultLeaf = leaf;
+    }
+    for (const auto& category : order) {
+        auto* branch = categoryItems.value(category);
+        branch->setText(0, tr("%1 (%2)").arg(category).arg(branch->childCount()));
+        branch->setExpanded(category == QStringLiteral("Actions / 操作"));
+    }
+    publishedNode->setExpanded(true);
     connect(navigation_, &QTreeWidget::currentItemChanged, this, [this](QTreeWidgetItem* item) {
         if (item && item->data(0, Qt::UserRole).isValid())
             selectPage(item->data(0, Qt::UserRole).toInt());
     });
-    navigation_->setCurrentItem(actionsLeaf);
+    navigation_->setCurrentItem(defaultLeaf);
     galleryTabs->addTab(browse, tr("组件图库"));
     galleryTabs->addTab(createScopePage(galleryTabs), tr("组件映射"));
     canvasLayout->addWidget(galleryTabs);
@@ -532,30 +534,49 @@ BaselineWindow::BaselineWindow() {
     setCentralWidget(root);
     setStatusBar(new commonWidget::Z_StatusBar(this));
     statusBar()->showMessage(tr("仅消费 GeneratedComponentSDK：SDK QSS/QRC 已加载；不读取 Token JSON。"));
+    QTimer::singleShot(0, this, [this] {
+        populateObjectInspector(qobject_cast<QStackedWidget*>(pages_)->currentWidget());
+    });
 }
 
 bool BaselineWindow::capture(const QString& directory) {
     if (!QDir().mkpath(directory) || !grab().save(directory + QStringLiteral("/baseline-gallery.png")))
         return false;
-    const QColor dash = indeterminateDashPixel(this);
-    const auto* checkbox = findChild<commonWidget::Z_CheckBox*>(
+    auto* checkboxPage = findChild<commonWidget::Z_CheckBox*>(
         QStringLiteral("baselineIndeterminateCheckbox"));
+    commonWidget::Z_CheckBox checkboxProbe;
+    checkboxProbe.setTristate(true);
+    checkboxProbe.setCheckState(Qt::PartiallyChecked);
+    checkboxProbe.resize(180, 32);
+    checkboxProbe.show();
+    QStyleOptionButton option;
+    option.initFrom(&checkboxProbe);
+    option.state |= QStyle::State_NoChange;
+    const QRect indicator = checkboxProbe.style()->subElementRect(
+        QStyle::SE_CheckBoxIndicator, &option, &checkboxProbe);
+    const QColor dash = checkboxProbe.grab().toImage().pixelColor(indicator.center());
     QJsonObject result{{QStringLiteral("packageKind"), QStringLiteral("qt-native-baseline")},
                        {QStringLiteral("nativeComponentCount"), publishedScope().size()},
                        {QStringLiteral("runtimeTokenJson"), false},
                        {QStringLiteral("legacyRuntime"), false},
                        {QStringLiteral("qssApplied"), !qApp->styleSheet().isEmpty()},
-                       {QStringLiteral("presentation"), QStringLiteral("performance-lab-information-architecture")},
+                       {QStringLiteral("presentation"), QStringLiteral("component-per-page-gallery")},
                        {QStringLiteral("gallerySections"), componentSectionCount()},
+                       {QStringLiteral("galleryPages"), componentPageCount()},
                        {QStringLiteral("objectInspector"), hasObjectInspector()},
-                       {QStringLiteral("indeterminateClass"), checkbox ? checkbox->property("designSystemClass").toString() : QString{}},
+                       {QStringLiteral("indeterminateClass"), checkboxPage ? checkboxPage->property("designSystemClass").toString() : QString{}},
                        {QStringLiteral("indeterminateDashPixel"), dash.name()},
                        {QStringLiteral("indeterminateDashVisible"), dash.red() > 220 && dash.green() > 220 && dash.blue() > 220}};
     QSaveFile file(directory + QStringLiteral("/runtime.json"));
     return file.open(QIODevice::WriteOnly) && file.write(QJsonDocument(result).toJson()) >= 0 && file.commit();
 }
 
-int BaselineWindow::componentSectionCount() const { return 4; }
+int BaselineWindow::componentSectionCount() const { return navigation_ ? navigation_->topLevelItem(0)->childCount() : 0; }
+
+int BaselineWindow::componentPageCount() const {
+    const auto* stack = qobject_cast<const QStackedWidget*>(pages_);
+    return stack ? stack->count() : 0;
+}
 
 bool BaselineWindow::hasObjectInspector() const {
     return objectInspector_ && objectInspector_->columnCount() == 2;
@@ -573,8 +594,19 @@ void BaselineWindow::populateObjectInspector(QWidget* target) {
     objectInspector_->clear();
     if (!target)
         return;
+    auto* tabs = target->findChild<QTabWidget*>(QStringLiteral("baselineComponentTabs"));
+    QWidget* active = tabs ? tabs->currentWidget() : target;
+    QWidget* specimen = nullptr;
+    for (auto* child : active->findChildren<QWidget*>()) {
+        if (child->objectName().startsWith(QStringLiteral("componentRoot_"))) {
+            specimen = child;
+            break;
+        }
+    }
     auto* root = new QTreeWidgetItem(objectInspector_,
-                                     {tr("展示页面"), QString::fromLatin1(target->metaObject()->className())});
+                                     {tr("当前组件"), specimen ? specimen->property("designSystemClass").toString()
+                                                              : tr("无可嵌入实例")});
     root->setExpanded(true);
-    appendObjectTree(root, target);
+    if (specimen)
+        appendObjectTree(root, specimen);
 }

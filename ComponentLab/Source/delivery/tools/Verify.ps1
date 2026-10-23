@@ -67,8 +67,9 @@ try {
         if ($report.packageKind -ne 'qt-native-baseline' -or
             $report.nativeComponentCount -ne 59 -or
             $report.runtimeTokenJson -or $report.legacyRuntime -or -not $report.qssApplied -or
-            $report.presentation -ne 'performance-lab-information-architecture' -or
-            $report.gallerySections -ne 4 -or -not $report.objectInspector -or
+            $report.presentation -ne 'component-per-page-gallery' -or
+            $report.gallerySections -ne 9 -or $report.galleryPages -ne 59 -or
+            -not $report.objectInspector -or
             -not $report.indeterminateDashVisible) {
             throw 'Unexpected baseline runtime contract'
         }

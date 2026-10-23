@@ -13,6 +13,7 @@ class BaselineWindow final : public QMainWindow {
 
     bool capture(const QString& directory);
     int componentSectionCount() const;
+    int componentPageCount() const;
     bool hasObjectInspector() const;
 
   private:
