@@ -89,6 +89,10 @@ find_package(GeneratedComponentSDK 2 CONFIG REQUIRED)
 target_link_libraries(my_app PRIVATE GeneratedComponentSDK::Components)
 ```
 
+The QSS, SVG and HarmonyOS fonts are compiled into `GeneratedComponentSDK.lib`;
+this binary package deliberately does not duplicate the loose `View` source
+assets. Use the companion source package when editing component QSS.
+
 After constructing `QApplication`, call
 `commonWidget::initializeNativeComponentResources()` and apply the returned
 `commonWidget::nativeComponentStyleSheet()` at the chosen application or page
@@ -107,6 +111,7 @@ verified `/MDd` package and is deliberately rejected by this release config.
         componentAuthority = $true
         tokenAuthority = $false
         visualQssAuthority = $true
+        visualResourceDelivery = 'static-qrc'
         runtimeTokenJson = $false
         legacyRuntime = $false
         linkage = 'static'
@@ -124,14 +129,94 @@ verified `/MDd` package and is deliberately rejected by this release config.
         --qt-root $QtRoot --cmake $Cmake --build-directory $build
     if ($LASTEXITCODE) { throw 'Baseline SDK staged-package verification failed; previous SDK is unchanged.' }
 
+    # Validate the exact standalone binary delivery payload before promotion.
+    # It contains headers, CMake import files, the static QRC library and its
+    # release manifest only; source assets live in the companion source route.
+    $stagedManifest = Get-Content -Raw -LiteralPath "$stage/manifest/component-sdk.json" | ConvertFrom-Json
+    $binaryStage = Assert-BuildOutput (Join-Path $projectRoot (
+        'output/work/cache/baseline-native-binary-stage-' + $stagedManifest.releaseId))
+    if (Test-Path -LiteralPath $binaryStage) { throw "BINARY_STAGE_ALREADY_EXISTS: $binaryStage" }
+    New-Item -ItemType Directory -Path $binaryStage -Force | Out-Null
+    Get-ChildItem -LiteralPath $stage -Force | ForEach-Object {
+        Copy-Item -LiteralPath $_.FullName -Destination $binaryStage -Recurse
+    }
+    & $python -B "$sourceRoot/SDKPackage.py" verify --sdk $binaryStage
+    if ($LASTEXITCODE) { throw 'Baseline SDK binary-delivery integrity verification failed; previous SDK is unchanged.' }
+
+    # A source package is a separate, portable migration route.  It is built
+    # in output/work first, contains only the documented ComponentPackage
+    # shape, and is accepted with the same independent consumer test before
+    # either artifact is promoted to its controlled/final location.
+    $sourceStage = Assert-BuildOutput (Join-Path $projectRoot (
+        'output/work/cache/baseline-native-source-stage-' + $stagedManifest.releaseId))
+    if (Test-Path -LiteralPath $sourceStage) { throw "SOURCE_STAGE_ALREADY_EXISTS: $sourceStage" }
+    New-Item -ItemType Directory -Path $sourceStage -Force | Out-Null
+    foreach ($entry in @('Form', 'View', 'Include', 'SRC', 'cmake', 'manifest', 'CMakeLists.txt')) {
+        Copy-Item -LiteralPath (Join-Path $packageRoot $entry) -Destination $sourceStage -Recurse
+    }
+    $sourceReadme = @'
+# GeneratedComponentSDK — Qt Native Baseline Source Package
+
+This self-contained source package contains only 59 direct Qt 5 `Q*` to
+`commonWidget::Z_*` wrappers.  It intentionally excludes ComponentFactory,
+Figma mappings, generated caches, runtime Token JSON, and composite or
+self-painted components.
+
+## Use as source
+
+Keep the directory structure unchanged, then add this package to the product:
+
+```cmake
+add_subdirectory(path/to/ComponentPackage)
+target_link_libraries(my_app PRIVATE GeneratedComponentSDK::Components)
+```
+
+After `QApplication` exists, call
+`commonWidget::initializeNativeComponentResources()` and apply the returned
+`commonWidget::nativeComponentStyleSheet()` at the application or page
+boundary. The QSS owns fixed visual values and reads no JSON at runtime.
+
+The package is validated against Qt 5.15, MSVC x64 and the `/MD` Release
+contract recorded in `manifest/source-package-release.json`.
+'@
+    $sourceReadme | Set-Content -LiteralPath "$sourceStage/README.md" -Encoding utf8
+    $sourceFileManifestPath = Join-Path $sourceStage 'manifest/source-package-release.json'
+    $sourceFiles = @(
+        Get-ChildItem -LiteralPath $sourceStage -File -Recurse |
+            Where-Object { $_.FullName -ne $sourceFileManifestPath } |
+            Sort-Object FullName |
+            ForEach-Object {
+                [ordered]@{
+                    path = [IO.Path]::GetRelativePath($sourceStage, $_.FullName).Replace('\', '/')
+                    sha256 = (Get-FileHash -LiteralPath $_.FullName -Algorithm SHA256).Hash.ToLowerInvariant()
+                    bytes = $_.Length
+                }
+            })
+    $sourceFileManifest = [ordered]@{
+        schemaVersion = 1
+        package = 'GeneratedComponentSDK'
+        packageKind = 'qt-native-baseline-source'
+        releaseId = $stagedManifest.releaseId
+        packageVersion = $stagedManifest.packageVersion
+        sourceFingerprint = $stagedManifest.sourceFingerprint
+        componentScope = 'manifest/base-sdk-scope.json'
+        scopeHash = (Get-FileHash -LiteralPath "$sourceStage/manifest/base-sdk-scope.json" -Algorithm SHA256).Hash.ToLowerInvariant()
+        runtimeTokenJson = $false
+        legacyRuntime = $false
+        fileHashAlgorithm = 'SHA-256'
+        selfHashExcluded = $true
+        files = $sourceFiles
+    }
+    $sourceFileManifest | ConvertTo-Json -Depth 6 | Set-Content -LiteralPath $sourceFileManifestPath -Encoding utf8
+
     # Source and binary consumers are independent acceptance routes.  Neither
     # includes any producer runtime source outside ComponentPackage.
     & "$projectRoot/docs/validation/BaselineNativeSourceConsumerTest/Build.ps1" `
-        -PackageRoot $packageRoot -QtRoot $QtRoot -Cmake $Cmake `
+        -PackageRoot $sourceStage -QtRoot $QtRoot -Cmake $Cmake `
         -BuildDirectory (Join-Path $projectRoot 'output/work/cache/BaselineNativeSourceConsumerTest')
-    if ($LASTEXITCODE) { throw 'Baseline SDK source consumer test failed; previous SDK is unchanged.' }
+    if ($LASTEXITCODE) { throw 'Baseline SDK source-package consumer test failed; previous SDK is unchanged.' }
     & "$projectRoot/docs/validation/BaselineNativeSDKConsumerTest/Build.ps1" `
-        -SdkRoot $stage -QtRoot $QtRoot -Cmake $Cmake `
+        -SdkRoot $binaryStage -QtRoot $QtRoot -Cmake $Cmake `
         -BuildDirectory (Join-Path $projectRoot 'output/work/cache/BaselineNativeSDKConsumerTest')
     if ($LASTEXITCODE) { throw 'Baseline SDK independent consumer test failed; previous SDK is unchanged.' }
 
@@ -142,6 +227,14 @@ verified `/MDd` package and is deliberately rejected by this release config.
     $delivery = Assert-DeliveryOutput (Join-Path $projectRoot (
         "output/delivery/baseline-native-sdk-" + $publishedManifest.releaseId))
     New-Item -ItemType Directory -Path $delivery -Force | Out-Null
+    $sourceDelivery = Assert-DeliveryOutput (Join-Path $projectRoot (
+        "output/delivery/baseline-native-component-source-" + $publishedManifest.releaseId))
+    if (Test-Path -LiteralPath $sourceDelivery) { throw "SOURCE_DELIVERY_ALREADY_EXISTS: $sourceDelivery" }
+    $binaryDelivery = Assert-DeliveryOutput (Join-Path $projectRoot (
+        "output/delivery/baseline-native-component-binary-" + $publishedManifest.releaseId))
+    if (Test-Path -LiteralPath $binaryDelivery) { throw "BINARY_DELIVERY_ALREADY_EXISTS: $binaryDelivery" }
+    Move-Item -LiteralPath $binaryStage -Destination $binaryDelivery
+    Move-Item -LiteralPath $sourceStage -Destination $sourceDelivery
     $acceptance = [ordered]@{
         releaseId = $publishedManifest.releaseId
         packageKind = $publishedManifest.packageKind
@@ -150,6 +243,10 @@ verified `/MDd` package and is deliberately rejected by this release config.
         nativeComponentCount = $publishedManifest.nativeComponentCount
         sourceConsumption = 'PASS: add_subdirectory independent consumer test'
         binaryConsumption = 'PASS: find_package independent consumer test'
+        binaryPackage = (Split-Path $binaryDelivery -Leaf)
+        binaryPackageIntegrity = 'PASS: standalone binary package manifest/hash verification'
+        sourcePackage = (Split-Path $sourceDelivery -Leaf)
+        sourcePackageConsumption = 'PASS: standalone source package add_subdirectory consumer test'
         qrcClosure = 'PASS: check_baseline_source_package.py'
         runtimeTokenJson = $publishedManifest.runtimeTokenJson
         legacyRuntime = $publishedManifest.legacyRuntime

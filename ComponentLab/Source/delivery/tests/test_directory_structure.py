@@ -23,8 +23,15 @@ class DirectoryTests(unittest.TestCase):
         manifest = json.loads((SDK / "manifest/component-sdk.json").read_bytes())
         self.assertEqual(manifest["owner"], "DesignToCode_GenerateComponent")
         self.assertTrue(manifest["componentAuthority"])
-        self.assertTrue(manifest["tokenAuthority"])
-        self.assertEqual(manifest["linkage"], "static")
+        if manifest.get("packageKind") == "qt-native-baseline":
+            self.assertEqual(manifest["publicationState"], "baseline-native")
+            self.assertFalse(manifest["tokenAuthority"])
+            self.assertTrue(manifest["visualQssAuthority"])
+            self.assertFalse(manifest["runtimeTokenJson"])
+            self.assertEqual(manifest["nativeComponentCount"], 59)
+        else:
+            self.assertTrue(manifest["tokenAuthority"])
+        self.assertIn(manifest["linkage"], ("static", "shared"))
 
     def test_no_component_or_token_compiler(self):
         names = {p.name for p in SOURCE.rglob("*") if p.is_file()}

@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "status": "baseline-native",
+  "owner": "DesignToCode_GenerateComponent",
+  "purpose": "Freeze the public baseline SDK to approved Qt-native Q* -> Z_* wrappers only.",
+  "namingRule": "Q<Class> -> commonWidget::Z_<Class>",
+  "nativeRegistry": "native-components.json",
+  "approvedQtClasses": [
+    "QWidget", "QFrame", "QPushButton", "QToolButton", "QRadioButton", "QCheckBox", "QCommandLinkButton", "QDialogButtonBox",
+    "QLineEdit", "QSpinBox", "QDoubleSpinBox", "QSlider", "QScrollBar", "QDial", "QComboBox", "QFontComboBox", "QDateTimeEdit", "QDateEdit", "QTimeEdit", "QKeySequenceEdit",
+    "QLabel", "QLCDNumber", "QProgressBar", "QTextBrowser", "QGraphicsView", "QCalendarWidget", "QTextEdit", "QPlainTextEdit",
+    "QListView", "QTreeView", "QTableView", "QColumnView", "QUndoView", "QListWidget", "QTreeWidget", "QTableWidget",
+    "QGroupBox", "QScrollArea", "QTabWidget", "QToolBox", "QStackedWidget", "QSplitter", "QDockWidget", "QMdiArea", "QMdiSubWindow", "QWizard", "QWizardPage",
+    "QMenu", "QMenuBar", "QToolBar", "QStatusBar", "QOpenGLWidget", "QDialog", "QMessageBox", "QFileDialog", "QColorDialog", "QFontDialog", "QInputDialog", "QProgressDialog"
+  ],
+  "publication": {
+    "publicPackage": "GeneratedComponentSDK",
+    "requiredState": "baseline-native",
+    "excludeKinds": ["composite-component", "custom-painted-widget", "native-behavior-custom-painted", "custom-popup-surface", "custom-composite-planned", "custom-composite-with-qt-temporal-adapters", "page", "experimental"],
+    "forbiddenPublicRuntimeRoots": [
+      "runtime/component/Z_FoundationComponents.*",
+      "runtime/component/Z_DesignComponents.*",
+      "runtime/component/Z_InputField.*",
+      "runtime/component/Z_Select.*",
+      "runtime/component/Z_OtpInput.*",
+      "runtime/component/ComponentFactory.*"
+    ]
+  },
+  "deferredComponentIds": [
+    "input", "select", "card", "chart", "navigation-bar", "side-menu", "switch", "badge", "chip", "number-input", "statistic", "date-time-input", "tooltip", "function-title"
+  ],
+  "validation": {
+    "expectedNativeComponentCount": 59,
+    "scopeCheck": "tools/check_base_sdk_scope.py",
+    "requiredPackageChecks": ["source-add-subdirectory", "sdk-find-package", "qrc-closure", "qss-no-producer-path", "token-visual-only-diff"]
+  }
+}

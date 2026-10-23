@@ -23,6 +23,18 @@ int main(int argc, char* argv[]) {
     Z_NATIVE_COMPONENT_TYPES(VERIFY_NATIVE_WRAPPER)
 #undef VERIFY_NATIVE_WRAPPER
 
+    // A Z_* wrapper must preserve the useful Qt constructor surface rather
+    // than forcing every consumer through the QWidget* overload.
+    commonWidget::Z_PushButton labelled(QStringLiteral("Confirm"), &owner);
+    commonWidget::Z_Menu titledMenu(QStringLiteral("Actions"), &owner);
+    commonWidget::Z_TableWidget grid(2, 3, &owner);
+    if (labelled.text().isEmpty() || titledMenu.title().isEmpty() ||
+        grid.rowCount() != 2 || grid.columnCount() != 3)
+        return 5;
+    if (labelled.property("designSystemClass").toString() !=
+        QStringLiteral("commonWidget::Z_PushButton"))
+        return 4;
+
     commonWidget::Z_CheckBox checkbox(&owner);
     checkbox.setTristate(true);
     checkbox.setCheckState(Qt::PartiallyChecked);
@@ -32,5 +44,5 @@ int main(int argc, char* argv[]) {
     // Application ownership is explicit: the package supplies a QSS string,
     // while a consuming product decides where and when to apply it.
     application.setStyleSheet(qss);
-    return application.styleSheet().isEmpty() ? 4 : 0;
+    return application.styleSheet().isEmpty() ? 5 : 0;
 }

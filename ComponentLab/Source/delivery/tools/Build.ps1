@@ -50,6 +50,8 @@ $buildOperation = Enter-ProjectOperationLock -ProjectRoot $project
 try {
 $SdkRoot = & "$root/Verify-GeneratedComponentSDK.ps1" -Package $SdkRoot
 $env:GENERATED_COMPONENT_SDK_ROOT = $SdkRoot
+$sdkManifest = Get-Content -LiteralPath (Join-Path $SdkRoot 'manifest/component-sdk.json') -Raw -Encoding UTF8 | ConvertFrom-Json
+$isBaselineSdk = $sdkManifest.packageKind -eq 'qt-native-baseline'
 $sdkManifestHash = (Get-FileHash -LiteralPath (Join-Path $SdkRoot 'manifest/component-sdk.json') -Algorithm SHA256).Hash
 $build = Assert-ProjectOutput $(if ($BuildDirectory) { $BuildDirectory } else { Join-Path $project 'output/work/cache/gallery-release' })
 $run = (Get-Date -Format 'yyyyMMdd-HHmmss') + '-' + [guid]::NewGuid().ToString('N').Substring(0,8)
@@ -96,18 +98,58 @@ try {
     }
     Invoke-Step 'governance' $Python @('-B',(Join-Path $root 'delivery/tools/CheckProject.py'),'--dist',$stage,'--snapshot',(Join-Path $logs 'validation-inputs.json'))
     Invoke-Step 'ctest' (Join-Path (Split-Path $CMake) 'ctest.exe') @('--test-dir',$build,'-j','1','--output-on-failure','--output-junit',(Join-Path $logs 'ctest.xml'))
-    $oldPlatform = $env:QT_QPA_PLATFORM
-    try {
-        $env:QT_QPA_PLATFORM = 'offscreen'
-        foreach ($profile in @('standard-light','wide-light','standard-dark','wide-dark')) {
-            Invoke-Step "token-$profile" (Join-Path $build 'token_probe.exe') @('--token-dir',(Join-Path $SdkRoot 'resources/tokens/default'),'--profile',$profile,'--output',(Join-Path $logs "token/$profile"))
+    if (-not $isBaselineSdk) {
+        $oldPlatform = $env:QT_QPA_PLATFORM
+        # Qt probes do not need system fonts; an empty existing font directory avoids
+        # the benign "Cannot find font directory" stderr warning that PowerShell 5.1
+        # would otherwise turn into a terminating error.
+        $emptyFonts = Assert-ProjectOutput (Join-Path $project 'output/work/fonts-empty')
+        [void](New-Item -ItemType Directory -Path $emptyFonts -Force)
+        $previousFontDir = $env:QT_QPA_FONTDIR
+        try {
+            $env:QT_QPA_PLATFORM = 'offscreen'
+            $env:QT_QPA_FONTDIR = $emptyFonts
+            foreach ($profile in @('standard-light','wide-light','standard-dark','wide-dark')) {
+                Invoke-Step "token-$profile" (Join-Path $build 'token_probe.exe') @('--token-dir',(Join-Path $SdkRoot 'resources/tokens/default'),'--profile',$profile,'--output',(Join-Path $logs "token/$profile"))
+            }
+        } finally {
+            $env:QT_QPA_PLATFORM = $oldPlatform
+            $env:QT_QPA_FONTDIR = $previousFontDir
         }
-    } finally { $env:QT_QPA_PLATFORM = $oldPlatform }
-    Invoke-Step 'deploy-stage' (Join-Path $QtDir 'bin/windeployqt.exe') @('--release','--no-translations','--no-compiler-runtime','--dir',$stage,(Join-Path $stage 'component_lab.exe'))
+    }
+    $deployArguments = @('--release','--no-translations','--no-compiler-runtime','--dir',$stage,(Join-Path $stage 'component_lab.exe'))
+    if ($isBaselineSdk) {
+        # A Widgets-only baseline does not need ANGLE, the software OpenGL
+        # rasterizer, D3D compiler or the general image/style plugin set.
+        # Keep only the plugins exercised by its public QSS/QRC contract.
+        $deployArguments = @('--release','--no-translations','--no-compiler-runtime','--no-plugins',
+            '--no-opengl-sw','--no-angle','--no-system-d3d-compiler','--dir',$stage,
+            (Join-Path $stage 'component_lab.exe'))
+    }
+    Invoke-Step 'deploy-stage' (Join-Path $QtDir 'bin/windeployqt.exe') $deployArguments
+    # Offscreen platform plugin is required by the accepted verification capture
+    # path (see Verify.ps1); deploy it from the same Qt kit so the bundle stays
+    # self-contained and no external plugin path is used.
+    if ($isBaselineSdk) {
+        foreach ($plugin in @('platforms/qwindows.dll','platforms/qoffscreen.dll','imageformats/qsvg.dll')) {
+            $sourcePlugin = Join-Path $QtDir (Join-Path 'plugins' $plugin)
+            $targetPlugin = Join-Path $stage $plugin
+            if (-not (Test-Path -LiteralPath $sourcePlugin)) { throw "Missing required baseline Qt plugin: $sourcePlugin" }
+            [void](New-Item -ItemType Directory -Path (Split-Path $targetPlugin -Parent) -Force)
+            Copy-Item -LiteralPath $sourcePlugin -Destination $targetPlugin -Force
+        }
+    } else {
+        $offscreenPlugin = Join-Path $QtDir 'plugins/platforms/qoffscreen.dll'
+        if (-not (Test-Path -LiteralPath $offscreenPlugin)) { throw "Missing Qt offscreen platform plugin: $offscreenPlugin" }
+        Copy-Item -LiteralPath $offscreenPlugin -Destination (Join-Path $stage 'platforms') -Force
+    }
     $crt = Get-ChildItem -Path (Join-Path $env:VCToolsRedistDir 'x64/Microsoft.VC*.CRT') -Directory | Sort-Object FullName -Descending | Select-Object -First 1
     if ($null -eq $crt) { throw 'VC runtime unavailable; ask the user, do not install.' }
     Get-ChildItem -LiteralPath $crt.FullName -Filter '*.dll' | Copy-Item -Destination $stage
-    foreach ($file in @('Qt5Core.dll','Qt5Gui.dll','Qt5Widgets.dll','Qt5Svg.dll','platforms/qwindows.dll','vcruntime140.dll','msvcp140.dll','Run.cmd')) {
+    $requiredRuntime = @('Qt5Core.dll','Qt5Gui.dll','Qt5Widgets.dll','platforms/qwindows.dll','platforms/qoffscreen.dll','vcruntime140.dll','msvcp140.dll','Run.cmd')
+    if ($isBaselineSdk) { $requiredRuntime += 'imageformats/qsvg.dll' }
+    if (-not $isBaselineSdk) { $requiredRuntime += 'Qt5Svg.dll' }
+    foreach ($file in $requiredRuntime) {
         if (-not (Test-Path -LiteralPath (Join-Path $stage $file))) { throw "Missing runtime: $file" }
     }
     & "$PSScriptRoot/Verify.ps1" -Dist $stage -ReportDirectory (Join-Path $logs 'native')
@@ -115,7 +157,8 @@ try {
     if ((Get-FileHash -LiteralPath (Join-Path $SdkRoot 'manifest/component-sdk.json') -Algorithm SHA256).Hash -ne $sdkManifestHash) {
         throw 'SDK_CHANGED_DURING_BUILD: do not combine new mappings with old binary.'
     }
-    Invoke-Step 'acceptance' $Python @('-B',$lifecycle,'receipt','--project',$project,'--stage',$stage,'--sdk',$SdkRoot,'--source-fingerprint',$sourceFingerprint,'--checks','ctest,token,native','--output',$success)
+    $acceptanceChecks = if ($isBaselineSdk) { 'ctest,native' } else { 'ctest,token,native' }
+    Invoke-Step 'acceptance' $Python @('-B',$lifecycle,'receipt','--project',$project,'--stage',$stage,'--sdk',$SdkRoot,'--source-fingerprint',$sourceFingerprint,'--checks',$acceptanceChecks,'--output',$success)
     Invoke-Step 'publish-tools' $Python @('-B',$lifecycle,'publish-tools','--project',$project,'--stage',$stage,'--name','gallery','--receipt',$success)
     $published = $true
     Write-Output "STABLE GALLERY: $(Join-Path $project 'build/tools/gallery')"

@@ -35,11 +35,11 @@ if(PROJECT_IS_TOP_LEVEL OR Z_NATIVE_COMPONENTS_INSTALL)
         RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}")
     install(DIRECTORY "${Z_NATIVE_PACKAGE_ROOT}/Include/"
         DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}")
-    install(DIRECTORY "${Z_NATIVE_PACKAGE_ROOT}/View/"
-        DESTINATION "View")
-    install(DIRECTORY "${Z_NATIVE_PACKAGE_ROOT}/Form/"
-        DESTINATION "Form")
-    install(DIRECTORY "${Z_NATIVE_PACKAGE_ROOT}/manifest/"
+    # The binary SDK links the QRC (QSS, SVG and HarmonyOS fonts) into the
+    # static library.  Do not duplicate the 20 MiB SC font as loose files in
+    # the binary package.  The separately delivered source package preserves
+    # Form/View/Include/SRC/cmake/manifest for QSS or source-level migration.
+    install(FILES "${Z_NATIVE_PACKAGE_ROOT}/manifest/base-sdk-scope.json"
         DESTINATION "manifest")
     install(EXPORT GeneratedComponentSDKTargets
         FILE GeneratedComponentSDKTargets.cmake

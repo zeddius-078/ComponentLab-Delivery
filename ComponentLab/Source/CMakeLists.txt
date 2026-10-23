@@ -13,12 +13,15 @@ set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTORCC ON)
 option(COMPONENTLAB_BUILD_DEMO "Build the component display application" ON)
 include(CTest)
-find_package(Qt5 5.15 REQUIRED COMPONENTS Core Gui Widgets Svg)
+include("${CMAKE_CURRENT_SOURCE_DIR}/GeneratedComponentDependency.cmake")
+find_package(Qt5 5.15 REQUIRED COMPONENTS Core Gui Widgets)
+if(NOT COMPONENTLAB_BASELINE_SDK)
+    find_package(Qt5 5.15 REQUIRED COMPONENTS Svg)
+endif()
 if(BUILD_TESTING)
     find_package(Qt5 5.15 REQUIRED COMPONENTS Test)
     find_package(Python3 3.9...<3.10 REQUIRED COMPONENTS Interpreter)
 endif()
-include("${CMAKE_CURRENT_SOURCE_DIR}/GeneratedComponentDependency.cmake")
 
 if(MSVC)
     if(DEFINED BUTTON_MSVC_INCLUDE_PREFIX)
@@ -31,6 +34,42 @@ if(MSVC)
     if(MSVC_VERSION GREATER_EQUAL 1951 AND Qt5Core_VERSION VERSION_EQUAL 5.15.2)
         add_compile_options("/FI${GENERATED_COMPONENT_SDK_ROOT}/include/MyDesignSystem/qt5152_msvc_compat.h")
     endif()
+endif()
+
+# The current production SDK is deliberately a small Qt-native package.  Its
+# gallery has a single deep consumer seam: public Z_* headers plus the package
+# QRC/QSS.  Historical Figma/Factory pages remain below for legacy packages;
+# they are not compiled or installed for this baseline SDK.
+if(COMPONENTLAB_BASELINE_SDK)
+    set(COMPONENT_LAB_BASELINE_SOURCES
+        delivery/baseline/BaselineComponentLab.cpp)
+    if(COMPONENTLAB_BUILD_DEMO)
+        add_executable(component_lab WIN32 ${COMPONENT_LAB_BASELINE_SOURCES})
+        target_link_libraries(component_lab PRIVATE
+            GeneratedComponentSDK::Components Qt5::Core Qt5::Gui Qt5::Widgets)
+    endif()
+    if(BUILD_TESTING)
+        add_executable(baseline_component_lab_tests
+            delivery/baseline/BaselineConsumerTests.cpp)
+        target_link_libraries(baseline_component_lab_tests PRIVATE
+            GeneratedComponentSDK::Components Qt5::Core Qt5::Gui Qt5::Widgets Qt5::Test)
+        add_test(NAME baseline_component_lab_consumer COMMAND baseline_component_lab_tests)
+        set_tests_properties(baseline_component_lab_consumer PROPERTIES
+            # CTest does not inherit the launcher path on Windows.  The SDK
+            # contract is a normal Qt consumer contract, so load Qt from the
+            # selected kit rather than relying on a machine-global PATH.
+            ENVIRONMENT "QT_QPA_PLATFORM=offscreen;PATH=$<TARGET_FILE_DIR:Qt5::Core>")
+        add_test(NAME directory_structure COMMAND "${Python3_EXECUTABLE}" -B
+            "${CMAKE_CURRENT_SOURCE_DIR}/delivery/tests/test_directory_structure.py")
+    endif()
+    if(COMPONENTLAB_BUILD_DEMO)
+        install(TARGETS component_lab RUNTIME DESTINATION .)
+        install(FILES delivery/qt.conf DESTINATION .)
+        install(FILES delivery/tools/RunOffline.cmd DESTINATION . RENAME Run.cmd)
+        install(FILES "${GENERATED_COMPONENT_SDK_ROOT}/manifest/component-sdk.json"
+            DESTINATION manifest)
+    endif()
+    return()
 endif()
 
 # Presentation code may arrange generated controls and report their state. The implementation

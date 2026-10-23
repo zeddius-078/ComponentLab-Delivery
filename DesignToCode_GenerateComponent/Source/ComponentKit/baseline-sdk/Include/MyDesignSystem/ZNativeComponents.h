@@ -6,9 +6,33 @@
 
 #include <QtWidgets>
 
-class QString;
+#include <type_traits>
+#include <utility>
 
 namespace commonWidget {
+
+// Qt's `using Base::Base` inherited constructors do not execute a
+// wrapper-owned constructor body.  A forwarding constructor is therefore
+// deliberate: it preserves every public native constructor while installing
+// the stable wrapper identity before the instance can be polished or painted.
+// This is a compile-time wrapper only; it introduces no new runtime state.
+inline bool ensureNativeIdentity(QWidget* widget, const char* qtClass, const char* sdkClass) {
+    const QString expectedClass = QString::fromLatin1(sdkClass);
+    bool changed = false;
+    if (!widget->property("designSystemNative").toBool()) {
+        widget->setProperty("designSystemNative", true);
+        changed = true;
+    }
+    if (widget->property("nativeQtClass").toString() != QLatin1String(qtClass)) {
+        widget->setProperty("nativeQtClass", QLatin1String(qtClass));
+        changed = true;
+    }
+    if (widget->property("designSystemClass").toString() != expectedClass) {
+        widget->setProperty("designSystemClass", expectedClass);
+        changed = true;
+    }
+    return changed;
+}
 
 #define Z_NATIVE_COMPONENT_TYPES(X) \
     X(QWidget, Z_Widget) \
@@ -74,7 +98,11 @@ namespace commonWidget {
 #define Z_DECLARE_NATIVE_WRAPPER(QT_CLASS, SDK_CLASS) \
     class SDK_CLASS : public QT_CLASS { \
       public: \
-        explicit SDK_CLASS(QWidget* parent = nullptr); \
+        template <typename... Args, \
+                  typename std::enable_if<std::is_constructible<QT_CLASS, Args...>::value, int>::type = 0> \
+        SDK_CLASS(Args&&... args) : QT_CLASS(std::forward<Args>(args)...) { \
+            Q_UNUSED(ensureNativeIdentity(this, #QT_CLASS, "commonWidget::" #SDK_CLASS)); \
+        } \
     };
 Z_NATIVE_COMPONENT_TYPES(Z_DECLARE_NATIVE_WRAPPER)
 #undef Z_DECLARE_NATIVE_WRAPPER

@@ -3,7 +3,7 @@
   "package": "GeneratedComponentSDK",
   "version": "2.0.0-development",
   "publicationState": "baseline-native-source-package",
-  "scope": "../../component-definitions/base-sdk-scope.json",
+  "scope": "manifest/base-sdk-scope.json",
   "sourceConsumption": "add_subdirectory(<ComponentPackage>)",
   "binaryConsumption": "find_package(GeneratedComponentSDK CONFIG REQUIRED)",
   "publicHeader": "Include/MyDesignSystem/MyDesignSystem.h",

@@ -27,6 +27,73 @@ def validation_inputs():
     return result
 
 
+def check_baseline_sdk(manifest, dist):
+    """Validate the published Qt-native baseline without assuming V2 Tokens.
+
+    The baseline is intentionally a direct C++/QSS package.  Figma maps,
+    palette JSON and the former ComponentFactory are legacy inputs, not a
+    runtime dependency of a portable native-control consumer.
+    """
+    assert manifest["publicationState"] == "baseline-native"
+    assert manifest["componentAuthority"]
+    assert not manifest["tokenAuthority"]
+    assert manifest["visualQssAuthority"]
+    assert not manifest["runtimeTokenJson"]
+    assert not manifest["legacyRuntime"]
+    assert manifest["visualResourceDelivery"] == "static-qrc"
+    assert manifest["linkage"] == "static"
+    assert manifest["cmakeTarget"] == "GeneratedComponentSDK::Components"
+    assert manifest["nativeComponentCount"] == 59
+    for relative in (
+        "include/MyDesignSystem/MyDesignSystem.h",
+        "include/MyDesignSystem/ZNativeComponents.h",
+        "lib/GeneratedComponentSDK.lib",
+        "manifest/base-sdk-scope.json",
+        "cmake/GeneratedComponentSDKConfig.cmake",
+    ):
+        assert (SDK / relative).is_file(), relative
+    assert not (SDK / "resources").exists()
+    assert not (SDK / "View").exists()
+    assert not (SDK / "Form").exists()
+    assert not list(SDK.rglob("*.exe")) and not list(SDK.rglob("*.dll"))
+    scope = json.loads((SDK / manifest["nativeScope"]).read_bytes())
+    native_classes = scope["approvedQtClasses"]
+    assert len(native_classes) == manifest["nativeComponentCount"]
+    assert all(item.startswith("Q") for item in native_classes)
+
+    cmake = (SOURCE / "CMakeLists.txt").read_text(encoding="utf-8-sig")
+    baseline_branch = cmake.split("if(COMPONENTLAB_BASELINE_SDK)", 1)[1].split(
+        "return()", 1)[0]
+    for forbidden in ("ComponentFactory", "TokenResources", "resources/mappings",
+                      "resources/tokens", "figma-component-map"):
+        assert forbidden not in baseline_branch, forbidden
+    assert "GeneratedComponentSDK::Components" in baseline_branch
+    assert "nativeComponentStyleSheet" in (SOURCE / "delivery/baseline/BaselineComponentLab.cpp").read_text(
+        encoding="utf-8-sig")
+
+    # A stable gallery can legitimately belong to the preceding legacy SDK
+    # release until this baseline build is promoted.  Validate a package only
+    # when the caller explicitly supplies its staged or released directory.
+    demo = Path(dist).resolve() if dist else None
+    if demo and demo.exists():
+        for relative in ("component_lab.exe", "Run.cmd", "manifest/component-sdk.json"):
+            assert (demo / relative).is_file(), relative
+        assert not list(demo.rglob("*.lib")) and not list(demo.rglob("*.h"))
+        assert not (demo / "resources").exists()
+        assert not (demo / "TokenSets").exists()
+    return {
+        "status": "PASS",
+        "sdkAuthority": str(SDK),
+        "sdkMode": "direct-reference",
+        "packageKind": "qt-native-baseline",
+        "nativeComponentCount": manifest["nativeComponentCount"],
+        "runtimeTokenJson": False,
+        "sdkManifestSha256": hashlib.sha256(
+            (SDK / "manifest/component-sdk.json").read_bytes()).hexdigest(),
+        "sourceRoles": ["delivery/baseline"],
+    }
+
+
 def check(dist=None):
     # ComponentLab directly consumes the workspace authority and must never publish or cache an SDK copy.
     assert not (PROJECT / "build/sdk").exists(), "ComponentLab must not contain build/sdk"
@@ -34,8 +101,10 @@ def check(dist=None):
     assert (SOURCE / "Verify-GeneratedComponentSDK.ps1").is_file()
     manifest = json.loads((SDK / "manifest/component-sdk.json").read_bytes())
     assert manifest["owner"] == "DesignToCode_GenerateComponent"
+    if manifest.get("packageKind") == "qt-native-baseline":
+        return check_baseline_sdk(manifest, dist)
     assert manifest["componentAuthority"] and manifest["tokenAuthority"]
-    assert manifest["linkage"] == "static"
+    assert manifest["linkage"] in ("static", "shared")
     assert manifest["designComponentCatalog"] == "resources/mappings/design-component-catalog.json"
     catalog = json.loads((SDK / manifest["designComponentCatalog"]).read_bytes())
     assert catalog["figmaFileKey"] == "w92BKW1EcutKmTXkwzNHbf"
@@ -60,7 +129,10 @@ def check(dist=None):
         for component_set in page["componentSets"]
     )
     assert (SDK / "include/MyDesignSystem/MyDesignSystem.h").is_file()
-    assert (SDK / "lib/GeneratedComponentSDK.lib").is_file()
+    if os.name == "nt":
+        assert (SDK / "lib/GeneratedComponentSDK.lib").is_file()
+    else:
+        assert (SDK / "lib/libGeneratedComponentSDK.so").is_file()
     assert (SDK / "resources/tokens/default").is_dir()
     assert not list(SDK.rglob("*.exe")) and not list(SDK.rglob("*.dll"))
     demo = Path(dist).resolve() if dist else PROJECT / "build/tools/gallery"

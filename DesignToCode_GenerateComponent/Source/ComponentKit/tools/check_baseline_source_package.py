@@ -35,6 +35,7 @@ def validate():
         "cmake/CMakeLists.txt",
         "cmake/GeneratedComponentSDKConfig.cmake.in",
         "manifest/component-package.json",
+        "manifest/base-sdk-scope.json",
         "CMakeLists.txt",
     }
     actual = {path.relative_to(PACKAGE).as_posix() for path in PACKAGE.rglob("*") if path.is_file()}
@@ -74,7 +75,10 @@ def validate():
         assert digest(PACKAGE / "View/fonts" / name) == digest(FONT_SOURCE / name), name
 
     manifest = json.loads((PACKAGE / "manifest/component-package.json").read_text(encoding="utf-8"))
-    assert manifest["scope"] == "../../component-definitions/base-sdk-scope.json"
+    embedded_scope = PACKAGE / manifest["scope"]
+    assert manifest["scope"] == "manifest/base-sdk-scope.json"
+    assert embedded_scope.is_file()
+    assert digest(embedded_scope) == digest(SCOPE)
     assert manifest["runtimeTokenJson"] is False
     assert manifest["legacyRuntime"] is False
     return {

@@ -11,23 +11,6 @@ void initializeNativeComponentQrc() {
 }
 
 namespace commonWidget {
-namespace {
-
-void applyNativeIdentity(QWidget* widget, const char* qtClass, const char* sdkClass) {
-    widget->setProperty("designSystemNative", true);
-    widget->setProperty("nativeQtClass", qtClass);
-    widget->setProperty("designSystemClass", QString::fromLatin1(sdkClass));
-}
-
-}  // namespace
-
-#define Z_IMPLEMENT_NATIVE_WRAPPER(QT_CLASS, SDK_CLASS) \
-    SDK_CLASS::SDK_CLASS(QWidget* parent) : QT_CLASS(parent) { \
-        applyNativeIdentity(this, #QT_CLASS, "commonWidget::" #SDK_CLASS); \
-    }
-Z_NATIVE_COMPONENT_TYPES(Z_IMPLEMENT_NATIVE_WRAPPER)
-#undef Z_IMPLEMENT_NATIVE_WRAPPER
-
 void initializeNativeComponentResources() {
     static const bool initialized = [] {
         initializeNativeComponentQrc();

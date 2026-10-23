@@ -29,26 +29,26 @@ def verify_native_baseline(manifest, names):
 
     A baseline package is not a cut-down copy of the historical component
     runtime.  In particular it must not carry runtime Token JSON, Figma maps,
-    ComponentFactory, or the component catalog.  Its visual authority is the
-    package-owned View QSS resource, while token data remains a build-time
-    concern of the producer.
+    ComponentFactory, or the component catalog. Its QSS, SVG and font assets
+    are compiled into the static QRC library, so the binary package does not
+    duplicate source View assets; those are preserved in the source package.
     """
     if manifest.get("tokenAuthority") is not False or not manifest.get("visualQssAuthority"):
         raise ValueError("SDK_BASELINE_AUTHORITY_INVALID")
     if manifest.get("runtimeTokenJson") is not False or manifest.get("legacyRuntime") is not False:
         raise ValueError("SDK_BASELINE_RUNTIME_BOUNDARY_INVALID")
+    # `external-view` is accepted only to validate the immediately preceding
+    # baseline during an atomic upgrade. Newly published packages must declare
+    # the smaller static-qrc form explicitly.
+    visual_delivery = manifest.get("visualResourceDelivery", "external-view")
+    if visual_delivery not in ("static-qrc", "external-view"):
+        raise ValueError("SDK_BASELINE_RESOURCE_DELIVERY_INVALID")
     scope_path = manifest.get("nativeScope", "")
     required = {
         "include/MyDesignSystem/MyDesignSystem.h",
         "include/MyDesignSystem/ZNativeComponents.h",
         "cmake/GeneratedComponentSDKConfig.cmake",
         "cmake/GeneratedComponentSDKConfigVersion.cmake",
-        "View/z_native_components.qrc",
-        "View/ZNativeComponents.qss",
-        "View/fonts/HarmonyOS_Sans.ttf",
-        "View/fonts/HarmonyOS_Sans_SC.ttf",
-        "View/fonts/LICENSE.txt",
-        "manifest/component-package.json",
         scope_path,
     }
     if not required.issubset(set(names)):
@@ -56,8 +56,13 @@ def verify_native_baseline(manifest, names):
     if any(name.startswith("resources/tokens/") or name.startswith("resources/mappings/")
            for name in names):
         raise ValueError("SDK_BASELINE_CONTAINS_RUNTIME_MIDDLEWARE")
-    if any(Path(name).suffix.lower() == ".json" and name != scope_path and
-           name not in ("manifest/component-sdk.json", "manifest/component-package.json")
+    if visual_delivery == "static-qrc" and any(
+            name.startswith("View/") or name.startswith("Form/") for name in names):
+        raise ValueError("SDK_BASELINE_DUPLICATES_SOURCE_ASSETS")
+    allowed_json = {scope_path, "manifest/component-sdk.json"}
+    if visual_delivery == "external-view":
+        allowed_json.add("manifest/component-package.json")
+    if any(Path(name).suffix.lower() == ".json" and name not in allowed_json
            for name in names):
         raise ValueError("SDK_BASELINE_CONTAINS_UNDECLARED_JSON")
     scope_file = Path(scope_path)
