@@ -9,6 +9,7 @@
   "alignmentValues":{"flex-start":"start","center":"center","flex-end":"end"},
   "missingAlignment":"start",
   "childOrder":"reverse-childNode",
+  "structureOnlyStatic":{"enabled":true,"modes":["NONE"],"allowMissingStackMode":true,"strategy":"absolute-geometry","geometryFields":["left","top","width","height"],"childOrder":"childNode"},
   "visibilityField":"visible",
   "missingVisibility":true,
   "sizeModes":{"FIXED":"Fixed","RESIZE_TO_FIT":"Hug","FILL_PARENT":"Fill"},

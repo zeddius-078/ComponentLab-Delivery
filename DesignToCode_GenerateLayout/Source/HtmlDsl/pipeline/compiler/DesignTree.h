@@ -9,8 +9,16 @@
 
 namespace v2 {
 // sourceHash 由调用方对输入文件计算，绑定本次树所依据的完整 DSL 或 B2 混合输入。
-inline QJsonObject designTree(const QJsonObject& raw, const QString& sourceHash, const QString& designProfile) {
-    const auto variableValidation = validateVariables(raw, designProfile);
+inline QJsonObject designTree(const QJsonObject& raw, const QString& sourceHash,
+                              const QString& designProfile, const QString& runtimeProfile = {},
+                              bool validateVariableBindings = true) {
+    // 结构模式不读取变量值、Token 或组件外观。此时不能要求设计端提供
+    // 多模式变量集的选择；严格模式仍完整执行原有 fail-closed 校验。
+    const auto variableValidation = validateVariableBindings
+        ? validateVariables(raw, designProfile, runtimeProfile)
+        : QJsonObject{{"status", "NOT_APPLICABLE"},
+                      {"reason", "STRUCTURE_ONLY_SKIPS_TOKEN_MODE_RESOLUTION"},
+                      {"scope", "structure-only does not evaluate design variable values"}};
     QJsonArray nodes, roots;
     QSet<QString> ids;
     std::function<void(const QJsonObject&, const QJsonValue&)> walk;

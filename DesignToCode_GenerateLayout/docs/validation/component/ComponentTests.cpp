@@ -1,4 +1,4 @@
-// 组件契约的原生测试：保存的 Pixso 实例与受控夹具分别验证，结果写到 component 目录。
+﻿// 组件契约的原生测试：保存的 Pixso 实例与受控夹具分别验证，结果写到 component 目录。
 // 所有修改仅发生在内存副本，原始设计输入保持原样。
 #include "ComponentConverter.h"
 #include "LayoutConverter.h"
@@ -449,7 +449,7 @@ private slots:
                             {"nodeText", "Mapped content"},
                             {"childNode", QJsonArray{}}},
                 QJsonObject{{"guid", masterId + ":profile-name"},
-                            {"name", "ProfileName"},
+                            {"name", "Profile/Name"},
                             {"nodeText", "Mapped profile"},
                             {"childNode", QJsonArray{}}},
                 QJsonObject{{"guid", masterId + ":label-content"},

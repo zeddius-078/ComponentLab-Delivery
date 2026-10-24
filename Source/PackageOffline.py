@@ -15,6 +15,7 @@ import zipfile
 
 from BuildReceipt import ROOT, check, sha
 from ArtifactLifecycle import inventory, operation_lock, verify_tools
+from AgentCapabilityProfile import binding as execution_capability_binding
 from SDKContract import verify as verify_sdk
 sys.path.insert(0, str(Path(__file__).parent / "offline"))
 from offline import no_links, inside, verify
@@ -113,7 +114,7 @@ def package(inputs_path, sdk, stage_only=False):
         copy(scripts / "tools", stage / "scripts/tools")
         copy(scripts / "capture", stage / "scripts/capture")
         copy(Path(__file__).parent / "offline/offline.py", stage / "scripts/offline.py")
-        for name in ("ArtifactLifecycle.py", "SDKContract.py"):
+        for name in ("ArtifactLifecycle.py", "AgentCapabilityProfile.py", "SDKContract.py"):
             copy(Path(__file__).parent / name, stage / "scripts" / name)
         copy(Path(__file__).parent / "offline/Run.cmd", stage / "Run.cmd")
         copy(tool / "resources/mapping", stage / "resources/mapping")
@@ -128,6 +129,7 @@ def package(inputs_path, sdk, stage_only=False):
         copy(ROOT / "docs/designRules/architecture/工具与交付依赖.md", stage / "DEPENDENCIES.md")
         manifest = {
             "schemaVersion": 1, "releaseId": release_id, "configuration": "Release",
+            "executionCapabilityProfile": execution_capability_binding(),
             "sdkManifestSha256": sha(sdk / "manifest/component-sdk.json"),
             "sourceFingerprint": sdk_manifest["sourceFingerprint"],
             "acceptance": {"developmentRegression": receipt["developmentRegressionPassed"],

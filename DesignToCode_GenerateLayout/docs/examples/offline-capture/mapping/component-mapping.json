@@ -1,4 +1,14 @@
 {
-  "version": 1, "profile": "wide-light", "rules": [],
+  "version": 1, "profile": "wide-light",
+  "runtimeProfiles": ["standard-light", "standard-dark", "wide-light", "wide-dark"],
+  "profileAliases": {
+    "light-compact": {
+      "runtimeProfile": "wide-light",
+      "theme": "light",
+      "density": "compact",
+      "reason": "Legacy design-side variable mode mapped to the canonical SDK context"
+    }
+  },
+  "rules": [],
   "notice": "Synthetic FRAME + PARAGRAPH example does not claim component coverage."
 }

@@ -44,6 +44,14 @@ class GeneratorContractTests(unittest.TestCase):
         (self.root / "input.json").write_text(json.dumps(self.raw), encoding="utf-8")
         (self.root / "mapping/engineering-names.json").write_text(json.dumps(self.names), encoding="utf-8")
         env = dict(os.environ, QT_QPA_PLATFORM="offscreen", D2C_RUNTIME_ROOT=str(PROJECT / "build/tools/layout"), D2C_WORK_ROOT=str(PROJECT))
+        # Relocation probes copy only the selected executable to NTFS. Keep its
+        # matching published DLLs/plugins explicit in the child environment so
+        # a loader failure cannot masquerade as an output-boundary rejection.
+        # This does not change the host/global PATH or install dependencies.
+        runtime_bin = COMPILER.resolve().parent
+        env["PATH"] = str(runtime_bin) + os.pathsep + env.get("PATH", "")
+        env["QT_PLUGIN_PATH"] = str(runtime_bin)
+        env["QT_QPA_PLATFORM_PLUGIN_PATH"] = str(runtime_bin / "platforms")
         arguments = [
             str(compiler), "--raw", str(self.root / "input.json"),
             "--mapping", str(self.root / "mapping"),
@@ -163,12 +171,12 @@ class GeneratorContractTests(unittest.TestCase):
         heading['nodeText'] = 123
         self.reject_formal_fixture('INVALID_TEXT_VALUE')
 
-    def test_formal_rejects_implicit_profile_switch(self):
+    def test_formal_uses_declared_profile_without_fixed_lock(self):
+        # 正式链路按设计侧 Profile 标记/映射声明解析上下文，不再强制固定 wide-light。
         output = self.formal_output()
         code, error = self.generate(formal=True, output=output)
-        self.assertNotEqual(code, 0)
-        self.assertIn("FORMAL_REQUIRES_LIGHT_COMPACT_MAPPING", error)
-        self.assertFalse(output.exists())
+        self.assertEqual(code, 0, error)
+        self.assertTrue((output / "form" / "reviewPage.ui").is_file(), list(output.rglob("*")))
 
     def test_entry_defaults_to_formal_and_rejects_mixed_modes(self):
         entry = PROJECT / 'Source/HtmlDsl/Generate.ps1'

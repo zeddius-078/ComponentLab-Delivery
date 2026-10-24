@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "id": "native-static-flex",
+  "version": "0.1.0",
+  "directions": {
+    "row": "QHBoxLayout",
+    "column": "QVBoxLayout"
+  },
+  "crossAlignment": {
+    "flex-start": {"row": "Qt::AlignTop", "column": "Qt::AlignLeft"},
+    "center": {"row": "Qt::AlignVCenter", "column": "Qt::AlignHCenter"},
+    "flex-end": {"row": "Qt::AlignBottom", "column": "Qt::AlignRight"},
+    "stretch": {"row": null, "column": null}
+  },
+  "unsupported": [
+    "flex-wrap", "row-reverse", "column-reverse", "space-around",
+    "space-evenly", "percentage-length", "calc", "absolute", "grid"
+  ]
+}

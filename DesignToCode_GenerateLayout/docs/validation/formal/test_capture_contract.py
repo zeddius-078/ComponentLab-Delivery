@@ -35,10 +35,10 @@ class CaptureContractTests(unittest.TestCase):
         self.addCleanup(self.temp.cleanup)
         self.root = Path(self.temp.name)
         self.html = """<!doctype html><meta charset="utf-8"><style>
-body{margin:0} #fixture_1{box-sizing:border-box;width:80px;height:60px;
-display:flex;flex-direction:row;gap:8px;padding:0px;align-items:flex-start;
-justify-content:flex-start} #fixture_2{width:20px;height:20px}
-</style><div id="fixture_1"><div id="fixture_2">A</div></div>"""
+body{margin:0} #fixture_1{box-sizing:border-box;width:80px;height:60px}
+.frame-content-fixture_1{display:flex;flex-direction:row;gap:8px;padding:0px;
+align-items:flex-start;justify-content:flex-start} #fixture_2{width:20px;height:20px}
+</style><div id="fixture_1"><div class="frame-content-fixture_1"><div id="fixture_2">A</div></div></div>"""
         self.raw = {"pixTreeNodes": [{"guid": "fixture:1", "type": "FRAME",
             "width": 80, "height": 60, "childNode": [{"guid": "fixture:2",
                 "type": "PARAGRAPH", "width": 20, "height": 20}]}]}
@@ -93,6 +93,67 @@ justify-content:flex-start} #fixture_2{width:20px;height:20px}
     def test_network_resource_cannot_silently_fill_cache_gap(self):
         self.html += '<img src="https://example.invalid/unexported.png">'
         self.assert_failure("HTML_RENDER_FAILED")
+
+    def test_nested_content_layer_is_located_and_structure_stays_strict(self):
+        self.html = """<!doctype html><meta charset="utf-8"><style>
+body{margin:0} #fixture_1{box-sizing:border-box;width:80px;height:60px}
+.Pixso-frame-fixture_1-content-layer{display:flex;flex-direction:row;gap:8px;
+padding:0px;align-items:flex-start;justify-content:flex-start}
+#fixture_2{width:20px;height:20px}
+</style><div id="fixture_1" class="stroke-wrapper-fixture_1">
+<div class="Pixso-frame-fixture_1"></div><div class="stroke-fixture_1"></div>
+<div class="Pixso-frame-fixture_1-content-layer"><div id="fixture_2">A</div></div></div>"""
+        process, report = self.run_capture()
+        self.assertEqual(process.returncode, 0, process.stderr.decode(errors="replace"))
+        self.assertEqual(report["warnings"], [])
+        value = json.loads((self.root / "working/hybrid-result.json").read_bytes())
+        self.assertEqual(value["pixTreeNodes"][0]["autoLayout"]["autoLayoutItemSpacing"], 8)
+
+    def test_unknown_content_wrapper_is_warning_and_preserves_dsl_subtree(self):
+        self.html = """<!doctype html><meta charset="utf-8"><style>
+body{margin:0} #fixture_1{width:80px;height:60px}
+</style><div id="fixture_1"><div class="future-wrapper-fixture_1"></div></div>"""
+        process, report = self.run_capture()
+        self.assertEqual(process.returncode, 0, process.stderr.decode(errors="replace"))
+        self.assertEqual(report["status"], "PASS")
+        self.assertEqual(report["warnings"], [{"kind": "FRAME_CONTENT_LAYER_UNRESOLVED", "guid": "fixture:1"}])
+        value = json.loads((self.root / "working/hybrid-result.json").read_bytes())
+        self.assertEqual(value["pixTreeNodes"][0]["childNode"][0]["guid"], "fixture:2")
+
+    def test_flat_dom_without_content_wrapper_is_measured_and_verified(self):
+        self.html = """<!doctype html><meta charset="utf-8"><style>
+body{margin:0} #fixture_1{box-sizing:border-box;width:80px;height:60px;display:flex;
+flex-direction:row;gap:8px;padding:0px;align-items:flex-start;justify-content:flex-start}
+#fixture_2{width:20px;height:20px}
+</style><div id="fixture_1"><div id="fixture_2">A</div></div>"""
+        process, report = self.run_capture()
+        self.assertEqual(process.returncode, 0, process.stderr.decode(errors="replace"))
+        self.assertEqual(report["status"], "PASS")
+        self.assertEqual(report["warnings"], [])
+        value = json.loads((self.root / "working/hybrid-result.json").read_bytes())
+        layout = value["pixTreeNodes"][0]["autoLayout"]
+        self.assertEqual(layout["autoLayoutItemSpacing"], 8)
+        self.assertEqual(layout["autoLayoutPaddingLeft"], 0)
+
+    def test_declared_font_family_is_loaded_even_if_page_text_uses_another(self):
+        # 真实导出会声明目标族却让正文使用别的族名；字体懒加载不能把可用资源误判为失败。
+        # 使用系统小字体（仅复制到临时目录）避免大字体在并发测试中拖慢截图。
+        source = Path(os.environ.get("WINDIR", r"C:\Windows")) / "Fonts/arial.ttf"
+        font_copy = self.root / "fixture-font.ttf"
+        font_copy.write_bytes(source.read_bytes())
+        self.capture["fontFamily"] = "FixtureFont"
+        self.html = self.html.replace(
+            "<style>",
+            "<style>@font-face{font-family:'FixtureFont';src:url(" + font_copy.as_uri() + ")}")
+        process, report = self.run_capture()
+        self.assertEqual(process.returncode, 0, process.stderr.decode(errors="replace"))
+        self.assertEqual(report["status"], "PASS")
+        self.assertEqual(report["warnings"], [])
+
+    def test_content_layer_child_set_mismatch_remains_error(self):
+        self.html = self.html.replace('<div id="fixture_2">A</div>',
+                                      '<div id="fixture_2">A</div><div id="fixture_3">B</div>')
+        self.assert_failure("HTML_CHILD_SET_MISMATCH")
 
 
 if __name__ == "__main__":

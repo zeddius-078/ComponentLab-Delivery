@@ -11,7 +11,9 @@ import unittest
 
 PROJECT = Path(__file__).resolve().parents[3]
 MAPPING = PROJECT / "docs/fixtures/layout/mapping-commerly"
-COMPILER = PROJECT / "build/tools/layout/bin/v2_ui_compiler.exe"
+_COMPILER_NAME = "v2_ui_compiler.exe" if os.name == "nt" else "v2_ui_compiler"
+COMPILER = Path(os.environ.get("D2C_COMPILER",
+    str(PROJECT / "build/tools/layout/bin" / _COMPILER_NAME)))
 
 
 def read(name):
@@ -56,9 +58,11 @@ class CommerlyMappingTests(unittest.TestCase):
         scratch.mkdir(parents=True, exist_ok=True)
         base = json.loads((PROJECT / "docs/examples/offline-capture/canonical.raw.json").read_bytes())
         env = dict(os.environ, QT_QPA_PLATFORM="offscreen", D2C_RUNTIME_ROOT=str(PROJECT / "build/tools/layout"), D2C_WORK_ROOT=str(PROJECT))
-        qt = Path(os.environ.get("QT_ROOT", "D:/QT/5.15.2/msvc2019_64"))
-        self.assertTrue((qt / "bin/Qt5Core.dll").is_file(), "Specify an existing QT_ROOT; do not install")
-        env["PATH"] = str(qt / "bin") + os.pathsep + env.get("PATH", "")
+        qt = Path(os.environ.get("QT_ROOT", "/usr/lib/x86_64-linux-gnu" if os.name != "nt" else "D:/QT/5.15.2/msvc2019_64"))
+        if os.name == "nt":
+            self.assertTrue((qt / "bin/Qt5Core.dll").is_file(), "Specify an existing QT_ROOT; do not install")
+            env["PATH"] = str(qt / "bin") + os.pathsep + env.get("PATH", "")
+        env["LD_LIBRARY_PATH"] = str(PROJECT.parent / "DesignToCode_GenerateComponent/build/sdk/lib") + os.pathsep + env.get("LD_LIBRARY_PATH", "")
         with tempfile.TemporaryDirectory(dir=str(scratch)) as temp:
             directory = Path(temp)
             for index, family in enumerate(read("inventory.json")["items"]):

@@ -15,9 +15,22 @@ import sys
 import uuid
 
 from SDKContract import reject_links, sha, verify as verify_sdk
+from AgentCapabilityProfile import binding as execution_capability_binding
 
 MANIFEST = "tool-manifest.json"
 _HELD_LOCKS = set()
+
+
+def verify_execution_capability(value):
+    """Validate the label carried by a newly controlled tool without guessing its model."""
+    required = {"canonicalId", "displayName", "executionClass", "profileSha256"}
+    if not isinstance(value, dict) or required - value.keys():
+        raise ValueError("EXECUTION_CAPABILITY_PROFILE_MISSING")
+    if (not isinstance(value["canonicalId"], str) or not value["canonicalId"].strip()
+            or not isinstance(value["profileSha256"], str)
+            or len(value["profileSha256"]) != 64):
+        raise ValueError("EXECUTION_CAPABILITY_PROFILE_INVALID")
+    return value
 
 
 def safe_path(project, relative):
@@ -153,6 +166,7 @@ def receipt(project, stage, sdk, source_fingerprint, checks, output):
              "sourceFingerprint": source_fingerprint, "sdkRoot": str(Path(sdk).resolve()),
              "sdkManifestSha256": sha(Path(sdk) / "manifest/component-sdk.json"),
              "stageFiles": files, "checks": checks,
+             "executionCapabilityProfile": execution_capability_binding(),
              "freshMachinePassed": False, "visualApproval": False}
     write_json(output, value)
     return value
@@ -169,6 +183,10 @@ def verify_tools(root):
     acceptance = manifest.get("acceptance", {})
     if acceptance.get("status") != "PASS" or not acceptance.get("checks"):
         raise ValueError("TOOL_ACCEPTANCE_MISSING")
+    # Packages published before this profile existed remain rebuildable but are
+    # deliberately not misrepresented as newly baseline-labelled tools.
+    if "executionCapabilityProfile" in acceptance:
+        verify_execution_capability(acceptance["executionCapabilityProfile"])
     return manifest
 
 
@@ -224,6 +242,7 @@ def publish(project, stage, name, receipt_path):
             raise ValueError("ACCEPTANCE_INVALID")
         if record.get("sourceFingerprint") != fingerprint(project):
             raise ValueError("ACCEPTANCE_STALE_SOURCE")
+        verify_execution_capability(record.get("executionCapabilityProfile"))
         verify_sdk(record["sdkRoot"])
         if sha(Path(record["sdkRoot"]) / "manifest/component-sdk.json") != record["sdkManifestSha256"]:
             raise ValueError("ACCEPTANCE_STALE_SDK")

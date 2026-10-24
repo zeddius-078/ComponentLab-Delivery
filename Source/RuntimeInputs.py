@@ -10,6 +10,7 @@ import uuid
 
 from ArtifactLifecycle import inventory, operation_lock, safe_path, write_json, switch_directory
 from SDKContract import reject_links, sha
+from AgentCapabilityProfile import binding as execution_capability_binding
 
 ROOT = Path(__file__).resolve().parent.parent
 
@@ -41,7 +42,7 @@ def promote(project, stage, relative, name, manifest_name):
 def support(project):
     stage = safe_path(project, "output/work/stage/support-" + uuid.uuid4().hex)
     stage.mkdir(parents=True)
-    for name in ("SDKContract.py", "ArtifactLifecycle.py", "OperationLock.ps1",
+    for name in ("SDKContract.py", "ArtifactLifecycle.py", "AgentCapabilityProfile.py", "OperationLock.ps1",
                  "RuntimeRun.py", "offline/LayoutRun.cmd"):
         copy(ROOT / "Source" / name, stage / name)
     write_json(stage / "support-manifest.json", {"schemaVersion": 1, "files": inventory(stage)})
@@ -96,6 +97,7 @@ def runtime(project, inputs):
     (stage / "licenses/input-provenance.json").write_bytes(inputs.read_bytes())
     write_json(stage / "runtime-manifest.json", {
         "schemaVersion": 1, "kind": "controlled-runtime", "inputManifestSha256": sha(inputs),
+        "executionCapabilityProfile": execution_capability_binding(),
         "redistributionReviewed": config.get("redistributionReviewed") is True,
         "reviewReference": config.get("reviewReference"), "playwright": playwright["version"],
         "chromium": browser, "runtime": {"python": "python/python.exe", "node": "node/node.exe",

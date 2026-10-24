@@ -34,6 +34,7 @@
 #include <QSignalBlocker>
 #include <QSet>
 #include <QSplitter>
+#include <QThread>
 #include <QTimer>
 #include <QTabWidget>
 #include <QTableWidget>
@@ -470,11 +471,25 @@ void DemoWindow::capture(const QString& path, const QString& pageId) {
                 gallery && gallery->property("variantBuildComplete").isValid()) {
                 QElapsedTimer buildDeadline;
                 buildDeadline.start();
+                // Specimen construction is event-loop driven; repainting the growing
+                // canvas on every turn dominates capture time on software rendering.
+                // Suspend updates while building, then paint the settled canvas once.
+                if (page)
+                    page->setUpdatesEnabled(false);
                 while (!gallery->property("variantBuildComplete").toBool() &&
-                       buildDeadline.elapsed() < 30000) {
-                    QEventLoop buildStep;
-                    QTimer::singleShot(10,&buildStep,&QEventLoop::quit);
-                    buildStep.exec(QEventLoop::ExcludeUserInputEvents);
+                       buildDeadline.elapsed() < 900000) {
+                    // Verification passes --quit-after, which sets the thread
+                    // quit flag while this capture runs. Nested QEventLoop::exec
+                    // calls return immediately once that flag is set, so the
+                    // build wait drains events directly instead of starting a
+                    // nested loop.
+                    QCoreApplication::processEvents(QEventLoop::ExcludeUserInputEvents);
+                    QThread::msleep(2);
+                }
+                if (page) {
+                    page->setUpdatesEnabled(true);
+                    page->update();
+                    QApplication::processEvents();
                 }
                 if (!gallery->property("variantBuildComplete").toBool())
                     throw std::runtime_error(

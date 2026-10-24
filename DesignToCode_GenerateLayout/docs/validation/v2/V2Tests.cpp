@@ -213,7 +213,7 @@ private slots:
 
     // 仅在临时 XML 中改成未知类，确认加载器拒绝并保持正式页面原样。
     void rejectsUnregisteredUiClass() {
-        QTemporaryDir temporary;
+        QTemporaryDir temporary(QString(D2C_ROOT) + "/../output/work/v2-test-XXXXXX");
         QVERIFY(temporary.isValid());
         // 复制页面及配套参数到临时目录，只对副本注入未知类，保护正式交付文件。
         for (const auto& ext : {".ui", ".qss", ".components.json"})
@@ -233,7 +233,7 @@ private slots:
 
     // 在临时副本把间距 10 改为 14，证明运行布局由 XML 驱动；末尾核对原文件哈希。
     void xmlEditControlsLayoutWithoutDsl() {
-        QTemporaryDir temporary;
+        QTemporaryDir temporary(QString(D2C_ROOT) + "/../output/work/v2-test-XXXXXX");
         QVERIFY(temporary.isValid());
         // 成套复制页面、样式和组件参数，隔离间距修改实验，避免正式页面被测试改写。
         for (const auto& ext : {".ui", ".qss", ".components.json"})
@@ -321,7 +321,7 @@ private slots:
 
     // 两次独立生成四类文件并逐字节比较，再与正式部署页面对照。
     void compilerIsDeterministic() {
-        QTemporaryDir temporary;
+        QTemporaryDir temporary(QString(D2C_ROOT) + "/../output/work/v2-test-XXXXXX");
         QVERIFY(temporary.isValid());
         const auto raw = QString(FIXTURE_ROOT) + "/design-inputs/result-page/canonical.raw.json";
         // 在两个独立输出前缀下运行生成器，排除复用上次文件造成的假确定性。
@@ -351,7 +351,7 @@ private slots:
     // 两个点位视图对照：token-sdk 页面用 Z Design System 类，qt-native 页面用公开 Qt 内置类，
     // 且 qt-native 的初始化参数已序列化进 XML、无需运行时工厂即可还原。
     void pointUiLibrarySwitchLoadsBothMappings() {
-        QTemporaryDir temporary;
+        QTemporaryDir temporary(QString(D2C_ROOT) + "/../output/work/v2-test-XXXXXX");
         QVERIFY(temporary.isValid());
         const auto raw = QString(FIXTURE_ROOT) + "/design-inputs/review-page/canonical.raw.json";
         QProcess tokenCompiler;
@@ -393,7 +393,7 @@ private slots:
     // 真实 27:450 页面使用设计侧 light-compact；生成必须显式解析为已发布的 wide-light，
     // 并把设计名与运行时名同时写入清单，证明没有把别名伪装成 SDK Token profile。
     void designProfileAliasResolvesToPublishedRuntimeContext() {
-        QTemporaryDir temporary;
+        QTemporaryDir temporary(QString(D2C_ROOT) + "/../output/work/v2-test-XXXXXX");
         QVERIFY(temporary.isValid());
         const auto raw = QString(FIXTURE_ROOT) +
                          "/design-inputs/horizontal-27-450-full/canonical.raw.json";
@@ -411,7 +411,7 @@ private slots:
     }
 
     void parentPrimarySizingHasExplicitOutcomes() {
-        QTemporaryDir temporary;
+        QTemporaryDir temporary(QString(D2C_ROOT) + "/../output/work/v2-test-XXXXXX");
         QVERIFY(temporary.isValid());
         const auto source = readJson(QString(FIXTURE_ROOT) +
                                      "/design-inputs/result-page/canonical.raw.json");
@@ -528,7 +528,7 @@ private slots:
 
     // 临时将选项状态改为未知值，生成器必须失败且不能留下可加载的 invalid.ui。
     void compilerRejectsUnsupportedVariant() {
-        QTemporaryDir temporary;
+        QTemporaryDir temporary(QString(D2C_ROOT) + "/../output/work/v2-test-XXXXXX");
         QVERIFY(temporary.isValid());
         auto raw =
             readJson(QString(FIXTURE_ROOT) + "/design-inputs/result-page/canonical.raw.json");

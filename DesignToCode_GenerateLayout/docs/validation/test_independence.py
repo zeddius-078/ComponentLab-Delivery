@@ -28,8 +28,11 @@ class IndependenceTests(unittest.TestCase):
         manifest = json.loads((SDK / 'manifest/component-sdk.json').read_bytes())
         self.assertEqual(manifest['owner'], 'DesignToCode_GenerateComponent')
         self.assertTrue(manifest['componentAuthority'])
-        self.assertEqual(manifest['linkage'], 'static')
-        self.assertTrue((SDK / 'lib/GeneratedComponentSDK.lib').is_file())
+        self.assertIn(manifest['linkage'], ('static', 'shared'))
+        if os.name == 'nt':
+            self.assertTrue((SDK / 'lib/GeneratedComponentSDK.lib').is_file())
+        else:
+            self.assertTrue((SDK / 'lib/libGeneratedComponentSDK.so').is_file())
         self.assertTrue((SDK / 'include/MyDesignSystem/MyDesignSystem.h').is_file())
         self.assertTrue((SDK / 'resources/tokens/default').is_dir())
         self.assertFalse(list(SDK.rglob('*.exe')))

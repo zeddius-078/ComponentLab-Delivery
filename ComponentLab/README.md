@@ -36,3 +36,7 @@ pwsh -File Source/delivery/tools/Build.ps1
 ## 验收记录
 
 结构、构造、交互、Token 变化和截图分别记录。展示程序启动成功只说明运行链路可用；组件是否适合业务接入，以独立 SDK 消费测试为准。
+
+## 自动化输出基线
+
+本项目的受控执行 SKU 为 `DS-V4F-BUILDUNK-NT-C256K-TEXT-AGENT-PROVIDERUNK`（DeepSeek V4 Flash 256K Non-Think）。自动化任务必须显式给定 SDK、组件族、Profile、场景和验证命令；缺失合同或展示差异记录并停止，不在展示层推断或补写组件实现。完整约束见工作区 [能力画像](../docs/designRules/architecture/agent-execution-capability-profile.json)。

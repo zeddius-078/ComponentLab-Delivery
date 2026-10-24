@@ -28,7 +28,7 @@ class DirectoryTests(unittest.TestCase):
             self.assertFalse(manifest["tokenAuthority"])
             self.assertTrue(manifest["visualQssAuthority"])
             self.assertFalse(manifest["runtimeTokenJson"])
-            self.assertEqual(manifest["nativeComponentCount"], 59)
+            self.assertEqual(manifest["nativeComponentCount"], 58)
         else:
             self.assertTrue(manifest["tokenAuthority"])
         self.assertIn(manifest["linkage"], ("static", "shared"))

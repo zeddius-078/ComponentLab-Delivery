@@ -1732,6 +1732,10 @@ auto* secondEditor=editors->widget(1);auto* area=secondEditor->findChild<QMdiAre
         QVERIFY(!window->findChild<QWidget*>("shadowEditor"));
     }
     void buttonPreservesLayoutAcrossV2Appearances() {
+        auto* tree = part<QTreeWidget>("componentTree");
+        QVERIFY(tree);
+        tree->setCurrentItem(pageItem(tree, QStringLiteral("172:2710")));
+        QCoreApplication::processEvents();
         auto* b = part<Z_PushButton>("BUTTON_ROOT");
         auto* appearance = part<QComboBox>("buttonAppearance");
         const auto before = b->sizeHint();
@@ -3027,7 +3031,11 @@ auto* secondEditor=editors->widget(1);auto* area=secondEditor->findChild<QMdiAre
         QCOMPARE(browseRequests.count(), 1);
         upload->setSnapshotState("Default");
         QMimeData mimeData;
+#ifdef Q_OS_WIN
         mimeData.setUrls({QUrl::fromLocalFile("C:/fixtures/recipe.csv")});
+#else
+        mimeData.setUrls({QUrl::fromLocalFile("/tmp/fixtures/recipe.csv")});
+#endif
         QDragEnterEvent dragEnter(QPoint(12, 12), Qt::CopyAction, &mimeData,
                                   Qt::LeftButton, Qt::NoModifier);
         QApplication::sendEvent(upload, &dragEnter);
@@ -3036,8 +3044,13 @@ auto* secondEditor=editors->widget(1);auto* area=secondEditor->findChild<QMdiAre
                         Qt::LeftButton, Qt::NoModifier);
         QApplication::sendEvent(upload, &drop);
         QCOMPARE(droppedFiles.count(), 1);
+#ifdef Q_OS_WIN
         QCOMPARE(droppedFiles.takeFirst().at(0).toStringList(),
                  QStringList({QStringLiteral("C:/fixtures/recipe.csv")}));
+#else
+        QCOMPARE(droppedFiles.takeFirst().at(0).toStringList(),
+                 QStringList({QStringLiteral("/tmp/fixtures/recipe.csv")}));
+#endif
         upload->resize(upload->sizeHint());
         QTest::keyClick(upload, Qt::Key_Return);
         QCOMPARE(browseRequests.count(), 2);

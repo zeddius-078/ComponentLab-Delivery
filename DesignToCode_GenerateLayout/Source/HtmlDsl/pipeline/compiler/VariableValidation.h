@@ -2,13 +2,16 @@
 // 校验页面已导出的变量引用，不替代 SDK Token 求值，也不扫描未使用的组件库变体。
 #include <QJsonArray>
 #include <QJsonObject>
+#include <QRegularExpression>
 #include <QSet>
+#include <QStringList>
 #include <cmath>
 #include <functional>
 #include <stdexcept>
 
 namespace v2 {
-inline QJsonObject validateVariables(const QJsonObject& raw, const QString& profile) {
+inline QJsonObject validateVariables(const QJsonObject& raw, const QString& profile,
+                                     const QString& runtimeProfile = {}) {
     const auto variables = raw["variableMap"].toObject();
     const auto sets = raw["variableSetMap"].toObject();
     int references = 0;
@@ -47,6 +50,51 @@ inline QJsonObject validateVariables(const QJsonObject& raw, const QString& prof
                     if (!mode.isEmpty()) fail("VARIABLE_MODE_AMBIGUOUS", setId);
                     mode = candidate.toObject()["id"].toString();
                 }
+            // 语义匹配：导出集合可能使用 Light/Dark、Standard/Wide 或
+            // light-comfortable 等组合命名；按主题/密度/宽度词元唯一匹配。
+            if (mode.isEmpty()) {
+                const auto tokensOf = [](const QString& name) {
+                    QSet<QString> tokens;
+                    for (const auto& part : name.toLower().split(
+                             QRegularExpression(QStringLiteral("[^a-z]+")), Qt::SkipEmptyParts))
+                        tokens.insert(part);
+                    return tokens;
+                };
+                const auto designTokens = tokensOf(profile);
+                const auto runtimeTokens = tokensOf(runtimeProfile);
+                QSet<QString> theme, density, width;
+                for (const auto* value : {"light", "dark"})
+                    if (designTokens.contains(QString::fromLatin1(value))) theme.insert(QString::fromLatin1(value));
+                for (const auto* value : {"comfortable", "compact"})
+                    if (designTokens.contains(QString::fromLatin1(value))) density.insert(QString::fromLatin1(value));
+                for (const auto* value : {"standard", "wide"})
+                    if (runtimeTokens.contains(QString::fromLatin1(value))) width.insert(QString::fromLatin1(value));
+                const auto intersects = [](const QSet<QString>& left, const QSet<QString>& right) {
+                    for (const auto& token : left)
+                        if (right.contains(token)) return true;
+                    return false;
+                };
+                QStringList semantic;
+                for (const auto& candidate : available) {
+                    const auto tokens = tokensOf(candidate.toObject()["name"].toString());
+                    bool hasTheme = false, hasDensity = false, hasWidth = false;
+                    for (const auto* value : {"light", "dark"})
+                        hasTheme = hasTheme || tokens.contains(QString::fromLatin1(value));
+                    for (const auto* value : {"comfortable", "compact"})
+                        hasDensity = hasDensity || tokens.contains(QString::fromLatin1(value));
+                    for (const auto* value : {"standard", "wide"})
+                        hasWidth = hasWidth || tokens.contains(QString::fromLatin1(value));
+                    // 无词元的模式名（如 Value）交给单模式规则处理，不参与语义猜测。
+                    if (!hasTheme && !hasDensity && !hasWidth) continue;
+                    bool matches = true;
+                    if (hasTheme) matches = matches && !theme.isEmpty() && intersects(tokens, theme);
+                    if (matches && hasDensity) matches = matches && !density.isEmpty() && intersects(tokens, density);
+                    if (matches && hasWidth) matches = matches && !width.isEmpty() && intersects(tokens, width);
+                    if (matches) semantic.append(candidate.toObject()["id"].toString());
+                }
+                if (semantic.size() == 1) mode = semantic.first();
+                else if (semantic.size() > 1) fail("VARIABLE_MODE_AMBIGUOUS", setId);
+            }
             // 单模式集合没有选择歧义；多模式集合绝不能默认取第一项。
             if (mode.isEmpty() && available.size() == 1)
                 mode = available.first().toObject()["id"].toString();

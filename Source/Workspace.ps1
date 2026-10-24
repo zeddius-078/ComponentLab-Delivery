@@ -19,6 +19,9 @@ $Python = Resolve-ProjectPython $Python
 $env:D2C_PYTHON_EXE = $Python
 $env:D2C_SUPPORT_ROOT = $PSScriptRoot
 $env:PYTHONDONTWRITEBYTECODE = '1'
+$capability = & $Python -B "$PSScriptRoot/AgentCapabilityProfile.py" verify | ConvertFrom-Json
+if ($LASTEXITCODE -ne 0 -or $capability.status -ne 'PASS') { throw 'AGENT_CAPABILITY_PROFILE_INVALID' }
+$env:D2C_AGENT_CAPABILITY_ID = $capability.canonicalId
 function Invoke-PythonStep([string[]]$Arguments) {
     & $Python -B @Arguments
     if ($LASTEXITCODE -ne 0) { throw "Python step failed ($LASTEXITCODE): $Arguments" }
@@ -92,10 +95,11 @@ $env:CMAKE_EXE = $Cmake
 $env:NINJA_ROOT = $NinjaRoot
 $env:NODE_EXE = $Node
 $env:D2C_NODE_MODULES = $NodeModules
-& $Python -B -c 'import sys; print("Python:", sys.version, sys.executable)'
+& $Python -B -c 'import sys; print((''Python:''), sys.version, sys.executable)'
 if ($Action -eq 'doctor') {
     $state = if (Test-Path -LiteralPath "$SdkRoot/manifest/component-sdk.json") { 'published; verify before use' } else { 'not published; not source damage' }
     Write-Output "SDK: $SdkRoot [$state], external/read-only=$external"
+    Write-Output "Execution capability baseline: $($capability.canonicalId) [$($capability.executionClass)]"
     Write-Output 'Existing developer prerequisites found. Build assets are protected; output is the execution area.'
     return
 }

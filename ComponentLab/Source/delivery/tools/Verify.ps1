@@ -65,7 +65,8 @@ try {
         }
         $report = Get-Content -LiteralPath (Join-Path $capture 'runtime.json') -Raw -Encoding UTF8 | ConvertFrom-Json
         if ($report.packageKind -ne 'qt-native-baseline' -or
-            $report.nativeComponentCount -ne 59 -or
+            $report.nativeComponentCount -ne 58 -or
+            $report.compositeComponentCount -ne 1 -or
             $report.runtimeTokenJson -or $report.legacyRuntime -or -not $report.qssApplied -or
             $report.presentation -ne 'component-per-page-gallery' -or
             $report.gallerySections -ne 9 -or $report.galleryPages -ne 59 -or

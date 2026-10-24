@@ -20,18 +20,33 @@ function Complete-BuildLogRun {
     $Destination = Assert-ProjectOutput $Destination -Lane logs
     if ($Logs -eq $Destination) { throw 'LOG_SOURCE_EQUALS_DESTINATION' }
     foreach ($directory in @($Logs, $Destination)) {
-        if (Test-Path -LiteralPath $directory) {
-            if (-not (Test-Path -LiteralPath $directory -PathType Container)) { throw 'LOG_DIRECTORY_REQUIRED' }
-            foreach ($item in Get-ChildItem -LiteralPath $directory -Recurse -Force) {
-                [void](Assert-ProjectOutput $item.FullName -Lane logs)
-            }
+        if ((Test-Path -LiteralPath $directory) -and
+            -not (Test-Path -LiteralPath $directory -PathType Container)) {
+            throw 'LOG_DIRECTORY_REQUIRED'
         }
+    }
+    # Validate the new run recursively. A previous run is only renamed to a
+    # recoverable output/work path; reading every protected child is neither
+    # necessary nor always possible on a machine with inherited log ACLs.
+    foreach ($item in Get-ChildItem -LiteralPath $Logs -Recurse -Force) {
+        [void](Assert-ProjectOutput $item.FullName -Lane logs)
     }
     if (-not (Test-Path -LiteralPath $Logs -PathType Container)) { throw 'LOG_RUN_MISSING' }
     $obsolete = Assert-ProjectOutput (Join-Path $ComponentLabProject ("output/work/obsolete-log-" + [guid]::NewGuid().ToString('N')))
     [void](New-Item -ItemType Directory -Path (Split-Path $Destination -Parent),(Split-Path $obsolete -Parent) -Force)
     $hadPrevious = Test-Path -LiteralPath $Destination
-    if ($hadPrevious) { Move-Item -LiteralPath $Destination -Destination $obsolete -ErrorAction Stop }
+    if ($hadPrevious) {
+        try {
+            Move-Item -LiteralPath $Destination -Destination $obsolete -ErrorAction Stop
+        } catch {
+            # Preserve a protected historical run intact. The current run is
+            # still a successful, independently named log under the same lane.
+            $fallback = Assert-ProjectOutput (Join-Path (Split-Path $Destination -Parent) (
+                'run-' + [guid]::NewGuid().ToString('N'))) -Lane logs
+            Move-Item -LiteralPath $Logs -Destination $fallback -ErrorAction Stop
+            return $fallback
+        }
+    }
     try {
         Move-Item -LiteralPath $Logs -Destination $Destination -ErrorAction Stop
     } catch {

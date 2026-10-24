@@ -16,7 +16,8 @@ public:
     // libraryProfile 为可切换组件库配置（可为空，空值等价 token-sdk 默认行为）。
     SceneBuilder(QJsonObject raw, QJsonObject componentRules, QJsonObject layoutRules,
                  QJsonObject extensions, QJsonObject engineeringNames = {},
-                 QJsonObject libraryProfile = {});
+                 QJsonObject libraryProfile = {}, bool layoutOnly = false,
+                 QSet<QString> expandedInstances = {}, QSet<QString> expandedComponents = {});
     // 同一实例只构建一次；页面归 parent 或调用方管理，内部 nodes 仅保存观察指针。
     QWidget* build(QWidget* parent = nullptr);
 
@@ -33,6 +34,8 @@ public:
 
 private:
     QWidget* create(const QJsonObject& node, QWidget* parent);
+    // 结构模式中的静态 Frame 保留设计的父坐标系和子节点几何，不伪造 Auto Layout。
+    QWidget* staticFrame(const QJsonObject& node, QWidget* parent);
     QWidget* option(const QJsonObject& node, QWidget* parent);
     // qt-native 聚合：父框子节点全部为已登记 SelectOption 时返回这些子节点，否则返回空。
     QJsonArray optionGroup(const QJsonObject& node);
@@ -40,10 +43,16 @@ private:
     QString optionLabel(const QJsonObject& node, const QJsonObject& family);
     QJsonObject raw, extensions, engineeringNames, libraryProfile, componentRules;
     d2c::ComponentConverter components;
+    QJsonObject staticLayoutRules;
     d2c::LayoutConverter layouts;
+    bool structureOnly = false;
+    QSet<QString> expandedInstances;
+    QSet<QString> expandedComponents;
     QMap<QString, QWidget*> nodes;
     QSet<QString> usedNames;
     QJsonArray extra;
     QJsonArray optionGroups;
+    QJsonArray staticLayouts;
+    QJsonArray warnings;
 };
 }

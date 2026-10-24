@@ -4,6 +4,7 @@ import hashlib
 import json
 from pathlib import Path
 from ArtifactLifecycle import fingerprint, verify_tools
+from AgentCapabilityProfile import binding as execution_capability_binding
 
 ROOT = Path(__file__).resolve().parent.parent
 PROJECTS = ("DesignToCode_GenerateComponent", "DesignToCode_GenerateLayout", "ComponentLab")
@@ -33,6 +34,7 @@ def current(sdk):
     binaries = ("DesignToCode_GenerateLayout/build/tools/layout/bin/v2_ui_compiler.exe",
                 "ComponentLab/build/tools/gallery/component_lab.exe")
     return {"inputs": inputs(), "sdkManifestSha256": sha(sdk / "manifest/component-sdk.json"),
+            "executionCapabilityProfile": execution_capability_binding(),
             "binaries": {p: sha(ROOT / p) for p in binaries},
             "galleryDeployment": {
                 p.relative_to(ROOT / "ComponentLab/build/tools/gallery").as_posix(): sha(p)

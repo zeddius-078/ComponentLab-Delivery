@@ -97,7 +97,23 @@ QString resolveClass(const QJsonObject& rule, const QJsonObject& profile) {
 }
 
 // qt-native 配置下的公开 Qt 类创建表：只接受白名单类名，其余失败关闭。
+bool isQtBuiltinClass(const QString& cls) {
+    static const QSet<QString> names{
+        "QRadioButton", "QColumnView", "QUndoView", "QTreeView", "QTableView",
+        "QListWidget", "QTreeWidget", "QTableWidget", "QFontComboBox", "QDateEdit",
+        "QDateTimeEdit", "QKeySequenceEdit", "QOpenGLWidget", "QDockWidget", "QMdiArea",
+        "QPushButton", "QCheckBox", "QLineEdit", "QLabel", "QSlider", "QScrollBar",
+        "QTimeEdit", "QToolButton", "QDialogButtonBox", "QCommandLinkButton", "QSplitter",
+        "QScrollArea", "QCalendarWidget", "QTextBrowser", "QTextEdit", "QPlainTextEdit",
+        "QListView", "QLCDNumber", "QGraphicsView", "QFrame", "QDial", "QStatusBar",
+        "QGroupBox", "QTabWidget", "QStackedWidget", "QToolBox", "QProgressBar",
+        "QSpinBox", "QDoubleSpinBox", "QComboBox", "QWidget"};
+    return names.contains(cls);
+}
+
 QWidget* createQtBuiltin(const QString& cls, QWidget* parent) {
+    if (!isQtBuiltinClass(cls))
+        throw std::runtime_error(("UNSUPPORTED_QT_NATIVE_CLASS: " + cls).toStdString());
     if (cls == "QRadioButton") return new QRadioButton(parent);
     if (cls == "QColumnView") return new QColumnView(parent);
     if (cls == "QUndoView") return new QUndoView(parent);
@@ -222,7 +238,8 @@ bool applyQtApi(QWidget* w, const QString& api, const QJsonValue& value) {
                             {"componentSetRef", node["mainStateGroup"]},
                             {"mainComponentRef", node["mainComponent"]},
                             {"detail", detail},
-                            {"availableProperties", node["propRefMap"]}};
+                            {"availableProperties", node.contains("propRefMap")
+                                ? node["propRefMap"] : node["propAssignMap"]}};
     throw std::runtime_error(QJsonDocument(error).toJson(QJsonDocument::Compact).toStdString());
 }
 
@@ -268,39 +285,106 @@ void collectGlyphs(const QJsonObject& node, const QString& prefix, QJsonArray& g
 }
 
 ComponentConverter::ComponentConverter(QJsonObject input, QJsonObject rules,
-                                       QJsonObject libraryProfile)
+                                       QJsonObject libraryProfile, bool layoutOnlyMode)
     : raw(std::move(input)), mapping(std::move(rules)),
       profile(std::move(libraryProfile)),
+      layoutOnly(layoutOnlyMode),
       componentFactory(std::make_unique<commonWidget::ComponentFactory>(
           mapping["profile"].toString())) {}
 
 ComponentConverter::~ComponentConverter() = default;
 
+QJsonObject ComponentConverter::componentFamily(const QJsonObject& instance) const {
+    const auto definitions = raw["pixComponentTreeDslNodes"].toArray();
+    const auto stateGroup = instance["mainStateGroup"].toString();
+    const auto mainComponent = instance["mainComponent"].toString();
+    if (stateGroup.isEmpty() && mainComponent.isEmpty())
+        return {};
+    if (!stateGroup.isEmpty()) {
+        const auto family = find(definitions, stateGroup);
+        if (!family.isEmpty())
+            return family;
+    }
+    if (!mainComponent.isEmpty())
+        return find(definitions, mainComponent);
+    return {};
+}
+
+QJsonObject ComponentConverter::componentMaster(const QJsonObject& instance) const {
+    const auto family = componentFamily(instance);
+    if (family.isEmpty())
+        return {};
+    const auto mainComponent = instance["mainComponent"].toString();
+    if (mainComponent.isEmpty())
+        return family;
+    // 独立公开组件的实例直接引用顶层定义；组件集实例则引用 family.childNode
+    // 中的母版。两种形态都来自普通 DSL，不能按实例名称猜测。
+    if (family["guid"].toString() == mainComponent)
+        return family;
+    return find(family["childNode"].toArray(), mainComponent);
+}
+
+QWidget* ComponentConverter::structureFallback(const QJsonObject& instance, QWidget* parent,
+                                                const QString& detail) {
+    const auto family = componentFamily(instance);
+    auto* widget = new QWidget(parent);
+    widget->setProperty("designNodeId", instance["guid"].toString());
+    widget->setProperty("designComponent", family["name"].toString());
+    records.append(QJsonObject{{"nodeId", instance["guid"]},
+                               {"componentName", family["name"]},
+                               {"qtClass", "QWidget"},
+                               {"calls", QJsonArray{}},
+                               {"appearance", "DEFAULT_COMPONENT_APPEARANCE"},
+                               {"mappingDepth", "IDENTITY_ONLY_FALLBACK"},
+                               {"warning", "UNMAPPED_COMPONENT"},
+                               {"detail", detail}});
+    return widget;
+}
+
+void ComponentConverter::discardTraceForNode(const QString& nodeId) {
+    QJsonArray kept;
+    for (const auto& entry : records)
+        if (entry.toObject()["nodeId"].toString() != nodeId)
+            kept.append(entry);
+    records = kept;
+}
+
 QWidget* ComponentConverter::convert(const QJsonObject& n, QWidget* parent) {
     // 用公共设计身份（组件集或独立组件节点）和名称双重匹配规则，再确认实例指向的母版 key。
-    const auto definitions = raw["pixComponentTreeDslNodes"].toArray();
-    auto family = find(definitions, n["mainStateGroup"].toString());
-    const bool standalonePublicComponent = family.isEmpty() &&
-        !n["mainComponent"].toString().isEmpty();
-    if (standalonePublicComponent)
-        family = find(definitions, n["mainComponent"].toString());
+    const auto family = componentFamily(n);
     const auto fail = [&](const QString& code, const QJsonObject& node, const QString& detail) {
         d2c::fail(code, node, family["name"].toString(), detail);
     };
     // 组件映射依赖实例引用；普通 FRAME 或文本必须交给其他转换路径。
     if (n["type"] != "INSTANCE")
         fail("INVALID_NODE_TYPE", n, n["type"].toString());
+    if (family.isEmpty() && n["mainStateGroup"].toString().isEmpty() &&
+        n["mainComponent"].toString().isEmpty())
+        fail("DETACHED_DSL_REQUIRES_BASE_IDENTITY", n,
+             "mainStateGroup/mainComponent are empty; node name and componentName are not family identities");
+    if (family.isEmpty())
+        fail("UNMAPPED_COMPONENT", n,
+             "component family reference is not present in pixComponentTreeDslNodes");
     QJsonObject rule;
     // 遍历声明的映射规则，以名称和 key 双重确认身份；多次命中会造成歧义。
     for (const auto& r : mapping["rules"].toArray()) {
         const auto candidate = r.toObject();
         // 公共独立组件使用 designIdentityId；组件集和旧 key 路径继续兼容。
-        const bool identityMatches = candidate.contains("designIdentityId")
+        // 结构模式允许设计库换代（key 变化）：只按组件名确认身份，类仍须可注册。
+        const bool identityMatches = layoutOnly ? true : candidate.contains("designIdentityId")
             ? candidate["designIdentityId"] == family["guid"]
             : candidate.contains("designComponentSetId")
             ? candidate["designComponentSetId"] == family["guid"]
             : candidate["designComponentKey"] == family["componentKey"];
-        if (identityMatches && candidate["designComponentName"] == family["name"]) {
+        const auto declaredName = candidate["designComponentName"].toString();
+        const auto familyName = family["name"].toString();
+        const auto namePolicy = mapping["componentNameMatchPolicy"].toString();
+        // 组件登记名只覆盖 ComponentLab/<组件集>/<组件身份>；身份之后的路径由属性/变体解析，
+        // 不再参与组件族匹配。没有显式策略时保持历史精确匹配，避免无意放宽旧规则。
+        const bool nameMatches = familyName == declaredName ||
+            (namePolicy == QStringLiteral("family-identity-prefix") &&
+             familyName.startsWith(declaredName + QStringLiteral("/")));
+        if (identityMatches && nameMatches) {
             // 已有命中规则时再次匹配表示配置有歧义，拒绝按遍历顺序任意选取。
             if (!rule.isEmpty())
                 fail("AMBIGUOUS_COMPONENT_MAPPING", n, family["name"].toString());
@@ -310,11 +394,9 @@ QWidget* ComponentConverter::convert(const QJsonObject& n, QWidget* parent) {
     // 没有契约时立即报告未映射，避免使用默认按钮掩盖设计侧缺项。
     if (rule.isEmpty())
         fail("UNMAPPED_COMPONENT", n, family["name"].toString());
-    const auto master = standalonePublicComponent
-        ? family
-        : find(family["childNode"].toArray(), n["mainComponent"].toString());
+    const auto master = componentMaster(n);
     // 核对母版引用及 key，防止实例属性被解释为另一母版的接口参数。
-    if (master.isEmpty() || master["componentKey"] != n["componentKey"])
+    if (!layoutOnly && (master.isEmpty() || master["componentKey"] != n["componentKey"]))
         fail("INVALID_COMPONENT_REFERENCE", n, family["name"].toString());
     // 先校验属性全集、Profile 和值域，再创建控件，减少半成品对象。
     QMap<QString, QString> props;
@@ -349,7 +431,18 @@ QWidget* ComponentConverter::convert(const QJsonObject& n, QWidget* parent) {
         QStringLiteral("state"));
     const QString compositionApi = rule["compositionApi"].toString();
     // public-qt 策略不使用 SDK 组合 API；组合属性和调用在下方按公开 API 白名单过滤。
-    const bool publicQt = profile["apiPolicy"].toString() == QStringLiteral("public-qt");
+    // Resolve the effective class before the property loop. Hybrid profiles may
+    // keep the SDK class for components without a public Qt equivalent while
+    // routing only whitelisted classes through the built-in constructor path.
+    const auto sdkCls = rule["qtClass"].toString();
+    const auto contract = library::resolve(rule, profile);
+    const auto cls = contract.isEmpty() ? resolveClass(rule, profile) : contract["className"].toString();
+    const auto measurementClass = contract.isEmpty() ? cls : contract["qtBase"].toString();
+    const bool publicQt = profile["apiPolicy"].toString() == QStringLiteral("public-qt") &&
+                          isQtBuiltinClass(measurementClass);
+    if (profile["apiPolicy"].toString() == QStringLiteral("public-qt") &&
+        !publicQt && cls != sdkCls)
+        fail("UNSUPPORTED_QT_NATIVE_CLASS", n, cls);
     QSet<QString> allowedQtApis;
     for (const auto& entry : profile["publicQtApis"].toArray())
         allowedQtApis.insert(entry.toString());
@@ -362,6 +455,20 @@ QWidget* ComponentConverter::convert(const QJsonObject& n, QWidget* parent) {
             fail("MISSING_PROPERTY", n, required);
     QJsonObject values;
     QMap<QString, QString> compositionProperties;
+    // 映射可显式声明无 SDK 对应 setter 的设计轴（ignoredProperties），
+    // 只跳过声明过的轴并记录原因；未声明的轴仍按 UNMAPPED_PROPERTY 拒绝。
+    const auto ignoredPropertyReason = [&rule](const QString& name, const QString& value) -> QString {
+        for (const auto& entry : rule["ignoredProperties"].toArray()) {
+            if (entry.isString() && entry.toString() == name) return QStringLiteral("declared-ignored");
+            const auto object = entry.toObject();
+            if (object["name"].toString() != name) continue;
+            // values 为空表示忽略整个轴；否则只忽略列出的取值，其余取值仍然拒绝。
+            const auto values = object["values"].toArray();
+            if (values.isEmpty() || values.contains(QJsonValue(value)))
+                return object["reason"].toString(QStringLiteral("declared-ignored"));
+        }
+        return {};
+    };
     // 将一般变体翻译成 API 参数；Profile 和 state 分别由主题检查及状态规则处理。
     for (auto it = props.cbegin(); it != props.cend(); ++it) {
         // 跳过已分配给专门流程的字段，避免将状态或主题误当通用 setter。
@@ -370,9 +477,15 @@ QWidget* ComponentConverter::convert(const QJsonObject& n, QWidget* parent) {
             continue;
         const auto spec = propertyRules[it.key()].toObject();
         const auto domain = spec["values"].toObject();
-        // 只接受契约列出的值，防止拼写错误被转换为空参数。
-        if (!domain.contains(it.value()))
+        if (!domain.contains(it.value())) {
+            const auto reason = ignoredPropertyReason(it.key(), it.value());
+            if (!reason.isEmpty()) {
+                skippedCalls.append(QJsonObject{{"api", "ignoredProperty"},
+                    {"property", it.key()}, {"value", it.value()}, {"reason", reason}});
+                continue;
+            }
             fail("UNMAPPED_PROPERTY", n, it.key() + "=" + it.value());
+        }
         const auto api = spec["api"].toString();
         const auto mapped = domain[it.value()];
         if (!publicQt && !compositionApi.isEmpty() && api == compositionApi) {
@@ -388,10 +501,6 @@ QWidget* ComponentConverter::convert(const QJsonObject& n, QWidget* parent) {
     if (!states.isEmpty() && !states.contains(props.value(stateProperty)))
         fail("UNMAPPED_STATE", n, props.value(stateProperty));
     // sdkCls 是构建期实测控件使用的 SDK 类；cls 是按 profile 解析后写入交付的最终类名。
-    const auto sdkCls = rule["qtClass"].toString();
-    const auto contract = library::resolve(rule, profile);
-    const auto cls = contract.isEmpty() ? resolveClass(rule, profile) : contract["className"].toString();
-    const auto measurementClass = contract.isEmpty() ? cls : contract["qtBase"].toString();
     // 转换期间由 unique_ptr 托管，后续任何 setter 失败都会释放本次控件。
     std::unique_ptr<QWidget> owned;
     using namespace commonWidget;
@@ -411,6 +520,17 @@ QWidget* ComponentConverter::convert(const QJsonObject& n, QWidget* parent) {
     w->setProperty("designNodeId", n["guid"].toString());
     w->setProperty("designComponent", family["name"].toString());
     QJsonArray calls;
+    if (layoutOnly) {
+        // 结构模式只确认身份、类注册和布局承载；不读取或执行任何实例属性、状态、槽位、
+        // 组合 API 或外观/Token setter，保留 Qt/组件构造函数提供的默认外观。
+        records.append(QJsonObject{{"nodeId", n["guid"]},
+                                    {"componentName", family["name"]},
+                                    {"qtClass", cls},
+                                    {"calls", calls},
+                                    {"appearance", "DEFAULT_COMPONENT_APPEARANCE"},
+                                    {"mappingDepth", "IDENTITY_AND_CLASS_ONLY"}});
+        return owned.release();
+    }
     if (!publicQt && !compositionApi.isEmpty()) {
         if (compositionApi == QStringLiteral("navigation.populateMenu")) {
             auto* menu = qobject_cast<QMenu*>(w);
@@ -540,9 +660,13 @@ QWidget* ComponentConverter::convert(const QJsonObject& n, QWidget* parent) {
         const auto resources = rule["resourceMappings"].toObject();
         const auto contentSlots = resources["contentSlots"].toObject();
         // 内容模式决定图标槽数量与位置，缺少规则时不能猜测 leading/trailing。
-        if (!contentSlots.contains(props.value("content")))
-            fail("UNMAPPED_CONTENT_MODE", n, props.value("content"));
-        const auto targets = contentSlots[props.value("content")].toArray();
+        // 轴名随设计库版本变化（content / Content），以映射解析后的 API 值为准。
+        const auto contentMode = values.contains(QStringLiteral("setContentMode"))
+            ? values.value(QStringLiteral("setContentMode")).toString()
+            : props.value(QStringLiteral("content"));
+        if (!contentSlots.contains(contentMode))
+            fail("UNMAPPED_CONTENT_MODE", n, contentMode);
+        const auto targets = contentSlots[contentMode].toArray();
         QJsonArray glyphs;
         collectGlyphs(master, resources["glyphPrefix"].toString(), glyphs);
         // 要求设计图标数量与内容模式的目标槽一致，避免图标错位或被丢弃。
@@ -657,9 +781,16 @@ QWidget* ComponentConverter::convert(const QJsonObject& n, QWidget* parent) {
         if (!active)
             continue;
         const auto definition = textSlots.value(slot["name"].toString());
-        // 缺失命名槽无法定位文本来源，报告契约与母版不一致。
-        if (definition.isEmpty())
+        // 缺失命名槽无法定位文本来源；仅显式声明 optional 的槽可以跳过并记录。
+        if (definition.isEmpty()) {
+            if (slot["optional"].toBool(false)) {
+                skippedCalls.append(QJsonObject{{"api", "optionalSlot"},
+                    {"property", slot["name"].toString()},
+                    {"reason", QStringLiteral("design provides no content for this slot")}});
+                continue;
+            }
             fail("MISSING_SLOT", n, slot["name"].toString());
+        }
         auto value = definition[slot["field"].toString()];
         // 按文字槽 GUID 查找实例覆盖；未命中时保留母版文字。
         for (const auto& p : n["props"].toArray()) {

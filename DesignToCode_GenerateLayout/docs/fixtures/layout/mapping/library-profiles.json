@@ -44,6 +44,37 @@
         "setFormat", "setTitle", "setGrid"
       ]
     },
+    "qt-native-hybrid": {
+      "description": "Hybrid profile: only components with an explicit public Qt override use the Qt built-in constructor path; components without a native Qt equivalent keep their SDK class and composition API.",
+      "libraryKind": "qt-native",
+      "classRenames": [],
+      "componentOverrides": {
+        "ComponentLab/Button/Primary": {"qtClass": "QPushButton"},
+        "ComponentLab/Input": {"qtClass": "QLineEdit"},
+        "ComponentLab/Select": {"qtClass": "QComboBox"},
+        "ComponentLab/TableView": {"qtClass": "QTableView"}
+      },
+      "apiPolicy": "public-qt",
+      "widgetSource": "qt-builtin-map",
+      "headerPolicy": "custom-header-map",
+      "headerMap": [
+        {"classPattern": "^QPushButton$", "extends": "QWidget", "header": "QPushButton.h"},
+        {"classPattern": "^QLineEdit$", "extends": "QWidget", "header": "QLineEdit.h"},
+        {"classPattern": "^QComboBox$", "extends": "QWidget", "header": "QComboBox.h"},
+        {"classPattern": "^QTableView$", "extends": "QWidget", "header": "QTableView.h"},
+        {"classPattern": "^QWidget$", "extends": "QWidget", "header": "QWidget.h"},
+        {"classPattern": "^QLabel$", "extends": "QWidget", "header": "QLabel.h"},
+        {"classPattern": "^QFrame$", "extends": "QWidget", "header": "QFrame.h"},
+        {"classPattern": "^commonWidget::Z_Navbar$", "extends": "QWidget", "header": "MyDesignSystem/Z_DesignComponents.h"},
+        {"classPattern": "^commonWidget::Z_Sidebar$", "extends": "QWidget", "header": "MyDesignSystem/Z_DesignComponents.h"},
+        {"classPattern": "^commonWidget::Z_DesktopBottomNavigation$", "extends": "QWidget", "header": "MyDesignSystem/Z_DesignComponents.h"}
+      ],
+      "publicQtApis": [
+        "setText", "setEnabled", "setReadOnly", "setChecked",
+        "setPlaceholderText", "setPlaceholder", "setCurrentIndex", "setValue", "setRange",
+        "setFormat", "setTitle", "setGrid"
+      ]
+    },
     "custom-library": {
       "description": "自用组件库示例（开发侧 token 化适配库或私有库）：classRenames 批量把 commonWidget::Z_* 改名成 MyOrg::*；componentOverrides 可只覆盖个别组件，实现渐进式适配升级（例如先只切 Button）。apiPolicy 沿用 sdk-composition 表示目标库提供等价的 apply 适配器；headerMap 说明生成的 customwidget 声明如何取头文件。",
       "libraryKind": "custom",

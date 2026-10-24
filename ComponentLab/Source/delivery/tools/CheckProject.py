@@ -43,10 +43,12 @@ def check_baseline_sdk(manifest, dist):
     assert manifest["visualResourceDelivery"] == "static-qrc"
     assert manifest["linkage"] == "static"
     assert manifest["cmakeTarget"] == "GeneratedComponentSDK::Components"
-    assert manifest["nativeComponentCount"] == 59
+    assert manifest["nativeComponentCount"] == 58
+    assert manifest.get("compositeComponentCount") == 1
     for relative in (
         "include/MyDesignSystem/MyDesignSystem.h",
         "include/MyDesignSystem/ZNativeComponents.h",
+        "include/MyDesignSystem/ZInputField.h",
         "lib/GeneratedComponentSDK.lib",
         "manifest/base-sdk-scope.json",
         "cmake/GeneratedComponentSDKConfig.cmake",
@@ -68,7 +70,7 @@ def check_baseline_sdk(manifest, dist):
                       "resources/tokens", "figma-component-map"):
         assert forbidden not in baseline_branch, forbidden
     assert "GeneratedComponentSDK::Components" in baseline_branch
-    assert "nativeComponentStyleSheet" in (SOURCE / "delivery/baseline/BaselineComponentLab.cpp").read_text(
+    assert "componentStyleSheet" in (SOURCE / "delivery/baseline/BaselineComponentLab.cpp").read_text(
         encoding="utf-8-sig")
 
     # A stable gallery can legitimately belong to the preceding legacy SDK

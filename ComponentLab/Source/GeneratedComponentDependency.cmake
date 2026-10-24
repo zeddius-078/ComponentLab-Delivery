@@ -22,9 +22,9 @@ if(NOT _sdk_kind_error AND _sdk_kind STREQUAL "qt-native-baseline")
     string(JSON _sdk_state GET "${_sdk_manifest}" publicationState)
     string(JSON _sdk_component_count GET "${_sdk_manifest}" nativeComponentCount)
     string(JSON _sdk_visual_delivery GET "${_sdk_manifest}" visualResourceDelivery)
-    if(NOT _sdk_state STREQUAL "baseline-native" OR NOT _sdk_component_count EQUAL 59 OR
+    if(NOT _sdk_state STREQUAL "baseline-native" OR NOT _sdk_component_count EQUAL 58 OR
        NOT _sdk_visual_delivery STREQUAL "static-qrc")
-        message(FATAL_ERROR "SDK_BASELINE_SCOPE_INVALID: expected the published 59-item Qt-native baseline.")
+        message(FATAL_ERROR "SDK_BASELINE_SCOPE_INVALID: expected the published 58-foundation baseline.")
     endif()
     foreach(_baseline_file IN ITEMS
             "include/MyDesignSystem/ZNativeComponents.h"

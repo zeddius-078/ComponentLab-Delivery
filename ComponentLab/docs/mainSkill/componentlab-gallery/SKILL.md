@@ -16,6 +16,12 @@ ComponentLab 消费 GenerateComponent 发布的 SDK，展示已发布组件。�
 3. 执行 `Source/Verify-GeneratedComponentSDK.ps1`。
 4. 确认目标 Profile、组件族和验收场景。
 
+## 受控执行设备基线
+
+展示构建的自动化输出基线为 `DS-V4F-BUILDUNK-NT-C256K-TEXT-AGENT-PROVIDERUNK`（DeepSeek V4 Flash 256K Non-Think）；完整画像位于工作区 `docs/designRules/architecture/agent-execution-capability-profile.json`。执行端只可按明确的 SDK、组件族、Profile、场景与回归命令运行，不能从截图、展示名称或历史输出推断缺失组件/Token/API，更不能在 Gallery 中补写组件实现。
+
+输入或 SDK 合同缺失、构建失败或展示差异必须保留证据并停止对应分支；不切换 SDK/Profile、不替换为样例、不修改受控 build 或环境以伪造通过。
+
 ## 关键目录
 
 | 路径 | 作用 |

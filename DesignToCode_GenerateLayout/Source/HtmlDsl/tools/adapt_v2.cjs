@@ -78,9 +78,32 @@ async function main() {
     page.removeAllListeners('pageerror');page.on('pageerror',e=>errors.push(e.message));
     page.on('requestfailed',r=>failures.push({url:r.url(),error:r.failure()?.errorText}));
     await page.reload();await page.evaluate(()=>document.fonts.ready);
+    // 真实导出可能声明了字体族而正文未使用该族（懒加载不会触发加载）；
+    // 显式加载目标族，保证“字体资源可用”仍被验证，而不是误判为失败。
+    await page.evaluate(font=>document.fonts.load(`14px "${font}"`),capture.fontFamily);
+    await page.evaluate(()=>document.fonts.ready);
     // 仅把节点 ID、类型和层级送入浏览器，以设计树确定需要测量的页面节点。
     const shape=n=>({guid:n.guid,type:n.type,children:(n.childNode||[]).map(shape)});
     const measured=await page.evaluate(({tree,fontFamily})=>{
+      const warnings=[];
+      const frameGuid = guid => guid.replace(/:/g,'_');
+      function findFrameContent(el,guid,expected) {
+        const key=frameGuid(guid);
+        // Export shapes observed to date: direct content wrapper first, then
+        // nested wrapper, then the stroke-aware content-layer wrapper.
+        const direct=[...el.children].find(c=>c.classList.contains('frame-content-'+key));
+        if(direct)return {element:direct,mode:'direct'};
+        const nested=el.querySelector('.frame-content-'+key);
+        if(nested)return {element:nested,mode:'descendant'};
+        const layer=el.querySelector('.Pixso-frame-'+key+'-content-layer');
+        if(layer)return {element:layer,mode:'content-layer'};
+        // Flat exports (no wrapper at all) are safe to measure only when the
+        // element's direct children already equal the DSL child set.
+        const ids=[...el.children].map(c=>c.id.replace(/_/g,':'));
+        if(ids.length===expected.length&&new Set(ids).size===ids.length&&
+          ids.every(id=>expected.some(c=>c.guid===id)))return {element:el,mode:'flat'};
+        return null;
+      }
       function walk(n,parentRect) {
         // 每个设计 ID 必须唯一命中 DOM；坐标转换为父节点局部坐标，拒绝绝对定位。
         const matches=document.querySelectorAll(`[id="${n.guid.replace(/:/g,'_')}"]`);
@@ -92,7 +115,15 @@ async function main() {
         const result={guid:n.guid,rect:[r.x-(parentRect?.x||0),r.y-(parentRect?.y||0),r.width,r.height],visible:s.display!=='none'&&s.visibility!=='hidden'};
         // 容器节点需要读取内部布局并递归测量；组件叶节点保留整体尺寸，避免误把内部装饰当页面子节点。
         if(n.type==='FRAME') {
-          const content=[...el.children].find(c=>c.classList.contains('frame-content-'+n.guid.replace(/:/g,'_')))||el;
+          const located=findFrameContent(el,n.guid,n.children);
+          // An unknown future wrapper is a narrow, non-structural warning.
+          // Do not inspect decoration children: keep this FRAME as a measured
+          // leaf and let adapt() preserve the DSL subtree and its geometry.
+          if(!located) {
+            warnings.push({kind:'FRAME_CONTENT_LAYER_UNRESOLVED',guid:n.guid});
+            return result;
+          }
+          const content=located.element;
           const css=getComputedStyle(content);
           const ids=[...content.children].map(c=>c.id.replace(/_/g,':'));
           // 核对数量、唯一性和成员身份，防止 DOM 少节点、多节点或混入另一组件的子项。
@@ -106,7 +137,7 @@ async function main() {
       const instances=[...document.querySelectorAll('[class*="Pixso-instance-"]')];
       return {tree:walk(tree),instances:instances.length,missingIdentity:instances.filter(el=>!el.hasAttribute('data-component-key')).length,
         cssVariables:[...getComputedStyle(document.documentElement)].filter(k=>k.startsWith('--')).length,
-        fontLoaded:document.fonts.check(`14px "${fontFamily}"`)};
+        fontLoaded:document.fonts.check(`14px "${fontFamily}"`),warnings};
     },{tree:shape(raw.pixTreeNodes[0]),fontFamily:capture.fontFamily});
     await page.screenshot({path:outputPath(path.join(report,'html.png'))});
     // 脚本、网络或字体失败会改变测量结果，因此先确认页面可用，再生成混合输入。
@@ -128,6 +159,9 @@ async function main() {
       // 只给容器覆盖布局字段并按测量树递归；叶节点的组件身份与属性继续沿用原 DSL。
       if(n.type==='FRAME') {
         const s=m.layout;
+        // Unknown content wrappers are measured as leaves. Preserve the DSL
+        // child tree instead of fabricating layout/order from decorations.
+        if(!s) return n;
         if(referencePage) {
           const evidence=referencePage.nodes.find(x=>x.id===n.guid)?.metrics;
           const actual={gap:px(s.gap),left:px(s.padding[0]),top:px(s.padding[1]),right:px(s.padding[2]),bottom:px(s.padding[3])};
@@ -156,9 +190,9 @@ async function main() {
       sourceHtmlSha256:hash(source),sourceDslSha256:hash(rawBytes),outputSha256:hash(derived),
       viewport,layoutReferenceSha256:referenceBytes ? hash(referenceBytes) : null,
       transformations:{resources,removedMissingScript,duplicateConstDeclarationsLowered:replacements},originalScriptErrors:beforeErrors,
-      errors,failures,inspection:measured,bindings,
+      errors,failures,warnings:measured.warnings||[],inspection:measured,bindings,
       fieldSources:{layout:'HTML computed styles / DOM order / dimensions',sizingModes:'original DSL',componentIdentity:'original DSL',propertiesAndSlots:'original DSL',visuals:'existing Qt Token/QSS'}});
-    console.log(JSON.stringify({status:'PASS',nodes:bindings.length,maxGeometryDelta:Math.max(...bindings.map(b=>b.maxDelta)),originalScriptErrors:beforeErrors}));
+    console.log(JSON.stringify({status:'PASS',nodes:bindings.length,maxGeometryDelta:Math.max(...bindings.map(b=>b.maxDelta)),warnings:measured.warnings||[],originalScriptErrors:beforeErrors}));
   } finally {await browser.close();}
 }
 // 失败时覆盖为 FAIL，避免上次成功的报告被当成本次结果。

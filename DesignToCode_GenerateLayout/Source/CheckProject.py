@@ -10,6 +10,21 @@ SOURCE = PROJECT / "Source"
 NAMES = {"ComponentLab", "DesignToCode_GenerateComponent", "DesignToCode_GenerateLayout"}
 OTHER = NAMES - {PROJECT.name}
 REPORT = PROJECT / "output/logs/project-check.json"
+MAINTAINED_CONFIGS = {
+    "pixso_native/component-mapping.json",
+    "pixso_native/layout-mapping.json",
+    "pixso_native/dsm/component_parsers.json",
+}
+
+
+def is_source_input(file):
+    """Allow tool sources and named maintained mappings, not generated data."""
+    allowed = {".cpp", ".h", ".ps1", ".py", ".js", ".cjs", ".cmake", ".cmd", ".sh"}
+    return (
+        file.suffix in allowed
+        or file.name in {"CMakeLists.txt", "README.md", ".clang-format"}
+        or file.relative_to(SOURCE).as_posix() in MAINTAINED_CONFIGS
+    )
 
 
 def normalize_for_boundary_check(content):
@@ -30,13 +45,12 @@ def check():
             result["pendingDeletion"].append(directory.name)
             continue
         assert directory.name in {"Source", "docs", "build", "output"}, (directory, "unexpected maintained directory")
-    allowed = {".cpp", ".h", ".ps1", ".py", ".js", ".cjs", ".cmake", ".cmd"}
     # Directory junctions would silently restore a shared dependency after a physical split.
     for file in SOURCE.rglob("*"):
         assert not file.is_symlink() and not getattr(file, "is_junction", lambda: False)(), file
         if not file.is_file() or file == Path(__file__):
             continue
-        assert file.suffix in allowed or file.name in {"CMakeLists.txt", "README.md", ".clang-format"}, (file, "non-tool file in Source")
+        assert is_source_input(file), (file, "non-tool file in Source")
         if file.suffix in {".cpp", ".h", ".ps1", ".py", ".js", ".cjs", ".cmd", ".qrc"} or file.name == "CMakeLists.txt":
             code = normalize_for_boundary_check(
                 file.read_text(encoding="utf-8-sig").replace("\\", "/")

@@ -33,6 +33,7 @@
 #include <QSet>
 #include <QTemporaryDir>
 #include <QRegularExpression>
+#include <functional>
 #include <QProcess>
 #include "StructurePreview.h"
 #include <QLibraryInfo>
@@ -209,13 +210,25 @@ void collectDesignProfiles(const QJsonValue& value, QSet<QString>& profiles) {
     collectDesignProfiles(object["childNode"], profiles);
 }
 
-ProfileResolution resolveDesignProfile(const QJsonObject& raw, const QJsonObject& mapping) {
-    QSet<QString> designProfiles;
-    collectDesignProfiles(raw["pixTreeNodes"], designProfiles);
-    const auto defaultRuntime = mapping["profile"].toString();
-    // 没有显式 Profile 时沿用映射合同默认上下文，不凭布局或文件名猜测主题。
-    if (designProfiles.isEmpty())
-        return {defaultRuntime, defaultRuntime, {}};
+    ProfileResolution resolveDesignProfile(const QJsonObject& raw, const QJsonObject& mapping) {
+        QSet<QString> designProfiles;
+        collectDesignProfiles(raw["pixTreeNodes"], designProfiles);
+        const auto defaultRuntime = mapping["profile"].toString();
+        // 没有显式 Profile 时沿用映射合同默认上下文，不凭布局或文件名猜测主题。
+        if (designProfiles.isEmpty()) {
+            // 变量模式可能仍使用设计侧名称（如 light-compact）。若映射为该运行时上下文
+            // 唯一登记了设计别名，则用它选择变量模式；多个别名时不猜，保持默认上下文。
+            QSet<QString> aliases;
+            const auto aliasMap = mapping["profileAliases"].toObject();
+            for (auto it = aliasMap.begin(); it != aliasMap.end(); ++it)
+                if (it.value().toObject()["runtimeProfile"].toString() == defaultRuntime)
+                    aliases.insert(it.key());
+            if (aliases.size() == 1) {
+                const auto designProfile = *aliases.cbegin();
+                return {designProfile, defaultRuntime, designProfile};
+            }
+            return {defaultRuntime, defaultRuntime, {}};
+        }
     // 多个设计上下文无法由一个 QApplication 主题同时承载，必须要求设计侧拆页或统一上下文。
     if (designProfiles.size() != 1)
         throw std::runtime_error("MIXED_DESIGN_PROFILES");
@@ -383,6 +396,8 @@ public:
              {"libraryProfile", libraryProfileName},
              {"designProfile", resources["resolvedDesignProfile"].toString(profile)},
              {"profileAlias", resources["resolvedProfileAlias"].toString()},
+             {"trace", scene.trace()},
+             {"warnings", scene.trace()["warnings"]},
              {"generator", "C++ UiCompiler; build-time conversion only"}};
         if (libraryProfile.contains("componentLibrary")) {
             manifest["libraryId"] = libraryProfile["libraryId"];
@@ -451,7 +466,7 @@ private:
                      " : public QWidget {\npublic:\n    explicit " + className +
                      "(QWidget* parent = nullptr);\n    ~" + className + "() override;\n";
             code = "#include \"" + className + ".h\"\n#include \"ui_" + className +
-                   ".h\"\n#include <stdexcept>\n\n" + className + "::" + className +
+                   ".h\"\n#include <QFile>\n#include <QResource>\n#include <stdexcept>\n\n" + className + "::" + className +
                    "(QWidget* parent)\n    : QWidget(parent), ui_(std::make_unique<Ui::Generated_" +
                    page->objectName() + ">()) {\n    ui_->setupUi(this);\n";
         } else {
@@ -462,6 +477,26 @@ private:
                    "    ui_->setupUi(this);\n    commonWidget::ComponentFactory factory(" + literal(profile) +
                    ");\n    QString error;\n";
         }
+        QSet<QString> extraHeaders;
+        for (auto it = publicObjects.cbegin(); it != publicObjects.cend(); ++it) {
+            const auto type = it.value();
+            if (type.startsWith("commonWidget::Z_TableView"))
+                extraHeaders.insert("MyDesignSystem/native/Z_TableView.h");
+            else if (type.startsWith("commonWidget::Z_PushButton"))
+                extraHeaders.insert("MyDesignSystem/Z_PushButton.h");
+            else if (type.startsWith("commonWidget::Z_"))
+                extraHeaders.insert("MyDesignSystem/Z_DesignComponents.h");
+            else if (type.startsWith("designer_widgets::"))
+                extraHeaders.insert("MyDesignSystem/DesignerWidgets.h");
+            else if (type.startsWith("Q"))
+                extraHeaders.insert(type);
+        }
+        auto extraIncludeList = extraHeaders.values();
+        extraIncludeList.sort();
+        QString extraIncludes;
+        for (const auto& headerName : extraIncludeList)
+            extraIncludes += "#include <" + headerName + ">\n";
+        header.replace("#include <memory>\n", "#include <memory>\n" + extraIncludes);
         if (resources.hasPageResources())
             code += "    Q_INIT_RESOURCE(" + className + ");\n";
         code += v2::component_initializer::emitInitialization(
@@ -745,7 +780,10 @@ private:
         QString type = component                  ? specs[name]["qtClass"].toString()
                        : qobject_cast<QLabel*>(w) ? "QLabel"
                                                   : "QWidget";
-        if (!component && !root && libraryProfile.contains("componentLibrary")) {
+        // 普通 FRAME 是页面布局脚手架，不是目标组件库声明的组件。它必须可由
+        // Qt 原生 QWidget 承载，不能因为 contract-only 库未重复登记 QWidget 而失败。
+        // 已映射 INSTANCE 仍必须命中 libraryEntries，未知组件不会因此被放行。
+        if (!component && !root && type != "QWidget" && libraryProfile.contains("componentLibrary")) {
             const auto entry = libraryProfile["libraryEntries"].toObject()[type].toObject();
             d2c::library::require(!entry.isEmpty(), "UNMAPPED_LIBRARY_COMPONENT: " + type);
             type = entry["className"].toString();
@@ -770,20 +808,30 @@ private:
         xml->writeAttribute("name", name);
         if (!formal) {
             property("designNodeId", "string", id, true);
+            if (w->property("sourceDesignNodeId").isValid())
+                property("sourceDesignNodeId", "string",
+                         w->property("sourceDesignNodeId").toString(), true);
             property("designName", "string", w->property("designName").toString(), true);
             property("designType", "string", w->property("designType").toString(), true);
+            property("designComponent", "string", w->property("designComponent").toString(), true);
+            if (w->property("instanceExpanded").toBool()) {
+                property("instanceExpanded", "bool", "true", true);
+                property("originalInstanceId", "string", w->property("originalInstanceId").toString(), true);
+                property("originalComponentId", "string", w->property("originalComponentId").toString(), true);
+            }
         }
         if (formal && type == "designer_widgets::SelectOption") {
             property("text", "string", specs[name]["label"].toString());
             property("controlSize", "string", specs[name]["controlSize"].toString());
         }
-        // 只为根窗口写初始 geometry，子节点位置由布局计算，避免与约束冲突。
-        if (root) {
+        // 根窗口总写入初始 geometry；静态容器的直接子节点同样写入 DSL 明确的
+        // 父级相对几何，Auto Layout 管理的节点仍不写 geometry，避免约束冲突。
+        if (root || w->property("staticPositioned").toBool()) {
             xml->writeStartElement("property");
             xml->writeAttribute("name", "geometry");
             xml->writeStartElement("rect");
-            xml->writeTextElement("x", "0");
-            xml->writeTextElement("y", "0");
+            xml->writeTextElement("x", QString::number(root ? 0 : w->x()));
+            xml->writeTextElement("y", QString::number(root ? 0 : w->y()));
             xml->writeTextElement("width", QString::number(w->width()));
             xml->writeTextElement("height", QString::number(w->height()));
             xml->writeEndElement();
@@ -852,13 +900,18 @@ private:
                     property("gridVisible", "bool", "true");
         }
         // 仅展开页面容器，避免把原生组件内部图标和绘制层重复生成到 XML。
-        if (!component) {
+        if (!component || w->property("instanceExpanded").toBool()) {
             // 只输出已启用背景填充的容器，保留其他容器的透明行为。
             if (w->autoFillBackground())
                 qss += "QWidget#" + name + " { background-color: " +
                        w->palette().color(QPalette::Window).name(QColor::HexArgb) + "; }\n";
             if (w->layout())
                 emitLayout(w);
+            else if (w->property("staticLayout").toBool()) {
+                const auto children = w->findChildren<QWidget*>(QString(), Qt::FindDirectChildrenOnly);
+                for (auto* child : children)
+                    widget(child);
+            }
         }
         // qt-native 聚合选项列表：items 属于组件静态内容，直接序列化进 XML。
         if (component && type == QStringLiteral("QListWidget")) {
@@ -883,7 +936,11 @@ int main(int argc, char** argv) {
     QCommandLineParser cli;
     cli.addHelpOption();
     cli.addOption({"strict-layout", "Require explicit layout gap and margins"});
-    cli.addOption({"formal", "Generate isolated uic page package (wide-light only)"});
+    cli.addOption({"formal", "Generate isolated uic page package (profile from design/mapping)"});
+        cli.addOption({"layout-only", "Generate static layout and mapped classes without visual/property/Token application"});
+        cli.addOption({"structure-only", "Structure-only mode: geometry + identity + class mapping; skip visual/state/Token application"});
+    cli.addOption({"expand-instance", "Explicit instance GUID to expand (repeatable)", "guid"});
+    cli.addOption({"expand-component", "Explicit design component name to expand (repeatable)", "name"});
     cli.addOption({"structure-preview", "Resolved design structure, without SDK component contracts"});
     cli.addOption({"initial-style", "Versioned initial visual JSON for structure preview", "path"});
     cli.addOption({"tool-root", "Offline runtime root (or D2C_RUNTIME_ROOT)", "path"});
@@ -954,11 +1011,49 @@ int main(int argc, char** argv) {
         const auto destination = formal ? formalDestination(cli.value("output")) : QString{};
         const auto raw = v2::readJson(cli.value("raw"));
         const auto sourceHash = hash(cli.value("raw"));
+        const bool layoutOnly = cli.isSet("layout-only") || cli.isSet("structure-only");
+        if (layoutOnly && cli.isSet("formal"))
+            throw std::runtime_error("STRUCTURE_ONLY_IS_NOT_FORMAL");
+        std::function<void(QJsonObject&)> stripInstanceProperties = [&](QJsonObject& node) {
+            if (node["type"] == "INSTANCE") {
+                node.remove("propRefMap");
+                node.remove("props");
+                node.remove("variantProperties");
+            }
+            auto children = node["childNode"].toArray();
+            for (int i = 0; i < children.size(); ++i) {
+                auto child = children[i].toObject();
+                stripInstanceProperties(child);
+                children[i] = child;
+            }
+            node["childNode"] = children;
+        };
+        QJsonObject rawForBuild = raw;
+        if (layoutOnly) {
+            auto roots = rawForBuild["pixTreeNodes"].toArray();
+            for (int i = 0; i < roots.size(); ++i) {
+                auto root = roots[i].toObject();
+                stripInstanceProperties(root);
+                roots[i] = root;
+            }
+            rawForBuild["pixTreeNodes"] = roots;
+        }
         const auto profileResolution = resolveDesignProfile(raw, components);
-        // 正式页面要求已发布的 wide-light 运行上下文；必须在设计 Profile 别名解析后判断。
-        if (formal && profileResolution.runtimeProfile != QStringLiteral("wide-light"))
-            throw std::runtime_error("FORMAL_REQUIRES_LIGHT_COMPACT_MAPPING");
+        // 运行上下文来自设计侧 Profile 标记或映射声明；不再强制固定剖面。
         auto resolvedComponents = components;
+        if (layoutOnly) {
+            auto rules = resolvedComponents["rules"].toArray();
+            for (int i = 0; i < rules.size(); ++i) {
+                auto rule = rules[i].toObject();
+                rule.remove("propertyMappings");
+                rule.remove("stateMappings");
+                rule.remove("compositionApi");
+                rule.remove("slotMappings");
+                rule.remove("ignoredProperties");
+                rules[i] = rule;
+            }
+            resolvedComponents["rules"] = rules;
+        }
         resolvedComponents["profile"] = profileResolution.runtimeProfile;
         resolvedComponents["resolvedDesignProfile"] = profileResolution.designProfile;
         resolvedComponents["resolvedProfileAlias"] = profileResolution.alias;
@@ -966,17 +1061,31 @@ int main(int argc, char** argv) {
         component_theme::install(app, profileResolution.runtimeProfile);
         // 先从设计输入投影节点树，再创建临时 Qt 对象，保持两种树的来源明确。
         // 原始变量集合使用设计侧模式名；SDK 别名仅用于主题与组件运行上下文。
-        const auto design = v2::designTree(raw, sourceHash, profileResolution.designProfile);
+        const auto design = v2::designTree(rawForBuild, sourceHash, profileResolution.designProfile,
+                                           profileResolution.runtimeProfile, !layoutOnly);
         auto layoutRules = v2::readJson(cli.value("mapping") + "/layout-mapping.json");
         if (cli.isSet("strict-layout") || formal)
             layoutRules["requireExplicitMetrics"] = true;
-        v2::SceneBuilder scene(raw, resolvedComponents, layoutRules,
+        QSet<QString> expandedInstances;
+        for (const auto& value : cli.values("expand-instance")) {
+            if (value.trimmed().isEmpty())
+                throw std::runtime_error("EMPTY_EXPAND_INSTANCE");
+            expandedInstances.insert(value);
+        }
+        QSet<QString> expandedComponents;
+        for (const auto& value : cli.values("expand-component")) {
+            if (value.trimmed().isEmpty())
+                throw std::runtime_error("EMPTY_EXPAND_COMPONENT");
+            expandedComponents.insert(value);
+        }
+        v2::SceneBuilder scene(rawForBuild, resolvedComponents, layoutRules,
                                v2::readJson(cli.value("extensions")),
                                v2::readJson(cli.value("mapping") + "/engineering-names.json"),
-                               libraryProfile);
+                               libraryProfile, layoutOnly, expandedInstances, expandedComponents);
         std::unique_ptr<QWidget> page(scene.build());
         page->ensurePolished();
-        page->layout()->activate();
+        if (page->layout())
+            page->layout()->activate();
         Emitter emitter(scene, profileResolution.runtimeProfile,
                         hash(cli.value("mapping") + "/engineering-names.json"), formal, resolvedComponents,
                         profileName, libraryProfile);
@@ -997,10 +1106,14 @@ int main(int argc, char** argv) {
                 {"libraryProfileSha256", hash(cli.value("mapping") + "/library-profiles.json")}};
             // 清单只写包外。检查器必须核对现有字节，不能只信任某次运行的 PASS。
             QJsonObject outputHashes;
-            QDirIterator files(staging.path(), QDir::Files, QDirIterator::Subdirectories);
-            while (files.hasNext()) {
-                const auto file = files.next();
-                outputHashes[QDir(staging.path()).relativeFilePath(file)] = hash(file);
+            {
+                // Windows 下目录句柄未释放会导致随后整目录 rename 随机失败，
+                // 迭代器必须先于发布动作析构。
+                QDirIterator files(staging.path(), QDir::Files, QDirIterator::Subdirectories);
+                while (files.hasNext()) {
+                    const auto file = files.next();
+                    outputHashes[QDir(staging.path()).relativeFilePath(file)] = hash(file);
+                }
             }
             emitter.formalRecord["outputSha256"] = outputHashes;
             // 先保存包外记录，发布失败时标记未发布；成功后整目录可供业务自行导入。

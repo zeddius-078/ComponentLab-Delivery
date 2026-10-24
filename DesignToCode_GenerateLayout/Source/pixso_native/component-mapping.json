@@ -1,0 +1,547 @@
+{
+  "schemaVersion": 1,
+  "id": "pixso-native-generated-sdk",
+  "version": "0.4.0",
+  "generationPolicy": "export-first",
+  "sdkRelease": "20261022T003619Z-bcd90761a8c0-4a9550c3",
+  "profiles": [
+    "standard-light",
+    "wide-light",
+    "standard-dark",
+    "wide-dark"
+  ],
+  "pageHost": {
+    "class": "designer_widgets::ThemeHost",
+    "header": "MyDesignSystem/DesignerWidgets.h",
+    "constructor": "profile-parent"
+  },
+  "sourceEvidence": {
+    "fileKey": "tuYNoeyBnlawZTMm2aRe2w",
+    "kind": "read_component_config_data plus public SDK headers",
+    "componentConfigEvidenceSha256": "8f7be000f0f144be1bdce1fd966ae80fe7fb883959da7160e7046e92d08a37d7",
+    "moduleBindingBasis": "Family id, family name and export key checked against the component configuration captured for the same Pixso file (read_component_config_data, artifact sha256 8f7be000f0f144be1bdce1fd966ae80fe7fb883959da7160e7046e92d08a37d7); one corresponding family-root id parsed per attachment SFC; this attachment is the preserved native export for the batch, so every module hash is byte-equal to the exported module.",
+    "attachmentSameBatchAsLiveDesign": "unverified",
+    "attachmentArchive": "vue-Design Components Build.zip",
+    "attachmentArchiveSha256": "006cfed7564cee2b0bb8f10cdb579f5a360ff3390d696ad21584dd6045b3b4c8",
+    "attachmentReanchoredBatch": "20261022-vue-23506"
+  },
+  "components": [
+    {
+      "mappingKey": "native.navbar",
+      "status": "partial",
+      "source": {
+        "fileKey": "tuYNoeyBnlawZTMm2aRe2w",
+        "componentSetId": "380:113",
+        "designName": "ComponentLab/Navbar",
+        "import": "components/Componentlabnavbar.vue",
+        "tag": "ComponentLabNavbar",
+        "moduleSha256": "21687c0f5e8d3dd20c2b83b978a7c8b3f5a9622d6226971cc06eeee468c9d096",
+        "moduleEvidence": {
+          "familyRootId": "380_113",
+          "preservedNativeSha256": "21687c0f5e8d3dd20c2b83b978a7c8b3f5a9622d6226971cc06eeee468c9d096",
+          "comparison": "byte-equal"
+        }
+      },
+      "qt": {
+        "class": "commonWidget::Z_Navbar",
+        "extends": "QWidget",
+        "header": "MyDesignSystem/Z_DesignComponents.h",
+        "constructor": "parent-only"
+      },
+      "props": {
+        "Density": {
+          "method": "setDensity",
+          "type": "string",
+          "values": {
+            "Comfortable": "Comfortable",
+            "Compact": "Compact"
+          }
+        },
+        "text_380_2": {
+          "method": "setProfileName",
+          "type": "string"
+        }
+      },
+      "textBindings": {
+        "profileName": {
+          "file": "components/Componentlabnavbar.vue",
+          "slots": [
+            "slot_380_40",
+            "slot_380_92"
+          ]
+        },
+        "searchPlaceholder": {
+          "file": "components/Componentlabnavbar.vue",
+          "slots": [
+            "slot_380_26"
+          ]
+        }
+      },
+      "publicChildren": {
+        "search": {
+          "accessor": "searchInput",
+          "class": "commonWidget::Z_InputField",
+          "header": "MyDesignSystem/Z_InputField.h"
+        }
+      },
+      "slots": {
+        "profileName": {
+          "kind": "text",
+          "type": "string",
+          "method": "setProfileName"
+        },
+        "searchPlaceholder": {
+          "kind": "text",
+          "type": "string",
+          "method": "setPlaceholder",
+          "receiver": "search"
+        }
+      },
+      "unresolved": [
+        "The exported Navbar instance carries no Layout variant property, so no setVariantProperty(\"Layout\", ...) call is emitted; the SDK default header layout applies and must not be presented as design-verified.",
+        "The exported search field is a ComponentLabInput instance override placed inside the Navbar search slot, so the placeholder is bound through the Navbar public search child and the Input rule is not emitted as an independent page widget.",
+        "Complete SDK boundary style contract remains unverified. The attachment is the preserved native export for this batch and its module hash is byte-equal, but its same-batch relationship to the live design file is not established.",
+        "Runtime defaults match CL/ComponentLab and Alex Morgan, but the avatar initials, notification icon, unread badge, chevron and search decorations have no configured public setter; their source content stays in the generation record and is never discarded.",
+        "The explicit profile text slot overrides its prop-derived initial value; unrelated content must not be discarded."
+      ]
+    },
+    {
+      "mappingKey": "native.button",
+      "status": "partial",
+      "source": {
+        "fileKey": "tuYNoeyBnlawZTMm2aRe2w",
+        "componentSetId": "173:2710",
+        "designName": "ComponentLab/Button/Primary",
+        "import": "components/Componentlabbuttonprimary.vue",
+        "tag": "ComponentLabButtonPrimary",
+        "moduleSha256": "bb4733bdd971dbb29566cc1510d047fd1c9819a15447ca1a0dea8180bcfadbe0",
+        "moduleEvidence": {
+          "familyRootId": "173_2710",
+          "preservedNativeSha256": "bb4733bdd971dbb29566cc1510d047fd1c9819a15447ca1a0dea8180bcfadbe0",
+          "comparison": "byte-equal"
+        }
+      },
+      "qt": {
+        "class": "commonWidget::Z_PushButton",
+        "extends": "QPushButton",
+        "header": "MyDesignSystem/Z_PushButton.h",
+        "constructor": "parent-only"
+      },
+      "props": {
+        "text_21_0": {
+          "method": "setText",
+          "type": "string"
+        },
+        "Size": {
+          "method": "setSize",
+          "type": "enum",
+          "values": {
+            "small": "commonWidget::ButtonSize::Small",
+            "medium": "commonWidget::ButtonSize::Medium",
+            "large": "commonWidget::ButtonSize::Large"
+          }
+        },
+        "State": {
+          "cases": {
+            "default": [
+              {
+                "method": "setEnabled",
+                "type": "bool",
+                "value": true
+              },
+              {
+                "method": "setLoading",
+                "type": "bool",
+                "value": false
+              }
+            ],
+            "disabled": [
+              {
+                "method": "setLoading",
+                "type": "bool",
+                "value": false
+              },
+              {
+                "method": "setEnabled",
+                "type": "bool",
+                "value": false
+              }
+            ],
+            "loading": [
+              {
+                "method": "setEnabled",
+                "type": "bool",
+                "value": true
+              },
+              {
+                "method": "setLoading",
+                "type": "bool",
+                "value": true
+              }
+            ]
+          }
+        }
+      },
+      "textBindings": {
+        "accessibleName": {
+          "file": "components/Componentlabbuttonprimary.vue",
+          "slots": [
+            "slot_173_2714"
+          ]
+        }
+      },
+      "slots": {
+        "accessibleName": {
+          "kind": "text",
+          "type": "string",
+          "method": "setAccessibleName",
+          "phase": "before-props"
+        }
+      },
+      "contentExpectations": {
+        "property": "State",
+        "values": {
+          "default": {
+            "text": true,
+            "images": 0
+          }
+        }
+      },
+      "unresolved": [
+        "The exported Button/Primary family has no Intent, Appearance or Content axis, so setIntent, setAppearance and setIconOnly are not emitted; the published SDK defaults apply and are not design-verified.",
+        "The exported instance hides the start and end icons (visible_21_19 and visible_21_57 are false) and therefore shows no image; no leading icon is bound and no QStyle::SP_FileIcon fallback is used in this batch.",
+        "The visible label is bound twice on purpose: text_21_0 sets the visible button text and slot_173_2714 sets the accessible name. Both carry the same exported string and neither is invented.",
+        "State default/disabled/loading have typed initialization candidates; hover/active/focus-visible require real interaction and remain unsupported. Real design mapping is still partial.",
+        "The internal loading indicator of the exported button is an implementation detail of the component module and is not bound as page content.",
+        "Per-variant source slots and resource files must remain traceable; no invented default text or icon."
+      ]
+    },
+    {
+      "mappingKey": "native.input",
+      "status": "partial",
+      "source": {
+        "fileKey": "tuYNoeyBnlawZTMm2aRe2w",
+        "componentSetId": "339:111",
+        "designName": "ComponentLab/Input",
+        "import": "components/Componentlabinput.vue",
+        "tag": "ComponentLabInput",
+        "moduleSha256": "ea9fc161b35585342fa5d059793d3103db671676c0debc261e8f09d3ca617af8",
+        "moduleEvidence": {
+          "familyRootId": "339_111",
+          "preservedNativeSha256": "ea9fc161b35585342fa5d059793d3103db671676c0debc261e8f09d3ca617af8",
+          "comparison": "byte-equal"
+        }
+      },
+      "qt": {
+        "class": "designer_widgets::InputField",
+        "extends": "QWidget",
+        "header": "MyDesignSystem/DesignerWidgets.h",
+        "constructor": "parent-only"
+      },
+      "props": {
+        "text_339_90": {
+          "method": "setValue",
+          "type": "string"
+        },
+        "text_339_91": {
+          "method": "setPlaceholderText",
+          "type": "string"
+        },
+        "visible_339_94": {
+          "method": "setAllowClear",
+          "type": "bool"
+        },
+        "Size": {
+          "method": "setControlSize",
+          "type": "string",
+          "values": {
+            "Small": "sm",
+            "Medium": "md",
+            "Large": "lg"
+          }
+        },
+        "State": {
+          "cases": {
+            "Default": [
+              {
+                "method": "setValue",
+                "type": "string",
+                "value": ""
+              },
+              {
+                "method": "setEnabled",
+                "type": "bool",
+                "value": true
+              },
+              {
+                "method": "setReadOnly",
+                "type": "bool",
+                "value": false
+              }
+            ]
+          }
+        }
+      },
+      "textBindings": {
+        "placeholder": {
+          "file": "components/Componentlabinput.vue",
+          "slots": [
+            "slot_339_77"
+          ]
+        }
+      },
+      "slots": {
+        "placeholder": {
+          "kind": "text",
+          "type": "string",
+          "method": "setPlaceholderText"
+        }
+      },
+      "unresolved": [
+        "ThemeHost must provide the selected Profile before uic creates the field.",
+        "In this batch the exported search field is an instance override inside the Navbar search slot, so this rule is not emitted as an independent page widget; the page binds the same placeholder through the Navbar public search child.",
+        "For the observed Large/Default branch, only placeholder slot_339_77 is visible. State Default clears the hidden Entered value prop after prop initialization; the actual visible slot overrides placeholder text. Other states and size-dependent text slots remain unsupported.",
+        "Prefix/suffix instance properties require actual icon resources and visibility.",
+        "Size value acceptance and all initial State conversions still require consumer validation."
+      ]
+    },
+    {
+      "mappingKey": "native.table",
+      "status": "partial",
+      "source": {
+        "fileKey": "tuYNoeyBnlawZTMm2aRe2w",
+        "componentSetId": "717:21",
+        "designName": "ComponentLab/TableView",
+        "import": "components/Componentlabtableview.vue",
+        "tag": "ComponentLabTableView",
+        "moduleSha256": "5c05dffccd3bfc0cc3c12da6bd3cd723cde9cca4503fff6db605cae494c05f1a",
+        "moduleEvidence": {
+          "familyRootId": "717_21",
+          "preservedNativeSha256": "5c05dffccd3bfc0cc3c12da6bd3cd723cde9cca4503fff6db605cae494c05f1a",
+          "comparison": "byte-equal"
+        }
+      },
+      "qt": {
+        "class": "commonWidget::Z_TableView",
+        "extends": "QTableView",
+        "header": "MyDesignSystem/native/Z_TableView.h",
+        "constructor": "parent-only"
+      },
+      "props": {},
+      "tableBinding": {
+        "file": "components/Componentlabtableview.vue",
+        "when": {
+          "Size": "Small",
+          "State": "Default"
+        },
+        "headers": [
+          "slot_717_27",
+          "slot_717_30",
+          "slot_717_32"
+        ],
+        "rows": [
+          [
+            "slot_717_37",
+            "slot_717_39",
+            "slot_717_41"
+          ],
+          [
+            "slot_717_46",
+            "slot_717_48",
+            "slot_717_50"
+          ],
+          [
+            "slot_717_55",
+            "slot_717_57",
+            "slot_717_59"
+          ]
+        ],
+        "output": "sampleData"
+      },
+      "slots": {
+        "sampleData": {
+          "kind": "table-model",
+          "method": "setModel",
+          "readOnly": true
+        }
+      },
+      "unresolved": [
+        "The observed Small/Default header and row slots form a 3-column, 3-row sample matrix. This is initial sample content, not a business data model.",
+        "Size, State, selection and sorting props remain unmapped; the sort icon resource and column/row geometry are not yet consumed. No silent drop is allowed.",
+        "The two exported table instances share the same visible sample content but use different sort icon resources; the unconsumed icon stays in the generation record.",
+        "Qt model lowering does not certify source/SDK appearance equivalence or interactive sorting behavior. Rule remains partial."
+      ]
+    },
+    {
+      "mappingKey": "native.bottom-navigation",
+      "status": "partial",
+      "source": {
+        "fileKey": "tuYNoeyBnlawZTMm2aRe2w",
+        "componentSetId": "1312:96",
+        "designName": "ComponentLab/DesktopBottomNavigation",
+        "import": "components/Componentlabdesktopbottomnavigation.vue",
+        "tag": "ComponentLabDesktopBottomNavigation",
+        "moduleSha256": "bb5dde0b1684f044a0bdd0c314ecc7a1ff0e9f9bdf1b08031271c635bcc8d915",
+        "moduleEvidence": {
+          "familyRootId": "1312_96",
+          "preservedNativeSha256": "bb5dde0b1684f044a0bdd0c314ecc7a1ff0e9f9bdf1b08031271c635bcc8d915",
+          "comparison": "byte-equal"
+        }
+      },
+      "qt": {
+        "class": "commonWidget::Z_DesktopBottomNavigation",
+        "extends": "QWidget",
+        "header": "MyDesignSystem/Z_DesignComponents.h",
+        "constructor": "parent-only"
+      },
+      "props": {
+        "IconPlacement": {
+          "method": "setIconPlacement",
+          "type": "string",
+          "values": {
+            "Top": "Top",
+            "Start": "Start"
+          }
+        }
+      },
+      "collections": {
+        "primary": {
+          "source": {
+            "import": "components/Componentlabdesktopbottomnavigationmainitem.vue",
+            "tag": "ComponentLabDesktopBottomNavigationMainItem"
+          },
+          "stateProperty": "State",
+          "states": {
+            "Default": false,
+            "Selected": true
+          },
+          "imageCount": 1,
+          "outputs": {
+            "labels": "primaryItems",
+            "selectedIndex": "currentIndex",
+            "icons": "primaryIconSources"
+          }
+        },
+        "secondary": {
+          "source": {
+            "import": "components/Componentlabdesktopbottomnavigationsubitem.vue",
+            "tag": "ComponentLabDesktopBottomNavigationSubItem"
+          },
+          "stateProperty": "State",
+          "states": {
+            "Default": false,
+            "Selected": true
+          },
+          "imageCount": 0,
+          "outputs": {
+            "labels": "secondaryItems",
+            "selectedIndex": "secondaryIndex"
+          }
+        }
+      },
+      "slots": {
+        "primaryItems": {
+          "kind": "string-list",
+          "type": "string-list",
+          "method": "setPrimaryItems"
+        },
+        "secondaryItems": {
+          "kind": "string-list",
+          "type": "string-list",
+          "method": "setSecondaryItems"
+        },
+        "primaryIconSources": {
+          "kind": "string-list",
+          "type": "string-list",
+          "method": "setPrimaryIconSources"
+        },
+        "currentIndex": {
+          "kind": "index",
+          "type": "int",
+          "method": "setCurrentIndex"
+        },
+        "secondaryIndex": {
+          "kind": "index",
+          "type": "int",
+          "method": "setSecondaryIndex"
+        }
+      },
+      "unresolved": [
+        "Collection evidence and explicit output slots support ordered text, selected indices and QRC icon binding; published-component runtime/visual parity still requires validation.",
+        "No separate SDK widgets are created for implementation-only navigation item components.",
+        "The exported primary group has three main items (首页, aaa, 设置) and the secondary group three sub items (概览, 最近, 收藏); the first item of each group is Selected, so currentIndex and secondaryIndex are 0.",
+        "The second main item declares prop text_1308_0 = 内容 while its visible slot text is aaa; the collection binds the visible slot content and the prop difference is recorded instead of being overwritten."
+      ]
+    },
+    {
+      "mappingKey": "native.sidebar",
+      "status": "partial",
+      "source": {
+        "fileKey": "tuYNoeyBnlawZTMm2aRe2w",
+        "componentSetId": "392:216",
+        "designName": "ComponentLab/Sidebar",
+        "import": "components/Componentlabsidebar.vue",
+        "tag": "ComponentLabSidebar",
+        "moduleSha256": "a2bf1744f1ccd1cdef18bc1d45700099bb9180d996b5a7f7426895fc441e1c12",
+        "moduleEvidence": {
+          "familyRootId": "392_216",
+          "preservedNativeSha256": "a2bf1744f1ccd1cdef18bc1d45700099bb9180d996b5a7f7426895fc441e1c12",
+          "comparison": "byte-equal"
+        }
+      },
+      "qt": {
+        "class": "commonWidget::Z_Sidebar",
+        "extends": "QWidget",
+        "header": "MyDesignSystem/Z_DesignComponents.h",
+        "constructor": "parent-only"
+      },
+      "props": {
+        "Density": {
+          "method": "setDensity",
+          "type": "string",
+          "values": {
+            "Comfortable": "Comfortable"
+          }
+        },
+        "Collapsed": {
+          "cases": {
+            "False": [
+              {
+                "method": "setCollapsed",
+                "type": "bool",
+                "value": false
+              }
+            ]
+          }
+        }
+      },
+      "textListBindings": {
+        "routeLabels": {
+          "file": "components/Componentlabsidebar.vue",
+          "slots": [
+            "slot_392_94",
+            "slot_392_98",
+            "slot_392_102",
+            "slot_392_106",
+            "slot_392_110",
+            "slot_392_115"
+          ]
+        }
+      },
+      "slots": {
+        "routeLabels": {
+          "kind": "string-list",
+          "type": "string-list",
+          "method": "setRouteLabels"
+        }
+      },
+      "unresolved": [
+        "Only observed Comfortable / Collapsed=False initialization has runtime readback. Other states remain unsupported.",
+        "Published SDK rejects Flyout=Closed and Flyout=Open. Closed must not be silently ignored or emitted as an unsupported setter call.",
+        "Six route labels bind in source slot order through setRouteLabels. Brand text_965_67 and route icons have no configured public setters; keep their differences in the generation record. No business route IDs are invented from labels.",
+        "At standard-light, public resize(280,520) is honored with fixed width 280 and minimum height 520. This only verifies outer size compatibility, not style or content parity."
+      ]
+    }
+  ],
+  "unmappedBoundaries": []
+}

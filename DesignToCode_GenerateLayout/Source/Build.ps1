@@ -42,7 +42,7 @@ Deploy-NativeQt -Exe "$stage/bin/v2_ui_compiler.exe"
 Copy-Item -LiteralPath "$PSScriptRoot/HtmlDsl/tools" -Destination "$stage/scripts/tools" -Recurse
 Copy-Item -LiteralPath "$PSScriptRoot/HtmlDsl/pipeline/capture" -Destination "$stage/scripts/capture" -Recurse
 Copy-Item -LiteralPath "$PSScriptRoot/HtmlDsl/PreviewStructure.py" -Destination "$stage/scripts/PreviewStructure.py"
-foreach ($entry in @('RuntimeRun.py','ArtifactLifecycle.py','SDKContract.py')) {
+foreach ($entry in @('RuntimeRun.py','ArtifactLifecycle.py','AgentCapabilityProfile.py','SDKContract.py')) {
     Copy-Item -LiteralPath "$support/$entry" -Destination "$stage/scripts/$entry"
 }
 Copy-Item -LiteralPath "$support/offline/LayoutRun.cmd" -Destination "$stage/Run.cmd"

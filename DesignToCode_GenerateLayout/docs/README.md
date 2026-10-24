@@ -17,6 +17,7 @@
 
 ## 专项规范
 
+- [原生 Vue 导出到 Qt 第二路径](Pixso原生DSM-D2C到Qt第二路径说明.md)：独立入口、依赖、配置、命令和当前验收范围；不要求 Vue 应用或浏览器运行
 - [多组件库与前缀切换](designRules/library-profiles.md)
 - [设计到布局生成说明](mainSkill/generate-layout-pipeline/references/设计到布局生成说明.md)
 - [布局生成执行与验收规则](designRules/workflow/布局生成执行与验收规则.md)
@@ -24,6 +25,6 @@
 - [布局转换器通用化规范](designRules/layout/布局转换器通用化规范.md)
 - [Qt UI 布局规则](designRules/layout/Qt-UI布局规则.md)
 
-固定输入和映射在 docs/fixtures/layout，模板与样例在 docs/examples，测试在 docs/validation。LibraryProfile 选择目标库；默认 token-sdk，新 analysis-system 仅是 planned 类名合同。正式与预览分开验收，不能由 uic 通过推断目标实现存在。
+第一路径固定输入和映射在 docs/fixtures/layout，通过 LibraryProfile 选库，默认 token-sdk；analysis-system 仅是 planned 类名合同。第二路径的维护映射位于 Source/pixso_native，通过显式 `--mapping`、`--sdk`、`--profile` 选择，不使用第一路径的 LibraryProfile 入口。模板与样例在 docs/examples，测试在 docs/validation。正式、适配候选和结构预览分开验收，不能由 uic 通过推断目标实现存在。
 
 旧采集清单必须重新核对哈希；导航栏 Token 消费契约问题仍按用户决定挂起。历史测试数字不作为当前结论。

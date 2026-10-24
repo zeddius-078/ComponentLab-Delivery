@@ -18,7 +18,7 @@ int main(int argc, char** argv) {
     parser.process(app);
 
     commonWidget::initializeNativeComponentResources();
-    app.setStyleSheet(commonWidget::nativeComponentStyleSheet() +
+    app.setStyleSheet(commonWidget::componentStyleSheet() +
                       baselineGalleryCanvasStyleSheet());
     BaselineWindow window;
     window.show();

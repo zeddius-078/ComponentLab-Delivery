@@ -36,8 +36,9 @@ if(MSVC)
     endif()
 endif()
 
-# The current production SDK is deliberately a small Qt-native package.  Its
-# gallery has a single deep consumer seam: public Z_* headers plus the package
+# The current production SDK has 58 Qt-native foundations plus explicitly
+# approved semantic composites. Its gallery has one consumer seam: public
+# Z_* headers plus the package
 # QRC/QSS.  Historical Figma/Factory pages remain below for legacy packages;
 # they are not compiled or installed for this baseline SDK.
 if(COMPONENTLAB_BASELINE_SDK)

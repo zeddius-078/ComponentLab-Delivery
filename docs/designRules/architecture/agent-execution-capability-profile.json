@@ -1,0 +1,72 @@
+{
+  "schemaVersion": 1,
+  "kind": "agent-execution-capability-profile",
+  "displayName": "DeepSeek V4 Flash 256K Non-Think",
+  "canonicalId": "DS-V4F-BUILDUNK-NT-C256K-TEXT-AGENT-PROVIDERUNK",
+  "observedDate": "2026-10-24",
+  "manufacturer": "DeepSeek",
+  "modelFamily": "DeepSeek V4",
+  "modelVariant": "Flash",
+  "checkpoint": "UNKNOWN",
+  "provider": "UNKNOWN",
+  "runtime": {
+    "reasoningMode": "Non-Think",
+    "reasoningEffort": "NOT_EXPOSED",
+    "inputContextLimit": 262144,
+    "contextUnit": "tokens",
+    "outputLimit": "UNKNOWN",
+    "modalities": {
+      "text": true,
+      "image": "UNKNOWN",
+      "audio": false,
+      "toolCalling": "UNKNOWN",
+      "structuredOutput": "UNKNOWN",
+      "streaming": "UNKNOWN"
+    }
+  },
+  "capability": {
+    "routineQa": "strong",
+    "summarization": "strong",
+    "longDocumentProcessing": "potentially-strong-recall-must-be-tested",
+    "structuredGeneration": "strong",
+    "schemaAndConfigTasks": "strong",
+    "codeGeneration": "medium-to-strong",
+    "repositoryLevelCoding": "medium",
+    "complexDebugging": "medium-to-weak",
+    "mathematicalReasoning": "limited-relative-to-high-reasoning",
+    "longHorizonAgentExecution": "depends-on-harness-and-verification",
+    "instructionFollowing": "requires-local-evaluation",
+    "factualReliability": "requires-external-verification"
+  },
+  "permittedWorkloads": [
+    "long-document-extraction-and-summarization",
+    "structured-content-generation",
+    "rules-explicit-code-edits",
+    "json-config-sql-and-dsl-tasks",
+    "low-risk-batch-processing",
+    "agent-tasks-with-automated-checks"
+  ],
+  "restrictedWorkloads": [
+    "cross-module-architecture-decisions",
+    "high-risk-production-changes",
+    "untested-long-horizon-autonomous-edits",
+    "complex-mathematics-algorithm-proofs-and-constraint-planning",
+    "exact-full-context-recall-by-context-window-alone",
+    "presenting-inference-as-fact"
+  ],
+  "executionContract": {
+    "executionClass": "controlled-low-autonomy",
+    "readBeforeEdit": true,
+    "testAfterEdit": true,
+    "evidenceRequired": true,
+    "externalFactCheckRequired": true,
+    "autonomousEnvironmentChange": false,
+    "completionRequiresArtifact": true,
+    "requiresFrozenJobSpecForGeneration": true,
+    "requiresExplicitPathsProfilesAndModes": true,
+    "forbidsInventedDesignValues": true,
+    "forbidsFallbackGeneratorOrParser": true,
+    "forbidsImplicitProfileOrSdkSwitch": true,
+    "failureAction": "record-evidence-and-stop"
+  }
+}

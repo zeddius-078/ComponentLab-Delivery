@@ -117,6 +117,31 @@ class ComponentLibraryTests(unittest.TestCase):
         self.save_library()
         self.rejected("UNMAPPED_LIBRARY_COMPONENT: QPushButton")
 
+    def test_framework_frame_does_not_require_library_qwidget_entry(self):
+        # QWidget 是页面 Frame 的 Qt 框架承载，不是库组件。删除 contract-only
+        # 库的 QWidget 声明后，普通 FRAME 仍须生成；INSTANCE 映射门禁不受影响。
+        self.library["components"] = [e for e in self.library["components"] if e["id"] != "QWidget"]
+        self.save_library()
+        child_id = "synthetic:framework-frame"
+        self.raw["pixTreeNodes"][0]["childNode"].append({
+            "guid": child_id, "name": "Framework Frame", "type": "FRAME",
+            "width": 64, "height": 32, "visible": True,
+            "autoLayout": {
+                "stackMode": "VERTICAL", "autoLayoutItemSpacing": 0,
+                "autoLayoutPaddingLeft": 0, "autoLayoutPaddingTop": 0,
+                "autoLayoutPaddingRight": 0, "autoLayoutPaddingBottom": 0,
+                "autoLayoutPrimaryAlign": "flex-start", "autoLayoutCounterAlign": "flex-start"
+            }, "childNode": []
+        })
+        names_path = self.mapping / "engineering-names.json"
+        names = json.loads(names_path.read_bytes())
+        names[child_id] = "frameworkFrame"
+        names_path.write_bytes(json.dumps(names).encode("utf-8"))
+        ui, _ = self.accepted("analysis-system", "framework-frame")
+        frame = next(widget for widget in ui.findall(".//widget")
+                     if widget.get("name") == "frameworkFrame")
+        self.assertEqual(frame.get("class"), "QWidget")
+
     def test_invalid_header_rejected(self):
         self.library["headerPrefix"] = "../Outside/"
         self.save_library()

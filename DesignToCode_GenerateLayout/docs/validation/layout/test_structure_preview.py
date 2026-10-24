@@ -11,7 +11,9 @@ import unittest
 import xml.etree.ElementTree as ET
 
 PROJECT = Path(__file__).resolve().parents[3]
-COMPILER = PROJECT / "build/tools/layout/bin/v2_ui_compiler.exe"
+_COMPILER_NAME = "v2_ui_compiler.exe" if os.name == "nt" else "v2_ui_compiler"
+COMPILER = Path(os.environ.get("D2C_COMPILER",
+    str(PROJECT / "build/tools/layout/bin" / _COMPILER_NAME)))
 FONT = PROJECT / "docs/examples/resources/HarmonyOS_Sans_SC_Regular.ttf"
 STYLE = PROJECT / "docs/examples/styles/initial-light.json"
 
@@ -25,13 +27,21 @@ class StructurePreviewTests(unittest.TestCase):
         reports.mkdir(parents=True, exist_ok=True)
         cls.work = Path(tempfile.mkdtemp(prefix="regression-", dir=str(reports)))
         cls.env = dict(os.environ)
-        qt = Path(os.environ["QT_ROOT"])
-        cls.env.update(QT_QPA_PLATFORM="offscreen", QT_PLUGIN_PATH=str(qt / "plugins"),
-                       QT_QPA_PLATFORM_PLUGIN_PATH=str(qt / "plugins/platforms"))
-        cls.env["PATH"] = str(qt / "bin") + os.pathsep + cls.env.get("PATH", "")
+        qt = Path(os.environ.get("QT_ROOT",
+            "/usr/lib/x86_64-linux-gnu" if os.name != "nt" else "D:/QT/5.15.2/msvc2019_64"))
+        cls.env.update(QT_QPA_PLATFORM="offscreen")
+        if os.name == "nt":
+            cls.env.update(QT_PLUGIN_PATH=str(qt / "plugins"),
+                           QT_QPA_PLATFORM_PLUGIN_PATH=str(qt / "plugins/platforms"))
+            cls.env["PATH"] = str(qt / "bin") + os.pathsep + cls.env.get("PATH", "")
+            cls.uic = qt / "bin/uic.exe"
+        else:
+            cls.env["LD_LIBRARY_PATH"] = str(
+                PROJECT.parent / "DesignToCode_GenerateComponent/build/sdk/lib"
+            ) + os.pathsep + cls.env.get("LD_LIBRARY_PATH", "")
+            cls.uic = Path(os.environ.get("D2C_UIC_EXE", "/usr/lib/qt5/bin/uic"))
         cls.env["D2C_RUNTIME_ROOT"] = str(PROJECT / "build/tools/layout")
         cls.env["D2C_WORK_ROOT"] = str(PROJECT)
-        cls.uic = qt / "bin/uic.exe"
         cls.source = {
             "schema": "design-structure/v1", "fileKey": "synthetic-independent",
             "provenance": "synthetic-regression", "root": {

@@ -1,0 +1,16 @@
+{
+  "__imports__": {
+    "ComponentLabNavbar": {"from": "@/components/Componentlabnavbar.vue", "default": true},
+    "ComponentLabButtonPrimary": {"from": "@/components/Componentlabbuttonprimary.vue", "default": true},
+    "ComponentLabInput": {"from": "@/components/Componentlabinput.vue", "default": true},
+    "ComponentLabTableView": {"from": "@/components/Componentlabtableview.vue", "default": true},
+    "ComponentLabDesktopBottomNavigation": {"from": "@/components/Componentlabdesktopbottomnavigation.vue", "default": true},
+    "ComponentLabSidebar": {"from": "@/components/Componentlabsidebar.vue", "default": true}
+  },
+  "ComponentLabNavbar": {"name": "ComponentLabNavbar", "props": {"showTrueValue": true}},
+  "ComponentLabButtonPrimary": {"name": "ComponentLabButtonPrimary", "props": {"showTrueValue": true}},
+  "ComponentLabInput": {"name": "ComponentLabInput", "props": {"showTrueValue": true}},
+  "ComponentLabTableView": {"name": "ComponentLabTableView", "props": {"showTrueValue": true}},
+  "ComponentLabDesktopBottomNavigation": {"name": "ComponentLabDesktopBottomNavigation", "props": {"showTrueValue": true}},
+  "ComponentLabSidebar": {"name": "ComponentLabSidebar", "props": {"showTrueValue": true}}
+}
