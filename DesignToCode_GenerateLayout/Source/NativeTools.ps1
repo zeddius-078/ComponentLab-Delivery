@@ -33,6 +33,31 @@ function Resolve-SupportRoot {
     }
     throw 'WORKSPACE_SUPPORT_MISSING: specify D2C_SUPPORT_ROOT with the published support tools.'
 }
+function Assert-LayoutToolMatchesCurrentSource {
+    param(
+        [Parameter(Mandatory)][string]$ToolRoot,
+        [Parameter(Mandatory)][string]$Python
+    )
+    # Source entrypoints must never silently execute a controlled tool built from
+    # different inputs.  This is deliberately not part of the portable Run.cmd
+    # path: a standalone package has no editable workspace Source to compare.
+    $manifestPath = Join-Path $ToolRoot 'tool-manifest.json'
+    $manifest = Get-Content -LiteralPath $manifestPath -Raw | ConvertFrom-Json
+    $published = [string]$manifest.acceptance.sourceFingerprint
+    if (-not $published) {
+        throw 'LAYOUT_TOOL_SOURCE_PROVENANCE_MISSING: publish layout from the current Source in the fixed development environment.'
+    }
+    $support = Resolve-SupportRoot
+    $current = & $Python -B "$support/ArtifactLifecycle.py" fingerprint --project $D2CProjectRoot
+    if ($LASTEXITCODE -ne 0 -or -not $current) { throw 'LAYOUT_SOURCE_FINGERPRINT_FAILED' }
+    $current = $current.Trim()
+    if ($published -ne $current) {
+        throw "LAYOUT_TOOL_STALE_SOURCE: published=$published current=$current. Run Source/Workspace.ps1 -Action build -Target layout in the fixed development environment; do not edit DSL, switch Profile, or create a fallback generator."
+    }
+    if (-not $manifest.acceptance.executionCapabilityProfile) {
+        throw 'LAYOUT_TOOL_AGENT_BASELINE_MISSING: republish layout from the current Source before using a low-capability Agent.'
+    }
+}
 function Initialize-LayoutRuntime {
     param([string]$ToolRoot, [string]$WorkRoot, [switch]$NeedNode)
     if (-not $ToolRoot) { $ToolRoot = if ($env:D2C_RUNTIME_ROOT) { $env:D2C_RUNTIME_ROOT } else { "$D2CProjectRoot/build/tools/layout" } }
@@ -45,6 +70,7 @@ function Initialize-LayoutRuntime {
     $python = Resolve-ProjectPython
     & $python -B "$ToolRoot/scripts/ArtifactLifecycle.py" verify-tools --root $ToolRoot | Out-Host
     if ($LASTEXITCODE) { throw 'LAYOUT_TOOL_INTEGRITY_FAILED' }
+    Assert-LayoutToolMatchesCurrentSource -ToolRoot $ToolRoot -Python $python
     $env:QT_QPA_PLATFORM_PLUGIN_PATH = "$ToolRoot/bin/platforms"
     $env:QT_PLUGIN_PATH = "$ToolRoot/bin"
     $env:QT_QPA_PLATFORM = 'offscreen'

@@ -47,6 +47,54 @@ description: 按输入类型选择独立的 HTML/DSL 或 Pixso 原生 Vue 导出
 
 调用任务必须冻结真实输入和输出：`fileKey/rootId` 或本地输入、路线、`GenerationMode`、SDK 根、Library Profile、mapping、字体、批次、页面名及验收命令。低能力执行端只可调用本 Skill 列出的现有入口；不能把 URL 换成样例、注入变量模式/几何、猜测组件身份或新建 HTML/DSL 解析器与 `.ui` 发射器。任一前置条件或门禁失败时记录错误并停止该分支；不得自动换 Profile/SDK/模式或把旧 `.ui` 作为本次结果。
 
+### 2.2 低能力执行任务卡与受控工具门禁
+
+低能力 Agent 不负责发现环境、选择替代工具或解释旧二进制行为。每次调用必须由任务发起方提供以下冻结字段；任一字段缺失即记录 `TASK_SPEC_REQUIRED` 并停止。
+
+| 字段 | 必须提供的值 | Agent 不得推断的内容 |
+| --- | --- | --- |
+| `projectRoot` | `G:\ComponentLab-Delivery\DesignToCode_GenerateLayout` | 其他同名目录或示例项目 |
+| `pythonExe` | 已存在的 Python 3.9 `python.exe` 完整路径 | 系统默认 Python 或较新版本 |
+| `toolRoot` | `build\tools\layout` 或已批准的绝对工具目录 | 缓存 EXE、临时目录或源码旁二进制 |
+| `sdkRoot` | 已发布 Release SDK 的绝对路径 | Debug SDK、私有源码或另一版本 |
+| `generationMode` | `structure-only` 或 `strict` | 失败后自动降级或切换模式 |
+| `rawDsl` / `captureManifest` | 同批、已冻结的输入绝对路径 | 样例、旧批次或改写后的 DSL |
+| `mappingDirectory`、`font`、`libraryProfile` | 已冻结的绝对路径与 Profile 名 | 另一套 mapping/Profile 或缺失资源 |
+| `outputDirectory` | `output\work\<批次>\<页面>` 下的新目录 | `build`、`delivery` 或已有结果目录 |
+| `verificationCommand` | 本 Skill 指定的 `uic` / 检查命令 | 手写 XML 检查器或替代发射器 |
+
+从 `Source/HtmlDsl/Generate.ps1` 启动时，入口先校验 `build/tools/layout/tool-manifest.json` 的文件哈希、发布时 `sourceFingerprint` 和当前 Source 指纹，以及受控执行设备画像。出现以下任一错误时必须停止，不生成 `.ui`、不改 DSL、不开新解析器：
+
+| 错误 | 唯一处置 |
+| --- | --- |
+| `LAYOUT_TOOL_STALE_SOURCE` | 到固定开发环境执行 `Source/Workspace.ps1 -Action build -Target layout`，成功发布后从头执行原任务卡 |
+| `LAYOUT_TOOL_SOURCE_PROVENANCE_MISSING` / `LAYOUT_TOOL_AGENT_BASELINE_MISSING` | 旧 Build 缺发布证明；只能重建并发布，不可手改 `build` 清单 |
+| `LAYOUT_TOOL_INTEGRITY_FAILED` | 保留原 Build，报告哈希错误；不得复制、替换或绕过 EXE |
+| `PYTHON39_REQUIRED` / `ENVIRONMENT_INCOMPLETE` | 只报告已安装路径缺口；不安装、不升级、不改 PATH |
+
+结构生成的最小调用只允许使用这条既有入口：
+
+```powershell
+pwsh -File Source/HtmlDsl/Generate.ps1 `
+  -GenerationMode structure-only `
+  -RawDsl '<冻结的canonical.raw.json>' `
+  -MappingDirectory '<冻结的mapping目录>' `
+  -Font '<冻结的字体文件>' `
+  -LibraryProfile '<冻结的Profile>' `
+  -ToolRoot '<冻结的build/tools/layout>' `
+  -WorkRoot 'G:\ComponentLab-Delivery\DesignToCode_GenerateLayout' `
+  -OutputDirectory 'output/work/<批次>/<页面>'
+```
+
+工具重建只允许在固定开发环境由工作区入口完成；运行已发布工具不要求 CMake、Visual Studio 或 Ninja：
+
+```powershell
+pwsh -File G:\ComponentLab-Delivery\Source\Workspace.ps1 -Action build -Target layout `
+  -Python '<已有Python3.9.exe>' -QtRoot '<已有Qt目录>' `
+  -VsRoot '<已有Visual Studio目录>' -Cmake '<已有cmake.exe>' `
+  -NinjaRoot '<已有Ninja目录>'
+```
+
 ## 3. 选择生成深度
 
 | 深度 | 输入 | 输出 | 适用场景 |
