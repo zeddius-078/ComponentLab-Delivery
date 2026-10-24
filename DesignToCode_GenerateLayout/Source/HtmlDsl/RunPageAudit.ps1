@@ -16,6 +16,9 @@ param(
 $ErrorActionPreference = 'Stop'
 . "$PSScriptRoot/../NativeTools.ps1"
 $python = Resolve-ProjectPython
+# 审计入口也是正式 Source 路径，必须先验证已发布工具与当前 Source
+# 一致，不能由 Python 脚本直接调用旧 EXE 后再报告编译错误。
+Initialize-LayoutRuntime -NeedNode
 $env:PYTHONDONTWRITEBYTECODE = '1'
 $pythonArgs = @(
     '-B',

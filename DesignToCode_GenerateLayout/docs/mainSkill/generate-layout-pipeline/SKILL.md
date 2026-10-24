@@ -86,6 +86,8 @@ pwsh -File Source/HtmlDsl/Generate.ps1 `
   -OutputDirectory 'output/work/<批次>/<页面>'
 ```
 
+`build/tools/layout/bin/v2_ui_compiler.exe` 是受控运行器的内部实现，不是 Agent 可调用入口；不得直接传入 `--structure-only`、`--layout-only` 或自行拼接编译器参数。`RunPageAudit.ps1` 与其 Python 实现均会先执行同一 Source/Build 指纹门禁；直接执行该 Python 文件也不能绕过。
+
 工具重建只允许在固定开发环境由工作区入口完成；运行已发布工具不要求 CMake、Visual Studio 或 Ninja：
 
 ```powershell

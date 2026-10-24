@@ -12,6 +12,11 @@ from urllib.request import Request, urlopen
 
 
 PROJECT = Path(__file__).resolve().parents[3]
+WORKSPACE_SUPPORT = PROJECT.parent / "Source"
+if str(WORKSPACE_SUPPORT) not in sys.path:
+    sys.path.insert(0, str(WORKSPACE_SUPPORT))
+from ArtifactLifecycle import fingerprint, verify_execution_capability
+
 os.environ.setdefault("D2C_RUNTIME_ROOT", str(PROJECT / "build/tools/layout"))
 os.environ.setdefault("D2C_WORK_ROOT", str(PROJECT))
 os.environ.setdefault("NODE_EXE", str(PROJECT / "build/runtime/node/node.exe"))
@@ -32,6 +37,33 @@ BROWSER = Path(os.environ["D2C_BROWSER_EXE"]).resolve()
 DEFAULT_MAPPING = PROJECT / "docs/fixtures/layout/mapping"
 DEFAULT_FONT = PROJECT / "docs/examples/resources/HarmonyOS_Sans_SC_Regular.ttf"
 CHECK_DELIVERY = PROJECT / "docs/validation/check_delivery.py"
+
+
+def verify_runtime_matches_source():
+    """Reject a direct Python audit when its controlled EXE predates Source.
+
+    This duplicate guard is intentional: RunPageAudit.py is callable with
+    Python directly, so relying only on the PowerShell wrapper would leave a
+    bypass for constrained Agents.  A standalone released package does not
+    execute this source-side audit script.
+    """
+    manifest_path = RUNTIME / "tool-manifest.json"
+    if not manifest_path.is_file():
+        raise RuntimeError("LAYOUT_TOOL_SOURCE_PROVENANCE_MISSING")
+    try:
+        acceptance = json.loads(manifest_path.read_text(encoding="utf-8"))["acceptance"]
+    except (OSError, ValueError, KeyError, TypeError) as error:
+        raise RuntimeError("LAYOUT_TOOL_SOURCE_PROVENANCE_INVALID") from error
+    published = str(acceptance.get("sourceFingerprint") or "")
+    if not published:
+        raise RuntimeError("LAYOUT_TOOL_SOURCE_PROVENANCE_MISSING")
+    current = fingerprint(PROJECT)
+    if published != current:
+        raise RuntimeError("LAYOUT_TOOL_STALE_SOURCE")
+    try:
+        verify_execution_capability(acceptance.get("executionCapabilityProfile"))
+    except (OSError, ValueError, KeyError, TypeError) as error:
+        raise RuntimeError("LAYOUT_TOOL_AGENT_BASELINE_MISSING") from error
 
 GENERIC_FONTS = {
     "serif", "sans-serif", "monospace", "cursive", "fantasy", "system-ui",
@@ -251,6 +283,12 @@ class Runner:
             [sys.executable, "-B", LIFECYCLE, "verify-tools", "--root", RUNTIME],
             timeout=120,
         )
+        if outcome["status"] == "PASS":
+            try:
+                verify_runtime_matches_source()
+            except RuntimeError as error:
+                outcome["status"] = "FAIL"
+                outcome["error"] = str(error)
         self.integrity_ok = outcome["status"] == "PASS"
         return outcome
 
